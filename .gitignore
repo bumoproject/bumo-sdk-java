@@ -13,6 +13,7 @@ bin/
 *.ipr
 *.iws
 .idea
+.idea/*
 .classpath
 .project
 .settings/
