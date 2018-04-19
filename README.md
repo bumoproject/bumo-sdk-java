@@ -1,80 +1,51 @@
-# Bumo Java SDK 文档
+# Bumo Java SDK
 
-## 1 概述
-本文档简要概述Bumo Java SDK部分常用接口文档
+## 简介
+Java开发人员可以轻松通过Bumo Java SDK操作Bumo区块链。您可以在几分钟内通过Maven或下载jar包的方式完成SDK的安装。
 
-- [配置](/1)
-- [创建账户](/1)
-- [查询账户](/1)
-- [发行资产](/1)
-- [转移资产](/1)
-- [查询Tx](/1)
+1. [docs](/docs) 是 Bumo Java SDK 的使用文档。
+2. [examples](/examples) 是一个基于maven的项目示例。
+3. [libs](/libs)  是 Bumo Java SDK 的 jar 包以及依赖包。
+4. [src](/src)  是 Bumo Java SDK 的源代码
 
-### 2 配置
-Bumo Java SDK无任何依赖框架，使用时只需要载入配置即可运行。配置如下：
+## 准备环境
 
-### 2.1 简单配置
+适用于JDK 8及以上版本。
 
-无需分布式服务，单机运行，具体配置如下：
+## 安装方式
 
+#### 方式一：在Maven项目中加入依赖项（推荐方式）
+在Maven工程中使用Bumo Java SDK，只需在maven配置中加入Bumo提供的远程仓库后，在pom.xml中加入相应依赖即可
+
+本文的以1.0.0版本为例说明
+
+maven 远程仓库 (仓库正在建设中......)
+``` xml
+<repository>
+    <id>pubnexus</id>                
+    <url>http://maven.bumo.io/content/groups/public/</url>
+    <releases>
+        <enabled>true</enabled>
+    </releases>
+    <snapshots>
+        <enabled>true</enabled>
+    </snapshots>
+</repository>
 ```
-
-    SDKConfig config = new SDKConfig();
-    
-    SDKProperties sdkProperties = new SDKProperties();
-    
-    // 为了使SDK访问区块链节点具备高可用能力，SDK提供多个节点负载连接的支持
-    
-    String ips = "seed1.bumotest.io:26002,seed2.bumotest.io:26002,seed3.bumotest.io:26002";
-    sdkProperties.setIps(ips); // 设置http协议的节点IP列表
-    
-    String eventUtis = "ws://seed1.bumotest.io:26003,ws://seed2.bumotest.io:26003,seed3.bumotest.io:26003";
-    sdkProperties.setEventUtis(eventUtis);// 设置tcp协议的节点IP列表
-    
-    
-    config.configSdk(sdkProperties);
-
-    // 完成配置获得spi
-    config.getOperationService();
-    config.getQueryService();
+在dependencies标签内加入如下内容：
+``` xml
+<dependency>
+  <groupId>cn.bumo</groupId>
+  <artifactId>bumo-sdk</artifactId>
+  <version>1.0.0</version>
+</dependency>
 ```
-### 2.2 高级配置
-SDK具备分布式能力，需要引入redis服务，具体配置如下：
+#### 方式二：在项目中导入JAR包
+1. 下载Bumo Java SDK开发包
+2. 解压该开发包
+3. 将bumo-java-sdk-{version}.jar以及附带的libs里的jar导入到您的项目中
 
-```
+## 示例工程
+Bumo Java SDK 提供了丰富的示例，供开发者参考
 
-    SDKConfig config = new SDKConfig();
-    
-    SDKProperties sdkProperties = new SDKProperties();
-    
-    // 为了使SDK访问区块链节点具备高可用能力，SDK提供多个节点负载连接的支持
-    
-    String ips = "seed1.bumotest.io:26002,seed2.bumotest.io:26002,seed3.bumotest.io:26002";
-    sdkProperties.setIps(ips); // 设置http协议的节点IP列表
-    
-    String eventUtis = "ws://seed1.bumotest.io:26003,ws://seed2.bumotest.io:26003,seed3.bumotest.io:26003";
-    sdkProperties.setEventUtis(eventUtis);// 设置tcp协议的节点IP列表
-    
-    // ###### 需要分布式服务时，需要加入以下配置 ---开始 ###### //
-    
-    sdkProperties.setRedisSeqManagerEnable(true);// 开启redis
-    sdkProperties.setRedisHost("192.168.10.73"); // redis服务IP ,请尽可能使用redis集群
-    sdkProperties.setRedisPort(10129); // redis 端口号
-    sdkProperties.setRedisPassword("xxxxxx"); // redis 认证密码
-    
-    // ###### 需要分布式服务时，需要加入以下配置 ---结束 ###### //
-    
-    config.configSdk(sdkProperties);
-    
-    
-
-    // 完成配置获得spi
-    OperationService operationService = config.getOperationService();
-    QueryService queryService = config.getQueryService();
-```
-
-### 3 示例说明
-完成配置后，可以通过以下示例来操作Bumo区块链网络
-
-#### 3.1 创建账户
-> 创建新账户需要创建账户操作者(区块链已有账户)花费约0.01BU的交易费用，并且给新账户至少0.1BU的初始化数量，该初始化BU数量由创建账户操作者提供。
+[示例文档入口](/docs)

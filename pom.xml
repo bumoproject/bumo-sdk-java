@@ -11,8 +11,8 @@
     <packaging>pom</packaging>
 
     <modules>
-		<module>bumo-sdk-src</module>
-		<module>bumo-sdk-example</module>
+		<module>src</module>
+		<module>examples</module>
     </modules>
 
     <build>
