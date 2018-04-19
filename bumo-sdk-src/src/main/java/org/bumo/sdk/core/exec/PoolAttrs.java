@@ -10,7 +10,7 @@ public class PoolAttrs {
 	private int corePoolSize = 10;
 	private int maximumPoolSize = 20000;
 	private long keepAliveTime = 60L;
-	private String threadFactoryName = "BUBI-SDK-MANAGER";
+	private String threadFactoryName = "BUMO-SDK-MANAGER";
 	private boolean indexThread = true;
 	private boolean deamon = false;
 	private int schdCorePoolSize = 2;

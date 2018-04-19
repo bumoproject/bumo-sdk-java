@@ -661,7 +661,7 @@ public final class Chain {
                 org.bumo.sdk.core.extend.protobuf.Chain.Account.class, org.bumo.sdk.core.extend.protobuf.Chain.Account.Builder.class);
       }
 
-      // Construct using cn.bumo.sdk.core.extend.bumochain.protobuf.Chain.Account.newBuilder()
+      // Construct using org.bumo.sdk.core.extend.protobuf.Chain.Account.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -1696,7 +1696,7 @@ public final class Chain {
                 org.bumo.sdk.core.extend.protobuf.Chain.AssetKey.class, org.bumo.sdk.core.extend.protobuf.Chain.AssetKey.Builder.class);
       }
 
-      // Construct using cn.bumo.sdk.core.extend.bumochain.protobuf.Chain.AssetKey.newBuilder()
+      // Construct using org.bumo.sdk.core.extend.protobuf.Chain.AssetKey.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -2361,7 +2361,7 @@ public final class Chain {
                 org.bumo.sdk.core.extend.protobuf.Chain.Asset.class, org.bumo.sdk.core.extend.protobuf.Chain.Asset.Builder.class);
       }
 
-      // Construct using cn.bumo.sdk.core.extend.bumochain.protobuf.Chain.Asset.newBuilder()
+      // Construct using org.bumo.sdk.core.extend.protobuf.Chain.Asset.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -2706,6 +2706,11 @@ public final class Chain {
      * <code>optional int64 issued_amount = 4;</code>
      */
     long getIssuedAmount();
+
+    /**
+     * <code>optional int32 fee_percent = 5;</code>
+     */
+    int getFeePercent();
   }
   /**
    * Protobuf type {@code protocol.AssetProperty}
@@ -2723,6 +2728,7 @@ public final class Chain {
       description_ = "";
       maxSupply_ = 0L;
       issuedAmount_ = 0L;
+      feePercent_ = 0;
     }
 
     @java.lang.Override
@@ -2769,6 +2775,11 @@ public final class Chain {
             case 32: {
 
               issuedAmount_ = input.readInt64();
+              break;
+            }
+            case 40: {
+
+              feePercent_ = input.readInt32();
               break;
             }
           }
@@ -2855,6 +2866,15 @@ public final class Chain {
       return issuedAmount_;
     }
 
+    public static final int FEE_PERCENT_FIELD_NUMBER = 5;
+    private int feePercent_;
+    /**
+     * <code>optional int32 fee_percent = 5;</code>
+     */
+    public int getFeePercent() {
+      return feePercent_;
+    }
+
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
@@ -2879,6 +2899,9 @@ public final class Chain {
       if (issuedAmount_ != 0L) {
         output.writeInt64(4, issuedAmount_);
       }
+      if (feePercent_ != 0) {
+        output.writeInt32(5, feePercent_);
+      }
     }
 
     public int getSerializedSize() {
@@ -2900,6 +2923,10 @@ public final class Chain {
       if (issuedAmount_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(4, issuedAmount_);
+      }
+      if (feePercent_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(5, feePercent_);
       }
       memoizedSize = size;
       return size;
@@ -2925,6 +2952,8 @@ public final class Chain {
           == other.getMaxSupply());
       result = result && (getIssuedAmount()
           == other.getIssuedAmount());
+      result = result && (getFeePercent()
+          == other.getFeePercent());
       return result;
     }
 
@@ -2945,6 +2974,8 @@ public final class Chain {
       hash = (37 * hash) + ISSUED_AMOUNT_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
           getIssuedAmount());
+      hash = (37 * hash) + FEE_PERCENT_FIELD_NUMBER;
+      hash = (53 * hash) + getFeePercent();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -3046,7 +3077,7 @@ public final class Chain {
                 org.bumo.sdk.core.extend.protobuf.Chain.AssetProperty.class, org.bumo.sdk.core.extend.protobuf.Chain.AssetProperty.Builder.class);
       }
 
-      // Construct using cn.bumo.sdk.core.extend.bumochain.protobuf.Chain.AssetProperty.newBuilder()
+      // Construct using org.bumo.sdk.core.extend.protobuf.Chain.AssetProperty.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -3070,6 +3101,8 @@ public final class Chain {
         maxSupply_ = 0L;
 
         issuedAmount_ = 0L;
+
+        feePercent_ = 0;
 
         return this;
       }
@@ -3097,6 +3130,7 @@ public final class Chain {
         result.description_ = description_;
         result.maxSupply_ = maxSupply_;
         result.issuedAmount_ = issuedAmount_;
+        result.feePercent_ = feePercent_;
         onBuilt();
         return result;
       }
@@ -3150,6 +3184,9 @@ public final class Chain {
         }
         if (other.getIssuedAmount() != 0L) {
           setIssuedAmount(other.getIssuedAmount());
+        }
+        if (other.getFeePercent() != 0) {
+          setFeePercent(other.getFeePercent());
         }
         onChanged();
         return this;
@@ -3323,6 +3360,32 @@ public final class Chain {
         onChanged();
         return this;
       }
+
+      private int feePercent_ ;
+      /**
+       * <code>optional int32 fee_percent = 5;</code>
+       */
+      public int getFeePercent() {
+        return feePercent_;
+      }
+      /**
+       * <code>optional int32 fee_percent = 5;</code>
+       */
+      public Builder setFeePercent(int value) {
+        
+        feePercent_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional int32 fee_percent = 5;</code>
+       */
+      public Builder clearFeePercent() {
+        
+        feePercent_ = 0;
+        onChanged();
+        return this;
+      }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return this;
@@ -3402,13 +3465,22 @@ public final class Chain {
     org.bumo.sdk.core.extend.protobuf.Chain.AssetKeyOrBuilder getKeyOrBuilder();
 
     /**
-     * <pre>
-     *AssetProperty property = 3;
-     * </pre>
-     *
      * <code>optional int64 amount = 2;</code>
      */
     long getAmount();
+
+    /**
+     * <code>optional .protocol.AssetProperty property = 3;</code>
+     */
+    boolean hasProperty();
+    /**
+     * <code>optional .protocol.AssetProperty property = 3;</code>
+     */
+    org.bumo.sdk.core.extend.protobuf.Chain.AssetProperty getProperty();
+    /**
+     * <code>optional .protocol.AssetProperty property = 3;</code>
+     */
+    org.bumo.sdk.core.extend.protobuf.Chain.AssetPropertyOrBuilder getPropertyOrBuilder();
   }
   /**
    * Protobuf type {@code protocol.AssetStore}
@@ -3466,6 +3538,19 @@ public final class Chain {
             case 16: {
 
               amount_ = input.readInt64();
+              break;
+            }
+            case 26: {
+              org.bumo.sdk.core.extend.protobuf.Chain.AssetProperty.Builder subBuilder = null;
+              if (property_ != null) {
+                subBuilder = property_.toBuilder();
+              }
+              property_ = input.readMessage(org.bumo.sdk.core.extend.protobuf.Chain.AssetProperty.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(property_);
+                property_ = subBuilder.buildPartial();
+              }
+
               break;
             }
           }
@@ -3527,14 +3612,31 @@ public final class Chain {
     public static final int AMOUNT_FIELD_NUMBER = 2;
     private long amount_;
     /**
-     * <pre>
-     *AssetProperty property = 3;
-     * </pre>
-     *
      * <code>optional int64 amount = 2;</code>
      */
     public long getAmount() {
       return amount_;
+    }
+
+    public static final int PROPERTY_FIELD_NUMBER = 3;
+    private org.bumo.sdk.core.extend.protobuf.Chain.AssetProperty property_;
+    /**
+     * <code>optional .protocol.AssetProperty property = 3;</code>
+     */
+    public boolean hasProperty() {
+      return property_ != null;
+    }
+    /**
+     * <code>optional .protocol.AssetProperty property = 3;</code>
+     */
+    public org.bumo.sdk.core.extend.protobuf.Chain.AssetProperty getProperty() {
+      return property_ == null ? org.bumo.sdk.core.extend.protobuf.Chain.AssetProperty.getDefaultInstance() : property_;
+    }
+    /**
+     * <code>optional .protocol.AssetProperty property = 3;</code>
+     */
+    public org.bumo.sdk.core.extend.protobuf.Chain.AssetPropertyOrBuilder getPropertyOrBuilder() {
+      return getProperty();
     }
 
     private byte memoizedIsInitialized = -1;
@@ -3555,6 +3657,9 @@ public final class Chain {
       if (amount_ != 0L) {
         output.writeInt64(2, amount_);
       }
+      if (property_ != null) {
+        output.writeMessage(3, getProperty());
+      }
     }
 
     public int getSerializedSize() {
@@ -3569,6 +3674,10 @@ public final class Chain {
       if (amount_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(2, amount_);
+      }
+      if (property_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(3, getProperty());
       }
       memoizedSize = size;
       return size;
@@ -3593,6 +3702,11 @@ public final class Chain {
       }
       result = result && (getAmount()
           == other.getAmount());
+      result = result && (hasProperty() == other.hasProperty());
+      if (hasProperty()) {
+        result = result && getProperty()
+            .equals(other.getProperty());
+      }
       return result;
     }
 
@@ -3610,6 +3724,10 @@ public final class Chain {
       hash = (37 * hash) + AMOUNT_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
           getAmount());
+      if (hasProperty()) {
+        hash = (37 * hash) + PROPERTY_FIELD_NUMBER;
+        hash = (53 * hash) + getProperty().hashCode();
+      }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -3711,7 +3829,7 @@ public final class Chain {
                 org.bumo.sdk.core.extend.protobuf.Chain.AssetStore.class, org.bumo.sdk.core.extend.protobuf.Chain.AssetStore.Builder.class);
       }
 
-      // Construct using cn.bumo.sdk.core.extend.bumochain.protobuf.Chain.AssetStore.newBuilder()
+      // Construct using org.bumo.sdk.core.extend.protobuf.Chain.AssetStore.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -3736,6 +3854,12 @@ public final class Chain {
         }
         amount_ = 0L;
 
+        if (propertyBuilder_ == null) {
+          property_ = null;
+        } else {
+          property_ = null;
+          propertyBuilder_ = null;
+        }
         return this;
       }
 
@@ -3764,6 +3888,11 @@ public final class Chain {
           result.key_ = keyBuilder_.build();
         }
         result.amount_ = amount_;
+        if (propertyBuilder_ == null) {
+          result.property_ = property_;
+        } else {
+          result.property_ = propertyBuilder_.build();
+        }
         onBuilt();
         return result;
       }
@@ -3810,6 +3939,9 @@ public final class Chain {
         }
         if (other.getAmount() != 0L) {
           setAmount(other.getAmount());
+        }
+        if (other.hasProperty()) {
+          mergeProperty(other.getProperty());
         }
         onChanged();
         return this;
@@ -3992,20 +4124,12 @@ public final class Chain {
 
       private long amount_ ;
       /**
-       * <pre>
-       *AssetProperty property = 3;
-       * </pre>
-       *
        * <code>optional int64 amount = 2;</code>
        */
       public long getAmount() {
         return amount_;
       }
       /**
-       * <pre>
-       *AssetProperty property = 3;
-       * </pre>
-       *
        * <code>optional int64 amount = 2;</code>
        */
       public Builder setAmount(long value) {
@@ -4015,10 +4139,6 @@ public final class Chain {
         return this;
       }
       /**
-       * <pre>
-       *AssetProperty property = 3;
-       * </pre>
-       *
        * <code>optional int64 amount = 2;</code>
        */
       public Builder clearAmount() {
@@ -4026,6 +4146,123 @@ public final class Chain {
         amount_ = 0L;
         onChanged();
         return this;
+      }
+
+      private org.bumo.sdk.core.extend.protobuf.Chain.AssetProperty property_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          org.bumo.sdk.core.extend.protobuf.Chain.AssetProperty, org.bumo.sdk.core.extend.protobuf.Chain.AssetProperty.Builder, org.bumo.sdk.core.extend.protobuf.Chain.AssetPropertyOrBuilder> propertyBuilder_;
+      /**
+       * <code>optional .protocol.AssetProperty property = 3;</code>
+       */
+      public boolean hasProperty() {
+        return propertyBuilder_ != null || property_ != null;
+      }
+      /**
+       * <code>optional .protocol.AssetProperty property = 3;</code>
+       */
+      public org.bumo.sdk.core.extend.protobuf.Chain.AssetProperty getProperty() {
+        if (propertyBuilder_ == null) {
+          return property_ == null ? org.bumo.sdk.core.extend.protobuf.Chain.AssetProperty.getDefaultInstance() : property_;
+        } else {
+          return propertyBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>optional .protocol.AssetProperty property = 3;</code>
+       */
+      public Builder setProperty(org.bumo.sdk.core.extend.protobuf.Chain.AssetProperty value) {
+        if (propertyBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          property_ = value;
+          onChanged();
+        } else {
+          propertyBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>optional .protocol.AssetProperty property = 3;</code>
+       */
+      public Builder setProperty(
+          org.bumo.sdk.core.extend.protobuf.Chain.AssetProperty.Builder builderForValue) {
+        if (propertyBuilder_ == null) {
+          property_ = builderForValue.build();
+          onChanged();
+        } else {
+          propertyBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <code>optional .protocol.AssetProperty property = 3;</code>
+       */
+      public Builder mergeProperty(org.bumo.sdk.core.extend.protobuf.Chain.AssetProperty value) {
+        if (propertyBuilder_ == null) {
+          if (property_ != null) {
+            property_ =
+              org.bumo.sdk.core.extend.protobuf.Chain.AssetProperty.newBuilder(property_).mergeFrom(value).buildPartial();
+          } else {
+            property_ = value;
+          }
+          onChanged();
+        } else {
+          propertyBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>optional .protocol.AssetProperty property = 3;</code>
+       */
+      public Builder clearProperty() {
+        if (propertyBuilder_ == null) {
+          property_ = null;
+          onChanged();
+        } else {
+          property_ = null;
+          propertyBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <code>optional .protocol.AssetProperty property = 3;</code>
+       */
+      public org.bumo.sdk.core.extend.protobuf.Chain.AssetProperty.Builder getPropertyBuilder() {
+        
+        onChanged();
+        return getPropertyFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>optional .protocol.AssetProperty property = 3;</code>
+       */
+      public org.bumo.sdk.core.extend.protobuf.Chain.AssetPropertyOrBuilder getPropertyOrBuilder() {
+        if (propertyBuilder_ != null) {
+          return propertyBuilder_.getMessageOrBuilder();
+        } else {
+          return property_ == null ?
+              org.bumo.sdk.core.extend.protobuf.Chain.AssetProperty.getDefaultInstance() : property_;
+        }
+      }
+      /**
+       * <code>optional .protocol.AssetProperty property = 3;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          org.bumo.sdk.core.extend.protobuf.Chain.AssetProperty, org.bumo.sdk.core.extend.protobuf.Chain.AssetProperty.Builder, org.bumo.sdk.core.extend.protobuf.Chain.AssetPropertyOrBuilder> 
+          getPropertyFieldBuilder() {
+        if (propertyBuilder_ == null) {
+          propertyBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              org.bumo.sdk.core.extend.protobuf.Chain.AssetProperty, org.bumo.sdk.core.extend.protobuf.Chain.AssetProperty.Builder, org.bumo.sdk.core.extend.protobuf.Chain.AssetPropertyOrBuilder>(
+                  getProperty(),
+                  getParentForChildren(),
+                  isClean());
+          property_ = null;
+        }
+        return propertyBuilder_;
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -4671,7 +4908,7 @@ public final class Chain {
                 org.bumo.sdk.core.extend.protobuf.Chain.LedgerHeader.class, org.bumo.sdk.core.extend.protobuf.Chain.LedgerHeader.Builder.class);
       }
 
-      // Construct using cn.bumo.sdk.core.extend.bumochain.protobuf.Chain.LedgerHeader.newBuilder()
+      // Construct using org.bumo.sdk.core.extend.protobuf.Chain.LedgerHeader.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -5612,7 +5849,7 @@ public final class Chain {
                 org.bumo.sdk.core.extend.protobuf.Chain.Ledger.class, org.bumo.sdk.core.extend.protobuf.Chain.Ledger.Builder.class);
       }
 
-      // Construct using cn.bumo.sdk.core.extend.bumochain.protobuf.Chain.Ledger.newBuilder()
+      // Construct using org.bumo.sdk.core.extend.protobuf.Chain.Ledger.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -6580,7 +6817,7 @@ public final class Chain {
                 org.bumo.sdk.core.extend.protobuf.Chain.OperationPayment.class, org.bumo.sdk.core.extend.protobuf.Chain.OperationPayment.Builder.class);
       }
 
-      // Construct using cn.bumo.sdk.core.extend.bumochain.protobuf.Chain.OperationPayment.newBuilder()
+      // Construct using org.bumo.sdk.core.extend.protobuf.Chain.OperationPayment.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -7303,7 +7540,7 @@ public final class Chain {
                 org.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold.class, org.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold.Builder.class);
       }
 
-      // Construct using cn.bumo.sdk.core.extend.bumochain.protobuf.Chain.OperationTypeThreshold.newBuilder()
+      // Construct using org.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -7932,7 +8169,7 @@ public final class Chain {
                 org.bumo.sdk.core.extend.protobuf.Chain.AccountPrivilege.class, org.bumo.sdk.core.extend.protobuf.Chain.AccountPrivilege.Builder.class);
       }
 
-      // Construct using cn.bumo.sdk.core.extend.bumochain.protobuf.Chain.AccountPrivilege.newBuilder()
+      // Construct using org.bumo.sdk.core.extend.protobuf.Chain.AccountPrivilege.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -8541,7 +8778,7 @@ public final class Chain {
 
     /**
      * <pre>
-     *required, [-1,MAX(INT64)] -1: ��ʾ������
+     *required, [-1,MAX(INT64)] -1: Indicate that it is not set
      * </pre>
      *
      * <code>optional int64 tx_threshold = 1;</code>
@@ -8550,7 +8787,7 @@ public final class Chain {
 
     /**
      * <pre>
-     *���������ã���������������Ϊ׼
+     * If this setting is applied, the operation threshold is based on this
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -8559,7 +8796,7 @@ public final class Chain {
         getTypeThresholdsList();
     /**
      * <pre>
-     *���������ã���������������Ϊ׼
+     * If this setting is applied, the operation threshold is based on this
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -8567,7 +8804,7 @@ public final class Chain {
     org.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold getTypeThresholds(int index);
     /**
      * <pre>
-     *���������ã���������������Ϊ׼
+     * If this setting is applied, the operation threshold is based on this
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -8575,7 +8812,7 @@ public final class Chain {
     int getTypeThresholdsCount();
     /**
      * <pre>
-     *���������ã���������������Ϊ׼
+     * If this setting is applied, the operation threshold is based on this
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -8584,7 +8821,7 @@ public final class Chain {
         getTypeThresholdsOrBuilderList();
     /**
      * <pre>
-     *���������ã���������������Ϊ׼
+     * If this setting is applied, the operation threshold is based on this
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -8678,7 +8915,7 @@ public final class Chain {
     private long txThreshold_;
     /**
      * <pre>
-     *required, [-1,MAX(INT64)] -1: ��ʾ������
+     *required, [-1,MAX(INT64)] -1: Indicate that it is not set
      * </pre>
      *
      * <code>optional int64 tx_threshold = 1;</code>
@@ -8691,7 +8928,7 @@ public final class Chain {
     private java.util.List<org.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold> typeThresholds_;
     /**
      * <pre>
-     *���������ã���������������Ϊ׼
+     * If this setting is applied, the operation threshold is based on this
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -8701,7 +8938,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *���������ã���������������Ϊ׼
+     * If this setting is applied, the operation threshold is based on this
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -8712,7 +8949,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *���������ã���������������Ϊ׼
+     * If this setting is applied, the operation threshold is based on this
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -8722,7 +8959,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *���������ã���������������Ϊ׼
+     * If this setting is applied, the operation threshold is based on this
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -8732,7 +8969,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *���������ã���������������Ϊ׼
+     * If this setting is applied, the operation threshold is based on this
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -8913,7 +9150,7 @@ public final class Chain {
                 org.bumo.sdk.core.extend.protobuf.Chain.AccountThreshold.class, org.bumo.sdk.core.extend.protobuf.Chain.AccountThreshold.Builder.class);
       }
 
-      // Construct using cn.bumo.sdk.core.extend.bumochain.protobuf.Chain.AccountThreshold.newBuilder()
+      // Construct using org.bumo.sdk.core.extend.protobuf.Chain.AccountThreshold.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -9074,7 +9311,7 @@ public final class Chain {
       private long txThreshold_ ;
       /**
        * <pre>
-       *required, [-1,MAX(INT64)] -1: ��ʾ������
+       *required, [-1,MAX(INT64)] -1: Indicate that it is not set
        * </pre>
        *
        * <code>optional int64 tx_threshold = 1;</code>
@@ -9084,7 +9321,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *required, [-1,MAX(INT64)] -1: ��ʾ������
+       *required, [-1,MAX(INT64)] -1: Indicate that it is not set
        * </pre>
        *
        * <code>optional int64 tx_threshold = 1;</code>
@@ -9097,7 +9334,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *required, [-1,MAX(INT64)] -1: ��ʾ������
+       *required, [-1,MAX(INT64)] -1: Indicate that it is not set
        * </pre>
        *
        * <code>optional int64 tx_threshold = 1;</code>
@@ -9123,7 +9360,7 @@ public final class Chain {
 
       /**
        * <pre>
-       *���������ã���������������Ϊ׼
+       * If this setting is applied, the operation threshold is based on this
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9137,7 +9374,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *���������ã���������������Ϊ׼
+       * If this setting is applied, the operation threshold is based on this
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9151,7 +9388,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *���������ã���������������Ϊ׼
+       * If this setting is applied, the operation threshold is based on this
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9165,7 +9402,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *���������ã���������������Ϊ׼
+       * If this setting is applied, the operation threshold is based on this
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9186,7 +9423,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *���������ã���������������Ϊ׼
+       * If this setting is applied, the operation threshold is based on this
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9204,7 +9441,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *���������ã���������������Ϊ׼
+       * If this setting is applied, the operation threshold is based on this
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9224,7 +9461,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *���������ã���������������Ϊ׼
+       * If this setting is applied, the operation threshold is based on this
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9245,7 +9482,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *���������ã���������������Ϊ׼
+       * If this setting is applied, the operation threshold is based on this
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9263,7 +9500,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *���������ã���������������Ϊ׼
+       * If this setting is applied, the operation threshold is based on this
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9281,7 +9518,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *���������ã���������������Ϊ׼
+       * If this setting is applied, the operation threshold is based on this
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9300,7 +9537,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *���������ã���������������Ϊ׼
+       * If this setting is applied, the operation threshold is based on this
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9317,7 +9554,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *���������ã���������������Ϊ׼
+       * If this setting is applied, the operation threshold is based on this
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9334,7 +9571,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *���������ã���������������Ϊ׼
+       * If this setting is applied, the operation threshold is based on this
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9345,7 +9582,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *���������ã���������������Ϊ׼
+       * If this setting is applied, the operation threshold is based on this
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9359,7 +9596,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *���������ã���������������Ϊ׼
+       * If this setting is applied, the operation threshold is based on this
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9374,7 +9611,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *���������ã���������������Ϊ׼
+       * If this setting is applied, the operation threshold is based on this
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9385,7 +9622,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *���������ã���������������Ϊ׼
+       * If this setting is applied, the operation threshold is based on this
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9397,7 +9634,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *���������ã���������������Ϊ׼
+       * If this setting is applied, the operation threshold is based on this
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9487,24 +9724,6 @@ public final class Chain {
      * <code>optional int64 amount = 2;</code>
      */
     long getAmount();
-
-    /**
-     * <code>optional int32 type = 3;</code>
-     */
-    int getType();
-
-    /**
-     * <code>optional .protocol.AssetProperty property = 4;</code>
-     */
-    boolean hasProperty();
-    /**
-     * <code>optional .protocol.AssetProperty property = 4;</code>
-     */
-    org.bumo.sdk.core.extend.protobuf.Chain.AssetProperty getProperty();
-    /**
-     * <code>optional .protocol.AssetProperty property = 4;</code>
-     */
-    org.bumo.sdk.core.extend.protobuf.Chain.AssetPropertyOrBuilder getPropertyOrBuilder();
   }
   /**
    * Protobuf type {@code protocol.OperationIssueAsset}
@@ -9520,7 +9739,6 @@ public final class Chain {
     private OperationIssueAsset() {
       code_ = "";
       amount_ = 0L;
-      type_ = 0;
     }
 
     @java.lang.Override
@@ -9557,24 +9775,6 @@ public final class Chain {
             case 16: {
 
               amount_ = input.readInt64();
-              break;
-            }
-            case 24: {
-
-              type_ = input.readInt32();
-              break;
-            }
-            case 34: {
-              org.bumo.sdk.core.extend.protobuf.Chain.AssetProperty.Builder subBuilder = null;
-              if (property_ != null) {
-                subBuilder = property_.toBuilder();
-              }
-              property_ = input.readMessage(org.bumo.sdk.core.extend.protobuf.Chain.AssetProperty.parser(), extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom(property_);
-                property_ = subBuilder.buildPartial();
-              }
-
               break;
             }
           }
@@ -9643,36 +9843,6 @@ public final class Chain {
       return amount_;
     }
 
-    public static final int TYPE_FIELD_NUMBER = 3;
-    private int type_;
-    /**
-     * <code>optional int32 type = 3;</code>
-     */
-    public int getType() {
-      return type_;
-    }
-
-    public static final int PROPERTY_FIELD_NUMBER = 4;
-    private org.bumo.sdk.core.extend.protobuf.Chain.AssetProperty property_;
-    /**
-     * <code>optional .protocol.AssetProperty property = 4;</code>
-     */
-    public boolean hasProperty() {
-      return property_ != null;
-    }
-    /**
-     * <code>optional .protocol.AssetProperty property = 4;</code>
-     */
-    public org.bumo.sdk.core.extend.protobuf.Chain.AssetProperty getProperty() {
-      return property_ == null ? org.bumo.sdk.core.extend.protobuf.Chain.AssetProperty.getDefaultInstance() : property_;
-    }
-    /**
-     * <code>optional .protocol.AssetProperty property = 4;</code>
-     */
-    public org.bumo.sdk.core.extend.protobuf.Chain.AssetPropertyOrBuilder getPropertyOrBuilder() {
-      return getProperty();
-    }
-
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
@@ -9691,12 +9861,6 @@ public final class Chain {
       if (amount_ != 0L) {
         output.writeInt64(2, amount_);
       }
-      if (type_ != 0) {
-        output.writeInt32(3, type_);
-      }
-      if (property_ != null) {
-        output.writeMessage(4, getProperty());
-      }
     }
 
     public int getSerializedSize() {
@@ -9710,14 +9874,6 @@ public final class Chain {
       if (amount_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(2, amount_);
-      }
-      if (type_ != 0) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(3, type_);
-      }
-      if (property_ != null) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(4, getProperty());
       }
       memoizedSize = size;
       return size;
@@ -9739,13 +9895,6 @@ public final class Chain {
           .equals(other.getCode());
       result = result && (getAmount()
           == other.getAmount());
-      result = result && (getType()
-          == other.getType());
-      result = result && (hasProperty() == other.hasProperty());
-      if (hasProperty()) {
-        result = result && getProperty()
-            .equals(other.getProperty());
-      }
       return result;
     }
 
@@ -9761,12 +9910,6 @@ public final class Chain {
       hash = (37 * hash) + AMOUNT_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
           getAmount());
-      hash = (37 * hash) + TYPE_FIELD_NUMBER;
-      hash = (53 * hash) + getType();
-      if (hasProperty()) {
-        hash = (37 * hash) + PROPERTY_FIELD_NUMBER;
-        hash = (53 * hash) + getProperty().hashCode();
-      }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -9868,7 +10011,7 @@ public final class Chain {
                 org.bumo.sdk.core.extend.protobuf.Chain.OperationIssueAsset.class, org.bumo.sdk.core.extend.protobuf.Chain.OperationIssueAsset.Builder.class);
       }
 
-      // Construct using cn.bumo.sdk.core.extend.bumochain.protobuf.Chain.OperationIssueAsset.newBuilder()
+      // Construct using org.bumo.sdk.core.extend.protobuf.Chain.OperationIssueAsset.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -9889,14 +10032,6 @@ public final class Chain {
 
         amount_ = 0L;
 
-        type_ = 0;
-
-        if (propertyBuilder_ == null) {
-          property_ = null;
-        } else {
-          property_ = null;
-          propertyBuilder_ = null;
-        }
         return this;
       }
 
@@ -9921,12 +10056,6 @@ public final class Chain {
         org.bumo.sdk.core.extend.protobuf.Chain.OperationIssueAsset result = new org.bumo.sdk.core.extend.protobuf.Chain.OperationIssueAsset(this);
         result.code_ = code_;
         result.amount_ = amount_;
-        result.type_ = type_;
-        if (propertyBuilder_ == null) {
-          result.property_ = property_;
-        } else {
-          result.property_ = propertyBuilder_.build();
-        }
         onBuilt();
         return result;
       }
@@ -9974,12 +10103,6 @@ public final class Chain {
         }
         if (other.getAmount() != 0L) {
           setAmount(other.getAmount());
-        }
-        if (other.getType() != 0) {
-          setType(other.getType());
-        }
-        if (other.hasProperty()) {
-          mergeProperty(other.getProperty());
         }
         onChanged();
         return this;
@@ -10100,149 +10223,6 @@ public final class Chain {
         amount_ = 0L;
         onChanged();
         return this;
-      }
-
-      private int type_ ;
-      /**
-       * <code>optional int32 type = 3;</code>
-       */
-      public int getType() {
-        return type_;
-      }
-      /**
-       * <code>optional int32 type = 3;</code>
-       */
-      public Builder setType(int value) {
-        
-        type_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>optional int32 type = 3;</code>
-       */
-      public Builder clearType() {
-        
-        type_ = 0;
-        onChanged();
-        return this;
-      }
-
-      private org.bumo.sdk.core.extend.protobuf.Chain.AssetProperty property_ = null;
-      private com.google.protobuf.SingleFieldBuilderV3<
-          org.bumo.sdk.core.extend.protobuf.Chain.AssetProperty, org.bumo.sdk.core.extend.protobuf.Chain.AssetProperty.Builder, org.bumo.sdk.core.extend.protobuf.Chain.AssetPropertyOrBuilder> propertyBuilder_;
-      /**
-       * <code>optional .protocol.AssetProperty property = 4;</code>
-       */
-      public boolean hasProperty() {
-        return propertyBuilder_ != null || property_ != null;
-      }
-      /**
-       * <code>optional .protocol.AssetProperty property = 4;</code>
-       */
-      public org.bumo.sdk.core.extend.protobuf.Chain.AssetProperty getProperty() {
-        if (propertyBuilder_ == null) {
-          return property_ == null ? org.bumo.sdk.core.extend.protobuf.Chain.AssetProperty.getDefaultInstance() : property_;
-        } else {
-          return propertyBuilder_.getMessage();
-        }
-      }
-      /**
-       * <code>optional .protocol.AssetProperty property = 4;</code>
-       */
-      public Builder setProperty(org.bumo.sdk.core.extend.protobuf.Chain.AssetProperty value) {
-        if (propertyBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          property_ = value;
-          onChanged();
-        } else {
-          propertyBuilder_.setMessage(value);
-        }
-
-        return this;
-      }
-      /**
-       * <code>optional .protocol.AssetProperty property = 4;</code>
-       */
-      public Builder setProperty(
-          org.bumo.sdk.core.extend.protobuf.Chain.AssetProperty.Builder builderForValue) {
-        if (propertyBuilder_ == null) {
-          property_ = builderForValue.build();
-          onChanged();
-        } else {
-          propertyBuilder_.setMessage(builderForValue.build());
-        }
-
-        return this;
-      }
-      /**
-       * <code>optional .protocol.AssetProperty property = 4;</code>
-       */
-      public Builder mergeProperty(org.bumo.sdk.core.extend.protobuf.Chain.AssetProperty value) {
-        if (propertyBuilder_ == null) {
-          if (property_ != null) {
-            property_ =
-              org.bumo.sdk.core.extend.protobuf.Chain.AssetProperty.newBuilder(property_).mergeFrom(value).buildPartial();
-          } else {
-            property_ = value;
-          }
-          onChanged();
-        } else {
-          propertyBuilder_.mergeFrom(value);
-        }
-
-        return this;
-      }
-      /**
-       * <code>optional .protocol.AssetProperty property = 4;</code>
-       */
-      public Builder clearProperty() {
-        if (propertyBuilder_ == null) {
-          property_ = null;
-          onChanged();
-        } else {
-          property_ = null;
-          propertyBuilder_ = null;
-        }
-
-        return this;
-      }
-      /**
-       * <code>optional .protocol.AssetProperty property = 4;</code>
-       */
-      public org.bumo.sdk.core.extend.protobuf.Chain.AssetProperty.Builder getPropertyBuilder() {
-        
-        onChanged();
-        return getPropertyFieldBuilder().getBuilder();
-      }
-      /**
-       * <code>optional .protocol.AssetProperty property = 4;</code>
-       */
-      public org.bumo.sdk.core.extend.protobuf.Chain.AssetPropertyOrBuilder getPropertyOrBuilder() {
-        if (propertyBuilder_ != null) {
-          return propertyBuilder_.getMessageOrBuilder();
-        } else {
-          return property_ == null ?
-              org.bumo.sdk.core.extend.protobuf.Chain.AssetProperty.getDefaultInstance() : property_;
-        }
-      }
-      /**
-       * <code>optional .protocol.AssetProperty property = 4;</code>
-       */
-      private com.google.protobuf.SingleFieldBuilderV3<
-          org.bumo.sdk.core.extend.protobuf.Chain.AssetProperty, org.bumo.sdk.core.extend.protobuf.Chain.AssetProperty.Builder, org.bumo.sdk.core.extend.protobuf.Chain.AssetPropertyOrBuilder> 
-          getPropertyFieldBuilder() {
-        if (propertyBuilder_ == null) {
-          propertyBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              org.bumo.sdk.core.extend.protobuf.Chain.AssetProperty, org.bumo.sdk.core.extend.protobuf.Chain.AssetProperty.Builder, org.bumo.sdk.core.extend.protobuf.Chain.AssetPropertyOrBuilder>(
-                  getProperty(),
-                  getParentForChildren(),
-                  isClean());
-          property_ = null;
-        }
-        return propertyBuilder_;
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -10659,7 +10639,7 @@ public final class Chain {
                 org.bumo.sdk.core.extend.protobuf.Chain.OperationPayCoin.class, org.bumo.sdk.core.extend.protobuf.Chain.OperationPayCoin.Builder.class);
       }
 
-      // Construct using cn.bumo.sdk.core.extend.bumochain.protobuf.Chain.OperationPayCoin.newBuilder()
+      // Construct using org.bumo.sdk.core.extend.protobuf.Chain.OperationPayCoin.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -11003,7 +10983,7 @@ public final class Chain {
 
     /**
      * <pre>
-     *required, [-1,MAX(UINT32)] -1: ��ʾ������
+     *required, [-1,MAX(UINT32)] -1: Indicate that it is not set
      * </pre>
      *
      * <code>optional int64 master_weight = 1;</code>
@@ -11012,7 +10992,7 @@ public final class Chain {
 
     /**
      * <pre>
-     *address:weight, ���weight Ϊ0 ��ʾɾ�����signer
+     *address:weight, If weight is 0, delete this signer
      * </pre>
      *
      * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11021,7 +11001,7 @@ public final class Chain {
         getSignersList();
     /**
      * <pre>
-     *address:weight, ���weight Ϊ0 ��ʾɾ�����signer
+     *address:weight, If weight is 0, delete this signer
      * </pre>
      *
      * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11029,7 +11009,7 @@ public final class Chain {
     org.bumo.sdk.core.extend.protobuf.Chain.Signer getSigners(int index);
     /**
      * <pre>
-     *address:weight, ���weight Ϊ0 ��ʾɾ�����signer
+     *address:weight, If weight is 0, delete this signer
      * </pre>
      *
      * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11037,7 +11017,7 @@ public final class Chain {
     int getSignersCount();
     /**
      * <pre>
-     *address:weight, ���weight Ϊ0 ��ʾɾ�����signer
+     *address:weight, If weight is 0, delete this signer
      * </pre>
      *
      * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11046,7 +11026,7 @@ public final class Chain {
         getSignersOrBuilderList();
     /**
      * <pre>
-     *address:weight, ���weight Ϊ0 ��ʾɾ�����signer
+     *address:weight, If weight is 0, delete this signer
      * </pre>
      *
      * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11140,7 +11120,7 @@ public final class Chain {
     private long masterWeight_;
     /**
      * <pre>
-     *required, [-1,MAX(UINT32)] -1: ��ʾ������
+     *required, [-1,MAX(UINT32)] -1: Indicate that it is not set
      * </pre>
      *
      * <code>optional int64 master_weight = 1;</code>
@@ -11153,7 +11133,7 @@ public final class Chain {
     private java.util.List<org.bumo.sdk.core.extend.protobuf.Chain.Signer> signers_;
     /**
      * <pre>
-     *address:weight, ���weight Ϊ0 ��ʾɾ�����signer
+     *address:weight, If weight is 0, delete this signer
      * </pre>
      *
      * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11163,7 +11143,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *address:weight, ���weight Ϊ0 ��ʾɾ�����signer
+     *address:weight, If weight is 0, delete this signer
      * </pre>
      *
      * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11174,7 +11154,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *address:weight, ���weight Ϊ0 ��ʾɾ�����signer
+     *address:weight, If weight is 0, delete this signer
      * </pre>
      *
      * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11184,7 +11164,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *address:weight, ���weight Ϊ0 ��ʾɾ�����signer
+     *address:weight, If weight is 0, delete this signer
      * </pre>
      *
      * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11194,7 +11174,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *address:weight, ���weight Ϊ0 ��ʾɾ�����signer
+     *address:weight, If weight is 0, delete this signer
      * </pre>
      *
      * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11375,7 +11355,7 @@ public final class Chain {
                 org.bumo.sdk.core.extend.protobuf.Chain.OperationSetSignerWeight.class, org.bumo.sdk.core.extend.protobuf.Chain.OperationSetSignerWeight.Builder.class);
       }
 
-      // Construct using cn.bumo.sdk.core.extend.bumochain.protobuf.Chain.OperationSetSignerWeight.newBuilder()
+      // Construct using org.bumo.sdk.core.extend.protobuf.Chain.OperationSetSignerWeight.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -11536,7 +11516,7 @@ public final class Chain {
       private long masterWeight_ ;
       /**
        * <pre>
-       *required, [-1,MAX(UINT32)] -1: ��ʾ������
+       *required, [-1,MAX(UINT32)] -1: Indicate that it is not set
        * </pre>
        *
        * <code>optional int64 master_weight = 1;</code>
@@ -11546,7 +11526,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *required, [-1,MAX(UINT32)] -1: ��ʾ������
+       *required, [-1,MAX(UINT32)] -1: Indicate that it is not set
        * </pre>
        *
        * <code>optional int64 master_weight = 1;</code>
@@ -11559,7 +11539,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *required, [-1,MAX(UINT32)] -1: ��ʾ������
+       *required, [-1,MAX(UINT32)] -1: Indicate that it is not set
        * </pre>
        *
        * <code>optional int64 master_weight = 1;</code>
@@ -11585,7 +11565,7 @@ public final class Chain {
 
       /**
        * <pre>
-       *address:weight, ���weight Ϊ0 ��ʾɾ�����signer
+       *address:weight, If weight is 0, delete this signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11599,7 +11579,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, ���weight Ϊ0 ��ʾɾ�����signer
+       *address:weight, If weight is 0, delete this signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11613,7 +11593,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, ���weight Ϊ0 ��ʾɾ�����signer
+       *address:weight, If weight is 0, delete this signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11627,7 +11607,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, ���weight Ϊ0 ��ʾɾ�����signer
+       *address:weight, If weight is 0, delete this signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11648,7 +11628,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, ���weight Ϊ0 ��ʾɾ�����signer
+       *address:weight, If weight is 0, delete this signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11666,7 +11646,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, ���weight Ϊ0 ��ʾɾ�����signer
+       *address:weight, If weight is 0, delete this signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11686,7 +11666,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, ���weight Ϊ0 ��ʾɾ�����signer
+       *address:weight, If weight is 0, delete this signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11707,7 +11687,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, ���weight Ϊ0 ��ʾɾ�����signer
+       *address:weight, If weight is 0, delete this signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11725,7 +11705,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, ���weight Ϊ0 ��ʾɾ�����signer
+       *address:weight, If weight is 0, delete this signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11743,7 +11723,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, ���weight Ϊ0 ��ʾɾ�����signer
+       *address:weight, If weight is 0, delete this signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11762,7 +11742,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, ���weight Ϊ0 ��ʾɾ�����signer
+       *address:weight, If weight is 0, delete this signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11779,7 +11759,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, ���weight Ϊ0 ��ʾɾ�����signer
+       *address:weight, If weight is 0, delete this signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11796,7 +11776,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, ���weight Ϊ0 ��ʾɾ�����signer
+       *address:weight, If weight is 0, delete this signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11807,7 +11787,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, ���weight Ϊ0 ��ʾɾ�����signer
+       *address:weight, If weight is 0, delete this signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11821,7 +11801,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, ���weight Ϊ0 ��ʾɾ�����signer
+       *address:weight, If weight is 0, delete this signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11836,7 +11816,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, ���weight Ϊ0 ��ʾɾ�����signer
+       *address:weight, If weight is 0, delete this signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11847,7 +11827,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, ���weight Ϊ0 ��ʾɾ�����signer
+       *address:weight, If weight is 0, delete this signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11859,7 +11839,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, ���weight Ϊ0 ��ʾɾ�����signer
+       *address:weight, If weight is 0, delete this signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -12283,7 +12263,7 @@ public final class Chain {
                 org.bumo.sdk.core.extend.protobuf.Chain.OperationLog.class, org.bumo.sdk.core.extend.protobuf.Chain.OperationLog.Builder.class);
       }
 
-      // Construct using cn.bumo.sdk.core.extend.bumochain.protobuf.Chain.OperationLog.newBuilder()
+      // Construct using org.bumo.sdk.core.extend.protobuf.Chain.OperationLog.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -13657,7 +13637,7 @@ public final class Chain {
                 org.bumo.sdk.core.extend.protobuf.Chain.Operation.class, org.bumo.sdk.core.extend.protobuf.Chain.Operation.Builder.class);
       }
 
-      // Construct using cn.bumo.sdk.core.extend.bumochain.protobuf.Chain.Operation.newBuilder()
+      // Construct using org.bumo.sdk.core.extend.protobuf.Chain.Operation.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -15058,7 +15038,7 @@ public final class Chain {
 
     /**
      * <pre>
-     *type:threshold ��threshold:0 ��ʾɾ��������͵�type
+     *type:threshold, threshold:0 Represents the deletion of this type of type
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15067,7 +15047,7 @@ public final class Chain {
         getTypeThresholdsList();
     /**
      * <pre>
-     *type:threshold ��threshold:0 ��ʾɾ��������͵�type
+     *type:threshold, threshold:0 Represents the deletion of this type of type
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15075,7 +15055,7 @@ public final class Chain {
     org.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold getTypeThresholds(int index);
     /**
      * <pre>
-     *type:threshold ��threshold:0 ��ʾɾ��������͵�type
+     *type:threshold, threshold:0 Represents the deletion of this type of type
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15083,7 +15063,7 @@ public final class Chain {
     int getTypeThresholdsCount();
     /**
      * <pre>
-     *type:threshold ��threshold:0 ��ʾɾ��������͵�type
+     *type:threshold, threshold:0 Represents the deletion of this type of type
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15092,7 +15072,7 @@ public final class Chain {
         getTypeThresholdsOrBuilderList();
     /**
      * <pre>
-     *type:threshold ��threshold:0 ��ʾɾ��������͵�type
+     *type:threshold, threshold:0 Represents the deletion of this type of type
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15195,7 +15175,7 @@ public final class Chain {
     private java.util.List<org.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold> typeThresholds_;
     /**
      * <pre>
-     *type:threshold ��threshold:0 ��ʾɾ��������͵�type
+     *type:threshold, threshold:0 Represents the deletion of this type of type
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15205,7 +15185,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *type:threshold ��threshold:0 ��ʾɾ��������͵�type
+     *type:threshold, threshold:0 Represents the deletion of this type of type
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15216,7 +15196,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *type:threshold ��threshold:0 ��ʾɾ��������͵�type
+     *type:threshold, threshold:0 Represents the deletion of this type of type
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15226,7 +15206,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *type:threshold ��threshold:0 ��ʾɾ��������͵�type
+     *type:threshold, threshold:0 Represents the deletion of this type of type
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15236,7 +15216,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *type:threshold ��threshold:0 ��ʾɾ��������͵�type
+     *type:threshold, threshold:0 Represents the deletion of this type of type
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15417,7 +15397,7 @@ public final class Chain {
                 org.bumo.sdk.core.extend.protobuf.Chain.OperationSetThreshold.class, org.bumo.sdk.core.extend.protobuf.Chain.OperationSetThreshold.Builder.class);
       }
 
-      // Construct using cn.bumo.sdk.core.extend.bumochain.protobuf.Chain.OperationSetThreshold.newBuilder()
+      // Construct using org.bumo.sdk.core.extend.protobuf.Chain.OperationSetThreshold.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -15615,7 +15595,7 @@ public final class Chain {
 
       /**
        * <pre>
-       *type:threshold ��threshold:0 ��ʾɾ��������͵�type
+       *type:threshold, threshold:0 Represents the deletion of this type of type
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15629,7 +15609,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold ��threshold:0 ��ʾɾ��������͵�type
+       *type:threshold, threshold:0 Represents the deletion of this type of type
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15643,7 +15623,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold ��threshold:0 ��ʾɾ��������͵�type
+       *type:threshold, threshold:0 Represents the deletion of this type of type
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15657,7 +15637,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold ��threshold:0 ��ʾɾ��������͵�type
+       *type:threshold, threshold:0 Represents the deletion of this type of type
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15678,7 +15658,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold ��threshold:0 ��ʾɾ��������͵�type
+       *type:threshold, threshold:0 Represents the deletion of this type of type
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15696,7 +15676,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold ��threshold:0 ��ʾɾ��������͵�type
+       *type:threshold, threshold:0 Represents the deletion of this type of type
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15716,7 +15696,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold ��threshold:0 ��ʾɾ��������͵�type
+       *type:threshold, threshold:0 Represents the deletion of this type of type
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15737,7 +15717,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold ��threshold:0 ��ʾɾ��������͵�type
+       *type:threshold, threshold:0 Represents the deletion of this type of type
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15755,7 +15735,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold ��threshold:0 ��ʾɾ��������͵�type
+       *type:threshold, threshold:0 Represents the deletion of this type of type
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15773,7 +15753,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold ��threshold:0 ��ʾɾ��������͵�type
+       *type:threshold, threshold:0 Represents the deletion of this type of type
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15792,7 +15772,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold ��threshold:0 ��ʾɾ��������͵�type
+       *type:threshold, threshold:0 Represents the deletion of this type of type
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15809,7 +15789,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold ��threshold:0 ��ʾɾ��������͵�type
+       *type:threshold, threshold:0 Represents the deletion of this type of type
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15826,7 +15806,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold ��threshold:0 ��ʾɾ��������͵�type
+       *type:threshold, threshold:0 Represents the deletion of this type of type
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15837,7 +15817,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold ��threshold:0 ��ʾɾ��������͵�type
+       *type:threshold, threshold:0 Represents the deletion of this type of type
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15851,7 +15831,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold ��threshold:0 ��ʾɾ��������͵�type
+       *type:threshold, threshold:0 Represents the deletion of this type of type
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15866,7 +15846,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold ��threshold:0 ��ʾɾ��������͵�type
+       *type:threshold, threshold:0 Represents the deletion of this type of type
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15877,7 +15857,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold ��threshold:0 ��ʾɾ��������͵�type
+       *type:threshold, threshold:0 Represents the deletion of this type of type
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15889,7 +15869,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold ��threshold:0 ��ʾɾ��������͵�type
+       *type:threshold, threshold:0 Represents the deletion of this type of type
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -16577,7 +16557,7 @@ public final class Chain {
                 org.bumo.sdk.core.extend.protobuf.Chain.Transaction.class, org.bumo.sdk.core.extend.protobuf.Chain.Transaction.Builder.class);
       }
 
-      // Construct using cn.bumo.sdk.core.extend.bumochain.protobuf.Chain.Transaction.newBuilder()
+      // Construct using org.bumo.sdk.core.extend.protobuf.Chain.Transaction.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -17659,7 +17639,7 @@ public final class Chain {
                 org.bumo.sdk.core.extend.protobuf.Chain.Signer.class, org.bumo.sdk.core.extend.protobuf.Chain.Signer.Builder.class);
       }
 
-      // Construct using cn.bumo.sdk.core.extend.bumochain.protobuf.Chain.Signer.newBuilder()
+      // Construct using org.bumo.sdk.core.extend.protobuf.Chain.Signer.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -17936,7 +17916,7 @@ public final class Chain {
 
     /**
      * <pre>
-     *������ض����鴥���ģ���ʱδ�ṩ��
+     * If it is triggered by a specific block, it is temporarily not provided
      * </pre>
      *
      * <code>optional int64 ledger_seq = 2;</code>
@@ -17945,7 +17925,7 @@ public final class Chain {
 
     /**
      * <pre>
-     *����ǽ��״�����
+     * If it's a transaction triggered
      * </pre>
      *
      * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -17953,7 +17933,7 @@ public final class Chain {
     boolean hasTransaction();
     /**
      * <pre>
-     *����ǽ��״�����
+     * If it's a transaction triggered
      * </pre>
      *
      * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -17961,7 +17941,7 @@ public final class Chain {
     org.bumo.sdk.core.extend.protobuf.Chain.Trigger.OperationTrigger getTransaction();
     /**
      * <pre>
-     *����ǽ��״�����
+     * If it's a transaction triggered
      * </pre>
      *
      * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -18429,7 +18409,7 @@ public final class Chain {
                   org.bumo.sdk.core.extend.protobuf.Chain.Trigger.OperationTrigger.class, org.bumo.sdk.core.extend.protobuf.Chain.Trigger.OperationTrigger.Builder.class);
         }
 
-        // Construct using cn.bumo.sdk.core.extend.bumochain.protobuf.Chain.Trigger.OperationTrigger.newBuilder()
+        // Construct using org.bumo.sdk.core.extend.protobuf.Chain.Trigger.OperationTrigger.newBuilder()
         private Builder() {
           maybeForceBuilderInitialization();
         }
@@ -18670,7 +18650,7 @@ public final class Chain {
     private long ledgerSeq_;
     /**
      * <pre>
-     *������ض����鴥���ģ���ʱδ�ṩ��
+     * If it is triggered by a specific block, it is temporarily not provided
      * </pre>
      *
      * <code>optional int64 ledger_seq = 2;</code>
@@ -18683,7 +18663,7 @@ public final class Chain {
     private org.bumo.sdk.core.extend.protobuf.Chain.Trigger.OperationTrigger transaction_;
     /**
      * <pre>
-     *����ǽ��״�����
+     * If it's a transaction triggered
      * </pre>
      *
      * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -18693,7 +18673,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *����ǽ��״�����
+     * If it's a transaction triggered
      * </pre>
      *
      * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -18703,7 +18683,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *����ǽ��״�����
+     * If it's a transaction triggered
      * </pre>
      *
      * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -18896,7 +18876,7 @@ public final class Chain {
                 org.bumo.sdk.core.extend.protobuf.Chain.Trigger.class, org.bumo.sdk.core.extend.protobuf.Chain.Trigger.Builder.class);
       }
 
-      // Construct using cn.bumo.sdk.core.extend.bumochain.protobuf.Chain.Trigger.newBuilder()
+      // Construct using org.bumo.sdk.core.extend.protobuf.Chain.Trigger.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -19075,7 +19055,7 @@ public final class Chain {
       private long ledgerSeq_ ;
       /**
        * <pre>
-       *������ض����鴥���ģ���ʱδ�ṩ��
+       * If it is triggered by a specific block, it is temporarily not provided
        * </pre>
        *
        * <code>optional int64 ledger_seq = 2;</code>
@@ -19085,7 +19065,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *������ض����鴥���ģ���ʱδ�ṩ��
+       * If it is triggered by a specific block, it is temporarily not provided
        * </pre>
        *
        * <code>optional int64 ledger_seq = 2;</code>
@@ -19098,7 +19078,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *������ض����鴥���ģ���ʱδ�ṩ��
+       * If it is triggered by a specific block, it is temporarily not provided
        * </pre>
        *
        * <code>optional int64 ledger_seq = 2;</code>
@@ -19115,7 +19095,7 @@ public final class Chain {
           org.bumo.sdk.core.extend.protobuf.Chain.Trigger.OperationTrigger, org.bumo.sdk.core.extend.protobuf.Chain.Trigger.OperationTrigger.Builder, org.bumo.sdk.core.extend.protobuf.Chain.Trigger.OperationTriggerOrBuilder> transactionBuilder_;
       /**
        * <pre>
-       *����ǽ��״�����
+       * If it's a transaction triggered
        * </pre>
        *
        * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -19125,7 +19105,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *����ǽ��״�����
+       * If it's a transaction triggered
        * </pre>
        *
        * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -19139,7 +19119,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *����ǽ��״�����
+       * If it's a transaction triggered
        * </pre>
        *
        * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -19159,7 +19139,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *����ǽ��״�����
+       * If it's a transaction triggered
        * </pre>
        *
        * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -19177,7 +19157,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *����ǽ��״�����
+       * If it's a transaction triggered
        * </pre>
        *
        * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -19199,7 +19179,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *����ǽ��״�����
+       * If it's a transaction triggered
        * </pre>
        *
        * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -19217,7 +19197,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *����ǽ��״�����
+       * If it's a transaction triggered
        * </pre>
        *
        * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -19229,7 +19209,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *����ǽ��״�����
+       * If it's a transaction triggered
        * </pre>
        *
        * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -19244,7 +19224,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *����ǽ��״�����
+       * If it's a transaction triggered
        * </pre>
        *
        * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -19735,7 +19715,7 @@ public final class Chain {
                 org.bumo.sdk.core.extend.protobuf.Chain.TransactionEnv.class, org.bumo.sdk.core.extend.protobuf.Chain.TransactionEnv.Builder.class);
       }
 
-      // Construct using cn.bumo.sdk.core.extend.bumochain.protobuf.Chain.TransactionEnv.newBuilder()
+      // Construct using org.bumo.sdk.core.extend.protobuf.Chain.TransactionEnv.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -20939,7 +20919,7 @@ public final class Chain {
                 org.bumo.sdk.core.extend.protobuf.Chain.TransactionEnvStore.class, org.bumo.sdk.core.extend.protobuf.Chain.TransactionEnvStore.Builder.class);
       }
 
-      // Construct using cn.bumo.sdk.core.extend.bumochain.protobuf.Chain.TransactionEnvStore.newBuilder()
+      // Construct using org.bumo.sdk.core.extend.protobuf.Chain.TransactionEnvStore.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -21772,7 +21752,7 @@ public final class Chain {
                 org.bumo.sdk.core.extend.protobuf.Chain.TransactionEnvSet.class, org.bumo.sdk.core.extend.protobuf.Chain.TransactionEnvSet.Builder.class);
       }
 
-      // Construct using cn.bumo.sdk.core.extend.bumochain.protobuf.Chain.TransactionEnvSet.newBuilder()
+      // Construct using org.bumo.sdk.core.extend.protobuf.Chain.TransactionEnvSet.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -22647,7 +22627,7 @@ public final class Chain {
                 org.bumo.sdk.core.extend.protobuf.Chain.ConsensusValueValidation.class, org.bumo.sdk.core.extend.protobuf.Chain.ConsensusValueValidation.Builder.class);
       }
 
-      // Construct using cn.bumo.sdk.core.extend.bumochain.protobuf.Chain.ConsensusValueValidation.newBuilder()
+      // Construct using org.bumo.sdk.core.extend.protobuf.Chain.ConsensusValueValidation.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -23552,7 +23532,7 @@ public final class Chain {
                 org.bumo.sdk.core.extend.protobuf.Chain.ConsensusValue.class, org.bumo.sdk.core.extend.protobuf.Chain.ConsensusValue.Builder.class);
       }
 
-      // Construct using cn.bumo.sdk.core.extend.bumochain.protobuf.Chain.ConsensusValue.newBuilder()
+      // Construct using org.bumo.sdk.core.extend.protobuf.Chain.ConsensusValue.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -24239,7 +24219,7 @@ public final class Chain {
 
     /**
      * <pre>
-     *��Լ����
+     * Contract type
      * </pre>
      *
      * <code>optional .protocol.Contract.ContractType type = 1;</code>
@@ -24247,7 +24227,7 @@ public final class Chain {
     int getTypeValue();
     /**
      * <pre>
-     *��Լ����
+     * Contract type
      * </pre>
      *
      * <code>optional .protocol.Contract.ContractType type = 1;</code>
@@ -24256,7 +24236,7 @@ public final class Chain {
 
     /**
      * <pre>
-     *��Լ����,js ����
+     * Contract content, JS code
      * </pre>
      *
      * <code>optional string payload = 2;</code>
@@ -24264,7 +24244,7 @@ public final class Chain {
     java.lang.String getPayload();
     /**
      * <pre>
-     *��Լ����,js ����
+     * Contract content, JS code
      * </pre>
      *
      * <code>optional string payload = 2;</code>
@@ -24441,7 +24421,7 @@ public final class Chain {
     private int type_;
     /**
      * <pre>
-     *��Լ����
+     * Contract type
      * </pre>
      *
      * <code>optional .protocol.Contract.ContractType type = 1;</code>
@@ -24451,7 +24431,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *��Լ����
+     * Contract type
      * </pre>
      *
      * <code>optional .protocol.Contract.ContractType type = 1;</code>
@@ -24465,7 +24445,7 @@ public final class Chain {
     private volatile java.lang.Object payload_;
     /**
      * <pre>
-     *��Լ����,js ����
+     * Contract content, JS code
      * </pre>
      *
      * <code>optional string payload = 2;</code>
@@ -24484,7 +24464,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *��Լ����,js ����
+     * Contract content, JS code
      * </pre>
      *
      * <code>optional string payload = 2;</code>
@@ -24669,7 +24649,7 @@ public final class Chain {
                 org.bumo.sdk.core.extend.protobuf.Chain.Contract.class, org.bumo.sdk.core.extend.protobuf.Chain.Contract.Builder.class);
       }
 
-      // Construct using cn.bumo.sdk.core.extend.bumochain.protobuf.Chain.Contract.newBuilder()
+      // Construct using org.bumo.sdk.core.extend.protobuf.Chain.Contract.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -24791,7 +24771,7 @@ public final class Chain {
       private int type_ = 0;
       /**
        * <pre>
-       *��Լ����
+       * Contract type
        * </pre>
        *
        * <code>optional .protocol.Contract.ContractType type = 1;</code>
@@ -24801,7 +24781,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *��Լ����
+       * Contract type
        * </pre>
        *
        * <code>optional .protocol.Contract.ContractType type = 1;</code>
@@ -24813,7 +24793,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *��Լ����
+       * Contract type
        * </pre>
        *
        * <code>optional .protocol.Contract.ContractType type = 1;</code>
@@ -24824,7 +24804,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *��Լ����
+       * Contract type
        * </pre>
        *
        * <code>optional .protocol.Contract.ContractType type = 1;</code>
@@ -24840,7 +24820,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *��Լ����
+       * Contract type
        * </pre>
        *
        * <code>optional .protocol.Contract.ContractType type = 1;</code>
@@ -24855,7 +24835,7 @@ public final class Chain {
       private java.lang.Object payload_ = "";
       /**
        * <pre>
-       *��Լ����,js ����
+       * Contract content, JS code
        * </pre>
        *
        * <code>optional string payload = 2;</code>
@@ -24874,7 +24854,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *��Լ����,js ����
+       * Contract content, JS code
        * </pre>
        *
        * <code>optional string payload = 2;</code>
@@ -24894,7 +24874,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *��Լ����,js ����
+       * Contract content, JS code
        * </pre>
        *
        * <code>optional string payload = 2;</code>
@@ -24911,7 +24891,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *��Լ����,js ����
+       * Contract content, JS code
        * </pre>
        *
        * <code>optional string payload = 2;</code>
@@ -24924,7 +24904,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *��Լ����,js ����
+       * Contract content, JS code
        * </pre>
        *
        * <code>optional string payload = 2;</code>
@@ -25070,7 +25050,7 @@ public final class Chain {
   }
   /**
    * <pre>
-   *�����˻�
+   * Create an account
    * </pre>
    *
    * Protobuf type {@code protocol.OperationCreateAccount}
@@ -25554,7 +25534,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *�����˻�
+     * Create an account
      * </pre>
      *
      * Protobuf type {@code protocol.OperationCreateAccount}
@@ -25575,7 +25555,7 @@ public final class Chain {
                 org.bumo.sdk.core.extend.protobuf.Chain.OperationCreateAccount.class, org.bumo.sdk.core.extend.protobuf.Chain.OperationCreateAccount.Builder.class);
       }
 
-      // Construct using cn.bumo.sdk.core.extend.bumochain.protobuf.Chain.OperationCreateAccount.newBuilder()
+      // Construct using org.bumo.sdk.core.extend.protobuf.Chain.OperationCreateAccount.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -26487,7 +26467,7 @@ public final class Chain {
 
     /**
      * <pre>
-     *��ѡ��metadata�İ汾�š���������ˣ�������ʺ����е�metadata_version��ͬ��
+     * Optional. The version number of metadata. If set up, it must be the same as the existing metadata_version of the account
      * </pre>
      *
      * <code>optional int64 version = 3;</code>
@@ -26659,7 +26639,7 @@ public final class Chain {
     private long version_;
     /**
      * <pre>
-     *��ѡ��metadata�İ汾�š���������ˣ�������ʺ����е�metadata_version��ͬ��
+     * Optional. The version number of metadata. If set up, it must be the same as the existing metadata_version of the account
      * </pre>
      *
      * <code>optional int64 version = 3;</code>
@@ -26867,7 +26847,7 @@ public final class Chain {
                 org.bumo.sdk.core.extend.protobuf.Chain.OperationSetMetadata.class, org.bumo.sdk.core.extend.protobuf.Chain.OperationSetMetadata.Builder.class);
       }
 
-      // Construct using cn.bumo.sdk.core.extend.bumochain.protobuf.Chain.OperationSetMetadata.newBuilder()
+      // Construct using org.bumo.sdk.core.extend.protobuf.Chain.OperationSetMetadata.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -27140,7 +27120,7 @@ public final class Chain {
       private long version_ ;
       /**
        * <pre>
-       *��ѡ��metadata�İ汾�š���������ˣ�������ʺ����е�metadata_version��ͬ��
+       * Optional. The version number of metadata. If set up, it must be the same as the existing metadata_version of the account
        * </pre>
        *
        * <code>optional int64 version = 3;</code>
@@ -27150,7 +27130,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *��ѡ��metadata�İ汾�š���������ˣ�������ʺ����е�metadata_version��ͬ��
+       * Optional. The version number of metadata. If set up, it must be the same as the existing metadata_version of the account
        * </pre>
        *
        * <code>optional int64 version = 3;</code>
@@ -27163,7 +27143,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *��ѡ��metadata�İ汾�š���������ˣ�������ʺ����е�metadata_version��ͬ��
+       * Optional. The version number of metadata. If set up, it must be the same as the existing metadata_version of the account
        * </pre>
        *
        * <code>optional int64 version = 3;</code>
@@ -27411,101 +27391,101 @@ public final class Chain {
       "ntract\022\017\n\007balance\030\007 \001(\003\"6\n\010AssetKey\022\016\n\006i" +
       "ssuer\030\001 \001(\t\022\014\n\004code\030\002 \001(\t\022\014\n\004type\030\003 \001(\005\"" +
       "8\n\005Asset\022\037\n\003key\030\001 \001(\0132\022.protocol.AssetKe" +
-      "y\022\016\n\006amount\030\002 \001(\003\"`\n\rAssetProperty\022\017\n\007de" +
+      "y\022\016\n\006amount\030\002 \001(\003\"u\n\rAssetProperty\022\017\n\007de" +
       "cimal\030\001 \001(\005\022\023\n\013description\030\002 \001(\t\022\022\n\nmax_",
-      "supply\030\003 \001(\003\022\025\n\rissued_amount\030\004 \001(\003\"=\n\nA" +
-      "ssetStore\022\037\n\003key\030\001 \001(\0132\022.protocol.AssetK" +
-      "ey\022\016\n\006amount\030\002 \001(\003\"\355\001\n\014LedgerHeader\022\013\n\003s" +
-      "eq\030\001 \001(\003\022\014\n\004hash\030\002 \001(\014\022\025\n\rprevious_hash\030" +
-      "\003 \001(\014\022\031\n\021account_tree_hash\030\004 \001(\014\022\022\n\nclos" +
-      "e_time\030\005 \001(\003\022\034\n\024consensus_value_hash\030\006 \001" +
-      "(\014\022\017\n\007version\030\007 \001(\003\022\020\n\010tx_count\030\010 \001(\003\022\027\n" +
-      "\017validators_hash\030\t \001(\014\022\021\n\tfees_hash\030\n \001(" +
-      "\014\022\017\n\007reserve\030\013 \001(\t\"d\n\006Ledger\022&\n\006header\030\001" +
-      " \001(\0132\026.protocol.LedgerHeader\0222\n\020transact",
-      "ion_envs\030\002 \003(\0132\030.protocol.TransactionEnv" +
-      "\"W\n\020OperationPayment\022\024\n\014dest_address\030\001 \001" +
-      "(\t\022\036\n\005asset\030\002 \001(\0132\017.protocol.Asset\022\r\n\005in" +
-      "put\030\003 \001(\t\"S\n\026OperationTypeThreshold\022&\n\004t" +
-      "ype\030\001 \001(\0162\030.protocol.Operation.Type\022\021\n\tt" +
-      "hreshold\030\002 \001(\003\"|\n\020AccountPrivilege\022\025\n\rma" +
-      "ster_weight\030\001 \001(\003\022!\n\007signers\030\002 \003(\0132\020.pro" +
-      "tocol.Signer\022.\n\nthresholds\030\003 \001(\0132\032.proto" +
-      "col.AccountThreshold\"c\n\020AccountThreshold" +
-      "\022\024\n\014tx_threshold\030\001 \001(\003\0229\n\017type_threshold",
-      "s\030\002 \003(\0132 .protocol.OperationTypeThreshol" +
-      "d\"l\n\023OperationIssueAsset\022\014\n\004code\030\001 \001(\t\022\016" +
-      "\n\006amount\030\002 \001(\003\022\014\n\004type\030\003 \001(\005\022)\n\010property" +
-      "\030\004 \001(\0132\027.protocol.AssetProperty\"G\n\020Opera" +
-      "tionPayCoin\022\024\n\014dest_address\030\001 \001(\t\022\016\n\006amo" +
-      "unt\030\002 \001(\003\022\r\n\005input\030\003 \001(\t\"T\n\030OperationSet" +
-      "SignerWeight\022\025\n\rmaster_weight\030\001 \001(\003\022!\n\007s" +
-      "igners\030\002 \003(\0132\020.protocol.Signer\",\n\014Operat" +
-      "ionLog\022\r\n\005topic\030\001 \001(\t\022\r\n\005datas\030\002 \003(\t\"\223\005\n" +
-      "\tOperation\022&\n\004type\030\001 \001(\0162\030.protocol.Oper",
-      "ation.Type\022\026\n\016source_address\030\002 \001(\t\022\020\n\010me" +
-      "tadata\030\003 \001(\014\0228\n\016create_account\030\004 \001(\0132 .p" +
-      "rotocol.OperationCreateAccount\0222\n\013issue_" +
-      "asset\030\005 \001(\0132\035.protocol.OperationIssueAss" +
-      "et\022+\n\007payment\030\006 \001(\0132\032.protocol.Operation" +
-      "Payment\0224\n\014set_metadata\030\007 \001(\0132\036.protocol" +
-      ".OperationSetMetadata\022=\n\021set_signer_weig" +
-      "ht\030\010 \001(\0132\".protocol.OperationSetSignerWe" +
-      "ight\0226\n\rset_threshold\030\t \001(\0132\037.protocol.O" +
-      "perationSetThreshold\022,\n\010pay_coin\030\n \001(\0132\032",
-      ".protocol.OperationPayCoin\022#\n\003log\030\013 \001(\0132" +
-      "\026.protocol.OperationLog\"\230\001\n\004Type\022\013\n\007UNKN" +
-      "OWN\020\000\022\022\n\016CREATE_ACCOUNT\020\001\022\017\n\013ISSUE_ASSET" +
-      "\020\002\022\013\n\007PAYMENT\020\003\022\020\n\014SET_METADATA\020\004\022\025\n\021SET" +
-      "_SIGNER_WEIGHT\020\005\022\021\n\rSET_THRESHOLD\020\006\022\014\n\010P" +
-      "AY_COIN\020\007\022\007\n\003LOG\020\010\"h\n\025OperationSetThresh" +
-      "old\022\024\n\014tx_threshold\030\001 \001(\003\0229\n\017type_thresh" +
-      "olds\030\004 \003(\0132 .protocol.OperationTypeThres" +
-      "hold\"\325\001\n\013Transaction\022\026\n\016source_address\030\001" +
-      " \001(\t\022\r\n\005nonce\030\002 \001(\003\022\021\n\tfee_limit\030\003 \001(\003\022\021",
-      "\n\tgas_price\030\004 \001(\003\022\027\n\017ceil_ledger_seq\030\005 \001" +
-      "(\003\022\020\n\010metadata\030\006 \001(\014\022\'\n\noperations\030\007 \003(\013" +
-      "2\023.protocol.Operation\"%\n\005Limit\022\013\n\007UNKNOW" +
-      "N\020\000\022\017\n\nOPERATIONS\020\350\007\"O\n\006Signer\022\017\n\007addres" +
-      "s\030\001 \001(\t\022\016\n\006weight\030\002 \001(\003\"$\n\005Limit\022\017\n\013SIGN" +
-      "ER_NONE\020\000\022\n\n\006SIGNER\020d\"\211\002\n\007Trigger\022;\n\020tra" +
-      "nsaction_type\030\001 \001(\0162!.protocol.Trigger.T" +
-      "ransactionType\022\022\n\nledger_seq\030\002 \001(\003\0227\n\013tr" +
-      "ansaction\030\003 \001(\0132\".protocol.Trigger.Opera" +
-      "tionTrigger\032/\n\020OperationTrigger\022\014\n\004hash\030",
-      "\001 \001(\014\022\r\n\005index\030\002 \001(\003\"C\n\017TransactionType\022" +
-      "\026\n\022NORMAL_TRANSACTION\020\000\022\030\n\024CONTRACT_TRAN" +
-      "SACTION\020\001\"\211\001\n\016TransactionEnv\022*\n\013transact" +
-      "ion\030\001 \001(\0132\025.protocol.Transaction\022\'\n\nsign" +
-      "atures\030\002 \003(\0132\023.protocol.Signature\022\"\n\007tri" +
-      "gger\030\003 \001(\0132\021.protocol.Trigger\"\272\001\n\023Transa" +
-      "ctionEnvStore\0221\n\017transaction_env\030\001 \001(\0132\030" +
-      ".protocol.TransactionEnv\022\022\n\nerror_code\030\002" +
-      " \001(\005\022\022\n\nerror_desc\030\003 \001(\t\022\022\n\nledger_seq\030\004" +
-      " \001(\003\022\022\n\nclose_time\030\005 \001(\003\022\014\n\004hash\030\006 \001(\014\022\022",
-      "\n\nactual_fee\030\007 \001(\003\":\n\021TransactionEnvSet\022" +
-      "%\n\003txs\030\002 \003(\0132\030.protocol.TransactionEnv\"G" +
-      "\n\030ConsensusValueValidation\022\025\n\rexpire_tx_" +
-      "ids\030\001 \003(\005\022\024\n\014error_tx_ids\030\002 \003(\005\"\203\002\n\016Cons" +
-      "ensusValue\022*\n\005txset\030\001 \001(\0132\033.protocol.Tra" +
-      "nsactionEnvSet\022\022\n\nclose_time\030\002 \001(\003\022\026\n\016pr" +
-      "evious_proof\030\003 \001(\014\022\022\n\nledger_seq\030\004 \001(\003\022\034" +
-      "\n\024previous_ledger_hash\030\005 \001(\014\022/\n\016ledger_u" +
-      "pgrade\030\006 \001(\0132\027.protocol.LedgerUpgrade\0226\n" +
-      "\nvalidation\030\007 \001(\0132\".protocol.ConsensusVa",
-      "lueValidation\"j\n\010Contract\022-\n\004type\030\001 \001(\0162" +
-      "\037.protocol.Contract.ContractType\022\017\n\007payl" +
-      "oad\030\002 \001(\t\"\036\n\014ContractType\022\016\n\nJAVASCRIPT\020" +
-      "\000\"\316\001\n\026OperationCreateAccount\022\024\n\014dest_add" +
-      "ress\030\001 \001(\t\022$\n\010contract\030\002 \001(\0132\022.protocol." +
-      "Contract\022(\n\004priv\030\003 \001(\0132\032.protocol.Accoun" +
-      "tPrivilege\022$\n\tmetadatas\030\004 \003(\0132\021.protocol" +
-      ".KeyPair\022\024\n\014init_balance\030\005 \001(\003\022\022\n\ninit_i" +
-      "nput\030\006 \001(\t\"X\n\024OperationSetMetadata\022\013\n\003ke" +
-      "y\030\001 \001(\t\022\r\n\005value\030\002 \001(\t\022\017\n\007version\030\003 \001(\003\022",
-      "\023\n\013delete_flag\030\004 \001(\010*#\n\005Limit\022\013\n\007UNKNOWN" +
-      "\020\000\022\r\n\tSIGNATURE\020dB\035\n\033cn.bumo.blockchain." +
-      "adapter3b\006proto3"
+      "supply\030\003 \001(\003\022\025\n\rissued_amount\030\004 \001(\003\022\023\n\013f" +
+      "ee_percent\030\005 \001(\005\"h\n\nAssetStore\022\037\n\003key\030\001 " +
+      "\001(\0132\022.protocol.AssetKey\022\016\n\006amount\030\002 \001(\003\022" +
+      ")\n\010property\030\003 \001(\0132\027.protocol.AssetProper" +
+      "ty\"\355\001\n\014LedgerHeader\022\013\n\003seq\030\001 \001(\003\022\014\n\004hash" +
+      "\030\002 \001(\014\022\025\n\rprevious_hash\030\003 \001(\014\022\031\n\021account" +
+      "_tree_hash\030\004 \001(\014\022\022\n\nclose_time\030\005 \001(\003\022\034\n\024" +
+      "consensus_value_hash\030\006 \001(\014\022\017\n\007version\030\007 " +
+      "\001(\003\022\020\n\010tx_count\030\010 \001(\003\022\027\n\017validators_hash" +
+      "\030\t \001(\014\022\021\n\tfees_hash\030\n \001(\014\022\017\n\007reserve\030\013 \001",
+      "(\t\"d\n\006Ledger\022&\n\006header\030\001 \001(\0132\026.protocol." +
+      "LedgerHeader\0222\n\020transaction_envs\030\002 \003(\0132\030" +
+      ".protocol.TransactionEnv\"W\n\020OperationPay" +
+      "ment\022\024\n\014dest_address\030\001 \001(\t\022\036\n\005asset\030\002 \001(" +
+      "\0132\017.protocol.Asset\022\r\n\005input\030\003 \001(\t\"S\n\026Ope" +
+      "rationTypeThreshold\022&\n\004type\030\001 \001(\0162\030.prot" +
+      "ocol.Operation.Type\022\021\n\tthreshold\030\002 \001(\003\"|" +
+      "\n\020AccountPrivilege\022\025\n\rmaster_weight\030\001 \001(" +
+      "\003\022!\n\007signers\030\002 \003(\0132\020.protocol.Signer\022.\n\n" +
+      "thresholds\030\003 \001(\0132\032.protocol.AccountThres",
+      "hold\"c\n\020AccountThreshold\022\024\n\014tx_threshold" +
+      "\030\001 \001(\003\0229\n\017type_thresholds\030\002 \003(\0132 .protoc" +
+      "ol.OperationTypeThreshold\"3\n\023OperationIs" +
+      "sueAsset\022\014\n\004code\030\001 \001(\t\022\016\n\006amount\030\002 \001(\003\"G" +
+      "\n\020OperationPayCoin\022\024\n\014dest_address\030\001 \001(\t" +
+      "\022\016\n\006amount\030\002 \001(\003\022\r\n\005input\030\003 \001(\t\"T\n\030Opera" +
+      "tionSetSignerWeight\022\025\n\rmaster_weight\030\001 \001" +
+      "(\003\022!\n\007signers\030\002 \003(\0132\020.protocol.Signer\",\n" +
+      "\014OperationLog\022\r\n\005topic\030\001 \001(\t\022\r\n\005datas\030\002 " +
+      "\003(\t\"\223\005\n\tOperation\022&\n\004type\030\001 \001(\0162\030.protoc",
+      "ol.Operation.Type\022\026\n\016source_address\030\002 \001(" +
+      "\t\022\020\n\010metadata\030\003 \001(\014\0228\n\016create_account\030\004 " +
+      "\001(\0132 .protocol.OperationCreateAccount\0222\n" +
+      "\013issue_asset\030\005 \001(\0132\035.protocol.OperationI" +
+      "ssueAsset\022+\n\007payment\030\006 \001(\0132\032.protocol.Op" +
+      "erationPayment\0224\n\014set_metadata\030\007 \001(\0132\036.p" +
+      "rotocol.OperationSetMetadata\022=\n\021set_sign" +
+      "er_weight\030\010 \001(\0132\".protocol.OperationSetS" +
+      "ignerWeight\0226\n\rset_threshold\030\t \001(\0132\037.pro" +
+      "tocol.OperationSetThreshold\022,\n\010pay_coin\030",
+      "\n \001(\0132\032.protocol.OperationPayCoin\022#\n\003log" +
+      "\030\013 \001(\0132\026.protocol.OperationLog\"\230\001\n\004Type\022" +
+      "\013\n\007UNKNOWN\020\000\022\022\n\016CREATE_ACCOUNT\020\001\022\017\n\013ISSU" +
+      "E_ASSET\020\002\022\013\n\007PAYMENT\020\003\022\020\n\014SET_METADATA\020\004" +
+      "\022\025\n\021SET_SIGNER_WEIGHT\020\005\022\021\n\rSET_THRESHOLD" +
+      "\020\006\022\014\n\010PAY_COIN\020\007\022\007\n\003LOG\020\010\"h\n\025OperationSe" +
+      "tThreshold\022\024\n\014tx_threshold\030\001 \001(\003\0229\n\017type" +
+      "_thresholds\030\004 \003(\0132 .protocol.OperationTy" +
+      "peThreshold\"\325\001\n\013Transaction\022\026\n\016source_ad" +
+      "dress\030\001 \001(\t\022\r\n\005nonce\030\002 \001(\003\022\021\n\tfee_limit\030",
+      "\003 \001(\003\022\021\n\tgas_price\030\004 \001(\003\022\027\n\017ceil_ledger_" +
+      "seq\030\005 \001(\003\022\020\n\010metadata\030\006 \001(\014\022\'\n\noperation" +
+      "s\030\007 \003(\0132\023.protocol.Operation\"%\n\005Limit\022\013\n" +
+      "\007UNKNOWN\020\000\022\017\n\nOPERATIONS\020\350\007\"O\n\006Signer\022\017\n" +
+      "\007address\030\001 \001(\t\022\016\n\006weight\030\002 \001(\003\"$\n\005Limit\022" +
+      "\017\n\013SIGNER_NONE\020\000\022\n\n\006SIGNER\020d\"\211\002\n\007Trigger" +
+      "\022;\n\020transaction_type\030\001 \001(\0162!.protocol.Tr" +
+      "igger.TransactionType\022\022\n\nledger_seq\030\002 \001(" +
+      "\003\0227\n\013transaction\030\003 \001(\0132\".protocol.Trigge" +
+      "r.OperationTrigger\032/\n\020OperationTrigger\022\014",
+      "\n\004hash\030\001 \001(\014\022\r\n\005index\030\002 \001(\003\"C\n\017Transacti" +
+      "onType\022\026\n\022NORMAL_TRANSACTION\020\000\022\030\n\024CONTRA" +
+      "CT_TRANSACTION\020\001\"\211\001\n\016TransactionEnv\022*\n\013t" +
+      "ransaction\030\001 \001(\0132\025.protocol.Transaction\022" +
+      "\'\n\nsignatures\030\002 \003(\0132\023.protocol.Signature" +
+      "\022\"\n\007trigger\030\003 \001(\0132\021.protocol.Trigger\"\272\001\n" +
+      "\023TransactionEnvStore\0221\n\017transaction_env\030" +
+      "\001 \001(\0132\030.protocol.TransactionEnv\022\022\n\nerror" +
+      "_code\030\002 \001(\005\022\022\n\nerror_desc\030\003 \001(\t\022\022\n\nledge" +
+      "r_seq\030\004 \001(\003\022\022\n\nclose_time\030\005 \001(\003\022\014\n\004hash\030",
+      "\006 \001(\014\022\022\n\nactual_fee\030\007 \001(\003\":\n\021Transaction" +
+      "EnvSet\022%\n\003txs\030\002 \003(\0132\030.protocol.Transacti" +
+      "onEnv\"G\n\030ConsensusValueValidation\022\025\n\rexp" +
+      "ire_tx_ids\030\001 \003(\005\022\024\n\014error_tx_ids\030\002 \003(\005\"\203" +
+      "\002\n\016ConsensusValue\022*\n\005txset\030\001 \001(\0132\033.proto" +
+      "col.TransactionEnvSet\022\022\n\nclose_time\030\002 \001(" +
+      "\003\022\026\n\016previous_proof\030\003 \001(\014\022\022\n\nledger_seq\030" +
+      "\004 \001(\003\022\034\n\024previous_ledger_hash\030\005 \001(\014\022/\n\016l" +
+      "edger_upgrade\030\006 \001(\0132\027.protocol.LedgerUpg" +
+      "rade\0226\n\nvalidation\030\007 \001(\0132\".protocol.Cons",
+      "ensusValueValidation\"j\n\010Contract\022-\n\004type" +
+      "\030\001 \001(\0162\037.protocol.Contract.ContractType\022" +
+      "\017\n\007payload\030\002 \001(\t\"\036\n\014ContractType\022\016\n\nJAVA" +
+      "SCRIPT\020\000\"\316\001\n\026OperationCreateAccount\022\024\n\014d" +
+      "est_address\030\001 \001(\t\022$\n\010contract\030\002 \001(\0132\022.pr" +
+      "otocol.Contract\022(\n\004priv\030\003 \001(\0132\032.protocol" +
+      ".AccountPrivilege\022$\n\tmetadatas\030\004 \003(\0132\021.p" +
+      "rotocol.KeyPair\022\024\n\014init_balance\030\005 \001(\003\022\022\n" +
+      "\ninit_input\030\006 \001(\t\"X\n\024OperationSetMetadat" +
+      "a\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\t\022\017\n\007version",
+      "\030\003 \001(\003\022\023\n\013delete_flag\030\004 \001(\010*#\n\005Limit\022\013\n\007" +
+      "UNKNOWN\020\000\022\r\n\tSIGNATURE\020dB#\n!org.bumo.sdk" +
+      ".core.extend.protobufb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -27543,13 +27523,13 @@ public final class Chain {
     internal_static_protocol_AssetProperty_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_protocol_AssetProperty_descriptor,
-        new java.lang.String[] { "Decimal", "Description", "MaxSupply", "IssuedAmount", });
+        new java.lang.String[] { "Decimal", "Description", "MaxSupply", "IssuedAmount", "FeePercent", });
     internal_static_protocol_AssetStore_descriptor =
       getDescriptor().getMessageTypes().get(4);
     internal_static_protocol_AssetStore_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_protocol_AssetStore_descriptor,
-        new java.lang.String[] { "Key", "Amount", });
+        new java.lang.String[] { "Key", "Amount", "Property", });
     internal_static_protocol_LedgerHeader_descriptor =
       getDescriptor().getMessageTypes().get(5);
     internal_static_protocol_LedgerHeader_fieldAccessorTable = new
@@ -27591,7 +27571,7 @@ public final class Chain {
     internal_static_protocol_OperationIssueAsset_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_protocol_OperationIssueAsset_descriptor,
-        new java.lang.String[] { "Code", "Amount", "Type", "Property", });
+        new java.lang.String[] { "Code", "Amount", });
     internal_static_protocol_OperationPayCoin_descriptor =
       getDescriptor().getMessageTypes().get(12);
     internal_static_protocol_OperationPayCoin_fieldAccessorTable = new

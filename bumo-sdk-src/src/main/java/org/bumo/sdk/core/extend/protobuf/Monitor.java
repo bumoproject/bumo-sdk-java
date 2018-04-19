@@ -492,7 +492,7 @@ public final class Monitor {
                 org.bumo.sdk.core.extend.protobuf.Monitor.Hello.class, org.bumo.sdk.core.extend.protobuf.Monitor.Hello.Builder.class);
       }
 
-      // Construct using cn.bumo.sdk.core.extend.bumochain.protobuf.Monitor.Hello.newBuilder()
+      // Construct using org.bumo.sdk.core.extend.protobuf.Monitor.Hello.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -1140,7 +1140,7 @@ public final class Monitor {
                 org.bumo.sdk.core.extend.protobuf.Monitor.Register.class, org.bumo.sdk.core.extend.protobuf.Monitor.Register.Builder.class);
       }
 
-      // Construct using cn.bumo.sdk.core.extend.bumochain.protobuf.Monitor.Register.newBuilder()
+      // Construct using org.bumo.sdk.core.extend.protobuf.Monitor.Register.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -1908,7 +1908,7 @@ public final class Monitor {
                 org.bumo.sdk.core.extend.protobuf.Monitor.Peer.class, org.bumo.sdk.core.extend.protobuf.Monitor.Peer.Builder.class);
       }
 
-      // Construct using cn.bumo.sdk.core.extend.bumochain.protobuf.Monitor.Peer.newBuilder()
+      // Construct using org.bumo.sdk.core.extend.protobuf.Monitor.Peer.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -2673,7 +2673,7 @@ public final class Monitor {
                 org.bumo.sdk.core.extend.protobuf.Monitor.GlueManager.class, org.bumo.sdk.core.extend.protobuf.Monitor.GlueManager.Builder.class);
       }
 
-      // Construct using cn.bumo.sdk.core.extend.bumochain.protobuf.Monitor.GlueManager.newBuilder()
+      // Construct using org.bumo.sdk.core.extend.protobuf.Monitor.GlueManager.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -3414,7 +3414,7 @@ public final class Monitor {
                 org.bumo.sdk.core.extend.protobuf.Monitor.PeerManager.class, org.bumo.sdk.core.extend.protobuf.Monitor.PeerManager.Builder.class);
       }
 
-      // Construct using cn.bumo.sdk.core.extend.bumochain.protobuf.Monitor.PeerManager.newBuilder()
+      // Construct using org.bumo.sdk.core.extend.protobuf.Monitor.PeerManager.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -4268,7 +4268,7 @@ public final class Monitor {
                 org.bumo.sdk.core.extend.protobuf.Monitor.BumoStatus.class, org.bumo.sdk.core.extend.protobuf.Monitor.BumoStatus.Builder.class);
       }
 
-      // Construct using cn.bumo.sdk.core.extend.bumochain.protobuf.Monitor.BumoStatus.newBuilder()
+      // Construct using org.bumo.sdk.core.extend.protobuf.Monitor.BumoStatus.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -5055,7 +5055,7 @@ public final class Monitor {
                 org.bumo.sdk.core.extend.protobuf.Monitor.LedgerStatus.class, org.bumo.sdk.core.extend.protobuf.Monitor.LedgerStatus.Builder.class);
       }
 
-      // Construct using cn.bumo.sdk.core.extend.bumochain.protobuf.Monitor.LedgerStatus.newBuilder()
+      // Construct using org.bumo.sdk.core.extend.protobuf.Monitor.LedgerStatus.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -5863,7 +5863,7 @@ public final class Monitor {
                 org.bumo.sdk.core.extend.protobuf.Monitor.SystemProperty.class, org.bumo.sdk.core.extend.protobuf.Monitor.SystemProperty.Builder.class);
       }
 
-      // Construct using cn.bumo.sdk.core.extend.bumochain.protobuf.Monitor.SystemProperty.newBuilder()
+      // Construct using org.bumo.sdk.core.extend.protobuf.Monitor.SystemProperty.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -6648,7 +6648,7 @@ public final class Monitor {
                 org.bumo.sdk.core.extend.protobuf.Monitor.SystemResource.class, org.bumo.sdk.core.extend.protobuf.Monitor.SystemResource.Builder.class);
       }
 
-      // Construct using cn.bumo.sdk.core.extend.bumochain.protobuf.Monitor.SystemResource.newBuilder()
+      // Construct using org.bumo.sdk.core.extend.protobuf.Monitor.SystemResource.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -7304,7 +7304,7 @@ public final class Monitor {
                 org.bumo.sdk.core.extend.protobuf.Monitor.Partition.class, org.bumo.sdk.core.extend.protobuf.Monitor.Partition.Builder.class);
       }
 
-      // Construct using cn.bumo.sdk.core.extend.bumochain.protobuf.Monitor.Partition.newBuilder()
+      // Construct using org.bumo.sdk.core.extend.protobuf.Monitor.Partition.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -8022,7 +8022,7 @@ public final class Monitor {
                 org.bumo.sdk.core.extend.protobuf.Monitor.CPU.class, org.bumo.sdk.core.extend.protobuf.Monitor.CPU.Builder.class);
       }
 
-      // Construct using cn.bumo.sdk.core.extend.bumochain.protobuf.Monitor.CPU.newBuilder()
+      // Construct using org.bumo.sdk.core.extend.protobuf.Monitor.CPU.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -8672,7 +8672,7 @@ public final class Monitor {
                 org.bumo.sdk.core.extend.protobuf.Monitor.SystemStatus.class, org.bumo.sdk.core.extend.protobuf.Monitor.SystemStatus.Builder.class);
       }
 
-      // Construct using cn.bumo.sdk.core.extend.bumochain.protobuf.Monitor.SystemStatus.newBuilder()
+      // Construct using org.bumo.sdk.core.extend.protobuf.Monitor.SystemStatus.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -9718,7 +9718,7 @@ public final class Monitor {
                 org.bumo.sdk.core.extend.protobuf.Monitor.AlertStatus.class, org.bumo.sdk.core.extend.protobuf.Monitor.AlertStatus.Builder.class);
       }
 
-      // Construct using cn.bumo.sdk.core.extend.bumochain.protobuf.Monitor.AlertStatus.newBuilder()
+      // Construct using org.bumo.sdk.core.extend.protobuf.Monitor.AlertStatus.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -10223,8 +10223,8 @@ public final class Monitor {
       "OR_MSGTYPE_SYSTEM\020\"\022\031\n\025MONITOR_MSGTYPE_A" +
       "LERT\020#\022\032\n\026MONITOR_MSGTYPE_NOTICE\020$\022%\n!MO" +
       "NITOR_MSGTYPE_ACCOUNT_EXCEPTION\020%\022\031\n\025MON" +
-      "ITOR_MSGTYPE_ERROR\020\'B\035\n\033cn.bumo.blockcha" +
-      "in.adapter3b\006proto3"
+      "ITOR_MSGTYPE_ERROR\020\'B#\n!org.bumo.sdk.cor" +
+      "e.extend.protobufb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {

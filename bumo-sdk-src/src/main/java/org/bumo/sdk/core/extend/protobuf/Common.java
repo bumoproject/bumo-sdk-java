@@ -84,6 +84,10 @@ public final class Common {
      */
     ERRCODE_MISSING_OPERATIONS(97),
     /**
+     * <code>ERRCODE_TOO_MANY_OPERATIONS = 98;</code>
+     */
+    ERRCODE_TOO_MANY_OPERATIONS(98),
+    /**
      * <code>ERRCODE_BAD_SEQUENCE = 99;</code>
      */
     ERRCODE_BAD_SEQUENCE(99),
@@ -243,6 +247,10 @@ public final class Common {
      */
     public static final int ERRCODE_MISSING_OPERATIONS_VALUE = 97;
     /**
+     * <code>ERRCODE_TOO_MANY_OPERATIONS = 98;</code>
+     */
+    public static final int ERRCODE_TOO_MANY_OPERATIONS_VALUE = 98;
+    /**
      * <code>ERRCODE_BAD_SEQUENCE = 99;</code>
      */
     public static final int ERRCODE_BAD_SEQUENCE_VALUE = 99;
@@ -369,6 +377,7 @@ public final class Common {
         case 93: return ERRCODE_INVALID_SIGNATURE;
         case 94: return ERRCODE_INVALID_ADDRESS;
         case 97: return ERRCODE_MISSING_OPERATIONS;
+        case 98: return ERRCODE_TOO_MANY_OPERATIONS;
         case 99: return ERRCODE_BAD_SEQUENCE;
         case 100: return ERRCODE_ACCOUNT_LOW_RESERVE;
         case 101: return ERRCODE_ACCOUNT_SOURCEDEST_EQUAL;
@@ -807,7 +816,7 @@ public final class Common {
                 org.bumo.sdk.core.extend.protobuf.Common.KeyPair.class, org.bumo.sdk.core.extend.protobuf.Common.KeyPair.Builder.class);
       }
 
-      // Construct using cn.bumo.sdk.core.extend.bumochain.protobuf.Common.KeyPair.newBuilder()
+      // Construct using org.bumo.sdk.core.extend.protobuf.Common.KeyPair.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -1449,7 +1458,7 @@ public final class Common {
                 org.bumo.sdk.core.extend.protobuf.Common.Signature.class, org.bumo.sdk.core.extend.protobuf.Common.Signature.Builder.class);
       }
 
-      // Construct using cn.bumo.sdk.core.extend.bumochain.protobuf.Common.Signature.newBuilder()
+      // Construct using org.bumo.sdk.core.extend.protobuf.Common.Signature.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -2043,7 +2052,7 @@ public final class Common {
                 org.bumo.sdk.core.extend.protobuf.Common.LedgerUpgrade.class, org.bumo.sdk.core.extend.protobuf.Common.LedgerUpgrade.Builder.class);
       }
 
-      // Construct using cn.bumo.sdk.core.extend.bumochain.protobuf.Common.LedgerUpgrade.newBuilder()
+      // Construct using org.bumo.sdk.core.extend.protobuf.Common.LedgerUpgrade.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -2692,7 +2701,7 @@ public final class Common {
                 org.bumo.sdk.core.extend.protobuf.Common.WsMessage.class, org.bumo.sdk.core.extend.protobuf.Common.WsMessage.Builder.class);
       }
 
-      // Construct using cn.bumo.sdk.core.extend.bumochain.protobuf.Common.WsMessage.newBuilder()
+      // Construct using org.bumo.sdk.core.extend.protobuf.Common.WsMessage.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -3253,7 +3262,7 @@ public final class Common {
                 org.bumo.sdk.core.extend.protobuf.Common.Ping.class, org.bumo.sdk.core.extend.protobuf.Common.Ping.Builder.class);
       }
 
-      // Construct using cn.bumo.sdk.core.extend.bumochain.protobuf.Common.Ping.newBuilder()
+      // Construct using org.bumo.sdk.core.extend.protobuf.Common.Ping.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -3691,7 +3700,7 @@ public final class Common {
                 org.bumo.sdk.core.extend.protobuf.Common.Pong.class, org.bumo.sdk.core.extend.protobuf.Common.Pong.Builder.class);
       }
 
-      // Construct using cn.bumo.sdk.core.extend.bumochain.protobuf.Common.Pong.newBuilder()
+      // Construct using org.bumo.sdk.core.extend.protobuf.Common.Pong.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -3924,7 +3933,7 @@ public final class Common {
       "\"J\n\tWsMessage\022\014\n\004type\030\001 \001(\003\022\017\n\007request\030\002" +
       " \001(\010\022\020\n\010sequence\030\003 \001(\003\022\014\n\004data\030\004 \001(\014\"\025\n\004" +
       "Ping\022\r\n\005nonce\030\001 \001(\003\"\025\n\004Pong\022\r\n\005nonce\030\001 \001" +
-      "(\003*\372\010\n\tERRORCODE\022\023\n\017ERRCODE_SUCCESS\020\000\022\032\n" +
+      "(\003*\233\t\n\tERRORCODE\022\023\n\017ERRCODE_SUCCESS\020\000\022\032\n" +
       "\026ERRCODE_INTERNAL_ERROR\020\001\022\035\n\031ERRCODE_INV",
       "ALID_PARAMETER\020\002\022\031\n\025ERRCODE_ALREADY_EXIS" +
       "T\020\003\022\025\n\021ERRCODE_NOT_EXIST\020\004\022\026\n\022ERRCODE_TX" +
@@ -3935,25 +3944,26 @@ public final class Common {
       "NVALID_PRIKEY\020[\022\031\n\025ERRCODE_ASSET_INVALID" +
       "\020\\\022\035\n\031ERRCODE_INVALID_SIGNATURE\020]\022\033\n\027ERR" +
       "CODE_INVALID_ADDRESS\020^\022\036\n\032ERRCODE_MISSIN" +
-      "G_OPERATIONS\020a\022\030\n\024ERRCODE_BAD_SEQUENCE\020c",
-      "\022\037\n\033ERRCODE_ACCOUNT_LOW_RESERVE\020d\022$\n ERR" +
-      "CODE_ACCOUNT_SOURCEDEST_EQUAL\020e\022\036\n\032ERRCO" +
-      "DE_ACCOUNT_DEST_EXIST\020f\022\035\n\031ERRCODE_ACCOU" +
-      "NT_NOT_EXIST\020g\022%\n!ERRCODE_ACCOUNT_ASSET_" +
-      "LOW_RESERVE\020h\022*\n&ERRCODE_ACCOUNT_ASSET_A" +
-      "MOUNT_TOO_LARGE\020i\022$\n ERRCODE_ACCOUNT_INI" +
-      "T_LOW_RESERVE\020j\022\032\n\026ERRCODE_FEE_NOT_ENOUG" +
-      "H\020o\022\032\n\026ERRCODE_OUT_OF_TXCACHE\020r\022\034\n\030ERRCO" +
-      "DE_WEIGHT_NOT_VALID\020x\022\037\n\033ERRCODE_THRESHO" +
-      "LD_NOT_VALID\020y\022 \n\033ERRCODE_INVALID_DATAVE",
-      "RSION\020\220\001\022\034\n\027ERRCODE_TX_SIZE_TOO_BIG\020\222\001\022\"" +
-      "\n\035ERRCODE_CONTRACT_EXECUTE_FAIL\020\227\001\022\"\n\035ER" +
-      "RCODE_CONTRACT_SYNTAX_ERROR\020\230\001\022(\n#ERRCOD" +
-      "E_CONTRACT_TOO_MANY_RECURSION\020\231\001\022+\n&ERRC" +
-      "ODE_CONTRACT_TOO_MANY_TRANSACTIONS\020\232\001\022%\n" +
-      " ERRCODE_CONTRACT_EXECUTE_EXPIRED\020\233\001\022!\n\034" +
-      "ERRCODE_TX_INSERT_QUEUE_FAIL\020\240\001B\035\n\033cn.bu" +
-      "mo.blockchain.adapter3b\006proto3"
+      "G_OPERATIONS\020a\022\037\n\033ERRCODE_TOO_MANY_OPERA",
+      "TIONS\020b\022\030\n\024ERRCODE_BAD_SEQUENCE\020c\022\037\n\033ERR" +
+      "CODE_ACCOUNT_LOW_RESERVE\020d\022$\n ERRCODE_AC" +
+      "COUNT_SOURCEDEST_EQUAL\020e\022\036\n\032ERRCODE_ACCO" +
+      "UNT_DEST_EXIST\020f\022\035\n\031ERRCODE_ACCOUNT_NOT_" +
+      "EXIST\020g\022%\n!ERRCODE_ACCOUNT_ASSET_LOW_RES" +
+      "ERVE\020h\022*\n&ERRCODE_ACCOUNT_ASSET_AMOUNT_T" +
+      "OO_LARGE\020i\022$\n ERRCODE_ACCOUNT_INIT_LOW_R" +
+      "ESERVE\020j\022\032\n\026ERRCODE_FEE_NOT_ENOUGH\020o\022\032\n\026" +
+      "ERRCODE_OUT_OF_TXCACHE\020r\022\034\n\030ERRCODE_WEIG" +
+      "HT_NOT_VALID\020x\022\037\n\033ERRCODE_THRESHOLD_NOT_",
+      "VALID\020y\022 \n\033ERRCODE_INVALID_DATAVERSION\020\220" +
+      "\001\022\034\n\027ERRCODE_TX_SIZE_TOO_BIG\020\222\001\022\"\n\035ERRCO" +
+      "DE_CONTRACT_EXECUTE_FAIL\020\227\001\022\"\n\035ERRCODE_C" +
+      "ONTRACT_SYNTAX_ERROR\020\230\001\022(\n#ERRCODE_CONTR" +
+      "ACT_TOO_MANY_RECURSION\020\231\001\022+\n&ERRCODE_CON" +
+      "TRACT_TOO_MANY_TRANSACTIONS\020\232\001\022%\n ERRCOD" +
+      "E_CONTRACT_EXECUTE_EXPIRED\020\233\001\022!\n\034ERRCODE" +
+      "_TX_INSERT_QUEUE_FAIL\020\240\001B#\n!org.bumo.sdk" +
+      ".core.extend.protobufb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
