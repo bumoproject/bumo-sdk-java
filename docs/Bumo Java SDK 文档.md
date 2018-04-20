@@ -3,17 +3,22 @@
 ## 1 概述
 本文档简要概述Bumo Java SDK部分常用接口文档
 
-- [配置](/1)
-- [创建账户](/1)
-- [查询账户](/1)
-- [发行资产](/1)
-- [转移资产](/1)
-- [查询Tx](/1)
+- [配置](#1.配置)
+	- [简单配置](#1.1简单配置)
+	- [高级配置](#1.2高级配置)
+- [示例说明](#2.示例说明)
+	- [创建账户](#2.1创建账户)
+	- [查询账户](#2.2查询账户)
+	- [发行资产](#2.3发行资产)
+	- [转移资产](#2.4转移资产)
+	- [查询Tx](#2.5查询Tx)
+		- [根据交易hash查询](#2.5.1根据交易hash查询)
+		- [根据区块序列号查询](#2.5.2根据区块序列号查询)
 
-### 2 配置
+### 1.配置
 Bumo Java SDK无任何依赖框架，使用时只需要载入配置即可运行。配置如下：
 
-### 2.1 简单配置
+### 1.1简单配置
 
 无需分布式服务，单机运行，具体配置如下：
 
@@ -38,7 +43,7 @@ Bumo Java SDK无任何依赖框架，使用时只需要载入配置即可运行�
     config.getOperationService();
     config.getQueryService();
 ```
-### 2.2 高级配置
+### 1.2高级配置
 SDK具备分布式能力，需要引入redis服务，具体配置如下：
 
 ```
@@ -73,10 +78,10 @@ SDK具备分布式能力，需要引入redis服务，具体配置如下：
     QueryService queryService = config.getQueryService();
 ```
 
-### 3 示例说明
+### 2.示例说明
 完成配置后，可以通过以下示例来操作Bumo区块链网络
 
-#### 3.1 创建账户
+#### 2.1创建账户
 > 创建新账户需要创建账户操作者(区块链已有账户)花费约0.01BU的交易费用，并且给新账户至少0.1BU的初始化数量，该初始化BU数量由创建账户操作者提供。
 
 示例如下：
@@ -117,7 +122,7 @@ try {
 	e.printStackTrace();
 }
 ```
-#### 3.2 查询账户信息
+#### 2.2查询账户
 
 示例如下：
 
@@ -128,7 +133,7 @@ String address = "buQYBzc87B71wDp4TyikrSkvti8YTMjYN8LT";
 Account account = queryService.getAccount(address);
 
 ```
-#### 3.3 发行资产
+#### 2.3发行资产
 资产发行方发行10亿资产ID为"HNC"的数字资产，示例如下：
 
 
@@ -160,7 +165,7 @@ try {
 	e.printStackTrace();
 }
 ```
-#### 3.4 转移资产
+#### 2.4转移资产
 
 示例如下：
 
@@ -196,8 +201,9 @@ try {
 }
 ```
 
-#### 3.5 查询Tx
+#### 2.5查询Tx
 
+##### 2.5.1根据交易hash查询
 通过hash查询交易的终态信息
 
 示例如下：
@@ -207,4 +213,17 @@ try {
 ```
 String txHash = "";
 ServiceResponse tx = queryService.getTransactionResultByHash(txHash);
+```
+
+##### 2.5.2根据区块序列号查询
+
+通过区块序列号查询交易的终态信息
+
+示例如下：
+
+
+
+```
+Long ledgerSeq = 1L;
+TransactionHistory tx = queryService.getTransactionHistoryByLedgerSeq(ledgerSeq);
 ```

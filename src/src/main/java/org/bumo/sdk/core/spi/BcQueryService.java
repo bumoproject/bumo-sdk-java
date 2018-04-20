@@ -37,6 +37,14 @@ public interface BcQueryService{
     TransactionHistory getTransactionHistoryByHash(String hash);
 
     /**
+     * Get the history of the trade
+     *
+     * @param hash txHash
+     */
+
+    TransactionHistory getTransactionHistoryByLedgerSeq(Long ledgerSeq);
+    
+    /**
      * TODO Cost of assessment
      * @author bumo
      * @since 18/03/16 3:44 p.m. 

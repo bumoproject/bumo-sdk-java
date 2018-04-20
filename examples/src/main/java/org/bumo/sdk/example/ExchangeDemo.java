@@ -114,4 +114,10 @@ public class ExchangeDemo {
 		TransactionHistory tx = queryService.getTransactionHistoryByHash(txHash);
 		System.out.println(tx);
 	}
+	
+	public static void queryTransactionBySeq(BcQueryService queryService) {
+		Long seq = 1L;
+		TransactionHistory tx = queryService.getTransactionHistoryByLedgerSeq(seq);
+		System.out.println(tx);
+	}
 }
