@@ -19,7 +19,7 @@ Java开发人员可以轻松通过Bumo Java SDK操作Bumo区块链。您可以�
 
 本文的以1.0.0版本为例说明
 
-maven 远程仓库 (仓库正在建设中......)
+maven 远程仓库
 ``` xml
 <repository>
     <id>pubnexus</id>                
@@ -35,7 +35,7 @@ maven 远程仓库 (仓库正在建设中......)
 在dependencies标签内加入如下内容：
 ``` xml
 <dependency>
-  <groupId>cn.bumo</groupId>
+  <groupId>org.bumo</groupId>
   <artifactId>bumo-sdk</artifactId>
   <version>1.0.0</version>
 </dependency>
