@@ -50,9 +50,13 @@ public class BcQueryServiceImpl implements BcQueryService{
      */
 	@Override
 	public EvalTxResult testTransaction(EvalTXReq request) {
-		
-		//TODO check args
 		return rpcService.testTransaction(request);
+	}
+
+
+	@Override
+	public TransactionHistory getTransactionHistoryByLedgerSeq(Long ledgerSeq) {
+		return rpcService.getTransactionHistoryByLedgerSeq(ledgerSeq);
 	}
 
 }

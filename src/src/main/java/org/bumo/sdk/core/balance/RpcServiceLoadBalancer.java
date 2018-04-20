@@ -201,4 +201,9 @@ public class RpcServiceLoadBalancer implements RpcService{
 		return rpcServiceProxy.testTransaction(request);
 	}
 
+	@Override
+	public TransactionHistory getTransactionHistoryByLedgerSeq(Long ledgerSeq) {
+		return rpcServiceProxy.getTransactionHistoryByLedgerSeq(ledgerSeq);
+	}
+
 }

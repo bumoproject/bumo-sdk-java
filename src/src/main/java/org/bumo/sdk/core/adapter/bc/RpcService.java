@@ -77,11 +77,17 @@ public interface RpcService{
     TransactionHistory getTransactionHistoryByAddress(@RequestParam(name = "address") String address);
 
     /**
-     * 根据地址获取交易历史信息
+     * 根据区块序列号获取交易历史信息
      */
     @HttpAction(path = "/getTransactionHistory", method = HttpMethod.GET, responseConverter = GetTransactionHistoryResponse.class)
     TransactionHistory getTransactionHistoryBySeq(@RequestParam(name = "ledger_seq", required = false) Long seq, @RequestParam(name = "start") int start, @RequestParam(name = "limit") int limit);
 
+    /**
+     * 根据区块序列号获取交易历史信息
+     */
+    @HttpAction(path = "/getTransactionHistory", method = HttpMethod.GET, responseConverter = GetTransactionHistoryResponse.class)
+    TransactionHistory getTransactionHistoryByLedgerSeq(@RequestParam(name = "ledger_seq") Long ledgerSeq);
+    
     /**
      * 根据hash获取交易信息
      */
