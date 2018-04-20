@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.bumo.sdk</groupId>
+        <groupId>org.bumo</groupId>
 		<artifactId>bumo-sdk-java</artifactId>
 		<version>1.0.0</version>
     </parent>

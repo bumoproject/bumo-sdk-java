@@ -7,7 +7,7 @@ import java.security.Security;
 import org.apache.commons.lang.ArrayUtils;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bumo.encryption.key.PrivateKey;
-import org.bumo.encryption.utils.KeyType;
+import org.bumo.encryption.model.KeyType;
 import org.bumo.sdk.core.utils.codec.Base58Utils;
 
 import net.i2p.crypto.eddsa.EdDSAPrivateKey;

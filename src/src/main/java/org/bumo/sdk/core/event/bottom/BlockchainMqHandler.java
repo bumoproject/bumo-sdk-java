@@ -1,6 +1,6 @@
 package org.bumo.sdk.core.event.bottom;
 
-import org.bumo.encryption.utils.HexFormat;
+import org.bumo.encryption.utils.hex.HexFormat;
 import org.bumo.sdk.core.event.EventBusService;
 import org.bumo.sdk.core.event.message.LedgerSeqEventMessage;
 import org.bumo.sdk.core.event.message.TransactionExecutedEventMessage;

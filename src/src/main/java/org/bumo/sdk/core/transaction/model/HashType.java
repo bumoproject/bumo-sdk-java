@@ -4,7 +4,7 @@ package org.bumo.sdk.core.transaction.model;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.bumo.encryption.utils.HashUtil;
+import org.bumo.encryption.utils.hash.HashUtil;
 
 /**
  * @author bumo
