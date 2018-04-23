@@ -35,7 +35,7 @@ maven 远程仓库
 在dependencies标签内加入如下内容：
 ``` xml
 <dependency>
-  <groupId>org.bumo</groupId>
+  <groupId>io.bumo</groupId>
   <artifactId>bumo-sdk</artifactId>
   <version>1.0.0</version>
 </dependency>
