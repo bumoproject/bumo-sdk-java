@@ -2,6 +2,7 @@ package io.bumo.sdk.example;
 
 import io.bumo.sdk.core.adapter.bc.response.Account;
 import io.bumo.sdk.core.adapter.bc.response.TransactionHistory;
+import io.bumo.sdk.core.adapter.bc.response.ledger.Ledger;
 import io.bumo.sdk.core.config.SDKConfig;
 import io.bumo.sdk.core.config.SDKProperties;
 import io.bumo.sdk.core.exception.SdkException;
@@ -119,5 +120,10 @@ public class ExchangeDemo {
 		Long seq = 1L;
 		TransactionHistory tx = queryService.getTransactionHistoryByLedgerSeq(seq);
 		System.out.println(tx);
+	}
+	
+	public static void queryLatestLedger(BcQueryService queryService) {
+		Ledger ledger = queryService.getLastestLedger();
+		System.out.println(ledger);
 	}
 }

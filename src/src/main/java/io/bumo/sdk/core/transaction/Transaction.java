@@ -261,7 +261,7 @@ public class Transaction{
     	
         Chain.Transaction.Builder builder = Chain.Transaction.newBuilder();
         if (txMetadata != null) {
-            builder.setMetadata(ByteString.copyFromUtf8(Hex.encodeHexString(txMetadata.getBytes())));
+            builder.setMetadata(ByteString.copyFromUtf8(txMetadata));
         }
         builder.setSourceAddress(sponsorAddress);
         builder.setNonce(nonce);

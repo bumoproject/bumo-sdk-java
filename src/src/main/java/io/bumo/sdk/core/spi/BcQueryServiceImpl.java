@@ -4,6 +4,7 @@ import io.bumo.sdk.core.adapter.bc.RpcService;
 import io.bumo.sdk.core.adapter.bc.request.test.EvalTXReq;
 import io.bumo.sdk.core.adapter.bc.response.Account;
 import io.bumo.sdk.core.adapter.bc.response.TransactionHistory;
+import io.bumo.sdk.core.adapter.bc.response.ledger.Ledger;
 import io.bumo.sdk.core.adapter.bc.response.operation.SetMetadata;
 import io.bumo.sdk.core.adapter.bc.response.test.EvalTxResult;
 import io.bumo.sdk.core.utils.spring.StringUtils;
@@ -57,6 +58,11 @@ public class BcQueryServiceImpl implements BcQueryService{
 	@Override
 	public TransactionHistory getTransactionHistoryByLedgerSeq(Long ledgerSeq) {
 		return rpcService.getTransactionHistoryByLedgerSeq(ledgerSeq);
+	}
+	
+	@Override
+	public Ledger getLastestLedger() {
+		return rpcService.getLedger();
 	}
 
 }

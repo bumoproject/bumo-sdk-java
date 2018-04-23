@@ -3,6 +3,7 @@ package io.bumo.sdk.core.spi;
 import io.bumo.sdk.core.adapter.bc.request.test.EvalTXReq;
 import io.bumo.sdk.core.adapter.bc.response.Account;
 import io.bumo.sdk.core.adapter.bc.response.TransactionHistory;
+import io.bumo.sdk.core.adapter.bc.response.ledger.Ledger;
 import io.bumo.sdk.core.adapter.bc.response.operation.SetMetadata;
 import io.bumo.sdk.core.adapter.bc.response.test.EvalTxResult;
 
@@ -12,9 +13,16 @@ import io.bumo.sdk.core.adapter.bc.response.test.EvalTxResult;
  * Block chain query service
  */
 public interface BcQueryService{
+	
+	/**
+     * Get latest ledger
+     *
+     * @param Latest ledger
+     */
+	Ledger getLastestLedger();
 
     /**
-     * Access to account information
+     * Account information
      *
      * @param address Account address
      */
