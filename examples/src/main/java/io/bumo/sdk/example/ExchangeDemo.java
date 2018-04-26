@@ -6,7 +6,6 @@ import io.bumo.sdk.core.adapter.bc.response.ledger.Ledger;
 import io.bumo.sdk.core.config.SDKConfig;
 import io.bumo.sdk.core.config.SDKProperties;
 import io.bumo.sdk.core.exception.SdkException;
-import io.bumo.sdk.core.operation.BcOperation;
 import io.bumo.sdk.core.operation.OperationFactory;
 import io.bumo.sdk.core.operation.impl.PayCoinOperation;
 import io.bumo.sdk.core.spi.BcOperationService;
@@ -39,49 +38,31 @@ public class ExchangeDemo {
         BcQueryService queryService = config.getQueryService();
         
         // create simple account
-        createSimpleAccount(operationService);
-        
-        // query account
-        queryAccount(queryService);
+        createBuChainAccount();
         
         // send BU token
         sendBuToken(operationService);
+        
+        // query account
+        queryAccount(queryService);
 	}
 	
 	/**
-	 * create simple account
-	 */
-	@SuppressWarnings("unused")
-	public static void createSimpleAccount(BcOperationService operationService) {
+	 *
+	 * create exchange wallet or the user's Buchain account
+	 *
+	 * @return the account address and public-private key pairs
+	 */
+
+	public static BlockchainKeyPair createBuChainAccount(){
 		// Public private key pair and block chain address of a random Bumo block account
 		BlockchainKeyPair keyPair = SecureKeyGenerator.generateBumoKeyPair();
-
-		// Note: the developer system needs to record the public and private key and address of the account
-
+		// Note: the system needs to record the public and private key and address of the account
 		String accountAddress = keyPair.getBumoAddress(); // Block chain account address
 		String accountSk = keyPair.getPriKey(); // Block chain account private key
 		String accountPk = keyPair.getPubKey(); // Block chain account public key
-
-		try {
-			String txSubmitAccountAddress = address;// Transaction sender block chain account address
-			Transaction transaction = operationService.newTransaction(txSubmitAccountAddress);
-
-			new OperationFactory();
-			
-			BcOperation bcOperation = OperationFactory.newCreateAccountOperation(accountAddress, ToBaseUnit.BU2MO("0.1")); // Create an account operation
-			
-			TransactionCommittedResult result = transaction
-					.buildTxMetadata("build simple account")
-					.buildAddOperation(bcOperation)
-					.buildAddGasPrice(1000) // 【required】 the price of Gas, at least 1000MO
-				    .buildAddFeeLimit(ToBaseUnit.BU2MO("0.01")) // 【required】Service Charge (1000000MO = 0.01BU)
-				    .buildAddSigner(publicKey, privateKey)
-					.commit();
-			
-			System.out.println(result.getHash());
-		} catch (SdkException e) {
-			e.printStackTrace();
-		}
+		
+		return keyPair;
 	}
 	
 	public static void sendBuToken(BcOperationService operationService) {
