@@ -113,7 +113,7 @@ public class Transaction{
     }
     /***
      * TODO
-     * @param fee
+     * @param feeLimit
      * @return
      * @throws SdkException
      */
