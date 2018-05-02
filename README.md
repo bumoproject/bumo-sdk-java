@@ -35,7 +35,7 @@ maven 远程仓库
 在dependencies标签内加入如下内容：
 ``` xml
 <dependency>
-  <groupId>org.bumo</groupId>
+  <groupId>io.bumo</groupId>
   <artifactId>bumo-sdk</artifactId>
   <version>1.0.0</version>
 </dependency>
@@ -43,7 +43,7 @@ maven 远程仓库
 #### 方式二：在项目中导入JAR包
 1. 下载Bumo Java SDK开发包
 2. 解压该开发包
-3. 将bumo-java-sdk-{version}.jar以及附带的libs里的jar导入到您的项目中
+3. 将bumo-sdk-{version}.jar以及附带的libs里的jar导入到您的项目中
 
 ## 示例工程
 Bumo Java SDK 提供了丰富的示例，供开发者参考

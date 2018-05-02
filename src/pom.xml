@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-        <groupId>org.bumo</groupId>
+        <groupId>io.bumo</groupId>
 		<artifactId>bumo-sdk-java</artifactId>
 		<version>1.0.0</version>
     </parent>
@@ -80,7 +80,7 @@
 			<version>2.0.0.Final</version>
 		</dependency>
 		<dependency>
-			<groupId>org.bumo</groupId>
+			<groupId>io.bumo</groupId>
 			<artifactId>bumo-encryption</artifactId>
 			<version>1.0.0</version>
 		</dependency>
