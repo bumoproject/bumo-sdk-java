@@ -13,11 +13,11 @@ import io.bumo.sdk.core.utils.spring.StringUtils;
  * @author bumo
  * @since 18/03/12 3:03 p.m.
  */
-public class BcQueryServiceImpl implements BcQueryService{
+public class QueryServiceImpl implements QueryService {
 
     private RpcService rpcService;
 
-    public BcQueryServiceImpl(RpcService rpcService){
+    public QueryServiceImpl(RpcService rpcService){
         this.rpcService = rpcService;
     }
 

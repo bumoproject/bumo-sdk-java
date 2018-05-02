@@ -12,7 +12,7 @@ import io.bumo.sdk.core.adapter.bc.response.test.EvalTxResult;
  * @since 18/03/12 3:03 p.m.
  * Block chain query service
  */
-public interface BcQueryService{
+public interface QueryService {
 	
 	/**
      * Get latest ledger

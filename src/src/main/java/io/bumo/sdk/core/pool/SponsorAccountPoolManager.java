@@ -3,7 +3,7 @@ package io.bumo.sdk.core.pool;
 import io.bumo.sdk.core.event.handle.AbstractEventHandler;
 import io.bumo.sdk.core.event.message.TransactionExecutedEventMessage;
 import io.bumo.sdk.core.event.source.EventSourceEnum;
-import io.bumo.sdk.core.spi.BcOperationService;
+import io.bumo.sdk.core.spi.OperationService;
 import io.bumo.sdk.core.utils.spring.StringUtils;
 
 /**
@@ -24,7 +24,7 @@ public class SponsorAccountPoolManager extends AbstractEventHandler<TransactionE
     /**
      * Initialization
      */
-    public void initPool(BcOperationService operationService, String address, String publicKey, String privateKey, Integer size, String filePath, String sponsorAccountMark){
+    public void initPool(OperationService operationService, String address, String publicKey, String privateKey, Integer size, String filePath, String sponsorAccountMark){
         this.sponsorAccountPool = sponsorAccountFactory.initPool(operationService, address, publicKey, privateKey, size, filePath, sponsorAccountMark);
     }
 

@@ -1,6 +1,6 @@
 package io.bumo.sdk.core.pool;
 
-import io.bumo.sdk.core.spi.BcOperationService;
+import io.bumo.sdk.core.spi.OperationService;
 
 /**
  * @author bumo
@@ -12,7 +12,7 @@ public interface SponsorAccountFactory{
     /**
      * Initialization account pool
      *
-     * @param BcOperationService Operating object
+     * @param OperationService Operating object
      * @param address
      * @param publicKey
      * @param privateKey
@@ -21,7 +21,7 @@ public interface SponsorAccountFactory{
      * @param sponsorAccountMark Metadata markers for all sponsor accounts，key=$$$SponsorAccountPoolMark$$$
      * @return Account pool
      */
-    SponsorAccountPool initPool(BcOperationService operationService, String address, String publicKey, String privateKey, Integer size, String filePath, String sponsorAccountMark);
+    SponsorAccountPool initPool(OperationService operationService, String address, String publicKey, String privateKey, Integer size, String filePath, String sponsorAccountMark);
 
 
 }

@@ -9,8 +9,8 @@ import io.bumo.sdk.core.exception.SdkException;
 import io.bumo.sdk.core.operation.BcOperation;
 import io.bumo.sdk.core.operation.OperationFactory;
 import io.bumo.sdk.core.operation.impl.PayCoinOperation;
-import io.bumo.sdk.core.spi.BcOperationService;
-import io.bumo.sdk.core.spi.BcQueryService;
+import io.bumo.sdk.core.spi.OperationService;
+import io.bumo.sdk.core.spi.QueryService;
 import io.bumo.sdk.core.transaction.Transaction;
 import io.bumo.sdk.core.transaction.model.TransactionCommittedResult;
 import io.bumo.sdk.core.utils.ToBaseUnit;
@@ -35,8 +35,8 @@ public class DigitalAssetsDemo {
         sdkProperties.setRedisPassword("xxxxxx");
         config.configSdk(sdkProperties);
         
-        BcOperationService operationService = config.getOperationService();
-        BcQueryService queryService = config.getQueryService();
+        OperationService operationService = config.getOperationService();
+        QueryService queryService = config.getQueryService();
         
         // create simple account
         createSimpleAccount(operationService);
@@ -52,7 +52,7 @@ public class DigitalAssetsDemo {
 	 * create simple account
 	 */
 	@SuppressWarnings("unused")
-	public static void createSimpleAccount(BcOperationService operationService) {
+	public static void createSimpleAccount(OperationService operationService) {
 		// Public private key pair and block chain address of a random Bumo block account
 		BlockchainKeyPair keyPair = SecureKeyGenerator.generateBumoKeyPair();
 
@@ -84,7 +84,7 @@ public class DigitalAssetsDemo {
 		}
 	}
 	
-	public static void issueAssets(BcOperationService operationService) {
+	public static void issueAssets(OperationService operationService) {
 		try {
 			// Asset issuer block chain account address
 			String issueAssetsAccountAddress = "buQdBdkvmAhnRrhLp4dmeCc2ft7RNE51c9EK";
@@ -112,7 +112,7 @@ public class DigitalAssetsDemo {
 		}
 	}
 	
-	public static void sendBuToken(BcOperationService operationService) {
+	public static void sendBuToken(OperationService operationService) {
 		String txSubmitAccountAddress = address;// Trade author block chain account address
 		String targetAddress = "buQchyqkRdJeyfrRwQVCEMdxEV2BPSoeQsGx";
 		Long sendTokenAmount = ToBaseUnit.BU2MO("0.6");
@@ -131,7 +131,7 @@ public class DigitalAssetsDemo {
 		}
 	}
 	
-	public static void PayAsset(BcOperationService operationService) {
+	public static void PayAsset(OperationService operationService) {
 		try {
 			// Asset owner block chain account address
 			String assetOwnerAccountAddress = "buQdBdkvmAhnRrhLp4dmeCc2ft7RNE51c9EK";
@@ -162,25 +162,25 @@ public class DigitalAssetsDemo {
 		}
 	}
 	
-	public static void queryAccount(BcQueryService queryService) {
+	public static void queryAccount(QueryService queryService) {
 		String address = "buQYBzc87B71wDp4TyikrSkvti8YTMjYN8LT"; 
 		Account account = queryService.getAccount(address);
 		System.out.println(account);
 	}
 	
-	public static void queryTransactionByHash(BcQueryService queryService) {
+	public static void queryTransactionByHash(QueryService queryService) {
 		String txHash = "";
 		TransactionHistory tx = queryService.getTransactionHistoryByHash(txHash);
 		System.out.println(tx);
 	}
 	
-	public static void queryTransactionBySeq(BcQueryService queryService) {
+	public static void queryTransactionBySeq(QueryService queryService) {
 		Long seq = 1L;
 		TransactionHistory tx = queryService.getTransactionHistoryByLedgerSeq(seq);
 		System.out.println(tx);
 	}
 	
-	public static void queryLatestLedger(BcQueryService queryService) {
+	public static void queryLatestLedger(QueryService queryService) {
 		Ledger ledger = queryService.getLastestLedger();
 		System.out.println(ledger);
 	}

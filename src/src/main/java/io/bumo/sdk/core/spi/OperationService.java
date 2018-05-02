@@ -9,7 +9,7 @@ import io.bumo.sdk.core.transaction.model.TransactionSerializable;
  * @since 18/03/12 3:03 p.m.
  * Block chain operation service
  */
-public interface BcOperationService{
+public interface OperationService {
 
     /**
      * Use an account pool to open a transaction

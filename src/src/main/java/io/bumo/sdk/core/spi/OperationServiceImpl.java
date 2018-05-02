@@ -14,7 +14,7 @@ import io.bumo.sdk.core.transaction.sync.TransactionSyncManager;
  * @author bumo
  * @since 18/03/12 3:03 p.m.
  */
-public class BcOperationServiceImpl implements BcOperationService{
+public class OperationServiceImpl implements OperationService {
 
     private SequenceManager sequenceManager;
     private RpcService rpcService;
@@ -24,7 +24,7 @@ public class BcOperationServiceImpl implements BcOperationService{
     @SuppressWarnings("unused")
 	private SponsorAccountPoolManager sponsorAccountPoolManager;
 
-    public BcOperationServiceImpl(SequenceManager sequenceManager, RpcService rpcService, TransactionSyncManager transactionSyncManager, NodeManager nodeManager, TxFailManager txFailManager, SponsorAccountPoolManager sponsorAccountPoolManager){
+    public OperationServiceImpl(SequenceManager sequenceManager, RpcService rpcService, TransactionSyncManager transactionSyncManager, NodeManager nodeManager, TxFailManager txFailManager, SponsorAccountPoolManager sponsorAccountPoolManager){
         this.sequenceManager = sequenceManager;
         this.rpcService = rpcService;
         this.transactionSyncManager = transactionSyncManager;

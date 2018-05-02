@@ -26,10 +26,10 @@ import io.bumo.sdk.core.seq.redis.DistributedLock;
 import io.bumo.sdk.core.seq.redis.RedisClient;
 import io.bumo.sdk.core.seq.redis.RedisConfig;
 import io.bumo.sdk.core.seq.redis.RedisSequenceManager;
-import io.bumo.sdk.core.spi.BcOperationService;
-import io.bumo.sdk.core.spi.BcOperationServiceImpl;
-import io.bumo.sdk.core.spi.BcQueryService;
-import io.bumo.sdk.core.spi.BcQueryServiceImpl;
+import io.bumo.sdk.core.spi.OperationService;
+import io.bumo.sdk.core.spi.OperationServiceImpl;
+import io.bumo.sdk.core.spi.QueryService;
+import io.bumo.sdk.core.spi.QueryServiceImpl;
 import io.bumo.sdk.core.transaction.TransactionContent;
 import io.bumo.sdk.core.transaction.model.Signature;
 import io.bumo.sdk.core.transaction.support.RedisTransactionContentSupport;
@@ -43,8 +43,8 @@ import io.bumo.sdk.core.transaction.sync.TransactionSyncManager;
  */
 public class SDKConfig{
 
-    private BcOperationService operationService;
-    private BcQueryService queryService;
+    private OperationService operationService;
+    private QueryService queryService;
     private NodeManager nodeManager;
     private RpcService rpcService;
     private EventBusService eventBusService;
@@ -128,7 +128,7 @@ public class SDKConfig{
         eventBusService.addEventHandler(sponsorAccountPoolManager);
 
         // 8 init spi
-        BcOperationService operationService = new BcOperationServiceImpl(sequenceManager, rpcService, transactionSyncManager, nodeManager, txFailManager, sponsorAccountPoolManager);
+        OperationService operationService = new OperationServiceImpl(sequenceManager, rpcService, transactionSyncManager, nodeManager, txFailManager, sponsorAccountPoolManager);
         
         //9 initBalanceEnable
         SDKConfig.initBalanceEnable = sdkProperties.isInitBalanceEnable();
@@ -146,17 +146,17 @@ public class SDKConfig{
             TransactionContent.switchSupport(redisSupport);
         }
 
-        BcQueryService queryService = new BcQueryServiceImpl(rpcService);
+        QueryService queryService = new QueryServiceImpl(rpcService);
 
         this.operationService = operationService;
         this.queryService = queryService;
     }
 
-    public BcOperationService getOperationService(){
+    public OperationService getOperationService(){
         return operationService;
     }
 
-    public BcQueryService getQueryService(){
+    public QueryService getQueryService(){
         return queryService;
     }
 

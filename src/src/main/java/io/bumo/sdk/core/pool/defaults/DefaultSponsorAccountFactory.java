@@ -9,7 +9,7 @@ import io.bumo.sdk.core.pool.SponsorAccount;
 import io.bumo.sdk.core.pool.SponsorAccountConfig;
 import io.bumo.sdk.core.pool.SponsorAccountFactory;
 import io.bumo.sdk.core.pool.SponsorAccountPool;
-import io.bumo.sdk.core.spi.BcOperationService;
+import io.bumo.sdk.core.spi.OperationService;
 import io.bumo.sdk.core.transaction.Transaction;
 import io.bumo.sdk.core.transaction.model.Signature;
 import io.bumo.sdk.core.utils.SwallowUtil;
@@ -57,7 +57,7 @@ public class DefaultSponsorAccountFactory implements SponsorAccountFactory{
     }
 
     @Override
-    public SponsorAccountPool initPool(BcOperationService operationService, String address, String publicKey, String privateKey, Integer size, String filePath, String sponsorAccountMark){
+    public SponsorAccountPool initPool(OperationService operationService, String address, String publicKey, String privateKey, Integer size, String filePath, String sponsorAccountMark){
 
         int poolSize = size == null || size == 0 ? DEFAULT_POOL_SIZE : size;
         String finalPath = getFinalPath(filePath);
@@ -162,7 +162,7 @@ public class DefaultSponsorAccountFactory implements SponsorAccountFactory{
     }
 
 
-    private List<SponsorAccount> parseFile(BcOperationService operationService, String address, String publicKey, String privateKey, Integer poolSize, String finalPath, String accountMark){
+    private List<SponsorAccount> parseFile(OperationService operationService, String address, String publicKey, String privateKey, Integer poolSize, String finalPath, String accountMark){
         File file = new File(finalPath);
         List<SponsorAccount> sponsorAccountList;
         if (file.exists()) {
@@ -209,7 +209,7 @@ public class DefaultSponsorAccountFactory implements SponsorAccountFactory{
         return sponsorAccountList;
     }
 
-    private List<SponsorAccount> generateSponsorAccount(BcOperationService operationService, String address, String publicKey, String privateKey, Integer poolSize, String accountMark){
+    private List<SponsorAccount> generateSponsorAccount(OperationService operationService, String address, String publicKey, String privateKey, Integer poolSize, String accountMark){
         int totalCount = 0;
         LOGGER.debug("generateSponsorAccount size:" + poolSize);
         List<SponsorAccount> sponsorAccountList = new ArrayList<>();
