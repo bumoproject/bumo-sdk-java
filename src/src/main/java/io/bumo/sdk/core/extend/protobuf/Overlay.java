@@ -895,7 +895,7 @@ public final class Overlay {
                 io.bumo.sdk.core.extend.protobuf.Overlay.Hello.class, io.bumo.sdk.core.extend.protobuf.Overlay.Hello.Builder.class);
       }
 
-      // Construct using org.bumo.sdk.core.extend.protobuf.Overlay.Hello.newBuilder()
+      // Construct using io.bumo.sdk.core.extend.protobuf.Overlay.Hello.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -1720,7 +1720,7 @@ public final class Overlay {
                 io.bumo.sdk.core.extend.protobuf.Overlay.HelloResponse.class, io.bumo.sdk.core.extend.protobuf.Overlay.HelloResponse.Builder.class);
       }
 
-      // Construct using org.bumo.sdk.core.extend.protobuf.Overlay.HelloResponse.newBuilder()
+      // Construct using io.bumo.sdk.core.extend.protobuf.Overlay.HelloResponse.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -2441,7 +2441,7 @@ public final class Overlay {
                 io.bumo.sdk.core.extend.protobuf.Overlay.Peer.class, io.bumo.sdk.core.extend.protobuf.Overlay.Peer.Builder.class);
       }
 
-      // Construct using org.bumo.sdk.core.extend.protobuf.Overlay.Peer.newBuilder()
+      // Construct using io.bumo.sdk.core.extend.protobuf.Overlay.Peer.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -3128,7 +3128,7 @@ public final class Overlay {
                 io.bumo.sdk.core.extend.protobuf.Overlay.Peers.class, io.bumo.sdk.core.extend.protobuf.Overlay.Peers.Builder.class);
       }
 
-      // Construct using org.bumo.sdk.core.extend.protobuf.Overlay.Peers.newBuilder()
+      // Construct using io.bumo.sdk.core.extend.protobuf.Overlay.Peers.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -3882,7 +3882,7 @@ public final class Overlay {
                 io.bumo.sdk.core.extend.protobuf.Overlay.GetLedgers.class, io.bumo.sdk.core.extend.protobuf.Overlay.GetLedgers.Builder.class);
       }
 
-      // Construct using org.bumo.sdk.core.extend.protobuf.Overlay.GetLedgers.newBuilder()
+      // Construct using io.bumo.sdk.core.extend.protobuf.Overlay.GetLedgers.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -4725,7 +4725,7 @@ public final class Overlay {
                 io.bumo.sdk.core.extend.protobuf.Overlay.Ledgers.class, io.bumo.sdk.core.extend.protobuf.Overlay.Ledgers.Builder.class);
       }
 
-      // Construct using org.bumo.sdk.core.extend.protobuf.Overlay.Ledgers.newBuilder()
+      // Construct using io.bumo.sdk.core.extend.protobuf.Overlay.Ledgers.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -5565,7 +5565,7 @@ public final class Overlay {
                 io.bumo.sdk.core.extend.protobuf.Overlay.DontHave.class, io.bumo.sdk.core.extend.protobuf.Overlay.DontHave.Builder.class);
       }
 
-      // Construct using org.bumo.sdk.core.extend.protobuf.Overlay.DontHave.newBuilder()
+      // Construct using io.bumo.sdk.core.extend.protobuf.Overlay.DontHave.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -6196,7 +6196,7 @@ public final class Overlay {
                 io.bumo.sdk.core.extend.protobuf.Overlay.LedgerUpgradeNotify.class, io.bumo.sdk.core.extend.protobuf.Overlay.LedgerUpgradeNotify.Builder.class);
       }
 
-      // Construct using org.bumo.sdk.core.extend.protobuf.Overlay.LedgerUpgradeNotify.newBuilder()
+      // Construct using io.bumo.sdk.core.extend.protobuf.Overlay.LedgerUpgradeNotify.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -6977,7 +6977,7 @@ public final class Overlay {
                 io.bumo.sdk.core.extend.protobuf.Overlay.EntryList.class, io.bumo.sdk.core.extend.protobuf.Overlay.EntryList.Builder.class);
       }
 
-      // Construct using org.bumo.sdk.core.extend.protobuf.Overlay.EntryList.newBuilder()
+      // Construct using io.bumo.sdk.core.extend.protobuf.Overlay.EntryList.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -7634,7 +7634,7 @@ public final class Overlay {
                 io.bumo.sdk.core.extend.protobuf.Overlay.ChainHello.class, io.bumo.sdk.core.extend.protobuf.Overlay.ChainHello.Builder.class);
       }
 
-      // Construct using org.bumo.sdk.core.extend.protobuf.Overlay.ChainHello.newBuilder()
+      // Construct using io.bumo.sdk.core.extend.protobuf.Overlay.ChainHello.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -8447,7 +8447,7 @@ public final class Overlay {
                 io.bumo.sdk.core.extend.protobuf.Overlay.ChainStatus.class, io.bumo.sdk.core.extend.protobuf.Overlay.ChainStatus.Builder.class);
       }
 
-      // Construct using org.bumo.sdk.core.extend.protobuf.Overlay.ChainStatus.newBuilder()
+      // Construct using io.bumo.sdk.core.extend.protobuf.Overlay.ChainStatus.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -9232,7 +9232,7 @@ public final class Overlay {
                 io.bumo.sdk.core.extend.protobuf.Overlay.ChainPeerMessage.class, io.bumo.sdk.core.extend.protobuf.Overlay.ChainPeerMessage.Builder.class);
       }
 
-      // Construct using org.bumo.sdk.core.extend.protobuf.Overlay.ChainPeerMessage.newBuilder()
+      // Construct using io.bumo.sdk.core.extend.protobuf.Overlay.ChainPeerMessage.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -9902,7 +9902,7 @@ public final class Overlay {
                 io.bumo.sdk.core.extend.protobuf.Overlay.ChainSubscribeTx.class, io.bumo.sdk.core.extend.protobuf.Overlay.ChainSubscribeTx.Builder.class);
       }
 
-      // Construct using org.bumo.sdk.core.extend.protobuf.Overlay.ChainSubscribeTx.newBuilder()
+      // Construct using io.bumo.sdk.core.extend.protobuf.Overlay.ChainSubscribeTx.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -10473,7 +10473,7 @@ public final class Overlay {
                 io.bumo.sdk.core.extend.protobuf.Overlay.ChainResponse.class, io.bumo.sdk.core.extend.protobuf.Overlay.ChainResponse.Builder.class);
       }
 
-      // Construct using org.bumo.sdk.core.extend.protobuf.Overlay.ChainResponse.newBuilder()
+      // Construct using io.bumo.sdk.core.extend.protobuf.Overlay.ChainResponse.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -11547,7 +11547,7 @@ public final class Overlay {
                 io.bumo.sdk.core.extend.protobuf.Overlay.ChainTxStatus.class, io.bumo.sdk.core.extend.protobuf.Overlay.ChainTxStatus.Builder.class);
       }
 
-      // Construct using org.bumo.sdk.core.extend.protobuf.Overlay.ChainTxStatus.newBuilder()
+      // Construct using io.bumo.sdk.core.extend.protobuf.Overlay.ChainTxStatus.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -12359,8 +12359,8 @@ public final class Overlay {
       "OFFLINE\020\r\022\026\n\022CHAIN_PEER_MESSAGE\020\016\022\033\n\027CHA" +
       "IN_SUBMITTRANSACTION\020\017\022\027\n\023CHAIN_LEDGER_H" +
       "EADER\020\020\022\026\n\022CHAIN_SUBSCRIBE_TX\020\021\022\026\n\022CHAIN" +
-      "_TX_ENV_STORE\020\022B#\n!org.bumo.sdk.core.ext" +
-      "end.protobufb\006proto3"
+      "_TX_ENV_STORE\020\022B\"\n io.bumo.sdk.core.exte" +
+      "nd.protobufb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {

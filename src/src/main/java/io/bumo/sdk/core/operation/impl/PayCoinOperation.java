@@ -66,7 +66,7 @@ public class PayCoinOperation extends AbstractBcOperation{
         @Override
         public void checkPass() throws SdkException{
             Assert.notEmpty(operation.payCoin.getDestAddress(), SdkError.OPERATION_ERROR_NOT_DESC_ADDRESS);
-            Assert.gtZero(operation.payCoin.getAmount(), SdkError.OPERATION_ERROR_PAYMENT_COIN_ZERO);
+            Assert.gtZero(operation.payCoin.getAmount(), SdkError.OPERATION_ERROR_PAYASSET_COIN_ZERO);
         }
         
     }

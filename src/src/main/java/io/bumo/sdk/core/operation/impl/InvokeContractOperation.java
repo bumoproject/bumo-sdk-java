@@ -20,16 +20,16 @@ public class InvokeContractOperation extends AbstractBcOperation{
     private String inputData; // Contract execution parameters
 
     private InvokeContractOperation(){
-        super(OperationType.PAYMENT.intValue());
+        super(OperationType.PAYASSET.intValue());
     } // Contract call use transfer type
 
 
     @Override
     protected void buildOperationContinue(Chain.Operation.Builder operation){
-        Chain.OperationPayment.Builder operationPayment = Chain.OperationPayment.newBuilder();
-        operationPayment.setDestAddress(destAddress);
-        if (!StringUtils.isEmpty(inputData)) operationPayment.setInput(inputData);
-        operation.setPayment(operationPayment);
+        Chain.OperationPayAsset.Builder operationPayAsset = Chain.OperationPayAsset.newBuilder();
+        operationPayAsset.setDestAddress(destAddress);
+        if (!StringUtils.isEmpty(inputData)) operationPayAsset.setInput(inputData);
+        operation.setPayAsset(operationPayAsset);
     }
 
 

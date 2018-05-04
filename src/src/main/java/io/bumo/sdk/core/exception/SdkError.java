@@ -11,12 +11,12 @@ public enum SdkError{
 
     SUCCESS(0, "Success"),
 
-    OPERATION_ERROR_NOT_DESC_ADDRESS(10001, "The operation must set the destination address"),
+    OPERATION_ERROR_NOT_DESC_ADDRESS(10001, "The operation must set the target address"),
     OPERATION_ERROR_STATUS(10002, "Operation state abnormality"),
     OPERATION_ERROR_NOT_CONTRACT_ADDRESS(10003, "The contract address can not be empty"),
     OPERATION_ERROR_ISSUE_SOURCE_ADDRESS(10004, "The asset issuer cannot be empty"),
     OPERATION_ERROR_ISSUE_CODE(10005, "Asset code can not be empty"),
-    OPERATION_ERROR_PAYMENT_AMOUNT_ZERO(10006, "The amount of the transfer must be more than 0"),
+    OPERATION_ERROR_PAYASSET_AMOUNT_ZERO(10006, "The amount of the transfer must be more than 0"),
     OPERATION_ERROR_SET_METADATA_EMPTY(10007, "Setting metadata can not be empty"),
     OPERATION_ERROR_SET_SIGNER_WEIGHT(10008, "You must set up masterWeight or signer"),
     OPERATION_ERROR_SET_THRESHOLD(10009, "You must set up txThreshold or typeThresholds"),
@@ -27,7 +27,7 @@ public enum SdkError{
     OPERATION_ERROR_TX_THRESHOLD_TYPE_LT_ZERO(10014, "The specific operation threshold should not be less than 0"),
     OPERATION_ERROR_SET_SIGNER_ADDRESS_NOT_EMPTY(10015, "The added signer's address can not be empty"),
     OPERATION_ERROR_TX_THRESHOLD_TYPE_NOT_NULL(10016, "Specific threshold operation type can not be empty"),
-    OPERATION_ERROR_PAYMENT_COIN_ZERO(10017, "Payment of BU currency must be more than 0"),
+    OPERATION_ERROR_PAYASSET_COIN_ZERO(10017, "Payment of BU Token must be more than 0"),
     OPERATION_ERROR_TEST_OPER(10018, "Evaluation operation cannot be empty"),
     OPERATION_ERROR_NOT_INITINPUT(10019,"initInput cannot be empty"),
     OPERATION_ERROR_INITBALANCE_ILLEGAL(10020,"InitBalance value is illegal"),

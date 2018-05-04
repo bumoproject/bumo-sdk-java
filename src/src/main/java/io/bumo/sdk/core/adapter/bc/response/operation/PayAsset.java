@@ -9,7 +9,7 @@ import io.bumo.sdk.core.adapter.bc.response.Asset;
  *
  * @author 布萌
  */
-public class Payment{
+public class PayAsset{
     private String metadata;
     @JSONField(name = "dest_address")
     private String destAddress;

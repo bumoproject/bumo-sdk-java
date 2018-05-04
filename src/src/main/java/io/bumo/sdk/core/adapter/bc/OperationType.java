@@ -4,7 +4,7 @@ public enum OperationType{
 
     CREATE_ACCOUNT(1), // 创建账号
     ISSUE_ASSET(2), // 发行资产
-    PAYMENT(3), // 转移资产
+    PAYASSET(3), // 转移资产
     SET_METADATA(4), // 设置metadata
     SET_SIGNER_WEIGHT(5), // set_signer_weight
     SET_THRESHOLD(6), // set_threshold

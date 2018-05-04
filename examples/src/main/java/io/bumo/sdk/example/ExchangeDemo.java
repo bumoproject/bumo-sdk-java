@@ -4,6 +4,7 @@ import io.bumo.sdk.core.adapter.bc.response.Account;
 import io.bumo.sdk.core.adapter.bc.response.TransactionHistory;
 import io.bumo.sdk.core.adapter.bc.response.ledger.Ledger;
 import io.bumo.sdk.core.config.SDKConfig;
+import io.bumo.sdk.core.config.SDKEngine;
 import io.bumo.sdk.core.config.SDKProperties;
 import io.bumo.sdk.core.exception.SdkException;
 import io.bumo.sdk.core.operation.OperationFactory;
@@ -21,28 +22,33 @@ public class ExchangeDemo {
     private static String publicKey = "b001b6d3120599d19cae7adb6c5e2674ede8629c871cb8b93bd05bb34d203cd974c3f0bc07e5";
     private static String privateKey = "privbtGQELqNswoyqgnQ9tcfpkuH8P1Q6quvoybqZ9oTVwWhS6Z2hi1B";
 	public static void main(String[] args) throws SdkException, InterruptedException {
-		String eventUtis = "ws://127.0.0.1:26003";
-        String ips = "127.0.0.1:26002";
+        // config in codes
+//		String eventUtis = "ws://127.0.0.1:26003";
+//        String ips = "127.0.0.1:26002";
+//
+//        SDKConfig config = new SDKConfig();
+//        SDKProperties sdkProperties = new SDKProperties();
+//        sdkProperties.setEventUtis(eventUtis);
+//        sdkProperties.setIps(ips);
+//        sdkProperties.setRedisSeqManagerEnable(true);
+//        sdkProperties.setRedisHost("192.168.100.33");
+//        sdkProperties.setRedisPort(36009);
+//        sdkProperties.setRedisPassword("xxxxxx");
+//        config.configSdk(sdkProperties);
+//        OperationService operationService = config.getOperationService();
+//        QueryService queryService = config.getQueryService();
 
-        SDKConfig config = new SDKConfig();
-        SDKProperties sdkProperties = new SDKProperties();
-        sdkProperties.setEventUtis(eventUtis);
-        sdkProperties.setIps(ips);
-        sdkProperties.setRedisSeqManagerEnable(true);
-        sdkProperties.setRedisHost("192.168.100.33");
-        sdkProperties.setRedisPort(36009);
-        sdkProperties.setRedisPassword("xxxxxx");
-        config.configSdk(sdkProperties);
-        
-        OperationService operationService = config.getOperationService();
-        QueryService queryService = config.getQueryService();
-        
+        // config in config.properties
+		SDKEngine sdkEngine = SDKEngine.getInstance();
+        OperationService operationService = sdkEngine.getOperationService();
+        QueryService queryService = sdkEngine.getQueryService();
+
         // create simple account
         createBuChainAccount();
-        
+
         // send BU token
         sendBuToken(operationService);
-        
+
         // query account
         queryAccount(queryService);
 	}

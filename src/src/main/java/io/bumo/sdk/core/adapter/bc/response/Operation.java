@@ -16,8 +16,8 @@ public class Operation{
     private InvokeContract invokeContract;
     @JSONField(name = "issue_asset")
     private IssueAsset issueAsset;
-    @JSONField(name = "payment")
-    private Payment payment;
+    @JSONField(name = "pay_asset")
+    private PayAsset payAsset;
     //TODO
     @JSONField(name = "pay_coin")
     private PayCoin payCoin;
@@ -58,12 +58,12 @@ public class Operation{
         this.issueAsset = issueAsset;
     }
 
-    public Payment getPayment(){
-        return payment;
+    public PayAsset getPayAsset(){
+        return payAsset;
     }
 
-    public void setPayment(Payment payment){
-        this.payment = payment;
+    public void setPayAsset(PayAsset payAsset){
+        this.payAsset = payAsset;
     }
 
     public SetMetadata getSetMetadata(){

@@ -661,7 +661,7 @@ public final class Chain {
                 io.bumo.sdk.core.extend.protobuf.Chain.Account.class, io.bumo.sdk.core.extend.protobuf.Chain.Account.Builder.class);
       }
 
-      // Construct using org.bumo.sdk.core.extend.protobuf.Chain.Account.newBuilder()
+      // Construct using io.bumo.sdk.core.extend.protobuf.Chain.Account.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -1696,7 +1696,7 @@ public final class Chain {
                 io.bumo.sdk.core.extend.protobuf.Chain.AssetKey.class, io.bumo.sdk.core.extend.protobuf.Chain.AssetKey.Builder.class);
       }
 
-      // Construct using org.bumo.sdk.core.extend.protobuf.Chain.AssetKey.newBuilder()
+      // Construct using io.bumo.sdk.core.extend.protobuf.Chain.AssetKey.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -2070,7 +2070,7 @@ public final class Chain {
   }
   /**
    * <pre>
-   *payment
+   *payAsset
    * </pre>
    *
    * Protobuf type {@code protocol.Asset}
@@ -2340,7 +2340,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *payment
+     *payAsset
      * </pre>
      *
      * Protobuf type {@code protocol.Asset}
@@ -2361,7 +2361,7 @@ public final class Chain {
                 io.bumo.sdk.core.extend.protobuf.Chain.Asset.class, io.bumo.sdk.core.extend.protobuf.Chain.Asset.Builder.class);
       }
 
-      // Construct using org.bumo.sdk.core.extend.protobuf.Chain.Asset.newBuilder()
+      // Construct using io.bumo.sdk.core.extend.protobuf.Chain.Asset.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -3077,7 +3077,7 @@ public final class Chain {
                 io.bumo.sdk.core.extend.protobuf.Chain.AssetProperty.class, io.bumo.sdk.core.extend.protobuf.Chain.AssetProperty.Builder.class);
       }
 
-      // Construct using org.bumo.sdk.core.extend.protobuf.Chain.AssetProperty.newBuilder()
+      // Construct using io.bumo.sdk.core.extend.protobuf.Chain.AssetProperty.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -3829,7 +3829,7 @@ public final class Chain {
                 io.bumo.sdk.core.extend.protobuf.Chain.AssetStore.class, io.bumo.sdk.core.extend.protobuf.Chain.AssetStore.Builder.class);
       }
 
-      // Construct using org.bumo.sdk.core.extend.protobuf.Chain.AssetStore.newBuilder()
+      // Construct using io.bumo.sdk.core.extend.protobuf.Chain.AssetStore.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -4908,7 +4908,7 @@ public final class Chain {
                 io.bumo.sdk.core.extend.protobuf.Chain.LedgerHeader.class, io.bumo.sdk.core.extend.protobuf.Chain.LedgerHeader.Builder.class);
       }
 
-      // Construct using org.bumo.sdk.core.extend.protobuf.Chain.LedgerHeader.newBuilder()
+      // Construct using io.bumo.sdk.core.extend.protobuf.Chain.LedgerHeader.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -5849,7 +5849,7 @@ public final class Chain {
                 io.bumo.sdk.core.extend.protobuf.Chain.Ledger.class, io.bumo.sdk.core.extend.protobuf.Chain.Ledger.Builder.class);
       }
 
-      // Construct using org.bumo.sdk.core.extend.protobuf.Chain.Ledger.newBuilder()
+      // Construct using io.bumo.sdk.core.extend.protobuf.Chain.Ledger.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -6420,8 +6420,8 @@ public final class Chain {
 
   }
 
-  public interface OperationPaymentOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:protocol.OperationPayment)
+  public interface OperationPayAssetOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:protocol.OperationPayAsset)
       com.google.protobuf.MessageOrBuilder {
 
     /**
@@ -6458,17 +6458,17 @@ public final class Chain {
         getInputBytes();
   }
   /**
-   * Protobuf type {@code protocol.OperationPayment}
+   * Protobuf type {@code protocol.OperationPayAsset}
    */
-  public  static final class OperationPayment extends
+  public  static final class OperationPayAsset extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:protocol.OperationPayment)
-      OperationPaymentOrBuilder {
-    // Use OperationPayment.newBuilder() to construct.
-    private OperationPayment(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      // @@protoc_insertion_point(message_implements:protocol.OperationPayAsset)
+      OperationPayAssetOrBuilder {
+    // Use OperationPayAsset.newBuilder() to construct.
+    private OperationPayAsset(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-    private OperationPayment() {
+    private OperationPayAsset() {
       destAddress_ = "";
       input_ = "";
     }
@@ -6478,7 +6478,7 @@ public final class Chain {
     getUnknownFields() {
       return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
     }
-    private OperationPayment(
+    private OperationPayAsset(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -6536,14 +6536,14 @@ public final class Chain {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return io.bumo.sdk.core.extend.protobuf.Chain.internal_static_protocol_OperationPayment_descriptor;
+      return io.bumo.sdk.core.extend.protobuf.Chain.internal_static_protocol_OperationPayAsset_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return io.bumo.sdk.core.extend.protobuf.Chain.internal_static_protocol_OperationPayment_fieldAccessorTable
+      return io.bumo.sdk.core.extend.protobuf.Chain.internal_static_protocol_OperationPayAsset_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              io.bumo.sdk.core.extend.protobuf.Chain.OperationPayment.class, io.bumo.sdk.core.extend.protobuf.Chain.OperationPayment.Builder.class);
+              io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset.class, io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset.Builder.class);
     }
 
     public static final int DEST_ADDRESS_FIELD_NUMBER = 1;
@@ -6683,10 +6683,10 @@ public final class Chain {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof io.bumo.sdk.core.extend.protobuf.Chain.OperationPayment)) {
+      if (!(obj instanceof io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset)) {
         return super.equals(obj);
       }
-      io.bumo.sdk.core.extend.protobuf.Chain.OperationPayment other = (io.bumo.sdk.core.extend.protobuf.Chain.OperationPayment) obj;
+      io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset other = (io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset) obj;
 
       boolean result = true;
       result = result && getDestAddress()
@@ -6721,58 +6721,58 @@ public final class Chain {
       return hash;
     }
 
-    public static io.bumo.sdk.core.extend.protobuf.Chain.OperationPayment parseFrom(
+    public static io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static io.bumo.sdk.core.extend.protobuf.Chain.OperationPayment parseFrom(
+    public static io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static io.bumo.sdk.core.extend.protobuf.Chain.OperationPayment parseFrom(byte[] data)
+    public static io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static io.bumo.sdk.core.extend.protobuf.Chain.OperationPayment parseFrom(
+    public static io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static io.bumo.sdk.core.extend.protobuf.Chain.OperationPayment parseFrom(java.io.InputStream input)
+    public static io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static io.bumo.sdk.core.extend.protobuf.Chain.OperationPayment parseFrom(
+    public static io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
-    public static io.bumo.sdk.core.extend.protobuf.Chain.OperationPayment parseDelimitedFrom(java.io.InputStream input)
+    public static io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
-    public static io.bumo.sdk.core.extend.protobuf.Chain.OperationPayment parseDelimitedFrom(
+    public static io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static io.bumo.sdk.core.extend.protobuf.Chain.OperationPayment parseFrom(
+    public static io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static io.bumo.sdk.core.extend.protobuf.Chain.OperationPayment parseFrom(
+    public static io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -6784,7 +6784,7 @@ public final class Chain {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(io.bumo.sdk.core.extend.protobuf.Chain.OperationPayment prototype) {
+    public static Builder newBuilder(io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() {
@@ -6799,25 +6799,25 @@ public final class Chain {
       return builder;
     }
     /**
-     * Protobuf type {@code protocol.OperationPayment}
+     * Protobuf type {@code protocol.OperationPayAsset}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:protocol.OperationPayment)
-        io.bumo.sdk.core.extend.protobuf.Chain.OperationPaymentOrBuilder {
+        // @@protoc_insertion_point(builder_implements:protocol.OperationPayAsset)
+        io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAssetOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return io.bumo.sdk.core.extend.protobuf.Chain.internal_static_protocol_OperationPayment_descriptor;
+        return io.bumo.sdk.core.extend.protobuf.Chain.internal_static_protocol_OperationPayAsset_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return io.bumo.sdk.core.extend.protobuf.Chain.internal_static_protocol_OperationPayment_fieldAccessorTable
+        return io.bumo.sdk.core.extend.protobuf.Chain.internal_static_protocol_OperationPayAsset_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                io.bumo.sdk.core.extend.protobuf.Chain.OperationPayment.class, io.bumo.sdk.core.extend.protobuf.Chain.OperationPayment.Builder.class);
+                io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset.class, io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset.Builder.class);
       }
 
-      // Construct using org.bumo.sdk.core.extend.protobuf.Chain.OperationPayment.newBuilder()
+      // Construct using io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -6849,23 +6849,23 @@ public final class Chain {
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return io.bumo.sdk.core.extend.protobuf.Chain.internal_static_protocol_OperationPayment_descriptor;
+        return io.bumo.sdk.core.extend.protobuf.Chain.internal_static_protocol_OperationPayAsset_descriptor;
       }
 
-      public io.bumo.sdk.core.extend.protobuf.Chain.OperationPayment getDefaultInstanceForType() {
-        return io.bumo.sdk.core.extend.protobuf.Chain.OperationPayment.getDefaultInstance();
+      public io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset getDefaultInstanceForType() {
+        return io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset.getDefaultInstance();
       }
 
-      public io.bumo.sdk.core.extend.protobuf.Chain.OperationPayment build() {
-        io.bumo.sdk.core.extend.protobuf.Chain.OperationPayment result = buildPartial();
+      public io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset build() {
+        io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      public io.bumo.sdk.core.extend.protobuf.Chain.OperationPayment buildPartial() {
-        io.bumo.sdk.core.extend.protobuf.Chain.OperationPayment result = new io.bumo.sdk.core.extend.protobuf.Chain.OperationPayment(this);
+      public io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset buildPartial() {
+        io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset result = new io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset(this);
         result.destAddress_ = destAddress_;
         if (assetBuilder_ == null) {
           result.asset_ = asset_;
@@ -6904,16 +6904,16 @@ public final class Chain {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof io.bumo.sdk.core.extend.protobuf.Chain.OperationPayment) {
-          return mergeFrom((io.bumo.sdk.core.extend.protobuf.Chain.OperationPayment)other);
+        if (other instanceof io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset) {
+          return mergeFrom((io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(io.bumo.sdk.core.extend.protobuf.Chain.OperationPayment other) {
-        if (other == io.bumo.sdk.core.extend.protobuf.Chain.OperationPayment.getDefaultInstance()) return this;
+      public Builder mergeFrom(io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset other) {
+        if (other == io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset.getDefaultInstance()) return this;
         if (!other.getDestAddress().isEmpty()) {
           destAddress_ = other.destAddress_;
           onChanged();
@@ -6937,11 +6937,11 @@ public final class Chain {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        io.bumo.sdk.core.extend.protobuf.Chain.OperationPayment parsedMessage = null;
+        io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (io.bumo.sdk.core.extend.protobuf.Chain.OperationPayment) e.getUnfinishedMessage();
+          parsedMessage = (io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -7216,39 +7216,39 @@ public final class Chain {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:protocol.OperationPayment)
+      // @@protoc_insertion_point(builder_scope:protocol.OperationPayAsset)
     }
 
-    // @@protoc_insertion_point(class_scope:protocol.OperationPayment)
-    private static final io.bumo.sdk.core.extend.protobuf.Chain.OperationPayment DEFAULT_INSTANCE;
+    // @@protoc_insertion_point(class_scope:protocol.OperationPayAsset)
+    private static final io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new io.bumo.sdk.core.extend.protobuf.Chain.OperationPayment();
+      DEFAULT_INSTANCE = new io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset();
     }
 
-    public static io.bumo.sdk.core.extend.protobuf.Chain.OperationPayment getDefaultInstance() {
+    public static io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<OperationPayment>
-        PARSER = new com.google.protobuf.AbstractParser<OperationPayment>() {
-      public OperationPayment parsePartialFrom(
+    private static final com.google.protobuf.Parser<OperationPayAsset>
+        PARSER = new com.google.protobuf.AbstractParser<OperationPayAsset>() {
+      public OperationPayAsset parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new OperationPayment(input, extensionRegistry);
+          return new OperationPayAsset(input, extensionRegistry);
       }
     };
 
-    public static com.google.protobuf.Parser<OperationPayment> parser() {
+    public static com.google.protobuf.Parser<OperationPayAsset> parser() {
       return PARSER;
     }
 
     @java.lang.Override
-    public com.google.protobuf.Parser<OperationPayment> getParserForType() {
+    public com.google.protobuf.Parser<OperationPayAsset> getParserForType() {
       return PARSER;
     }
 
-    public io.bumo.sdk.core.extend.protobuf.Chain.OperationPayment getDefaultInstanceForType() {
+    public io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -7540,7 +7540,7 @@ public final class Chain {
                 io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold.class, io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold.Builder.class);
       }
 
-      // Construct using org.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold.newBuilder()
+      // Construct using io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -8169,7 +8169,7 @@ public final class Chain {
                 io.bumo.sdk.core.extend.protobuf.Chain.AccountPrivilege.class, io.bumo.sdk.core.extend.protobuf.Chain.AccountPrivilege.Builder.class);
       }
 
-      // Construct using org.bumo.sdk.core.extend.protobuf.Chain.AccountPrivilege.newBuilder()
+      // Construct using io.bumo.sdk.core.extend.protobuf.Chain.AccountPrivilege.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -8778,7 +8778,7 @@ public final class Chain {
 
     /**
      * <pre>
-     *required, [-1,MAX(INT64)] -1: Indicate that it is not set
+     *required, [-1,MAX(INT64)] -1: 表示不设置 indicate no setting
      * </pre>
      *
      * <code>optional int64 tx_threshold = 1;</code>
@@ -8787,7 +8787,7 @@ public final class Chain {
 
     /**
      * <pre>
-     * If this setting is applied, the operation threshold is based on this
+     *如果这个设置，则操作门限以这个为准 
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -8796,7 +8796,7 @@ public final class Chain {
         getTypeThresholdsList();
     /**
      * <pre>
-     * If this setting is applied, the operation threshold is based on this
+     *如果这个设置，则操作门限以这个为准 
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -8804,7 +8804,7 @@ public final class Chain {
     io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold getTypeThresholds(int index);
     /**
      * <pre>
-     * If this setting is applied, the operation threshold is based on this
+     *如果这个设置，则操作门限以这个为准 
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -8812,7 +8812,7 @@ public final class Chain {
     int getTypeThresholdsCount();
     /**
      * <pre>
-     * If this setting is applied, the operation threshold is based on this
+     *如果这个设置，则操作门限以这个为准 
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -8821,7 +8821,7 @@ public final class Chain {
         getTypeThresholdsOrBuilderList();
     /**
      * <pre>
-     * If this setting is applied, the operation threshold is based on this
+     *如果这个设置，则操作门限以这个为准 
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -8915,7 +8915,7 @@ public final class Chain {
     private long txThreshold_;
     /**
      * <pre>
-     *required, [-1,MAX(INT64)] -1: Indicate that it is not set
+     *required, [-1,MAX(INT64)] -1: 表示不设置 indicate no setting
      * </pre>
      *
      * <code>optional int64 tx_threshold = 1;</code>
@@ -8928,7 +8928,7 @@ public final class Chain {
     private java.util.List<io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold> typeThresholds_;
     /**
      * <pre>
-     * If this setting is applied, the operation threshold is based on this
+     *如果这个设置，则操作门限以这个为准 
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -8938,7 +8938,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     * If this setting is applied, the operation threshold is based on this
+     *如果这个设置，则操作门限以这个为准 
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -8949,7 +8949,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     * If this setting is applied, the operation threshold is based on this
+     *如果这个设置，则操作门限以这个为准 
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -8959,7 +8959,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     * If this setting is applied, the operation threshold is based on this
+     *如果这个设置，则操作门限以这个为准 
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -8969,7 +8969,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     * If this setting is applied, the operation threshold is based on this
+     *如果这个设置，则操作门限以这个为准 
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9150,7 +9150,7 @@ public final class Chain {
                 io.bumo.sdk.core.extend.protobuf.Chain.AccountThreshold.class, io.bumo.sdk.core.extend.protobuf.Chain.AccountThreshold.Builder.class);
       }
 
-      // Construct using org.bumo.sdk.core.extend.protobuf.Chain.AccountThreshold.newBuilder()
+      // Construct using io.bumo.sdk.core.extend.protobuf.Chain.AccountThreshold.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -9311,7 +9311,7 @@ public final class Chain {
       private long txThreshold_ ;
       /**
        * <pre>
-       *required, [-1,MAX(INT64)] -1: Indicate that it is not set
+       *required, [-1,MAX(INT64)] -1: 表示不设置 indicate no setting
        * </pre>
        *
        * <code>optional int64 tx_threshold = 1;</code>
@@ -9321,7 +9321,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *required, [-1,MAX(INT64)] -1: Indicate that it is not set
+       *required, [-1,MAX(INT64)] -1: 表示不设置 indicate no setting
        * </pre>
        *
        * <code>optional int64 tx_threshold = 1;</code>
@@ -9334,7 +9334,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *required, [-1,MAX(INT64)] -1: Indicate that it is not set
+       *required, [-1,MAX(INT64)] -1: 表示不设置 indicate no setting
        * </pre>
        *
        * <code>optional int64 tx_threshold = 1;</code>
@@ -9360,7 +9360,7 @@ public final class Chain {
 
       /**
        * <pre>
-       * If this setting is applied, the operation threshold is based on this
+       *如果这个设置，则操作门限以这个为准 
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9374,7 +9374,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       * If this setting is applied, the operation threshold is based on this
+       *如果这个设置，则操作门限以这个为准 
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9388,7 +9388,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       * If this setting is applied, the operation threshold is based on this
+       *如果这个设置，则操作门限以这个为准 
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9402,7 +9402,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       * If this setting is applied, the operation threshold is based on this
+       *如果这个设置，则操作门限以这个为准 
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9423,7 +9423,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       * If this setting is applied, the operation threshold is based on this
+       *如果这个设置，则操作门限以这个为准 
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9441,7 +9441,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       * If this setting is applied, the operation threshold is based on this
+       *如果这个设置，则操作门限以这个为准 
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9461,7 +9461,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       * If this setting is applied, the operation threshold is based on this
+       *如果这个设置，则操作门限以这个为准 
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9482,7 +9482,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       * If this setting is applied, the operation threshold is based on this
+       *如果这个设置，则操作门限以这个为准 
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9500,7 +9500,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       * If this setting is applied, the operation threshold is based on this
+       *如果这个设置，则操作门限以这个为准 
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9518,7 +9518,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       * If this setting is applied, the operation threshold is based on this
+       *如果这个设置，则操作门限以这个为准 
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9537,7 +9537,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       * If this setting is applied, the operation threshold is based on this
+       *如果这个设置，则操作门限以这个为准 
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9554,7 +9554,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       * If this setting is applied, the operation threshold is based on this
+       *如果这个设置，则操作门限以这个为准 
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9571,7 +9571,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       * If this setting is applied, the operation threshold is based on this
+       *如果这个设置，则操作门限以这个为准 
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9582,7 +9582,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       * If this setting is applied, the operation threshold is based on this
+       *如果这个设置，则操作门限以这个为准 
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9596,7 +9596,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       * If this setting is applied, the operation threshold is based on this
+       *如果这个设置，则操作门限以这个为准 
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9611,7 +9611,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       * If this setting is applied, the operation threshold is based on this
+       *如果这个设置，则操作门限以这个为准 
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9622,7 +9622,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       * If this setting is applied, the operation threshold is based on this
+       *如果这个设置，则操作门限以这个为准 
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9634,7 +9634,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       * If this setting is applied, the operation threshold is based on this
+       *如果这个设置，则操作门限以这个为准 
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -10011,7 +10011,7 @@ public final class Chain {
                 io.bumo.sdk.core.extend.protobuf.Chain.OperationIssueAsset.class, io.bumo.sdk.core.extend.protobuf.Chain.OperationIssueAsset.Builder.class);
       }
 
-      // Construct using org.bumo.sdk.core.extend.protobuf.Chain.OperationIssueAsset.newBuilder()
+      // Construct using io.bumo.sdk.core.extend.protobuf.Chain.OperationIssueAsset.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -10639,7 +10639,7 @@ public final class Chain {
                 io.bumo.sdk.core.extend.protobuf.Chain.OperationPayCoin.class, io.bumo.sdk.core.extend.protobuf.Chain.OperationPayCoin.Builder.class);
       }
 
-      // Construct using org.bumo.sdk.core.extend.protobuf.Chain.OperationPayCoin.newBuilder()
+      // Construct using io.bumo.sdk.core.extend.protobuf.Chain.OperationPayCoin.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -10983,7 +10983,7 @@ public final class Chain {
 
     /**
      * <pre>
-     *required, [-1,MAX(UINT32)] -1: Indicate that it is not set
+     *required, [-1,MAX(UINT32)] -1: 表示不设置
      * </pre>
      *
      * <code>optional int64 master_weight = 1;</code>
@@ -10992,7 +10992,7 @@ public final class Chain {
 
     /**
      * <pre>
-     *address:weight, If weight is 0, delete this signer
+     *address:weight, 如果weight 为0 表示删除这个signer
      * </pre>
      *
      * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11001,7 +11001,7 @@ public final class Chain {
         getSignersList();
     /**
      * <pre>
-     *address:weight, If weight is 0, delete this signer
+     *address:weight, 如果weight 为0 表示删除这个signer
      * </pre>
      *
      * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11009,7 +11009,7 @@ public final class Chain {
     io.bumo.sdk.core.extend.protobuf.Chain.Signer getSigners(int index);
     /**
      * <pre>
-     *address:weight, If weight is 0, delete this signer
+     *address:weight, 如果weight 为0 表示删除这个signer
      * </pre>
      *
      * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11017,7 +11017,7 @@ public final class Chain {
     int getSignersCount();
     /**
      * <pre>
-     *address:weight, If weight is 0, delete this signer
+     *address:weight, 如果weight 为0 表示删除这个signer
      * </pre>
      *
      * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11026,7 +11026,7 @@ public final class Chain {
         getSignersOrBuilderList();
     /**
      * <pre>
-     *address:weight, If weight is 0, delete this signer
+     *address:weight, 如果weight 为0 表示删除这个signer
      * </pre>
      *
      * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11120,7 +11120,7 @@ public final class Chain {
     private long masterWeight_;
     /**
      * <pre>
-     *required, [-1,MAX(UINT32)] -1: Indicate that it is not set
+     *required, [-1,MAX(UINT32)] -1: 表示不设置
      * </pre>
      *
      * <code>optional int64 master_weight = 1;</code>
@@ -11133,7 +11133,7 @@ public final class Chain {
     private java.util.List<io.bumo.sdk.core.extend.protobuf.Chain.Signer> signers_;
     /**
      * <pre>
-     *address:weight, If weight is 0, delete this signer
+     *address:weight, 如果weight 为0 表示删除这个signer
      * </pre>
      *
      * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11143,7 +11143,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *address:weight, If weight is 0, delete this signer
+     *address:weight, 如果weight 为0 表示删除这个signer
      * </pre>
      *
      * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11154,7 +11154,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *address:weight, If weight is 0, delete this signer
+     *address:weight, 如果weight 为0 表示删除这个signer
      * </pre>
      *
      * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11164,7 +11164,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *address:weight, If weight is 0, delete this signer
+     *address:weight, 如果weight 为0 表示删除这个signer
      * </pre>
      *
      * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11174,7 +11174,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *address:weight, If weight is 0, delete this signer
+     *address:weight, 如果weight 为0 表示删除这个signer
      * </pre>
      *
      * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11355,7 +11355,7 @@ public final class Chain {
                 io.bumo.sdk.core.extend.protobuf.Chain.OperationSetSignerWeight.class, io.bumo.sdk.core.extend.protobuf.Chain.OperationSetSignerWeight.Builder.class);
       }
 
-      // Construct using org.bumo.sdk.core.extend.protobuf.Chain.OperationSetSignerWeight.newBuilder()
+      // Construct using io.bumo.sdk.core.extend.protobuf.Chain.OperationSetSignerWeight.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -11516,7 +11516,7 @@ public final class Chain {
       private long masterWeight_ ;
       /**
        * <pre>
-       *required, [-1,MAX(UINT32)] -1: Indicate that it is not set
+       *required, [-1,MAX(UINT32)] -1: 表示不设置
        * </pre>
        *
        * <code>optional int64 master_weight = 1;</code>
@@ -11526,7 +11526,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *required, [-1,MAX(UINT32)] -1: Indicate that it is not set
+       *required, [-1,MAX(UINT32)] -1: 表示不设置
        * </pre>
        *
        * <code>optional int64 master_weight = 1;</code>
@@ -11539,7 +11539,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *required, [-1,MAX(UINT32)] -1: Indicate that it is not set
+       *required, [-1,MAX(UINT32)] -1: 表示不设置
        * </pre>
        *
        * <code>optional int64 master_weight = 1;</code>
@@ -11565,7 +11565,7 @@ public final class Chain {
 
       /**
        * <pre>
-       *address:weight, If weight is 0, delete this signer
+       *address:weight, 如果weight 为0 表示删除这个signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11579,7 +11579,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, If weight is 0, delete this signer
+       *address:weight, 如果weight 为0 表示删除这个signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11593,7 +11593,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, If weight is 0, delete this signer
+       *address:weight, 如果weight 为0 表示删除这个signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11607,7 +11607,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, If weight is 0, delete this signer
+       *address:weight, 如果weight 为0 表示删除这个signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11628,7 +11628,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, If weight is 0, delete this signer
+       *address:weight, 如果weight 为0 表示删除这个signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11646,7 +11646,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, If weight is 0, delete this signer
+       *address:weight, 如果weight 为0 表示删除这个signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11666,7 +11666,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, If weight is 0, delete this signer
+       *address:weight, 如果weight 为0 表示删除这个signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11687,7 +11687,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, If weight is 0, delete this signer
+       *address:weight, 如果weight 为0 表示删除这个signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11705,7 +11705,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, If weight is 0, delete this signer
+       *address:weight, 如果weight 为0 表示删除这个signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11723,7 +11723,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, If weight is 0, delete this signer
+       *address:weight, 如果weight 为0 表示删除这个signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11742,7 +11742,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, If weight is 0, delete this signer
+       *address:weight, 如果weight 为0 表示删除这个signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11759,7 +11759,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, If weight is 0, delete this signer
+       *address:weight, 如果weight 为0 表示删除这个signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11776,7 +11776,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, If weight is 0, delete this signer
+       *address:weight, 如果weight 为0 表示删除这个signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11787,7 +11787,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, If weight is 0, delete this signer
+       *address:weight, 如果weight 为0 表示删除这个signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11801,7 +11801,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, If weight is 0, delete this signer
+       *address:weight, 如果weight 为0 表示删除这个signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11816,7 +11816,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, If weight is 0, delete this signer
+       *address:weight, 如果weight 为0 表示删除这个signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11827,7 +11827,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, If weight is 0, delete this signer
+       *address:weight, 如果weight 为0 表示删除这个signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11839,7 +11839,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, If weight is 0, delete this signer
+       *address:weight, 如果weight 为0 表示删除这个signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -12263,7 +12263,7 @@ public final class Chain {
                 io.bumo.sdk.core.extend.protobuf.Chain.OperationLog.class, io.bumo.sdk.core.extend.protobuf.Chain.OperationLog.Builder.class);
       }
 
-      // Construct using org.bumo.sdk.core.extend.protobuf.Chain.OperationLog.newBuilder()
+      // Construct using io.bumo.sdk.core.extend.protobuf.Chain.OperationLog.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -12672,17 +12672,17 @@ public final class Chain {
     io.bumo.sdk.core.extend.protobuf.Chain.OperationIssueAssetOrBuilder getIssueAssetOrBuilder();
 
     /**
-     * <code>optional .protocol.OperationPayment payment = 6;</code>
+     * <code>optional .protocol.OperationPayAsset pay_asset = 6;</code>
      */
-    boolean hasPayment();
+    boolean hasPayAsset();
     /**
-     * <code>optional .protocol.OperationPayment payment = 6;</code>
+     * <code>optional .protocol.OperationPayAsset pay_asset = 6;</code>
      */
-    io.bumo.sdk.core.extend.protobuf.Chain.OperationPayment getPayment();
+    io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset getPayAsset();
     /**
-     * <code>optional .protocol.OperationPayment payment = 6;</code>
+     * <code>optional .protocol.OperationPayAsset pay_asset = 6;</code>
      */
-    io.bumo.sdk.core.extend.protobuf.Chain.OperationPaymentOrBuilder getPaymentOrBuilder();
+    io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAssetOrBuilder getPayAssetOrBuilder();
 
     /**
      * <code>optional .protocol.OperationSetMetadata set_metadata = 7;</code>
@@ -12835,14 +12835,14 @@ public final class Chain {
               break;
             }
             case 50: {
-              io.bumo.sdk.core.extend.protobuf.Chain.OperationPayment.Builder subBuilder = null;
-              if (payment_ != null) {
-                subBuilder = payment_.toBuilder();
+              io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset.Builder subBuilder = null;
+              if (payAsset_ != null) {
+                subBuilder = payAsset_.toBuilder();
               }
-              payment_ = input.readMessage(io.bumo.sdk.core.extend.protobuf.Chain.OperationPayment.parser(), extensionRegistry);
+              payAsset_ = input.readMessage(io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset.parser(), extensionRegistry);
               if (subBuilder != null) {
-                subBuilder.mergeFrom(payment_);
-                payment_ = subBuilder.buildPartial();
+                subBuilder.mergeFrom(payAsset_);
+                payAsset_ = subBuilder.buildPartial();
               }
 
               break;
@@ -12953,9 +12953,9 @@ public final class Chain {
        */
       ISSUE_ASSET(2),
       /**
-       * <code>PAYMENT = 3;</code>
+       * <code>PAY_ASSET = 3;</code>
        */
-      PAYMENT(3),
+      PAY_ASSET(3),
       /**
        * <code>SET_METADATA = 4;</code>
        */
@@ -12992,9 +12992,9 @@ public final class Chain {
        */
       public static final int ISSUE_ASSET_VALUE = 2;
       /**
-       * <code>PAYMENT = 3;</code>
+       * <code>PAY_ASSET = 3;</code>
        */
-      public static final int PAYMENT_VALUE = 3;
+      public static final int PAY_ASSET_VALUE = 3;
       /**
        * <code>SET_METADATA = 4;</code>
        */
@@ -13038,7 +13038,7 @@ public final class Chain {
           case 0: return UNKNOWN;
           case 1: return CREATE_ACCOUNT;
           case 2: return ISSUE_ASSET;
-          case 3: return PAYMENT;
+          case 3: return PAY_ASSET;
           case 4: return SET_METADATA;
           case 5: return SET_SIGNER_WEIGHT;
           case 6: return SET_THRESHOLD;
@@ -13206,25 +13206,25 @@ public final class Chain {
       return getIssueAsset();
     }
 
-    public static final int PAYMENT_FIELD_NUMBER = 6;
-    private io.bumo.sdk.core.extend.protobuf.Chain.OperationPayment payment_;
+    public static final int PAY_ASSET_FIELD_NUMBER = 6;
+    private io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset payAsset_;
     /**
-     * <code>optional .protocol.OperationPayment payment = 6;</code>
+     * <code>optional .protocol.OperationPayAsset pay_asset = 6;</code>
      */
-    public boolean hasPayment() {
-      return payment_ != null;
+    public boolean hasPayAsset() {
+      return payAsset_ != null;
     }
     /**
-     * <code>optional .protocol.OperationPayment payment = 6;</code>
+     * <code>optional .protocol.OperationPayAsset pay_asset = 6;</code>
      */
-    public io.bumo.sdk.core.extend.protobuf.Chain.OperationPayment getPayment() {
-      return payment_ == null ? io.bumo.sdk.core.extend.protobuf.Chain.OperationPayment.getDefaultInstance() : payment_;
+    public io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset getPayAsset() {
+      return payAsset_ == null ? io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset.getDefaultInstance() : payAsset_;
     }
     /**
-     * <code>optional .protocol.OperationPayment payment = 6;</code>
+     * <code>optional .protocol.OperationPayAsset pay_asset = 6;</code>
      */
-    public io.bumo.sdk.core.extend.protobuf.Chain.OperationPaymentOrBuilder getPaymentOrBuilder() {
-      return getPayment();
+    public io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAssetOrBuilder getPayAssetOrBuilder() {
+      return getPayAsset();
     }
 
     public static final int SET_METADATA_FIELD_NUMBER = 7;
@@ -13359,8 +13359,8 @@ public final class Chain {
       if (issueAsset_ != null) {
         output.writeMessage(5, getIssueAsset());
       }
-      if (payment_ != null) {
-        output.writeMessage(6, getPayment());
+      if (payAsset_ != null) {
+        output.writeMessage(6, getPayAsset());
       }
       if (setMetadata_ != null) {
         output.writeMessage(7, getSetMetadata());
@@ -13403,9 +13403,9 @@ public final class Chain {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(5, getIssueAsset());
       }
-      if (payment_ != null) {
+      if (payAsset_ != null) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(6, getPayment());
+          .computeMessageSize(6, getPayAsset());
       }
       if (setMetadata_ != null) {
         size += com.google.protobuf.CodedOutputStream
@@ -13458,10 +13458,10 @@ public final class Chain {
         result = result && getIssueAsset()
             .equals(other.getIssueAsset());
       }
-      result = result && (hasPayment() == other.hasPayment());
-      if (hasPayment()) {
-        result = result && getPayment()
-            .equals(other.getPayment());
+      result = result && (hasPayAsset() == other.hasPayAsset());
+      if (hasPayAsset()) {
+        result = result && getPayAsset()
+            .equals(other.getPayAsset());
       }
       result = result && (hasSetMetadata() == other.hasSetMetadata());
       if (hasSetMetadata()) {
@@ -13512,9 +13512,9 @@ public final class Chain {
         hash = (37 * hash) + ISSUE_ASSET_FIELD_NUMBER;
         hash = (53 * hash) + getIssueAsset().hashCode();
       }
-      if (hasPayment()) {
-        hash = (37 * hash) + PAYMENT_FIELD_NUMBER;
-        hash = (53 * hash) + getPayment().hashCode();
+      if (hasPayAsset()) {
+        hash = (37 * hash) + PAY_ASSET_FIELD_NUMBER;
+        hash = (53 * hash) + getPayAsset().hashCode();
       }
       if (hasSetMetadata()) {
         hash = (37 * hash) + SET_METADATA_FIELD_NUMBER;
@@ -13637,7 +13637,7 @@ public final class Chain {
                 io.bumo.sdk.core.extend.protobuf.Chain.Operation.class, io.bumo.sdk.core.extend.protobuf.Chain.Operation.Builder.class);
       }
 
-      // Construct using org.bumo.sdk.core.extend.protobuf.Chain.Operation.newBuilder()
+      // Construct using io.bumo.sdk.core.extend.protobuf.Chain.Operation.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -13672,11 +13672,11 @@ public final class Chain {
           issueAsset_ = null;
           issueAssetBuilder_ = null;
         }
-        if (paymentBuilder_ == null) {
-          payment_ = null;
+        if (payAssetBuilder_ == null) {
+          payAsset_ = null;
         } else {
-          payment_ = null;
-          paymentBuilder_ = null;
+          payAsset_ = null;
+          payAssetBuilder_ = null;
         }
         if (setMetadataBuilder_ == null) {
           setMetadata_ = null;
@@ -13743,10 +13743,10 @@ public final class Chain {
         } else {
           result.issueAsset_ = issueAssetBuilder_.build();
         }
-        if (paymentBuilder_ == null) {
-          result.payment_ = payment_;
+        if (payAssetBuilder_ == null) {
+          result.payAsset_ = payAsset_;
         } else {
-          result.payment_ = paymentBuilder_.build();
+          result.payAsset_ = payAssetBuilder_.build();
         }
         if (setMetadataBuilder_ == null) {
           result.setMetadata_ = setMetadata_;
@@ -13830,8 +13830,8 @@ public final class Chain {
         if (other.hasIssueAsset()) {
           mergeIssueAsset(other.getIssueAsset());
         }
-        if (other.hasPayment()) {
-          mergePayment(other.getPayment());
+        if (other.hasPayAsset()) {
+          mergePayAsset(other.getPayAsset());
         }
         if (other.hasSetMetadata()) {
           mergeSetMetadata(other.getSetMetadata());
@@ -14277,121 +14277,121 @@ public final class Chain {
         return issueAssetBuilder_;
       }
 
-      private io.bumo.sdk.core.extend.protobuf.Chain.OperationPayment payment_ = null;
+      private io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset payAsset_ = null;
       private com.google.protobuf.SingleFieldBuilderV3<
-          io.bumo.sdk.core.extend.protobuf.Chain.OperationPayment, io.bumo.sdk.core.extend.protobuf.Chain.OperationPayment.Builder, io.bumo.sdk.core.extend.protobuf.Chain.OperationPaymentOrBuilder> paymentBuilder_;
+          io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset, io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset.Builder, io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAssetOrBuilder> payAssetBuilder_;
       /**
-       * <code>optional .protocol.OperationPayment payment = 6;</code>
+       * <code>optional .protocol.OperationPayAsset pay_asset = 6;</code>
        */
-      public boolean hasPayment() {
-        return paymentBuilder_ != null || payment_ != null;
+      public boolean hasPayAsset() {
+        return payAssetBuilder_ != null || payAsset_ != null;
       }
       /**
-       * <code>optional .protocol.OperationPayment payment = 6;</code>
+       * <code>optional .protocol.OperationPayAsset pay_asset = 6;</code>
        */
-      public io.bumo.sdk.core.extend.protobuf.Chain.OperationPayment getPayment() {
-        if (paymentBuilder_ == null) {
-          return payment_ == null ? io.bumo.sdk.core.extend.protobuf.Chain.OperationPayment.getDefaultInstance() : payment_;
+      public io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset getPayAsset() {
+        if (payAssetBuilder_ == null) {
+          return payAsset_ == null ? io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset.getDefaultInstance() : payAsset_;
         } else {
-          return paymentBuilder_.getMessage();
+          return payAssetBuilder_.getMessage();
         }
       }
       /**
-       * <code>optional .protocol.OperationPayment payment = 6;</code>
+       * <code>optional .protocol.OperationPayAsset pay_asset = 6;</code>
        */
-      public Builder setPayment(io.bumo.sdk.core.extend.protobuf.Chain.OperationPayment value) {
-        if (paymentBuilder_ == null) {
+      public Builder setPayAsset(io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset value) {
+        if (payAssetBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          payment_ = value;
+          payAsset_ = value;
           onChanged();
         } else {
-          paymentBuilder_.setMessage(value);
+          payAssetBuilder_.setMessage(value);
         }
 
         return this;
       }
       /**
-       * <code>optional .protocol.OperationPayment payment = 6;</code>
+       * <code>optional .protocol.OperationPayAsset pay_asset = 6;</code>
        */
-      public Builder setPayment(
-          io.bumo.sdk.core.extend.protobuf.Chain.OperationPayment.Builder builderForValue) {
-        if (paymentBuilder_ == null) {
-          payment_ = builderForValue.build();
+      public Builder setPayAsset(
+          io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset.Builder builderForValue) {
+        if (payAssetBuilder_ == null) {
+          payAsset_ = builderForValue.build();
           onChanged();
         } else {
-          paymentBuilder_.setMessage(builderForValue.build());
+          payAssetBuilder_.setMessage(builderForValue.build());
         }
 
         return this;
       }
       /**
-       * <code>optional .protocol.OperationPayment payment = 6;</code>
+       * <code>optional .protocol.OperationPayAsset pay_asset = 6;</code>
        */
-      public Builder mergePayment(io.bumo.sdk.core.extend.protobuf.Chain.OperationPayment value) {
-        if (paymentBuilder_ == null) {
-          if (payment_ != null) {
-            payment_ =
-              io.bumo.sdk.core.extend.protobuf.Chain.OperationPayment.newBuilder(payment_).mergeFrom(value).buildPartial();
+      public Builder mergePayAsset(io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset value) {
+        if (payAssetBuilder_ == null) {
+          if (payAsset_ != null) {
+            payAsset_ =
+              io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset.newBuilder(payAsset_).mergeFrom(value).buildPartial();
           } else {
-            payment_ = value;
+            payAsset_ = value;
           }
           onChanged();
         } else {
-          paymentBuilder_.mergeFrom(value);
+          payAssetBuilder_.mergeFrom(value);
         }
 
         return this;
       }
       /**
-       * <code>optional .protocol.OperationPayment payment = 6;</code>
+       * <code>optional .protocol.OperationPayAsset pay_asset = 6;</code>
        */
-      public Builder clearPayment() {
-        if (paymentBuilder_ == null) {
-          payment_ = null;
+      public Builder clearPayAsset() {
+        if (payAssetBuilder_ == null) {
+          payAsset_ = null;
           onChanged();
         } else {
-          payment_ = null;
-          paymentBuilder_ = null;
+          payAsset_ = null;
+          payAssetBuilder_ = null;
         }
 
         return this;
       }
       /**
-       * <code>optional .protocol.OperationPayment payment = 6;</code>
+       * <code>optional .protocol.OperationPayAsset pay_asset = 6;</code>
        */
-      public io.bumo.sdk.core.extend.protobuf.Chain.OperationPayment.Builder getPaymentBuilder() {
+      public io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset.Builder getPayAssetBuilder() {
         
         onChanged();
-        return getPaymentFieldBuilder().getBuilder();
+        return getPayAssetFieldBuilder().getBuilder();
       }
       /**
-       * <code>optional .protocol.OperationPayment payment = 6;</code>
+       * <code>optional .protocol.OperationPayAsset pay_asset = 6;</code>
        */
-      public io.bumo.sdk.core.extend.protobuf.Chain.OperationPaymentOrBuilder getPaymentOrBuilder() {
-        if (paymentBuilder_ != null) {
-          return paymentBuilder_.getMessageOrBuilder();
+      public io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAssetOrBuilder getPayAssetOrBuilder() {
+        if (payAssetBuilder_ != null) {
+          return payAssetBuilder_.getMessageOrBuilder();
         } else {
-          return payment_ == null ?
-              io.bumo.sdk.core.extend.protobuf.Chain.OperationPayment.getDefaultInstance() : payment_;
+          return payAsset_ == null ?
+              io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset.getDefaultInstance() : payAsset_;
         }
       }
       /**
-       * <code>optional .protocol.OperationPayment payment = 6;</code>
+       * <code>optional .protocol.OperationPayAsset pay_asset = 6;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
-          io.bumo.sdk.core.extend.protobuf.Chain.OperationPayment, io.bumo.sdk.core.extend.protobuf.Chain.OperationPayment.Builder, io.bumo.sdk.core.extend.protobuf.Chain.OperationPaymentOrBuilder> 
-          getPaymentFieldBuilder() {
-        if (paymentBuilder_ == null) {
-          paymentBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              io.bumo.sdk.core.extend.protobuf.Chain.OperationPayment, io.bumo.sdk.core.extend.protobuf.Chain.OperationPayment.Builder, io.bumo.sdk.core.extend.protobuf.Chain.OperationPaymentOrBuilder>(
-                  getPayment(),
+          io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset, io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset.Builder, io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAssetOrBuilder> 
+          getPayAssetFieldBuilder() {
+        if (payAssetBuilder_ == null) {
+          payAssetBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset, io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset.Builder, io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAssetOrBuilder>(
+                  getPayAsset(),
                   getParentForChildren(),
                   isClean());
-          payment_ = null;
+          payAsset_ = null;
         }
-        return paymentBuilder_;
+        return payAssetBuilder_;
       }
 
       private io.bumo.sdk.core.extend.protobuf.Chain.OperationSetMetadata setMetadata_ = null;
@@ -15038,7 +15038,7 @@ public final class Chain {
 
     /**
      * <pre>
-     *type:threshold, threshold:0 Represents the deletion of this type of type
+     *type:threshold ，threshold:0 表示删除这个类型的type
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15047,7 +15047,7 @@ public final class Chain {
         getTypeThresholdsList();
     /**
      * <pre>
-     *type:threshold, threshold:0 Represents the deletion of this type of type
+     *type:threshold ，threshold:0 表示删除这个类型的type
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15055,7 +15055,7 @@ public final class Chain {
     io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold getTypeThresholds(int index);
     /**
      * <pre>
-     *type:threshold, threshold:0 Represents the deletion of this type of type
+     *type:threshold ，threshold:0 表示删除这个类型的type
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15063,7 +15063,7 @@ public final class Chain {
     int getTypeThresholdsCount();
     /**
      * <pre>
-     *type:threshold, threshold:0 Represents the deletion of this type of type
+     *type:threshold ，threshold:0 表示删除这个类型的type
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15072,7 +15072,7 @@ public final class Chain {
         getTypeThresholdsOrBuilderList();
     /**
      * <pre>
-     *type:threshold, threshold:0 Represents the deletion of this type of type
+     *type:threshold ，threshold:0 表示删除这个类型的type
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15175,7 +15175,7 @@ public final class Chain {
     private java.util.List<io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold> typeThresholds_;
     /**
      * <pre>
-     *type:threshold, threshold:0 Represents the deletion of this type of type
+     *type:threshold ，threshold:0 表示删除这个类型的type
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15185,7 +15185,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *type:threshold, threshold:0 Represents the deletion of this type of type
+     *type:threshold ，threshold:0 表示删除这个类型的type
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15196,7 +15196,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *type:threshold, threshold:0 Represents the deletion of this type of type
+     *type:threshold ，threshold:0 表示删除这个类型的type
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15206,7 +15206,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *type:threshold, threshold:0 Represents the deletion of this type of type
+     *type:threshold ，threshold:0 表示删除这个类型的type
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15216,7 +15216,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *type:threshold, threshold:0 Represents the deletion of this type of type
+     *type:threshold ，threshold:0 表示删除这个类型的type
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15397,7 +15397,7 @@ public final class Chain {
                 io.bumo.sdk.core.extend.protobuf.Chain.OperationSetThreshold.class, io.bumo.sdk.core.extend.protobuf.Chain.OperationSetThreshold.Builder.class);
       }
 
-      // Construct using org.bumo.sdk.core.extend.protobuf.Chain.OperationSetThreshold.newBuilder()
+      // Construct using io.bumo.sdk.core.extend.protobuf.Chain.OperationSetThreshold.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -15595,7 +15595,7 @@ public final class Chain {
 
       /**
        * <pre>
-       *type:threshold, threshold:0 Represents the deletion of this type of type
+       *type:threshold ，threshold:0 表示删除这个类型的type
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15609,7 +15609,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold, threshold:0 Represents the deletion of this type of type
+       *type:threshold ，threshold:0 表示删除这个类型的type
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15623,7 +15623,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold, threshold:0 Represents the deletion of this type of type
+       *type:threshold ，threshold:0 表示删除这个类型的type
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15637,7 +15637,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold, threshold:0 Represents the deletion of this type of type
+       *type:threshold ，threshold:0 表示删除这个类型的type
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15658,7 +15658,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold, threshold:0 Represents the deletion of this type of type
+       *type:threshold ，threshold:0 表示删除这个类型的type
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15676,7 +15676,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold, threshold:0 Represents the deletion of this type of type
+       *type:threshold ，threshold:0 表示删除这个类型的type
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15696,7 +15696,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold, threshold:0 Represents the deletion of this type of type
+       *type:threshold ，threshold:0 表示删除这个类型的type
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15717,7 +15717,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold, threshold:0 Represents the deletion of this type of type
+       *type:threshold ，threshold:0 表示删除这个类型的type
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15735,7 +15735,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold, threshold:0 Represents the deletion of this type of type
+       *type:threshold ，threshold:0 表示删除这个类型的type
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15753,7 +15753,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold, threshold:0 Represents the deletion of this type of type
+       *type:threshold ，threshold:0 表示删除这个类型的type
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15772,7 +15772,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold, threshold:0 Represents the deletion of this type of type
+       *type:threshold ，threshold:0 表示删除这个类型的type
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15789,7 +15789,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold, threshold:0 Represents the deletion of this type of type
+       *type:threshold ，threshold:0 表示删除这个类型的type
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15806,7 +15806,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold, threshold:0 Represents the deletion of this type of type
+       *type:threshold ，threshold:0 表示删除这个类型的type
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15817,7 +15817,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold, threshold:0 Represents the deletion of this type of type
+       *type:threshold ，threshold:0 表示删除这个类型的type
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15831,7 +15831,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold, threshold:0 Represents the deletion of this type of type
+       *type:threshold ，threshold:0 表示删除这个类型的type
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15846,7 +15846,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold, threshold:0 Represents the deletion of this type of type
+       *type:threshold ，threshold:0 表示删除这个类型的type
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15857,7 +15857,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold, threshold:0 Represents the deletion of this type of type
+       *type:threshold ，threshold:0 表示删除这个类型的type
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15869,7 +15869,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold, threshold:0 Represents the deletion of this type of type
+       *type:threshold ，threshold:0 表示删除这个类型的type
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -16557,7 +16557,7 @@ public final class Chain {
                 io.bumo.sdk.core.extend.protobuf.Chain.Transaction.class, io.bumo.sdk.core.extend.protobuf.Chain.Transaction.Builder.class);
       }
 
-      // Construct using org.bumo.sdk.core.extend.protobuf.Chain.Transaction.newBuilder()
+      // Construct using io.bumo.sdk.core.extend.protobuf.Chain.Transaction.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -17639,7 +17639,7 @@ public final class Chain {
                 io.bumo.sdk.core.extend.protobuf.Chain.Signer.class, io.bumo.sdk.core.extend.protobuf.Chain.Signer.Builder.class);
       }
 
-      // Construct using org.bumo.sdk.core.extend.protobuf.Chain.Signer.newBuilder()
+      // Construct using io.bumo.sdk.core.extend.protobuf.Chain.Signer.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -17916,7 +17916,7 @@ public final class Chain {
 
     /**
      * <pre>
-     * If it is triggered by a specific block, it is temporarily not provided
+     *如果是特定区块触发的（暂时未提供）
      * </pre>
      *
      * <code>optional int64 ledger_seq = 2;</code>
@@ -17925,7 +17925,7 @@ public final class Chain {
 
     /**
      * <pre>
-     * If it's a transaction triggered
+     *如果是交易触发的
      * </pre>
      *
      * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -17933,7 +17933,7 @@ public final class Chain {
     boolean hasTransaction();
     /**
      * <pre>
-     * If it's a transaction triggered
+     *如果是交易触发的
      * </pre>
      *
      * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -17941,7 +17941,7 @@ public final class Chain {
     io.bumo.sdk.core.extend.protobuf.Chain.Trigger.OperationTrigger getTransaction();
     /**
      * <pre>
-     * If it's a transaction triggered
+     *如果是交易触发的
      * </pre>
      *
      * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -18409,7 +18409,7 @@ public final class Chain {
                   io.bumo.sdk.core.extend.protobuf.Chain.Trigger.OperationTrigger.class, io.bumo.sdk.core.extend.protobuf.Chain.Trigger.OperationTrigger.Builder.class);
         }
 
-        // Construct using org.bumo.sdk.core.extend.protobuf.Chain.Trigger.OperationTrigger.newBuilder()
+        // Construct using io.bumo.sdk.core.extend.protobuf.Chain.Trigger.OperationTrigger.newBuilder()
         private Builder() {
           maybeForceBuilderInitialization();
         }
@@ -18650,7 +18650,7 @@ public final class Chain {
     private long ledgerSeq_;
     /**
      * <pre>
-     * If it is triggered by a specific block, it is temporarily not provided
+     *如果是特定区块触发的（暂时未提供）
      * </pre>
      *
      * <code>optional int64 ledger_seq = 2;</code>
@@ -18663,7 +18663,7 @@ public final class Chain {
     private io.bumo.sdk.core.extend.protobuf.Chain.Trigger.OperationTrigger transaction_;
     /**
      * <pre>
-     * If it's a transaction triggered
+     *如果是交易触发的
      * </pre>
      *
      * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -18673,7 +18673,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     * If it's a transaction triggered
+     *如果是交易触发的
      * </pre>
      *
      * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -18683,7 +18683,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     * If it's a transaction triggered
+     *如果是交易触发的
      * </pre>
      *
      * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -18876,7 +18876,7 @@ public final class Chain {
                 io.bumo.sdk.core.extend.protobuf.Chain.Trigger.class, io.bumo.sdk.core.extend.protobuf.Chain.Trigger.Builder.class);
       }
 
-      // Construct using org.bumo.sdk.core.extend.protobuf.Chain.Trigger.newBuilder()
+      // Construct using io.bumo.sdk.core.extend.protobuf.Chain.Trigger.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -19055,7 +19055,7 @@ public final class Chain {
       private long ledgerSeq_ ;
       /**
        * <pre>
-       * If it is triggered by a specific block, it is temporarily not provided
+       *如果是特定区块触发的（暂时未提供）
        * </pre>
        *
        * <code>optional int64 ledger_seq = 2;</code>
@@ -19065,7 +19065,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       * If it is triggered by a specific block, it is temporarily not provided
+       *如果是特定区块触发的（暂时未提供）
        * </pre>
        *
        * <code>optional int64 ledger_seq = 2;</code>
@@ -19078,7 +19078,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       * If it is triggered by a specific block, it is temporarily not provided
+       *如果是特定区块触发的（暂时未提供）
        * </pre>
        *
        * <code>optional int64 ledger_seq = 2;</code>
@@ -19095,7 +19095,7 @@ public final class Chain {
           io.bumo.sdk.core.extend.protobuf.Chain.Trigger.OperationTrigger, io.bumo.sdk.core.extend.protobuf.Chain.Trigger.OperationTrigger.Builder, io.bumo.sdk.core.extend.protobuf.Chain.Trigger.OperationTriggerOrBuilder> transactionBuilder_;
       /**
        * <pre>
-       * If it's a transaction triggered
+       *如果是交易触发的
        * </pre>
        *
        * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -19105,7 +19105,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       * If it's a transaction triggered
+       *如果是交易触发的
        * </pre>
        *
        * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -19119,7 +19119,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       * If it's a transaction triggered
+       *如果是交易触发的
        * </pre>
        *
        * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -19139,7 +19139,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       * If it's a transaction triggered
+       *如果是交易触发的
        * </pre>
        *
        * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -19157,7 +19157,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       * If it's a transaction triggered
+       *如果是交易触发的
        * </pre>
        *
        * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -19179,7 +19179,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       * If it's a transaction triggered
+       *如果是交易触发的
        * </pre>
        *
        * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -19197,7 +19197,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       * If it's a transaction triggered
+       *如果是交易触发的
        * </pre>
        *
        * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -19209,7 +19209,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       * If it's a transaction triggered
+       *如果是交易触发的
        * </pre>
        *
        * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -19224,7 +19224,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       * If it's a transaction triggered
+       *如果是交易触发的
        * </pre>
        *
        * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -19715,7 +19715,7 @@ public final class Chain {
                 io.bumo.sdk.core.extend.protobuf.Chain.TransactionEnv.class, io.bumo.sdk.core.extend.protobuf.Chain.TransactionEnv.Builder.class);
       }
 
-      // Construct using org.bumo.sdk.core.extend.protobuf.Chain.TransactionEnv.newBuilder()
+      // Construct using io.bumo.sdk.core.extend.protobuf.Chain.TransactionEnv.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -20919,7 +20919,7 @@ public final class Chain {
                 io.bumo.sdk.core.extend.protobuf.Chain.TransactionEnvStore.class, io.bumo.sdk.core.extend.protobuf.Chain.TransactionEnvStore.Builder.class);
       }
 
-      // Construct using org.bumo.sdk.core.extend.protobuf.Chain.TransactionEnvStore.newBuilder()
+      // Construct using io.bumo.sdk.core.extend.protobuf.Chain.TransactionEnvStore.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -21752,7 +21752,7 @@ public final class Chain {
                 io.bumo.sdk.core.extend.protobuf.Chain.TransactionEnvSet.class, io.bumo.sdk.core.extend.protobuf.Chain.TransactionEnvSet.Builder.class);
       }
 
-      // Construct using org.bumo.sdk.core.extend.protobuf.Chain.TransactionEnvSet.newBuilder()
+      // Construct using io.bumo.sdk.core.extend.protobuf.Chain.TransactionEnvSet.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -22627,7 +22627,7 @@ public final class Chain {
                 io.bumo.sdk.core.extend.protobuf.Chain.ConsensusValueValidation.class, io.bumo.sdk.core.extend.protobuf.Chain.ConsensusValueValidation.Builder.class);
       }
 
-      // Construct using org.bumo.sdk.core.extend.protobuf.Chain.ConsensusValueValidation.newBuilder()
+      // Construct using io.bumo.sdk.core.extend.protobuf.Chain.ConsensusValueValidation.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -23532,7 +23532,7 @@ public final class Chain {
                 io.bumo.sdk.core.extend.protobuf.Chain.ConsensusValue.class, io.bumo.sdk.core.extend.protobuf.Chain.ConsensusValue.Builder.class);
       }
 
-      // Construct using org.bumo.sdk.core.extend.protobuf.Chain.ConsensusValue.newBuilder()
+      // Construct using io.bumo.sdk.core.extend.protobuf.Chain.ConsensusValue.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -24219,7 +24219,7 @@ public final class Chain {
 
     /**
      * <pre>
-     * Contract type
+     *合约类型
      * </pre>
      *
      * <code>optional .protocol.Contract.ContractType type = 1;</code>
@@ -24227,7 +24227,7 @@ public final class Chain {
     int getTypeValue();
     /**
      * <pre>
-     * Contract type
+     *合约类型
      * </pre>
      *
      * <code>optional .protocol.Contract.ContractType type = 1;</code>
@@ -24236,7 +24236,7 @@ public final class Chain {
 
     /**
      * <pre>
-     * Contract content, JS code
+     *合约内容,js 代码
      * </pre>
      *
      * <code>optional string payload = 2;</code>
@@ -24244,7 +24244,7 @@ public final class Chain {
     java.lang.String getPayload();
     /**
      * <pre>
-     * Contract content, JS code
+     *合约内容,js 代码
      * </pre>
      *
      * <code>optional string payload = 2;</code>
@@ -24421,7 +24421,7 @@ public final class Chain {
     private int type_;
     /**
      * <pre>
-     * Contract type
+     *合约类型
      * </pre>
      *
      * <code>optional .protocol.Contract.ContractType type = 1;</code>
@@ -24431,7 +24431,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     * Contract type
+     *合约类型
      * </pre>
      *
      * <code>optional .protocol.Contract.ContractType type = 1;</code>
@@ -24445,7 +24445,7 @@ public final class Chain {
     private volatile java.lang.Object payload_;
     /**
      * <pre>
-     * Contract content, JS code
+     *合约内容,js 代码
      * </pre>
      *
      * <code>optional string payload = 2;</code>
@@ -24464,7 +24464,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     * Contract content, JS code
+     *合约内容,js 代码
      * </pre>
      *
      * <code>optional string payload = 2;</code>
@@ -24649,7 +24649,7 @@ public final class Chain {
                 io.bumo.sdk.core.extend.protobuf.Chain.Contract.class, io.bumo.sdk.core.extend.protobuf.Chain.Contract.Builder.class);
       }
 
-      // Construct using org.bumo.sdk.core.extend.protobuf.Chain.Contract.newBuilder()
+      // Construct using io.bumo.sdk.core.extend.protobuf.Chain.Contract.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -24771,7 +24771,7 @@ public final class Chain {
       private int type_ = 0;
       /**
        * <pre>
-       * Contract type
+       *合约类型
        * </pre>
        *
        * <code>optional .protocol.Contract.ContractType type = 1;</code>
@@ -24781,7 +24781,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       * Contract type
+       *合约类型
        * </pre>
        *
        * <code>optional .protocol.Contract.ContractType type = 1;</code>
@@ -24793,7 +24793,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       * Contract type
+       *合约类型
        * </pre>
        *
        * <code>optional .protocol.Contract.ContractType type = 1;</code>
@@ -24804,7 +24804,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       * Contract type
+       *合约类型
        * </pre>
        *
        * <code>optional .protocol.Contract.ContractType type = 1;</code>
@@ -24820,7 +24820,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       * Contract type
+       *合约类型
        * </pre>
        *
        * <code>optional .protocol.Contract.ContractType type = 1;</code>
@@ -24835,7 +24835,7 @@ public final class Chain {
       private java.lang.Object payload_ = "";
       /**
        * <pre>
-       * Contract content, JS code
+       *合约内容,js 代码
        * </pre>
        *
        * <code>optional string payload = 2;</code>
@@ -24854,7 +24854,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       * Contract content, JS code
+       *合约内容,js 代码
        * </pre>
        *
        * <code>optional string payload = 2;</code>
@@ -24874,7 +24874,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       * Contract content, JS code
+       *合约内容,js 代码
        * </pre>
        *
        * <code>optional string payload = 2;</code>
@@ -24891,7 +24891,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       * Contract content, JS code
+       *合约内容,js 代码
        * </pre>
        *
        * <code>optional string payload = 2;</code>
@@ -24904,7 +24904,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       * Contract content, JS code
+       *合约内容,js 代码
        * </pre>
        *
        * <code>optional string payload = 2;</code>
@@ -25050,7 +25050,7 @@ public final class Chain {
   }
   /**
    * <pre>
-   * Create an account
+   *创建账户
    * </pre>
    *
    * Protobuf type {@code protocol.OperationCreateAccount}
@@ -25534,7 +25534,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     * Create an account
+     *创建账户
      * </pre>
      *
      * Protobuf type {@code protocol.OperationCreateAccount}
@@ -25555,7 +25555,7 @@ public final class Chain {
                 io.bumo.sdk.core.extend.protobuf.Chain.OperationCreateAccount.class, io.bumo.sdk.core.extend.protobuf.Chain.OperationCreateAccount.Builder.class);
       }
 
-      // Construct using org.bumo.sdk.core.extend.protobuf.Chain.OperationCreateAccount.newBuilder()
+      // Construct using io.bumo.sdk.core.extend.protobuf.Chain.OperationCreateAccount.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -26467,7 +26467,7 @@ public final class Chain {
 
     /**
      * <pre>
-     * Optional. The version number of metadata. If set up, it must be the same as the existing metadata_version of the account
+     *可选。metadata的版本号。如果设置了，必须和帐号现有的metadata_version相同。
      * </pre>
      *
      * <code>optional int64 version = 3;</code>
@@ -26639,7 +26639,7 @@ public final class Chain {
     private long version_;
     /**
      * <pre>
-     * Optional. The version number of metadata. If set up, it must be the same as the existing metadata_version of the account
+     *可选。metadata的版本号。如果设置了，必须和帐号现有的metadata_version相同。
      * </pre>
      *
      * <code>optional int64 version = 3;</code>
@@ -26847,7 +26847,7 @@ public final class Chain {
                 io.bumo.sdk.core.extend.protobuf.Chain.OperationSetMetadata.class, io.bumo.sdk.core.extend.protobuf.Chain.OperationSetMetadata.Builder.class);
       }
 
-      // Construct using org.bumo.sdk.core.extend.protobuf.Chain.OperationSetMetadata.newBuilder()
+      // Construct using io.bumo.sdk.core.extend.protobuf.Chain.OperationSetMetadata.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -27120,7 +27120,7 @@ public final class Chain {
       private long version_ ;
       /**
        * <pre>
-       * Optional. The version number of metadata. If set up, it must be the same as the existing metadata_version of the account
+       *可选。metadata的版本号。如果设置了，必须和帐号现有的metadata_version相同。
        * </pre>
        *
        * <code>optional int64 version = 3;</code>
@@ -27130,7 +27130,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       * Optional. The version number of metadata. If set up, it must be the same as the existing metadata_version of the account
+       *可选。metadata的版本号。如果设置了，必须和帐号现有的metadata_version相同。
        * </pre>
        *
        * <code>optional int64 version = 3;</code>
@@ -27143,7 +27143,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       * Optional. The version number of metadata. If set up, it must be the same as the existing metadata_version of the account
+       *可选。metadata的版本号。如果设置了，必须和帐号现有的metadata_version相同。
        * </pre>
        *
        * <code>optional int64 version = 3;</code>
@@ -27265,10 +27265,10 @@ public final class Chain {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_protocol_Ledger_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_protocol_OperationPayment_descriptor;
+    internal_static_protocol_OperationPayAsset_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_protocol_OperationPayment_fieldAccessorTable;
+      internal_static_protocol_OperationPayAsset_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_protocol_OperationTypeThreshold_descriptor;
   private static final 
@@ -27405,87 +27405,87 @@ public final class Chain {
       "\030\t \001(\014\022\021\n\tfees_hash\030\n \001(\014\022\017\n\007reserve\030\013 \001",
       "(\t\"d\n\006Ledger\022&\n\006header\030\001 \001(\0132\026.protocol." +
       "LedgerHeader\0222\n\020transaction_envs\030\002 \003(\0132\030" +
-      ".protocol.TransactionEnv\"W\n\020OperationPay" +
-      "ment\022\024\n\014dest_address\030\001 \001(\t\022\036\n\005asset\030\002 \001(" +
-      "\0132\017.protocol.Asset\022\r\n\005input\030\003 \001(\t\"S\n\026Ope" +
-      "rationTypeThreshold\022&\n\004type\030\001 \001(\0162\030.prot" +
-      "ocol.Operation.Type\022\021\n\tthreshold\030\002 \001(\003\"|" +
-      "\n\020AccountPrivilege\022\025\n\rmaster_weight\030\001 \001(" +
-      "\003\022!\n\007signers\030\002 \003(\0132\020.protocol.Signer\022.\n\n" +
-      "thresholds\030\003 \001(\0132\032.protocol.AccountThres",
-      "hold\"c\n\020AccountThreshold\022\024\n\014tx_threshold" +
-      "\030\001 \001(\003\0229\n\017type_thresholds\030\002 \003(\0132 .protoc" +
-      "ol.OperationTypeThreshold\"3\n\023OperationIs" +
-      "sueAsset\022\014\n\004code\030\001 \001(\t\022\016\n\006amount\030\002 \001(\003\"G" +
-      "\n\020OperationPayCoin\022\024\n\014dest_address\030\001 \001(\t" +
-      "\022\016\n\006amount\030\002 \001(\003\022\r\n\005input\030\003 \001(\t\"T\n\030Opera" +
-      "tionSetSignerWeight\022\025\n\rmaster_weight\030\001 \001" +
-      "(\003\022!\n\007signers\030\002 \003(\0132\020.protocol.Signer\",\n" +
-      "\014OperationLog\022\r\n\005topic\030\001 \001(\t\022\r\n\005datas\030\002 " +
-      "\003(\t\"\223\005\n\tOperation\022&\n\004type\030\001 \001(\0162\030.protoc",
-      "ol.Operation.Type\022\026\n\016source_address\030\002 \001(" +
-      "\t\022\020\n\010metadata\030\003 \001(\014\0228\n\016create_account\030\004 " +
-      "\001(\0132 .protocol.OperationCreateAccount\0222\n" +
-      "\013issue_asset\030\005 \001(\0132\035.protocol.OperationI" +
-      "ssueAsset\022+\n\007payment\030\006 \001(\0132\032.protocol.Op" +
-      "erationPayment\0224\n\014set_metadata\030\007 \001(\0132\036.p" +
-      "rotocol.OperationSetMetadata\022=\n\021set_sign" +
-      "er_weight\030\010 \001(\0132\".protocol.OperationSetS" +
-      "ignerWeight\0226\n\rset_threshold\030\t \001(\0132\037.pro" +
-      "tocol.OperationSetThreshold\022,\n\010pay_coin\030",
-      "\n \001(\0132\032.protocol.OperationPayCoin\022#\n\003log" +
-      "\030\013 \001(\0132\026.protocol.OperationLog\"\230\001\n\004Type\022" +
-      "\013\n\007UNKNOWN\020\000\022\022\n\016CREATE_ACCOUNT\020\001\022\017\n\013ISSU" +
-      "E_ASSET\020\002\022\013\n\007PAYMENT\020\003\022\020\n\014SET_METADATA\020\004" +
-      "\022\025\n\021SET_SIGNER_WEIGHT\020\005\022\021\n\rSET_THRESHOLD" +
-      "\020\006\022\014\n\010PAY_COIN\020\007\022\007\n\003LOG\020\010\"h\n\025OperationSe" +
-      "tThreshold\022\024\n\014tx_threshold\030\001 \001(\003\0229\n\017type" +
-      "_thresholds\030\004 \003(\0132 .protocol.OperationTy" +
-      "peThreshold\"\325\001\n\013Transaction\022\026\n\016source_ad" +
-      "dress\030\001 \001(\t\022\r\n\005nonce\030\002 \001(\003\022\021\n\tfee_limit\030",
-      "\003 \001(\003\022\021\n\tgas_price\030\004 \001(\003\022\027\n\017ceil_ledger_" +
-      "seq\030\005 \001(\003\022\020\n\010metadata\030\006 \001(\014\022\'\n\noperation" +
-      "s\030\007 \003(\0132\023.protocol.Operation\"%\n\005Limit\022\013\n" +
-      "\007UNKNOWN\020\000\022\017\n\nOPERATIONS\020\350\007\"O\n\006Signer\022\017\n" +
-      "\007address\030\001 \001(\t\022\016\n\006weight\030\002 \001(\003\"$\n\005Limit\022" +
-      "\017\n\013SIGNER_NONE\020\000\022\n\n\006SIGNER\020d\"\211\002\n\007Trigger" +
-      "\022;\n\020transaction_type\030\001 \001(\0162!.protocol.Tr" +
-      "igger.TransactionType\022\022\n\nledger_seq\030\002 \001(" +
-      "\003\0227\n\013transaction\030\003 \001(\0132\".protocol.Trigge" +
-      "r.OperationTrigger\032/\n\020OperationTrigger\022\014",
-      "\n\004hash\030\001 \001(\014\022\r\n\005index\030\002 \001(\003\"C\n\017Transacti" +
-      "onType\022\026\n\022NORMAL_TRANSACTION\020\000\022\030\n\024CONTRA" +
-      "CT_TRANSACTION\020\001\"\211\001\n\016TransactionEnv\022*\n\013t" +
-      "ransaction\030\001 \001(\0132\025.protocol.Transaction\022" +
-      "\'\n\nsignatures\030\002 \003(\0132\023.protocol.Signature" +
-      "\022\"\n\007trigger\030\003 \001(\0132\021.protocol.Trigger\"\272\001\n" +
-      "\023TransactionEnvStore\0221\n\017transaction_env\030" +
-      "\001 \001(\0132\030.protocol.TransactionEnv\022\022\n\nerror" +
-      "_code\030\002 \001(\005\022\022\n\nerror_desc\030\003 \001(\t\022\022\n\nledge" +
-      "r_seq\030\004 \001(\003\022\022\n\nclose_time\030\005 \001(\003\022\014\n\004hash\030",
-      "\006 \001(\014\022\022\n\nactual_fee\030\007 \001(\003\":\n\021Transaction" +
-      "EnvSet\022%\n\003txs\030\002 \003(\0132\030.protocol.Transacti" +
-      "onEnv\"G\n\030ConsensusValueValidation\022\025\n\rexp" +
-      "ire_tx_ids\030\001 \003(\005\022\024\n\014error_tx_ids\030\002 \003(\005\"\203" +
-      "\002\n\016ConsensusValue\022*\n\005txset\030\001 \001(\0132\033.proto" +
-      "col.TransactionEnvSet\022\022\n\nclose_time\030\002 \001(" +
-      "\003\022\026\n\016previous_proof\030\003 \001(\014\022\022\n\nledger_seq\030" +
-      "\004 \001(\003\022\034\n\024previous_ledger_hash\030\005 \001(\014\022/\n\016l" +
-      "edger_upgrade\030\006 \001(\0132\027.protocol.LedgerUpg" +
-      "rade\0226\n\nvalidation\030\007 \001(\0132\".protocol.Cons",
-      "ensusValueValidation\"j\n\010Contract\022-\n\004type" +
-      "\030\001 \001(\0162\037.protocol.Contract.ContractType\022" +
-      "\017\n\007payload\030\002 \001(\t\"\036\n\014ContractType\022\016\n\nJAVA" +
-      "SCRIPT\020\000\"\316\001\n\026OperationCreateAccount\022\024\n\014d" +
-      "est_address\030\001 \001(\t\022$\n\010contract\030\002 \001(\0132\022.pr" +
-      "otocol.Contract\022(\n\004priv\030\003 \001(\0132\032.protocol" +
-      ".AccountPrivilege\022$\n\tmetadatas\030\004 \003(\0132\021.p" +
-      "rotocol.KeyPair\022\024\n\014init_balance\030\005 \001(\003\022\022\n" +
-      "\ninit_input\030\006 \001(\t\"X\n\024OperationSetMetadat" +
-      "a\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\t\022\017\n\007version",
-      "\030\003 \001(\003\022\023\n\013delete_flag\030\004 \001(\010*#\n\005Limit\022\013\n\007" +
-      "UNKNOWN\020\000\022\r\n\tSIGNATURE\020dB#\n!org.bumo.sdk" +
-      ".core.extend.protobufb\006proto3"
+      ".protocol.TransactionEnv\"X\n\021OperationPay" +
+      "Asset\022\024\n\014dest_address\030\001 \001(\t\022\036\n\005asset\030\002 \001" +
+      "(\0132\017.protocol.Asset\022\r\n\005input\030\003 \001(\t\"S\n\026Op" +
+      "erationTypeThreshold\022&\n\004type\030\001 \001(\0162\030.pro" +
+      "tocol.Operation.Type\022\021\n\tthreshold\030\002 \001(\003\"" +
+      "|\n\020AccountPrivilege\022\025\n\rmaster_weight\030\001 \001" +
+      "(\003\022!\n\007signers\030\002 \003(\0132\020.protocol.Signer\022.\n" +
+      "\nthresholds\030\003 \001(\0132\032.protocol.AccountThre",
+      "shold\"c\n\020AccountThreshold\022\024\n\014tx_threshol" +
+      "d\030\001 \001(\003\0229\n\017type_thresholds\030\002 \003(\0132 .proto" +
+      "col.OperationTypeThreshold\"3\n\023OperationI" +
+      "ssueAsset\022\014\n\004code\030\001 \001(\t\022\016\n\006amount\030\002 \001(\003\"" +
+      "G\n\020OperationPayCoin\022\024\n\014dest_address\030\001 \001(" +
+      "\t\022\016\n\006amount\030\002 \001(\003\022\r\n\005input\030\003 \001(\t\"T\n\030Oper" +
+      "ationSetSignerWeight\022\025\n\rmaster_weight\030\001 " +
+      "\001(\003\022!\n\007signers\030\002 \003(\0132\020.protocol.Signer\"," +
+      "\n\014OperationLog\022\r\n\005topic\030\001 \001(\t\022\r\n\005datas\030\002" +
+      " \003(\t\"\230\005\n\tOperation\022&\n\004type\030\001 \001(\0162\030.proto",
+      "col.Operation.Type\022\026\n\016source_address\030\002 \001" +
+      "(\t\022\020\n\010metadata\030\003 \001(\014\0228\n\016create_account\030\004" +
+      " \001(\0132 .protocol.OperationCreateAccount\0222" +
+      "\n\013issue_asset\030\005 \001(\0132\035.protocol.Operation" +
+      "IssueAsset\022.\n\tpay_asset\030\006 \001(\0132\033.protocol" +
+      ".OperationPayAsset\0224\n\014set_metadata\030\007 \001(\013" +
+      "2\036.protocol.OperationSetMetadata\022=\n\021set_" +
+      "signer_weight\030\010 \001(\0132\".protocol.Operation" +
+      "SetSignerWeight\0226\n\rset_threshold\030\t \001(\0132\037" +
+      ".protocol.OperationSetThreshold\022,\n\010pay_c",
+      "oin\030\n \001(\0132\032.protocol.OperationPayCoin\022#\n" +
+      "\003log\030\013 \001(\0132\026.protocol.OperationLog\"\232\001\n\004T" +
+      "ype\022\013\n\007UNKNOWN\020\000\022\022\n\016CREATE_ACCOUNT\020\001\022\017\n\013" +
+      "ISSUE_ASSET\020\002\022\r\n\tPAY_ASSET\020\003\022\020\n\014SET_META" +
+      "DATA\020\004\022\025\n\021SET_SIGNER_WEIGHT\020\005\022\021\n\rSET_THR" +
+      "ESHOLD\020\006\022\014\n\010PAY_COIN\020\007\022\007\n\003LOG\020\010\"h\n\025Opera" +
+      "tionSetThreshold\022\024\n\014tx_threshold\030\001 \001(\003\0229" +
+      "\n\017type_thresholds\030\004 \003(\0132 .protocol.Opera" +
+      "tionTypeThreshold\"\325\001\n\013Transaction\022\026\n\016sou" +
+      "rce_address\030\001 \001(\t\022\r\n\005nonce\030\002 \001(\003\022\021\n\tfee_",
+      "limit\030\003 \001(\003\022\021\n\tgas_price\030\004 \001(\003\022\027\n\017ceil_l" +
+      "edger_seq\030\005 \001(\003\022\020\n\010metadata\030\006 \001(\014\022\'\n\nope" +
+      "rations\030\007 \003(\0132\023.protocol.Operation\"%\n\005Li" +
+      "mit\022\013\n\007UNKNOWN\020\000\022\017\n\nOPERATIONS\020\350\007\"O\n\006Sig" +
+      "ner\022\017\n\007address\030\001 \001(\t\022\016\n\006weight\030\002 \001(\003\"$\n\005" +
+      "Limit\022\017\n\013SIGNER_NONE\020\000\022\n\n\006SIGNER\020d\"\211\002\n\007T" +
+      "rigger\022;\n\020transaction_type\030\001 \001(\0162!.proto" +
+      "col.Trigger.TransactionType\022\022\n\nledger_se" +
+      "q\030\002 \001(\003\0227\n\013transaction\030\003 \001(\0132\".protocol." +
+      "Trigger.OperationTrigger\032/\n\020OperationTri",
+      "gger\022\014\n\004hash\030\001 \001(\014\022\r\n\005index\030\002 \001(\003\"C\n\017Tra" +
+      "nsactionType\022\026\n\022NORMAL_TRANSACTION\020\000\022\030\n\024" +
+      "CONTRACT_TRANSACTION\020\001\"\211\001\n\016TransactionEn" +
+      "v\022*\n\013transaction\030\001 \001(\0132\025.protocol.Transa" +
+      "ction\022\'\n\nsignatures\030\002 \003(\0132\023.protocol.Sig" +
+      "nature\022\"\n\007trigger\030\003 \001(\0132\021.protocol.Trigg" +
+      "er\"\272\001\n\023TransactionEnvStore\0221\n\017transactio" +
+      "n_env\030\001 \001(\0132\030.protocol.TransactionEnv\022\022\n" +
+      "\nerror_code\030\002 \001(\005\022\022\n\nerror_desc\030\003 \001(\t\022\022\n" +
+      "\nledger_seq\030\004 \001(\003\022\022\n\nclose_time\030\005 \001(\003\022\014\n",
+      "\004hash\030\006 \001(\014\022\022\n\nactual_fee\030\007 \001(\003\":\n\021Trans" +
+      "actionEnvSet\022%\n\003txs\030\002 \003(\0132\030.protocol.Tra" +
+      "nsactionEnv\"G\n\030ConsensusValueValidation\022" +
+      "\025\n\rexpire_tx_ids\030\001 \003(\005\022\024\n\014error_tx_ids\030\002" +
+      " \003(\005\"\203\002\n\016ConsensusValue\022*\n\005txset\030\001 \001(\0132\033" +
+      ".protocol.TransactionEnvSet\022\022\n\nclose_tim" +
+      "e\030\002 \001(\003\022\026\n\016previous_proof\030\003 \001(\014\022\022\n\nledge" +
+      "r_seq\030\004 \001(\003\022\034\n\024previous_ledger_hash\030\005 \001(" +
+      "\014\022/\n\016ledger_upgrade\030\006 \001(\0132\027.protocol.Led" +
+      "gerUpgrade\0226\n\nvalidation\030\007 \001(\0132\".protoco",
+      "l.ConsensusValueValidation\"j\n\010Contract\022-" +
+      "\n\004type\030\001 \001(\0162\037.protocol.Contract.Contrac" +
+      "tType\022\017\n\007payload\030\002 \001(\t\"\036\n\014ContractType\022\016" +
+      "\n\nJAVASCRIPT\020\000\"\316\001\n\026OperationCreateAccoun" +
+      "t\022\024\n\014dest_address\030\001 \001(\t\022$\n\010contract\030\002 \001(" +
+      "\0132\022.protocol.Contract\022(\n\004priv\030\003 \001(\0132\032.pr" +
+      "otocol.AccountPrivilege\022$\n\tmetadatas\030\004 \003" +
+      "(\0132\021.protocol.KeyPair\022\024\n\014init_balance\030\005 " +
+      "\001(\003\022\022\n\ninit_input\030\006 \001(\t\"X\n\024OperationSetM" +
+      "etadata\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\t\022\017\n\007v",
+      "ersion\030\003 \001(\003\022\023\n\013delete_flag\030\004 \001(\010*#\n\005Lim" +
+      "it\022\013\n\007UNKNOWN\020\000\022\r\n\tSIGNATURE\020dB\"\n io.bum" +
+      "o.sdk.core.extend.protobufb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -27542,11 +27542,11 @@ public final class Chain {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_protocol_Ledger_descriptor,
         new java.lang.String[] { "Header", "TransactionEnvs", });
-    internal_static_protocol_OperationPayment_descriptor =
+    internal_static_protocol_OperationPayAsset_descriptor =
       getDescriptor().getMessageTypes().get(7);
-    internal_static_protocol_OperationPayment_fieldAccessorTable = new
+    internal_static_protocol_OperationPayAsset_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_protocol_OperationPayment_descriptor,
+        internal_static_protocol_OperationPayAsset_descriptor,
         new java.lang.String[] { "DestAddress", "Asset", "Input", });
     internal_static_protocol_OperationTypeThreshold_descriptor =
       getDescriptor().getMessageTypes().get(8);
@@ -27595,7 +27595,7 @@ public final class Chain {
     internal_static_protocol_Operation_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_protocol_Operation_descriptor,
-        new java.lang.String[] { "Type", "SourceAddress", "Metadata", "CreateAccount", "IssueAsset", "Payment", "SetMetadata", "SetSignerWeight", "SetThreshold", "PayCoin", "Log", });
+        new java.lang.String[] { "Type", "SourceAddress", "Metadata", "CreateAccount", "IssueAsset", "PayAsset", "SetMetadata", "SetSignerWeight", "SetThreshold", "PayCoin", "Log", });
     internal_static_protocol_OperationSetThreshold_descriptor =
       getDescriptor().getMessageTypes().get(16);
     internal_static_protocol_OperationSetThreshold_fieldAccessorTable = new

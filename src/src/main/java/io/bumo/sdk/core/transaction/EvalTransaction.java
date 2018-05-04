@@ -18,7 +18,7 @@ import io.bumo.sdk.core.operation.BuildConsume;
 import io.bumo.sdk.core.operation.impl.CreateAccountOperation;
 import io.bumo.sdk.core.operation.impl.IssueAssetOperation;
 import io.bumo.sdk.core.operation.impl.PayCoinOperation;
-import io.bumo.sdk.core.operation.impl.PaymentOperation;
+import io.bumo.sdk.core.operation.impl.PayAssetOperation;
 import io.bumo.sdk.core.operation.impl.SetMetadataOperation;
 import io.bumo.sdk.core.operation.impl.SetSignerWeightOperation;
 import io.bumo.sdk.core.operation.impl.SetThresholdOperation;
@@ -114,10 +114,10 @@ public class EvalTransaction{
         		op.setType(OperationType.ISSUE_ASSET.intValue());
         	}
         	
-        	if(operation instanceof PaymentOperation) {
-        		PaymentOperation paymentOperation = (PaymentOperation)operation;
-        		op.setPayment(paymentOperation.getPayment());
-        		op.setType(OperationType.PAYMENT.intValue());
+        	if(operation instanceof PayAssetOperation) {
+        		PayAssetOperation payAssetOperation = (PayAssetOperation)operation;
+        		op.setPayAsset(payAssetOperation.getPayAsset());
+        		op.setType(OperationType.PAYASSET.intValue());
         	}
         	
         	if(operation instanceof SetMetadataOperation) {

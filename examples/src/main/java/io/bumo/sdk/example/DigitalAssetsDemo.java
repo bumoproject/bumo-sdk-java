@@ -3,8 +3,7 @@ package io.bumo.sdk.example;
 import io.bumo.sdk.core.adapter.bc.response.Account;
 import io.bumo.sdk.core.adapter.bc.response.TransactionHistory;
 import io.bumo.sdk.core.adapter.bc.response.ledger.Ledger;
-import io.bumo.sdk.core.config.SDKConfig;
-import io.bumo.sdk.core.config.SDKProperties;
+import io.bumo.sdk.core.config.SDKEngine;
 import io.bumo.sdk.core.exception.SdkException;
 import io.bumo.sdk.core.operation.BcOperation;
 import io.bumo.sdk.core.operation.OperationFactory;
@@ -22,21 +21,27 @@ public class DigitalAssetsDemo {
     private static String publicKey = "b001b6d3120599d19cae7adb6c5e2674ede8629c871cb8b93bd05bb34d203cd974c3f0bc07e5";
     private static String privateKey = "privbtGQELqNswoyqgnQ9tcfpkuH8P1Q6quvoybqZ9oTVwWhS6Z2hi1B";
 	public static void main(String[] args) throws SdkException, InterruptedException {
-		String eventUtis = "ws://127.0.0.1:36003";
-        String ips = "127.0.0.1:36002";
+		// config in codes
+//		String eventUtis = "ws://127.0.0.1:36003";
+//        String ips = "127.0.0.1:36002";
+//
+//        SDKConfig config = new SDKConfig();
+//        SDKProperties sdkProperties = new SDKProperties();
+//        sdkProperties.setEventUtis(eventUtis);
+//        sdkProperties.setIps(ips);
+//        sdkProperties.setRedisSeqManagerEnable(false);
+//        sdkProperties.setRedisHost("192.168.100.33");
+//        sdkProperties.setRedisPort(10379);
+//        sdkProperties.setRedisPassword("xxxxxx");
+//        config.configSdk(sdkProperties);
+//		OperationService operationService = config.getOperationService();
+//		QueryService queryService = config.getQueryService();
 
-        SDKConfig config = new SDKConfig();
-        SDKProperties sdkProperties = new SDKProperties();
-        sdkProperties.setEventUtis(eventUtis);
-        sdkProperties.setIps(ips);
-        sdkProperties.setRedisSeqManagerEnable(false);
-        sdkProperties.setRedisHost("192.168.100.33");
-        sdkProperties.setRedisPort(10379);
-        sdkProperties.setRedisPassword("xxxxxx");
-        config.configSdk(sdkProperties);
-        
-        OperationService operationService = config.getOperationService();
-        QueryService queryService = config.getQueryService();
+
+		// config in config.properties
+		SDKEngine sdkEngine = SDKEngine.getInstance();
+		OperationService operationService = sdkEngine.getOperationService();
+		QueryService queryService = sdkEngine.getQueryService();
         
         // create simple account
         createSimpleAccount(operationService);
@@ -146,7 +151,7 @@ public class DigitalAssetsDemo {
 			String issuerAddress = "buQYBzc87B71wDp4TyikrSkvti8YTMjYN8LT";// Asset issuer
 			String assetCode = "HNC"; // Asset ID
 			Long sendAmount = 1000000000L; // Issue 1 billion HNC
-			BcOperation bcOperation = OperationFactory.newPaymentOperation(destAccountAddress,issuerAddress,assetCode,sendAmount); // 创建资产发行操作
+			BcOperation bcOperation = OperationFactory.newPayAssetOperation(destAccountAddress,issuerAddress,assetCode,sendAmount); // 创建资产发行操作
 			
 			TransactionCommittedResult result = transaction
 					.buildAddOperation(bcOperation)

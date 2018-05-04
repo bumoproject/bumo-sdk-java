@@ -48,6 +48,10 @@ public final class Common {
      */
     ERRCODE_ACCESS_DENIED(6),
     /**
+     * <code>ERRCODE_MATH_OVERFLOW = 7;</code>
+     */
+    ERRCODE_MATH_OVERFLOW(7),
+    /**
      * <code>ERRCODE_EXPR_CONDITION_RESULT_FALSE = 20;</code>
      */
     ERRCODE_EXPR_CONDITION_RESULT_FALSE(20),
@@ -132,6 +136,10 @@ public final class Common {
      */
     ERRCODE_FEE_NOT_ENOUGH(111),
     /**
+     * <code>ERRCODE_FEE_INVALID = 112;</code>
+     */
+    ERRCODE_FEE_INVALID(112),
+    /**
      * <code>ERRCODE_OUT_OF_TXCACHE = 114;</code>
      */
     ERRCODE_OUT_OF_TXCACHE(114),
@@ -210,6 +218,10 @@ public final class Common {
      * <code>ERRCODE_ACCESS_DENIED = 6;</code>
      */
     public static final int ERRCODE_ACCESS_DENIED_VALUE = 6;
+    /**
+     * <code>ERRCODE_MATH_OVERFLOW = 7;</code>
+     */
+    public static final int ERRCODE_MATH_OVERFLOW_VALUE = 7;
     /**
      * <code>ERRCODE_EXPR_CONDITION_RESULT_FALSE = 20;</code>
      */
@@ -295,6 +307,10 @@ public final class Common {
      */
     public static final int ERRCODE_FEE_NOT_ENOUGH_VALUE = 111;
     /**
+     * <code>ERRCODE_FEE_INVALID = 112;</code>
+     */
+    public static final int ERRCODE_FEE_INVALID_VALUE = 112;
+    /**
      * <code>ERRCODE_OUT_OF_TXCACHE = 114;</code>
      */
     public static final int ERRCODE_OUT_OF_TXCACHE_VALUE = 114;
@@ -369,6 +385,7 @@ public final class Common {
         case 4: return ERRCODE_NOT_EXIST;
         case 5: return ERRCODE_TX_TIMEOUT;
         case 6: return ERRCODE_ACCESS_DENIED;
+        case 7: return ERRCODE_MATH_OVERFLOW;
         case 20: return ERRCODE_EXPR_CONDITION_RESULT_FALSE;
         case 21: return ERRCODE_EXPR_CONDITION_SYNTAX_ERROR;
         case 90: return ERRCODE_INVALID_PUBKEY;
@@ -387,6 +404,7 @@ public final class Common {
         case 105: return ERRCODE_ACCOUNT_ASSET_AMOUNT_TOO_LARGE;
         case 106: return ERRCODE_ACCOUNT_INIT_LOW_RESERVE;
         case 111: return ERRCODE_FEE_NOT_ENOUGH;
+        case 112: return ERRCODE_FEE_INVALID;
         case 114: return ERRCODE_OUT_OF_TXCACHE;
         case 120: return ERRCODE_WEIGHT_NOT_VALID;
         case 121: return ERRCODE_THRESHOLD_NOT_VALID;
@@ -816,7 +834,7 @@ public final class Common {
                 io.bumo.sdk.core.extend.protobuf.Common.KeyPair.class, io.bumo.sdk.core.extend.protobuf.Common.KeyPair.Builder.class);
       }
 
-      // Construct using org.bumo.sdk.core.extend.protobuf.Common.KeyPair.newBuilder()
+      // Construct using io.bumo.sdk.core.extend.protobuf.Common.KeyPair.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -1458,7 +1476,7 @@ public final class Common {
                 io.bumo.sdk.core.extend.protobuf.Common.Signature.class, io.bumo.sdk.core.extend.protobuf.Common.Signature.Builder.class);
       }
 
-      // Construct using org.bumo.sdk.core.extend.protobuf.Common.Signature.newBuilder()
+      // Construct using io.bumo.sdk.core.extend.protobuf.Common.Signature.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -2052,7 +2070,7 @@ public final class Common {
                 io.bumo.sdk.core.extend.protobuf.Common.LedgerUpgrade.class, io.bumo.sdk.core.extend.protobuf.Common.LedgerUpgrade.Builder.class);
       }
 
-      // Construct using org.bumo.sdk.core.extend.protobuf.Common.LedgerUpgrade.newBuilder()
+      // Construct using io.bumo.sdk.core.extend.protobuf.Common.LedgerUpgrade.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -2701,7 +2719,7 @@ public final class Common {
                 io.bumo.sdk.core.extend.protobuf.Common.WsMessage.class, io.bumo.sdk.core.extend.protobuf.Common.WsMessage.Builder.class);
       }
 
-      // Construct using org.bumo.sdk.core.extend.protobuf.Common.WsMessage.newBuilder()
+      // Construct using io.bumo.sdk.core.extend.protobuf.Common.WsMessage.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -3262,7 +3280,7 @@ public final class Common {
                 io.bumo.sdk.core.extend.protobuf.Common.Ping.class, io.bumo.sdk.core.extend.protobuf.Common.Ping.Builder.class);
       }
 
-      // Construct using org.bumo.sdk.core.extend.protobuf.Common.Ping.newBuilder()
+      // Construct using io.bumo.sdk.core.extend.protobuf.Common.Ping.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -3700,7 +3718,7 @@ public final class Common {
                 io.bumo.sdk.core.extend.protobuf.Common.Pong.class, io.bumo.sdk.core.extend.protobuf.Common.Pong.Builder.class);
       }
 
-      // Construct using org.bumo.sdk.core.extend.protobuf.Common.Pong.newBuilder()
+      // Construct using io.bumo.sdk.core.extend.protobuf.Common.Pong.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -3933,37 +3951,38 @@ public final class Common {
       "\"J\n\tWsMessage\022\014\n\004type\030\001 \001(\003\022\017\n\007request\030\002" +
       " \001(\010\022\020\n\010sequence\030\003 \001(\003\022\014\n\004data\030\004 \001(\014\"\025\n\004" +
       "Ping\022\r\n\005nonce\030\001 \001(\003\"\025\n\004Pong\022\r\n\005nonce\030\001 \001" +
-      "(\003*\233\t\n\tERRORCODE\022\023\n\017ERRCODE_SUCCESS\020\000\022\032\n" +
+      "(\003*\317\t\n\tERRORCODE\022\023\n\017ERRCODE_SUCCESS\020\000\022\032\n" +
       "\026ERRCODE_INTERNAL_ERROR\020\001\022\035\n\031ERRCODE_INV",
       "ALID_PARAMETER\020\002\022\031\n\025ERRCODE_ALREADY_EXIS" +
       "T\020\003\022\025\n\021ERRCODE_NOT_EXIST\020\004\022\026\n\022ERRCODE_TX" +
-      "_TIMEOUT\020\005\022\031\n\025ERRCODE_ACCESS_DENIED\020\006\022\'\n" +
-      "#ERRCODE_EXPR_CONDITION_RESULT_FALSE\020\024\022\'" +
-      "\n#ERRCODE_EXPR_CONDITION_SYNTAX_ERROR\020\025\022" +
-      "\032\n\026ERRCODE_INVALID_PUBKEY\020Z\022\032\n\026ERRCODE_I" +
-      "NVALID_PRIKEY\020[\022\031\n\025ERRCODE_ASSET_INVALID" +
-      "\020\\\022\035\n\031ERRCODE_INVALID_SIGNATURE\020]\022\033\n\027ERR" +
-      "CODE_INVALID_ADDRESS\020^\022\036\n\032ERRCODE_MISSIN" +
-      "G_OPERATIONS\020a\022\037\n\033ERRCODE_TOO_MANY_OPERA",
-      "TIONS\020b\022\030\n\024ERRCODE_BAD_SEQUENCE\020c\022\037\n\033ERR" +
-      "CODE_ACCOUNT_LOW_RESERVE\020d\022$\n ERRCODE_AC" +
-      "COUNT_SOURCEDEST_EQUAL\020e\022\036\n\032ERRCODE_ACCO" +
-      "UNT_DEST_EXIST\020f\022\035\n\031ERRCODE_ACCOUNT_NOT_" +
-      "EXIST\020g\022%\n!ERRCODE_ACCOUNT_ASSET_LOW_RES" +
-      "ERVE\020h\022*\n&ERRCODE_ACCOUNT_ASSET_AMOUNT_T" +
-      "OO_LARGE\020i\022$\n ERRCODE_ACCOUNT_INIT_LOW_R" +
-      "ESERVE\020j\022\032\n\026ERRCODE_FEE_NOT_ENOUGH\020o\022\032\n\026" +
-      "ERRCODE_OUT_OF_TXCACHE\020r\022\034\n\030ERRCODE_WEIG" +
-      "HT_NOT_VALID\020x\022\037\n\033ERRCODE_THRESHOLD_NOT_",
-      "VALID\020y\022 \n\033ERRCODE_INVALID_DATAVERSION\020\220" +
-      "\001\022\034\n\027ERRCODE_TX_SIZE_TOO_BIG\020\222\001\022\"\n\035ERRCO" +
-      "DE_CONTRACT_EXECUTE_FAIL\020\227\001\022\"\n\035ERRCODE_C" +
-      "ONTRACT_SYNTAX_ERROR\020\230\001\022(\n#ERRCODE_CONTR" +
-      "ACT_TOO_MANY_RECURSION\020\231\001\022+\n&ERRCODE_CON" +
-      "TRACT_TOO_MANY_TRANSACTIONS\020\232\001\022%\n ERRCOD" +
-      "E_CONTRACT_EXECUTE_EXPIRED\020\233\001\022!\n\034ERRCODE" +
-      "_TX_INSERT_QUEUE_FAIL\020\240\001B#\n!org.bumo.sdk" +
-      ".core.extend.protobufb\006proto3"
+      "_TIMEOUT\020\005\022\031\n\025ERRCODE_ACCESS_DENIED\020\006\022\031\n" +
+      "\025ERRCODE_MATH_OVERFLOW\020\007\022\'\n#ERRCODE_EXPR" +
+      "_CONDITION_RESULT_FALSE\020\024\022\'\n#ERRCODE_EXP" +
+      "R_CONDITION_SYNTAX_ERROR\020\025\022\032\n\026ERRCODE_IN" +
+      "VALID_PUBKEY\020Z\022\032\n\026ERRCODE_INVALID_PRIKEY" +
+      "\020[\022\031\n\025ERRCODE_ASSET_INVALID\020\\\022\035\n\031ERRCODE" +
+      "_INVALID_SIGNATURE\020]\022\033\n\027ERRCODE_INVALID_" +
+      "ADDRESS\020^\022\036\n\032ERRCODE_MISSING_OPERATIONS\020",
+      "a\022\037\n\033ERRCODE_TOO_MANY_OPERATIONS\020b\022\030\n\024ER" +
+      "RCODE_BAD_SEQUENCE\020c\022\037\n\033ERRCODE_ACCOUNT_" +
+      "LOW_RESERVE\020d\022$\n ERRCODE_ACCOUNT_SOURCED" +
+      "EST_EQUAL\020e\022\036\n\032ERRCODE_ACCOUNT_DEST_EXIS" +
+      "T\020f\022\035\n\031ERRCODE_ACCOUNT_NOT_EXIST\020g\022%\n!ER" +
+      "RCODE_ACCOUNT_ASSET_LOW_RESERVE\020h\022*\n&ERR" +
+      "CODE_ACCOUNT_ASSET_AMOUNT_TOO_LARGE\020i\022$\n" +
+      " ERRCODE_ACCOUNT_INIT_LOW_RESERVE\020j\022\032\n\026E" +
+      "RRCODE_FEE_NOT_ENOUGH\020o\022\027\n\023ERRCODE_FEE_I" +
+      "NVALID\020p\022\032\n\026ERRCODE_OUT_OF_TXCACHE\020r\022\034\n\030",
+      "ERRCODE_WEIGHT_NOT_VALID\020x\022\037\n\033ERRCODE_TH" +
+      "RESHOLD_NOT_VALID\020y\022 \n\033ERRCODE_INVALID_D" +
+      "ATAVERSION\020\220\001\022\034\n\027ERRCODE_TX_SIZE_TOO_BIG" +
+      "\020\222\001\022\"\n\035ERRCODE_CONTRACT_EXECUTE_FAIL\020\227\001\022" +
+      "\"\n\035ERRCODE_CONTRACT_SYNTAX_ERROR\020\230\001\022(\n#E" +
+      "RRCODE_CONTRACT_TOO_MANY_RECURSION\020\231\001\022+\n" +
+      "&ERRCODE_CONTRACT_TOO_MANY_TRANSACTIONS\020" +
+      "\232\001\022%\n ERRCODE_CONTRACT_EXECUTE_EXPIRED\020\233" +
+      "\001\022!\n\034ERRCODE_TX_INSERT_QUEUE_FAIL\020\240\001B\"\n " +
+      "io.bumo.sdk.core.extend.protobufb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {

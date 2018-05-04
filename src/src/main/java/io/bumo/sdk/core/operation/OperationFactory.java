@@ -51,8 +51,8 @@ public class OperationFactory{
      * @param assetCode     Asset code
      * @param amount        The amount of the assets to be transfered
      */
-    public static PaymentOperation newPaymentOperation(String targetAddress, String issuerAddress, String assetCode, long amount) throws SdkException{
-        return new PaymentOperation.Builder().buildAmount(amount).buildAssetCode(assetCode).buildTargetAddress(targetAddress).buildIssuerAddress(issuerAddress).build();
+    public static PayAssetOperation newPayAssetOperation(String targetAddress, String issuerAddress, String assetCode, long amount) throws SdkException{
+        return new PayAssetOperation.Builder().buildAmount(amount).buildAssetCode(assetCode).buildTargetAddress(targetAddress).buildIssuerAddress(issuerAddress).build();
     }
 
     /**
@@ -67,8 +67,8 @@ public class OperationFactory{
      * @throws SdkException
      */
     @SuppressWarnings("unused")
-	private static PaymentOperation newPaymentOperation(String targetAddress, String issuerAddress, String assetCode, long amount, String input) throws SdkException{
-        return new PaymentOperation.Builder().buildAmount(amount).buildAssetCode(assetCode).buildTargetAddress(targetAddress).buildIssuerAddress(issuerAddress).buildInput(input).build();
+	private static PayAssetOperation newPayAssetOperation(String targetAddress, String issuerAddress, String assetCode, long amount, String input) throws SdkException{
+        return new PayAssetOperation.Builder().buildAmount(amount).buildAssetCode(assetCode).buildTargetAddress(targetAddress).buildIssuerAddress(issuerAddress).buildInput(input).build();
     }
     /***
      * Pay BU token
