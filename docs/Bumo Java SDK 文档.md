@@ -117,7 +117,10 @@ BcOperation operation = OperationFactory.newCreateAccountOperation(targetAddress
 
 2.  构建transaction
 
-   先创建transaction对象，将operation绑定到transaction对象，并设置GasPrice、feeLimit和signer等信息，例如：
+   先创建transaction对象，将operation绑定到transaction对象，并设置gasPrice、feeLimit和signer等信息
+> 注意：gasPrice和feeLimit的单位是MO，且 1 BU = 10^8 MO
+   
+   例如：
    
 ```
 Transaction transaction = operationService.newTransaction(txSubmitAccountAddress);
@@ -165,7 +168,7 @@ OperationFactory.newCreateAccountOperation(destAddress, initBalance);
    参数     |     类型     |     描述                    |
 ----------- | ------------ | --------------------------- |
 destAddress |    String    | 区块链账户地址              |
-initBalance |    long      | 创建账户初始化账户余额，最少10000000mo（注:1 bu = 10^8 mo） |
+initBalance |    long      | 创建账户初始化账户余额，最少10000000 MO（注:1 BU = 10^8 MO） |
 
 #### 发行资产
 
@@ -217,7 +220,7 @@ OperationFactory.newPayCoinOperation(targetAddress, amount);
 参数             |      类型    |      描述      |
 ---------------- | ------------ |  ------------  |
 targetAddress    |   String     | 目标区块链地址 | 
-sendTokenAmount  |    long      |    发送数量    | 
+sendTokenAmount  |    long      | 发送数量 (单位 : MO　注:1 BU = 10^8 MO)    | 
 
 ### 查询说明
 
@@ -280,55 +283,55 @@ balance     |  Long          |  账户余额 (单位 : MO　注:1 BU = 10^8 MO) 
 assetsHash  |  String        |  账户资产hash       |
 storageHash |  String        |  账户区块链存储hash |
 nonce       |  long          |  账户交易次数       |
-assets      |  [Asset](#asset数据结构)[]       |  资产列表           |
-contract    |  [Contract](#contract数据结构)      |  账户合约           |
-metadatas   |  [SetMetadata](#setmetadata数据结构)[] |  备注信息           |
-priv        |  [Priv](#priv数据结构)          |  权限               |
+assets      |  [Asset](#asset对象)[]       |  资产列表           |
+contract    |  [Contract](#contract对象)      |  账户合约           |
+metadatas   |  [SetMetadata](#setmetadata对象)[] |  备注信息           |
+priv        |  [Priv](#priv对象)          |  权限               |
 
-###### Asset数据结构
+###### Asset对象
 参数        |   类型         |       描述          |       
 ----------- | -------------- | ------------------- |
 amount      |  Long        |  账户资产数量       |
-key         |  [Key](#key数据结构)           |  资产标识         |
+key         |  [Key](#key对象)           |  资产标识         |
 
-###### Key数据结构
+###### Key对象
 参数        |   类型         |       描述          |       
 ----------- | -------------- | ------------------- |
 code        |  String        |  资产代码           |
 issuer      |  String        |  资产发行方         |
 
-###### Contract数据结构
+###### Contract对象
 参数        |   类型         |       描述          |       
 ----------- | -------------- | ------------------- |
 payload     |  String        |  合约入参           |
 
-###### SetMetadata数据结构
+###### SetMetadata对象
 参数        |   类型         |       描述          |       
 ----------- | -------------- | ------------------- |
 key         |  String        |  关键字索引         |
 value       |  String        |  内容               |
 version     |  long          |  版本               |
 
-###### Priv数据结构
+###### Priv对象
 参数         |   类型         |       描述          |       
 ------------ | -------------- | ------------------- |
 masterWeight |  long          |  账户自身权重       |
-signers      |  List<[Signer](#signer数据结构)>     |  签名者列表         |
-threshold    |  [Threshold](#threshold数据结构)     |  门限权重           |
+signers      |  List<[Signer](#signer对象)>     |  签名者列表         |
+threshold    |  [Threshold](#threshold对象)     |  门限权重           |
 
-###### Signer数据结构
+###### Signer对象
 参数         |   类型         |       描述          |       
 ------------ | -------------- | ------------------- |
 address      |  String        |  签名者账户地址     |
 weight       |  long          |  签名者权重         |
 
-###### Threshold数据结构
+###### Threshold对象
 参数            |   类型                |       描述            |       
 --------------- | --------------------- | --------------------- |
 txThreshold     |  long                 |  交易默认门限权重     |
-type_thresholds |  List<[TypeThreshold](#typethreshold数据结构)>  |  指定操作类型门限权重 |
+type_thresholds |  List<[TypeThreshold](#typethreshold对象)>  |  指定操作类型门限权重 |
 
-###### TypeThreshold数据结构
+###### TypeThreshold对象
 参数            |   类型                |       描述            |       
 --------------- | --------------------- | --------------------- |
 type            |  long                 |  指定操作类型         |
@@ -386,8 +389,8 @@ TransactionHistory tx = queryService.getTransactionResultByHash(txHash);
 | sourceAddress |   String          |   交易发起账户地址   |
 | nonce         |   long            |   交易序列号         |
 | metadata      |   String          |   附加信息           |
-| feeLimit      |   long            |   交易手续费         |
-| gasPrice      |   long            |   打包费用           |
+| feeLimit      |   long            |   交易手续费 (单位 : MO　注:1 BU = 10^8 MO)         |
+| gasPrice      |   long            |   打包费用 (单位 : MO　注:1 BU = 10^8 MO)          |
 | operations    |   [Operation](#operation对象)[]     |   操作列表           |
 
 ###### Operation对象
@@ -396,12 +399,43 @@ TransactionHistory tx = queryService.getTransactionResultByHash(txHash);
 | sourceAddress   |   String          |   源账户地址         |
 | type            |   int             |   操作类型           |
 | metadata        |   String          |   附加信息           |
-| createAccount   |   CreateAccount   |   创建账户操作       |
-| issueAsset      |   IssueAsset      |   发行资产操作       |
-| payAsset        |   PayAsset        |   转移资产操作       |
-| payCoin         |   PayCoin         |   转移BU操作         |
+| createAccount   |   [CreateAccount](#createaccount对象)   |   创建账户操作       |
+| issueAsset      |   [IssueAsset](#issueasset对象)      |   发行资产操作       |
+| payAsset        |   [PayAsset](#payasset对象)        |   转移资产操作       |
+| payCoin         |   [PayCoin](#paycoin对象)         |   转移BU操作         |
 
-各个操作的数据结构，请参照之前的操作说明
+###### CreateAccount对象
+| 参数            |   类型            |    描述              |
+| :-------------- | ----------------- | -------------------- |
+| metadata   |   String          |   附加信息         |
+| destAddress        |   String          |   目标账户地址           |
+| initBalance   |   CreateAccount   |   初始化资产 (单位 : MO　注:1 BU = 10^8 MO)      |
+| initInput      |   String      |   合约入参       |
+| contract        |   [Contract](#contract对象)        |   合约       |
+| metadatas         |   List<[SetMetadata](#setmetadata对象)>         |   附加信息         |
+| priv         |   [Priv](#Priv对象)         |   权限         |
+
+###### IssueAsset对象
+| 参数            |   类型            |    描述              |
+| :-------------- | ----------------- | -------------------- |
+| metadata   |   String          |   附加信息         |
+| amount   |   CreateAccount   |   资产数量      |
+| code      |   String      |   资产代码       |
+
+###### PayAsset对象
+| 参数            |   类型            |    描述              |
+| :-------------- | ----------------- | -------------------- |
+| metadata   |   String          |   附加信息         |
+| destAddress   |   String          |   目标地址         |
+| asset   |   [Asset](#asset对象)   |   资产数量      |
+| input      |   String      |   合约入参       |
+
+###### PayCoin对象
+| 参数            |   类型            |    描述              |
+| :-------------- | ----------------- | -------------------- |
+| destAddress   |   String          |   目标地址         |
+| amount   |   long   |   BU数量 (单位 : MO　注:1 BU = 10^8 MO)     |
+| input      |   String      |   合约入参       |
 
 ##### 根据区块序列号查询交易
 
@@ -418,7 +452,7 @@ TransactionHistory tx = queryService.getTransactionHistoryByLedgerSeq(ledgerSeq)
 | :------------- | ---------- | ---------- |
 | txHash         |   String   | 交易hash   |
 
-返回参数请参考“[根据交易hash查询](#根据交易hash查询)”的说明
+返回参数请参考“[根据hash查询交易](#根据hash查询交易)”的说明
 
 ### 示例
 
