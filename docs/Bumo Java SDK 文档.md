@@ -181,7 +181,7 @@ OperationFactory.newIssueAssetOperation(assetCode, amount);
 ###### 入参
 | 参数           |    类型    |   描述                |
 | :------------- | ---------- | --------------------- |
-| assetCode      |   String   | 资产代码, 如: "CNY"   |
+| assetCode      |   String   | 资产代码, 如: "HNC"   |
 | amount         |   long     | 资产数量              |
 
 #### 转移资产
