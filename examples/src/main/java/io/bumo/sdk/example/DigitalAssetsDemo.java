@@ -1,10 +1,15 @@
 package io.bumo.sdk.example;
 
+import io.bumo.encryption.key.PrivateKey;
+import io.bumo.encryption.utils.hex.HexFormat;
 import io.bumo.sdk.core.adapter.bc.response.Account;
 import io.bumo.sdk.core.adapter.bc.response.TransactionHistory;
 import io.bumo.sdk.core.adapter.bc.response.ledger.Ledger;
+import io.bumo.sdk.core.config.SDKConfig;
 import io.bumo.sdk.core.config.SDKEngine;
+import io.bumo.sdk.core.config.SDKProperties;
 import io.bumo.sdk.core.exception.SdkException;
+import io.bumo.sdk.core.extend.protobuf.Chain;
 import io.bumo.sdk.core.operation.BcOperation;
 import io.bumo.sdk.core.operation.OperationFactory;
 import io.bumo.sdk.core.operation.impl.PayCoinOperation;
@@ -17,33 +22,33 @@ import io.bumo.sdk.core.utils.blockchain.BlockchainKeyPair;
 import io.bumo.sdk.core.utils.blockchain.SecureKeyGenerator;
 
 public class DigitalAssetsDemo {
-	private static String address = "buQdBdkvmAhnRrhLp4dmeCc2ft7RNE51c9EK";
-    private static String publicKey = "b001b6d3120599d19cae7adb6c5e2674ede8629c871cb8b93bd05bb34d203cd974c3f0bc07e5";
-    private static String privateKey = "privbtGQELqNswoyqgnQ9tcfpkuH8P1Q6quvoybqZ9oTVwWhS6Z2hi1B";
+	private static String address = "buQgQ3s2qY5DTFLezXzqf7NWLcVXufCyN93L";
+    private static String publicKey = "b001a8d29c772472953b51358ae05aa082c2de6af5b585e909bdb6078ae013d39bb41644d4a7";
+    private static String privateKey = "privbxpwDNRMe7xAshHChrnUdbLK5GpxgvqwhNcMMXA6byaX6VM85ThD";
 	public static void main(String[] args) throws SdkException, InterruptedException {
-		// config in codes
-//		String eventUtis = "ws://127.0.0.1:36003";
-//        String ips = "127.0.0.1:36002";
-//
-//        SDKConfig config = new SDKConfig();
-//        SDKProperties sdkProperties = new SDKProperties();
-//        sdkProperties.setEventUtis(eventUtis);
-//        sdkProperties.setIps(ips);
-//        sdkProperties.setRedisSeqManagerEnable(false);
-//        sdkProperties.setRedisHost("192.168.100.33");
-//        sdkProperties.setRedisPort(10379);
-//        sdkProperties.setRedisPassword("xxxxxx");
-//        config.configSdk(sdkProperties);
-//		OperationService operationService = config.getOperationService();
-//		QueryService queryService = config.getQueryService();
 
+		// config in codes
+		String eventUtis = "ws://127.0.0.1:26003";
+        String ips = "127.0.0.1:26002";
+
+        SDKConfig config = new SDKConfig();
+        SDKProperties sdkProperties = new SDKProperties();
+        sdkProperties.setEventUtis(eventUtis);
+        sdkProperties.setIps(ips);
+        sdkProperties.setRedisSeqManagerEnable(false);
+        sdkProperties.setRedisHost("192.168.100.33");
+        sdkProperties.setRedisPort(10379);
+        sdkProperties.setRedisPassword("xxxxxx");
+        config.configSdk(sdkProperties);
+		OperationService operationService = config.getOperationService();
+		QueryService queryService = config.getQueryService();
 
 		// config in config.properties
-		SDKEngine sdkEngine = SDKEngine.getInstance();
-		OperationService operationService = sdkEngine.getOperationService();
-		QueryService queryService = sdkEngine.getQueryService();
-        
-        // create simple account
+//		SDKEngine sdkEngine = SDKEngine.getInstance();
+//		OperationService operationService = sdkEngine.getOperationService();
+//		QueryService queryService = sdkEngine.getQueryService();
+//
+//        // create simple account
         createSimpleAccount(operationService);
         
         // query account
@@ -68,21 +73,24 @@ public class DigitalAssetsDemo {
 		String accountPk = keyPair.getPubKey(); // Block chain account public key
 
 		try {
-			String txSubmitAccountAddress = address;// Transaction sender block chain account address
+			// Create an account operation
+			BcOperation bcOperation = OperationFactory.newCreateAccountOperation(accountAddress, ToBaseUnit.BU2MO("0.1"));
+
+			// Get start Tx
+			String txSubmitAccountAddress = address; // Transaction sender block chain account address
 			Transaction transaction = operationService.newTransaction(txSubmitAccountAddress);
 
-			new OperationFactory();
-			
-			BcOperation bcOperation = OperationFactory.newCreateAccountOperation(accountAddress, ToBaseUnit.BU2MO("0.1")); // Create an account operation
-			
-			TransactionCommittedResult result = transaction
-					.buildTxMetadata("build simple account")
+			// Bind operation
+			transaction.buildTxMetadata("build simple account")
 					.buildAddOperation(bcOperation)
-					.buildAddGasPrice(1000) // 【required】 the price of Gas, at least 1000MO
+					.buildAddGasPrice(100) // 【required】 the price of Gas, at least 1000MO
 				    .buildAddFeeLimit(ToBaseUnit.BU2MO("0.01")) // 【required】Service Charge (1000000MO = 0.01BU)
-				    .buildAddSigner(publicKey, privateKey)
-					.commit();
-			
+				    .buildAddSigner(publicKey, privateKey);
+
+			// Commit Tx
+			TransactionCommittedResult result = transaction.commit();
+
+			// Get the hash of Tx
 			System.out.println(result.getHash());
 		} catch (SdkException e) {
 			e.printStackTrace();
@@ -92,25 +100,30 @@ public class DigitalAssetsDemo {
 	public static void issueAssets(OperationService operationService) {
 		try {
 			// Asset issuer block chain account address
-			String issueAssetsAccountAddress = "buQdBdkvmAhnRrhLp4dmeCc2ft7RNE51c9EK";
+			String issueAssetsAccountAddress = "buQgQ3s2qY5DTFLezXzqf7NWLcVXufCyN93L";
 			// Public key of asset issuer account
-			String issueAssetsAccountPublicKey = "b001b6d3120599d19cae7adb6c5e2674ede8629c871cb8b93bd05bb34d203cd974c3f0bc07e5";
+			String issueAssetsAccountPublicKey = "b001a8d29c772472953b51358ae05aa082c2de6af5b585e909bdb6078ae013d39bb41644d4a7";
 			// Asset issuer's private key
-			String issueAssetsAccountPrivateKey = "privbtGQELqNswoyqgnQ9tcfpkuH8P1Q6quvoybqZ9oTVwWhS6Z2hi1B";
-			
-			Transaction transaction = operationService.newTransaction(issueAssetsAccountAddress);
-			
+			String issueAssetsAccountPrivateKey = "privbxpwDNRMe7xAshHChrnUdbLK5GpxgvqwhNcMMXA6byaX6VM85ThD";
+
+			// Creating asset distribution operations
 			String assetCode = "HNC";
 			Long issueAmount = 1000000000L; // Issue 1 billion HNC
-			BcOperation bcOperation = OperationFactory.newIssueAssetOperation(assetCode,issueAmount ); // Creating asset distribution operations
-			
-			TransactionCommittedResult result = transaction
-					.buildAddOperation(bcOperation)
+			BcOperation bcOperation = OperationFactory.newIssueAssetOperation(assetCode,issueAmount );
+
+			// Get start Tx
+			Transaction transaction = operationService.newTransaction(issueAssetsAccountAddress);
+
+			// Bind operation
+			 transaction.buildAddOperation(bcOperation)
 					.buildAddGasPrice(1000) // 【required】 the price of Gas, at least 1000MO
 				    .buildAddFeeLimit(ToBaseUnit.BU2MO("50.01")) // 【required】Service Fee + Operation Fee (1000000MO + 5000000000MO = 50.01BU)
-				    .buildAddSigner(issueAssetsAccountPublicKey, issueAssetsAccountPrivateKey)
-					.commit();
-			
+				    .buildAddSigner(issueAssetsAccountPublicKey, issueAssetsAccountPrivateKey);
+
+			// Commit Tx
+			TransactionCommittedResult result = transaction.commit();
+
+			// Get the hash of Tx
 			System.out.println(result.getHash());
 		} catch (SdkException e) {
 			e.printStackTrace();
@@ -121,15 +134,24 @@ public class DigitalAssetsDemo {
 		String txSubmitAccountAddress = address;// Trade author block chain account address
 		String targetAddress = "buQchyqkRdJeyfrRwQVCEMdxEV2BPSoeQsGx";
 		Long sendTokenAmount = ToBaseUnit.BU2MO("0.6");
-		Transaction transaction = operationService.newTransaction(txSubmitAccountAddress);
 		try {
+			// Creating asset distribution operations
 			PayCoinOperation payCoinOperation = OperationFactory.newPayCoinOperation(targetAddress, sendTokenAmount);
-			TransactionCommittedResult result = transaction.buildAddOperation(payCoinOperation)
+
+			// Get start Tx
+			Transaction transaction = operationService.newTransaction(txSubmitAccountAddress);
+
+			// Bind operation
+			transaction.buildAddOperation(payCoinOperation)
 				.buildTxMetadata("send BU token")
 				.buildAddGasPrice(1000) // 【required】 the price of Gas, at least 1000MO
 			    .buildAddFeeLimit(ToBaseUnit.BU2MO("0.01")) // 【required】Service Charge (1000000MO = 0.01BU)
-			    .buildAddSigner(publicKey, privateKey)
-				.commit();
+			    .buildAddSigner(publicKey, privateKey);
+
+			// Commit Tx
+			TransactionCommittedResult result = transaction.commit();
+
+			// Get the hash of Tx
 			System.out.println(result.getHash());
 		} catch (SdkException e) {
 			e.printStackTrace();
@@ -139,28 +161,34 @@ public class DigitalAssetsDemo {
 	public static void PayAsset(OperationService operationService) {
 		try {
 			// Asset owner block chain account address
-			String assetOwnerAccountAddress = "buQdBdkvmAhnRrhLp4dmeCc2ft7RNE51c9EK";
+			String assetOwnerAccountAddress = "buQgQ3s2qY5DTFLezXzqf7NWLcVXufCyN93L";
 			// Asset owner account public key
-			String assetOwnerAccountPublicKey = "b001b6d3120599d19cae7adb6c5e2674ede8629c871cb8b93bd05bb34d203cd974c3f0bc07e5";
+			String assetOwnerAccountPublicKey = "b001a8d29c772472953b51358ae05aa082c2de6af5b585e909bdb6078ae013d39bb41644d4a7";
 			// Asset owner's private key
-			String assetOwnerAccountPrivateKey = "privbtGQELqNswoyqgnQ9tcfpkuH8P1Q6quvoybqZ9oTVwWhS6Z2hi1B";
-			
-			Transaction transaction = operationService.newTransaction(assetOwnerAccountAddress);
-			
+			String assetOwnerAccountPrivateKey = "privbxpwDNRMe7xAshHChrnUdbLK5GpxgvqwhNcMMXA6byaX6VM85ThD";
+
+			// Creating asset distribution operations
 			String destAccountAddress = "buQjM8zQV3VXiUETCaJCogKbFoofnSWufgXo"; // Account address of the asset recipient
 			String issuerAddress = "buQYBzc87B71wDp4TyikrSkvti8YTMjYN8LT";// Asset issuer
 			String assetCode = "HNC"; // Asset ID
 			Long sendAmount = 1000000000L; // Issue 1 billion HNC
 			BcOperation bcOperation = OperationFactory.newPayAssetOperation(destAccountAddress,issuerAddress,assetCode,sendAmount); // 创建资产发行操作
-			
-			TransactionCommittedResult result = transaction
+
+			// Get start Tx
+			Transaction transaction = operationService.newTransaction(assetOwnerAccountAddress);
+
+			// Bind operation
+			transaction
 					.buildAddOperation(bcOperation)
 					.buildTxMetadata("payment")
 					.buildAddGasPrice(1000) // 【required】 the price of Gas, at least 1000MO
 				    .buildAddFeeLimit(ToBaseUnit.BU2MO("0.01")) // 【required】Service Charge (1000000MO = 0.01BU)
-				    .buildAddSigner(assetOwnerAccountPublicKey, assetOwnerAccountPrivateKey)
-					.commit();
-			
+				    .buildAddSigner(assetOwnerAccountPublicKey, assetOwnerAccountPrivateKey);
+
+			// Commit Tx
+			TransactionCommittedResult result = transaction.commit();
+
+			// Get the hash of Tx
 			System.out.println(result.getHash());
 		} catch (SdkException e) {
 			e.printStackTrace();
@@ -168,25 +196,25 @@ public class DigitalAssetsDemo {
 	}
 	
 	public static void queryAccount(QueryService queryService) {
-		String address = "buQYBzc87B71wDp4TyikrSkvti8YTMjYN8LT"; 
+		String address = "buQgQ3s2qY5DTFLezXzqf7NWLcVXufCyN93L";
 		Account account = queryService.getAccount(address);
-		System.out.println(account);
+		System.out.println(account.getAddress());
 	}
 	
 	public static void queryTransactionByHash(QueryService queryService) {
 		String txHash = "";
 		TransactionHistory tx = queryService.getTransactionHistoryByHash(txHash);
-		System.out.println(tx);
+		System.out.println(tx.getTotalCount());
 	}
 	
 	public static void queryTransactionBySeq(QueryService queryService) {
 		Long seq = 1L;
 		TransactionHistory tx = queryService.getTransactionHistoryByLedgerSeq(seq);
-		System.out.println(tx);
+		System.out.println(tx.getTotalCount());
 	}
 	
 	public static void queryLatestLedger(QueryService queryService) {
 		Ledger ledger = queryService.getLastestLedger();
-		System.out.println(ledger);
+		System.out.println(ledger.getHeader().getHash());
 	}
 }

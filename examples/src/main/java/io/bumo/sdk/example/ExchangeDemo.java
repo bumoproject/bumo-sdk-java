@@ -18,30 +18,30 @@ import io.bumo.sdk.core.utils.blockchain.BlockchainKeyPair;
 import io.bumo.sdk.core.utils.blockchain.SecureKeyGenerator;
 
 public class ExchangeDemo {
-	private static String address = "buQdBdkvmAhnRrhLp4dmeCc2ft7RNE51c9EK";
-    private static String publicKey = "b001b6d3120599d19cae7adb6c5e2674ede8629c871cb8b93bd05bb34d203cd974c3f0bc07e5";
-    private static String privateKey = "privbtGQELqNswoyqgnQ9tcfpkuH8P1Q6quvoybqZ9oTVwWhS6Z2hi1B";
+	private static String address = "buQgQ3s2qY5DTFLezXzqf7NWLcVXufCyN93L";
+	private static String publicKey = "b001a8d29c772472953b51358ae05aa082c2de6af5b585e909bdb6078ae013d39bb41644d4a7";
+	private static String privateKey = "privbxpwDNRMe7xAshHChrnUdbLK5GpxgvqwhNcMMXA6byaX6VM85ThD";
 	public static void main(String[] args) throws SdkException, InterruptedException {
         // config in codes
-//		String eventUtis = "ws://127.0.0.1:26003";
-//        String ips = "127.0.0.1:26002";
-//
-//        SDKConfig config = new SDKConfig();
-//        SDKProperties sdkProperties = new SDKProperties();
-//        sdkProperties.setEventUtis(eventUtis);
-//        sdkProperties.setIps(ips);
-//        sdkProperties.setRedisSeqManagerEnable(true);
-//        sdkProperties.setRedisHost("192.168.100.33");
-//        sdkProperties.setRedisPort(36009);
-//        sdkProperties.setRedisPassword("xxxxxx");
-//        config.configSdk(sdkProperties);
-//        OperationService operationService = config.getOperationService();
-//        QueryService queryService = config.getQueryService();
+		String eventUtis = "ws://127.0.0.1:26003";
+        String ips = "127.0.0.1:26002";
+
+        SDKConfig config = new SDKConfig();
+        SDKProperties sdkProperties = new SDKProperties();
+        sdkProperties.setEventUtis(eventUtis);
+        sdkProperties.setIps(ips);
+        sdkProperties.setRedisSeqManagerEnable(true);
+        sdkProperties.setRedisHost("192.168.100.33");
+        sdkProperties.setRedisPort(36009);
+        sdkProperties.setRedisPassword("xxxxxx");
+        config.configSdk(sdkProperties);
+        OperationService operationService = config.getOperationService();
+        QueryService queryService = config.getQueryService();
 
         // config in config.properties
-		SDKEngine sdkEngine = SDKEngine.getInstance();
-        OperationService operationService = sdkEngine.getOperationService();
-        QueryService queryService = sdkEngine.getQueryService();
+//		SDKEngine sdkEngine = SDKEngine.getInstance();
+//        OperationService operationService = sdkEngine.getOperationService();
+//        QueryService queryService = sdkEngine.getQueryService();
 
         // create simple account
         createBuChainAccount();
@@ -75,15 +75,24 @@ public class ExchangeDemo {
 		String txSubmitAccountAddress = address;// Trade author block chain account address
 		String targetAddress = "buQchyqkRdJeyfrRwQVCEMdxEV2BPSoeQsGx";
 		Long sendTokenAmount = ToBaseUnit.BU2MO("0.6");
-		Transaction transaction = operationService.newTransaction(txSubmitAccountAddress);
 		try {
+			// Creating asset distribution operations
 			PayCoinOperation payCoinOperation = OperationFactory.newPayCoinOperation(targetAddress, sendTokenAmount);
-			TransactionCommittedResult result = transaction.buildAddOperation(payCoinOperation)
-				.buildTxMetadata("send BU token")
-				.buildAddGasPrice(1000) // 【required】 the price of Gas, at least 1000MO
-			    .buildAddFeeLimit(ToBaseUnit.BU2MO("0.01")) // 【required】Service Charge (1000000MO = 0.01BU)
-			    .buildAddSigner(publicKey, privateKey)
-				.commit();
+
+			// Get start Tx
+			Transaction transaction = operationService.newTransaction(txSubmitAccountAddress);
+
+			// Bind operation
+			transaction.buildAddOperation(payCoinOperation)
+					.buildTxMetadata("send BU token")
+					.buildAddGasPrice(1000) // 【required】 the price of Gas, at least 1000MO
+					.buildAddFeeLimit(ToBaseUnit.BU2MO("0.01")) // 【required】Service Charge (1000000MO = 0.01BU)
+					.buildAddSigner(publicKey, privateKey);
+
+			// Commit Tx
+			TransactionCommittedResult result = transaction.commit();
+
+			// Get the hash of Tx
 			System.out.println(result.getHash());
 		} catch (SdkException e) {
 			e.printStackTrace();
@@ -100,17 +109,17 @@ public class ExchangeDemo {
 	public static void queryTransactionByHash(QueryService queryService) {
 		String txHash = "";
 		TransactionHistory tx = queryService.getTransactionHistoryByHash(txHash);
-		System.out.println(tx);
+		System.out.println(tx.getTotalCount());
 	}
 	
 	public static void queryTransactionBySeq(QueryService queryService) {
 		Long seq = 1L;
 		TransactionHistory tx = queryService.getTransactionHistoryByLedgerSeq(seq);
-		System.out.println(tx);
+		System.out.println(tx.getTotalCount());
 	}
 	
 	public static void queryLatestLedger(QueryService queryService) {
 		Ledger ledger = queryService.getLastestLedger();
-		System.out.println(ledger);
+		System.out.println(ledger.getHeader().getHash());
 	}
 }
