@@ -111,7 +111,7 @@ BlockchainKeyPair keyPair = SecureKeyGenerator.generateBumoKeyPair();
 通过调用OperationFactory的方法，创建出指定功能的操作，以创建账户为例：
    
 ```
-BcOperation operation = OperationFactory.newCreateAccountOperation(targetAddress, initBalance);
+CreateAccountOperation operation = OperationFactory.newCreateAccountOperation(targetAddress, initBalance);
 ```
 详情见[Operation说明](#operation说明)
 
@@ -141,7 +141,7 @@ TransactionCommittedResult result = transaction.commit();
 
 4. 获取transaction hash
 
-hash是transaction的唯一标识，不管发起transaction后是否成功都会有Hash，开发者可以通过hash查询transaction最终状态
+hash是transaction的唯一标识，开发者可以通过hash查询transaction最终状态。但是如果基本参数校验失败的交易（如：序列号有误，余额不足，手续费不足，权重不足等），不会返回hash，会抛出异常。
   
 ```
 result.getHash();
@@ -161,7 +161,7 @@ Account account = queryService.getAccount(address);
 ###### 调用方法
 
 ```
-OperationFactory.newCreateAccountOperation(destAddress, initBalance);
+CreateAccountOperation operation = OperationFactory.newCreateAccountOperation(destAddress, initBalance);
 
 ```
 ###### 入参
@@ -177,7 +177,7 @@ initBalance |    long      | 创建账户初始化账户余额，最少10000000 
 ###### 调用方法
 
 ```
-OperationFactory.newIssueAssetOperation(assetCode, amount);
+IssueAssetOperation operation = OperationFactory.newIssueAssetOperation(assetCode, amount);
 
 ```
 
@@ -194,7 +194,7 @@ OperationFactory.newIssueAssetOperation(assetCode, amount);
 ###### 调用方法：
 
 ```
-OperationFactory.newPayAssetOperation(targetAddress, issuerAddress, assetCode, amount);
+PayAssetOperation operation = OperationFactory.newPayAssetOperation(targetAddress, issuerAddress, assetCode, amount);
 
 ```
 
@@ -228,7 +228,7 @@ sendTokenAmount  |    long      | 发送数量 (单位 : MO　注:1 BU = 10^8 MO
 
 ###### 调用方法
 ```
-Ledger ledger = queryService.getLastestLedger();
+Ledger ledger = queryService.getLatestLedger();
 
 ```
 
@@ -346,7 +346,7 @@ threshold       |  long                 |  门限权重，默认-1     |
 ###### 调用方法
 
 ```
-TransactionHistory tx = queryService.getTransactionResultByHash(txHash);
+TransactionHistory tx = queryService.getTransactionHistoryByHash(txHash);
 
 ```
 
@@ -489,18 +489,21 @@ try {
 	String txSubmitAccountPublicKey = "b00127e8dbf046a533d2e4cf2bd55f3466410c1d6f76f09dd5ca721c996c691e72d8e5a1bb17";
 	// 交易提交人账户私钥
 	String txSubmitAccountPrivateKey = "privbwMpfEK1i4jkReGmApwkHbY8ggMKCML9mJSx2DW9ddCutkCBx7j4";
-	Transaction transaction = operationService.newTransaction(txSubmitAccountAddress);
-
+	
 	// 创建账户目前最少初始化账户余额是0.1BU
-	BcOperation bcOperation = OperationFactory.newCreateAccountOperation(accountAddress, ToBaseUnit.BU2MO("0.1")); // 创建创建账户操作
+	CreateAccountOperation operation = OperationFactory.newCreateAccountOperation(accountAddress, ToBaseUnit.BU2MO("0.1")); // 创建创建账户操作
 	
-	TransactionCommittedResult result = transaction
-			.buildAddOperation(bcOperation)
-			.buildAddGasPrice(1000) // 【必填】 Gas的价格，目前至少1000MO
-		    .buildAddFeeLimit(ToBaseUnit.BU2MO("0.01")) // 【必填】手续费 (1000000MO = 0.01BU)
-		    .buildAddSigner(txSubmitAccountPublicKey, txSubmitAccountPrivateKey)
-			.commit();
+	// 构造Tx
+	Transaction transaction = operationService.newTransaction(txSubmitAccountAddress);
+	transaction.buildAddOperation(operation)
+		 .buildAddGasPrice(1000) // 【必填】 Gas的价格，目前至少1000MO
+		 .buildAddFeeLimit(ToBaseUnit.BU2MO("0.01")) // 【必填】手续费 (1000000MO = 0.01BU)
+		 .buildAddSigner(txSubmitAccountPublicKey, txSubmitAccountPrivateKey);
 	
+	// 提交Tx
+	TransactionCommittedResult result = transaction.commit();
+	
+	// 获取交易hash
 	System.out.println(result.getHash());
 } catch (SdkException e) {
 	e.printStackTrace();
@@ -517,19 +520,22 @@ try {
 	// 资产发行方账户私钥
 	String issueAssetsAccountPrivateKey = "privbwMpfEK1i4jkReGmApwkHbY8ggMKCML9mJSx2DW9ddCutkCBx7j4";
 	
-	Transaction transaction = operationService.newTransaction(issueAssetsAccountAddress);
-	
+	// 创建operation
 	String assetCode = "HNC";
 	Long issueAmount = 1000000000L; // 发行10亿 HNC
-	BcOperation bcOperation = OperationFactory.newIssueAssetOperation(assetCode,issueAmount ); // 创建资产发行操作
+	IssueAssetOperation operation = OperationFactory.newIssueAssetOperation(assetCode,issueAmount ); // 创建资产发行操作
 	
-	TransactionCommittedResult result = transaction
-			.buildAddOperation(bcOperation)
-			.buildAddGasPrice(1000) // 【必填】 Gas的价格，目前至少1000MO
-		    .buildAddFeeLimit(ToBaseUnit.BU2MO("50.01")) // 【必填】手续费 + 操作费 (1000000MO + 5000000000MO = 50.01BU)
-		    .buildAddSigner(issueAssetsAccountPublicKey, issueAssetsAccountPrivateKey)
-			.commit();
+	// 构建Tx
+	Transaction transaction = operationService.newTransaction(issueAssetsAccountAddress);
+	transaction.buildAddOperation(operation)
+		 .buildAddGasPrice(1000) // 【必填】 Gas的价格，目前至少1000MO
+		 .buildAddFeeLimit(ToBaseUnit.BU2MO("0.01")) // 【必填】手续费 (1000000MO = 0.01BU)
+		 .buildAddSigner(issueAssetsAccountPublicKey, issueAssetsAccountPrivateKey);
 	
+	// 提交Tx
+	TransactionCommittedResult result = transaction.commit();
+	
+	// 获取交易hash
 	System.out.println(result.getHash());
 } catch (SdkException e) {
 	e.printStackTrace();
@@ -547,21 +553,26 @@ try {
 	// 资产拥有方账户私钥
 	String assetOwnerAccountPrivateKey = "privbwMpfEK1i4jkReGmApwkHbY8ggMKCML9mJSx2DW9ddCutkCBx7j4";
 	
-	Transaction transaction = operationService.newTransaction(assetOwnerAccountAddress);
-	
 	String destAccountAddress = "buQjM8zQV3VXiUETCaJCogKbFoofnSWufgXo"; // 资产接收方账户地址
 	String issuerAddress = "buQYBzc87B71wDp4TyikrSkvti8YTMjYN8LT";// 资产发行方
 	String assetCode = "HNC"; // 资产ID
 	Long sendAmount = 1000000000L; // 发行10亿 HNC
-	BcOperation bcOperation = OperationFactory.newPayAssetOperation(destAccountAddress,issuerAddress,assetCode,sendAmount); // 创建资产发行操作
 	
-	TransactionCommittedResult result = transaction
-			.buildAddOperation(bcOperation)
-			.buildAddGasPrice(1000) // 【必填】 Gas的价格，目前至少1000MO
-		    .buildAddFeeLimit(ToBaseUnit.BU2MO("0.01")) // 【必填】手续费 (1000000MO = 0.01BU)
-		    .buildAddSigner(assetOwnerAccountPublicKey, assetOwnerAccountPrivateKey)
-			.commit();
+	// 创建operation
+	PayAssetOperation operation = OperationFactory.newPayAssetOperation(destAccountAddress,issuerAddress,assetCode,sendAmount); // 创建资产发行操作
 	
+	// 构建Tx
+	Transaction transaction = operationService.newTransaction(assetOwnerAccountAddress);
+	transaction.buildAddOperation(operation)
+		.buildAddGasPrice(1000) // 【必填】 Gas的价格，目前至少1000MO
+		.buildAddFeeLimit(ToBaseUnit.BU2MO("0.01")) // 【必填】手续费 (1000000MO = 0.01BU)
+		.buildAddSigner(assetOwnerAccountPublicKey, assetOwnerAccountPrivateKey);
+	
+	
+	// 提交Tx
+	TransactionCommittedResult result = transaction.commit();
+
+	// 获取交易hash
 	System.out.println(result.getHash());
 } catch (SdkException e) {
 	e.printStackTrace();
@@ -579,15 +590,22 @@ try {
     String txSubmitAccountAddress = address;// Trade author block chain account address
     String targetAddress = "buQchyqkRdJeyfrRwQVCEMdxEV2BPSoeQsGx";
 	Long sendTokenAmount = ToBaseUnit.BU2MO("0.6");
-	Transaction transaction = operationService.newTransaction(txSubmitAccountAddress);
 	
-	PayCoinOperation payCoinOperation = OperationFactory.newPayCoinOperation(targetAddress, sendTokenAmount);
-	TransactionCommittedResult result = transaction.buildAddOperation(payCoinOperation)
+	// 创建operation
+	PayCoinOperation operation = OperationFactory.newPayCoinOperation(targetAddress, sendTokenAmount);
+	
+	// 构建Tx
+	Transaction transaction = operationService.newTransaction(txSubmitAccountAddress);
+	transaction.buildAddOperation(operation)
 		.buildTxMetadata("send BU token")
 		.buildAddGasPrice(1000) // 【required】 the price of Gas, at least 1000MO
 	    .buildAddFeeLimit(ToBaseUnit.BU2MO("0.01")) // 【required】Service Charge (1000000MO = 0.01BU)
-	    .buildAddSigner(publicKey, privateKey)
-		.commit();
+	    .buildAddSigner(publicKey, privateKey);
+	    
+	// 提交Tx
+	TransactionCommittedResult result = transaction.commit();
+	
+	// 获取交易hash
 	System.out.println(result.getHash());
 } catch (SdkException e) {
 	e.printStackTrace();
@@ -598,7 +616,7 @@ try {
 #### -查询最新区块
 
 ```
-Ledger ledger = queryService.getLastestLedger();
+Ledger ledger = queryService.getLatestLedger();
 System.out.println(ledger);
 
 ```
@@ -615,7 +633,7 @@ Account account = queryService.getAccount(address);
 
 ```
 String txHash = "";
-TransactionHistory tx = queryService.getTransactionResultByHash(txHash);
+TransactionHistory tx = queryService.getTransactionHistoryByHash(txHash);
 ```
 
 #### -根据区块序列号查询交易
