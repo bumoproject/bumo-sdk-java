@@ -19,7 +19,7 @@ public interface QueryService {
      *
      * @param Latest ledger
      */
-	Ledger getLastestLedger();
+	Ledger getLatestLedger();
 
     /**
      * Account information

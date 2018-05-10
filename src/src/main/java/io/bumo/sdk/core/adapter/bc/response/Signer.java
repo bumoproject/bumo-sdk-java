@@ -3,7 +3,7 @@ package io.bumo.sdk.core.adapter.bc.response;
 /**
  * 签名者
  *
- * @author 布萌
+ * @author bumo
  */
 public class Signer{
     private String address;

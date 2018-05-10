@@ -1,7 +1,7 @@
 package io.bumo.sdk.core.adapter.bc.common;
 
 /**
- * @author 布萌
+ * @author bumo
  */
 public class Signer{
     private String address;

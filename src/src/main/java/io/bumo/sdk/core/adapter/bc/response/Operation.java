@@ -7,7 +7,7 @@ import io.bumo.sdk.core.adapter.bc.response.operation.*;
 /**
  * 操作信息
  *
- * @author 布萌
+ * @author bumo
  */
 public class Operation{
     @JSONField(name = "create_account")

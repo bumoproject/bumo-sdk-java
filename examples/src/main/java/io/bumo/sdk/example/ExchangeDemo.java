@@ -4,7 +4,6 @@ import io.bumo.sdk.core.adapter.bc.response.Account;
 import io.bumo.sdk.core.adapter.bc.response.TransactionHistory;
 import io.bumo.sdk.core.adapter.bc.response.ledger.Ledger;
 import io.bumo.sdk.core.config.SDKConfig;
-import io.bumo.sdk.core.config.SDKEngine;
 import io.bumo.sdk.core.config.SDKProperties;
 import io.bumo.sdk.core.exception.SdkException;
 import io.bumo.sdk.core.operation.OperationFactory;
@@ -77,13 +76,14 @@ public class ExchangeDemo {
 		Long sendTokenAmount = ToBaseUnit.BU2MO("0.6");
 		try {
 			// Creating asset distribution operations
-			PayCoinOperation payCoinOperation = OperationFactory.newPayCoinOperation(targetAddress, sendTokenAmount);
+			PayCoinOperation operation = OperationFactory.newPayCoinOperation(targetAddress, sendTokenAmount);
+
 
 			// Get start Tx
 			Transaction transaction = operationService.newTransaction(txSubmitAccountAddress);
 
 			// Bind operation
-			transaction.buildAddOperation(payCoinOperation)
+			transaction.buildAddOperation(operation)
 					.buildTxMetadata("send BU token")
 					.buildAddGasPrice(1000) // 【required】 the price of Gas, at least 1000MO
 					.buildAddFeeLimit(ToBaseUnit.BU2MO("0.01")) // 【required】Service Charge (1000000MO = 0.01BU)
@@ -119,7 +119,7 @@ public class ExchangeDemo {
 	}
 	
 	public static void queryLatestLedger(QueryService queryService) {
-		Ledger ledger = queryService.getLastestLedger();
+		Ledger ledger = queryService.getLatestLedger();
 		System.out.println(ledger.getHeader().getHash());
 	}
 }

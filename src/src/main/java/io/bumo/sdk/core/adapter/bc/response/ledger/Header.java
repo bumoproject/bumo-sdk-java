@@ -7,7 +7,7 @@ import io.bumo.sdk.core.adapter.bc.response.ConsensusValue;
 /**
  * 区块头信息
  *
- * @author 布萌
+ * @author bumo
  */
 public class Header{
     @JSONField(name = "account_tree_hash")

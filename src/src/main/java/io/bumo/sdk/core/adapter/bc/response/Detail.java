@@ -1,7 +1,7 @@
 package io.bumo.sdk.core.adapter.bc.response;
 
 /**
- * @author 布萌
+ * @author bumo
  */
 public class Detail{
     private long amount;

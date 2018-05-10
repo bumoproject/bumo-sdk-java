@@ -5,7 +5,7 @@ import io.bumo.sdk.core.service.QueryService;
 
 /**
  * @author bumo
- * @since 18/03/12 下午3:03.
+ * @since 18/03/12 P.M.3:03.
  */
 public class QueryServiceImpl implements QueryService{
 

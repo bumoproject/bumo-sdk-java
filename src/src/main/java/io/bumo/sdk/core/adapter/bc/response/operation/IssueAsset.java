@@ -2,7 +2,7 @@ package io.bumo.sdk.core.adapter.bc.response.operation;
 
 /**
  * 发行资产
- * @author 布萌
+ * @author bumo
  *
  */
 public class IssueAsset {

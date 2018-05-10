@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 创建账号
+ * Create account
  */
 public class CreateAccount{
 	
@@ -83,7 +83,7 @@ public class CreateAccount{
 	}
 
     /**
-     * 验证metadata的key或者value不能为空
+     * Verify that metadata's key or value can not be empty
      * @return
      */
     public boolean checkMetadata(){

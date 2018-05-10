@@ -3,7 +3,7 @@ package io.bumo.sdk.core.adapter.bc.response;
 /**
  * 3.0 资产只会包含这两个属性，不会有更多
  *
- * @author 布萌
+ * @author bumo
  */
 public class Property{
     private String code;

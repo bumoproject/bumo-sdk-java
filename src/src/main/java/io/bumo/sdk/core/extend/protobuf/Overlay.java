@@ -4300,7 +4300,7 @@ public final class Overlay {
       OUT_OF_SYNC(1),
       /**
        * <pre>
-       *请求的ledger数过多
+       * Excessive number of ledger requests
        * </pre>
        *
        * <code>OUT_OF_LEDGERS = 2;</code>
@@ -4308,7 +4308,7 @@ public final class Overlay {
       OUT_OF_LEDGERS(2),
       /**
        * <pre>
-       *本节点正忙
+       * This node is busy
        * </pre>
        *
        * <code>BUSY = 3;</code>
@@ -4316,7 +4316,7 @@ public final class Overlay {
       BUSY(3),
       /**
        * <pre>
-       *节点本身不允许同步
+       * Node itself is not allowed to synchronize
        * </pre>
        *
        * <code>REFUSE = 4;</code>
@@ -4324,7 +4324,7 @@ public final class Overlay {
       REFUSE(4),
       /**
        * <pre>
-       *内部错误
+       * Internal error
        * </pre>
        *
        * <code>INTERNAL = 5;</code>
@@ -4335,7 +4335,7 @@ public final class Overlay {
 
       /**
        * <pre>
-       *成功
+       * Success
        * </pre>
        *
        * <code>OK = 0;</code>
@@ -4343,7 +4343,7 @@ public final class Overlay {
       public static final int OK_VALUE = 0;
       /**
        * <pre>
-       *节点本身处于非同步状态
+       * The node itself is in a non synchronous state
        * </pre>
        *
        * <code>OUT_OF_SYNC = 1;</code>
@@ -4351,7 +4351,7 @@ public final class Overlay {
       public static final int OUT_OF_SYNC_VALUE = 1;
       /**
        * <pre>
-       *请求的ledger数过多
+       * Excessive number of ledger requests
        * </pre>
        *
        * <code>OUT_OF_LEDGERS = 2;</code>
@@ -4359,7 +4359,7 @@ public final class Overlay {
       public static final int OUT_OF_LEDGERS_VALUE = 2;
       /**
        * <pre>
-       *本节点正忙
+       * This node is busy
        * </pre>
        *
        * <code>BUSY = 3;</code>
@@ -4367,7 +4367,7 @@ public final class Overlay {
       public static final int BUSY_VALUE = 3;
       /**
        * <pre>
-       *节点本身不允许同步
+       * Node itself is not allowed to synchronize
        * </pre>
        *
        * <code>REFUSE = 4;</code>
@@ -4375,7 +4375,7 @@ public final class Overlay {
       public static final int REFUSE_VALUE = 4;
       /**
        * <pre>
-       *内部错误
+       * Internal error
        * </pre>
        *
        * <code>INTERNAL = 5;</code>

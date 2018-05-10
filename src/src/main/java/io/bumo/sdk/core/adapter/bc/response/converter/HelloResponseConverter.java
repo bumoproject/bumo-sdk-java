@@ -10,8 +10,8 @@ import io.bumo.sdk.core.utils.http.converters.StringResponseConverter;
 import io.bumo.sdk.core.utils.http.util.SerializeUtils;
 
 /**
- * @author 布萌
- * @since 18/3/20 下午5:47.
+ * @author bumo
+ * @since 18/3/20 P.M.5:47.
  */
 public class HelloResponseConverter implements ResponseConverter{
 

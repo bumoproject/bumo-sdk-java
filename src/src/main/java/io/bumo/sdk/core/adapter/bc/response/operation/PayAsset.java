@@ -7,7 +7,7 @@ import io.bumo.sdk.core.adapter.bc.response.Asset;
 /**
  * 转移资产
  *
- * @author 布萌
+ * @author bumo
  */
 public class PayAsset{
     private String metadata;

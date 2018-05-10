@@ -7,7 +7,7 @@ import io.bumo.sdk.core.adapter.bc.response.TypeThreshold;
 /**
  * 设置门限
  *
- * @author 布萌
+ * @author bumo
  */
 public class SetThreshold{
     @JSONField(name = "tx_threshold")

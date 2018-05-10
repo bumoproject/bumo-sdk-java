@@ -5,8 +5,8 @@ package io.bumo.sdk.core.adapter.bc.request.test;
 import io.bumo.sdk.core.adapter.bc.response.SubTransaction;
 /***
  * 
- * @author 布萌
- * @since 2018/3/16 下午2:09.
+ * @author bumo
+ * @since 2018/3/16 P.M.2:09.
  *
  */
 public class ReqSubTransaction extends SubTransaction {

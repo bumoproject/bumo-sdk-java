@@ -1,6 +1,7 @@
 package io.bumo.sdk.example;
 
 import io.bumo.encryption.key.PrivateKey;
+import io.bumo.encryption.key.PublicKey;
 import io.bumo.encryption.utils.hex.HexFormat;
 import io.bumo.sdk.core.adapter.bc.response.Account;
 import io.bumo.sdk.core.adapter.bc.response.TransactionHistory;
@@ -12,6 +13,9 @@ import io.bumo.sdk.core.exception.SdkException;
 import io.bumo.sdk.core.extend.protobuf.Chain;
 import io.bumo.sdk.core.operation.BcOperation;
 import io.bumo.sdk.core.operation.OperationFactory;
+import io.bumo.sdk.core.operation.impl.CreateAccountOperation;
+import io.bumo.sdk.core.operation.impl.IssueAssetOperation;
+import io.bumo.sdk.core.operation.impl.PayAssetOperation;
 import io.bumo.sdk.core.operation.impl.PayCoinOperation;
 import io.bumo.sdk.core.spi.OperationService;
 import io.bumo.sdk.core.spi.QueryService;
@@ -29,31 +33,33 @@ public class DigitalAssetsDemo {
 
 		// config in codes
 		String eventUtis = "ws://127.0.0.1:26003";
-        String ips = "127.0.0.1:26002";
+		String ips = "127.0.0.1:26002";
 
-        SDKConfig config = new SDKConfig();
-        SDKProperties sdkProperties = new SDKProperties();
-        sdkProperties.setEventUtis(eventUtis);
-        sdkProperties.setIps(ips);
-        sdkProperties.setRedisSeqManagerEnable(false);
-        sdkProperties.setRedisHost("192.168.100.33");
-        sdkProperties.setRedisPort(10379);
-        sdkProperties.setRedisPassword("xxxxxx");
-        config.configSdk(sdkProperties);
+		SDKConfig config = new SDKConfig();
+		SDKProperties sdkProperties = new SDKProperties();
+		sdkProperties.setEventUtis(eventUtis);
+		sdkProperties.setIps(ips);
+		sdkProperties.setRedisSeqManagerEnable(false);
+		sdkProperties.setRedisHost("192.168.100.33");
+		sdkProperties.setRedisPort(10379);
+		sdkProperties.setRedisPassword("xxxxxx");
+		config.configSdk(sdkProperties);
 		OperationService operationService = config.getOperationService();
 		QueryService queryService = config.getQueryService();
+
+		queryTransactionByHash(queryService);
 
 		// config in config.properties
 //		SDKEngine sdkEngine = SDKEngine.getInstance();
 //		OperationService operationService = sdkEngine.getOperationService();
 //		QueryService queryService = sdkEngine.getQueryService();
-//
-//        // create simple account
+
+        // create simple account
         createSimpleAccount(operationService);
-        
+
         // query account
         queryAccount(queryService);
-        
+
         // issue assets
         issueAssets(operationService);
 	}
@@ -74,7 +80,7 @@ public class DigitalAssetsDemo {
 
 		try {
 			// Create an account operation
-			BcOperation bcOperation = OperationFactory.newCreateAccountOperation(accountAddress, ToBaseUnit.BU2MO("0.1"));
+			CreateAccountOperation operation = OperationFactory.newCreateAccountOperation(accountAddress, ToBaseUnit.BU2MO("0.1"));
 
 			// Get start Tx
 			String txSubmitAccountAddress = address; // Transaction sender block chain account address
@@ -82,7 +88,7 @@ public class DigitalAssetsDemo {
 
 			// Bind operation
 			transaction.buildTxMetadata("build simple account")
-					.buildAddOperation(bcOperation)
+					.buildAddOperation(operation)
 					.buildAddGasPrice(100) // 【required】 the price of Gas, at least 1000MO
 				    .buildAddFeeLimit(ToBaseUnit.BU2MO("0.01")) // 【required】Service Charge (1000000MO = 0.01BU)
 				    .buildAddSigner(publicKey, privateKey);
@@ -109,13 +115,13 @@ public class DigitalAssetsDemo {
 			// Creating asset distribution operations
 			String assetCode = "HNC";
 			Long issueAmount = 1000000000L; // Issue 1 billion HNC
-			BcOperation bcOperation = OperationFactory.newIssueAssetOperation(assetCode,issueAmount );
+			IssueAssetOperation operation = OperationFactory.newIssueAssetOperation(assetCode,issueAmount );
 
 			// Get start Tx
 			Transaction transaction = operationService.newTransaction(issueAssetsAccountAddress);
 
 			// Bind operation
-			 transaction.buildAddOperation(bcOperation)
+			 transaction.buildAddOperation(operation)
 					.buildAddGasPrice(1000) // 【required】 the price of Gas, at least 1000MO
 				    .buildAddFeeLimit(ToBaseUnit.BU2MO("50.01")) // 【required】Service Fee + Operation Fee (1000000MO + 5000000000MO = 50.01BU)
 				    .buildAddSigner(issueAssetsAccountPublicKey, issueAssetsAccountPrivateKey);
@@ -136,13 +142,13 @@ public class DigitalAssetsDemo {
 		Long sendTokenAmount = ToBaseUnit.BU2MO("0.6");
 		try {
 			// Creating asset distribution operations
-			PayCoinOperation payCoinOperation = OperationFactory.newPayCoinOperation(targetAddress, sendTokenAmount);
+			PayCoinOperation operation = OperationFactory.newPayCoinOperation(targetAddress, sendTokenAmount);
 
 			// Get start Tx
 			Transaction transaction = operationService.newTransaction(txSubmitAccountAddress);
 
 			// Bind operation
-			transaction.buildAddOperation(payCoinOperation)
+			transaction.buildAddOperation(operation)
 				.buildTxMetadata("send BU token")
 				.buildAddGasPrice(1000) // 【required】 the price of Gas, at least 1000MO
 			    .buildAddFeeLimit(ToBaseUnit.BU2MO("0.01")) // 【required】Service Charge (1000000MO = 0.01BU)
@@ -172,14 +178,14 @@ public class DigitalAssetsDemo {
 			String issuerAddress = "buQYBzc87B71wDp4TyikrSkvti8YTMjYN8LT";// Asset issuer
 			String assetCode = "HNC"; // Asset ID
 			Long sendAmount = 1000000000L; // Issue 1 billion HNC
-			BcOperation bcOperation = OperationFactory.newPayAssetOperation(destAccountAddress,issuerAddress,assetCode,sendAmount); // 创建资产发行操作
+			PayAssetOperation operation = OperationFactory.newPayAssetOperation(destAccountAddress,issuerAddress,assetCode,sendAmount); // 创建资产发行操作
 
 			// Get start Tx
 			Transaction transaction = operationService.newTransaction(assetOwnerAccountAddress);
 
 			// Bind operation
 			transaction
-					.buildAddOperation(bcOperation)
+					.buildAddOperation(operation)
 					.buildTxMetadata("payment")
 					.buildAddGasPrice(1000) // 【required】 the price of Gas, at least 1000MO
 				    .buildAddFeeLimit(ToBaseUnit.BU2MO("0.01")) // 【required】Service Charge (1000000MO = 0.01BU)
@@ -202,9 +208,9 @@ public class DigitalAssetsDemo {
 	}
 	
 	public static void queryTransactionByHash(QueryService queryService) {
-		String txHash = "";
+		String txHash = "bc0b59554bb14709c24f5a5fd5725a0e2cb49ad6f836cb646802df87293218b6";
 		TransactionHistory tx = queryService.getTransactionHistoryByHash(txHash);
-		System.out.println(tx.getTotalCount());
+		System.out.println(new String(HexFormat.hexToByte(tx.getTransactions()[0].getTransaction().getMetadata())));
 	}
 	
 	public static void queryTransactionBySeq(QueryService queryService) {
@@ -214,7 +220,7 @@ public class DigitalAssetsDemo {
 	}
 	
 	public static void queryLatestLedger(QueryService queryService) {
-		Ledger ledger = queryService.getLastestLedger();
+		Ledger ledger = queryService.getLatestLedger();
 		System.out.println(ledger.getHeader().getHash());
 	}
 }

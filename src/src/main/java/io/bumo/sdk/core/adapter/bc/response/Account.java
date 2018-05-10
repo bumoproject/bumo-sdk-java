@@ -8,7 +8,7 @@ import io.bumo.sdk.core.adapter.bc.response.operation.SetMetadata;
 /**
  * 账号信息
  *
- * @author 布萌
+ * @author bumo
  */
 public class Account{
     private String address;

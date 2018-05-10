@@ -5,7 +5,7 @@ import com.alibaba.fastjson.annotation.JSONField;
 /**
  * 签名信息
  *
- * @author 布萌
+ * @author bumo
  */
 public class Signature{
     @JSONField(name = "public_key")

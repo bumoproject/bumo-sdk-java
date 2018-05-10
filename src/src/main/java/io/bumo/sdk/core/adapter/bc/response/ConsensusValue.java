@@ -5,7 +5,7 @@ import com.alibaba.fastjson.annotation.JSONField;
 /**
  * 共识历史信息
  *
- * @author 布萌
+ * @author bumo
  */
 public class ConsensusValue{
     /**

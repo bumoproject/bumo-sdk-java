@@ -3,7 +3,7 @@ package io.bumo.sdk.core.adapter.bc.response.ledger;
 
 /**
  * 区块信息
- * @author 布萌
+ * @author bumo
  *
  */
 public class Ledger {

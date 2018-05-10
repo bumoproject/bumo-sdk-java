@@ -10,8 +10,8 @@ import io.bumo.sdk.core.utils.http.ResponseConverter;
 import io.bumo.sdk.core.utils.http.agent.ServiceRequest;
 import io.bumo.sdk.core.utils.http.converters.JsonResponseConverter;
 /***
- * 评估费用的响应转换器
- * @author 布萌
+ * Response converter for cost assessment
+ * @author bumo
  *
  */
 public class TestTXResponseConverter implements ResponseConverter{

@@ -4,9 +4,9 @@ import io.bumo.sdk.core.adapter.bc.response.Account;
 import io.bumo.sdk.core.utils.http.util.SerializeUtils;
 
 /**
- * 解析rpc返回结果中的result
+ * Parsing the result in the result of RPC return
  *
- * @author 布萌
+ * @author bumo
  */
 public class GetAccountResponseConverter extends AbstractResponseConverter{
 

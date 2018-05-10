@@ -7,7 +7,7 @@ import io.bumo.sdk.core.adapter.bc.common.Signer;
 /**
  * 设置权重
  *
- * @author 布萌
+ * @author bumo
  */
 public class SetSignerWeight{
     /**

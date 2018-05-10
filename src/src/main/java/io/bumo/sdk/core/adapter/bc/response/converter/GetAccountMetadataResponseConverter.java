@@ -4,8 +4,8 @@ import io.bumo.sdk.core.adapter.bc.response.Account;
 import io.bumo.sdk.core.utils.http.util.SerializeUtils;
 
 /**
- * @author 布萌
- * @since 18/03/12 下午3:03.
+ * @author bumo
+ * @since 18/03/12 P.M.3:03.
  */
 public class GetAccountMetadataResponseConverter extends AbstractResponseConverter{
 

@@ -25,7 +25,7 @@ public class KeyGeneratorFactory{
     /**
      * Create a factory instance of KeyGenerator based on a base of 36
      *
-     * @param len key的length；
+     * @param len key length；
      * @return
      */
     public static KeyGeneratorFactory createBase36Instance(int len){

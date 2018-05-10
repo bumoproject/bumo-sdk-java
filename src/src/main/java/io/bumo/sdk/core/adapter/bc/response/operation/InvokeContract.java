@@ -4,7 +4,7 @@ import com.alibaba.fastjson.annotation.JSONField;
 
 /**
  * 调用合约
- * @author 布萌
+ * @author bumo
  *
  */
 public class InvokeContract {

@@ -5,7 +5,7 @@ import com.alibaba.fastjson.annotation.JSONField;
 /**
  * 交易信息
  *
- * @author 布萌
+ * @author bumo
  */
 public class SubTransaction{
     @JSONField(name = "source_address")

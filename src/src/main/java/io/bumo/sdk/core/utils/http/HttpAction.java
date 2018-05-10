@@ -34,7 +34,7 @@ public @interface HttpAction {
 	public HttpMethod method();
 
 	/**
-	 * HTTP 的 Content-Type;
+	 * HTTP Content-Type;
 	 * @return
 	 */
 	public String contentType() default "";

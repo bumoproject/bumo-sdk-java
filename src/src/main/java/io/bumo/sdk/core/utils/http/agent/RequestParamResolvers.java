@@ -152,9 +152,9 @@ abstract class RequestParamResolvers{
     }
 
     /**
-     * 将多个请求参数解析器的解析结果组合在一起的包装器；
+     * Wrapper that combines the analytic results of multiple request parameter parsers
      *
-     * @author haiq
+     * @author bumo
      */
     private static class MultiRequestParamResolverWrapper implements RequestParamResolver{
 

@@ -3,7 +3,7 @@ package io.bumo.sdk.core.adapter.bc.response.test;
 import com.alibaba.fastjson.annotation.JSONField;
 /***
  * 评估费用
- * @author 布萌
+ * @author bumo
  *
  */
 public class EvalTxResult {

@@ -5,7 +5,7 @@ import com.alibaba.fastjson.annotation.JSONField;
 
 /**
  * rpc返回结果
- * @author 布萌
+ * @author bumo
  *
  */
 public class ServiceResponse {

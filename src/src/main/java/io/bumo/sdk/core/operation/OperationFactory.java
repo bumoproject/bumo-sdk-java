@@ -7,7 +7,7 @@ import io.bumo.sdk.core.operation.impl.*;
 
 /**
  * @author bumo
- * @since 18/03/12 下午3:03.
+ * @since 18/03/12 P.M.3:03.
  * It provides parameterized creation operation method, which is just portable access. All operations can be self created. The upper layer can self encapsulate and easily invoke
  */
 public class OperationFactory{

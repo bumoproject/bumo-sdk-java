@@ -149,10 +149,10 @@ public class SDKEngine{
         eventBusService.addEventHandler(transactionSyncManager);
         eventBusService.addEventHandler(sponsorAccountPoolManager);
 
-        // 8 初始化spi
+        // 8 Initialization of SPI
         OperationService operationService = new OperationServiceImpl(sequenceManager, rpcService, transactionSyncManager, nodeManager, txFailManager, sponsorAccountPoolManager);
         /**
-         * fix:屏蔽掉账户池的操作
+         * fix:Shield the operation of the account pool
          *
          * if (sdkProperties.isAccountPoolEnable()) {
             sponsorAccountPoolManager.initPool(operationService, sdkProperties.getAddress(), sdkProperties.getPublicKey(), sdkProperties.getPrivateKey(), sdkProperties.getSize(), sdkProperties.getPoolFilepath(), sdkProperties.getMark());

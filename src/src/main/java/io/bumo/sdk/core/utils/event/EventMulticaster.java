@@ -40,26 +40,26 @@ public class EventMulticaster<TListener> implements Disposable{
 
     @SuppressWarnings("unchecked")
 	public EventMulticaster(Class<TListener> listenerClass, ExceptionHandle<TListener> exHandle){
-        // 初始化错误处理器；
+        // Initialization error processor
         this.exHandle = exHandle == null ? new DefaultExceptionHandle<>() : exHandle;
 
-        // 解析出不支持的方法；
+        // Parsing unsupported methods
         Method[] methods = ReflectionUtils.getAllDeclaredMethods(listenerClass);
         List<Method> supMths = new LinkedList<>();
         for (Method method : methods) {
             if (method.getDeclaringClass() == Object.class) {
-                // 不支持 Object 方法；
+                // Object method does not support
                 continue;
             }
             if (method.getReturnType() != void.class) {
-                // 不支持带返回值的方法；
+                // A method that does not support the return value
                 continue;
             }
             supMths.add(method);
         }
         supportedMethods = supMths.toArray(new Method[supMths.size()]);
 
-        // 生成代理类；
+        // Generation agent class
         listenerProxy = (TListener) Proxy.newProxyInstance(listenerClass.getClassLoader(),
                 new Class<?>[] {listenerClass}, new InvocationHandler(){
                     @Override
@@ -81,7 +81,7 @@ public class EventMulticaster<TListener> implements Disposable{
         if (supported) {
             doNotify(listeners, method, args);
         } else {
-            // 调用了不支持的方法；
+            // The unsupported method was invoked
             throw new UnsupportedOperationException("Unsupported method for event multicasting!");
         }
     }

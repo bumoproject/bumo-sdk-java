@@ -5,7 +5,7 @@ import com.alibaba.fastjson.annotation.JSONField;
 /**
  * 交易历史返回体
  *
- * @author 布萌
+ * @author bumo
  */
 public class TransactionHistory{
     @JSONField(name = "total_count")

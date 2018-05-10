@@ -61,7 +61,7 @@ public class QueryServiceImpl implements QueryService {
 	}
 	
 	@Override
-	public Ledger getLastestLedger() {
+	public Ledger getLatestLedger() {
 		return rpcService.getLedger();
 	}
 

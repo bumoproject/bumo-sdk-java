@@ -40,7 +40,7 @@ import io.bumo.sdk.core.utils.http.agent.ServiceEndpoint;
 
 /**
  * @author bumo
- * @since 18/03/12 afternoon 3:03.
+ * @since 18/03/12 P.M. 3:03.
  * Load access to the underlying node
  * Load policy: access the maximum block node for access
  */

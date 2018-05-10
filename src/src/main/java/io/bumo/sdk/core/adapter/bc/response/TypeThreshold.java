@@ -3,16 +3,16 @@ package io.bumo.sdk.core.adapter.bc.response;
 /**
  * 3.0
  *
- * @author 布萌
+ * @author bumo
  */
 public class TypeThreshold{
     /**
-     * type 表示某种类型的操作 (0, 100]
+     * type Representing a certain type of operation (0, 100]
      */
     private long type;
 
     /**
-     * threshold optional，default 0, 0 ：删除该类型操作，>0 && <= MAX(INT64)：设置权重值为该值，其他：非法
+     * threshold optional，default 0, 0 ：In addition to this type of operation，>0 && <= MAX(INT64)：Set the weight value for the value, and the other: illegal
      */
     private long threshold;
 

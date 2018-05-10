@@ -1,7 +1,7 @@
 package io.bumo.sdk.core.adapter.bc.request;
 /**
  * 提交交易
- * @author 布萌
+ * @author bumo
  *
  */
 public class SubTransactionRequest {

@@ -4,8 +4,8 @@ import com.alibaba.fastjson.annotation.JSONField;
 
 /***
  * 
- * @author 布萌
- * @since 2018/3/16 下午2:09.
+ * @author bumo
+ * @since 2018/3/16 P.M.2:09.
  *
  */
 public class ReqTransactionJson {

@@ -1,7 +1,7 @@
 package io.bumo.sdk.core.adapter.bc.response.test;
 /***
  * 评估费用
- * @author 布萌
+ * @author bumo
  *
  */
 public class TransactionEnv {

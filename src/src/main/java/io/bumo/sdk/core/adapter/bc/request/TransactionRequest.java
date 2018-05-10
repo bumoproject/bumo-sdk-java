@@ -4,7 +4,7 @@ import com.alibaba.fastjson.annotation.JSONField;
 
 /**
  * 交易提交请求
- * @author 布萌
+ * @author bumo
  *
  */
 public class TransactionRequest {
