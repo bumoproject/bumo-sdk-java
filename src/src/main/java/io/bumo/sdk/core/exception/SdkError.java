@@ -32,7 +32,7 @@ public enum SdkError{
     OPERATION_ERROR_NOT_INITINPUT(10019,"InitInput cannot be empty"),
     OPERATION_ERROR_INITBALANCE_ILLEGAL(10020,"InitBalance value is illegal"),
     OPERATION_ERROR_NOT_INPUT(10021,"Input cannot be empty"),
-    OPERATION_ERROR_NOT_METADATA(10022,"the key or value of metadata cannot be empty"),
+    OPERATION_ERROR_NOT_METADATA(10022,"The key or value of metadata cannot be empty"),
 
     TRANSACTION_ERROR_SPONSOR(10100, "The initiator of the transaction cannot be empty"),
     TRANSACTION_ERROR_SIGNATURE(10101, "Transaction signature list cannot be empty"),
