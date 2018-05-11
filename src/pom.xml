@@ -82,7 +82,7 @@
 		<dependency>
 			<groupId>io.bumo</groupId>
 			<artifactId>bumo-encryption</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.1</version>
 		</dependency>
 	</dependencies>
 </project>
