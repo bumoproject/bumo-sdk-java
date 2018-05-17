@@ -14,7 +14,7 @@ public enum BlockchainError{
 
     TARGET_EXIST(3, "Objects already exist, such as repeated submission of transactions"),
 
-    TARGET_NOT_EXIST(4, "Object does not exist, such as query no account, TX, block, etc"),
+    TARGET_NOT_EXIST(4, "Object does not exist, such as failure to query account, TX, block"),
 
     TX_TIMEOUT(5, "TX timeout means that the TX has been removed from the TX cache queue by the current node, but it does not mean that this must not be executed"),
 
@@ -22,27 +22,27 @@ public enum BlockchainError{
 
     EXPR_CONDITION_SYNTAX_ERROR(21, "An error in expression syntax analysis, which means that the TX will fail"),
 
-    ILLEGAL_PUB_KEY(90, "Public key illegal"),
+    ILLEGAL_PUB_KEY(90, "Illegal public key"),
 
-    ILLEGAL_PRIV_KEY(91, "Private key is illegal"),
+    ILLEGAL_PRIV_KEY(91, "Illegal private key"),
 
-    ILLEGAL_ASSET(92, "Asset issue address is illegal"),
+    ILLEGAL_ASSET(92, "Illegal asset issuing address"),
 
     WRONG_SIGNATURE(93, "The signature weight is not enough to reach the threshold value of the operation"),
 
-    ILLEGAL_ADDRESS(94, "The address is illegal"),
+    ILLEGAL_ADDRESS(94, "Illegal address"),
 
     OUT_OF_TIME_SPAN(95, "Not in the time range"),
 
     NO_CONSENSUS(96, "No consensus"),
 
-    TX_EMPTY_OPERATIONS(97, "Lack of operation in the transaction"),
+    TX_EMPTY_OPERATIONS(97, "Lack operation in transaction"),
 
     TX_OUT_OF_MAX_OPERATIONS(98, "The number of operations contained in the transaction exceeds the limit"),
 
-    TX_WRONG_SEQUENCE_NO(99, "The serial number of the transaction is illegal"),
+    TX_WRONG_SEQUENCE_NO(99, "Illegal transaction serial number"),
 
-    NO_MONEY(100, "Insufficient balance of available currency"),
+    NO_MONEY(100, "Insufficient balance of available token"),
 
     ILLEGAL_TARGET_EQ_SOURCE(101, "The target address is equal to the source address"),
 
@@ -54,23 +54,23 @@ public enum BlockchainError{
 
     ASSET_AMOUNT_TOO_LARGE(105, "The amount of assets is too large, beyond the scope of Int64"),
 
-    LACK_FEE(111, "Insufficient formalities"),
+    LACK_FEE(111, "Insufficient handling fee provided"),
 
-    TX_TOO_EARLY(112, "Trading prematurely"),
+    TX_TOO_EARLY(112, "Too early submission of transaction"),
 
-    TX_TOO_LATE(113, "The transaction was submitted lately"),
+    TX_TOO_LATE(113, "Too late submission of transaction"),
 
     TX_TOO_MANY(114, "The number of transactions received by the server is too much and is being processed"),
 
-    ILLEGAL_WEIGHT(120, "Invalidity of weight value"),
+    ILLEGAL_WEIGHT(120, "Invalid weight value"),
 
     NO_INPUT(130, "Input does not exist"),
 
-    ILLEGAL_INPUT(131, "The input is illegal"),
+    ILLEGAL_INPUT(131, "Illegal input"),
 
-    IS_NOT_SCF_TX(132, "Non supply chain type transaction"),
+    IS_NOT_SCF_TX(132, "Non-supply-chain transaction"),
 
-    ILLEGAL_VERSION(144, "Error of metadata version number of account"),
+    ILLEGAL_VERSION(144, "Incorrect metadata version of account"),
 
     CONTRACT_EXECUTE_FAIL(151, "Failure of contract execution"),
 

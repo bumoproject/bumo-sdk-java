@@ -50,7 +50,7 @@ Bumo Java SDK无任何依赖框架，使用时只需要载入配置即可运行�
     String ips = "seed1.bumotest.io:26002,seed2.bumotest.io:26002,seed3.bumotest.io:26002";
     sdkProperties.setIps(ips); // 设置http协议的节点IP列表
     
-    String eventUtis = "ws://seed1.bumotest.io:26003,ws://seed2.bumotest.io:26003,seed3.bumotest.io:26003";
+    String eventUtis = "ws://seed1.bumotest.io:26003,ws://seed2.bumotest.io:26003,ws://seed3.bumotest.io:26003";
     sdkProperties.setEventUtis(eventUtis);// 设置tcp协议的节点IP列表
     
     
@@ -74,7 +74,7 @@ SDK具备分布式能力，需要引入redis服务，具体配置如下：
     String ips = "seed1.bumotest.io:26002,seed2.bumotest.io:26002,seed3.bumotest.io:26002";
     sdkProperties.setIps(ips); // 设置http协议的节点IP列表
     
-    String eventUtis = "ws://seed1.bumotest.io:26003,ws://seed2.bumotest.io:26003,seed3.bumotest.io:26003";
+    String eventUtis = "ws://seed1.bumotest.io:26003,ws://seed2.bumotest.io:26003,ws://seed3.bumotest.io:26003";
     sdkProperties.setEventUtis(eventUtis);// 设置tcp协议的节点IP列表
     
     // ###### 需要分布式服务时，需要加入以下配置 ---开始 ###### //
@@ -141,7 +141,7 @@ TransactionCommittedResult result = transaction.commit();
 
 4. 获取transaction hash
 
-hash是transaction的唯一标识，开发者可以通过hash查询transaction最终状态。但是如果基本参数校验失败的交易（如：序列号有误，余额不足，手续费不足，权重不足等），不会返回hash，会抛出异常。
+hash是transaction的唯一标识，开发者可以通过hash查询transaction最终状态。成功和部分失败的交易会返回hash， 而基本参数校验失败的交易（如：序列号有误，余额不足，手续费不足，权重不足等），不会返回hash，会抛出异常。
   
 ```
 result.getHash();
@@ -232,7 +232,7 @@ Ledger ledger = queryService.getLatestLedger();
 
 ```
 
-###### 返回参数(Account)
+###### 返回参数
 参数        |   类型         |       描述          |       
 ----------- | -------------- | ------------------- |
 header      |  [Header](#header对象)  |  区块头    |
@@ -244,10 +244,11 @@ accountTreeHash    |  String    |  账户树哈希    |
 closeTime          |  long      |  区块关闭时间    |
 consensusValueHash |  String    |  共识内容哈希    |
 previousHash       |  String    |  前一个区块头哈希  |
+seq                |  long      |  区块序列号      |
 txCount            |  long      |  交易数    |
 validatorsHash     |  String    |  验证节点列表哈希 |
 version            |  long      |  版本号    |
-consensusValue     |  [ConsensusValue](#consensusvalue对象)  |  区块头    |
+consensusValue     |  [ConsensusValue](#consensusvalue对象)  | 共识内容    |
 
 ###### ConsensusValue对象
 参数        |   类型         |       描述          |       
@@ -275,7 +276,7 @@ Account account = queryService.getAccount(address);
 ------- | --------- | -------------- |
 address |  String   | 账户区块链地址 |
 
-###### 返回参数(Account)
+###### 返回参数
 参数        |   类型         |       描述          |       
 ----------- | -------------- | ------------------- |
 address     |  String        |  账户区块链地址     |
@@ -355,16 +356,16 @@ TransactionHistory tx = queryService.getTransactionHistoryByHash(txHash);
 | :------------- | ---------- | ---------- |
 | txHash         |   String   | 交易hash   |
 
-###### 返回参数(TransactionHistory)
+###### 返回参数
 | 参数    |        类型                |    描述        |
 | :------ | -------------------------- | -------------- |
-| tx      | [TransactionHistory](#transactionhistory对象)         |  交易历史结果  |
+| tx      | [TransactionHistory](#transactionhistory对象)         |  历史结果  |
 
 ###### TransactionHistory对象
 | 参数          |   类型            |    描述              |
 | :------------ | ----------------- | -------------------- |
-| totalCount    |   long            | 查询到的历史交易总数 |
-| transactions  |   [Transaction](#transaction对象)[]   | 历史交易列表         |
+| totalCount    |   long            | 查询到的交易总数 |
+| transactions  |   [Transaction](#transaction对象)[]   | 交易列表         |
 
 ###### Transaction对象
 | 参数          |   类型            |    描述              |
@@ -374,7 +375,7 @@ TransactionHistory tx = queryService.getTransactionHistoryByHash(txHash);
 | errorDesc     |   String          |   错误描述           |
 | ledgerSeq     |   long            |   历史交易所在区块   |
 | hash          |   String          |  历史交易hash        |
-| signatures    |   [Signature](#signature对象)[]     |  历史交易的签名列表  |
+| signatures    |   [Signature](#signature对象)[]     |  交易的签名列表  |
 | transaction   |   [SubTransaction](#subtransaction对象)  |  子交易              |
 
 ###### Signature对象
@@ -653,7 +654,7 @@ TransactionHistory tx = queryService.getTransactionHistoryByLedgerSeq(ledgerSeq)
 2 | 参数错误
 3 | 对象已存在， 如重复提交交易
 4 | 对象不存在，如查询不到账号、TX、区块等
-5 | 对象不存在，如查询不到账号、TX、区块等
+5 | 交易超时，意味着交易已经从交易缓冲队列中删除
 20 | 指表达式执行结果为 false，意味着该 TX 当前没有执行成功，但这并不代表在以后的区块不能成功
 21 | 指表达式语法分析错误，代表该 TX 一定会失败
 90 | 公钥非法
