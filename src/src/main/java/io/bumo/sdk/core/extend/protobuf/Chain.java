@@ -8778,7 +8778,7 @@ public final class Chain {
 
     /**
      * <pre>
-     *required, [-1,MAX(INT64)] -1: 表示不设置 indicate no setting
+     *required, [-1,MAX(INT64)] -1: indicate no setting
      * </pre>
      *
      * <code>optional int64 tx_threshold = 1;</code>
@@ -8787,7 +8787,7 @@ public final class Chain {
 
     /**
      * <pre>
-     *如果这个设置，则操作门限以这个为准 
+     *
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -8796,7 +8796,7 @@ public final class Chain {
         getTypeThresholdsList();
     /**
      * <pre>
-     *如果这个设置，则操作门限以这个为准 
+     *
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -8804,7 +8804,7 @@ public final class Chain {
     io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold getTypeThresholds(int index);
     /**
      * <pre>
-     *如果这个设置，则操作门限以这个为准 
+     *
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -8812,7 +8812,7 @@ public final class Chain {
     int getTypeThresholdsCount();
     /**
      * <pre>
-     *如果这个设置，则操作门限以这个为准 
+     *
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -8821,7 +8821,7 @@ public final class Chain {
         getTypeThresholdsOrBuilderList();
     /**
      * <pre>
-     *如果这个设置，则操作门限以这个为准 
+     *
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -8915,7 +8915,7 @@ public final class Chain {
     private long txThreshold_;
     /**
      * <pre>
-     *required, [-1,MAX(INT64)] -1: 表示不设置 indicate no setting
+     *required, [-1,MAX(INT64)] -1:  indicate no setting
      * </pre>
      *
      * <code>optional int64 tx_threshold = 1;</code>
@@ -8928,7 +8928,7 @@ public final class Chain {
     private java.util.List<io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold> typeThresholds_;
     /**
      * <pre>
-     *如果这个设置，则操作门限以这个为准 
+     *
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -8938,7 +8938,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *如果这个设置，则操作门限以这个为准 
+     *
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -8949,7 +8949,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *如果这个设置，则操作门限以这个为准 
+     *
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -8959,7 +8959,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *如果这个设置，则操作门限以这个为准 
+     *
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -8969,7 +8969,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *如果这个设置，则操作门限以这个为准 
+     *
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9311,7 +9311,7 @@ public final class Chain {
       private long txThreshold_ ;
       /**
        * <pre>
-       *required, [-1,MAX(INT64)] -1: 表示不设置 indicate no setting
+       *required, [-1,MAX(INT64)] -1:  indicate no setting
        * </pre>
        *
        * <code>optional int64 tx_threshold = 1;</code>
@@ -9321,7 +9321,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *required, [-1,MAX(INT64)] -1: 表示不设置 indicate no setting
+       *required, [-1,MAX(INT64)] -1:  indicate no setting
        * </pre>
        *
        * <code>optional int64 tx_threshold = 1;</code>
@@ -9334,7 +9334,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *required, [-1,MAX(INT64)] -1: 表示不设置 indicate no setting
+       *required, [-1,MAX(INT64)] -1:  indicate no setting
        * </pre>
        *
        * <code>optional int64 tx_threshold = 1;</code>
@@ -9360,7 +9360,7 @@ public final class Chain {
 
       /**
        * <pre>
-       *如果这个设置，则操作门限以这个为准 
+       *
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9374,7 +9374,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *如果这个设置，则操作门限以这个为准 
+       *
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9388,7 +9388,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *如果这个设置，则操作门限以这个为准 
+       *
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9402,7 +9402,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *如果这个设置，则操作门限以这个为准 
+       *
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9423,7 +9423,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *如果这个设置，则操作门限以这个为准 
+       *
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9441,7 +9441,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *如果这个设置，则操作门限以这个为准 
+       *
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9461,7 +9461,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *如果这个设置，则操作门限以这个为准 
+       *
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9482,7 +9482,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *如果这个设置，则操作门限以这个为准 
+       *
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9500,7 +9500,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *如果这个设置，则操作门限以这个为准 
+       *
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9518,7 +9518,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *如果这个设置，则操作门限以这个为准 
+       *
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9537,7 +9537,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *如果这个设置，则操作门限以这个为准 
+       *
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9554,7 +9554,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *如果这个设置，则操作门限以这个为准 
+       *
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9571,7 +9571,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *如果这个设置，则操作门限以这个为准 
+       *
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9582,7 +9582,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *如果这个设置，则操作门限以这个为准 
+       *
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9596,7 +9596,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *如果这个设置，则操作门限以这个为准 
+       *
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9611,7 +9611,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *如果这个设置，则操作门限以这个为准 
+       *
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9622,7 +9622,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *如果这个设置，则操作门限以这个为准 
+       *
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9634,7 +9634,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *如果这个设置，则操作门限以这个为准 
+       *
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -10983,7 +10983,7 @@ public final class Chain {
 
     /**
      * <pre>
-     *required, [-1,MAX(UINT32)] -1: 表示不设置
+     *required, [-1,MAX(UINT32)] -1:
      * </pre>
      *
      * <code>optional int64 master_weight = 1;</code>
@@ -10992,7 +10992,7 @@ public final class Chain {
 
     /**
      * <pre>
-     *address:weight, 如果weight 为0 表示删除这个signer
+     *address:weight, weight signer
      * </pre>
      *
      * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11001,7 +11001,7 @@ public final class Chain {
         getSignersList();
     /**
      * <pre>
-     *address:weight, 如果weight 为0 表示删除这个signer
+     *address:weight, weight signer
      * </pre>
      *
      * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11009,7 +11009,7 @@ public final class Chain {
     io.bumo.sdk.core.extend.protobuf.Chain.Signer getSigners(int index);
     /**
      * <pre>
-     *address:weight, 如果weight 为0 表示删除这个signer
+     *address:weight, weight signer
      * </pre>
      *
      * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11017,7 +11017,7 @@ public final class Chain {
     int getSignersCount();
     /**
      * <pre>
-     *address:weight, 如果weight 为0 表示删除这个signer
+     *address:weight, weight signer
      * </pre>
      *
      * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11026,7 +11026,7 @@ public final class Chain {
         getSignersOrBuilderList();
     /**
      * <pre>
-     *address:weight, 如果weight 为0 表示删除这个signer
+     *address:weight, weight signer
      * </pre>
      *
      * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11120,7 +11120,7 @@ public final class Chain {
     private long masterWeight_;
     /**
      * <pre>
-     *required, [-1,MAX(UINT32)] -1: 表示不设置
+     *required, [-1,MAX(UINT32)] -1:
      * </pre>
      *
      * <code>optional int64 master_weight = 1;</code>
@@ -11133,7 +11133,7 @@ public final class Chain {
     private java.util.List<io.bumo.sdk.core.extend.protobuf.Chain.Signer> signers_;
     /**
      * <pre>
-     *address:weight, 如果weight 为0 表示删除这个signer
+     *address:weight, weight signer
      * </pre>
      *
      * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11143,7 +11143,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *address:weight, 如果weight 为0 表示删除这个signer
+     *address:weight, weight signer
      * </pre>
      *
      * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11154,7 +11154,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *address:weight, 如果weight 为0 表示删除这个signer
+     *address:weight, weight signer
      * </pre>
      *
      * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11164,7 +11164,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *address:weight, 如果weight 为0 表示删除这个signer
+     *address:weight, weight signer
      * </pre>
      *
      * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11174,7 +11174,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *address:weight, 如果weight 为0 表示删除这个signer
+     *address:weight, weight signer
      * </pre>
      *
      * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11516,7 +11516,7 @@ public final class Chain {
       private long masterWeight_ ;
       /**
        * <pre>
-       *required, [-1,MAX(UINT32)] -1: 表示不设置
+       *required, [-1,MAX(UINT32)] -1:
        * </pre>
        *
        * <code>optional int64 master_weight = 1;</code>
@@ -11526,7 +11526,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *required, [-1,MAX(UINT32)] -1: 表示不设置
+       *required, [-1,MAX(UINT32)] -1:
        * </pre>
        *
        * <code>optional int64 master_weight = 1;</code>
@@ -11539,7 +11539,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *required, [-1,MAX(UINT32)] -1: 表示不设置
+       *required, [-1,MAX(UINT32)] -1:
        * </pre>
        *
        * <code>optional int64 master_weight = 1;</code>
@@ -11565,7 +11565,7 @@ public final class Chain {
 
       /**
        * <pre>
-       *address:weight, 如果weight 为0 表示删除这个signer
+       *address:weight, weight signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11579,7 +11579,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, 如果weight 为0 表示删除这个signer
+       *address:weight, weight signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11593,7 +11593,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, 如果weight 为0 表示删除这个signer
+       *address:weight, weight signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11607,7 +11607,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, 如果weight 为0 表示删除这个signer
+       *address:weight, weight signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11628,7 +11628,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, 如果weight 为0 表示删除这个signer
+       *address:weight, weight signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11646,7 +11646,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, 如果weight 为0 表示删除这个signer
+       *address:weight, weight signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11666,7 +11666,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, 如果weight 为0 表示删除这个signer
+       *address:weight, weight signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11687,7 +11687,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, 如果weight 为0 表示删除这个signer
+       *address:weight, weight signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11705,7 +11705,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, 如果weight 为0 表示删除这个signer
+       *address:weight, weight signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11723,7 +11723,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, 如果weight 为0 表示删除这个signer
+       *address:weight, weight signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11742,7 +11742,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, 如果weight 为0 表示删除这个signer
+       *address:weight, weight signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11759,7 +11759,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, 如果weight 为0 表示删除这个signer
+       *address:weight, weight signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11776,7 +11776,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, 如果weight 为0 表示删除这个signer
+       *address:weight, weight signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11787,7 +11787,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, 如果weight 为0 表示删除这个signer
+       *address:weight, weight signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11801,7 +11801,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, 如果weight 为0 表示删除这个signer
+       *address:weight, weight signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11816,7 +11816,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, 如果weight 为0 表示删除这个signer
+       *address:weight, weight signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11827,7 +11827,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, 如果weight 为0 表示删除这个signer
+       *address:weight, weight signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11839,7 +11839,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, 如果weight 为0 表示删除这个signer
+       *address:weight, weight signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -15038,7 +15038,7 @@ public final class Chain {
 
     /**
      * <pre>
-     *type:threshold ，threshold:0 表示删除这个类型的type
+     *type:threshold threshold:0 删偷type
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15047,7 +15047,7 @@ public final class Chain {
         getTypeThresholdsList();
     /**
      * <pre>
-     *type:threshold ，threshold:0 表示删除这个类型的type
+     *type:threshold threshold:0 删偷type
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15055,7 +15055,7 @@ public final class Chain {
     io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold getTypeThresholds(int index);
     /**
      * <pre>
-     *type:threshold ，threshold:0 表示删除这个类型的type
+     *type:threshold threshold:0 删偷type
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15063,7 +15063,7 @@ public final class Chain {
     int getTypeThresholdsCount();
     /**
      * <pre>
-     *type:threshold ，threshold:0 表示删除这个类型的type
+     *
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15072,7 +15072,7 @@ public final class Chain {
         getTypeThresholdsOrBuilderList();
     /**
      * <pre>
-     *type:threshold ，threshold:0 表示删除这个类型的type
+     *
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15175,7 +15175,7 @@ public final class Chain {
     private java.util.List<io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold> typeThresholds_;
     /**
      * <pre>
-     *type:threshold ，threshold:0 表示删除这个类型的type
+     *
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15185,7 +15185,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *type:threshold ，threshold:0 表示删除这个类型的type
+     *
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15196,7 +15196,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *type:threshold ，threshold:0 表示删除这个类型的type
+     *
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15206,7 +15206,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *type:threshold ，threshold:0 表示删除这个类型的type
+     *
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15216,7 +15216,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *type:threshold ，threshold:0 表示删除这个类型的type
+     *
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15595,7 +15595,7 @@ public final class Chain {
 
       /**
        * <pre>
-       *type:threshold ，threshold:0 表示删除这个类型的type
+       *
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15609,7 +15609,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold ，threshold:0 表示删除这个类型的type
+       *
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15623,7 +15623,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold ，threshold:0 表示删除这个类型的type
+       *
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15637,7 +15637,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold ，threshold:0 表示删除这个类型的type
+       *
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15658,7 +15658,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold ，threshold:0 表示删除这个类型的type
+       *
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15676,7 +15676,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold ，threshold:0 表示删除这个类型的type
+       *
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15696,7 +15696,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold ，threshold:0 表示删除这个类型的type
+       *
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15717,7 +15717,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold ，threshold:0 表示删除这个类型的type
+       *
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15735,7 +15735,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold ，threshold:0 表示删除这个类型的type
+       *
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15753,7 +15753,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold ，threshold:0 表示删除这个类型的type
+       *
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15772,7 +15772,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold ，threshold:0 表示删除这个类型的type
+       *
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15789,7 +15789,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold ，threshold:0 表示删除这个类型的type
+       *
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15806,7 +15806,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold ，threshold:0 表示删除这个类型的type
+       *
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15817,7 +15817,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold ，threshold:0 表示删除这个类型的type
+       *
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15831,7 +15831,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold ，threshold:0 表示删除这个类型的type
+       *
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15846,7 +15846,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold ，threshold:0 表示删除这个类型的type
+       *
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15857,7 +15857,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold ，threshold:0 表示删除这个类型的type
+       *
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -15869,7 +15869,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold ，threshold:0 表示删除这个类型的type
+       *
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -17916,7 +17916,7 @@ public final class Chain {
 
     /**
      * <pre>
-     *如果是特定区块触发的（暂时未提供）
+     *
      * </pre>
      *
      * <code>optional int64 ledger_seq = 2;</code>
@@ -17925,7 +17925,7 @@ public final class Chain {
 
     /**
      * <pre>
-     *如果是交易触发的
+     *
      * </pre>
      *
      * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -17933,7 +17933,7 @@ public final class Chain {
     boolean hasTransaction();
     /**
      * <pre>
-     *如果是交易触发的
+     *
      * </pre>
      *
      * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -17941,7 +17941,7 @@ public final class Chain {
     io.bumo.sdk.core.extend.protobuf.Chain.Trigger.OperationTrigger getTransaction();
     /**
      * <pre>
-     *如果是交易触发的
+     *
      * </pre>
      *
      * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -18650,7 +18650,7 @@ public final class Chain {
     private long ledgerSeq_;
     /**
      * <pre>
-     *如果是特定区块触发的（暂时未提供）
+     *
      * </pre>
      *
      * <code>optional int64 ledger_seq = 2;</code>
@@ -18663,7 +18663,7 @@ public final class Chain {
     private io.bumo.sdk.core.extend.protobuf.Chain.Trigger.OperationTrigger transaction_;
     /**
      * <pre>
-     *如果是交易触发的
+     *
      * </pre>
      *
      * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -18673,7 +18673,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *如果是交易触发的
+     *
      * </pre>
      *
      * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -18683,7 +18683,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *如果是交易触发的
+     *
      * </pre>
      *
      * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -19055,7 +19055,7 @@ public final class Chain {
       private long ledgerSeq_ ;
       /**
        * <pre>
-       *如果是特定区块触发的（暂时未提供）
+       *
        * </pre>
        *
        * <code>optional int64 ledger_seq = 2;</code>
@@ -19065,7 +19065,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *如果是特定区块触发的（暂时未提供）
+       *
        * </pre>
        *
        * <code>optional int64 ledger_seq = 2;</code>
@@ -19078,7 +19078,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *如果是特定区块触发的（暂时未提供）
+       *
        * </pre>
        *
        * <code>optional int64 ledger_seq = 2;</code>
@@ -19095,7 +19095,7 @@ public final class Chain {
           io.bumo.sdk.core.extend.protobuf.Chain.Trigger.OperationTrigger, io.bumo.sdk.core.extend.protobuf.Chain.Trigger.OperationTrigger.Builder, io.bumo.sdk.core.extend.protobuf.Chain.Trigger.OperationTriggerOrBuilder> transactionBuilder_;
       /**
        * <pre>
-       *如果是交易触发的
+       *
        * </pre>
        *
        * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -19105,7 +19105,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *如果是交易触发的
+       *
        * </pre>
        *
        * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -19119,7 +19119,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *如果是交易触发的
+       *
        * </pre>
        *
        * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -19139,7 +19139,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *如果是交易触发的
+       *
        * </pre>
        *
        * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -19157,7 +19157,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *如果是交易触发的
+       *
        * </pre>
        *
        * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -19179,7 +19179,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *如果是交易触发的
+       *
        * </pre>
        *
        * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -19197,7 +19197,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *如果是交易触发的
+       *
        * </pre>
        *
        * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -19209,7 +19209,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *如果是交易触发的
+       *
        * </pre>
        *
        * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -19224,7 +19224,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *如果是交易触发的
+       *
        * </pre>
        *
        * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -24219,7 +24219,7 @@ public final class Chain {
 
     /**
      * <pre>
-     *合约类型
+     *
      * </pre>
      *
      * <code>optional .protocol.Contract.ContractType type = 1;</code>
@@ -24227,7 +24227,7 @@ public final class Chain {
     int getTypeValue();
     /**
      * <pre>
-     *合约类型
+     *
      * </pre>
      *
      * <code>optional .protocol.Contract.ContractType type = 1;</code>
@@ -24236,7 +24236,7 @@ public final class Chain {
 
     /**
      * <pre>
-     *合约内容,js 代码
+     *
      * </pre>
      *
      * <code>optional string payload = 2;</code>
@@ -24244,7 +24244,7 @@ public final class Chain {
     java.lang.String getPayload();
     /**
      * <pre>
-     *合约内容,js 代码
+     *
      * </pre>
      *
      * <code>optional string payload = 2;</code>
@@ -24421,7 +24421,7 @@ public final class Chain {
     private int type_;
     /**
      * <pre>
-     *合约类型
+     *
      * </pre>
      *
      * <code>optional .protocol.Contract.ContractType type = 1;</code>
@@ -24431,7 +24431,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *合约类型
+     *
      * </pre>
      *
      * <code>optional .protocol.Contract.ContractType type = 1;</code>
@@ -24445,7 +24445,7 @@ public final class Chain {
     private volatile java.lang.Object payload_;
     /**
      * <pre>
-     *合约内容,js 代码
+     *
      * </pre>
      *
      * <code>optional string payload = 2;</code>
@@ -24464,7 +24464,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *合约内容,js 代码
+     *
      * </pre>
      *
      * <code>optional string payload = 2;</code>
@@ -24771,7 +24771,7 @@ public final class Chain {
       private int type_ = 0;
       /**
        * <pre>
-       *合约类型
+       *
        * </pre>
        *
        * <code>optional .protocol.Contract.ContractType type = 1;</code>
@@ -24781,7 +24781,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *合约类型
+       *
        * </pre>
        *
        * <code>optional .protocol.Contract.ContractType type = 1;</code>
@@ -24793,7 +24793,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *合约类型
+       *
        * </pre>
        *
        * <code>optional .protocol.Contract.ContractType type = 1;</code>
@@ -24804,7 +24804,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *合约类型
+       *
        * </pre>
        *
        * <code>optional .protocol.Contract.ContractType type = 1;</code>
@@ -24820,7 +24820,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *合约类型
+       *
        * </pre>
        *
        * <code>optional .protocol.Contract.ContractType type = 1;</code>
@@ -24835,7 +24835,7 @@ public final class Chain {
       private java.lang.Object payload_ = "";
       /**
        * <pre>
-       *合约内容,js 代码
+       *
        * </pre>
        *
        * <code>optional string payload = 2;</code>
@@ -24854,7 +24854,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *合约内容,js 代码
+       *
        * </pre>
        *
        * <code>optional string payload = 2;</code>
@@ -24874,7 +24874,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *合约内容,js 代码
+       *
        * </pre>
        *
        * <code>optional string payload = 2;</code>
@@ -24891,7 +24891,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *合约内容,js 代码
+       *
        * </pre>
        *
        * <code>optional string payload = 2;</code>
@@ -24904,7 +24904,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *合约内容,js 代码
+       *
        * </pre>
        *
        * <code>optional string payload = 2;</code>
@@ -25050,7 +25050,7 @@ public final class Chain {
   }
   /**
    * <pre>
-   *创建账户
+   *嘶
    * </pre>
    *
    * Protobuf type {@code protocol.OperationCreateAccount}
@@ -25534,7 +25534,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *创建账户
+     *
      * </pre>
      *
      * Protobuf type {@code protocol.OperationCreateAccount}
@@ -26467,7 +26467,7 @@ public final class Chain {
 
     /**
      * <pre>
-     *可选。metadata的版本号。如果设置了，必须和帐号现有的metadata_version相同。
+     *
      * </pre>
      *
      * <code>optional int64 version = 3;</code>
@@ -26639,7 +26639,7 @@ public final class Chain {
     private long version_;
     /**
      * <pre>
-     *可选。metadata的版本号。如果设置了，必须和帐号现有的metadata_version相同。
+     *
      * </pre>
      *
      * <code>optional int64 version = 3;</code>
@@ -27120,7 +27120,7 @@ public final class Chain {
       private long version_ ;
       /**
        * <pre>
-       *可选。metadata的版本号。如果设置了，必须和帐号现有的metadata_version相同。
+       *
        * </pre>
        *
        * <code>optional int64 version = 3;</code>
@@ -27130,7 +27130,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *可选。metadata的版本号。如果设置了，必须和帐号现有的metadata_version相同。
+       *
        * </pre>
        *
        * <code>optional int64 version = 3;</code>
@@ -27143,7 +27143,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *可选。metadata的版本号。如果设置了，必须和帐号现有的metadata_version相同。
+       *
        * </pre>
        *
        * <code>optional int64 version = 3;</code>
