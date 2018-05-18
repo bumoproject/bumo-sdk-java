@@ -1,4 +1,4 @@
-English | [中文](Bumo Java SDK_CN.md)
+English | [中文](SDK_CN.md)
 
 # Bumo Java SDK
 This document introduces some of the regular APIs for Bumo Java SDK

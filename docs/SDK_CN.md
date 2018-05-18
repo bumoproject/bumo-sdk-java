@@ -1,4 +1,4 @@
-[English](Bumo Java SDK.md) | 中文
+[English](SDK.md) | 中文
 
 # Bumo Java SDK
 
