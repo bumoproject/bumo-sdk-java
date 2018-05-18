@@ -1,25 +1,25 @@
 # Bumo Java SDK
 
-## 简介
-Java开发人员可以轻松通过Bumo Java SDK操作Bumo区块链。您可以在几分钟内通过Maven或下载jar包的方式完成SDK的安装。
+## Introduction
+Java developers can easily operate Bumo blockchain via the Bumo Java SDK. And you can complete the installation of the SDK in Maven or by downloading the jar package in a few minutes.
 
-1. [docs](/docs) 是 Bumo Java SDK 的使用文档。
-2. [examples](/examples) 是一个基于maven的项目示例。
-3. [libs](/libs)  是 Bumo Java SDK 的 jar 包以及依赖包。
-4. [src](/src)  是 Bumo Java SDK 的源代码
+1. [docs](/docs) are the usage documentations for the Bumo Java SDK.
+2. [examples](/examples) are some examples of a project based on Maven.
+3. [libs](/libs) are the jar package and the dependency packages for the Bumo Java SDK.
+4. [src](/src)  is the source code for the Bumo Java SDK.
 
-## 准备环境
+## Environment
 
-适用于JDK 8及以上版本。
+JDK 8 or above.
 
-## 安装方式
+## Installation
 
-#### 方式一：在Maven项目中加入依赖项（推荐方式）
-在Maven工程中使用Bumo Java SDK，只需在maven配置中加入Bumo提供的远程仓库后，在pom.xml中加入相应依赖即可
+#### Mode 1：Adding Dependencies to Maven Projects (Recommended)
+To use the Bumo Java SDK in a Maven project, just add the remote repository provided by Bumo to the maven configuration and add the corresponding dependency to pom.xml.
 
-本文的以1.0.0版本为例说明
+This article uses version 1.0.0 as an example
 
-maven 远程仓库
+Maven remote repository
 ``` xml
 <repository>
     <id>pubnexus</id>                
@@ -32,7 +32,7 @@ maven 远程仓库
     </snapshots>
 </repository>
 ```
-在dependencies标签内加入如下内容：
+Add the following in the dependencies tag：
 ``` xml
 <dependency>
   <groupId>io.bumo</groupId>
@@ -40,12 +40,12 @@ maven 远程仓库
   <version>1.0.0</version>
 </dependency>
 ```
-#### 方式二：在项目中导入JAR包
-1. 下载Bumo Java SDK开发包
-2. 解压该开发包
-3. 将bumo-sdk-{version}.jar以及附带的libs里的jar导入到您的项目中
+#### Mode 2: Import the JAR Package in the Project
+1. Download Bumo Java SDK Development Kit
+2. Unzip the development package
+3. Import bumo-sdk-{version}.jar and the included libs jar into your project
 
 ## 示例工程
-Bumo Java SDK 提供了丰富的示例，供开发者参考
+Bumo Java SDK provides rich examples for developers' reference
 
-[示例文档入口](/docs)
+[Sample document entry](docs/Bumo Java SDK.md "")

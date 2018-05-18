@@ -1,4 +1,6 @@
-# Bumo Java SDK 文档
+[English](Bumo Java SDK.md) | 中文
+
+# Bumo Java SDK
 
 ## 概述
 本文档简要概述Bumo Java SDK部分常用接口文档
