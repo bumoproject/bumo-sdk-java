@@ -45,7 +45,7 @@ Add the following in the dependencies tag：
 2. Unzip the development package
 3. Import bumo-sdk-{version}.jar and the included libs jar into your project
 
-## 示例工程
+## Example project
 Bumo Java SDK provides rich examples for developers' reference
 
 [Sample document entry](docs/SDK.md "")
