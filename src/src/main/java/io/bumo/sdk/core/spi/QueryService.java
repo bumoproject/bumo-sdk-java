@@ -17,7 +17,7 @@ public interface QueryService {
 	/**
      * Get latest ledger
      *
-     * @param Latest ledger
+     * @return Latest ledger
      */
 	Ledger getLatestLedger();
 
@@ -27,6 +27,13 @@ public interface QueryService {
      * @param address Account address
      */
     Account getAccount(String address);
+
+    /**
+     * Account balance
+     *
+     * @param address Account address
+     */
+    Double getBalance(String address);
 
     /**
      * Get the value of the specified account metadata
@@ -47,7 +54,7 @@ public interface QueryService {
     /**
      * Get the history of the trade
      *
-     * @param hash txHash
+     * @param ledgerSeq ledger sequence
      */
 
     TransactionHistory getTransactionHistoryByLedgerSeq(Long ledgerSeq);

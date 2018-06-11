@@ -27,16 +27,22 @@ import io.bumo.sdk.core.utils.http.RequestParam;
 public interface RpcService{
 
     /**
+     * 获取底层基本信息
+     */
+    @HttpAction(path = "/hello", method = HttpMethod.GET, responseConverter = HelloResponseConverter.class)
+    Hello hello();
+    
+    /**
      * 获取账号信息
      */
     @HttpAction(path = "/getAccount", method = HttpMethod.GET, responseConverter = GetAccountResponseConverter.class)
     Account getAccount(@RequestParam(name = "address") String address);
 
     /**
-     * 获取底层基本信息
+     * 获取账号余额
      */
-    @HttpAction(path = "/hello", method = HttpMethod.GET, responseConverter = HelloResponseConverter.class)
-    Hello hello();
+    @HttpAction(path = "/getAccountBase", method = HttpMethod.GET, responseConverter = GetAccountResponseConverter.class)
+    Account getAccountBase(@RequestParam(name = "address") String address);
 
     /**
      * 获取账号信息
@@ -63,8 +69,7 @@ public interface RpcService{
     String submitTransaction(@RequestBody SubTransactionRequest request);
     
     /**
-     * 
-     * @param addrs
+     *
      * @return
      */
     @HttpAction(path = "/testTransaction", method = HttpMethod.POST, responseConverter = TestTXResponseConverter.class)

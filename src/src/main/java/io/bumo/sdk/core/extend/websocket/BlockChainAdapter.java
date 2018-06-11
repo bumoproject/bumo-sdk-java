@@ -64,6 +64,7 @@ public class BlockChainAdapter {
 			uri_ = URI.create(uri_address);
 			send_queue_ = new LinkedBlockingQueue<WsMessage>();
 			blockchain_manager_thhead = new Thread(this);
+			blockchain_manager_thhead.setName("manager_" + String.valueOf(index));
 			blockchain_manager_thhead.start();
 		}
 		
@@ -77,16 +78,25 @@ public class BlockChainAdapter {
 			while (!is_exit) {
 				try {
 					block_chain_ = new BlockChain(draft_, uri_);
-					Thread block_chain_thread = new Thread(block_chain_);
-					block_chain_thread.setName("worker_thread_" + index_);
-					block_chain_thread.start();
-					block_chain_thread.join();
+					if (block_chain_ != null && !is_exit) {
+						Thread block_chain_thread = new Thread(block_chain_);
+						block_chain_thread.setName("worker_thread_" + index_);
+						if (!is_exit) {
+							block_chain_thread.start();
+						}
+						if (!is_exit) {
+							block_chain_thread.join();
+						}
+					}
+
 				} catch (Exception e) {
 					logger_.debug("connect failed, " + e.getMessage());
 				}
 				
 				try {
-					Thread.sleep(5000);
+					if (!is_exit) {
+						Thread.sleep(5000);
+					}
 				} catch (Exception e) {
 					logger_.error("sleep 5000 failed, " + e.getMessage());
 				}
@@ -100,7 +110,9 @@ public class BlockChainAdapter {
 		public void Stop() {
 			try {
 				is_exit = true;
-				block_chain_.close();
+				if (block_chain_ != null) {
+					block_chain_.close();
+				}
 			} catch (Exception e) {
 				logger_.error("join failed, " + e.getMessage());
 			}
@@ -238,13 +250,15 @@ public class BlockChainAdapter {
 					heartbeat_message_thread_.start();
 				}
 				public void run() {
-					while (heartbeat_enabled_) {
+					while (heartbeat_enabled_ && !is_exit) {
 						try {
-							Thread.sleep(check_interval);
+							if (!is_exit) {
+								Thread.sleep(check_interval);
+							}
 						} catch (Exception ex) {
 							logger_.debug("HeartbeatThread sleep failed, " + ex.getMessage());
 						}
-						if (is_connected_) {
+						if (is_connected_ && !is_exit) {
 							// send ping
 							WebSocket conn = getConnection();
 							
@@ -288,10 +302,10 @@ public class BlockChainAdapter {
 					send_message_thread_.start();
 				}
 				public void run() {
-					while (send_enabled_) {
+					while (send_enabled_ && !is_exit) {
 						WsMessage send_message = null;
 						try {
-							if (!is_connected_) {
+							if (!is_connected_ && !is_exit) {
 								Thread.sleep(3000);
 								continue;
 							}
@@ -307,7 +321,9 @@ public class BlockChainAdapter {
 							logger_.error("HeartbeatThread send failed, " + e.getMessage());
 							send_queue_.add(send_message);
 							try {
-								Thread.sleep(3000);
+								if (!is_connected_ && !is_exit) {
+									Thread.sleep(3000);
+								}
 							} catch (Exception ex) {
 								logger_.error("HeartbeatThread sleep failed, " + ex.getMessage());
 							}

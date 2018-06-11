@@ -17,7 +17,9 @@
 	- [发行资产](#发行资产)
 	- [转移资产](#转移资产)
 	- [发送BU](#发送bu)
-	
+	- [创建合约](#创建合约)
+	- [转移资产并触发合约](#转移资产并触发合约)
+	- [发送BU并触发合约](#发送BU并触发合约)
 - [查询说明](#查询说明)
     - [查询最新区块](#查询最新区块)
     - [查询账户](#查询账户)
@@ -30,6 +32,9 @@
    - [-发行资产](#-发行资产)
    - [-转移资产](#-转移资产)
    - [-发送BU](#-发送bu)
+   - [-创建合约](#-创建合约)
+   - [-转移资产并触发合约](#转移资产并触发合约)
+   - [-发送BU并触发合约](#发送BU并触发合约)
    - [-根据hash查询交易](#-根据hash查询交易)
    - [-根据区块序列号查询交易](#-根据区块序列号查询交易)
 - [错误码](#错误码)
@@ -163,13 +168,14 @@ Account account = queryService.getAccount(address);
 ###### 调用方法
 
 ```
-CreateAccountOperation operation = OperationFactory.newCreateAccountOperation(destAddress, initBalance);
+CreateAccountOperation operation = OperationFactory.newCreateAccountOperation(sourceAddress, destAddress, initBalance);
 
 ```
 ###### 入参
    参数     |     类型     |     描述                    |
 ----------- | ------------ | --------------------------- |
-destAddress |    String    | 区块链账户地址              |
+sourceAddress | String     | 待创建新账户的源区块链账户地址   |
+destAddress |    String    | 待创建的区块链账户地址              |
 initBalance |    long      | 创建账户初始化账户余额，最少10000000 MO（注:1 BU = 10^8 MO） |
 
 #### 发行资产
@@ -179,13 +185,14 @@ initBalance |    long      | 创建账户初始化账户余额，最少10000000 
 ###### 调用方法
 
 ```
-IssueAssetOperation operation = OperationFactory.newIssueAssetOperation(assetCode, amount);
+IssueAssetOperation operation = OperationFactory.newIssueAssetOperation(sourceAddress, assetCode, amount);
 
 ```
 
 ###### 入参
 | 参数           |    类型    |   描述                |
 | :------------- | ---------- | --------------------- |
+sourceAddress | String     | 待发行资产的源区块链账户地址   |
 | assetCode      |   String   | 资产代码, 如: "HNC"   |
 | amount         |   long     | 资产数量              |
 
@@ -196,13 +203,14 @@ IssueAssetOperation operation = OperationFactory.newIssueAssetOperation(assetCod
 ###### 调用方法：
 
 ```
-PayAssetOperation operation = OperationFactory.newPayAssetOperation(targetAddress, issuerAddress, assetCode, amount);
+PayAssetOperation operation = OperationFactory.newPayAssetOperation(sourceAddress, targetAddress, issuerAddress, assetCode, amount);
 
 ```
 
 ###### 入参
 | 参数           |    类型    |   描述            |
 | :------------- | ---------- | ----------------- |
+sourceAddress | String     | 待转移资产的源区块链账户地址   |
 | targetAddress  |   String   | 目标账户地址      |
 | issuerAddress  |   String   | 资产发行账户地址  |
 | assetCode      |   String   | 资产代码          |
@@ -214,15 +222,74 @@ PayAssetOperation operation = OperationFactory.newPayAssetOperation(targetAddres
 ###### 调用方法
 
 ```
-OperationFactory.newPayCoinOperation(targetAddress, amount);
+OperationFactory.newPayCoinOperation(sourceAddress, targetAddress, amount);
 
 ```
 
 ##### 入参
 参数             |      类型    |      描述      |
 ---------------- | ------------ |  ------------  |
+sourceAddress | String     | 待发送BU的源区块链账户地址   |
 targetAddress    |   String     | 目标区块链地址 | 
 sendTokenAmount  |    long      | 发送数量 (单位 : MO　注:1 BU = 10^8 MO)    | 
+
+#### 创建合约
+
+###### 调用方法
+
+```
+newCreateContractOperation(sourceAddress, destAddress, initBalance, payload, initInput)
+
+```
+
+##### 入参
+参数             |      类型    |      描述      |
+---------------- | ------------ |  ------------  |
+sourceAddress | String     | 待创建合约的源区块链账户地址   |
+destAddress    |   String     | 待创建的合约账户的区块链地址 | 
+initBalance  |    long      | 初始化资产 (单位 : MO　注:1 BU = 10^8 MO)    | 
+payload  |    String      | 合约代码，这里是指javascript代码    | 
+initInput  |    String      | 合约代码初始化入参    | 
+
+#### 转移资产并触发合约
+
+###### 调用方法
+
+```
+newInvokeContractByAssetOperation(sourceAddress, targetAddress, issuerAddress, assetCode, amount, inputData)
+
+```
+
+##### 入参
+参数             |      类型    |      描述      |
+---------------- | ------------ |  ------------  |
+sourceAddress | String     | 待转移资产的源区块链账户地址   |
+targetAddress  |   String   | 目标账户地址      |
+issuerAddress  |   String   | 资产发行账户地址  |
+assetCode      |   String   | 资产代码          |
+amount    |   long     | 资产数量          |
+inputData  |    String      | 待传递的合约参数    | 
+
+> 当targetAddress=null或assetCode=null或assetCode=null或amount=0时，仅触发合约，不转移资产
+
+#### 发送BU并触发合约
+
+###### 调用方法
+
+```
+newInvokeContractByBUOperation(sourceAddress, targetAddress, amount ,inputData)
+
+```
+
+##### 入参
+参数             |      类型    |      描述      |
+---------------- | ------------ |  ------------  |
+sourceAddress | String     | 待发送BU的源区块链账户地址   |
+targetAddress    |   String     | 目标区块链地址 | 
+amount  |    long      | 发送数量 (单位 : MO　注:1 BU = 10^8 MO)    | 
+inputData  |    String      | 待传递的合约参数    | 
+
+> 当=0时，仅触发合约，不发送BU
 
 ### 查询说明
 
@@ -614,6 +681,104 @@ try {
 	e.printStackTrace();
 }
 
+```
+#### -创建合约
+
+```
+// Public private key pair and block chain address of a random Bumo block account
+BlockchainKeyPair keyPair = SecureKeyGenerator.generateBumoKeyPair();
+
+// Note: the developer system needs to record the public and private key and address of the account
+
+String accountAddress = keyPair.getBumoAddress(); // Block chain account address
+String accountSk = keyPair.getPriKey(); // Block chain account private key
+String accountPk = keyPair.getPubKey(); // Block chain account public key
+
+try {
+	// Create an account operation
+	CreateAccountOperation operation = OperationFactory.newCreateContractOperation(address, accountAddress, 111111111111L/*ToBaseUnit.BU2MO("0.1")*/,
+			"\"use strict\";function init(bar){/*init whatever you want*/return;}function main(input){if (input === 'issue') {issueAsset(\"FMR\", \"10000\");} else if (input === 'pay_asset') { payAsset(sender, thisAddress, \"FMR\", \"1000\"); }}function query(input){ let sender_balance = getBalance(sender);let this_balance = getBalance(thisAddress);log(sender_balance);log(this_balance);return input;}",
+			"");
+
+	// Get start Tx
+	String txSubmitAccountAddress = address; // Transaction sender block chain account address
+	Transaction transaction = operationService.newTransaction(txSubmitAccountAddress);
+
+	// Bind operation
+	transaction.buildTxMetadata("build simple account")
+			.buildAddOperation(operation)
+			.buildAddGasPrice(1000) // 【required】 the price of Gas, at least 1000MO
+			.buildAddFeeLimit(ToBaseUnit.BU2MO("10.01")) // 【required】Service Charge (1000000MO = 0.01BU)
+			.buildAddSigner(publicKey, privateKey);
+
+	// Commit Tx
+	TransactionCommittedResult result = transaction.commit();
+
+	System.out.println("new address:" + accountAddress);
+	System.out.println("new publickey :" + accountPk);
+	System.out.println("new private key:" + accountSk);
+
+	// Get the hash of Tx
+	System.out.println(result.getHash());
+} catch (SdkException e) {
+	e.printStackTrace();
+}
+```
+
+#### -转移资产并触发合约
+
+```
+try {
+	String contractAccount = "buQh4tAWb7pAnDrWhXMRHioojMi4zUf9ZDKD";
+
+	// Creating asset distribution operations
+	BcOperation operation = OperationFactory.newInvokeContractByAssetOperation(address, contractAccount, "", "", 0, "issue");
+
+	// Get start Tx
+	Transaction transaction = operationService.newTransaction(address);
+
+	// Bind operation
+	transaction.buildAddOperation(operation)
+			.buildAddGasPrice(1000) // 【required】 the price of Gas, at least 1000MO
+			.buildAddFeeLimit(ToBaseUnit.BU2MO("0.01")) // 【required】Service Fee + Operation Fee (1000000MO + 5000000000MO = 50.01BU)
+			.buildAddSigner(publicKey, privateKey);
+
+	// Commit Tx
+	TransactionCommittedResult result = transaction.commit();
+
+	// Get the hash of Tx
+	System.out.println(result.getHash());
+} catch (SdkException e) {
+	e.printStackTrace();
+}
+```
+
+#### -发送BU并触发合约
+
+```
+try {
+	String contractAccount = "buQh4tAWb7pAnDrWhXMRHioojMi4zUf9ZDKD";
+
+	// Creating asset distribution operations
+	BcOperation operation = OperationFactory.newInvokeContractByBUOperation(address, contractAccount, 0, "pay_asset");
+
+	// Get start Tx
+	Transaction transaction = operationService.newTransaction(address);
+
+	// Bind operation
+	transaction.buildAddOperation(operation)
+			.buildAddGasPrice(1000) // 【required】 the price of Gas, at least 1000MO
+			.buildAddFeeLimit(ToBaseUnit.BU2MO("0.01")) // 【required】Service Fee + Operation Fee (1000000MO + 5000000000MO = 50.01BU)
+			.buildAddSigner(publicKey, privateKey);
+
+	// Commit Tx
+	TransactionCommittedResult result = transaction.commit();
+
+	// Get the hash of Tx
+	System.out.println(result.getHash());
+} catch (SdkException e) {
+	e.printStackTrace();
+}
 ```
 
 #### -查询最新区块

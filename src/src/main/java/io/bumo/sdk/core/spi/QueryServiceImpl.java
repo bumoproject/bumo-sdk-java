@@ -7,6 +7,7 @@ import io.bumo.sdk.core.adapter.bc.response.TransactionHistory;
 import io.bumo.sdk.core.adapter.bc.response.ledger.Ledger;
 import io.bumo.sdk.core.adapter.bc.response.operation.SetMetadata;
 import io.bumo.sdk.core.adapter.bc.response.test.EvalTxResult;
+import io.bumo.sdk.core.utils.ToBaseUnit;
 import io.bumo.sdk.core.utils.spring.StringUtils;
 
 /**
@@ -28,6 +29,18 @@ public class QueryServiceImpl implements QueryService {
             throw new IllegalArgumentException("query account method address must not null!");
         }
         return rpcService.getAccount(address);
+    }
+
+    @Override
+    public Double getBalance(String address) {
+        if (StringUtils.isEmpty(address)) {
+            throw new IllegalArgumentException("query account method address must not null!");
+        }
+        Account balance = rpcService.getAccountBase(address);
+        if (balance == null) {
+            return null;
+        }
+        return ToBaseUnit.MO2BU(balance.getBalance());
     }
 
     @Override

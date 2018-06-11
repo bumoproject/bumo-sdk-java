@@ -76,7 +76,7 @@ public class ExchangeDemo {
 		Long sendTokenAmount = ToBaseUnit.BU2MO("0.6");
 		try {
 			// Creating asset distribution operations
-			PayCoinOperation operation = OperationFactory.newPayCoinOperation(targetAddress, sendTokenAmount);
+			PayCoinOperation operation = OperationFactory.newPayCoinOperation(address, targetAddress, sendTokenAmount);
 
 
 			// Get start Tx

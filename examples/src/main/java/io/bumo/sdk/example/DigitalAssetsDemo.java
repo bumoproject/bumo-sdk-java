@@ -13,10 +13,7 @@ import io.bumo.sdk.core.exception.SdkException;
 import io.bumo.sdk.core.extend.protobuf.Chain;
 import io.bumo.sdk.core.operation.BcOperation;
 import io.bumo.sdk.core.operation.OperationFactory;
-import io.bumo.sdk.core.operation.impl.CreateAccountOperation;
-import io.bumo.sdk.core.operation.impl.IssueAssetOperation;
-import io.bumo.sdk.core.operation.impl.PayAssetOperation;
-import io.bumo.sdk.core.operation.impl.PayCoinOperation;
+import io.bumo.sdk.core.operation.impl.*;
 import io.bumo.sdk.core.spi.OperationService;
 import io.bumo.sdk.core.spi.QueryService;
 import io.bumo.sdk.core.transaction.Transaction;
@@ -80,7 +77,7 @@ public class DigitalAssetsDemo {
 
 		try {
 			// Create an account operation
-			CreateAccountOperation operation = OperationFactory.newCreateAccountOperation(accountAddress, ToBaseUnit.BU2MO("0.1"));
+			CreateAccountOperation operation = OperationFactory.newCreateAccountOperation(address, accountAddress, ToBaseUnit.BU2MO("0.1"));
 
 			// Get start Tx
 			String txSubmitAccountAddress = address; // Transaction sender block chain account address
@@ -92,6 +89,102 @@ public class DigitalAssetsDemo {
 					.buildAddGasPrice(100) // 【required】 the price of Gas, at least 1000MO
 				    .buildAddFeeLimit(ToBaseUnit.BU2MO("0.01")) // 【required】Service Charge (1000000MO = 0.01BU)
 				    .buildAddSigner(publicKey, privateKey);
+
+			// Commit Tx
+			TransactionCommittedResult result = transaction.commit();
+
+			// Get the hash of Tx
+			System.out.println(result.getHash());
+		} catch (SdkException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * create simple account
+	 */
+	@SuppressWarnings("unused")
+	public static void createContractAccount(OperationService operationService) {
+		// Public private key pair and block chain address of a random Bumo block account
+		BlockchainKeyPair keyPair = SecureKeyGenerator.generateBumoKeyPair();
+
+		// Note: the developer system needs to record the public and private key and address of the account
+		String accountAddress = keyPair.getBumoAddress(); // Block chain account address
+		String accountSk = keyPair.getPriKey(); // Block chain account private key
+		String accountPk = keyPair.getPubKey(); // Block chain account public key
+
+		try {
+			// Create an account operation
+			CreateAccountOperation operation = OperationFactory.newCreateContractOperation(address, accountAddress, ToBaseUnit.BU2MO("0.1"),
+					"\"use strict\";function init(bar){/*init whatever you want*/return;}function main(input){issueAsset(\"FMR\", \"10000\");}function query(input){ let sender_balance = getBalance(sender);let this_balance = getBalance(thisAddress);log(sender_balance);log(this_balance);return input;}",
+					"");
+
+			// Get start Tx
+			String txSubmitAccountAddress = address; // Transaction sender block chain account address
+			Transaction transaction = operationService.newTransaction(txSubmitAccountAddress);
+
+			// Bind operation
+			transaction.buildTxMetadata("build simple account")
+					.buildAddOperation(operation)
+					.buildAddGasPrice(1000) // 【required】 the price of Gas, at least 1000MO
+					.buildAddFeeLimit(ToBaseUnit.BU2MO("10.01")) // 【required】Service Charge (1000000MO = 0.01BU)
+					.buildAddSigner(publicKey, privateKey);
+
+			// Commit Tx
+			TransactionCommittedResult result = transaction.commit();
+
+			System.out.println("new address:" + accountAddress);
+			System.out.println("new publickey :" + accountPk);
+			System.out.println("new private key:" + accountSk);
+
+			// Get the hash of Tx
+			System.out.println(result.getHash());
+		} catch (SdkException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void invokeContractByAsset(OperationService operationService) {
+		try {
+			String contractAccount = "buQh4tAWb7pAnDrWhXMRHioojMi4zUf9ZDKD";
+
+			// Creating asset distribution operations
+			BcOperation operation = OperationFactory.newInvokeContractByAssetOperation(address, contractAccount, "", "", 0, "issue");
+
+			// Get start Tx
+			Transaction transaction = operationService.newTransaction(address);
+
+			// Bind operation
+			transaction.buildAddOperation(operation)
+					.buildAddGasPrice(1000) // 【required】 the price of Gas, at least 1000MO
+					.buildAddFeeLimit(ToBaseUnit.BU2MO("0.01")) // 【required】Service Fee + Operation Fee (1000000MO + 5000000000MO = 50.01BU)
+					.buildAddSigner(publicKey, privateKey);
+
+			// Commit Tx
+			TransactionCommittedResult result = transaction.commit();
+
+			// Get the hash of Tx
+			System.out.println(result.getHash());
+		} catch (SdkException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void invokeContractByBU(OperationService operationService) {
+		try {
+			String contractAccount = "buQh4tAWb7pAnDrWhXMRHioojMi4zUf9ZDKD";
+
+			// Creating asset distribution operations
+			BcOperation operation = OperationFactory.newInvokeContractByBUOperation(address, contractAccount, 0, "pay_asset");
+
+			// Get start Tx
+			Transaction transaction = operationService.newTransaction(address);
+
+			// Bind operation
+			transaction.buildAddOperation(operation)
+					.buildAddGasPrice(1000) // 【required】 the price of Gas, at least 1000MO
+					.buildAddFeeLimit(ToBaseUnit.BU2MO("0.01")) // 【required】Service Fee + Operation Fee (1000000MO + 5000000000MO = 50.01BU)
+					.buildAddSigner(publicKey, privateKey);
 
 			// Commit Tx
 			TransactionCommittedResult result = transaction.commit();
@@ -115,7 +208,7 @@ public class DigitalAssetsDemo {
 			// Creating asset distribution operations
 			String assetCode = "HNC";
 			Long issueAmount = 1000000000L; // Issue 1 billion HNC
-			IssueAssetOperation operation = OperationFactory.newIssueAssetOperation(assetCode,issueAmount );
+			IssueAssetOperation operation = OperationFactory.newIssueAssetOperation(address, assetCode,issueAmount );
 
 			// Get start Tx
 			Transaction transaction = operationService.newTransaction(issueAssetsAccountAddress);
@@ -142,7 +235,7 @@ public class DigitalAssetsDemo {
 		Long sendTokenAmount = ToBaseUnit.BU2MO("0.6");
 		try {
 			// Creating asset distribution operations
-			PayCoinOperation operation = OperationFactory.newPayCoinOperation(targetAddress, sendTokenAmount);
+			PayCoinOperation operation = OperationFactory.newPayCoinOperation(address, targetAddress, sendTokenAmount);
 
 			// Get start Tx
 			Transaction transaction = operationService.newTransaction(txSubmitAccountAddress);
@@ -178,7 +271,7 @@ public class DigitalAssetsDemo {
 			String issuerAddress = "buQYBzc87B71wDp4TyikrSkvti8YTMjYN8LT";// Asset issuer
 			String assetCode = "HNC"; // Asset ID
 			Long sendAmount = 1000000000L; // Issue 1 billion HNC
-			PayAssetOperation operation = OperationFactory.newPayAssetOperation(destAccountAddress,issuerAddress,assetCode,sendAmount); // 创建资产发行操作
+			PayAssetOperation operation = OperationFactory.newPayAssetOperation(address, destAccountAddress,issuerAddress,assetCode,sendAmount); // 创建资产发行操作
 
 			// Get start Tx
 			Transaction transaction = operationService.newTransaction(assetOwnerAccountAddress);

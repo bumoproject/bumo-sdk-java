@@ -228,7 +228,8 @@ public class Transaction{
 
             if (sync) {
 
-                txFuture.await();
+                // wait for 50 blocks
+                txFuture.await(10000 * 50);
 
                 if (!success(txFuture.getErrorCode())) {
                     throw new SdkException(Integer.valueOf(txFuture.getErrorCode()), txFuture.getErrorMessage());

@@ -15,6 +15,8 @@ This document introduces some of the regular APIs for Bumo Java SDK
 	- [Issue assets](#issue-assets)
 	- [Transfer Assets](#transfer-assets)
 	- [Send BU](#send-bu)
+	- [Create contract](#create-contract)
+	- [Invoke contract](#invoke-contract)
 	
 - [Query instructions](#query-instructions)
     - [Query the latest ledger](#query-the-latest-ledger)
@@ -27,6 +29,8 @@ This document introduces some of the regular APIs for Bumo Java SDK
    - [-Issue Assets](#-issue-assets)
    - [-Transfer Assets](#-transfer-assets)
    - [-Send BU](#-send-bu)
+   - [-Create contract](#-create-contract)
+   - [-Invoke contract](#-invoke-contract)
    - [-Query Account](#-query-account)
    - [-Query transaction by hash](#-query-transaction-by-hash)
    - [-Query transaction by block serial number](#-query-transaction-by-block-serial-number)
@@ -219,6 +223,40 @@ Parameter              |      Type     |     Description      |
 ---------------- | ------------ |  ------------  |
 targetAddress    |   String     | Target blockchain address | 
 sendTokenAmount  |    long      |    Sending amount    | 
+
+#### Create contract
+
+###### How to call
+
+```
+newCreateContractOperation(sourceAddress, destAddress, initBalance, payload, initInput)
+
+```
+
+###### Entry parameters
+Parameter              |      Type     |     Description      |
+---------------- | ------------ |  ------------  |
+sourceAddress | String     | Source blockchain address   |
+destAddress    |   String     | Contract blockchain address | 
+initBalance  |    long      | Initial balance of the contract account that will be created, mininum 1, 0000, 000MO (Note: 1 BU = 10^8 MO)    | 
+payload  |    String      | Contract code, here is javascript code    | 
+initInput  |    long      |   Initial argument of contract code   | 
+
+#### Invoke contract
+
+###### How to call
+
+```
+newInvokeContractOperation(destAddress, inputData)
+
+```
+
+###### Entry parameters
+Parameter              |      Type     |     Description      |
+---------------- | ------------ |  ------------  |
+destAddress    |   String     | Target contract blockchain address | 
+inputData  |    long      |   The argument to be sent of contract code     | 
+
 
 ### Query instructions
 
@@ -592,6 +630,77 @@ try {
 	e.printStackTrace();
 }
 
+```
+
+#### -Create contract
+
+```
+// Public private key pair and block chain address of a random Bumo block account
+BlockchainKeyPair keyPair = SecureKeyGenerator.generateBumoKeyPair();
+
+// Note: the developer system needs to record the public and private key and address of the account
+
+String accountAddress = keyPair.getBumoAddress(); // Block chain account address
+String accountSk = keyPair.getPriKey(); // Block chain account private key
+String accountPk = keyPair.getPubKey(); // Block chain account public key
+
+try {
+	// Create an account operation
+	CreateAccountOperation operation = OperationFactory.newCreateContractOperation(address, accountAddress, 111111111111L/*ToBaseUnit.BU2MO("0.1")*/,
+			"\"use strict\";function init(bar){/*init whatever you want*/return;}function main(input){if (input === 'issue') {issueAsset(\"FMR\", \"10000\");} else if (input === 'pay_asset') { payAsset(sender, thisAddress, \"FMR\", \"1000\"); }}function query(input){ let sender_balance = getBalance(sender);let this_balance = getBalance(thisAddress);log(sender_balance);log(this_balance);return input;}",
+			"");
+
+	// Get start Tx
+	String txSubmitAccountAddress = address; // Transaction sender block chain account address
+	Transaction transaction = operationService.newTransaction(txSubmitAccountAddress);
+
+	// Bind operation
+	transaction.buildTxMetadata("build simple account")
+			.buildAddOperation(operation)
+			.buildAddGasPrice(1000) // 【required】 the price of Gas, at least 1000MO
+			.buildAddFeeLimit(ToBaseUnit.BU2MO("10.01")) // 【required】Service Charge (1000000MO = 0.01BU)
+			.buildAddSigner(publicKey, privateKey);
+
+	// Commit Tx
+	TransactionCommittedResult result = transaction.commit();
+
+	System.out.println("new address:" + accountAddress);
+	System.out.println("new publickey :" + accountPk);
+	System.out.println("new private key:" + accountSk);
+
+	// Get the hash of Tx
+	System.out.println(result.getHash());
+} catch (SdkException e) {
+	e.printStackTrace();
+}
+```
+
+####-Invoke contract
+
+```
+try {
+	String contractAccount = "buQh4tAWb7pAnDrWhXMRHioojMi4zUf9ZDKD";
+
+	// Creating asset distribution operations
+	InvokeContractOperation operation = OperationFactory.newInvokeContractOperation(contractAccount, "");
+
+	// Get start Tx
+	Transaction transaction = operationService.newTransaction(address);
+
+	// Bind operation
+	transaction.buildAddOperation(operation)
+			.buildAddGasPrice(1000) // 【required】 the price of Gas, at least 1000MO
+			.buildAddFeeLimit(ToBaseUnit.BU2MO("0.01")) // 【required】Service Fee + Operation Fee (1000000MO + 5000000000MO = 50.01BU)
+			.buildAddSigner(publicKey, privateKey);
+
+	// Commit Tx
+	TransactionCommittedResult result = transaction.commit();
+
+	// Get the hash of Tx
+	System.out.println(result.getHash());
+} catch (SdkException e) {
+	e.printStackTrace();
+}
 ```
 
 #### -Query the latest block query

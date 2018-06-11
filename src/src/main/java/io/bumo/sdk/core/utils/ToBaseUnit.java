@@ -30,7 +30,7 @@ public class ToBaseUnit {
 		return Long.parseLong(delStartZero(beforeStr + afterStr));
 	}
 	
-	public static Long MO2BU(String moAmount){
+	public static Double MO2BU(String moAmount){
 		// must be long, and the number is between 1 and 18
 		if (!moAmount.matches("^[0-9]{1,18}?$")) {
 			return null;
@@ -52,12 +52,12 @@ public class ToBaseUnit {
 		if(result.endsWith(".")){
 			result = result.substring(0,result.length()-1);
 		}
-		return Long.parseLong(result);
+		return Double.parseDouble(result);
 	}
 	public static void main(String[] args) {
 		Long s1 = ToBaseUnit.BU2MO("9999999999.99999999");
 		System.out.println(s1);
-		Long s2 = ToBaseUnit.MO2BU("1000");
+		Double s2 = ToBaseUnit.MO2BU("1000");
 		System.out.println(s2);
 	}
 	public static String delEndsZero(String src) {

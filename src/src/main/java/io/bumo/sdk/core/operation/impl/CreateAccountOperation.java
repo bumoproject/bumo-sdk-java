@@ -51,13 +51,25 @@ public class CreateAccountOperation extends AbstractBcOperation{
             });
         }
 
+        // Contract
+        String script = createAccount.getContract().getPayload();
+        if (!StringUtils.isEmpty(script)) {
+            Chain.Contract.Builder contractBuilder = Chain.Contract.newBuilder();
+            contractBuilder.setPayload(script);
+            operationCreateAccount.setContract(contractBuilder);
+        }
+
         // right
         Priv priv = createAccount.getPriv();
         Chain.AccountPrivilege.Builder accountPrivilegeBuilder = Chain.AccountPrivilege.newBuilder();
         long masterWeight = priv.getMasterWeight();
-        if (masterWeight == 0) {
+        if (!StringUtils.isEmpty(script)) {
+            masterWeight = 0;
+        }
+        else if (masterWeight == 0) {
         	masterWeight = 1;
         }
+
         accountPrivilegeBuilder.setMasterWeight(masterWeight);
         // signer
         if (priv.getSigners() != null) {
@@ -73,8 +85,8 @@ public class CreateAccountOperation extends AbstractBcOperation{
         if (threshold != null) {
             Chain.AccountThreshold.Builder accountThresholdBuilder = Chain.AccountThreshold.newBuilder();
             long txThreshold = threshold.getTxThreshold();
-            if (txThreshold == 0) {
-            	txThreshold = 1;
+            if (!StringUtils.isEmpty(script) || txThreshold == 0) {
+                txThreshold = 1;
             }
             accountThresholdBuilder.setTxThreshold(txThreshold);
 
@@ -94,13 +106,6 @@ public class CreateAccountOperation extends AbstractBcOperation{
 
         operationCreateAccount.setPriv(accountPrivilegeBuilder);
 
-        // Contract
-        String script = createAccount.getContract().getPayload();
-        if (!StringUtils.isEmpty(script)) {
-            Chain.Contract.Builder contractBuilder = Chain.Contract.newBuilder();
-            contractBuilder.setPayload(script);
-            operationCreateAccount.setContract(contractBuilder);
-        }
         operation.setCreateAccount(operationCreateAccount);
     }
 
@@ -126,6 +131,10 @@ public class CreateAccountOperation extends AbstractBcOperation{
 
         public Builder buildAddMetadata(String key, String value) throws SdkException{
             return buildTemplate(() -> createAccount.getMetadatas().add(new SetMetadata(key, value)));
+        }
+
+        public Builder buildAddMetadata(String key, String value, long version) throws SdkException{
+            return buildTemplate(() -> createAccount.getMetadatas().add(new SetMetadata(key, value, version)));
         }
         
         public Builder buildAddInitInput(String initInput) throws SdkException{

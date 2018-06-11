@@ -13,9 +13,7 @@ import io.bumo.sdk.core.adapter.bc.response.operation.SetMetadata;
 public class Account{
     private String address;
     private Asset[] assets;
-
-    private Long balance;
-
+    private String balance;
     /**
      * #3.0
      */
@@ -107,11 +105,11 @@ public class Account{
         this.priv = priv;
     }
 
-    public Long getBalance(){
+    public String getBalance() {
         return balance;
     }
 
-    public void setBalance(Long balance){
+    public void setBalance(String balance) {
         this.balance = balance;
     }
 }

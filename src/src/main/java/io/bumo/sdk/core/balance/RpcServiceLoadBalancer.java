@@ -71,6 +71,11 @@ public class RpcServiceLoadBalancer implements RpcService{
     }
 
     @Override
+    public Account getAccountBase(String address) {
+        return rpcServiceProxy.getAccountBase(address);
+    }
+
+    @Override
     public Hello hello(){
         return rpcServiceProxy.hello();
     }
