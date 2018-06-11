@@ -16,7 +16,8 @@ This document introduces some of the regular APIs for Bumo Java SDK
 	- [Transfer Assets](#transfer-assets)
 	- [Send BU](#send-bu)
 	- [Create contract](#create-contract)
-	- [Invoke contract](#invoke-contract)
+	- [Transfer Assets and Invoke contract](#transfer-assets-and-invoke-contract)
+	- [Send BU and Invoke contract](#send-bu-and-invoke-contract)
 	
 - [Query instructions](#query-instructions)
     - [Query the latest ledger](#query-the-latest-ledger)
@@ -30,7 +31,8 @@ This document introduces some of the regular APIs for Bumo Java SDK
    - [-Transfer Assets](#-transfer-assets)
    - [-Send BU](#-send-bu)
    - [-Create contract](#-create-contract)
-   - [-Invoke contract](#-invoke-contract)
+   - [-Transfer Assets and Invoke contract](#-transfer-assets-and-invoke-contract)
+   - [-Send BU and Invoke contract](#-send-bu-and-invoke-contract)
    - [-Query Account](#-query-account)
    - [-Query transaction by hash](#-query-transaction-by-hash)
    - [-Query transaction by block serial number](#-query-transaction-by-block-serial-number)
@@ -206,7 +208,7 @@ OperationFactory.newPayAssetOperation(targetAddress, issuerAddress, assetCode, a
 | targetAddress  |   String   | Target account address      |
 | issuerAddress  |   String   | Asset issuer account address  |
 | assetCode      |   String   | Asset code          |
-| amount    |   long     | Asset amount          |
+| amount    |   long     | The amount of the account balance, mininum 1, 0000, 000MO (Note: 1 BU = 10^8 MO) |
 
 #### Send BU
 > Transfer the BUs owned by the current account (sender) to a specified account (recipient)
@@ -242,21 +244,41 @@ initBalance  |    long      | Initial balance of the contract account that will 
 payload  |    String      | Contract code, here is javascript code    | 
 initInput  |    long      |   Initial argument of contract code   | 
 
-#### Invoke contract
+#### Transfer Assets and Invoke contract
 
 ###### How to call
 
 ```
-newInvokeContractOperation(destAddress, inputData)
+newInvokeContractByAssetOperation(sourceAddress, targetAddress, issuerAddress, assetCode, amount, inputData)
 
 ```
 
 ###### Entry parameters
 Parameter              |      Type     |     Description      |
 ---------------- | ------------ |  ------------  |
-destAddress    |   String     | Target contract blockchain address | 
+sourceAddress | String     | Source blockchain address   |
+targetAddress  |   String   | Target contract blockchain address      |
+issuerAddress  |   String   | Asset issuer account address  |
+assetCode      |   String   | Asset code          |
+amount    |   long     | Asset amount         |
 inputData  |    long      |   The argument to be sent of contract code     | 
 
+#### Send BU and Invoke contract
+
+###### How to call
+
+```
+newInvokeContractByBUOperation(sourceAddress, targetAddress, amount ,inputData)
+
+```
+
+###### Entry parameters
+Parameter              |      Type     |     Description      |
+---------------- | ------------ |  ------------  |
+sourceAddress | String     | Source blockchain address   |
+targetAddress  |   String   | Target contract blockchain address      |
+amount    |   long     | Asset amount         |
+inputData  |    long      |   The argument to be sent of contract code     | 
 
 ### Query instructions
 
@@ -675,14 +697,42 @@ try {
 }
 ```
 
-####-Invoke contract
+#### -Transfer Assets and Invoke contract
 
 ```
 try {
 	String contractAccount = "buQh4tAWb7pAnDrWhXMRHioojMi4zUf9ZDKD";
 
 	// Creating asset distribution operations
-	InvokeContractOperation operation = OperationFactory.newInvokeContractOperation(contractAccount, "");
+	BcOperation operation = OperationFactory.newInvokeContractByAssetOperation(address, contractAccount, "", "", 0, "issue");
+
+	// Get start Tx
+	Transaction transaction = operationService.newTransaction(address);
+
+	// Bind operation
+	transaction.buildAddOperation(operation)
+			.buildAddGasPrice(1000) // 【required】 the price of Gas, at least 1000MO
+			.buildAddFeeLimit(ToBaseUnit.BU2MO("0.01")) // 【required】Service Fee + Operation Fee (1000000MO + 5000000000MO = 50.01BU)
+			.buildAddSigner(publicKey, privateKey);
+
+	// Commit Tx
+	TransactionCommittedResult result = transaction.commit();
+
+	// Get the hash of Tx
+	System.out.println(result.getHash());
+} catch (SdkException e) {
+	e.printStackTrace();
+}
+```
+
+#### -Send BU and Invoke contract
+
+```
+try {
+	String contractAccount = "buQh4tAWb7pAnDrWhXMRHioojMi4zUf9ZDKD";
+
+	// Creating asset distribution operations
+	BcOperation operation = OperationFactory.newInvokeContractByBUOperation(address, contractAccount, 0, "pay_asset");
 
 	// Get start Tx
 	Transaction transaction = operationService.newTransaction(address);
