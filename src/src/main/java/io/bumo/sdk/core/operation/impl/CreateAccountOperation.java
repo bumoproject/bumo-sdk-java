@@ -164,7 +164,10 @@ public class CreateAccountOperation extends AbstractBcOperation{
 
         @Override
         public void checkPass() throws SdkException{
-            Assert.notEmpty(operation.createAccount.getDestAddress(), SdkError.OPERATION_ERROR_NOT_DESC_ADDRESS);
+            if (operation.createAccount.getContract().getPayload() == null || operation.createAccount.getContract().getPayload().isEmpty()) {
+                Assert.notEmpty(operation.createAccount.getDestAddress(), SdkError.OPERATION_ERROR_NOT_DESC_ADDRESS);
+            }
+
             if(SDKConfig.initBalanceEnable){
                 Assert.notTrue(operation.createAccount.getInitBalance() <= 0, SdkError.OPERATION_ERROR_INITBALANCE_ILLEGAL);
             }
