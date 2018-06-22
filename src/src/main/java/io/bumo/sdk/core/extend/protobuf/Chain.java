@@ -117,11 +117,11 @@ public final class Chain {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>optional string address = 1;</code>
+     * <code>string address = 1;</code>
      */
     java.lang.String getAddress();
     /**
-     * <code>optional string address = 1;</code>
+     * <code>string address = 1;</code>
      */
     com.google.protobuf.ByteString
         getAddressBytes();
@@ -131,20 +131,20 @@ public final class Chain {
      *last transaction seq
      * </pre>
      *
-     * <code>optional int64 nonce = 2;</code>
+     * <code>int64 nonce = 2;</code>
      */
     long getNonce();
 
     /**
-     * <code>optional .protocol.AccountPrivilege priv = 3;</code>
+     * <code>.protocol.AccountPrivilege priv = 3;</code>
      */
     boolean hasPriv();
     /**
-     * <code>optional .protocol.AccountPrivilege priv = 3;</code>
+     * <code>.protocol.AccountPrivilege priv = 3;</code>
      */
     io.bumo.sdk.core.extend.protobuf.Chain.AccountPrivilege getPriv();
     /**
-     * <code>optional .protocol.AccountPrivilege priv = 3;</code>
+     * <code>.protocol.AccountPrivilege priv = 3;</code>
      */
     io.bumo.sdk.core.extend.protobuf.Chain.AccountPrivilegeOrBuilder getPrivOrBuilder();
 
@@ -153,7 +153,7 @@ public final class Chain {
      *metadatas_hash = merklehash(metadatas);
      * </pre>
      *
-     * <code>optional bytes metadatas_hash = 4;</code>
+     * <code>bytes metadatas_hash = 4;</code>
      */
     com.google.protobuf.ByteString getMetadatasHash();
 
@@ -162,25 +162,25 @@ public final class Chain {
      *assets_hash = merkelhash(assets)
      * </pre>
      *
-     * <code>optional bytes assets_hash = 5;</code>
+     * <code>bytes assets_hash = 5;</code>
      */
     com.google.protobuf.ByteString getAssetsHash();
 
     /**
-     * <code>optional .protocol.Contract contract = 6;</code>
+     * <code>.protocol.Contract contract = 6;</code>
      */
     boolean hasContract();
     /**
-     * <code>optional .protocol.Contract contract = 6;</code>
+     * <code>.protocol.Contract contract = 6;</code>
      */
     io.bumo.sdk.core.extend.protobuf.Chain.Contract getContract();
     /**
-     * <code>optional .protocol.Contract contract = 6;</code>
+     * <code>.protocol.Contract contract = 6;</code>
      */
     io.bumo.sdk.core.extend.protobuf.Chain.ContractOrBuilder getContractOrBuilder();
 
     /**
-     * <code>optional int64 balance = 7;</code>
+     * <code>int64 balance = 7;</code>
      */
     long getBalance();
   }
@@ -191,6 +191,7 @@ public final class Chain {
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:protocol.Account)
       AccountOrBuilder {
+  private static final long serialVersionUID = 0L;
     // Use Account.newBuilder() to construct.
     private Account(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -206,14 +207,19 @@ public final class Chain {
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
-      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+      return this.unknownFields;
     }
     private Account(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
         boolean done = false;
         while (!done) {
@@ -223,7 +229,8 @@ public final class Chain {
               done = true;
               break;
             default: {
-              if (!input.skipField(tag)) {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
               break;
@@ -288,6 +295,7 @@ public final class Chain {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
+        this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
     }
@@ -306,7 +314,7 @@ public final class Chain {
     public static final int ADDRESS_FIELD_NUMBER = 1;
     private volatile java.lang.Object address_;
     /**
-     * <code>optional string address = 1;</code>
+     * <code>string address = 1;</code>
      */
     public java.lang.String getAddress() {
       java.lang.Object ref = address_;
@@ -321,7 +329,7 @@ public final class Chain {
       }
     }
     /**
-     * <code>optional string address = 1;</code>
+     * <code>string address = 1;</code>
      */
     public com.google.protobuf.ByteString
         getAddressBytes() {
@@ -344,7 +352,7 @@ public final class Chain {
      *last transaction seq
      * </pre>
      *
-     * <code>optional int64 nonce = 2;</code>
+     * <code>int64 nonce = 2;</code>
      */
     public long getNonce() {
       return nonce_;
@@ -353,19 +361,19 @@ public final class Chain {
     public static final int PRIV_FIELD_NUMBER = 3;
     private io.bumo.sdk.core.extend.protobuf.Chain.AccountPrivilege priv_;
     /**
-     * <code>optional .protocol.AccountPrivilege priv = 3;</code>
+     * <code>.protocol.AccountPrivilege priv = 3;</code>
      */
     public boolean hasPriv() {
       return priv_ != null;
     }
     /**
-     * <code>optional .protocol.AccountPrivilege priv = 3;</code>
+     * <code>.protocol.AccountPrivilege priv = 3;</code>
      */
     public io.bumo.sdk.core.extend.protobuf.Chain.AccountPrivilege getPriv() {
       return priv_ == null ? io.bumo.sdk.core.extend.protobuf.Chain.AccountPrivilege.getDefaultInstance() : priv_;
     }
     /**
-     * <code>optional .protocol.AccountPrivilege priv = 3;</code>
+     * <code>.protocol.AccountPrivilege priv = 3;</code>
      */
     public io.bumo.sdk.core.extend.protobuf.Chain.AccountPrivilegeOrBuilder getPrivOrBuilder() {
       return getPriv();
@@ -378,7 +386,7 @@ public final class Chain {
      *metadatas_hash = merklehash(metadatas);
      * </pre>
      *
-     * <code>optional bytes metadatas_hash = 4;</code>
+     * <code>bytes metadatas_hash = 4;</code>
      */
     public com.google.protobuf.ByteString getMetadatasHash() {
       return metadatasHash_;
@@ -391,7 +399,7 @@ public final class Chain {
      *assets_hash = merkelhash(assets)
      * </pre>
      *
-     * <code>optional bytes assets_hash = 5;</code>
+     * <code>bytes assets_hash = 5;</code>
      */
     public com.google.protobuf.ByteString getAssetsHash() {
       return assetsHash_;
@@ -400,19 +408,19 @@ public final class Chain {
     public static final int CONTRACT_FIELD_NUMBER = 6;
     private io.bumo.sdk.core.extend.protobuf.Chain.Contract contract_;
     /**
-     * <code>optional .protocol.Contract contract = 6;</code>
+     * <code>.protocol.Contract contract = 6;</code>
      */
     public boolean hasContract() {
       return contract_ != null;
     }
     /**
-     * <code>optional .protocol.Contract contract = 6;</code>
+     * <code>.protocol.Contract contract = 6;</code>
      */
     public io.bumo.sdk.core.extend.protobuf.Chain.Contract getContract() {
       return contract_ == null ? io.bumo.sdk.core.extend.protobuf.Chain.Contract.getDefaultInstance() : contract_;
     }
     /**
-     * <code>optional .protocol.Contract contract = 6;</code>
+     * <code>.protocol.Contract contract = 6;</code>
      */
     public io.bumo.sdk.core.extend.protobuf.Chain.ContractOrBuilder getContractOrBuilder() {
       return getContract();
@@ -421,7 +429,7 @@ public final class Chain {
     public static final int BALANCE_FIELD_NUMBER = 7;
     private long balance_;
     /**
-     * <code>optional int64 balance = 7;</code>
+     * <code>int64 balance = 7;</code>
      */
     public long getBalance() {
       return balance_;
@@ -460,6 +468,7 @@ public final class Chain {
       if (balance_ != 0L) {
         output.writeInt64(7, balance_);
       }
+      unknownFields.writeTo(output);
     }
 
     public int getSerializedSize() {
@@ -494,11 +503,11 @@ public final class Chain {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(7, balance_);
       }
+      size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
     }
 
-    private static final long serialVersionUID = 0L;
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -530,6 +539,7 @@ public final class Chain {
       }
       result = result && (getBalance()
           == other.getBalance());
+      result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
 
@@ -539,7 +549,7 @@ public final class Chain {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptorForType().hashCode();
+      hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + ADDRESS_FIELD_NUMBER;
       hash = (53 * hash) + getAddress().hashCode();
       hash = (37 * hash) + NONCE_FIELD_NUMBER;
@@ -565,6 +575,17 @@ public final class Chain {
       return hash;
     }
 
+    public static io.bumo.sdk.core.extend.protobuf.Chain.Account parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static io.bumo.sdk.core.extend.protobuf.Chain.Account parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
     public static io.bumo.sdk.core.extend.protobuf.Chain.Account parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -746,7 +767,7 @@ public final class Chain {
       }
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
       public Builder clearField(
@@ -759,12 +780,12 @@ public final class Chain {
       }
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, Object value) {
+          int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -800,6 +821,7 @@ public final class Chain {
         if (other.getBalance() != 0L) {
           setBalance(other.getBalance());
         }
+        this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
       }
@@ -828,7 +850,7 @@ public final class Chain {
 
       private java.lang.Object address_ = "";
       /**
-       * <code>optional string address = 1;</code>
+       * <code>string address = 1;</code>
        */
       public java.lang.String getAddress() {
         java.lang.Object ref = address_;
@@ -843,7 +865,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional string address = 1;</code>
+       * <code>string address = 1;</code>
        */
       public com.google.protobuf.ByteString
           getAddressBytes() {
@@ -859,7 +881,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional string address = 1;</code>
+       * <code>string address = 1;</code>
        */
       public Builder setAddress(
           java.lang.String value) {
@@ -872,7 +894,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional string address = 1;</code>
+       * <code>string address = 1;</code>
        */
       public Builder clearAddress() {
         
@@ -881,7 +903,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional string address = 1;</code>
+       * <code>string address = 1;</code>
        */
       public Builder setAddressBytes(
           com.google.protobuf.ByteString value) {
@@ -901,7 +923,7 @@ public final class Chain {
        *last transaction seq
        * </pre>
        *
-       * <code>optional int64 nonce = 2;</code>
+       * <code>int64 nonce = 2;</code>
        */
       public long getNonce() {
         return nonce_;
@@ -911,7 +933,7 @@ public final class Chain {
        *last transaction seq
        * </pre>
        *
-       * <code>optional int64 nonce = 2;</code>
+       * <code>int64 nonce = 2;</code>
        */
       public Builder setNonce(long value) {
         
@@ -924,7 +946,7 @@ public final class Chain {
        *last transaction seq
        * </pre>
        *
-       * <code>optional int64 nonce = 2;</code>
+       * <code>int64 nonce = 2;</code>
        */
       public Builder clearNonce() {
         
@@ -937,13 +959,13 @@ public final class Chain {
       private com.google.protobuf.SingleFieldBuilderV3<
           io.bumo.sdk.core.extend.protobuf.Chain.AccountPrivilege, io.bumo.sdk.core.extend.protobuf.Chain.AccountPrivilege.Builder, io.bumo.sdk.core.extend.protobuf.Chain.AccountPrivilegeOrBuilder> privBuilder_;
       /**
-       * <code>optional .protocol.AccountPrivilege priv = 3;</code>
+       * <code>.protocol.AccountPrivilege priv = 3;</code>
        */
       public boolean hasPriv() {
         return privBuilder_ != null || priv_ != null;
       }
       /**
-       * <code>optional .protocol.AccountPrivilege priv = 3;</code>
+       * <code>.protocol.AccountPrivilege priv = 3;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.AccountPrivilege getPriv() {
         if (privBuilder_ == null) {
@@ -953,7 +975,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional .protocol.AccountPrivilege priv = 3;</code>
+       * <code>.protocol.AccountPrivilege priv = 3;</code>
        */
       public Builder setPriv(io.bumo.sdk.core.extend.protobuf.Chain.AccountPrivilege value) {
         if (privBuilder_ == null) {
@@ -969,7 +991,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.AccountPrivilege priv = 3;</code>
+       * <code>.protocol.AccountPrivilege priv = 3;</code>
        */
       public Builder setPriv(
           io.bumo.sdk.core.extend.protobuf.Chain.AccountPrivilege.Builder builderForValue) {
@@ -983,7 +1005,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.AccountPrivilege priv = 3;</code>
+       * <code>.protocol.AccountPrivilege priv = 3;</code>
        */
       public Builder mergePriv(io.bumo.sdk.core.extend.protobuf.Chain.AccountPrivilege value) {
         if (privBuilder_ == null) {
@@ -1001,7 +1023,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.AccountPrivilege priv = 3;</code>
+       * <code>.protocol.AccountPrivilege priv = 3;</code>
        */
       public Builder clearPriv() {
         if (privBuilder_ == null) {
@@ -1015,7 +1037,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.AccountPrivilege priv = 3;</code>
+       * <code>.protocol.AccountPrivilege priv = 3;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.AccountPrivilege.Builder getPrivBuilder() {
         
@@ -1023,7 +1045,7 @@ public final class Chain {
         return getPrivFieldBuilder().getBuilder();
       }
       /**
-       * <code>optional .protocol.AccountPrivilege priv = 3;</code>
+       * <code>.protocol.AccountPrivilege priv = 3;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.AccountPrivilegeOrBuilder getPrivOrBuilder() {
         if (privBuilder_ != null) {
@@ -1034,7 +1056,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional .protocol.AccountPrivilege priv = 3;</code>
+       * <code>.protocol.AccountPrivilege priv = 3;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           io.bumo.sdk.core.extend.protobuf.Chain.AccountPrivilege, io.bumo.sdk.core.extend.protobuf.Chain.AccountPrivilege.Builder, io.bumo.sdk.core.extend.protobuf.Chain.AccountPrivilegeOrBuilder> 
@@ -1056,7 +1078,7 @@ public final class Chain {
        *metadatas_hash = merklehash(metadatas);
        * </pre>
        *
-       * <code>optional bytes metadatas_hash = 4;</code>
+       * <code>bytes metadatas_hash = 4;</code>
        */
       public com.google.protobuf.ByteString getMetadatasHash() {
         return metadatasHash_;
@@ -1066,7 +1088,7 @@ public final class Chain {
        *metadatas_hash = merklehash(metadatas);
        * </pre>
        *
-       * <code>optional bytes metadatas_hash = 4;</code>
+       * <code>bytes metadatas_hash = 4;</code>
        */
       public Builder setMetadatasHash(com.google.protobuf.ByteString value) {
         if (value == null) {
@@ -1082,7 +1104,7 @@ public final class Chain {
        *metadatas_hash = merklehash(metadatas);
        * </pre>
        *
-       * <code>optional bytes metadatas_hash = 4;</code>
+       * <code>bytes metadatas_hash = 4;</code>
        */
       public Builder clearMetadatasHash() {
         
@@ -1097,7 +1119,7 @@ public final class Chain {
        *assets_hash = merkelhash(assets)
        * </pre>
        *
-       * <code>optional bytes assets_hash = 5;</code>
+       * <code>bytes assets_hash = 5;</code>
        */
       public com.google.protobuf.ByteString getAssetsHash() {
         return assetsHash_;
@@ -1107,7 +1129,7 @@ public final class Chain {
        *assets_hash = merkelhash(assets)
        * </pre>
        *
-       * <code>optional bytes assets_hash = 5;</code>
+       * <code>bytes assets_hash = 5;</code>
        */
       public Builder setAssetsHash(com.google.protobuf.ByteString value) {
         if (value == null) {
@@ -1123,7 +1145,7 @@ public final class Chain {
        *assets_hash = merkelhash(assets)
        * </pre>
        *
-       * <code>optional bytes assets_hash = 5;</code>
+       * <code>bytes assets_hash = 5;</code>
        */
       public Builder clearAssetsHash() {
         
@@ -1136,13 +1158,13 @@ public final class Chain {
       private com.google.protobuf.SingleFieldBuilderV3<
           io.bumo.sdk.core.extend.protobuf.Chain.Contract, io.bumo.sdk.core.extend.protobuf.Chain.Contract.Builder, io.bumo.sdk.core.extend.protobuf.Chain.ContractOrBuilder> contractBuilder_;
       /**
-       * <code>optional .protocol.Contract contract = 6;</code>
+       * <code>.protocol.Contract contract = 6;</code>
        */
       public boolean hasContract() {
         return contractBuilder_ != null || contract_ != null;
       }
       /**
-       * <code>optional .protocol.Contract contract = 6;</code>
+       * <code>.protocol.Contract contract = 6;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.Contract getContract() {
         if (contractBuilder_ == null) {
@@ -1152,7 +1174,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional .protocol.Contract contract = 6;</code>
+       * <code>.protocol.Contract contract = 6;</code>
        */
       public Builder setContract(io.bumo.sdk.core.extend.protobuf.Chain.Contract value) {
         if (contractBuilder_ == null) {
@@ -1168,7 +1190,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.Contract contract = 6;</code>
+       * <code>.protocol.Contract contract = 6;</code>
        */
       public Builder setContract(
           io.bumo.sdk.core.extend.protobuf.Chain.Contract.Builder builderForValue) {
@@ -1182,7 +1204,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.Contract contract = 6;</code>
+       * <code>.protocol.Contract contract = 6;</code>
        */
       public Builder mergeContract(io.bumo.sdk.core.extend.protobuf.Chain.Contract value) {
         if (contractBuilder_ == null) {
@@ -1200,7 +1222,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.Contract contract = 6;</code>
+       * <code>.protocol.Contract contract = 6;</code>
        */
       public Builder clearContract() {
         if (contractBuilder_ == null) {
@@ -1214,7 +1236,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.Contract contract = 6;</code>
+       * <code>.protocol.Contract contract = 6;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.Contract.Builder getContractBuilder() {
         
@@ -1222,7 +1244,7 @@ public final class Chain {
         return getContractFieldBuilder().getBuilder();
       }
       /**
-       * <code>optional .protocol.Contract contract = 6;</code>
+       * <code>.protocol.Contract contract = 6;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.ContractOrBuilder getContractOrBuilder() {
         if (contractBuilder_ != null) {
@@ -1233,7 +1255,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional .protocol.Contract contract = 6;</code>
+       * <code>.protocol.Contract contract = 6;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           io.bumo.sdk.core.extend.protobuf.Chain.Contract, io.bumo.sdk.core.extend.protobuf.Chain.Contract.Builder, io.bumo.sdk.core.extend.protobuf.Chain.ContractOrBuilder> 
@@ -1251,13 +1273,13 @@ public final class Chain {
 
       private long balance_ ;
       /**
-       * <code>optional int64 balance = 7;</code>
+       * <code>int64 balance = 7;</code>
        */
       public long getBalance() {
         return balance_;
       }
       /**
-       * <code>optional int64 balance = 7;</code>
+       * <code>int64 balance = 7;</code>
        */
       public Builder setBalance(long value) {
         
@@ -1266,7 +1288,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional int64 balance = 7;</code>
+       * <code>int64 balance = 7;</code>
        */
       public Builder clearBalance() {
         
@@ -1276,12 +1298,12 @@ public final class Chain {
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.setUnknownFieldsProto3(unknownFields);
       }
 
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.mergeUnknownFields(unknownFields);
       }
 
 
@@ -1304,7 +1326,7 @@ public final class Chain {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new Account(input, extensionRegistry);
+        return new Account(input, extensionRegistry);
       }
     };
 
@@ -1328,21 +1350,21 @@ public final class Chain {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>optional string issuer = 1;</code>
+     * <code>string issuer = 1;</code>
      */
     java.lang.String getIssuer();
     /**
-     * <code>optional string issuer = 1;</code>
+     * <code>string issuer = 1;</code>
      */
     com.google.protobuf.ByteString
         getIssuerBytes();
 
     /**
-     * <code>optional string code = 2;</code>
+     * <code>string code = 2;</code>
      */
     java.lang.String getCode();
     /**
-     * <code>optional string code = 2;</code>
+     * <code>string code = 2;</code>
      */
     com.google.protobuf.ByteString
         getCodeBytes();
@@ -1352,7 +1374,7 @@ public final class Chain {
      *0:not limited ammount
      * </pre>
      *
-     * <code>optional int32 type = 3;</code>
+     * <code>int32 type = 3;</code>
      */
     int getType();
   }
@@ -1363,6 +1385,7 @@ public final class Chain {
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:protocol.AssetKey)
       AssetKeyOrBuilder {
+  private static final long serialVersionUID = 0L;
     // Use AssetKey.newBuilder() to construct.
     private AssetKey(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -1376,14 +1399,19 @@ public final class Chain {
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
-      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+      return this.unknownFields;
     }
     private AssetKey(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
         boolean done = false;
         while (!done) {
@@ -1393,7 +1421,8 @@ public final class Chain {
               done = true;
               break;
             default: {
-              if (!input.skipField(tag)) {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
               break;
@@ -1423,6 +1452,7 @@ public final class Chain {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
+        this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
     }
@@ -1441,7 +1471,7 @@ public final class Chain {
     public static final int ISSUER_FIELD_NUMBER = 1;
     private volatile java.lang.Object issuer_;
     /**
-     * <code>optional string issuer = 1;</code>
+     * <code>string issuer = 1;</code>
      */
     public java.lang.String getIssuer() {
       java.lang.Object ref = issuer_;
@@ -1456,7 +1486,7 @@ public final class Chain {
       }
     }
     /**
-     * <code>optional string issuer = 1;</code>
+     * <code>string issuer = 1;</code>
      */
     public com.google.protobuf.ByteString
         getIssuerBytes() {
@@ -1475,7 +1505,7 @@ public final class Chain {
     public static final int CODE_FIELD_NUMBER = 2;
     private volatile java.lang.Object code_;
     /**
-     * <code>optional string code = 2;</code>
+     * <code>string code = 2;</code>
      */
     public java.lang.String getCode() {
       java.lang.Object ref = code_;
@@ -1490,7 +1520,7 @@ public final class Chain {
       }
     }
     /**
-     * <code>optional string code = 2;</code>
+     * <code>string code = 2;</code>
      */
     public com.google.protobuf.ByteString
         getCodeBytes() {
@@ -1513,7 +1543,7 @@ public final class Chain {
      *0:not limited ammount
      * </pre>
      *
-     * <code>optional int32 type = 3;</code>
+     * <code>int32 type = 3;</code>
      */
     public int getType() {
       return type_;
@@ -1540,6 +1570,7 @@ public final class Chain {
       if (type_ != 0) {
         output.writeInt32(3, type_);
       }
+      unknownFields.writeTo(output);
     }
 
     public int getSerializedSize() {
@@ -1557,11 +1588,11 @@ public final class Chain {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(3, type_);
       }
+      size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
     }
 
-    private static final long serialVersionUID = 0L;
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -1579,6 +1610,7 @@ public final class Chain {
           .equals(other.getCode());
       result = result && (getType()
           == other.getType());
+      result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
 
@@ -1588,7 +1620,7 @@ public final class Chain {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptorForType().hashCode();
+      hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + ISSUER_FIELD_NUMBER;
       hash = (53 * hash) + getIssuer().hashCode();
       hash = (37 * hash) + CODE_FIELD_NUMBER;
@@ -1600,6 +1632,17 @@ public final class Chain {
       return hash;
     }
 
+    public static io.bumo.sdk.core.extend.protobuf.Chain.AssetKey parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static io.bumo.sdk.core.extend.protobuf.Chain.AssetKey parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
     public static io.bumo.sdk.core.extend.protobuf.Chain.AssetKey parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -1753,7 +1796,7 @@ public final class Chain {
       }
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
       public Builder clearField(
@@ -1766,12 +1809,12 @@ public final class Chain {
       }
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, Object value) {
+          int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -1796,6 +1839,7 @@ public final class Chain {
         if (other.getType() != 0) {
           setType(other.getType());
         }
+        this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
       }
@@ -1824,7 +1868,7 @@ public final class Chain {
 
       private java.lang.Object issuer_ = "";
       /**
-       * <code>optional string issuer = 1;</code>
+       * <code>string issuer = 1;</code>
        */
       public java.lang.String getIssuer() {
         java.lang.Object ref = issuer_;
@@ -1839,7 +1883,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional string issuer = 1;</code>
+       * <code>string issuer = 1;</code>
        */
       public com.google.protobuf.ByteString
           getIssuerBytes() {
@@ -1855,7 +1899,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional string issuer = 1;</code>
+       * <code>string issuer = 1;</code>
        */
       public Builder setIssuer(
           java.lang.String value) {
@@ -1868,7 +1912,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional string issuer = 1;</code>
+       * <code>string issuer = 1;</code>
        */
       public Builder clearIssuer() {
         
@@ -1877,7 +1921,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional string issuer = 1;</code>
+       * <code>string issuer = 1;</code>
        */
       public Builder setIssuerBytes(
           com.google.protobuf.ByteString value) {
@@ -1893,7 +1937,7 @@ public final class Chain {
 
       private java.lang.Object code_ = "";
       /**
-       * <code>optional string code = 2;</code>
+       * <code>string code = 2;</code>
        */
       public java.lang.String getCode() {
         java.lang.Object ref = code_;
@@ -1908,7 +1952,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional string code = 2;</code>
+       * <code>string code = 2;</code>
        */
       public com.google.protobuf.ByteString
           getCodeBytes() {
@@ -1924,7 +1968,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional string code = 2;</code>
+       * <code>string code = 2;</code>
        */
       public Builder setCode(
           java.lang.String value) {
@@ -1937,7 +1981,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional string code = 2;</code>
+       * <code>string code = 2;</code>
        */
       public Builder clearCode() {
         
@@ -1946,7 +1990,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional string code = 2;</code>
+       * <code>string code = 2;</code>
        */
       public Builder setCodeBytes(
           com.google.protobuf.ByteString value) {
@@ -1966,7 +2010,7 @@ public final class Chain {
        *0:not limited ammount
        * </pre>
        *
-       * <code>optional int32 type = 3;</code>
+       * <code>int32 type = 3;</code>
        */
       public int getType() {
         return type_;
@@ -1976,7 +2020,7 @@ public final class Chain {
        *0:not limited ammount
        * </pre>
        *
-       * <code>optional int32 type = 3;</code>
+       * <code>int32 type = 3;</code>
        */
       public Builder setType(int value) {
         
@@ -1989,7 +2033,7 @@ public final class Chain {
        *0:not limited ammount
        * </pre>
        *
-       * <code>optional int32 type = 3;</code>
+       * <code>int32 type = 3;</code>
        */
       public Builder clearType() {
         
@@ -1999,12 +2043,12 @@ public final class Chain {
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.setUnknownFieldsProto3(unknownFields);
       }
 
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.mergeUnknownFields(unknownFields);
       }
 
 
@@ -2027,7 +2071,7 @@ public final class Chain {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new AssetKey(input, extensionRegistry);
+        return new AssetKey(input, extensionRegistry);
       }
     };
 
@@ -2051,20 +2095,20 @@ public final class Chain {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>optional .protocol.AssetKey key = 1;</code>
+     * <code>.protocol.AssetKey key = 1;</code>
      */
     boolean hasKey();
     /**
-     * <code>optional .protocol.AssetKey key = 1;</code>
+     * <code>.protocol.AssetKey key = 1;</code>
      */
     io.bumo.sdk.core.extend.protobuf.Chain.AssetKey getKey();
     /**
-     * <code>optional .protocol.AssetKey key = 1;</code>
+     * <code>.protocol.AssetKey key = 1;</code>
      */
     io.bumo.sdk.core.extend.protobuf.Chain.AssetKeyOrBuilder getKeyOrBuilder();
 
     /**
-     * <code>optional int64 amount = 2;</code>
+     * <code>int64 amount = 2;</code>
      */
     long getAmount();
   }
@@ -2079,6 +2123,7 @@ public final class Chain {
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:protocol.Asset)
       AssetOrBuilder {
+  private static final long serialVersionUID = 0L;
     // Use Asset.newBuilder() to construct.
     private Asset(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -2090,14 +2135,19 @@ public final class Chain {
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
-      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+      return this.unknownFields;
     }
     private Asset(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
         boolean done = false;
         while (!done) {
@@ -2107,7 +2157,8 @@ public final class Chain {
               done = true;
               break;
             default: {
-              if (!input.skipField(tag)) {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
               break;
@@ -2138,6 +2189,7 @@ public final class Chain {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
+        this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
     }
@@ -2156,19 +2208,19 @@ public final class Chain {
     public static final int KEY_FIELD_NUMBER = 1;
     private io.bumo.sdk.core.extend.protobuf.Chain.AssetKey key_;
     /**
-     * <code>optional .protocol.AssetKey key = 1;</code>
+     * <code>.protocol.AssetKey key = 1;</code>
      */
     public boolean hasKey() {
       return key_ != null;
     }
     /**
-     * <code>optional .protocol.AssetKey key = 1;</code>
+     * <code>.protocol.AssetKey key = 1;</code>
      */
     public io.bumo.sdk.core.extend.protobuf.Chain.AssetKey getKey() {
       return key_ == null ? io.bumo.sdk.core.extend.protobuf.Chain.AssetKey.getDefaultInstance() : key_;
     }
     /**
-     * <code>optional .protocol.AssetKey key = 1;</code>
+     * <code>.protocol.AssetKey key = 1;</code>
      */
     public io.bumo.sdk.core.extend.protobuf.Chain.AssetKeyOrBuilder getKeyOrBuilder() {
       return getKey();
@@ -2177,7 +2229,7 @@ public final class Chain {
     public static final int AMOUNT_FIELD_NUMBER = 2;
     private long amount_;
     /**
-     * <code>optional int64 amount = 2;</code>
+     * <code>int64 amount = 2;</code>
      */
     public long getAmount() {
       return amount_;
@@ -2201,6 +2253,7 @@ public final class Chain {
       if (amount_ != 0L) {
         output.writeInt64(2, amount_);
       }
+      unknownFields.writeTo(output);
     }
 
     public int getSerializedSize() {
@@ -2216,11 +2269,11 @@ public final class Chain {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(2, amount_);
       }
+      size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
     }
 
-    private static final long serialVersionUID = 0L;
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -2239,6 +2292,7 @@ public final class Chain {
       }
       result = result && (getAmount()
           == other.getAmount());
+      result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
 
@@ -2248,7 +2302,7 @@ public final class Chain {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptorForType().hashCode();
+      hash = (19 * hash) + getDescriptor().hashCode();
       if (hasKey()) {
         hash = (37 * hash) + KEY_FIELD_NUMBER;
         hash = (53 * hash) + getKey().hashCode();
@@ -2261,6 +2315,17 @@ public final class Chain {
       return hash;
     }
 
+    public static io.bumo.sdk.core.extend.protobuf.Chain.Asset parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static io.bumo.sdk.core.extend.protobuf.Chain.Asset parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
     public static io.bumo.sdk.core.extend.protobuf.Chain.Asset parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -2423,7 +2488,7 @@ public final class Chain {
       }
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
       public Builder clearField(
@@ -2436,12 +2501,12 @@ public final class Chain {
       }
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, Object value) {
+          int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -2461,6 +2526,7 @@ public final class Chain {
         if (other.getAmount() != 0L) {
           setAmount(other.getAmount());
         }
+        this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
       }
@@ -2491,13 +2557,13 @@ public final class Chain {
       private com.google.protobuf.SingleFieldBuilderV3<
           io.bumo.sdk.core.extend.protobuf.Chain.AssetKey, io.bumo.sdk.core.extend.protobuf.Chain.AssetKey.Builder, io.bumo.sdk.core.extend.protobuf.Chain.AssetKeyOrBuilder> keyBuilder_;
       /**
-       * <code>optional .protocol.AssetKey key = 1;</code>
+       * <code>.protocol.AssetKey key = 1;</code>
        */
       public boolean hasKey() {
         return keyBuilder_ != null || key_ != null;
       }
       /**
-       * <code>optional .protocol.AssetKey key = 1;</code>
+       * <code>.protocol.AssetKey key = 1;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.AssetKey getKey() {
         if (keyBuilder_ == null) {
@@ -2507,7 +2573,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional .protocol.AssetKey key = 1;</code>
+       * <code>.protocol.AssetKey key = 1;</code>
        */
       public Builder setKey(io.bumo.sdk.core.extend.protobuf.Chain.AssetKey value) {
         if (keyBuilder_ == null) {
@@ -2523,7 +2589,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.AssetKey key = 1;</code>
+       * <code>.protocol.AssetKey key = 1;</code>
        */
       public Builder setKey(
           io.bumo.sdk.core.extend.protobuf.Chain.AssetKey.Builder builderForValue) {
@@ -2537,7 +2603,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.AssetKey key = 1;</code>
+       * <code>.protocol.AssetKey key = 1;</code>
        */
       public Builder mergeKey(io.bumo.sdk.core.extend.protobuf.Chain.AssetKey value) {
         if (keyBuilder_ == null) {
@@ -2555,7 +2621,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.AssetKey key = 1;</code>
+       * <code>.protocol.AssetKey key = 1;</code>
        */
       public Builder clearKey() {
         if (keyBuilder_ == null) {
@@ -2569,7 +2635,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.AssetKey key = 1;</code>
+       * <code>.protocol.AssetKey key = 1;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.AssetKey.Builder getKeyBuilder() {
         
@@ -2577,7 +2643,7 @@ public final class Chain {
         return getKeyFieldBuilder().getBuilder();
       }
       /**
-       * <code>optional .protocol.AssetKey key = 1;</code>
+       * <code>.protocol.AssetKey key = 1;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.AssetKeyOrBuilder getKeyOrBuilder() {
         if (keyBuilder_ != null) {
@@ -2588,7 +2654,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional .protocol.AssetKey key = 1;</code>
+       * <code>.protocol.AssetKey key = 1;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           io.bumo.sdk.core.extend.protobuf.Chain.AssetKey, io.bumo.sdk.core.extend.protobuf.Chain.AssetKey.Builder, io.bumo.sdk.core.extend.protobuf.Chain.AssetKeyOrBuilder> 
@@ -2606,13 +2672,13 @@ public final class Chain {
 
       private long amount_ ;
       /**
-       * <code>optional int64 amount = 2;</code>
+       * <code>int64 amount = 2;</code>
        */
       public long getAmount() {
         return amount_;
       }
       /**
-       * <code>optional int64 amount = 2;</code>
+       * <code>int64 amount = 2;</code>
        */
       public Builder setAmount(long value) {
         
@@ -2621,7 +2687,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional int64 amount = 2;</code>
+       * <code>int64 amount = 2;</code>
        */
       public Builder clearAmount() {
         
@@ -2631,12 +2697,12 @@ public final class Chain {
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.setUnknownFieldsProto3(unknownFields);
       }
 
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.mergeUnknownFields(unknownFields);
       }
 
 
@@ -2659,7 +2725,7 @@ public final class Chain {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new Asset(input, extensionRegistry);
+        return new Asset(input, extensionRegistry);
       }
     };
 
@@ -2683,32 +2749,32 @@ public final class Chain {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>optional int32 decimal = 1;</code>
+     * <code>int32 decimal = 1;</code>
      */
     int getDecimal();
 
     /**
-     * <code>optional string description = 2;</code>
+     * <code>string description = 2;</code>
      */
     java.lang.String getDescription();
     /**
-     * <code>optional string description = 2;</code>
+     * <code>string description = 2;</code>
      */
     com.google.protobuf.ByteString
         getDescriptionBytes();
 
     /**
-     * <code>optional int64 max_supply = 3;</code>
+     * <code>int64 max_supply = 3;</code>
      */
     long getMaxSupply();
 
     /**
-     * <code>optional int64 issued_amount = 4;</code>
+     * <code>int64 issued_amount = 4;</code>
      */
     long getIssuedAmount();
 
     /**
-     * <code>optional int32 fee_percent = 5;</code>
+     * <code>int32 fee_percent = 5;</code>
      */
     int getFeePercent();
   }
@@ -2719,6 +2785,7 @@ public final class Chain {
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:protocol.AssetProperty)
       AssetPropertyOrBuilder {
+  private static final long serialVersionUID = 0L;
     // Use AssetProperty.newBuilder() to construct.
     private AssetProperty(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -2734,14 +2801,19 @@ public final class Chain {
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
-      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+      return this.unknownFields;
     }
     private AssetProperty(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
         boolean done = false;
         while (!done) {
@@ -2751,7 +2823,8 @@ public final class Chain {
               done = true;
               break;
             default: {
-              if (!input.skipField(tag)) {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
               break;
@@ -2790,6 +2863,7 @@ public final class Chain {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
+        this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
     }
@@ -2808,7 +2882,7 @@ public final class Chain {
     public static final int DECIMAL_FIELD_NUMBER = 1;
     private int decimal_;
     /**
-     * <code>optional int32 decimal = 1;</code>
+     * <code>int32 decimal = 1;</code>
      */
     public int getDecimal() {
       return decimal_;
@@ -2817,7 +2891,7 @@ public final class Chain {
     public static final int DESCRIPTION_FIELD_NUMBER = 2;
     private volatile java.lang.Object description_;
     /**
-     * <code>optional string description = 2;</code>
+     * <code>string description = 2;</code>
      */
     public java.lang.String getDescription() {
       java.lang.Object ref = description_;
@@ -2832,7 +2906,7 @@ public final class Chain {
       }
     }
     /**
-     * <code>optional string description = 2;</code>
+     * <code>string description = 2;</code>
      */
     public com.google.protobuf.ByteString
         getDescriptionBytes() {
@@ -2851,7 +2925,7 @@ public final class Chain {
     public static final int MAX_SUPPLY_FIELD_NUMBER = 3;
     private long maxSupply_;
     /**
-     * <code>optional int64 max_supply = 3;</code>
+     * <code>int64 max_supply = 3;</code>
      */
     public long getMaxSupply() {
       return maxSupply_;
@@ -2860,7 +2934,7 @@ public final class Chain {
     public static final int ISSUED_AMOUNT_FIELD_NUMBER = 4;
     private long issuedAmount_;
     /**
-     * <code>optional int64 issued_amount = 4;</code>
+     * <code>int64 issued_amount = 4;</code>
      */
     public long getIssuedAmount() {
       return issuedAmount_;
@@ -2869,7 +2943,7 @@ public final class Chain {
     public static final int FEE_PERCENT_FIELD_NUMBER = 5;
     private int feePercent_;
     /**
-     * <code>optional int32 fee_percent = 5;</code>
+     * <code>int32 fee_percent = 5;</code>
      */
     public int getFeePercent() {
       return feePercent_;
@@ -2902,6 +2976,7 @@ public final class Chain {
       if (feePercent_ != 0) {
         output.writeInt32(5, feePercent_);
       }
+      unknownFields.writeTo(output);
     }
 
     public int getSerializedSize() {
@@ -2928,11 +3003,11 @@ public final class Chain {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(5, feePercent_);
       }
+      size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
     }
 
-    private static final long serialVersionUID = 0L;
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -2954,6 +3029,7 @@ public final class Chain {
           == other.getIssuedAmount());
       result = result && (getFeePercent()
           == other.getFeePercent());
+      result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
 
@@ -2963,7 +3039,7 @@ public final class Chain {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptorForType().hashCode();
+      hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + DECIMAL_FIELD_NUMBER;
       hash = (53 * hash) + getDecimal();
       hash = (37 * hash) + DESCRIPTION_FIELD_NUMBER;
@@ -2981,6 +3057,17 @@ public final class Chain {
       return hash;
     }
 
+    public static io.bumo.sdk.core.extend.protobuf.Chain.AssetProperty parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static io.bumo.sdk.core.extend.protobuf.Chain.AssetProperty parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
     public static io.bumo.sdk.core.extend.protobuf.Chain.AssetProperty parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -3140,7 +3227,7 @@ public final class Chain {
       }
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
       public Builder clearField(
@@ -3153,12 +3240,12 @@ public final class Chain {
       }
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, Object value) {
+          int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -3188,6 +3275,7 @@ public final class Chain {
         if (other.getFeePercent() != 0) {
           setFeePercent(other.getFeePercent());
         }
+        this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
       }
@@ -3216,13 +3304,13 @@ public final class Chain {
 
       private int decimal_ ;
       /**
-       * <code>optional int32 decimal = 1;</code>
+       * <code>int32 decimal = 1;</code>
        */
       public int getDecimal() {
         return decimal_;
       }
       /**
-       * <code>optional int32 decimal = 1;</code>
+       * <code>int32 decimal = 1;</code>
        */
       public Builder setDecimal(int value) {
         
@@ -3231,7 +3319,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional int32 decimal = 1;</code>
+       * <code>int32 decimal = 1;</code>
        */
       public Builder clearDecimal() {
         
@@ -3242,7 +3330,7 @@ public final class Chain {
 
       private java.lang.Object description_ = "";
       /**
-       * <code>optional string description = 2;</code>
+       * <code>string description = 2;</code>
        */
       public java.lang.String getDescription() {
         java.lang.Object ref = description_;
@@ -3257,7 +3345,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional string description = 2;</code>
+       * <code>string description = 2;</code>
        */
       public com.google.protobuf.ByteString
           getDescriptionBytes() {
@@ -3273,7 +3361,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional string description = 2;</code>
+       * <code>string description = 2;</code>
        */
       public Builder setDescription(
           java.lang.String value) {
@@ -3286,7 +3374,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional string description = 2;</code>
+       * <code>string description = 2;</code>
        */
       public Builder clearDescription() {
         
@@ -3295,7 +3383,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional string description = 2;</code>
+       * <code>string description = 2;</code>
        */
       public Builder setDescriptionBytes(
           com.google.protobuf.ByteString value) {
@@ -3311,13 +3399,13 @@ public final class Chain {
 
       private long maxSupply_ ;
       /**
-       * <code>optional int64 max_supply = 3;</code>
+       * <code>int64 max_supply = 3;</code>
        */
       public long getMaxSupply() {
         return maxSupply_;
       }
       /**
-       * <code>optional int64 max_supply = 3;</code>
+       * <code>int64 max_supply = 3;</code>
        */
       public Builder setMaxSupply(long value) {
         
@@ -3326,7 +3414,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional int64 max_supply = 3;</code>
+       * <code>int64 max_supply = 3;</code>
        */
       public Builder clearMaxSupply() {
         
@@ -3337,13 +3425,13 @@ public final class Chain {
 
       private long issuedAmount_ ;
       /**
-       * <code>optional int64 issued_amount = 4;</code>
+       * <code>int64 issued_amount = 4;</code>
        */
       public long getIssuedAmount() {
         return issuedAmount_;
       }
       /**
-       * <code>optional int64 issued_amount = 4;</code>
+       * <code>int64 issued_amount = 4;</code>
        */
       public Builder setIssuedAmount(long value) {
         
@@ -3352,7 +3440,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional int64 issued_amount = 4;</code>
+       * <code>int64 issued_amount = 4;</code>
        */
       public Builder clearIssuedAmount() {
         
@@ -3363,13 +3451,13 @@ public final class Chain {
 
       private int feePercent_ ;
       /**
-       * <code>optional int32 fee_percent = 5;</code>
+       * <code>int32 fee_percent = 5;</code>
        */
       public int getFeePercent() {
         return feePercent_;
       }
       /**
-       * <code>optional int32 fee_percent = 5;</code>
+       * <code>int32 fee_percent = 5;</code>
        */
       public Builder setFeePercent(int value) {
         
@@ -3378,7 +3466,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional int32 fee_percent = 5;</code>
+       * <code>int32 fee_percent = 5;</code>
        */
       public Builder clearFeePercent() {
         
@@ -3388,12 +3476,12 @@ public final class Chain {
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.setUnknownFieldsProto3(unknownFields);
       }
 
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.mergeUnknownFields(unknownFields);
       }
 
 
@@ -3416,7 +3504,7 @@ public final class Chain {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new AssetProperty(input, extensionRegistry);
+        return new AssetProperty(input, extensionRegistry);
       }
     };
 
@@ -3444,7 +3532,7 @@ public final class Chain {
      *required
      * </pre>
      *
-     * <code>optional .protocol.AssetKey key = 1;</code>
+     * <code>.protocol.AssetKey key = 1;</code>
      */
     boolean hasKey();
     /**
@@ -3452,7 +3540,7 @@ public final class Chain {
      *required
      * </pre>
      *
-     * <code>optional .protocol.AssetKey key = 1;</code>
+     * <code>.protocol.AssetKey key = 1;</code>
      */
     io.bumo.sdk.core.extend.protobuf.Chain.AssetKey getKey();
     /**
@@ -3460,25 +3548,25 @@ public final class Chain {
      *required
      * </pre>
      *
-     * <code>optional .protocol.AssetKey key = 1;</code>
+     * <code>.protocol.AssetKey key = 1;</code>
      */
     io.bumo.sdk.core.extend.protobuf.Chain.AssetKeyOrBuilder getKeyOrBuilder();
 
     /**
-     * <code>optional int64 amount = 2;</code>
+     * <code>int64 amount = 2;</code>
      */
     long getAmount();
 
     /**
-     * <code>optional .protocol.AssetProperty property = 3;</code>
+     * <code>.protocol.AssetProperty property = 3;</code>
      */
     boolean hasProperty();
     /**
-     * <code>optional .protocol.AssetProperty property = 3;</code>
+     * <code>.protocol.AssetProperty property = 3;</code>
      */
     io.bumo.sdk.core.extend.protobuf.Chain.AssetProperty getProperty();
     /**
-     * <code>optional .protocol.AssetProperty property = 3;</code>
+     * <code>.protocol.AssetProperty property = 3;</code>
      */
     io.bumo.sdk.core.extend.protobuf.Chain.AssetPropertyOrBuilder getPropertyOrBuilder();
   }
@@ -3489,6 +3577,7 @@ public final class Chain {
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:protocol.AssetStore)
       AssetStoreOrBuilder {
+  private static final long serialVersionUID = 0L;
     // Use AssetStore.newBuilder() to construct.
     private AssetStore(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -3500,14 +3589,19 @@ public final class Chain {
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
-      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+      return this.unknownFields;
     }
     private AssetStore(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
         boolean done = false;
         while (!done) {
@@ -3517,7 +3611,8 @@ public final class Chain {
               done = true;
               break;
             default: {
-              if (!input.skipField(tag)) {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
               break;
@@ -3561,6 +3656,7 @@ public final class Chain {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
+        this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
     }
@@ -3583,7 +3679,7 @@ public final class Chain {
      *required
      * </pre>
      *
-     * <code>optional .protocol.AssetKey key = 1;</code>
+     * <code>.protocol.AssetKey key = 1;</code>
      */
     public boolean hasKey() {
       return key_ != null;
@@ -3593,7 +3689,7 @@ public final class Chain {
      *required
      * </pre>
      *
-     * <code>optional .protocol.AssetKey key = 1;</code>
+     * <code>.protocol.AssetKey key = 1;</code>
      */
     public io.bumo.sdk.core.extend.protobuf.Chain.AssetKey getKey() {
       return key_ == null ? io.bumo.sdk.core.extend.protobuf.Chain.AssetKey.getDefaultInstance() : key_;
@@ -3603,7 +3699,7 @@ public final class Chain {
      *required
      * </pre>
      *
-     * <code>optional .protocol.AssetKey key = 1;</code>
+     * <code>.protocol.AssetKey key = 1;</code>
      */
     public io.bumo.sdk.core.extend.protobuf.Chain.AssetKeyOrBuilder getKeyOrBuilder() {
       return getKey();
@@ -3612,7 +3708,7 @@ public final class Chain {
     public static final int AMOUNT_FIELD_NUMBER = 2;
     private long amount_;
     /**
-     * <code>optional int64 amount = 2;</code>
+     * <code>int64 amount = 2;</code>
      */
     public long getAmount() {
       return amount_;
@@ -3621,19 +3717,19 @@ public final class Chain {
     public static final int PROPERTY_FIELD_NUMBER = 3;
     private io.bumo.sdk.core.extend.protobuf.Chain.AssetProperty property_;
     /**
-     * <code>optional .protocol.AssetProperty property = 3;</code>
+     * <code>.protocol.AssetProperty property = 3;</code>
      */
     public boolean hasProperty() {
       return property_ != null;
     }
     /**
-     * <code>optional .protocol.AssetProperty property = 3;</code>
+     * <code>.protocol.AssetProperty property = 3;</code>
      */
     public io.bumo.sdk.core.extend.protobuf.Chain.AssetProperty getProperty() {
       return property_ == null ? io.bumo.sdk.core.extend.protobuf.Chain.AssetProperty.getDefaultInstance() : property_;
     }
     /**
-     * <code>optional .protocol.AssetProperty property = 3;</code>
+     * <code>.protocol.AssetProperty property = 3;</code>
      */
     public io.bumo.sdk.core.extend.protobuf.Chain.AssetPropertyOrBuilder getPropertyOrBuilder() {
       return getProperty();
@@ -3660,6 +3756,7 @@ public final class Chain {
       if (property_ != null) {
         output.writeMessage(3, getProperty());
       }
+      unknownFields.writeTo(output);
     }
 
     public int getSerializedSize() {
@@ -3679,11 +3776,11 @@ public final class Chain {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(3, getProperty());
       }
+      size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
     }
 
-    private static final long serialVersionUID = 0L;
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -3707,6 +3804,7 @@ public final class Chain {
         result = result && getProperty()
             .equals(other.getProperty());
       }
+      result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
 
@@ -3716,7 +3814,7 @@ public final class Chain {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptorForType().hashCode();
+      hash = (19 * hash) + getDescriptor().hashCode();
       if (hasKey()) {
         hash = (37 * hash) + KEY_FIELD_NUMBER;
         hash = (53 * hash) + getKey().hashCode();
@@ -3733,6 +3831,17 @@ public final class Chain {
       return hash;
     }
 
+    public static io.bumo.sdk.core.extend.protobuf.Chain.AssetStore parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static io.bumo.sdk.core.extend.protobuf.Chain.AssetStore parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
     public static io.bumo.sdk.core.extend.protobuf.Chain.AssetStore parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -3902,7 +4011,7 @@ public final class Chain {
       }
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
       public Builder clearField(
@@ -3915,12 +4024,12 @@ public final class Chain {
       }
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, Object value) {
+          int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -3943,6 +4052,7 @@ public final class Chain {
         if (other.hasProperty()) {
           mergeProperty(other.getProperty());
         }
+        this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
       }
@@ -3977,7 +4087,7 @@ public final class Chain {
        *required
        * </pre>
        *
-       * <code>optional .protocol.AssetKey key = 1;</code>
+       * <code>.protocol.AssetKey key = 1;</code>
        */
       public boolean hasKey() {
         return keyBuilder_ != null || key_ != null;
@@ -3987,7 +4097,7 @@ public final class Chain {
        *required
        * </pre>
        *
-       * <code>optional .protocol.AssetKey key = 1;</code>
+       * <code>.protocol.AssetKey key = 1;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.AssetKey getKey() {
         if (keyBuilder_ == null) {
@@ -4001,7 +4111,7 @@ public final class Chain {
        *required
        * </pre>
        *
-       * <code>optional .protocol.AssetKey key = 1;</code>
+       * <code>.protocol.AssetKey key = 1;</code>
        */
       public Builder setKey(io.bumo.sdk.core.extend.protobuf.Chain.AssetKey value) {
         if (keyBuilder_ == null) {
@@ -4021,7 +4131,7 @@ public final class Chain {
        *required
        * </pre>
        *
-       * <code>optional .protocol.AssetKey key = 1;</code>
+       * <code>.protocol.AssetKey key = 1;</code>
        */
       public Builder setKey(
           io.bumo.sdk.core.extend.protobuf.Chain.AssetKey.Builder builderForValue) {
@@ -4039,7 +4149,7 @@ public final class Chain {
        *required
        * </pre>
        *
-       * <code>optional .protocol.AssetKey key = 1;</code>
+       * <code>.protocol.AssetKey key = 1;</code>
        */
       public Builder mergeKey(io.bumo.sdk.core.extend.protobuf.Chain.AssetKey value) {
         if (keyBuilder_ == null) {
@@ -4061,7 +4171,7 @@ public final class Chain {
        *required
        * </pre>
        *
-       * <code>optional .protocol.AssetKey key = 1;</code>
+       * <code>.protocol.AssetKey key = 1;</code>
        */
       public Builder clearKey() {
         if (keyBuilder_ == null) {
@@ -4079,7 +4189,7 @@ public final class Chain {
        *required
        * </pre>
        *
-       * <code>optional .protocol.AssetKey key = 1;</code>
+       * <code>.protocol.AssetKey key = 1;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.AssetKey.Builder getKeyBuilder() {
         
@@ -4091,7 +4201,7 @@ public final class Chain {
        *required
        * </pre>
        *
-       * <code>optional .protocol.AssetKey key = 1;</code>
+       * <code>.protocol.AssetKey key = 1;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.AssetKeyOrBuilder getKeyOrBuilder() {
         if (keyBuilder_ != null) {
@@ -4106,7 +4216,7 @@ public final class Chain {
        *required
        * </pre>
        *
-       * <code>optional .protocol.AssetKey key = 1;</code>
+       * <code>.protocol.AssetKey key = 1;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           io.bumo.sdk.core.extend.protobuf.Chain.AssetKey, io.bumo.sdk.core.extend.protobuf.Chain.AssetKey.Builder, io.bumo.sdk.core.extend.protobuf.Chain.AssetKeyOrBuilder> 
@@ -4124,13 +4234,13 @@ public final class Chain {
 
       private long amount_ ;
       /**
-       * <code>optional int64 amount = 2;</code>
+       * <code>int64 amount = 2;</code>
        */
       public long getAmount() {
         return amount_;
       }
       /**
-       * <code>optional int64 amount = 2;</code>
+       * <code>int64 amount = 2;</code>
        */
       public Builder setAmount(long value) {
         
@@ -4139,7 +4249,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional int64 amount = 2;</code>
+       * <code>int64 amount = 2;</code>
        */
       public Builder clearAmount() {
         
@@ -4152,13 +4262,13 @@ public final class Chain {
       private com.google.protobuf.SingleFieldBuilderV3<
           io.bumo.sdk.core.extend.protobuf.Chain.AssetProperty, io.bumo.sdk.core.extend.protobuf.Chain.AssetProperty.Builder, io.bumo.sdk.core.extend.protobuf.Chain.AssetPropertyOrBuilder> propertyBuilder_;
       /**
-       * <code>optional .protocol.AssetProperty property = 3;</code>
+       * <code>.protocol.AssetProperty property = 3;</code>
        */
       public boolean hasProperty() {
         return propertyBuilder_ != null || property_ != null;
       }
       /**
-       * <code>optional .protocol.AssetProperty property = 3;</code>
+       * <code>.protocol.AssetProperty property = 3;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.AssetProperty getProperty() {
         if (propertyBuilder_ == null) {
@@ -4168,7 +4278,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional .protocol.AssetProperty property = 3;</code>
+       * <code>.protocol.AssetProperty property = 3;</code>
        */
       public Builder setProperty(io.bumo.sdk.core.extend.protobuf.Chain.AssetProperty value) {
         if (propertyBuilder_ == null) {
@@ -4184,7 +4294,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.AssetProperty property = 3;</code>
+       * <code>.protocol.AssetProperty property = 3;</code>
        */
       public Builder setProperty(
           io.bumo.sdk.core.extend.protobuf.Chain.AssetProperty.Builder builderForValue) {
@@ -4198,7 +4308,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.AssetProperty property = 3;</code>
+       * <code>.protocol.AssetProperty property = 3;</code>
        */
       public Builder mergeProperty(io.bumo.sdk.core.extend.protobuf.Chain.AssetProperty value) {
         if (propertyBuilder_ == null) {
@@ -4216,7 +4326,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.AssetProperty property = 3;</code>
+       * <code>.protocol.AssetProperty property = 3;</code>
        */
       public Builder clearProperty() {
         if (propertyBuilder_ == null) {
@@ -4230,7 +4340,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.AssetProperty property = 3;</code>
+       * <code>.protocol.AssetProperty property = 3;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.AssetProperty.Builder getPropertyBuilder() {
         
@@ -4238,7 +4348,7 @@ public final class Chain {
         return getPropertyFieldBuilder().getBuilder();
       }
       /**
-       * <code>optional .protocol.AssetProperty property = 3;</code>
+       * <code>.protocol.AssetProperty property = 3;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.AssetPropertyOrBuilder getPropertyOrBuilder() {
         if (propertyBuilder_ != null) {
@@ -4249,7 +4359,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional .protocol.AssetProperty property = 3;</code>
+       * <code>.protocol.AssetProperty property = 3;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           io.bumo.sdk.core.extend.protobuf.Chain.AssetProperty, io.bumo.sdk.core.extend.protobuf.Chain.AssetProperty.Builder, io.bumo.sdk.core.extend.protobuf.Chain.AssetPropertyOrBuilder> 
@@ -4266,12 +4376,12 @@ public final class Chain {
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.setUnknownFieldsProto3(unknownFields);
       }
 
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.mergeUnknownFields(unknownFields);
       }
 
 
@@ -4294,7 +4404,7 @@ public final class Chain {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new AssetStore(input, extensionRegistry);
+        return new AssetStore(input, extensionRegistry);
       }
     };
 
@@ -4318,42 +4428,42 @@ public final class Chain {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>optional int64 seq = 1;</code>
+     * <code>int64 seq = 1;</code>
      */
     long getSeq();
 
     /**
-     * <code>optional bytes hash = 2;</code>
+     * <code>bytes hash = 2;</code>
      */
     com.google.protobuf.ByteString getHash();
 
     /**
-     * <code>optional bytes previous_hash = 3;</code>
+     * <code>bytes previous_hash = 3;</code>
      */
     com.google.protobuf.ByteString getPreviousHash();
 
     /**
-     * <code>optional bytes account_tree_hash = 4;</code>
+     * <code>bytes account_tree_hash = 4;</code>
      */
     com.google.protobuf.ByteString getAccountTreeHash();
 
     /**
-     * <code>optional int64 close_time = 5;</code>
+     * <code>int64 close_time = 5;</code>
      */
     long getCloseTime();
 
     /**
-     * <code>optional bytes consensus_value_hash = 6;</code>
+     * <code>bytes consensus_value_hash = 6;</code>
      */
     com.google.protobuf.ByteString getConsensusValueHash();
 
     /**
-     * <code>optional int64 version = 7;</code>
+     * <code>int64 version = 7;</code>
      */
     long getVersion();
 
     /**
-     * <code>optional int64 tx_count = 8;</code>
+     * <code>int64 tx_count = 8;</code>
      */
     long getTxCount();
 
@@ -4362,21 +4472,21 @@ public final class Chain {
      * hash
      * </pre>
      *
-     * <code>optional bytes validators_hash = 9;</code>
+     * <code>bytes validators_hash = 9;</code>
      */
     com.google.protobuf.ByteString getValidatorsHash();
 
     /**
-     * <code>optional bytes fees_hash = 10;</code>
+     * <code>bytes fees_hash = 10;</code>
      */
     com.google.protobuf.ByteString getFeesHash();
 
     /**
-     * <code>optional string reserve = 11;</code>
+     * <code>string reserve = 11;</code>
      */
     java.lang.String getReserve();
     /**
-     * <code>optional string reserve = 11;</code>
+     * <code>string reserve = 11;</code>
      */
     com.google.protobuf.ByteString
         getReserveBytes();
@@ -4388,6 +4498,7 @@ public final class Chain {
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:protocol.LedgerHeader)
       LedgerHeaderOrBuilder {
+  private static final long serialVersionUID = 0L;
     // Use LedgerHeader.newBuilder() to construct.
     private LedgerHeader(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -4409,14 +4520,19 @@ public final class Chain {
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
-      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+      return this.unknownFields;
     }
     private LedgerHeader(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
         boolean done = false;
         while (!done) {
@@ -4426,7 +4542,8 @@ public final class Chain {
               done = true;
               break;
             default: {
-              if (!input.skipField(tag)) {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
               break;
@@ -4495,6 +4612,7 @@ public final class Chain {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
+        this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
     }
@@ -4513,7 +4631,7 @@ public final class Chain {
     public static final int SEQ_FIELD_NUMBER = 1;
     private long seq_;
     /**
-     * <code>optional int64 seq = 1;</code>
+     * <code>int64 seq = 1;</code>
      */
     public long getSeq() {
       return seq_;
@@ -4522,7 +4640,7 @@ public final class Chain {
     public static final int HASH_FIELD_NUMBER = 2;
     private com.google.protobuf.ByteString hash_;
     /**
-     * <code>optional bytes hash = 2;</code>
+     * <code>bytes hash = 2;</code>
      */
     public com.google.protobuf.ByteString getHash() {
       return hash_;
@@ -4531,7 +4649,7 @@ public final class Chain {
     public static final int PREVIOUS_HASH_FIELD_NUMBER = 3;
     private com.google.protobuf.ByteString previousHash_;
     /**
-     * <code>optional bytes previous_hash = 3;</code>
+     * <code>bytes previous_hash = 3;</code>
      */
     public com.google.protobuf.ByteString getPreviousHash() {
       return previousHash_;
@@ -4540,7 +4658,7 @@ public final class Chain {
     public static final int ACCOUNT_TREE_HASH_FIELD_NUMBER = 4;
     private com.google.protobuf.ByteString accountTreeHash_;
     /**
-     * <code>optional bytes account_tree_hash = 4;</code>
+     * <code>bytes account_tree_hash = 4;</code>
      */
     public com.google.protobuf.ByteString getAccountTreeHash() {
       return accountTreeHash_;
@@ -4549,7 +4667,7 @@ public final class Chain {
     public static final int CLOSE_TIME_FIELD_NUMBER = 5;
     private long closeTime_;
     /**
-     * <code>optional int64 close_time = 5;</code>
+     * <code>int64 close_time = 5;</code>
      */
     public long getCloseTime() {
       return closeTime_;
@@ -4558,7 +4676,7 @@ public final class Chain {
     public static final int CONSENSUS_VALUE_HASH_FIELD_NUMBER = 6;
     private com.google.protobuf.ByteString consensusValueHash_;
     /**
-     * <code>optional bytes consensus_value_hash = 6;</code>
+     * <code>bytes consensus_value_hash = 6;</code>
      */
     public com.google.protobuf.ByteString getConsensusValueHash() {
       return consensusValueHash_;
@@ -4567,7 +4685,7 @@ public final class Chain {
     public static final int VERSION_FIELD_NUMBER = 7;
     private long version_;
     /**
-     * <code>optional int64 version = 7;</code>
+     * <code>int64 version = 7;</code>
      */
     public long getVersion() {
       return version_;
@@ -4576,7 +4694,7 @@ public final class Chain {
     public static final int TX_COUNT_FIELD_NUMBER = 8;
     private long txCount_;
     /**
-     * <code>optional int64 tx_count = 8;</code>
+     * <code>int64 tx_count = 8;</code>
      */
     public long getTxCount() {
       return txCount_;
@@ -4589,7 +4707,7 @@ public final class Chain {
      * hash
      * </pre>
      *
-     * <code>optional bytes validators_hash = 9;</code>
+     * <code>bytes validators_hash = 9;</code>
      */
     public com.google.protobuf.ByteString getValidatorsHash() {
       return validatorsHash_;
@@ -4598,7 +4716,7 @@ public final class Chain {
     public static final int FEES_HASH_FIELD_NUMBER = 10;
     private com.google.protobuf.ByteString feesHash_;
     /**
-     * <code>optional bytes fees_hash = 10;</code>
+     * <code>bytes fees_hash = 10;</code>
      */
     public com.google.protobuf.ByteString getFeesHash() {
       return feesHash_;
@@ -4607,7 +4725,7 @@ public final class Chain {
     public static final int RESERVE_FIELD_NUMBER = 11;
     private volatile java.lang.Object reserve_;
     /**
-     * <code>optional string reserve = 11;</code>
+     * <code>string reserve = 11;</code>
      */
     public java.lang.String getReserve() {
       java.lang.Object ref = reserve_;
@@ -4622,7 +4740,7 @@ public final class Chain {
       }
     }
     /**
-     * <code>optional string reserve = 11;</code>
+     * <code>string reserve = 11;</code>
      */
     public com.google.protobuf.ByteString
         getReserveBytes() {
@@ -4683,6 +4801,7 @@ public final class Chain {
       if (!getReserveBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 11, reserve_);
       }
+      unknownFields.writeTo(output);
     }
 
     public int getSerializedSize() {
@@ -4733,11 +4852,11 @@ public final class Chain {
       if (!getReserveBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(11, reserve_);
       }
+      size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
     }
 
-    private static final long serialVersionUID = 0L;
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -4771,6 +4890,7 @@ public final class Chain {
           .equals(other.getFeesHash());
       result = result && getReserve()
           .equals(other.getReserve());
+      result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
 
@@ -4780,7 +4900,7 @@ public final class Chain {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptorForType().hashCode();
+      hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + SEQ_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
           getSeq());
@@ -4812,6 +4932,17 @@ public final class Chain {
       return hash;
     }
 
+    public static io.bumo.sdk.core.extend.protobuf.Chain.LedgerHeader parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static io.bumo.sdk.core.extend.protobuf.Chain.LedgerHeader parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
     public static io.bumo.sdk.core.extend.protobuf.Chain.LedgerHeader parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -4989,7 +5120,7 @@ public final class Chain {
       }
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
       public Builder clearField(
@@ -5002,12 +5133,12 @@ public final class Chain {
       }
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, Object value) {
+          int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -5055,6 +5186,7 @@ public final class Chain {
           reserve_ = other.reserve_;
           onChanged();
         }
+        this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
       }
@@ -5083,13 +5215,13 @@ public final class Chain {
 
       private long seq_ ;
       /**
-       * <code>optional int64 seq = 1;</code>
+       * <code>int64 seq = 1;</code>
        */
       public long getSeq() {
         return seq_;
       }
       /**
-       * <code>optional int64 seq = 1;</code>
+       * <code>int64 seq = 1;</code>
        */
       public Builder setSeq(long value) {
         
@@ -5098,7 +5230,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional int64 seq = 1;</code>
+       * <code>int64 seq = 1;</code>
        */
       public Builder clearSeq() {
         
@@ -5109,13 +5241,13 @@ public final class Chain {
 
       private com.google.protobuf.ByteString hash_ = com.google.protobuf.ByteString.EMPTY;
       /**
-       * <code>optional bytes hash = 2;</code>
+       * <code>bytes hash = 2;</code>
        */
       public com.google.protobuf.ByteString getHash() {
         return hash_;
       }
       /**
-       * <code>optional bytes hash = 2;</code>
+       * <code>bytes hash = 2;</code>
        */
       public Builder setHash(com.google.protobuf.ByteString value) {
         if (value == null) {
@@ -5127,7 +5259,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional bytes hash = 2;</code>
+       * <code>bytes hash = 2;</code>
        */
       public Builder clearHash() {
         
@@ -5138,13 +5270,13 @@ public final class Chain {
 
       private com.google.protobuf.ByteString previousHash_ = com.google.protobuf.ByteString.EMPTY;
       /**
-       * <code>optional bytes previous_hash = 3;</code>
+       * <code>bytes previous_hash = 3;</code>
        */
       public com.google.protobuf.ByteString getPreviousHash() {
         return previousHash_;
       }
       /**
-       * <code>optional bytes previous_hash = 3;</code>
+       * <code>bytes previous_hash = 3;</code>
        */
       public Builder setPreviousHash(com.google.protobuf.ByteString value) {
         if (value == null) {
@@ -5156,7 +5288,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional bytes previous_hash = 3;</code>
+       * <code>bytes previous_hash = 3;</code>
        */
       public Builder clearPreviousHash() {
         
@@ -5167,13 +5299,13 @@ public final class Chain {
 
       private com.google.protobuf.ByteString accountTreeHash_ = com.google.protobuf.ByteString.EMPTY;
       /**
-       * <code>optional bytes account_tree_hash = 4;</code>
+       * <code>bytes account_tree_hash = 4;</code>
        */
       public com.google.protobuf.ByteString getAccountTreeHash() {
         return accountTreeHash_;
       }
       /**
-       * <code>optional bytes account_tree_hash = 4;</code>
+       * <code>bytes account_tree_hash = 4;</code>
        */
       public Builder setAccountTreeHash(com.google.protobuf.ByteString value) {
         if (value == null) {
@@ -5185,7 +5317,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional bytes account_tree_hash = 4;</code>
+       * <code>bytes account_tree_hash = 4;</code>
        */
       public Builder clearAccountTreeHash() {
         
@@ -5196,13 +5328,13 @@ public final class Chain {
 
       private long closeTime_ ;
       /**
-       * <code>optional int64 close_time = 5;</code>
+       * <code>int64 close_time = 5;</code>
        */
       public long getCloseTime() {
         return closeTime_;
       }
       /**
-       * <code>optional int64 close_time = 5;</code>
+       * <code>int64 close_time = 5;</code>
        */
       public Builder setCloseTime(long value) {
         
@@ -5211,7 +5343,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional int64 close_time = 5;</code>
+       * <code>int64 close_time = 5;</code>
        */
       public Builder clearCloseTime() {
         
@@ -5222,13 +5354,13 @@ public final class Chain {
 
       private com.google.protobuf.ByteString consensusValueHash_ = com.google.protobuf.ByteString.EMPTY;
       /**
-       * <code>optional bytes consensus_value_hash = 6;</code>
+       * <code>bytes consensus_value_hash = 6;</code>
        */
       public com.google.protobuf.ByteString getConsensusValueHash() {
         return consensusValueHash_;
       }
       /**
-       * <code>optional bytes consensus_value_hash = 6;</code>
+       * <code>bytes consensus_value_hash = 6;</code>
        */
       public Builder setConsensusValueHash(com.google.protobuf.ByteString value) {
         if (value == null) {
@@ -5240,7 +5372,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional bytes consensus_value_hash = 6;</code>
+       * <code>bytes consensus_value_hash = 6;</code>
        */
       public Builder clearConsensusValueHash() {
         
@@ -5251,13 +5383,13 @@ public final class Chain {
 
       private long version_ ;
       /**
-       * <code>optional int64 version = 7;</code>
+       * <code>int64 version = 7;</code>
        */
       public long getVersion() {
         return version_;
       }
       /**
-       * <code>optional int64 version = 7;</code>
+       * <code>int64 version = 7;</code>
        */
       public Builder setVersion(long value) {
         
@@ -5266,7 +5398,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional int64 version = 7;</code>
+       * <code>int64 version = 7;</code>
        */
       public Builder clearVersion() {
         
@@ -5277,13 +5409,13 @@ public final class Chain {
 
       private long txCount_ ;
       /**
-       * <code>optional int64 tx_count = 8;</code>
+       * <code>int64 tx_count = 8;</code>
        */
       public long getTxCount() {
         return txCount_;
       }
       /**
-       * <code>optional int64 tx_count = 8;</code>
+       * <code>int64 tx_count = 8;</code>
        */
       public Builder setTxCount(long value) {
         
@@ -5292,7 +5424,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional int64 tx_count = 8;</code>
+       * <code>int64 tx_count = 8;</code>
        */
       public Builder clearTxCount() {
         
@@ -5307,7 +5439,7 @@ public final class Chain {
        * hash
        * </pre>
        *
-       * <code>optional bytes validators_hash = 9;</code>
+       * <code>bytes validators_hash = 9;</code>
        */
       public com.google.protobuf.ByteString getValidatorsHash() {
         return validatorsHash_;
@@ -5317,7 +5449,7 @@ public final class Chain {
        * hash
        * </pre>
        *
-       * <code>optional bytes validators_hash = 9;</code>
+       * <code>bytes validators_hash = 9;</code>
        */
       public Builder setValidatorsHash(com.google.protobuf.ByteString value) {
         if (value == null) {
@@ -5333,7 +5465,7 @@ public final class Chain {
        * hash
        * </pre>
        *
-       * <code>optional bytes validators_hash = 9;</code>
+       * <code>bytes validators_hash = 9;</code>
        */
       public Builder clearValidatorsHash() {
         
@@ -5344,13 +5476,13 @@ public final class Chain {
 
       private com.google.protobuf.ByteString feesHash_ = com.google.protobuf.ByteString.EMPTY;
       /**
-       * <code>optional bytes fees_hash = 10;</code>
+       * <code>bytes fees_hash = 10;</code>
        */
       public com.google.protobuf.ByteString getFeesHash() {
         return feesHash_;
       }
       /**
-       * <code>optional bytes fees_hash = 10;</code>
+       * <code>bytes fees_hash = 10;</code>
        */
       public Builder setFeesHash(com.google.protobuf.ByteString value) {
         if (value == null) {
@@ -5362,7 +5494,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional bytes fees_hash = 10;</code>
+       * <code>bytes fees_hash = 10;</code>
        */
       public Builder clearFeesHash() {
         
@@ -5373,7 +5505,7 @@ public final class Chain {
 
       private java.lang.Object reserve_ = "";
       /**
-       * <code>optional string reserve = 11;</code>
+       * <code>string reserve = 11;</code>
        */
       public java.lang.String getReserve() {
         java.lang.Object ref = reserve_;
@@ -5388,7 +5520,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional string reserve = 11;</code>
+       * <code>string reserve = 11;</code>
        */
       public com.google.protobuf.ByteString
           getReserveBytes() {
@@ -5404,7 +5536,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional string reserve = 11;</code>
+       * <code>string reserve = 11;</code>
        */
       public Builder setReserve(
           java.lang.String value) {
@@ -5417,7 +5549,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional string reserve = 11;</code>
+       * <code>string reserve = 11;</code>
        */
       public Builder clearReserve() {
         
@@ -5426,7 +5558,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional string reserve = 11;</code>
+       * <code>string reserve = 11;</code>
        */
       public Builder setReserveBytes(
           com.google.protobuf.ByteString value) {
@@ -5441,12 +5573,12 @@ public final class Chain {
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.setUnknownFieldsProto3(unknownFields);
       }
 
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.mergeUnknownFields(unknownFields);
       }
 
 
@@ -5469,7 +5601,7 @@ public final class Chain {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new LedgerHeader(input, extensionRegistry);
+        return new LedgerHeader(input, extensionRegistry);
       }
     };
 
@@ -5493,15 +5625,15 @@ public final class Chain {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>optional .protocol.LedgerHeader header = 1;</code>
+     * <code>.protocol.LedgerHeader header = 1;</code>
      */
     boolean hasHeader();
     /**
-     * <code>optional .protocol.LedgerHeader header = 1;</code>
+     * <code>.protocol.LedgerHeader header = 1;</code>
      */
     io.bumo.sdk.core.extend.protobuf.Chain.LedgerHeader getHeader();
     /**
-     * <code>optional .protocol.LedgerHeader header = 1;</code>
+     * <code>.protocol.LedgerHeader header = 1;</code>
      */
     io.bumo.sdk.core.extend.protobuf.Chain.LedgerHeaderOrBuilder getHeaderOrBuilder();
 
@@ -5536,6 +5668,7 @@ public final class Chain {
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:protocol.Ledger)
       LedgerOrBuilder {
+  private static final long serialVersionUID = 0L;
     // Use Ledger.newBuilder() to construct.
     private Ledger(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -5547,14 +5680,19 @@ public final class Chain {
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
-      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+      return this.unknownFields;
     }
     private Ledger(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
         boolean done = false;
         while (!done) {
@@ -5564,7 +5702,8 @@ public final class Chain {
               done = true;
               break;
             default: {
-              if (!input.skipField(tag)) {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
               break;
@@ -5602,6 +5741,7 @@ public final class Chain {
         if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
           transactionEnvs_ = java.util.Collections.unmodifiableList(transactionEnvs_);
         }
+        this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
     }
@@ -5621,19 +5761,19 @@ public final class Chain {
     public static final int HEADER_FIELD_NUMBER = 1;
     private io.bumo.sdk.core.extend.protobuf.Chain.LedgerHeader header_;
     /**
-     * <code>optional .protocol.LedgerHeader header = 1;</code>
+     * <code>.protocol.LedgerHeader header = 1;</code>
      */
     public boolean hasHeader() {
       return header_ != null;
     }
     /**
-     * <code>optional .protocol.LedgerHeader header = 1;</code>
+     * <code>.protocol.LedgerHeader header = 1;</code>
      */
     public io.bumo.sdk.core.extend.protobuf.Chain.LedgerHeader getHeader() {
       return header_ == null ? io.bumo.sdk.core.extend.protobuf.Chain.LedgerHeader.getDefaultInstance() : header_;
     }
     /**
-     * <code>optional .protocol.LedgerHeader header = 1;</code>
+     * <code>.protocol.LedgerHeader header = 1;</code>
      */
     public io.bumo.sdk.core.extend.protobuf.Chain.LedgerHeaderOrBuilder getHeaderOrBuilder() {
       return getHeader();
@@ -5692,6 +5832,7 @@ public final class Chain {
       for (int i = 0; i < transactionEnvs_.size(); i++) {
         output.writeMessage(2, transactionEnvs_.get(i));
       }
+      unknownFields.writeTo(output);
     }
 
     public int getSerializedSize() {
@@ -5707,11 +5848,11 @@ public final class Chain {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(2, transactionEnvs_.get(i));
       }
+      size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
     }
 
-    private static final long serialVersionUID = 0L;
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -5730,6 +5871,7 @@ public final class Chain {
       }
       result = result && getTransactionEnvsList()
           .equals(other.getTransactionEnvsList());
+      result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
 
@@ -5739,7 +5881,7 @@ public final class Chain {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptorForType().hashCode();
+      hash = (19 * hash) + getDescriptor().hashCode();
       if (hasHeader()) {
         hash = (37 * hash) + HEADER_FIELD_NUMBER;
         hash = (53 * hash) + getHeader().hashCode();
@@ -5753,6 +5895,17 @@ public final class Chain {
       return hash;
     }
 
+    public static io.bumo.sdk.core.extend.protobuf.Chain.Ledger parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static io.bumo.sdk.core.extend.protobuf.Chain.Ledger parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
     public static io.bumo.sdk.core.extend.protobuf.Chain.Ledger parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -5927,7 +6080,7 @@ public final class Chain {
       }
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
       public Builder clearField(
@@ -5940,12 +6093,12 @@ public final class Chain {
       }
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, Object value) {
+          int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -5988,6 +6141,7 @@ public final class Chain {
             }
           }
         }
+        this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
       }
@@ -6019,13 +6173,13 @@ public final class Chain {
       private com.google.protobuf.SingleFieldBuilderV3<
           io.bumo.sdk.core.extend.protobuf.Chain.LedgerHeader, io.bumo.sdk.core.extend.protobuf.Chain.LedgerHeader.Builder, io.bumo.sdk.core.extend.protobuf.Chain.LedgerHeaderOrBuilder> headerBuilder_;
       /**
-       * <code>optional .protocol.LedgerHeader header = 1;</code>
+       * <code>.protocol.LedgerHeader header = 1;</code>
        */
       public boolean hasHeader() {
         return headerBuilder_ != null || header_ != null;
       }
       /**
-       * <code>optional .protocol.LedgerHeader header = 1;</code>
+       * <code>.protocol.LedgerHeader header = 1;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.LedgerHeader getHeader() {
         if (headerBuilder_ == null) {
@@ -6035,7 +6189,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional .protocol.LedgerHeader header = 1;</code>
+       * <code>.protocol.LedgerHeader header = 1;</code>
        */
       public Builder setHeader(io.bumo.sdk.core.extend.protobuf.Chain.LedgerHeader value) {
         if (headerBuilder_ == null) {
@@ -6051,7 +6205,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.LedgerHeader header = 1;</code>
+       * <code>.protocol.LedgerHeader header = 1;</code>
        */
       public Builder setHeader(
           io.bumo.sdk.core.extend.protobuf.Chain.LedgerHeader.Builder builderForValue) {
@@ -6065,7 +6219,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.LedgerHeader header = 1;</code>
+       * <code>.protocol.LedgerHeader header = 1;</code>
        */
       public Builder mergeHeader(io.bumo.sdk.core.extend.protobuf.Chain.LedgerHeader value) {
         if (headerBuilder_ == null) {
@@ -6083,7 +6237,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.LedgerHeader header = 1;</code>
+       * <code>.protocol.LedgerHeader header = 1;</code>
        */
       public Builder clearHeader() {
         if (headerBuilder_ == null) {
@@ -6097,7 +6251,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.LedgerHeader header = 1;</code>
+       * <code>.protocol.LedgerHeader header = 1;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.LedgerHeader.Builder getHeaderBuilder() {
         
@@ -6105,7 +6259,7 @@ public final class Chain {
         return getHeaderFieldBuilder().getBuilder();
       }
       /**
-       * <code>optional .protocol.LedgerHeader header = 1;</code>
+       * <code>.protocol.LedgerHeader header = 1;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.LedgerHeaderOrBuilder getHeaderOrBuilder() {
         if (headerBuilder_ != null) {
@@ -6116,7 +6270,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional .protocol.LedgerHeader header = 1;</code>
+       * <code>.protocol.LedgerHeader header = 1;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           io.bumo.sdk.core.extend.protobuf.Chain.LedgerHeader, io.bumo.sdk.core.extend.protobuf.Chain.LedgerHeader.Builder, io.bumo.sdk.core.extend.protobuf.Chain.LedgerHeaderOrBuilder> 
@@ -6373,12 +6527,12 @@ public final class Chain {
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.setUnknownFieldsProto3(unknownFields);
       }
 
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.mergeUnknownFields(unknownFields);
       }
 
 
@@ -6401,7 +6555,7 @@ public final class Chain {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new Ledger(input, extensionRegistry);
+        return new Ledger(input, extensionRegistry);
       }
     };
 
@@ -6425,34 +6579,34 @@ public final class Chain {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>optional string dest_address = 1;</code>
+     * <code>string dest_address = 1;</code>
      */
     java.lang.String getDestAddress();
     /**
-     * <code>optional string dest_address = 1;</code>
+     * <code>string dest_address = 1;</code>
      */
     com.google.protobuf.ByteString
         getDestAddressBytes();
 
     /**
-     * <code>optional .protocol.Asset asset = 2;</code>
+     * <code>.protocol.Asset asset = 2;</code>
      */
     boolean hasAsset();
     /**
-     * <code>optional .protocol.Asset asset = 2;</code>
+     * <code>.protocol.Asset asset = 2;</code>
      */
     io.bumo.sdk.core.extend.protobuf.Chain.Asset getAsset();
     /**
-     * <code>optional .protocol.Asset asset = 2;</code>
+     * <code>.protocol.Asset asset = 2;</code>
      */
     io.bumo.sdk.core.extend.protobuf.Chain.AssetOrBuilder getAssetOrBuilder();
 
     /**
-     * <code>optional string input = 3;</code>
+     * <code>string input = 3;</code>
      */
     java.lang.String getInput();
     /**
-     * <code>optional string input = 3;</code>
+     * <code>string input = 3;</code>
      */
     com.google.protobuf.ByteString
         getInputBytes();
@@ -6464,6 +6618,7 @@ public final class Chain {
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:protocol.OperationPayAsset)
       OperationPayAssetOrBuilder {
+  private static final long serialVersionUID = 0L;
     // Use OperationPayAsset.newBuilder() to construct.
     private OperationPayAsset(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -6476,14 +6631,19 @@ public final class Chain {
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
-      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+      return this.unknownFields;
     }
     private OperationPayAsset(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
         boolean done = false;
         while (!done) {
@@ -6493,7 +6653,8 @@ public final class Chain {
               done = true;
               break;
             default: {
-              if (!input.skipField(tag)) {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
               break;
@@ -6531,6 +6692,7 @@ public final class Chain {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
+        this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
     }
@@ -6549,7 +6711,7 @@ public final class Chain {
     public static final int DEST_ADDRESS_FIELD_NUMBER = 1;
     private volatile java.lang.Object destAddress_;
     /**
-     * <code>optional string dest_address = 1;</code>
+     * <code>string dest_address = 1;</code>
      */
     public java.lang.String getDestAddress() {
       java.lang.Object ref = destAddress_;
@@ -6564,7 +6726,7 @@ public final class Chain {
       }
     }
     /**
-     * <code>optional string dest_address = 1;</code>
+     * <code>string dest_address = 1;</code>
      */
     public com.google.protobuf.ByteString
         getDestAddressBytes() {
@@ -6583,19 +6745,19 @@ public final class Chain {
     public static final int ASSET_FIELD_NUMBER = 2;
     private io.bumo.sdk.core.extend.protobuf.Chain.Asset asset_;
     /**
-     * <code>optional .protocol.Asset asset = 2;</code>
+     * <code>.protocol.Asset asset = 2;</code>
      */
     public boolean hasAsset() {
       return asset_ != null;
     }
     /**
-     * <code>optional .protocol.Asset asset = 2;</code>
+     * <code>.protocol.Asset asset = 2;</code>
      */
     public io.bumo.sdk.core.extend.protobuf.Chain.Asset getAsset() {
       return asset_ == null ? io.bumo.sdk.core.extend.protobuf.Chain.Asset.getDefaultInstance() : asset_;
     }
     /**
-     * <code>optional .protocol.Asset asset = 2;</code>
+     * <code>.protocol.Asset asset = 2;</code>
      */
     public io.bumo.sdk.core.extend.protobuf.Chain.AssetOrBuilder getAssetOrBuilder() {
       return getAsset();
@@ -6604,7 +6766,7 @@ public final class Chain {
     public static final int INPUT_FIELD_NUMBER = 3;
     private volatile java.lang.Object input_;
     /**
-     * <code>optional string input = 3;</code>
+     * <code>string input = 3;</code>
      */
     public java.lang.String getInput() {
       java.lang.Object ref = input_;
@@ -6619,7 +6781,7 @@ public final class Chain {
       }
     }
     /**
-     * <code>optional string input = 3;</code>
+     * <code>string input = 3;</code>
      */
     public com.google.protobuf.ByteString
         getInputBytes() {
@@ -6656,6 +6818,7 @@ public final class Chain {
       if (!getInputBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 3, input_);
       }
+      unknownFields.writeTo(output);
     }
 
     public int getSerializedSize() {
@@ -6673,11 +6836,11 @@ public final class Chain {
       if (!getInputBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, input_);
       }
+      size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
     }
 
-    private static final long serialVersionUID = 0L;
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -6698,6 +6861,7 @@ public final class Chain {
       }
       result = result && getInput()
           .equals(other.getInput());
+      result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
 
@@ -6707,7 +6871,7 @@ public final class Chain {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptorForType().hashCode();
+      hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + DEST_ADDRESS_FIELD_NUMBER;
       hash = (53 * hash) + getDestAddress().hashCode();
       if (hasAsset()) {
@@ -6721,6 +6885,17 @@ public final class Chain {
       return hash;
     }
 
+    public static io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
     public static io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -6882,7 +7057,7 @@ public final class Chain {
       }
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
       public Builder clearField(
@@ -6895,12 +7070,12 @@ public final class Chain {
       }
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, Object value) {
+          int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -6925,6 +7100,7 @@ public final class Chain {
           input_ = other.input_;
           onChanged();
         }
+        this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
       }
@@ -6953,7 +7129,7 @@ public final class Chain {
 
       private java.lang.Object destAddress_ = "";
       /**
-       * <code>optional string dest_address = 1;</code>
+       * <code>string dest_address = 1;</code>
        */
       public java.lang.String getDestAddress() {
         java.lang.Object ref = destAddress_;
@@ -6968,7 +7144,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional string dest_address = 1;</code>
+       * <code>string dest_address = 1;</code>
        */
       public com.google.protobuf.ByteString
           getDestAddressBytes() {
@@ -6984,7 +7160,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional string dest_address = 1;</code>
+       * <code>string dest_address = 1;</code>
        */
       public Builder setDestAddress(
           java.lang.String value) {
@@ -6997,7 +7173,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional string dest_address = 1;</code>
+       * <code>string dest_address = 1;</code>
        */
       public Builder clearDestAddress() {
         
@@ -7006,7 +7182,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional string dest_address = 1;</code>
+       * <code>string dest_address = 1;</code>
        */
       public Builder setDestAddressBytes(
           com.google.protobuf.ByteString value) {
@@ -7024,13 +7200,13 @@ public final class Chain {
       private com.google.protobuf.SingleFieldBuilderV3<
           io.bumo.sdk.core.extend.protobuf.Chain.Asset, io.bumo.sdk.core.extend.protobuf.Chain.Asset.Builder, io.bumo.sdk.core.extend.protobuf.Chain.AssetOrBuilder> assetBuilder_;
       /**
-       * <code>optional .protocol.Asset asset = 2;</code>
+       * <code>.protocol.Asset asset = 2;</code>
        */
       public boolean hasAsset() {
         return assetBuilder_ != null || asset_ != null;
       }
       /**
-       * <code>optional .protocol.Asset asset = 2;</code>
+       * <code>.protocol.Asset asset = 2;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.Asset getAsset() {
         if (assetBuilder_ == null) {
@@ -7040,7 +7216,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional .protocol.Asset asset = 2;</code>
+       * <code>.protocol.Asset asset = 2;</code>
        */
       public Builder setAsset(io.bumo.sdk.core.extend.protobuf.Chain.Asset value) {
         if (assetBuilder_ == null) {
@@ -7056,7 +7232,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.Asset asset = 2;</code>
+       * <code>.protocol.Asset asset = 2;</code>
        */
       public Builder setAsset(
           io.bumo.sdk.core.extend.protobuf.Chain.Asset.Builder builderForValue) {
@@ -7070,7 +7246,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.Asset asset = 2;</code>
+       * <code>.protocol.Asset asset = 2;</code>
        */
       public Builder mergeAsset(io.bumo.sdk.core.extend.protobuf.Chain.Asset value) {
         if (assetBuilder_ == null) {
@@ -7088,7 +7264,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.Asset asset = 2;</code>
+       * <code>.protocol.Asset asset = 2;</code>
        */
       public Builder clearAsset() {
         if (assetBuilder_ == null) {
@@ -7102,7 +7278,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.Asset asset = 2;</code>
+       * <code>.protocol.Asset asset = 2;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.Asset.Builder getAssetBuilder() {
         
@@ -7110,7 +7286,7 @@ public final class Chain {
         return getAssetFieldBuilder().getBuilder();
       }
       /**
-       * <code>optional .protocol.Asset asset = 2;</code>
+       * <code>.protocol.Asset asset = 2;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.AssetOrBuilder getAssetOrBuilder() {
         if (assetBuilder_ != null) {
@@ -7121,7 +7297,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional .protocol.Asset asset = 2;</code>
+       * <code>.protocol.Asset asset = 2;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           io.bumo.sdk.core.extend.protobuf.Chain.Asset, io.bumo.sdk.core.extend.protobuf.Chain.Asset.Builder, io.bumo.sdk.core.extend.protobuf.Chain.AssetOrBuilder> 
@@ -7139,7 +7315,7 @@ public final class Chain {
 
       private java.lang.Object input_ = "";
       /**
-       * <code>optional string input = 3;</code>
+       * <code>string input = 3;</code>
        */
       public java.lang.String getInput() {
         java.lang.Object ref = input_;
@@ -7154,7 +7330,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional string input = 3;</code>
+       * <code>string input = 3;</code>
        */
       public com.google.protobuf.ByteString
           getInputBytes() {
@@ -7170,7 +7346,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional string input = 3;</code>
+       * <code>string input = 3;</code>
        */
       public Builder setInput(
           java.lang.String value) {
@@ -7183,7 +7359,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional string input = 3;</code>
+       * <code>string input = 3;</code>
        */
       public Builder clearInput() {
         
@@ -7192,7 +7368,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional string input = 3;</code>
+       * <code>string input = 3;</code>
        */
       public Builder setInputBytes(
           com.google.protobuf.ByteString value) {
@@ -7207,12 +7383,12 @@ public final class Chain {
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.setUnknownFieldsProto3(unknownFields);
       }
 
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.mergeUnknownFields(unknownFields);
       }
 
 
@@ -7235,7 +7411,7 @@ public final class Chain {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new OperationPayAsset(input, extensionRegistry);
+        return new OperationPayAsset(input, extensionRegistry);
       }
     };
 
@@ -7259,16 +7435,16 @@ public final class Chain {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>optional .protocol.Operation.Type type = 1;</code>
+     * <code>.protocol.Operation.Type type = 1;</code>
      */
     int getTypeValue();
     /**
-     * <code>optional .protocol.Operation.Type type = 1;</code>
+     * <code>.protocol.Operation.Type type = 1;</code>
      */
     io.bumo.sdk.core.extend.protobuf.Chain.Operation.Type getType();
 
     /**
-     * <code>optional int64 threshold = 2;</code>
+     * <code>int64 threshold = 2;</code>
      */
     long getThreshold();
   }
@@ -7279,6 +7455,7 @@ public final class Chain {
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:protocol.OperationTypeThreshold)
       OperationTypeThresholdOrBuilder {
+  private static final long serialVersionUID = 0L;
     // Use OperationTypeThreshold.newBuilder() to construct.
     private OperationTypeThreshold(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -7291,14 +7468,19 @@ public final class Chain {
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
-      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+      return this.unknownFields;
     }
     private OperationTypeThreshold(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
         boolean done = false;
         while (!done) {
@@ -7308,7 +7490,8 @@ public final class Chain {
               done = true;
               break;
             default: {
-              if (!input.skipField(tag)) {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
               break;
@@ -7332,6 +7515,7 @@ public final class Chain {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
+        this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
     }
@@ -7350,13 +7534,13 @@ public final class Chain {
     public static final int TYPE_FIELD_NUMBER = 1;
     private int type_;
     /**
-     * <code>optional .protocol.Operation.Type type = 1;</code>
+     * <code>.protocol.Operation.Type type = 1;</code>
      */
     public int getTypeValue() {
       return type_;
     }
     /**
-     * <code>optional .protocol.Operation.Type type = 1;</code>
+     * <code>.protocol.Operation.Type type = 1;</code>
      */
     public io.bumo.sdk.core.extend.protobuf.Chain.Operation.Type getType() {
       io.bumo.sdk.core.extend.protobuf.Chain.Operation.Type result = io.bumo.sdk.core.extend.protobuf.Chain.Operation.Type.valueOf(type_);
@@ -7366,7 +7550,7 @@ public final class Chain {
     public static final int THRESHOLD_FIELD_NUMBER = 2;
     private long threshold_;
     /**
-     * <code>optional int64 threshold = 2;</code>
+     * <code>int64 threshold = 2;</code>
      */
     public long getThreshold() {
       return threshold_;
@@ -7390,6 +7574,7 @@ public final class Chain {
       if (threshold_ != 0L) {
         output.writeInt64(2, threshold_);
       }
+      unknownFields.writeTo(output);
     }
 
     public int getSerializedSize() {
@@ -7405,11 +7590,11 @@ public final class Chain {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(2, threshold_);
       }
+      size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
     }
 
-    private static final long serialVersionUID = 0L;
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -7424,6 +7609,7 @@ public final class Chain {
       result = result && type_ == other.type_;
       result = result && (getThreshold()
           == other.getThreshold());
+      result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
 
@@ -7433,7 +7619,7 @@ public final class Chain {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptorForType().hashCode();
+      hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + TYPE_FIELD_NUMBER;
       hash = (53 * hash) + type_;
       hash = (37 * hash) + THRESHOLD_FIELD_NUMBER;
@@ -7444,6 +7630,17 @@ public final class Chain {
       return hash;
     }
 
+    public static io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
     public static io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -7594,7 +7791,7 @@ public final class Chain {
       }
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
       public Builder clearField(
@@ -7607,12 +7804,12 @@ public final class Chain {
       }
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, Object value) {
+          int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -7632,6 +7829,7 @@ public final class Chain {
         if (other.getThreshold() != 0L) {
           setThreshold(other.getThreshold());
         }
+        this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
       }
@@ -7660,13 +7858,13 @@ public final class Chain {
 
       private int type_ = 0;
       /**
-       * <code>optional .protocol.Operation.Type type = 1;</code>
+       * <code>.protocol.Operation.Type type = 1;</code>
        */
       public int getTypeValue() {
         return type_;
       }
       /**
-       * <code>optional .protocol.Operation.Type type = 1;</code>
+       * <code>.protocol.Operation.Type type = 1;</code>
        */
       public Builder setTypeValue(int value) {
         type_ = value;
@@ -7674,14 +7872,14 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.Operation.Type type = 1;</code>
+       * <code>.protocol.Operation.Type type = 1;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.Operation.Type getType() {
         io.bumo.sdk.core.extend.protobuf.Chain.Operation.Type result = io.bumo.sdk.core.extend.protobuf.Chain.Operation.Type.valueOf(type_);
         return result == null ? io.bumo.sdk.core.extend.protobuf.Chain.Operation.Type.UNRECOGNIZED : result;
       }
       /**
-       * <code>optional .protocol.Operation.Type type = 1;</code>
+       * <code>.protocol.Operation.Type type = 1;</code>
        */
       public Builder setType(io.bumo.sdk.core.extend.protobuf.Chain.Operation.Type value) {
         if (value == null) {
@@ -7693,7 +7891,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.Operation.Type type = 1;</code>
+       * <code>.protocol.Operation.Type type = 1;</code>
        */
       public Builder clearType() {
         
@@ -7704,13 +7902,13 @@ public final class Chain {
 
       private long threshold_ ;
       /**
-       * <code>optional int64 threshold = 2;</code>
+       * <code>int64 threshold = 2;</code>
        */
       public long getThreshold() {
         return threshold_;
       }
       /**
-       * <code>optional int64 threshold = 2;</code>
+       * <code>int64 threshold = 2;</code>
        */
       public Builder setThreshold(long value) {
         
@@ -7719,7 +7917,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional int64 threshold = 2;</code>
+       * <code>int64 threshold = 2;</code>
        */
       public Builder clearThreshold() {
         
@@ -7729,12 +7927,12 @@ public final class Chain {
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.setUnknownFieldsProto3(unknownFields);
       }
 
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.mergeUnknownFields(unknownFields);
       }
 
 
@@ -7757,7 +7955,7 @@ public final class Chain {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new OperationTypeThreshold(input, extensionRegistry);
+        return new OperationTypeThreshold(input, extensionRegistry);
       }
     };
 
@@ -7781,7 +7979,7 @@ public final class Chain {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>optional int64 master_weight = 1;</code>
+     * <code>int64 master_weight = 1;</code>
      */
     long getMasterWeight();
 
@@ -7810,15 +8008,15 @@ public final class Chain {
         int index);
 
     /**
-     * <code>optional .protocol.AccountThreshold thresholds = 3;</code>
+     * <code>.protocol.AccountThreshold thresholds = 3;</code>
      */
     boolean hasThresholds();
     /**
-     * <code>optional .protocol.AccountThreshold thresholds = 3;</code>
+     * <code>.protocol.AccountThreshold thresholds = 3;</code>
      */
     io.bumo.sdk.core.extend.protobuf.Chain.AccountThreshold getThresholds();
     /**
-     * <code>optional .protocol.AccountThreshold thresholds = 3;</code>
+     * <code>.protocol.AccountThreshold thresholds = 3;</code>
      */
     io.bumo.sdk.core.extend.protobuf.Chain.AccountThresholdOrBuilder getThresholdsOrBuilder();
   }
@@ -7829,6 +8027,7 @@ public final class Chain {
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:protocol.AccountPrivilege)
       AccountPrivilegeOrBuilder {
+  private static final long serialVersionUID = 0L;
     // Use AccountPrivilege.newBuilder() to construct.
     private AccountPrivilege(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -7841,14 +8040,19 @@ public final class Chain {
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
-      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+      return this.unknownFields;
     }
     private AccountPrivilege(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
         boolean done = false;
         while (!done) {
@@ -7858,7 +8062,8 @@ public final class Chain {
               done = true;
               break;
             default: {
-              if (!input.skipField(tag)) {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
               break;
@@ -7901,6 +8106,7 @@ public final class Chain {
         if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
           signers_ = java.util.Collections.unmodifiableList(signers_);
         }
+        this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
     }
@@ -7920,7 +8126,7 @@ public final class Chain {
     public static final int MASTER_WEIGHT_FIELD_NUMBER = 1;
     private long masterWeight_;
     /**
-     * <code>optional int64 master_weight = 1;</code>
+     * <code>int64 master_weight = 1;</code>
      */
     public long getMasterWeight() {
       return masterWeight_;
@@ -7964,19 +8170,19 @@ public final class Chain {
     public static final int THRESHOLDS_FIELD_NUMBER = 3;
     private io.bumo.sdk.core.extend.protobuf.Chain.AccountThreshold thresholds_;
     /**
-     * <code>optional .protocol.AccountThreshold thresholds = 3;</code>
+     * <code>.protocol.AccountThreshold thresholds = 3;</code>
      */
     public boolean hasThresholds() {
       return thresholds_ != null;
     }
     /**
-     * <code>optional .protocol.AccountThreshold thresholds = 3;</code>
+     * <code>.protocol.AccountThreshold thresholds = 3;</code>
      */
     public io.bumo.sdk.core.extend.protobuf.Chain.AccountThreshold getThresholds() {
       return thresholds_ == null ? io.bumo.sdk.core.extend.protobuf.Chain.AccountThreshold.getDefaultInstance() : thresholds_;
     }
     /**
-     * <code>optional .protocol.AccountThreshold thresholds = 3;</code>
+     * <code>.protocol.AccountThreshold thresholds = 3;</code>
      */
     public io.bumo.sdk.core.extend.protobuf.Chain.AccountThresholdOrBuilder getThresholdsOrBuilder() {
       return getThresholds();
@@ -8003,6 +8209,7 @@ public final class Chain {
       if (thresholds_ != null) {
         output.writeMessage(3, getThresholds());
       }
+      unknownFields.writeTo(output);
     }
 
     public int getSerializedSize() {
@@ -8022,11 +8229,11 @@ public final class Chain {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(3, getThresholds());
       }
+      size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
     }
 
-    private static final long serialVersionUID = 0L;
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -8047,6 +8254,7 @@ public final class Chain {
         result = result && getThresholds()
             .equals(other.getThresholds());
       }
+      result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
 
@@ -8056,7 +8264,7 @@ public final class Chain {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptorForType().hashCode();
+      hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + MASTER_WEIGHT_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
           getMasterWeight());
@@ -8073,6 +8281,17 @@ public final class Chain {
       return hash;
     }
 
+    public static io.bumo.sdk.core.extend.protobuf.Chain.AccountPrivilege parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static io.bumo.sdk.core.extend.protobuf.Chain.AccountPrivilege parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
     public static io.bumo.sdk.core.extend.protobuf.Chain.AccountPrivilege parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -8250,7 +8469,7 @@ public final class Chain {
       }
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
       public Builder clearField(
@@ -8263,12 +8482,12 @@ public final class Chain {
       }
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, Object value) {
+          int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -8314,6 +8533,7 @@ public final class Chain {
         if (other.hasThresholds()) {
           mergeThresholds(other.getThresholds());
         }
+        this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
       }
@@ -8343,13 +8563,13 @@ public final class Chain {
 
       private long masterWeight_ ;
       /**
-       * <code>optional int64 master_weight = 1;</code>
+       * <code>int64 master_weight = 1;</code>
        */
       public long getMasterWeight() {
         return masterWeight_;
       }
       /**
-       * <code>optional int64 master_weight = 1;</code>
+       * <code>int64 master_weight = 1;</code>
        */
       public Builder setMasterWeight(long value) {
         
@@ -8358,7 +8578,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional int64 master_weight = 1;</code>
+       * <code>int64 master_weight = 1;</code>
        */
       public Builder clearMasterWeight() {
         
@@ -8611,13 +8831,13 @@ public final class Chain {
       private com.google.protobuf.SingleFieldBuilderV3<
           io.bumo.sdk.core.extend.protobuf.Chain.AccountThreshold, io.bumo.sdk.core.extend.protobuf.Chain.AccountThreshold.Builder, io.bumo.sdk.core.extend.protobuf.Chain.AccountThresholdOrBuilder> thresholdsBuilder_;
       /**
-       * <code>optional .protocol.AccountThreshold thresholds = 3;</code>
+       * <code>.protocol.AccountThreshold thresholds = 3;</code>
        */
       public boolean hasThresholds() {
         return thresholdsBuilder_ != null || thresholds_ != null;
       }
       /**
-       * <code>optional .protocol.AccountThreshold thresholds = 3;</code>
+       * <code>.protocol.AccountThreshold thresholds = 3;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.AccountThreshold getThresholds() {
         if (thresholdsBuilder_ == null) {
@@ -8627,7 +8847,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional .protocol.AccountThreshold thresholds = 3;</code>
+       * <code>.protocol.AccountThreshold thresholds = 3;</code>
        */
       public Builder setThresholds(io.bumo.sdk.core.extend.protobuf.Chain.AccountThreshold value) {
         if (thresholdsBuilder_ == null) {
@@ -8643,7 +8863,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.AccountThreshold thresholds = 3;</code>
+       * <code>.protocol.AccountThreshold thresholds = 3;</code>
        */
       public Builder setThresholds(
           io.bumo.sdk.core.extend.protobuf.Chain.AccountThreshold.Builder builderForValue) {
@@ -8657,7 +8877,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.AccountThreshold thresholds = 3;</code>
+       * <code>.protocol.AccountThreshold thresholds = 3;</code>
        */
       public Builder mergeThresholds(io.bumo.sdk.core.extend.protobuf.Chain.AccountThreshold value) {
         if (thresholdsBuilder_ == null) {
@@ -8675,7 +8895,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.AccountThreshold thresholds = 3;</code>
+       * <code>.protocol.AccountThreshold thresholds = 3;</code>
        */
       public Builder clearThresholds() {
         if (thresholdsBuilder_ == null) {
@@ -8689,7 +8909,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.AccountThreshold thresholds = 3;</code>
+       * <code>.protocol.AccountThreshold thresholds = 3;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.AccountThreshold.Builder getThresholdsBuilder() {
         
@@ -8697,7 +8917,7 @@ public final class Chain {
         return getThresholdsFieldBuilder().getBuilder();
       }
       /**
-       * <code>optional .protocol.AccountThreshold thresholds = 3;</code>
+       * <code>.protocol.AccountThreshold thresholds = 3;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.AccountThresholdOrBuilder getThresholdsOrBuilder() {
         if (thresholdsBuilder_ != null) {
@@ -8708,7 +8928,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional .protocol.AccountThreshold thresholds = 3;</code>
+       * <code>.protocol.AccountThreshold thresholds = 3;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           io.bumo.sdk.core.extend.protobuf.Chain.AccountThreshold, io.bumo.sdk.core.extend.protobuf.Chain.AccountThreshold.Builder, io.bumo.sdk.core.extend.protobuf.Chain.AccountThresholdOrBuilder> 
@@ -8725,12 +8945,12 @@ public final class Chain {
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.setUnknownFieldsProto3(unknownFields);
       }
 
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.mergeUnknownFields(unknownFields);
       }
 
 
@@ -8753,7 +8973,7 @@ public final class Chain {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new AccountPrivilege(input, extensionRegistry);
+        return new AccountPrivilege(input, extensionRegistry);
       }
     };
 
@@ -8781,49 +9001,29 @@ public final class Chain {
      *required, [-1,MAX(INT64)] -1: indicate no setting
      * </pre>
      *
-     * <code>optional int64 tx_threshold = 1;</code>
+     * <code>int64 tx_threshold = 1;</code>
      */
     long getTxThreshold();
 
     /**
-     * <pre>
-     *
-     * </pre>
-     *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
      */
     java.util.List<io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold> 
         getTypeThresholdsList();
     /**
-     * <pre>
-     *
-     * </pre>
-     *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
      */
     io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold getTypeThresholds(int index);
     /**
-     * <pre>
-     *
-     * </pre>
-     *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
      */
     int getTypeThresholdsCount();
     /**
-     * <pre>
-     *
-     * </pre>
-     *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
      */
     java.util.List<? extends io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThresholdOrBuilder> 
         getTypeThresholdsOrBuilderList();
     /**
-     * <pre>
-     *
-     * </pre>
-     *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
      */
     io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThresholdOrBuilder getTypeThresholdsOrBuilder(
@@ -8836,6 +9036,7 @@ public final class Chain {
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:protocol.AccountThreshold)
       AccountThresholdOrBuilder {
+  private static final long serialVersionUID = 0L;
     // Use AccountThreshold.newBuilder() to construct.
     private AccountThreshold(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -8848,14 +9049,19 @@ public final class Chain {
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
-      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+      return this.unknownFields;
     }
     private AccountThreshold(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
         boolean done = false;
         while (!done) {
@@ -8865,7 +9071,8 @@ public final class Chain {
               done = true;
               break;
             default: {
-              if (!input.skipField(tag)) {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
               break;
@@ -8895,6 +9102,7 @@ public final class Chain {
         if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
           typeThresholds_ = java.util.Collections.unmodifiableList(typeThresholds_);
         }
+        this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
     }
@@ -8915,10 +9123,10 @@ public final class Chain {
     private long txThreshold_;
     /**
      * <pre>
-     *required, [-1,MAX(INT64)] -1:  indicate no setting
+     *required, [-1,MAX(INT64)] -1: indicate no setting
      * </pre>
      *
-     * <code>optional int64 tx_threshold = 1;</code>
+     * <code>int64 tx_threshold = 1;</code>
      */
     public long getTxThreshold() {
       return txThreshold_;
@@ -8927,20 +9135,12 @@ public final class Chain {
     public static final int TYPE_THRESHOLDS_FIELD_NUMBER = 2;
     private java.util.List<io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold> typeThresholds_;
     /**
-     * <pre>
-     *
-     * </pre>
-     *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
      */
     public java.util.List<io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold> getTypeThresholdsList() {
       return typeThresholds_;
     }
     /**
-     * <pre>
-     *
-     * </pre>
-     *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
      */
     public java.util.List<? extends io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThresholdOrBuilder> 
@@ -8948,30 +9148,18 @@ public final class Chain {
       return typeThresholds_;
     }
     /**
-     * <pre>
-     *
-     * </pre>
-     *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
      */
     public int getTypeThresholdsCount() {
       return typeThresholds_.size();
     }
     /**
-     * <pre>
-     *
-     * </pre>
-     *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
      */
     public io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold getTypeThresholds(int index) {
       return typeThresholds_.get(index);
     }
     /**
-     * <pre>
-     *
-     * </pre>
-     *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
      */
     public io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThresholdOrBuilder getTypeThresholdsOrBuilder(
@@ -8997,6 +9185,7 @@ public final class Chain {
       for (int i = 0; i < typeThresholds_.size(); i++) {
         output.writeMessage(2, typeThresholds_.get(i));
       }
+      unknownFields.writeTo(output);
     }
 
     public int getSerializedSize() {
@@ -9012,11 +9201,11 @@ public final class Chain {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(2, typeThresholds_.get(i));
       }
+      size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
     }
 
-    private static final long serialVersionUID = 0L;
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -9032,6 +9221,7 @@ public final class Chain {
           == other.getTxThreshold());
       result = result && getTypeThresholdsList()
           .equals(other.getTypeThresholdsList());
+      result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
 
@@ -9041,7 +9231,7 @@ public final class Chain {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptorForType().hashCode();
+      hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + TX_THRESHOLD_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
           getTxThreshold());
@@ -9054,6 +9244,17 @@ public final class Chain {
       return hash;
     }
 
+    public static io.bumo.sdk.core.extend.protobuf.Chain.AccountThreshold parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static io.bumo.sdk.core.extend.protobuf.Chain.AccountThreshold parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
     public static io.bumo.sdk.core.extend.protobuf.Chain.AccountThreshold parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -9220,7 +9421,7 @@ public final class Chain {
       }
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
       public Builder clearField(
@@ -9233,12 +9434,12 @@ public final class Chain {
       }
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, Object value) {
+          int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -9281,6 +9482,7 @@ public final class Chain {
             }
           }
         }
+        this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
       }
@@ -9311,20 +9513,20 @@ public final class Chain {
       private long txThreshold_ ;
       /**
        * <pre>
-       *required, [-1,MAX(INT64)] -1:  indicate no setting
+       *required, [-1,MAX(INT64)] -1: indicate no setting
        * </pre>
        *
-       * <code>optional int64 tx_threshold = 1;</code>
+       * <code>int64 tx_threshold = 1;</code>
        */
       public long getTxThreshold() {
         return txThreshold_;
       }
       /**
        * <pre>
-       *required, [-1,MAX(INT64)] -1:  indicate no setting
+       *required, [-1,MAX(INT64)] -1: indicate no setting
        * </pre>
        *
-       * <code>optional int64 tx_threshold = 1;</code>
+       * <code>int64 tx_threshold = 1;</code>
        */
       public Builder setTxThreshold(long value) {
         
@@ -9334,10 +9536,10 @@ public final class Chain {
       }
       /**
        * <pre>
-       *required, [-1,MAX(INT64)] -1:  indicate no setting
+       *required, [-1,MAX(INT64)] -1: indicate no setting
        * </pre>
        *
-       * <code>optional int64 tx_threshold = 1;</code>
+       * <code>int64 tx_threshold = 1;</code>
        */
       public Builder clearTxThreshold() {
         
@@ -9359,10 +9561,6 @@ public final class Chain {
           io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold, io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold.Builder, io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThresholdOrBuilder> typeThresholdsBuilder_;
 
       /**
-       * <pre>
-       *
-       * </pre>
-       *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
        */
       public java.util.List<io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold> getTypeThresholdsList() {
@@ -9373,10 +9571,6 @@ public final class Chain {
         }
       }
       /**
-       * <pre>
-       *
-       * </pre>
-       *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
        */
       public int getTypeThresholdsCount() {
@@ -9387,10 +9581,6 @@ public final class Chain {
         }
       }
       /**
-       * <pre>
-       *
-       * </pre>
-       *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold getTypeThresholds(int index) {
@@ -9401,10 +9591,6 @@ public final class Chain {
         }
       }
       /**
-       * <pre>
-       *
-       * </pre>
-       *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
        */
       public Builder setTypeThresholds(
@@ -9422,10 +9608,6 @@ public final class Chain {
         return this;
       }
       /**
-       * <pre>
-       *
-       * </pre>
-       *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
        */
       public Builder setTypeThresholds(
@@ -9440,10 +9622,6 @@ public final class Chain {
         return this;
       }
       /**
-       * <pre>
-       *
-       * </pre>
-       *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
        */
       public Builder addTypeThresholds(io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold value) {
@@ -9460,10 +9638,6 @@ public final class Chain {
         return this;
       }
       /**
-       * <pre>
-       *
-       * </pre>
-       *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
        */
       public Builder addTypeThresholds(
@@ -9481,10 +9655,6 @@ public final class Chain {
         return this;
       }
       /**
-       * <pre>
-       *
-       * </pre>
-       *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
        */
       public Builder addTypeThresholds(
@@ -9499,10 +9669,6 @@ public final class Chain {
         return this;
       }
       /**
-       * <pre>
-       *
-       * </pre>
-       *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
        */
       public Builder addTypeThresholds(
@@ -9517,10 +9683,6 @@ public final class Chain {
         return this;
       }
       /**
-       * <pre>
-       *
-       * </pre>
-       *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
        */
       public Builder addAllTypeThresholds(
@@ -9536,10 +9698,6 @@ public final class Chain {
         return this;
       }
       /**
-       * <pre>
-       *
-       * </pre>
-       *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
        */
       public Builder clearTypeThresholds() {
@@ -9553,10 +9711,6 @@ public final class Chain {
         return this;
       }
       /**
-       * <pre>
-       *
-       * </pre>
-       *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
        */
       public Builder removeTypeThresholds(int index) {
@@ -9570,10 +9724,6 @@ public final class Chain {
         return this;
       }
       /**
-       * <pre>
-       *
-       * </pre>
-       *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold.Builder getTypeThresholdsBuilder(
@@ -9581,10 +9731,6 @@ public final class Chain {
         return getTypeThresholdsFieldBuilder().getBuilder(index);
       }
       /**
-       * <pre>
-       *
-       * </pre>
-       *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThresholdOrBuilder getTypeThresholdsOrBuilder(
@@ -9595,10 +9741,6 @@ public final class Chain {
         }
       }
       /**
-       * <pre>
-       *
-       * </pre>
-       *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
        */
       public java.util.List<? extends io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThresholdOrBuilder> 
@@ -9610,10 +9752,6 @@ public final class Chain {
         }
       }
       /**
-       * <pre>
-       *
-       * </pre>
-       *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold.Builder addTypeThresholdsBuilder() {
@@ -9621,10 +9759,6 @@ public final class Chain {
             io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold.getDefaultInstance());
       }
       /**
-       * <pre>
-       *
-       * </pre>
-       *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold.Builder addTypeThresholdsBuilder(
@@ -9633,10 +9767,6 @@ public final class Chain {
             index, io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold.getDefaultInstance());
       }
       /**
-       * <pre>
-       *
-       * </pre>
-       *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
        */
       public java.util.List<io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold.Builder> 
@@ -9659,12 +9789,12 @@ public final class Chain {
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.setUnknownFieldsProto3(unknownFields);
       }
 
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.mergeUnknownFields(unknownFields);
       }
 
 
@@ -9687,7 +9817,7 @@ public final class Chain {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new AccountThreshold(input, extensionRegistry);
+        return new AccountThreshold(input, extensionRegistry);
       }
     };
 
@@ -9711,17 +9841,17 @@ public final class Chain {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>optional string code = 1;</code>
+     * <code>string code = 1;</code>
      */
     java.lang.String getCode();
     /**
-     * <code>optional string code = 1;</code>
+     * <code>string code = 1;</code>
      */
     com.google.protobuf.ByteString
         getCodeBytes();
 
     /**
-     * <code>optional int64 amount = 2;</code>
+     * <code>int64 amount = 2;</code>
      */
     long getAmount();
   }
@@ -9732,6 +9862,7 @@ public final class Chain {
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:protocol.OperationIssueAsset)
       OperationIssueAssetOrBuilder {
+  private static final long serialVersionUID = 0L;
     // Use OperationIssueAsset.newBuilder() to construct.
     private OperationIssueAsset(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -9744,14 +9875,19 @@ public final class Chain {
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
-      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+      return this.unknownFields;
     }
     private OperationIssueAsset(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
         boolean done = false;
         while (!done) {
@@ -9761,7 +9897,8 @@ public final class Chain {
               done = true;
               break;
             default: {
-              if (!input.skipField(tag)) {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
               break;
@@ -9785,6 +9922,7 @@ public final class Chain {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
+        this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
     }
@@ -9803,7 +9941,7 @@ public final class Chain {
     public static final int CODE_FIELD_NUMBER = 1;
     private volatile java.lang.Object code_;
     /**
-     * <code>optional string code = 1;</code>
+     * <code>string code = 1;</code>
      */
     public java.lang.String getCode() {
       java.lang.Object ref = code_;
@@ -9818,7 +9956,7 @@ public final class Chain {
       }
     }
     /**
-     * <code>optional string code = 1;</code>
+     * <code>string code = 1;</code>
      */
     public com.google.protobuf.ByteString
         getCodeBytes() {
@@ -9837,7 +9975,7 @@ public final class Chain {
     public static final int AMOUNT_FIELD_NUMBER = 2;
     private long amount_;
     /**
-     * <code>optional int64 amount = 2;</code>
+     * <code>int64 amount = 2;</code>
      */
     public long getAmount() {
       return amount_;
@@ -9861,6 +9999,7 @@ public final class Chain {
       if (amount_ != 0L) {
         output.writeInt64(2, amount_);
       }
+      unknownFields.writeTo(output);
     }
 
     public int getSerializedSize() {
@@ -9875,11 +10014,11 @@ public final class Chain {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(2, amount_);
       }
+      size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
     }
 
-    private static final long serialVersionUID = 0L;
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -9895,6 +10034,7 @@ public final class Chain {
           .equals(other.getCode());
       result = result && (getAmount()
           == other.getAmount());
+      result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
 
@@ -9904,7 +10044,7 @@ public final class Chain {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptorForType().hashCode();
+      hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + CODE_FIELD_NUMBER;
       hash = (53 * hash) + getCode().hashCode();
       hash = (37 * hash) + AMOUNT_FIELD_NUMBER;
@@ -9915,6 +10055,17 @@ public final class Chain {
       return hash;
     }
 
+    public static io.bumo.sdk.core.extend.protobuf.Chain.OperationIssueAsset parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static io.bumo.sdk.core.extend.protobuf.Chain.OperationIssueAsset parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
     public static io.bumo.sdk.core.extend.protobuf.Chain.OperationIssueAsset parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -10065,7 +10216,7 @@ public final class Chain {
       }
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
       public Builder clearField(
@@ -10078,12 +10229,12 @@ public final class Chain {
       }
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, Object value) {
+          int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -10104,6 +10255,7 @@ public final class Chain {
         if (other.getAmount() != 0L) {
           setAmount(other.getAmount());
         }
+        this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
       }
@@ -10132,7 +10284,7 @@ public final class Chain {
 
       private java.lang.Object code_ = "";
       /**
-       * <code>optional string code = 1;</code>
+       * <code>string code = 1;</code>
        */
       public java.lang.String getCode() {
         java.lang.Object ref = code_;
@@ -10147,7 +10299,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional string code = 1;</code>
+       * <code>string code = 1;</code>
        */
       public com.google.protobuf.ByteString
           getCodeBytes() {
@@ -10163,7 +10315,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional string code = 1;</code>
+       * <code>string code = 1;</code>
        */
       public Builder setCode(
           java.lang.String value) {
@@ -10176,7 +10328,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional string code = 1;</code>
+       * <code>string code = 1;</code>
        */
       public Builder clearCode() {
         
@@ -10185,7 +10337,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional string code = 1;</code>
+       * <code>string code = 1;</code>
        */
       public Builder setCodeBytes(
           com.google.protobuf.ByteString value) {
@@ -10201,13 +10353,13 @@ public final class Chain {
 
       private long amount_ ;
       /**
-       * <code>optional int64 amount = 2;</code>
+       * <code>int64 amount = 2;</code>
        */
       public long getAmount() {
         return amount_;
       }
       /**
-       * <code>optional int64 amount = 2;</code>
+       * <code>int64 amount = 2;</code>
        */
       public Builder setAmount(long value) {
         
@@ -10216,7 +10368,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional int64 amount = 2;</code>
+       * <code>int64 amount = 2;</code>
        */
       public Builder clearAmount() {
         
@@ -10226,12 +10378,12 @@ public final class Chain {
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.setUnknownFieldsProto3(unknownFields);
       }
 
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.mergeUnknownFields(unknownFields);
       }
 
 
@@ -10254,7 +10406,7 @@ public final class Chain {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new OperationIssueAsset(input, extensionRegistry);
+        return new OperationIssueAsset(input, extensionRegistry);
       }
     };
 
@@ -10278,26 +10430,26 @@ public final class Chain {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>optional string dest_address = 1;</code>
+     * <code>string dest_address = 1;</code>
      */
     java.lang.String getDestAddress();
     /**
-     * <code>optional string dest_address = 1;</code>
+     * <code>string dest_address = 1;</code>
      */
     com.google.protobuf.ByteString
         getDestAddressBytes();
 
     /**
-     * <code>optional int64 amount = 2;</code>
+     * <code>int64 amount = 2;</code>
      */
     long getAmount();
 
     /**
-     * <code>optional string input = 3;</code>
+     * <code>string input = 3;</code>
      */
     java.lang.String getInput();
     /**
-     * <code>optional string input = 3;</code>
+     * <code>string input = 3;</code>
      */
     com.google.protobuf.ByteString
         getInputBytes();
@@ -10309,6 +10461,7 @@ public final class Chain {
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:protocol.OperationPayCoin)
       OperationPayCoinOrBuilder {
+  private static final long serialVersionUID = 0L;
     // Use OperationPayCoin.newBuilder() to construct.
     private OperationPayCoin(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -10322,14 +10475,19 @@ public final class Chain {
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
-      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+      return this.unknownFields;
     }
     private OperationPayCoin(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
         boolean done = false;
         while (!done) {
@@ -10339,7 +10497,8 @@ public final class Chain {
               done = true;
               break;
             default: {
-              if (!input.skipField(tag)) {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
               break;
@@ -10369,6 +10528,7 @@ public final class Chain {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
+        this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
     }
@@ -10387,7 +10547,7 @@ public final class Chain {
     public static final int DEST_ADDRESS_FIELD_NUMBER = 1;
     private volatile java.lang.Object destAddress_;
     /**
-     * <code>optional string dest_address = 1;</code>
+     * <code>string dest_address = 1;</code>
      */
     public java.lang.String getDestAddress() {
       java.lang.Object ref = destAddress_;
@@ -10402,7 +10562,7 @@ public final class Chain {
       }
     }
     /**
-     * <code>optional string dest_address = 1;</code>
+     * <code>string dest_address = 1;</code>
      */
     public com.google.protobuf.ByteString
         getDestAddressBytes() {
@@ -10421,7 +10581,7 @@ public final class Chain {
     public static final int AMOUNT_FIELD_NUMBER = 2;
     private long amount_;
     /**
-     * <code>optional int64 amount = 2;</code>
+     * <code>int64 amount = 2;</code>
      */
     public long getAmount() {
       return amount_;
@@ -10430,7 +10590,7 @@ public final class Chain {
     public static final int INPUT_FIELD_NUMBER = 3;
     private volatile java.lang.Object input_;
     /**
-     * <code>optional string input = 3;</code>
+     * <code>string input = 3;</code>
      */
     public java.lang.String getInput() {
       java.lang.Object ref = input_;
@@ -10445,7 +10605,7 @@ public final class Chain {
       }
     }
     /**
-     * <code>optional string input = 3;</code>
+     * <code>string input = 3;</code>
      */
     public com.google.protobuf.ByteString
         getInputBytes() {
@@ -10482,6 +10642,7 @@ public final class Chain {
       if (!getInputBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 3, input_);
       }
+      unknownFields.writeTo(output);
     }
 
     public int getSerializedSize() {
@@ -10499,11 +10660,11 @@ public final class Chain {
       if (!getInputBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, input_);
       }
+      size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
     }
 
-    private static final long serialVersionUID = 0L;
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -10521,6 +10682,7 @@ public final class Chain {
           == other.getAmount());
       result = result && getInput()
           .equals(other.getInput());
+      result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
 
@@ -10530,7 +10692,7 @@ public final class Chain {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptorForType().hashCode();
+      hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + DEST_ADDRESS_FIELD_NUMBER;
       hash = (53 * hash) + getDestAddress().hashCode();
       hash = (37 * hash) + AMOUNT_FIELD_NUMBER;
@@ -10543,6 +10705,17 @@ public final class Chain {
       return hash;
     }
 
+    public static io.bumo.sdk.core.extend.protobuf.Chain.OperationPayCoin parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static io.bumo.sdk.core.extend.protobuf.Chain.OperationPayCoin parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
     public static io.bumo.sdk.core.extend.protobuf.Chain.OperationPayCoin parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -10696,7 +10869,7 @@ public final class Chain {
       }
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
       public Builder clearField(
@@ -10709,12 +10882,12 @@ public final class Chain {
       }
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, Object value) {
+          int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -10739,6 +10912,7 @@ public final class Chain {
           input_ = other.input_;
           onChanged();
         }
+        this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
       }
@@ -10767,7 +10941,7 @@ public final class Chain {
 
       private java.lang.Object destAddress_ = "";
       /**
-       * <code>optional string dest_address = 1;</code>
+       * <code>string dest_address = 1;</code>
        */
       public java.lang.String getDestAddress() {
         java.lang.Object ref = destAddress_;
@@ -10782,7 +10956,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional string dest_address = 1;</code>
+       * <code>string dest_address = 1;</code>
        */
       public com.google.protobuf.ByteString
           getDestAddressBytes() {
@@ -10798,7 +10972,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional string dest_address = 1;</code>
+       * <code>string dest_address = 1;</code>
        */
       public Builder setDestAddress(
           java.lang.String value) {
@@ -10811,7 +10985,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional string dest_address = 1;</code>
+       * <code>string dest_address = 1;</code>
        */
       public Builder clearDestAddress() {
         
@@ -10820,7 +10994,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional string dest_address = 1;</code>
+       * <code>string dest_address = 1;</code>
        */
       public Builder setDestAddressBytes(
           com.google.protobuf.ByteString value) {
@@ -10836,13 +11010,13 @@ public final class Chain {
 
       private long amount_ ;
       /**
-       * <code>optional int64 amount = 2;</code>
+       * <code>int64 amount = 2;</code>
        */
       public long getAmount() {
         return amount_;
       }
       /**
-       * <code>optional int64 amount = 2;</code>
+       * <code>int64 amount = 2;</code>
        */
       public Builder setAmount(long value) {
         
@@ -10851,7 +11025,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional int64 amount = 2;</code>
+       * <code>int64 amount = 2;</code>
        */
       public Builder clearAmount() {
         
@@ -10862,7 +11036,7 @@ public final class Chain {
 
       private java.lang.Object input_ = "";
       /**
-       * <code>optional string input = 3;</code>
+       * <code>string input = 3;</code>
        */
       public java.lang.String getInput() {
         java.lang.Object ref = input_;
@@ -10877,7 +11051,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional string input = 3;</code>
+       * <code>string input = 3;</code>
        */
       public com.google.protobuf.ByteString
           getInputBytes() {
@@ -10893,7 +11067,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional string input = 3;</code>
+       * <code>string input = 3;</code>
        */
       public Builder setInput(
           java.lang.String value) {
@@ -10906,7 +11080,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional string input = 3;</code>
+       * <code>string input = 3;</code>
        */
       public Builder clearInput() {
         
@@ -10915,7 +11089,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional string input = 3;</code>
+       * <code>string input = 3;</code>
        */
       public Builder setInputBytes(
           com.google.protobuf.ByteString value) {
@@ -10930,12 +11104,12 @@ public final class Chain {
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.setUnknownFieldsProto3(unknownFields);
       }
 
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.mergeUnknownFields(unknownFields);
       }
 
 
@@ -10958,7 +11132,7 @@ public final class Chain {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new OperationPayCoin(input, extensionRegistry);
+        return new OperationPayCoin(input, extensionRegistry);
       }
     };
 
@@ -10983,16 +11157,16 @@ public final class Chain {
 
     /**
      * <pre>
-     *required, [-1,MAX(UINT32)] -1:
+     *required, [-1,MAX(UINT32)] -1: indicate no setting
      * </pre>
      *
-     * <code>optional int64 master_weight = 1;</code>
+     * <code>int64 master_weight = 1;</code>
      */
     long getMasterWeight();
 
     /**
      * <pre>
-     *address:weight, weight signer
+     *address:weight, if weight is 0 indicate deleting this signer
      * </pre>
      *
      * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11001,7 +11175,7 @@ public final class Chain {
         getSignersList();
     /**
      * <pre>
-     *address:weight, weight signer
+     *address:weight, if weight is 0 indicate deleting this signer
      * </pre>
      *
      * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11009,7 +11183,7 @@ public final class Chain {
     io.bumo.sdk.core.extend.protobuf.Chain.Signer getSigners(int index);
     /**
      * <pre>
-     *address:weight, weight signer
+     *address:weight, if weight is 0 indicate deleting this signer
      * </pre>
      *
      * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11017,7 +11191,7 @@ public final class Chain {
     int getSignersCount();
     /**
      * <pre>
-     *address:weight, weight signer
+     *address:weight, if weight is 0 indicate deleting this signer
      * </pre>
      *
      * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11026,7 +11200,7 @@ public final class Chain {
         getSignersOrBuilderList();
     /**
      * <pre>
-     *address:weight, weight signer
+     *address:weight, if weight is 0 indicate deleting this signer
      * </pre>
      *
      * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11041,6 +11215,7 @@ public final class Chain {
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:protocol.OperationSetSignerWeight)
       OperationSetSignerWeightOrBuilder {
+  private static final long serialVersionUID = 0L;
     // Use OperationSetSignerWeight.newBuilder() to construct.
     private OperationSetSignerWeight(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -11053,14 +11228,19 @@ public final class Chain {
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
-      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+      return this.unknownFields;
     }
     private OperationSetSignerWeight(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
         boolean done = false;
         while (!done) {
@@ -11070,7 +11250,8 @@ public final class Chain {
               done = true;
               break;
             default: {
-              if (!input.skipField(tag)) {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
               break;
@@ -11100,6 +11281,7 @@ public final class Chain {
         if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
           signers_ = java.util.Collections.unmodifiableList(signers_);
         }
+        this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
     }
@@ -11120,10 +11302,10 @@ public final class Chain {
     private long masterWeight_;
     /**
      * <pre>
-     *required, [-1,MAX(UINT32)] -1:
+     *required, [-1,MAX(UINT32)] -1: indicate no setting
      * </pre>
      *
-     * <code>optional int64 master_weight = 1;</code>
+     * <code>int64 master_weight = 1;</code>
      */
     public long getMasterWeight() {
       return masterWeight_;
@@ -11133,7 +11315,7 @@ public final class Chain {
     private java.util.List<io.bumo.sdk.core.extend.protobuf.Chain.Signer> signers_;
     /**
      * <pre>
-     *address:weight, weight signer
+     *address:weight, if weight is 0 indicate deleting this signer
      * </pre>
      *
      * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11143,7 +11325,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *address:weight, weight signer
+     *address:weight, if weight is 0 indicate deleting this signer
      * </pre>
      *
      * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11154,7 +11336,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *address:weight, weight signer
+     *address:weight, if weight is 0 indicate deleting this signer
      * </pre>
      *
      * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11164,7 +11346,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *address:weight, weight signer
+     *address:weight, if weight is 0 indicate deleting this signer
      * </pre>
      *
      * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11174,7 +11356,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *address:weight, weight signer
+     *address:weight, if weight is 0 indicate deleting this signer
      * </pre>
      *
      * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11202,6 +11384,7 @@ public final class Chain {
       for (int i = 0; i < signers_.size(); i++) {
         output.writeMessage(2, signers_.get(i));
       }
+      unknownFields.writeTo(output);
     }
 
     public int getSerializedSize() {
@@ -11217,11 +11400,11 @@ public final class Chain {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(2, signers_.get(i));
       }
+      size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
     }
 
-    private static final long serialVersionUID = 0L;
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -11237,6 +11420,7 @@ public final class Chain {
           == other.getMasterWeight());
       result = result && getSignersList()
           .equals(other.getSignersList());
+      result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
 
@@ -11246,7 +11430,7 @@ public final class Chain {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptorForType().hashCode();
+      hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + MASTER_WEIGHT_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
           getMasterWeight());
@@ -11259,6 +11443,17 @@ public final class Chain {
       return hash;
     }
 
+    public static io.bumo.sdk.core.extend.protobuf.Chain.OperationSetSignerWeight parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static io.bumo.sdk.core.extend.protobuf.Chain.OperationSetSignerWeight parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
     public static io.bumo.sdk.core.extend.protobuf.Chain.OperationSetSignerWeight parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -11425,7 +11620,7 @@ public final class Chain {
       }
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
       public Builder clearField(
@@ -11438,12 +11633,12 @@ public final class Chain {
       }
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, Object value) {
+          int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -11486,6 +11681,7 @@ public final class Chain {
             }
           }
         }
+        this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
       }
@@ -11516,20 +11712,20 @@ public final class Chain {
       private long masterWeight_ ;
       /**
        * <pre>
-       *required, [-1,MAX(UINT32)] -1:
+       *required, [-1,MAX(UINT32)] -1: indicate no setting
        * </pre>
        *
-       * <code>optional int64 master_weight = 1;</code>
+       * <code>int64 master_weight = 1;</code>
        */
       public long getMasterWeight() {
         return masterWeight_;
       }
       /**
        * <pre>
-       *required, [-1,MAX(UINT32)] -1:
+       *required, [-1,MAX(UINT32)] -1: indicate no setting
        * </pre>
        *
-       * <code>optional int64 master_weight = 1;</code>
+       * <code>int64 master_weight = 1;</code>
        */
       public Builder setMasterWeight(long value) {
         
@@ -11539,10 +11735,10 @@ public final class Chain {
       }
       /**
        * <pre>
-       *required, [-1,MAX(UINT32)] -1:
+       *required, [-1,MAX(UINT32)] -1: indicate no setting
        * </pre>
        *
-       * <code>optional int64 master_weight = 1;</code>
+       * <code>int64 master_weight = 1;</code>
        */
       public Builder clearMasterWeight() {
         
@@ -11565,7 +11761,7 @@ public final class Chain {
 
       /**
        * <pre>
-       *address:weight, weight signer
+       *address:weight, if weight is 0 indicate deleting this signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11579,7 +11775,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, weight signer
+       *address:weight, if weight is 0 indicate deleting this signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11593,7 +11789,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, weight signer
+       *address:weight, if weight is 0 indicate deleting this signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11607,7 +11803,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, weight signer
+       *address:weight, if weight is 0 indicate deleting this signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11628,7 +11824,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, weight signer
+       *address:weight, if weight is 0 indicate deleting this signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11646,7 +11842,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, weight signer
+       *address:weight, if weight is 0 indicate deleting this signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11666,7 +11862,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, weight signer
+       *address:weight, if weight is 0 indicate deleting this signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11687,7 +11883,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, weight signer
+       *address:weight, if weight is 0 indicate deleting this signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11705,7 +11901,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, weight signer
+       *address:weight, if weight is 0 indicate deleting this signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11723,7 +11919,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, weight signer
+       *address:weight, if weight is 0 indicate deleting this signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11742,7 +11938,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, weight signer
+       *address:weight, if weight is 0 indicate deleting this signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11759,7 +11955,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, weight signer
+       *address:weight, if weight is 0 indicate deleting this signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11776,7 +11972,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, weight signer
+       *address:weight, if weight is 0 indicate deleting this signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11787,7 +11983,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, weight signer
+       *address:weight, if weight is 0 indicate deleting this signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11801,7 +11997,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, weight signer
+       *address:weight, if weight is 0 indicate deleting this signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11816,7 +12012,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, weight signer
+       *address:weight, if weight is 0 indicate deleting this signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11827,7 +12023,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, weight signer
+       *address:weight, if weight is 0 indicate deleting this signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11839,7 +12035,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, weight signer
+       *address:weight, if weight is 0 indicate deleting this signer
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11864,12 +12060,12 @@ public final class Chain {
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.setUnknownFieldsProto3(unknownFields);
       }
 
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.mergeUnknownFields(unknownFields);
       }
 
 
@@ -11892,7 +12088,7 @@ public final class Chain {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new OperationSetSignerWeight(input, extensionRegistry);
+        return new OperationSetSignerWeight(input, extensionRegistry);
       }
     };
 
@@ -11916,11 +12112,11 @@ public final class Chain {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>optional string topic = 1;</code>
+     * <code>string topic = 1;</code>
      */
     java.lang.String getTopic();
     /**
-     * <code>optional string topic = 1;</code>
+     * <code>string topic = 1;</code>
      */
     com.google.protobuf.ByteString
         getTopicBytes();
@@ -11951,6 +12147,7 @@ public final class Chain {
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:protocol.OperationLog)
       OperationLogOrBuilder {
+  private static final long serialVersionUID = 0L;
     // Use OperationLog.newBuilder() to construct.
     private OperationLog(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -11963,14 +12160,19 @@ public final class Chain {
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
-      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+      return this.unknownFields;
     }
     private OperationLog(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
         boolean done = false;
         while (!done) {
@@ -11980,7 +12182,8 @@ public final class Chain {
               done = true;
               break;
             default: {
-              if (!input.skipField(tag)) {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
               break;
@@ -12011,6 +12214,7 @@ public final class Chain {
         if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
           datas_ = datas_.getUnmodifiableView();
         }
+        this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
     }
@@ -12030,7 +12234,7 @@ public final class Chain {
     public static final int TOPIC_FIELD_NUMBER = 1;
     private volatile java.lang.Object topic_;
     /**
-     * <code>optional string topic = 1;</code>
+     * <code>string topic = 1;</code>
      */
     public java.lang.String getTopic() {
       java.lang.Object ref = topic_;
@@ -12045,7 +12249,7 @@ public final class Chain {
       }
     }
     /**
-     * <code>optional string topic = 1;</code>
+     * <code>string topic = 1;</code>
      */
     public com.google.protobuf.ByteString
         getTopicBytes() {
@@ -12108,6 +12312,7 @@ public final class Chain {
       for (int i = 0; i < datas_.size(); i++) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 2, datas_.getRaw(i));
       }
+      unknownFields.writeTo(output);
     }
 
     public int getSerializedSize() {
@@ -12126,11 +12331,11 @@ public final class Chain {
         size += dataSize;
         size += 1 * getDatasList().size();
       }
+      size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
     }
 
-    private static final long serialVersionUID = 0L;
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -12146,6 +12351,7 @@ public final class Chain {
           .equals(other.getTopic());
       result = result && getDatasList()
           .equals(other.getDatasList());
+      result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
 
@@ -12155,7 +12361,7 @@ public final class Chain {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptorForType().hashCode();
+      hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + TOPIC_FIELD_NUMBER;
       hash = (53 * hash) + getTopic().hashCode();
       if (getDatasCount() > 0) {
@@ -12167,6 +12373,17 @@ public final class Chain {
       return hash;
     }
 
+    public static io.bumo.sdk.core.extend.protobuf.Chain.OperationLog parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static io.bumo.sdk.core.extend.protobuf.Chain.OperationLog parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
     public static io.bumo.sdk.core.extend.protobuf.Chain.OperationLog parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -12324,7 +12541,7 @@ public final class Chain {
       }
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
       public Builder clearField(
@@ -12337,12 +12554,12 @@ public final class Chain {
       }
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, Object value) {
+          int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -12370,6 +12587,7 @@ public final class Chain {
           }
           onChanged();
         }
+        this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
       }
@@ -12399,7 +12617,7 @@ public final class Chain {
 
       private java.lang.Object topic_ = "";
       /**
-       * <code>optional string topic = 1;</code>
+       * <code>string topic = 1;</code>
        */
       public java.lang.String getTopic() {
         java.lang.Object ref = topic_;
@@ -12414,7 +12632,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional string topic = 1;</code>
+       * <code>string topic = 1;</code>
        */
       public com.google.protobuf.ByteString
           getTopicBytes() {
@@ -12430,7 +12648,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional string topic = 1;</code>
+       * <code>string topic = 1;</code>
        */
       public Builder setTopic(
           java.lang.String value) {
@@ -12443,7 +12661,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional string topic = 1;</code>
+       * <code>string topic = 1;</code>
        */
       public Builder clearTopic() {
         
@@ -12452,7 +12670,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional string topic = 1;</code>
+       * <code>string topic = 1;</code>
        */
       public Builder setTopicBytes(
           com.google.protobuf.ByteString value) {
@@ -12561,12 +12779,12 @@ public final class Chain {
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.setUnknownFieldsProto3(unknownFields);
       }
 
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.mergeUnknownFields(unknownFields);
       }
 
 
@@ -12589,7 +12807,7 @@ public final class Chain {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new OperationLog(input, extensionRegistry);
+        return new OperationLog(input, extensionRegistry);
       }
     };
 
@@ -12608,31 +12826,1432 @@ public final class Chain {
 
   }
 
+  public interface OperationSetPrivilegeOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:protocol.OperationSetPrivilege)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>string master_weight = 1;</code>
+     */
+    java.lang.String getMasterWeight();
+    /**
+     * <code>string master_weight = 1;</code>
+     */
+    com.google.protobuf.ByteString
+        getMasterWeightBytes();
+
+    /**
+     * <code>repeated .protocol.Signer signers = 2;</code>
+     */
+    java.util.List<io.bumo.sdk.core.extend.protobuf.Chain.Signer> 
+        getSignersList();
+    /**
+     * <code>repeated .protocol.Signer signers = 2;</code>
+     */
+    io.bumo.sdk.core.extend.protobuf.Chain.Signer getSigners(int index);
+    /**
+     * <code>repeated .protocol.Signer signers = 2;</code>
+     */
+    int getSignersCount();
+    /**
+     * <code>repeated .protocol.Signer signers = 2;</code>
+     */
+    java.util.List<? extends io.bumo.sdk.core.extend.protobuf.Chain.SignerOrBuilder> 
+        getSignersOrBuilderList();
+    /**
+     * <code>repeated .protocol.Signer signers = 2;</code>
+     */
+    io.bumo.sdk.core.extend.protobuf.Chain.SignerOrBuilder getSignersOrBuilder(
+        int index);
+
+    /**
+     * <code>string tx_threshold = 3;</code>
+     */
+    java.lang.String getTxThreshold();
+    /**
+     * <code>string tx_threshold = 3;</code>
+     */
+    com.google.protobuf.ByteString
+        getTxThresholdBytes();
+
+    /**
+     * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
+     */
+    java.util.List<io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold> 
+        getTypeThresholdsList();
+    /**
+     * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
+     */
+    io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold getTypeThresholds(int index);
+    /**
+     * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
+     */
+    int getTypeThresholdsCount();
+    /**
+     * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
+     */
+    java.util.List<? extends io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThresholdOrBuilder> 
+        getTypeThresholdsOrBuilderList();
+    /**
+     * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
+     */
+    io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThresholdOrBuilder getTypeThresholdsOrBuilder(
+        int index);
+  }
+  /**
+   * Protobuf type {@code protocol.OperationSetPrivilege}
+   */
+  public  static final class OperationSetPrivilege extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:protocol.OperationSetPrivilege)
+      OperationSetPrivilegeOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use OperationSetPrivilege.newBuilder() to construct.
+    private OperationSetPrivilege(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private OperationSetPrivilege() {
+      masterWeight_ = "";
+      signers_ = java.util.Collections.emptyList();
+      txThreshold_ = "";
+      typeThresholds_ = java.util.Collections.emptyList();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private OperationSetPrivilege(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              masterWeight_ = s;
+              break;
+            }
+            case 18: {
+              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+                signers_ = new java.util.ArrayList<io.bumo.sdk.core.extend.protobuf.Chain.Signer>();
+                mutable_bitField0_ |= 0x00000002;
+              }
+              signers_.add(
+                  input.readMessage(io.bumo.sdk.core.extend.protobuf.Chain.Signer.parser(), extensionRegistry));
+              break;
+            }
+            case 26: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              txThreshold_ = s;
+              break;
+            }
+            case 34: {
+              if (!((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+                typeThresholds_ = new java.util.ArrayList<io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold>();
+                mutable_bitField0_ |= 0x00000008;
+              }
+              typeThresholds_.add(
+                  input.readMessage(io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold.parser(), extensionRegistry));
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+          signers_ = java.util.Collections.unmodifiableList(signers_);
+        }
+        if (((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+          typeThresholds_ = java.util.Collections.unmodifiableList(typeThresholds_);
+        }
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return io.bumo.sdk.core.extend.protobuf.Chain.internal_static_protocol_OperationSetPrivilege_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return io.bumo.sdk.core.extend.protobuf.Chain.internal_static_protocol_OperationSetPrivilege_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilege.class, io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilege.Builder.class);
+    }
+
+    private int bitField0_;
+    public static final int MASTER_WEIGHT_FIELD_NUMBER = 1;
+    private volatile java.lang.Object masterWeight_;
+    /**
+     * <code>string master_weight = 1;</code>
+     */
+    public java.lang.String getMasterWeight() {
+      java.lang.Object ref = masterWeight_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        masterWeight_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string master_weight = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getMasterWeightBytes() {
+      java.lang.Object ref = masterWeight_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        masterWeight_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int SIGNERS_FIELD_NUMBER = 2;
+    private java.util.List<io.bumo.sdk.core.extend.protobuf.Chain.Signer> signers_;
+    /**
+     * <code>repeated .protocol.Signer signers = 2;</code>
+     */
+    public java.util.List<io.bumo.sdk.core.extend.protobuf.Chain.Signer> getSignersList() {
+      return signers_;
+    }
+    /**
+     * <code>repeated .protocol.Signer signers = 2;</code>
+     */
+    public java.util.List<? extends io.bumo.sdk.core.extend.protobuf.Chain.SignerOrBuilder> 
+        getSignersOrBuilderList() {
+      return signers_;
+    }
+    /**
+     * <code>repeated .protocol.Signer signers = 2;</code>
+     */
+    public int getSignersCount() {
+      return signers_.size();
+    }
+    /**
+     * <code>repeated .protocol.Signer signers = 2;</code>
+     */
+    public io.bumo.sdk.core.extend.protobuf.Chain.Signer getSigners(int index) {
+      return signers_.get(index);
+    }
+    /**
+     * <code>repeated .protocol.Signer signers = 2;</code>
+     */
+    public io.bumo.sdk.core.extend.protobuf.Chain.SignerOrBuilder getSignersOrBuilder(
+        int index) {
+      return signers_.get(index);
+    }
+
+    public static final int TX_THRESHOLD_FIELD_NUMBER = 3;
+    private volatile java.lang.Object txThreshold_;
+    /**
+     * <code>string tx_threshold = 3;</code>
+     */
+    public java.lang.String getTxThreshold() {
+      java.lang.Object ref = txThreshold_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        txThreshold_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string tx_threshold = 3;</code>
+     */
+    public com.google.protobuf.ByteString
+        getTxThresholdBytes() {
+      java.lang.Object ref = txThreshold_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        txThreshold_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int TYPE_THRESHOLDS_FIELD_NUMBER = 4;
+    private java.util.List<io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold> typeThresholds_;
+    /**
+     * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
+     */
+    public java.util.List<io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold> getTypeThresholdsList() {
+      return typeThresholds_;
+    }
+    /**
+     * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
+     */
+    public java.util.List<? extends io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThresholdOrBuilder> 
+        getTypeThresholdsOrBuilderList() {
+      return typeThresholds_;
+    }
+    /**
+     * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
+     */
+    public int getTypeThresholdsCount() {
+      return typeThresholds_.size();
+    }
+    /**
+     * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
+     */
+    public io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold getTypeThresholds(int index) {
+      return typeThresholds_.get(index);
+    }
+    /**
+     * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
+     */
+    public io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThresholdOrBuilder getTypeThresholdsOrBuilder(
+        int index) {
+      return typeThresholds_.get(index);
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (!getMasterWeightBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, masterWeight_);
+      }
+      for (int i = 0; i < signers_.size(); i++) {
+        output.writeMessage(2, signers_.get(i));
+      }
+      if (!getTxThresholdBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, txThreshold_);
+      }
+      for (int i = 0; i < typeThresholds_.size(); i++) {
+        output.writeMessage(4, typeThresholds_.get(i));
+      }
+      unknownFields.writeTo(output);
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (!getMasterWeightBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, masterWeight_);
+      }
+      for (int i = 0; i < signers_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(2, signers_.get(i));
+      }
+      if (!getTxThresholdBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, txThreshold_);
+      }
+      for (int i = 0; i < typeThresholds_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(4, typeThresholds_.get(i));
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilege)) {
+        return super.equals(obj);
+      }
+      io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilege other = (io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilege) obj;
+
+      boolean result = true;
+      result = result && getMasterWeight()
+          .equals(other.getMasterWeight());
+      result = result && getSignersList()
+          .equals(other.getSignersList());
+      result = result && getTxThreshold()
+          .equals(other.getTxThreshold());
+      result = result && getTypeThresholdsList()
+          .equals(other.getTypeThresholdsList());
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + MASTER_WEIGHT_FIELD_NUMBER;
+      hash = (53 * hash) + getMasterWeight().hashCode();
+      if (getSignersCount() > 0) {
+        hash = (37 * hash) + SIGNERS_FIELD_NUMBER;
+        hash = (53 * hash) + getSignersList().hashCode();
+      }
+      hash = (37 * hash) + TX_THRESHOLD_FIELD_NUMBER;
+      hash = (53 * hash) + getTxThreshold().hashCode();
+      if (getTypeThresholdsCount() > 0) {
+        hash = (37 * hash) + TYPE_THRESHOLDS_FIELD_NUMBER;
+        hash = (53 * hash) + getTypeThresholdsList().hashCode();
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilege parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilege parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilege parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilege parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilege parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilege parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilege parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilege parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilege parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilege parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilege parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilege parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilege prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code protocol.OperationSetPrivilege}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:protocol.OperationSetPrivilege)
+        io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilegeOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return io.bumo.sdk.core.extend.protobuf.Chain.internal_static_protocol_OperationSetPrivilege_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return io.bumo.sdk.core.extend.protobuf.Chain.internal_static_protocol_OperationSetPrivilege_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilege.class, io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilege.Builder.class);
+      }
+
+      // Construct using io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilege.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+          getSignersFieldBuilder();
+          getTypeThresholdsFieldBuilder();
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        masterWeight_ = "";
+
+        if (signersBuilder_ == null) {
+          signers_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000002);
+        } else {
+          signersBuilder_.clear();
+        }
+        txThreshold_ = "";
+
+        if (typeThresholdsBuilder_ == null) {
+          typeThresholds_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000008);
+        } else {
+          typeThresholdsBuilder_.clear();
+        }
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return io.bumo.sdk.core.extend.protobuf.Chain.internal_static_protocol_OperationSetPrivilege_descriptor;
+      }
+
+      public io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilege getDefaultInstanceForType() {
+        return io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilege.getDefaultInstance();
+      }
+
+      public io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilege build() {
+        io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilege result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilege buildPartial() {
+        io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilege result = new io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilege(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        result.masterWeight_ = masterWeight_;
+        if (signersBuilder_ == null) {
+          if (((bitField0_ & 0x00000002) == 0x00000002)) {
+            signers_ = java.util.Collections.unmodifiableList(signers_);
+            bitField0_ = (bitField0_ & ~0x00000002);
+          }
+          result.signers_ = signers_;
+        } else {
+          result.signers_ = signersBuilder_.build();
+        }
+        result.txThreshold_ = txThreshold_;
+        if (typeThresholdsBuilder_ == null) {
+          if (((bitField0_ & 0x00000008) == 0x00000008)) {
+            typeThresholds_ = java.util.Collections.unmodifiableList(typeThresholds_);
+            bitField0_ = (bitField0_ & ~0x00000008);
+          }
+          result.typeThresholds_ = typeThresholds_;
+        } else {
+          result.typeThresholds_ = typeThresholdsBuilder_.build();
+        }
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilege) {
+          return mergeFrom((io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilege)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilege other) {
+        if (other == io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilege.getDefaultInstance()) return this;
+        if (!other.getMasterWeight().isEmpty()) {
+          masterWeight_ = other.masterWeight_;
+          onChanged();
+        }
+        if (signersBuilder_ == null) {
+          if (!other.signers_.isEmpty()) {
+            if (signers_.isEmpty()) {
+              signers_ = other.signers_;
+              bitField0_ = (bitField0_ & ~0x00000002);
+            } else {
+              ensureSignersIsMutable();
+              signers_.addAll(other.signers_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.signers_.isEmpty()) {
+            if (signersBuilder_.isEmpty()) {
+              signersBuilder_.dispose();
+              signersBuilder_ = null;
+              signers_ = other.signers_;
+              bitField0_ = (bitField0_ & ~0x00000002);
+              signersBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getSignersFieldBuilder() : null;
+            } else {
+              signersBuilder_.addAllMessages(other.signers_);
+            }
+          }
+        }
+        if (!other.getTxThreshold().isEmpty()) {
+          txThreshold_ = other.txThreshold_;
+          onChanged();
+        }
+        if (typeThresholdsBuilder_ == null) {
+          if (!other.typeThresholds_.isEmpty()) {
+            if (typeThresholds_.isEmpty()) {
+              typeThresholds_ = other.typeThresholds_;
+              bitField0_ = (bitField0_ & ~0x00000008);
+            } else {
+              ensureTypeThresholdsIsMutable();
+              typeThresholds_.addAll(other.typeThresholds_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.typeThresholds_.isEmpty()) {
+            if (typeThresholdsBuilder_.isEmpty()) {
+              typeThresholdsBuilder_.dispose();
+              typeThresholdsBuilder_ = null;
+              typeThresholds_ = other.typeThresholds_;
+              bitField0_ = (bitField0_ & ~0x00000008);
+              typeThresholdsBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getTypeThresholdsFieldBuilder() : null;
+            } else {
+              typeThresholdsBuilder_.addAllMessages(other.typeThresholds_);
+            }
+          }
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilege parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilege) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private java.lang.Object masterWeight_ = "";
+      /**
+       * <code>string master_weight = 1;</code>
+       */
+      public java.lang.String getMasterWeight() {
+        java.lang.Object ref = masterWeight_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          masterWeight_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string master_weight = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getMasterWeightBytes() {
+        java.lang.Object ref = masterWeight_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          masterWeight_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string master_weight = 1;</code>
+       */
+      public Builder setMasterWeight(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        masterWeight_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string master_weight = 1;</code>
+       */
+      public Builder clearMasterWeight() {
+        
+        masterWeight_ = getDefaultInstance().getMasterWeight();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string master_weight = 1;</code>
+       */
+      public Builder setMasterWeightBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        masterWeight_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.util.List<io.bumo.sdk.core.extend.protobuf.Chain.Signer> signers_ =
+        java.util.Collections.emptyList();
+      private void ensureSignersIsMutable() {
+        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
+          signers_ = new java.util.ArrayList<io.bumo.sdk.core.extend.protobuf.Chain.Signer>(signers_);
+          bitField0_ |= 0x00000002;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          io.bumo.sdk.core.extend.protobuf.Chain.Signer, io.bumo.sdk.core.extend.protobuf.Chain.Signer.Builder, io.bumo.sdk.core.extend.protobuf.Chain.SignerOrBuilder> signersBuilder_;
+
+      /**
+       * <code>repeated .protocol.Signer signers = 2;</code>
+       */
+      public java.util.List<io.bumo.sdk.core.extend.protobuf.Chain.Signer> getSignersList() {
+        if (signersBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(signers_);
+        } else {
+          return signersBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <code>repeated .protocol.Signer signers = 2;</code>
+       */
+      public int getSignersCount() {
+        if (signersBuilder_ == null) {
+          return signers_.size();
+        } else {
+          return signersBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .protocol.Signer signers = 2;</code>
+       */
+      public io.bumo.sdk.core.extend.protobuf.Chain.Signer getSigners(int index) {
+        if (signersBuilder_ == null) {
+          return signers_.get(index);
+        } else {
+          return signersBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .protocol.Signer signers = 2;</code>
+       */
+      public Builder setSigners(
+          int index, io.bumo.sdk.core.extend.protobuf.Chain.Signer value) {
+        if (signersBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureSignersIsMutable();
+          signers_.set(index, value);
+          onChanged();
+        } else {
+          signersBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .protocol.Signer signers = 2;</code>
+       */
+      public Builder setSigners(
+          int index, io.bumo.sdk.core.extend.protobuf.Chain.Signer.Builder builderForValue) {
+        if (signersBuilder_ == null) {
+          ensureSignersIsMutable();
+          signers_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          signersBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .protocol.Signer signers = 2;</code>
+       */
+      public Builder addSigners(io.bumo.sdk.core.extend.protobuf.Chain.Signer value) {
+        if (signersBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureSignersIsMutable();
+          signers_.add(value);
+          onChanged();
+        } else {
+          signersBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .protocol.Signer signers = 2;</code>
+       */
+      public Builder addSigners(
+          int index, io.bumo.sdk.core.extend.protobuf.Chain.Signer value) {
+        if (signersBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureSignersIsMutable();
+          signers_.add(index, value);
+          onChanged();
+        } else {
+          signersBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .protocol.Signer signers = 2;</code>
+       */
+      public Builder addSigners(
+          io.bumo.sdk.core.extend.protobuf.Chain.Signer.Builder builderForValue) {
+        if (signersBuilder_ == null) {
+          ensureSignersIsMutable();
+          signers_.add(builderForValue.build());
+          onChanged();
+        } else {
+          signersBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .protocol.Signer signers = 2;</code>
+       */
+      public Builder addSigners(
+          int index, io.bumo.sdk.core.extend.protobuf.Chain.Signer.Builder builderForValue) {
+        if (signersBuilder_ == null) {
+          ensureSignersIsMutable();
+          signers_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          signersBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .protocol.Signer signers = 2;</code>
+       */
+      public Builder addAllSigners(
+          java.lang.Iterable<? extends io.bumo.sdk.core.extend.protobuf.Chain.Signer> values) {
+        if (signersBuilder_ == null) {
+          ensureSignersIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, signers_);
+          onChanged();
+        } else {
+          signersBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .protocol.Signer signers = 2;</code>
+       */
+      public Builder clearSigners() {
+        if (signersBuilder_ == null) {
+          signers_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000002);
+          onChanged();
+        } else {
+          signersBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .protocol.Signer signers = 2;</code>
+       */
+      public Builder removeSigners(int index) {
+        if (signersBuilder_ == null) {
+          ensureSignersIsMutable();
+          signers_.remove(index);
+          onChanged();
+        } else {
+          signersBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .protocol.Signer signers = 2;</code>
+       */
+      public io.bumo.sdk.core.extend.protobuf.Chain.Signer.Builder getSignersBuilder(
+          int index) {
+        return getSignersFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .protocol.Signer signers = 2;</code>
+       */
+      public io.bumo.sdk.core.extend.protobuf.Chain.SignerOrBuilder getSignersOrBuilder(
+          int index) {
+        if (signersBuilder_ == null) {
+          return signers_.get(index);  } else {
+          return signersBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .protocol.Signer signers = 2;</code>
+       */
+      public java.util.List<? extends io.bumo.sdk.core.extend.protobuf.Chain.SignerOrBuilder> 
+           getSignersOrBuilderList() {
+        if (signersBuilder_ != null) {
+          return signersBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(signers_);
+        }
+      }
+      /**
+       * <code>repeated .protocol.Signer signers = 2;</code>
+       */
+      public io.bumo.sdk.core.extend.protobuf.Chain.Signer.Builder addSignersBuilder() {
+        return getSignersFieldBuilder().addBuilder(
+            io.bumo.sdk.core.extend.protobuf.Chain.Signer.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .protocol.Signer signers = 2;</code>
+       */
+      public io.bumo.sdk.core.extend.protobuf.Chain.Signer.Builder addSignersBuilder(
+          int index) {
+        return getSignersFieldBuilder().addBuilder(
+            index, io.bumo.sdk.core.extend.protobuf.Chain.Signer.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .protocol.Signer signers = 2;</code>
+       */
+      public java.util.List<io.bumo.sdk.core.extend.protobuf.Chain.Signer.Builder> 
+           getSignersBuilderList() {
+        return getSignersFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          io.bumo.sdk.core.extend.protobuf.Chain.Signer, io.bumo.sdk.core.extend.protobuf.Chain.Signer.Builder, io.bumo.sdk.core.extend.protobuf.Chain.SignerOrBuilder> 
+          getSignersFieldBuilder() {
+        if (signersBuilder_ == null) {
+          signersBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              io.bumo.sdk.core.extend.protobuf.Chain.Signer, io.bumo.sdk.core.extend.protobuf.Chain.Signer.Builder, io.bumo.sdk.core.extend.protobuf.Chain.SignerOrBuilder>(
+                  signers_,
+                  ((bitField0_ & 0x00000002) == 0x00000002),
+                  getParentForChildren(),
+                  isClean());
+          signers_ = null;
+        }
+        return signersBuilder_;
+      }
+
+      private java.lang.Object txThreshold_ = "";
+      /**
+       * <code>string tx_threshold = 3;</code>
+       */
+      public java.lang.String getTxThreshold() {
+        java.lang.Object ref = txThreshold_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          txThreshold_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string tx_threshold = 3;</code>
+       */
+      public com.google.protobuf.ByteString
+          getTxThresholdBytes() {
+        java.lang.Object ref = txThreshold_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          txThreshold_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string tx_threshold = 3;</code>
+       */
+      public Builder setTxThreshold(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        txThreshold_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string tx_threshold = 3;</code>
+       */
+      public Builder clearTxThreshold() {
+        
+        txThreshold_ = getDefaultInstance().getTxThreshold();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string tx_threshold = 3;</code>
+       */
+      public Builder setTxThresholdBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        txThreshold_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.util.List<io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold> typeThresholds_ =
+        java.util.Collections.emptyList();
+      private void ensureTypeThresholdsIsMutable() {
+        if (!((bitField0_ & 0x00000008) == 0x00000008)) {
+          typeThresholds_ = new java.util.ArrayList<io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold>(typeThresholds_);
+          bitField0_ |= 0x00000008;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold, io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold.Builder, io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThresholdOrBuilder> typeThresholdsBuilder_;
+
+      /**
+       * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
+       */
+      public java.util.List<io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold> getTypeThresholdsList() {
+        if (typeThresholdsBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(typeThresholds_);
+        } else {
+          return typeThresholdsBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
+       */
+      public int getTypeThresholdsCount() {
+        if (typeThresholdsBuilder_ == null) {
+          return typeThresholds_.size();
+        } else {
+          return typeThresholdsBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
+       */
+      public io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold getTypeThresholds(int index) {
+        if (typeThresholdsBuilder_ == null) {
+          return typeThresholds_.get(index);
+        } else {
+          return typeThresholdsBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
+       */
+      public Builder setTypeThresholds(
+          int index, io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold value) {
+        if (typeThresholdsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureTypeThresholdsIsMutable();
+          typeThresholds_.set(index, value);
+          onChanged();
+        } else {
+          typeThresholdsBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
+       */
+      public Builder setTypeThresholds(
+          int index, io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold.Builder builderForValue) {
+        if (typeThresholdsBuilder_ == null) {
+          ensureTypeThresholdsIsMutable();
+          typeThresholds_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          typeThresholdsBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
+       */
+      public Builder addTypeThresholds(io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold value) {
+        if (typeThresholdsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureTypeThresholdsIsMutable();
+          typeThresholds_.add(value);
+          onChanged();
+        } else {
+          typeThresholdsBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
+       */
+      public Builder addTypeThresholds(
+          int index, io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold value) {
+        if (typeThresholdsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureTypeThresholdsIsMutable();
+          typeThresholds_.add(index, value);
+          onChanged();
+        } else {
+          typeThresholdsBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
+       */
+      public Builder addTypeThresholds(
+          io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold.Builder builderForValue) {
+        if (typeThresholdsBuilder_ == null) {
+          ensureTypeThresholdsIsMutable();
+          typeThresholds_.add(builderForValue.build());
+          onChanged();
+        } else {
+          typeThresholdsBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
+       */
+      public Builder addTypeThresholds(
+          int index, io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold.Builder builderForValue) {
+        if (typeThresholdsBuilder_ == null) {
+          ensureTypeThresholdsIsMutable();
+          typeThresholds_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          typeThresholdsBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
+       */
+      public Builder addAllTypeThresholds(
+          java.lang.Iterable<? extends io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold> values) {
+        if (typeThresholdsBuilder_ == null) {
+          ensureTypeThresholdsIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, typeThresholds_);
+          onChanged();
+        } else {
+          typeThresholdsBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
+       */
+      public Builder clearTypeThresholds() {
+        if (typeThresholdsBuilder_ == null) {
+          typeThresholds_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000008);
+          onChanged();
+        } else {
+          typeThresholdsBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
+       */
+      public Builder removeTypeThresholds(int index) {
+        if (typeThresholdsBuilder_ == null) {
+          ensureTypeThresholdsIsMutable();
+          typeThresholds_.remove(index);
+          onChanged();
+        } else {
+          typeThresholdsBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
+       */
+      public io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold.Builder getTypeThresholdsBuilder(
+          int index) {
+        return getTypeThresholdsFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
+       */
+      public io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThresholdOrBuilder getTypeThresholdsOrBuilder(
+          int index) {
+        if (typeThresholdsBuilder_ == null) {
+          return typeThresholds_.get(index);  } else {
+          return typeThresholdsBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
+       */
+      public java.util.List<? extends io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThresholdOrBuilder> 
+           getTypeThresholdsOrBuilderList() {
+        if (typeThresholdsBuilder_ != null) {
+          return typeThresholdsBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(typeThresholds_);
+        }
+      }
+      /**
+       * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
+       */
+      public io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold.Builder addTypeThresholdsBuilder() {
+        return getTypeThresholdsFieldBuilder().addBuilder(
+            io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
+       */
+      public io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold.Builder addTypeThresholdsBuilder(
+          int index) {
+        return getTypeThresholdsFieldBuilder().addBuilder(
+            index, io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
+       */
+      public java.util.List<io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold.Builder> 
+           getTypeThresholdsBuilderList() {
+        return getTypeThresholdsFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold, io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold.Builder, io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThresholdOrBuilder> 
+          getTypeThresholdsFieldBuilder() {
+        if (typeThresholdsBuilder_ == null) {
+          typeThresholdsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold, io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold.Builder, io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThresholdOrBuilder>(
+                  typeThresholds_,
+                  ((bitField0_ & 0x00000008) == 0x00000008),
+                  getParentForChildren(),
+                  isClean());
+          typeThresholds_ = null;
+        }
+        return typeThresholdsBuilder_;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:protocol.OperationSetPrivilege)
+    }
+
+    // @@protoc_insertion_point(class_scope:protocol.OperationSetPrivilege)
+    private static final io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilege DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilege();
+    }
+
+    public static io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilege getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<OperationSetPrivilege>
+        PARSER = new com.google.protobuf.AbstractParser<OperationSetPrivilege>() {
+      public OperationSetPrivilege parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new OperationSetPrivilege(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<OperationSetPrivilege> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<OperationSetPrivilege> getParserForType() {
+      return PARSER;
+    }
+
+    public io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilege getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   public interface OperationOrBuilder extends
       // @@protoc_insertion_point(interface_extends:protocol.Operation)
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>optional .protocol.Operation.Type type = 1;</code>
+     * <code>.protocol.Operation.Type type = 1;</code>
      */
     int getTypeValue();
     /**
-     * <code>optional .protocol.Operation.Type type = 1;</code>
+     * <code>.protocol.Operation.Type type = 1;</code>
      */
     io.bumo.sdk.core.extend.protobuf.Chain.Operation.Type getType();
 
     /**
-     * <code>optional string source_address = 2;</code>
+     * <code>string source_address = 2;</code>
      */
     java.lang.String getSourceAddress();
     /**
-     * <code>optional string source_address = 2;</code>
+     * <code>string source_address = 2;</code>
      */
     com.google.protobuf.ByteString
         getSourceAddressBytes();
 
     /**
-     * <code>optional bytes metadata = 3;</code>
+     * <code>bytes metadata = 3;</code>
      */
     com.google.protobuf.ByteString getMetadata();
 
@@ -12640,114 +14259,127 @@ public final class Chain {
      * <pre>
      * </pre>
      *
-     * <code>optional .protocol.OperationCreateAccount create_account = 4;</code>
+     * <code>.protocol.OperationCreateAccount create_account = 4;</code>
      */
     boolean hasCreateAccount();
     /**
      * <pre>
      * </pre>
      *
-     * <code>optional .protocol.OperationCreateAccount create_account = 4;</code>
+     * <code>.protocol.OperationCreateAccount create_account = 4;</code>
      */
     io.bumo.sdk.core.extend.protobuf.Chain.OperationCreateAccount getCreateAccount();
     /**
      * <pre>
      * </pre>
      *
-     * <code>optional .protocol.OperationCreateAccount create_account = 4;</code>
+     * <code>.protocol.OperationCreateAccount create_account = 4;</code>
      */
     io.bumo.sdk.core.extend.protobuf.Chain.OperationCreateAccountOrBuilder getCreateAccountOrBuilder();
 
     /**
-     * <code>optional .protocol.OperationIssueAsset issue_asset = 5;</code>
+     * <code>.protocol.OperationIssueAsset issue_asset = 5;</code>
      */
     boolean hasIssueAsset();
     /**
-     * <code>optional .protocol.OperationIssueAsset issue_asset = 5;</code>
+     * <code>.protocol.OperationIssueAsset issue_asset = 5;</code>
      */
     io.bumo.sdk.core.extend.protobuf.Chain.OperationIssueAsset getIssueAsset();
     /**
-     * <code>optional .protocol.OperationIssueAsset issue_asset = 5;</code>
+     * <code>.protocol.OperationIssueAsset issue_asset = 5;</code>
      */
     io.bumo.sdk.core.extend.protobuf.Chain.OperationIssueAssetOrBuilder getIssueAssetOrBuilder();
 
     /**
-     * <code>optional .protocol.OperationPayAsset pay_asset = 6;</code>
+     * <code>.protocol.OperationPayAsset pay_asset = 6;</code>
      */
     boolean hasPayAsset();
     /**
-     * <code>optional .protocol.OperationPayAsset pay_asset = 6;</code>
+     * <code>.protocol.OperationPayAsset pay_asset = 6;</code>
      */
     io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset getPayAsset();
     /**
-     * <code>optional .protocol.OperationPayAsset pay_asset = 6;</code>
+     * <code>.protocol.OperationPayAsset pay_asset = 6;</code>
      */
     io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAssetOrBuilder getPayAssetOrBuilder();
 
     /**
-     * <code>optional .protocol.OperationSetMetadata set_metadata = 7;</code>
+     * <code>.protocol.OperationSetMetadata set_metadata = 7;</code>
      */
     boolean hasSetMetadata();
     /**
-     * <code>optional .protocol.OperationSetMetadata set_metadata = 7;</code>
+     * <code>.protocol.OperationSetMetadata set_metadata = 7;</code>
      */
     io.bumo.sdk.core.extend.protobuf.Chain.OperationSetMetadata getSetMetadata();
     /**
-     * <code>optional .protocol.OperationSetMetadata set_metadata = 7;</code>
+     * <code>.protocol.OperationSetMetadata set_metadata = 7;</code>
      */
     io.bumo.sdk.core.extend.protobuf.Chain.OperationSetMetadataOrBuilder getSetMetadataOrBuilder();
 
     /**
-     * <code>optional .protocol.OperationSetSignerWeight set_signer_weight = 8;</code>
+     * <code>.protocol.OperationSetSignerWeight set_signer_weight = 8;</code>
      */
     boolean hasSetSignerWeight();
     /**
-     * <code>optional .protocol.OperationSetSignerWeight set_signer_weight = 8;</code>
+     * <code>.protocol.OperationSetSignerWeight set_signer_weight = 8;</code>
      */
     io.bumo.sdk.core.extend.protobuf.Chain.OperationSetSignerWeight getSetSignerWeight();
     /**
-     * <code>optional .protocol.OperationSetSignerWeight set_signer_weight = 8;</code>
+     * <code>.protocol.OperationSetSignerWeight set_signer_weight = 8;</code>
      */
     io.bumo.sdk.core.extend.protobuf.Chain.OperationSetSignerWeightOrBuilder getSetSignerWeightOrBuilder();
 
     /**
-     * <code>optional .protocol.OperationSetThreshold set_threshold = 9;</code>
+     * <code>.protocol.OperationSetThreshold set_threshold = 9;</code>
      */
     boolean hasSetThreshold();
     /**
-     * <code>optional .protocol.OperationSetThreshold set_threshold = 9;</code>
+     * <code>.protocol.OperationSetThreshold set_threshold = 9;</code>
      */
     io.bumo.sdk.core.extend.protobuf.Chain.OperationSetThreshold getSetThreshold();
     /**
-     * <code>optional .protocol.OperationSetThreshold set_threshold = 9;</code>
+     * <code>.protocol.OperationSetThreshold set_threshold = 9;</code>
      */
     io.bumo.sdk.core.extend.protobuf.Chain.OperationSetThresholdOrBuilder getSetThresholdOrBuilder();
 
     /**
-     * <code>optional .protocol.OperationPayCoin pay_coin = 10;</code>
+     * <code>.protocol.OperationPayCoin pay_coin = 10;</code>
      */
     boolean hasPayCoin();
     /**
-     * <code>optional .protocol.OperationPayCoin pay_coin = 10;</code>
+     * <code>.protocol.OperationPayCoin pay_coin = 10;</code>
      */
     io.bumo.sdk.core.extend.protobuf.Chain.OperationPayCoin getPayCoin();
     /**
-     * <code>optional .protocol.OperationPayCoin pay_coin = 10;</code>
+     * <code>.protocol.OperationPayCoin pay_coin = 10;</code>
      */
     io.bumo.sdk.core.extend.protobuf.Chain.OperationPayCoinOrBuilder getPayCoinOrBuilder();
 
     /**
-     * <code>optional .protocol.OperationLog log = 11;</code>
+     * <code>.protocol.OperationLog log = 11;</code>
      */
     boolean hasLog();
     /**
-     * <code>optional .protocol.OperationLog log = 11;</code>
+     * <code>.protocol.OperationLog log = 11;</code>
      */
     io.bumo.sdk.core.extend.protobuf.Chain.OperationLog getLog();
     /**
-     * <code>optional .protocol.OperationLog log = 11;</code>
+     * <code>.protocol.OperationLog log = 11;</code>
      */
     io.bumo.sdk.core.extend.protobuf.Chain.OperationLogOrBuilder getLogOrBuilder();
+
+    /**
+     * <code>.protocol.OperationSetPrivilege set_privilege = 12;</code>
+     */
+    boolean hasSetPrivilege();
+    /**
+     * <code>.protocol.OperationSetPrivilege set_privilege = 12;</code>
+     */
+    io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilege getSetPrivilege();
+    /**
+     * <code>.protocol.OperationSetPrivilege set_privilege = 12;</code>
+     */
+    io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilegeOrBuilder getSetPrivilegeOrBuilder();
   }
   /**
    * Protobuf type {@code protocol.Operation}
@@ -12756,6 +14388,7 @@ public final class Chain {
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:protocol.Operation)
       OperationOrBuilder {
+  private static final long serialVersionUID = 0L;
     // Use Operation.newBuilder() to construct.
     private Operation(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -12769,14 +14402,19 @@ public final class Chain {
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
-      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+      return this.unknownFields;
     }
     private Operation(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
         boolean done = false;
         while (!done) {
@@ -12786,7 +14424,8 @@ public final class Chain {
               done = true;
               break;
             default: {
-              if (!input.skipField(tag)) {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
               break;
@@ -12912,6 +14551,19 @@ public final class Chain {
 
               break;
             }
+            case 98: {
+              io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilege.Builder subBuilder = null;
+              if (setPrivilege_ != null) {
+                subBuilder = setPrivilege_.toBuilder();
+              }
+              setPrivilege_ = input.readMessage(io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilege.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(setPrivilege_);
+                setPrivilege_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -12920,6 +14572,7 @@ public final class Chain {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
+        this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
     }
@@ -12976,6 +14629,10 @@ public final class Chain {
        * <code>LOG = 8;</code>
        */
       LOG(8),
+      /**
+       * <code>SET_PRIVILEGE = 9;</code>
+       */
+      SET_PRIVILEGE(9),
       UNRECOGNIZED(-1),
       ;
 
@@ -13015,6 +14672,10 @@ public final class Chain {
        * <code>LOG = 8;</code>
        */
       public static final int LOG_VALUE = 8;
+      /**
+       * <code>SET_PRIVILEGE = 9;</code>
+       */
+      public static final int SET_PRIVILEGE_VALUE = 9;
 
 
       public final int getNumber() {
@@ -13044,6 +14705,7 @@ public final class Chain {
           case 6: return SET_THRESHOLD;
           case 7: return PAY_COIN;
           case 8: return LOG;
+          case 9: return SET_PRIVILEGE;
           default: return null;
         }
       }
@@ -13099,13 +14761,13 @@ public final class Chain {
     public static final int TYPE_FIELD_NUMBER = 1;
     private int type_;
     /**
-     * <code>optional .protocol.Operation.Type type = 1;</code>
+     * <code>.protocol.Operation.Type type = 1;</code>
      */
     public int getTypeValue() {
       return type_;
     }
     /**
-     * <code>optional .protocol.Operation.Type type = 1;</code>
+     * <code>.protocol.Operation.Type type = 1;</code>
      */
     public io.bumo.sdk.core.extend.protobuf.Chain.Operation.Type getType() {
       io.bumo.sdk.core.extend.protobuf.Chain.Operation.Type result = io.bumo.sdk.core.extend.protobuf.Chain.Operation.Type.valueOf(type_);
@@ -13115,7 +14777,7 @@ public final class Chain {
     public static final int SOURCE_ADDRESS_FIELD_NUMBER = 2;
     private volatile java.lang.Object sourceAddress_;
     /**
-     * <code>optional string source_address = 2;</code>
+     * <code>string source_address = 2;</code>
      */
     public java.lang.String getSourceAddress() {
       java.lang.Object ref = sourceAddress_;
@@ -13130,7 +14792,7 @@ public final class Chain {
       }
     }
     /**
-     * <code>optional string source_address = 2;</code>
+     * <code>string source_address = 2;</code>
      */
     public com.google.protobuf.ByteString
         getSourceAddressBytes() {
@@ -13149,7 +14811,7 @@ public final class Chain {
     public static final int METADATA_FIELD_NUMBER = 3;
     private com.google.protobuf.ByteString metadata_;
     /**
-     * <code>optional bytes metadata = 3;</code>
+     * <code>bytes metadata = 3;</code>
      */
     public com.google.protobuf.ByteString getMetadata() {
       return metadata_;
@@ -13161,7 +14823,7 @@ public final class Chain {
      * <pre>
      * </pre>
      *
-     * <code>optional .protocol.OperationCreateAccount create_account = 4;</code>
+     * <code>.protocol.OperationCreateAccount create_account = 4;</code>
      */
     public boolean hasCreateAccount() {
       return createAccount_ != null;
@@ -13170,7 +14832,7 @@ public final class Chain {
      * <pre>
      * </pre>
      *
-     * <code>optional .protocol.OperationCreateAccount create_account = 4;</code>
+     * <code>.protocol.OperationCreateAccount create_account = 4;</code>
      */
     public io.bumo.sdk.core.extend.protobuf.Chain.OperationCreateAccount getCreateAccount() {
       return createAccount_ == null ? io.bumo.sdk.core.extend.protobuf.Chain.OperationCreateAccount.getDefaultInstance() : createAccount_;
@@ -13179,7 +14841,7 @@ public final class Chain {
      * <pre>
      * </pre>
      *
-     * <code>optional .protocol.OperationCreateAccount create_account = 4;</code>
+     * <code>.protocol.OperationCreateAccount create_account = 4;</code>
      */
     public io.bumo.sdk.core.extend.protobuf.Chain.OperationCreateAccountOrBuilder getCreateAccountOrBuilder() {
       return getCreateAccount();
@@ -13188,19 +14850,19 @@ public final class Chain {
     public static final int ISSUE_ASSET_FIELD_NUMBER = 5;
     private io.bumo.sdk.core.extend.protobuf.Chain.OperationIssueAsset issueAsset_;
     /**
-     * <code>optional .protocol.OperationIssueAsset issue_asset = 5;</code>
+     * <code>.protocol.OperationIssueAsset issue_asset = 5;</code>
      */
     public boolean hasIssueAsset() {
       return issueAsset_ != null;
     }
     /**
-     * <code>optional .protocol.OperationIssueAsset issue_asset = 5;</code>
+     * <code>.protocol.OperationIssueAsset issue_asset = 5;</code>
      */
     public io.bumo.sdk.core.extend.protobuf.Chain.OperationIssueAsset getIssueAsset() {
       return issueAsset_ == null ? io.bumo.sdk.core.extend.protobuf.Chain.OperationIssueAsset.getDefaultInstance() : issueAsset_;
     }
     /**
-     * <code>optional .protocol.OperationIssueAsset issue_asset = 5;</code>
+     * <code>.protocol.OperationIssueAsset issue_asset = 5;</code>
      */
     public io.bumo.sdk.core.extend.protobuf.Chain.OperationIssueAssetOrBuilder getIssueAssetOrBuilder() {
       return getIssueAsset();
@@ -13209,19 +14871,19 @@ public final class Chain {
     public static final int PAY_ASSET_FIELD_NUMBER = 6;
     private io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset payAsset_;
     /**
-     * <code>optional .protocol.OperationPayAsset pay_asset = 6;</code>
+     * <code>.protocol.OperationPayAsset pay_asset = 6;</code>
      */
     public boolean hasPayAsset() {
       return payAsset_ != null;
     }
     /**
-     * <code>optional .protocol.OperationPayAsset pay_asset = 6;</code>
+     * <code>.protocol.OperationPayAsset pay_asset = 6;</code>
      */
     public io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset getPayAsset() {
       return payAsset_ == null ? io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset.getDefaultInstance() : payAsset_;
     }
     /**
-     * <code>optional .protocol.OperationPayAsset pay_asset = 6;</code>
+     * <code>.protocol.OperationPayAsset pay_asset = 6;</code>
      */
     public io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAssetOrBuilder getPayAssetOrBuilder() {
       return getPayAsset();
@@ -13230,19 +14892,19 @@ public final class Chain {
     public static final int SET_METADATA_FIELD_NUMBER = 7;
     private io.bumo.sdk.core.extend.protobuf.Chain.OperationSetMetadata setMetadata_;
     /**
-     * <code>optional .protocol.OperationSetMetadata set_metadata = 7;</code>
+     * <code>.protocol.OperationSetMetadata set_metadata = 7;</code>
      */
     public boolean hasSetMetadata() {
       return setMetadata_ != null;
     }
     /**
-     * <code>optional .protocol.OperationSetMetadata set_metadata = 7;</code>
+     * <code>.protocol.OperationSetMetadata set_metadata = 7;</code>
      */
     public io.bumo.sdk.core.extend.protobuf.Chain.OperationSetMetadata getSetMetadata() {
       return setMetadata_ == null ? io.bumo.sdk.core.extend.protobuf.Chain.OperationSetMetadata.getDefaultInstance() : setMetadata_;
     }
     /**
-     * <code>optional .protocol.OperationSetMetadata set_metadata = 7;</code>
+     * <code>.protocol.OperationSetMetadata set_metadata = 7;</code>
      */
     public io.bumo.sdk.core.extend.protobuf.Chain.OperationSetMetadataOrBuilder getSetMetadataOrBuilder() {
       return getSetMetadata();
@@ -13251,19 +14913,19 @@ public final class Chain {
     public static final int SET_SIGNER_WEIGHT_FIELD_NUMBER = 8;
     private io.bumo.sdk.core.extend.protobuf.Chain.OperationSetSignerWeight setSignerWeight_;
     /**
-     * <code>optional .protocol.OperationSetSignerWeight set_signer_weight = 8;</code>
+     * <code>.protocol.OperationSetSignerWeight set_signer_weight = 8;</code>
      */
     public boolean hasSetSignerWeight() {
       return setSignerWeight_ != null;
     }
     /**
-     * <code>optional .protocol.OperationSetSignerWeight set_signer_weight = 8;</code>
+     * <code>.protocol.OperationSetSignerWeight set_signer_weight = 8;</code>
      */
     public io.bumo.sdk.core.extend.protobuf.Chain.OperationSetSignerWeight getSetSignerWeight() {
       return setSignerWeight_ == null ? io.bumo.sdk.core.extend.protobuf.Chain.OperationSetSignerWeight.getDefaultInstance() : setSignerWeight_;
     }
     /**
-     * <code>optional .protocol.OperationSetSignerWeight set_signer_weight = 8;</code>
+     * <code>.protocol.OperationSetSignerWeight set_signer_weight = 8;</code>
      */
     public io.bumo.sdk.core.extend.protobuf.Chain.OperationSetSignerWeightOrBuilder getSetSignerWeightOrBuilder() {
       return getSetSignerWeight();
@@ -13272,19 +14934,19 @@ public final class Chain {
     public static final int SET_THRESHOLD_FIELD_NUMBER = 9;
     private io.bumo.sdk.core.extend.protobuf.Chain.OperationSetThreshold setThreshold_;
     /**
-     * <code>optional .protocol.OperationSetThreshold set_threshold = 9;</code>
+     * <code>.protocol.OperationSetThreshold set_threshold = 9;</code>
      */
     public boolean hasSetThreshold() {
       return setThreshold_ != null;
     }
     /**
-     * <code>optional .protocol.OperationSetThreshold set_threshold = 9;</code>
+     * <code>.protocol.OperationSetThreshold set_threshold = 9;</code>
      */
     public io.bumo.sdk.core.extend.protobuf.Chain.OperationSetThreshold getSetThreshold() {
       return setThreshold_ == null ? io.bumo.sdk.core.extend.protobuf.Chain.OperationSetThreshold.getDefaultInstance() : setThreshold_;
     }
     /**
-     * <code>optional .protocol.OperationSetThreshold set_threshold = 9;</code>
+     * <code>.protocol.OperationSetThreshold set_threshold = 9;</code>
      */
     public io.bumo.sdk.core.extend.protobuf.Chain.OperationSetThresholdOrBuilder getSetThresholdOrBuilder() {
       return getSetThreshold();
@@ -13293,19 +14955,19 @@ public final class Chain {
     public static final int PAY_COIN_FIELD_NUMBER = 10;
     private io.bumo.sdk.core.extend.protobuf.Chain.OperationPayCoin payCoin_;
     /**
-     * <code>optional .protocol.OperationPayCoin pay_coin = 10;</code>
+     * <code>.protocol.OperationPayCoin pay_coin = 10;</code>
      */
     public boolean hasPayCoin() {
       return payCoin_ != null;
     }
     /**
-     * <code>optional .protocol.OperationPayCoin pay_coin = 10;</code>
+     * <code>.protocol.OperationPayCoin pay_coin = 10;</code>
      */
     public io.bumo.sdk.core.extend.protobuf.Chain.OperationPayCoin getPayCoin() {
       return payCoin_ == null ? io.bumo.sdk.core.extend.protobuf.Chain.OperationPayCoin.getDefaultInstance() : payCoin_;
     }
     /**
-     * <code>optional .protocol.OperationPayCoin pay_coin = 10;</code>
+     * <code>.protocol.OperationPayCoin pay_coin = 10;</code>
      */
     public io.bumo.sdk.core.extend.protobuf.Chain.OperationPayCoinOrBuilder getPayCoinOrBuilder() {
       return getPayCoin();
@@ -13314,22 +14976,43 @@ public final class Chain {
     public static final int LOG_FIELD_NUMBER = 11;
     private io.bumo.sdk.core.extend.protobuf.Chain.OperationLog log_;
     /**
-     * <code>optional .protocol.OperationLog log = 11;</code>
+     * <code>.protocol.OperationLog log = 11;</code>
      */
     public boolean hasLog() {
       return log_ != null;
     }
     /**
-     * <code>optional .protocol.OperationLog log = 11;</code>
+     * <code>.protocol.OperationLog log = 11;</code>
      */
     public io.bumo.sdk.core.extend.protobuf.Chain.OperationLog getLog() {
       return log_ == null ? io.bumo.sdk.core.extend.protobuf.Chain.OperationLog.getDefaultInstance() : log_;
     }
     /**
-     * <code>optional .protocol.OperationLog log = 11;</code>
+     * <code>.protocol.OperationLog log = 11;</code>
      */
     public io.bumo.sdk.core.extend.protobuf.Chain.OperationLogOrBuilder getLogOrBuilder() {
       return getLog();
+    }
+
+    public static final int SET_PRIVILEGE_FIELD_NUMBER = 12;
+    private io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilege setPrivilege_;
+    /**
+     * <code>.protocol.OperationSetPrivilege set_privilege = 12;</code>
+     */
+    public boolean hasSetPrivilege() {
+      return setPrivilege_ != null;
+    }
+    /**
+     * <code>.protocol.OperationSetPrivilege set_privilege = 12;</code>
+     */
+    public io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilege getSetPrivilege() {
+      return setPrivilege_ == null ? io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilege.getDefaultInstance() : setPrivilege_;
+    }
+    /**
+     * <code>.protocol.OperationSetPrivilege set_privilege = 12;</code>
+     */
+    public io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilegeOrBuilder getSetPrivilegeOrBuilder() {
+      return getSetPrivilege();
     }
 
     private byte memoizedIsInitialized = -1;
@@ -13377,6 +15060,10 @@ public final class Chain {
       if (log_ != null) {
         output.writeMessage(11, getLog());
       }
+      if (setPrivilege_ != null) {
+        output.writeMessage(12, getSetPrivilege());
+      }
+      unknownFields.writeTo(output);
     }
 
     public int getSerializedSize() {
@@ -13427,11 +15114,15 @@ public final class Chain {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(11, getLog());
       }
+      if (setPrivilege_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(12, getSetPrivilege());
+      }
+      size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
     }
 
-    private static final long serialVersionUID = 0L;
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -13488,6 +15179,12 @@ public final class Chain {
         result = result && getLog()
             .equals(other.getLog());
       }
+      result = result && (hasSetPrivilege() == other.hasSetPrivilege());
+      if (hasSetPrivilege()) {
+        result = result && getSetPrivilege()
+            .equals(other.getSetPrivilege());
+      }
+      result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
 
@@ -13497,7 +15194,7 @@ public final class Chain {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptorForType().hashCode();
+      hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + TYPE_FIELD_NUMBER;
       hash = (53 * hash) + type_;
       hash = (37 * hash) + SOURCE_ADDRESS_FIELD_NUMBER;
@@ -13536,11 +15233,26 @@ public final class Chain {
         hash = (37 * hash) + LOG_FIELD_NUMBER;
         hash = (53 * hash) + getLog().hashCode();
       }
+      if (hasSetPrivilege()) {
+        hash = (37 * hash) + SET_PRIVILEGE_FIELD_NUMBER;
+        hash = (53 * hash) + getSetPrivilege().hashCode();
+      }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
+    public static io.bumo.sdk.core.extend.protobuf.Chain.Operation parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static io.bumo.sdk.core.extend.protobuf.Chain.Operation parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
     public static io.bumo.sdk.core.extend.protobuf.Chain.Operation parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -13708,6 +15420,12 @@ public final class Chain {
           log_ = null;
           logBuilder_ = null;
         }
+        if (setPrivilegeBuilder_ == null) {
+          setPrivilege_ = null;
+        } else {
+          setPrivilege_ = null;
+          setPrivilegeBuilder_ = null;
+        }
         return this;
       }
 
@@ -13773,6 +15491,11 @@ public final class Chain {
         } else {
           result.log_ = logBuilder_.build();
         }
+        if (setPrivilegeBuilder_ == null) {
+          result.setPrivilege_ = setPrivilege_;
+        } else {
+          result.setPrivilege_ = setPrivilegeBuilder_.build();
+        }
         onBuilt();
         return result;
       }
@@ -13782,7 +15505,7 @@ public final class Chain {
       }
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
       public Builder clearField(
@@ -13795,12 +15518,12 @@ public final class Chain {
       }
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, Object value) {
+          int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -13848,6 +15571,10 @@ public final class Chain {
         if (other.hasLog()) {
           mergeLog(other.getLog());
         }
+        if (other.hasSetPrivilege()) {
+          mergeSetPrivilege(other.getSetPrivilege());
+        }
+        this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
       }
@@ -13876,13 +15603,13 @@ public final class Chain {
 
       private int type_ = 0;
       /**
-       * <code>optional .protocol.Operation.Type type = 1;</code>
+       * <code>.protocol.Operation.Type type = 1;</code>
        */
       public int getTypeValue() {
         return type_;
       }
       /**
-       * <code>optional .protocol.Operation.Type type = 1;</code>
+       * <code>.protocol.Operation.Type type = 1;</code>
        */
       public Builder setTypeValue(int value) {
         type_ = value;
@@ -13890,14 +15617,14 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.Operation.Type type = 1;</code>
+       * <code>.protocol.Operation.Type type = 1;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.Operation.Type getType() {
         io.bumo.sdk.core.extend.protobuf.Chain.Operation.Type result = io.bumo.sdk.core.extend.protobuf.Chain.Operation.Type.valueOf(type_);
         return result == null ? io.bumo.sdk.core.extend.protobuf.Chain.Operation.Type.UNRECOGNIZED : result;
       }
       /**
-       * <code>optional .protocol.Operation.Type type = 1;</code>
+       * <code>.protocol.Operation.Type type = 1;</code>
        */
       public Builder setType(io.bumo.sdk.core.extend.protobuf.Chain.Operation.Type value) {
         if (value == null) {
@@ -13909,7 +15636,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.Operation.Type type = 1;</code>
+       * <code>.protocol.Operation.Type type = 1;</code>
        */
       public Builder clearType() {
         
@@ -13920,7 +15647,7 @@ public final class Chain {
 
       private java.lang.Object sourceAddress_ = "";
       /**
-       * <code>optional string source_address = 2;</code>
+       * <code>string source_address = 2;</code>
        */
       public java.lang.String getSourceAddress() {
         java.lang.Object ref = sourceAddress_;
@@ -13935,7 +15662,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional string source_address = 2;</code>
+       * <code>string source_address = 2;</code>
        */
       public com.google.protobuf.ByteString
           getSourceAddressBytes() {
@@ -13951,7 +15678,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional string source_address = 2;</code>
+       * <code>string source_address = 2;</code>
        */
       public Builder setSourceAddress(
           java.lang.String value) {
@@ -13964,7 +15691,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional string source_address = 2;</code>
+       * <code>string source_address = 2;</code>
        */
       public Builder clearSourceAddress() {
         
@@ -13973,7 +15700,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional string source_address = 2;</code>
+       * <code>string source_address = 2;</code>
        */
       public Builder setSourceAddressBytes(
           com.google.protobuf.ByteString value) {
@@ -13989,13 +15716,13 @@ public final class Chain {
 
       private com.google.protobuf.ByteString metadata_ = com.google.protobuf.ByteString.EMPTY;
       /**
-       * <code>optional bytes metadata = 3;</code>
+       * <code>bytes metadata = 3;</code>
        */
       public com.google.protobuf.ByteString getMetadata() {
         return metadata_;
       }
       /**
-       * <code>optional bytes metadata = 3;</code>
+       * <code>bytes metadata = 3;</code>
        */
       public Builder setMetadata(com.google.protobuf.ByteString value) {
         if (value == null) {
@@ -14007,7 +15734,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional bytes metadata = 3;</code>
+       * <code>bytes metadata = 3;</code>
        */
       public Builder clearMetadata() {
         
@@ -14023,7 +15750,7 @@ public final class Chain {
        * <pre>
        * </pre>
        *
-       * <code>optional .protocol.OperationCreateAccount create_account = 4;</code>
+       * <code>.protocol.OperationCreateAccount create_account = 4;</code>
        */
       public boolean hasCreateAccount() {
         return createAccountBuilder_ != null || createAccount_ != null;
@@ -14032,7 +15759,7 @@ public final class Chain {
        * <pre>
        * </pre>
        *
-       * <code>optional .protocol.OperationCreateAccount create_account = 4;</code>
+       * <code>.protocol.OperationCreateAccount create_account = 4;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.OperationCreateAccount getCreateAccount() {
         if (createAccountBuilder_ == null) {
@@ -14045,7 +15772,7 @@ public final class Chain {
        * <pre>
        * </pre>
        *
-       * <code>optional .protocol.OperationCreateAccount create_account = 4;</code>
+       * <code>.protocol.OperationCreateAccount create_account = 4;</code>
        */
       public Builder setCreateAccount(io.bumo.sdk.core.extend.protobuf.Chain.OperationCreateAccount value) {
         if (createAccountBuilder_ == null) {
@@ -14064,7 +15791,7 @@ public final class Chain {
        * <pre>
        * </pre>
        *
-       * <code>optional .protocol.OperationCreateAccount create_account = 4;</code>
+       * <code>.protocol.OperationCreateAccount create_account = 4;</code>
        */
       public Builder setCreateAccount(
           io.bumo.sdk.core.extend.protobuf.Chain.OperationCreateAccount.Builder builderForValue) {
@@ -14081,7 +15808,7 @@ public final class Chain {
        * <pre>
        * </pre>
        *
-       * <code>optional .protocol.OperationCreateAccount create_account = 4;</code>
+       * <code>.protocol.OperationCreateAccount create_account = 4;</code>
        */
       public Builder mergeCreateAccount(io.bumo.sdk.core.extend.protobuf.Chain.OperationCreateAccount value) {
         if (createAccountBuilder_ == null) {
@@ -14102,7 +15829,7 @@ public final class Chain {
        * <pre>
        * </pre>
        *
-       * <code>optional .protocol.OperationCreateAccount create_account = 4;</code>
+       * <code>.protocol.OperationCreateAccount create_account = 4;</code>
        */
       public Builder clearCreateAccount() {
         if (createAccountBuilder_ == null) {
@@ -14119,7 +15846,7 @@ public final class Chain {
        * <pre>
        * </pre>
        *
-       * <code>optional .protocol.OperationCreateAccount create_account = 4;</code>
+       * <code>.protocol.OperationCreateAccount create_account = 4;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.OperationCreateAccount.Builder getCreateAccountBuilder() {
         
@@ -14130,7 +15857,7 @@ public final class Chain {
        * <pre>
        * </pre>
        *
-       * <code>optional .protocol.OperationCreateAccount create_account = 4;</code>
+       * <code>.protocol.OperationCreateAccount create_account = 4;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.OperationCreateAccountOrBuilder getCreateAccountOrBuilder() {
         if (createAccountBuilder_ != null) {
@@ -14144,7 +15871,7 @@ public final class Chain {
        * <pre>
        * </pre>
        *
-       * <code>optional .protocol.OperationCreateAccount create_account = 4;</code>
+       * <code>.protocol.OperationCreateAccount create_account = 4;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           io.bumo.sdk.core.extend.protobuf.Chain.OperationCreateAccount, io.bumo.sdk.core.extend.protobuf.Chain.OperationCreateAccount.Builder, io.bumo.sdk.core.extend.protobuf.Chain.OperationCreateAccountOrBuilder> 
@@ -14164,13 +15891,13 @@ public final class Chain {
       private com.google.protobuf.SingleFieldBuilderV3<
           io.bumo.sdk.core.extend.protobuf.Chain.OperationIssueAsset, io.bumo.sdk.core.extend.protobuf.Chain.OperationIssueAsset.Builder, io.bumo.sdk.core.extend.protobuf.Chain.OperationIssueAssetOrBuilder> issueAssetBuilder_;
       /**
-       * <code>optional .protocol.OperationIssueAsset issue_asset = 5;</code>
+       * <code>.protocol.OperationIssueAsset issue_asset = 5;</code>
        */
       public boolean hasIssueAsset() {
         return issueAssetBuilder_ != null || issueAsset_ != null;
       }
       /**
-       * <code>optional .protocol.OperationIssueAsset issue_asset = 5;</code>
+       * <code>.protocol.OperationIssueAsset issue_asset = 5;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.OperationIssueAsset getIssueAsset() {
         if (issueAssetBuilder_ == null) {
@@ -14180,7 +15907,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional .protocol.OperationIssueAsset issue_asset = 5;</code>
+       * <code>.protocol.OperationIssueAsset issue_asset = 5;</code>
        */
       public Builder setIssueAsset(io.bumo.sdk.core.extend.protobuf.Chain.OperationIssueAsset value) {
         if (issueAssetBuilder_ == null) {
@@ -14196,7 +15923,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.OperationIssueAsset issue_asset = 5;</code>
+       * <code>.protocol.OperationIssueAsset issue_asset = 5;</code>
        */
       public Builder setIssueAsset(
           io.bumo.sdk.core.extend.protobuf.Chain.OperationIssueAsset.Builder builderForValue) {
@@ -14210,7 +15937,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.OperationIssueAsset issue_asset = 5;</code>
+       * <code>.protocol.OperationIssueAsset issue_asset = 5;</code>
        */
       public Builder mergeIssueAsset(io.bumo.sdk.core.extend.protobuf.Chain.OperationIssueAsset value) {
         if (issueAssetBuilder_ == null) {
@@ -14228,7 +15955,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.OperationIssueAsset issue_asset = 5;</code>
+       * <code>.protocol.OperationIssueAsset issue_asset = 5;</code>
        */
       public Builder clearIssueAsset() {
         if (issueAssetBuilder_ == null) {
@@ -14242,7 +15969,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.OperationIssueAsset issue_asset = 5;</code>
+       * <code>.protocol.OperationIssueAsset issue_asset = 5;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.OperationIssueAsset.Builder getIssueAssetBuilder() {
         
@@ -14250,7 +15977,7 @@ public final class Chain {
         return getIssueAssetFieldBuilder().getBuilder();
       }
       /**
-       * <code>optional .protocol.OperationIssueAsset issue_asset = 5;</code>
+       * <code>.protocol.OperationIssueAsset issue_asset = 5;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.OperationIssueAssetOrBuilder getIssueAssetOrBuilder() {
         if (issueAssetBuilder_ != null) {
@@ -14261,7 +15988,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional .protocol.OperationIssueAsset issue_asset = 5;</code>
+       * <code>.protocol.OperationIssueAsset issue_asset = 5;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           io.bumo.sdk.core.extend.protobuf.Chain.OperationIssueAsset, io.bumo.sdk.core.extend.protobuf.Chain.OperationIssueAsset.Builder, io.bumo.sdk.core.extend.protobuf.Chain.OperationIssueAssetOrBuilder> 
@@ -14281,13 +16008,13 @@ public final class Chain {
       private com.google.protobuf.SingleFieldBuilderV3<
           io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset, io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset.Builder, io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAssetOrBuilder> payAssetBuilder_;
       /**
-       * <code>optional .protocol.OperationPayAsset pay_asset = 6;</code>
+       * <code>.protocol.OperationPayAsset pay_asset = 6;</code>
        */
       public boolean hasPayAsset() {
         return payAssetBuilder_ != null || payAsset_ != null;
       }
       /**
-       * <code>optional .protocol.OperationPayAsset pay_asset = 6;</code>
+       * <code>.protocol.OperationPayAsset pay_asset = 6;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset getPayAsset() {
         if (payAssetBuilder_ == null) {
@@ -14297,7 +16024,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional .protocol.OperationPayAsset pay_asset = 6;</code>
+       * <code>.protocol.OperationPayAsset pay_asset = 6;</code>
        */
       public Builder setPayAsset(io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset value) {
         if (payAssetBuilder_ == null) {
@@ -14313,7 +16040,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.OperationPayAsset pay_asset = 6;</code>
+       * <code>.protocol.OperationPayAsset pay_asset = 6;</code>
        */
       public Builder setPayAsset(
           io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset.Builder builderForValue) {
@@ -14327,7 +16054,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.OperationPayAsset pay_asset = 6;</code>
+       * <code>.protocol.OperationPayAsset pay_asset = 6;</code>
        */
       public Builder mergePayAsset(io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset value) {
         if (payAssetBuilder_ == null) {
@@ -14345,7 +16072,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.OperationPayAsset pay_asset = 6;</code>
+       * <code>.protocol.OperationPayAsset pay_asset = 6;</code>
        */
       public Builder clearPayAsset() {
         if (payAssetBuilder_ == null) {
@@ -14359,7 +16086,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.OperationPayAsset pay_asset = 6;</code>
+       * <code>.protocol.OperationPayAsset pay_asset = 6;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset.Builder getPayAssetBuilder() {
         
@@ -14367,7 +16094,7 @@ public final class Chain {
         return getPayAssetFieldBuilder().getBuilder();
       }
       /**
-       * <code>optional .protocol.OperationPayAsset pay_asset = 6;</code>
+       * <code>.protocol.OperationPayAsset pay_asset = 6;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAssetOrBuilder getPayAssetOrBuilder() {
         if (payAssetBuilder_ != null) {
@@ -14378,7 +16105,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional .protocol.OperationPayAsset pay_asset = 6;</code>
+       * <code>.protocol.OperationPayAsset pay_asset = 6;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset, io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAsset.Builder, io.bumo.sdk.core.extend.protobuf.Chain.OperationPayAssetOrBuilder> 
@@ -14398,13 +16125,13 @@ public final class Chain {
       private com.google.protobuf.SingleFieldBuilderV3<
           io.bumo.sdk.core.extend.protobuf.Chain.OperationSetMetadata, io.bumo.sdk.core.extend.protobuf.Chain.OperationSetMetadata.Builder, io.bumo.sdk.core.extend.protobuf.Chain.OperationSetMetadataOrBuilder> setMetadataBuilder_;
       /**
-       * <code>optional .protocol.OperationSetMetadata set_metadata = 7;</code>
+       * <code>.protocol.OperationSetMetadata set_metadata = 7;</code>
        */
       public boolean hasSetMetadata() {
         return setMetadataBuilder_ != null || setMetadata_ != null;
       }
       /**
-       * <code>optional .protocol.OperationSetMetadata set_metadata = 7;</code>
+       * <code>.protocol.OperationSetMetadata set_metadata = 7;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.OperationSetMetadata getSetMetadata() {
         if (setMetadataBuilder_ == null) {
@@ -14414,7 +16141,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional .protocol.OperationSetMetadata set_metadata = 7;</code>
+       * <code>.protocol.OperationSetMetadata set_metadata = 7;</code>
        */
       public Builder setSetMetadata(io.bumo.sdk.core.extend.protobuf.Chain.OperationSetMetadata value) {
         if (setMetadataBuilder_ == null) {
@@ -14430,7 +16157,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.OperationSetMetadata set_metadata = 7;</code>
+       * <code>.protocol.OperationSetMetadata set_metadata = 7;</code>
        */
       public Builder setSetMetadata(
           io.bumo.sdk.core.extend.protobuf.Chain.OperationSetMetadata.Builder builderForValue) {
@@ -14444,7 +16171,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.OperationSetMetadata set_metadata = 7;</code>
+       * <code>.protocol.OperationSetMetadata set_metadata = 7;</code>
        */
       public Builder mergeSetMetadata(io.bumo.sdk.core.extend.protobuf.Chain.OperationSetMetadata value) {
         if (setMetadataBuilder_ == null) {
@@ -14462,7 +16189,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.OperationSetMetadata set_metadata = 7;</code>
+       * <code>.protocol.OperationSetMetadata set_metadata = 7;</code>
        */
       public Builder clearSetMetadata() {
         if (setMetadataBuilder_ == null) {
@@ -14476,7 +16203,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.OperationSetMetadata set_metadata = 7;</code>
+       * <code>.protocol.OperationSetMetadata set_metadata = 7;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.OperationSetMetadata.Builder getSetMetadataBuilder() {
         
@@ -14484,7 +16211,7 @@ public final class Chain {
         return getSetMetadataFieldBuilder().getBuilder();
       }
       /**
-       * <code>optional .protocol.OperationSetMetadata set_metadata = 7;</code>
+       * <code>.protocol.OperationSetMetadata set_metadata = 7;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.OperationSetMetadataOrBuilder getSetMetadataOrBuilder() {
         if (setMetadataBuilder_ != null) {
@@ -14495,7 +16222,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional .protocol.OperationSetMetadata set_metadata = 7;</code>
+       * <code>.protocol.OperationSetMetadata set_metadata = 7;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           io.bumo.sdk.core.extend.protobuf.Chain.OperationSetMetadata, io.bumo.sdk.core.extend.protobuf.Chain.OperationSetMetadata.Builder, io.bumo.sdk.core.extend.protobuf.Chain.OperationSetMetadataOrBuilder> 
@@ -14515,13 +16242,13 @@ public final class Chain {
       private com.google.protobuf.SingleFieldBuilderV3<
           io.bumo.sdk.core.extend.protobuf.Chain.OperationSetSignerWeight, io.bumo.sdk.core.extend.protobuf.Chain.OperationSetSignerWeight.Builder, io.bumo.sdk.core.extend.protobuf.Chain.OperationSetSignerWeightOrBuilder> setSignerWeightBuilder_;
       /**
-       * <code>optional .protocol.OperationSetSignerWeight set_signer_weight = 8;</code>
+       * <code>.protocol.OperationSetSignerWeight set_signer_weight = 8;</code>
        */
       public boolean hasSetSignerWeight() {
         return setSignerWeightBuilder_ != null || setSignerWeight_ != null;
       }
       /**
-       * <code>optional .protocol.OperationSetSignerWeight set_signer_weight = 8;</code>
+       * <code>.protocol.OperationSetSignerWeight set_signer_weight = 8;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.OperationSetSignerWeight getSetSignerWeight() {
         if (setSignerWeightBuilder_ == null) {
@@ -14531,7 +16258,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional .protocol.OperationSetSignerWeight set_signer_weight = 8;</code>
+       * <code>.protocol.OperationSetSignerWeight set_signer_weight = 8;</code>
        */
       public Builder setSetSignerWeight(io.bumo.sdk.core.extend.protobuf.Chain.OperationSetSignerWeight value) {
         if (setSignerWeightBuilder_ == null) {
@@ -14547,7 +16274,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.OperationSetSignerWeight set_signer_weight = 8;</code>
+       * <code>.protocol.OperationSetSignerWeight set_signer_weight = 8;</code>
        */
       public Builder setSetSignerWeight(
           io.bumo.sdk.core.extend.protobuf.Chain.OperationSetSignerWeight.Builder builderForValue) {
@@ -14561,7 +16288,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.OperationSetSignerWeight set_signer_weight = 8;</code>
+       * <code>.protocol.OperationSetSignerWeight set_signer_weight = 8;</code>
        */
       public Builder mergeSetSignerWeight(io.bumo.sdk.core.extend.protobuf.Chain.OperationSetSignerWeight value) {
         if (setSignerWeightBuilder_ == null) {
@@ -14579,7 +16306,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.OperationSetSignerWeight set_signer_weight = 8;</code>
+       * <code>.protocol.OperationSetSignerWeight set_signer_weight = 8;</code>
        */
       public Builder clearSetSignerWeight() {
         if (setSignerWeightBuilder_ == null) {
@@ -14593,7 +16320,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.OperationSetSignerWeight set_signer_weight = 8;</code>
+       * <code>.protocol.OperationSetSignerWeight set_signer_weight = 8;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.OperationSetSignerWeight.Builder getSetSignerWeightBuilder() {
         
@@ -14601,7 +16328,7 @@ public final class Chain {
         return getSetSignerWeightFieldBuilder().getBuilder();
       }
       /**
-       * <code>optional .protocol.OperationSetSignerWeight set_signer_weight = 8;</code>
+       * <code>.protocol.OperationSetSignerWeight set_signer_weight = 8;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.OperationSetSignerWeightOrBuilder getSetSignerWeightOrBuilder() {
         if (setSignerWeightBuilder_ != null) {
@@ -14612,7 +16339,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional .protocol.OperationSetSignerWeight set_signer_weight = 8;</code>
+       * <code>.protocol.OperationSetSignerWeight set_signer_weight = 8;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           io.bumo.sdk.core.extend.protobuf.Chain.OperationSetSignerWeight, io.bumo.sdk.core.extend.protobuf.Chain.OperationSetSignerWeight.Builder, io.bumo.sdk.core.extend.protobuf.Chain.OperationSetSignerWeightOrBuilder> 
@@ -14632,13 +16359,13 @@ public final class Chain {
       private com.google.protobuf.SingleFieldBuilderV3<
           io.bumo.sdk.core.extend.protobuf.Chain.OperationSetThreshold, io.bumo.sdk.core.extend.protobuf.Chain.OperationSetThreshold.Builder, io.bumo.sdk.core.extend.protobuf.Chain.OperationSetThresholdOrBuilder> setThresholdBuilder_;
       /**
-       * <code>optional .protocol.OperationSetThreshold set_threshold = 9;</code>
+       * <code>.protocol.OperationSetThreshold set_threshold = 9;</code>
        */
       public boolean hasSetThreshold() {
         return setThresholdBuilder_ != null || setThreshold_ != null;
       }
       /**
-       * <code>optional .protocol.OperationSetThreshold set_threshold = 9;</code>
+       * <code>.protocol.OperationSetThreshold set_threshold = 9;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.OperationSetThreshold getSetThreshold() {
         if (setThresholdBuilder_ == null) {
@@ -14648,7 +16375,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional .protocol.OperationSetThreshold set_threshold = 9;</code>
+       * <code>.protocol.OperationSetThreshold set_threshold = 9;</code>
        */
       public Builder setSetThreshold(io.bumo.sdk.core.extend.protobuf.Chain.OperationSetThreshold value) {
         if (setThresholdBuilder_ == null) {
@@ -14664,7 +16391,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.OperationSetThreshold set_threshold = 9;</code>
+       * <code>.protocol.OperationSetThreshold set_threshold = 9;</code>
        */
       public Builder setSetThreshold(
           io.bumo.sdk.core.extend.protobuf.Chain.OperationSetThreshold.Builder builderForValue) {
@@ -14678,7 +16405,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.OperationSetThreshold set_threshold = 9;</code>
+       * <code>.protocol.OperationSetThreshold set_threshold = 9;</code>
        */
       public Builder mergeSetThreshold(io.bumo.sdk.core.extend.protobuf.Chain.OperationSetThreshold value) {
         if (setThresholdBuilder_ == null) {
@@ -14696,7 +16423,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.OperationSetThreshold set_threshold = 9;</code>
+       * <code>.protocol.OperationSetThreshold set_threshold = 9;</code>
        */
       public Builder clearSetThreshold() {
         if (setThresholdBuilder_ == null) {
@@ -14710,7 +16437,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.OperationSetThreshold set_threshold = 9;</code>
+       * <code>.protocol.OperationSetThreshold set_threshold = 9;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.OperationSetThreshold.Builder getSetThresholdBuilder() {
         
@@ -14718,7 +16445,7 @@ public final class Chain {
         return getSetThresholdFieldBuilder().getBuilder();
       }
       /**
-       * <code>optional .protocol.OperationSetThreshold set_threshold = 9;</code>
+       * <code>.protocol.OperationSetThreshold set_threshold = 9;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.OperationSetThresholdOrBuilder getSetThresholdOrBuilder() {
         if (setThresholdBuilder_ != null) {
@@ -14729,7 +16456,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional .protocol.OperationSetThreshold set_threshold = 9;</code>
+       * <code>.protocol.OperationSetThreshold set_threshold = 9;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           io.bumo.sdk.core.extend.protobuf.Chain.OperationSetThreshold, io.bumo.sdk.core.extend.protobuf.Chain.OperationSetThreshold.Builder, io.bumo.sdk.core.extend.protobuf.Chain.OperationSetThresholdOrBuilder> 
@@ -14749,13 +16476,13 @@ public final class Chain {
       private com.google.protobuf.SingleFieldBuilderV3<
           io.bumo.sdk.core.extend.protobuf.Chain.OperationPayCoin, io.bumo.sdk.core.extend.protobuf.Chain.OperationPayCoin.Builder, io.bumo.sdk.core.extend.protobuf.Chain.OperationPayCoinOrBuilder> payCoinBuilder_;
       /**
-       * <code>optional .protocol.OperationPayCoin pay_coin = 10;</code>
+       * <code>.protocol.OperationPayCoin pay_coin = 10;</code>
        */
       public boolean hasPayCoin() {
         return payCoinBuilder_ != null || payCoin_ != null;
       }
       /**
-       * <code>optional .protocol.OperationPayCoin pay_coin = 10;</code>
+       * <code>.protocol.OperationPayCoin pay_coin = 10;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.OperationPayCoin getPayCoin() {
         if (payCoinBuilder_ == null) {
@@ -14765,7 +16492,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional .protocol.OperationPayCoin pay_coin = 10;</code>
+       * <code>.protocol.OperationPayCoin pay_coin = 10;</code>
        */
       public Builder setPayCoin(io.bumo.sdk.core.extend.protobuf.Chain.OperationPayCoin value) {
         if (payCoinBuilder_ == null) {
@@ -14781,7 +16508,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.OperationPayCoin pay_coin = 10;</code>
+       * <code>.protocol.OperationPayCoin pay_coin = 10;</code>
        */
       public Builder setPayCoin(
           io.bumo.sdk.core.extend.protobuf.Chain.OperationPayCoin.Builder builderForValue) {
@@ -14795,7 +16522,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.OperationPayCoin pay_coin = 10;</code>
+       * <code>.protocol.OperationPayCoin pay_coin = 10;</code>
        */
       public Builder mergePayCoin(io.bumo.sdk.core.extend.protobuf.Chain.OperationPayCoin value) {
         if (payCoinBuilder_ == null) {
@@ -14813,7 +16540,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.OperationPayCoin pay_coin = 10;</code>
+       * <code>.protocol.OperationPayCoin pay_coin = 10;</code>
        */
       public Builder clearPayCoin() {
         if (payCoinBuilder_ == null) {
@@ -14827,7 +16554,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.OperationPayCoin pay_coin = 10;</code>
+       * <code>.protocol.OperationPayCoin pay_coin = 10;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.OperationPayCoin.Builder getPayCoinBuilder() {
         
@@ -14835,7 +16562,7 @@ public final class Chain {
         return getPayCoinFieldBuilder().getBuilder();
       }
       /**
-       * <code>optional .protocol.OperationPayCoin pay_coin = 10;</code>
+       * <code>.protocol.OperationPayCoin pay_coin = 10;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.OperationPayCoinOrBuilder getPayCoinOrBuilder() {
         if (payCoinBuilder_ != null) {
@@ -14846,7 +16573,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional .protocol.OperationPayCoin pay_coin = 10;</code>
+       * <code>.protocol.OperationPayCoin pay_coin = 10;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           io.bumo.sdk.core.extend.protobuf.Chain.OperationPayCoin, io.bumo.sdk.core.extend.protobuf.Chain.OperationPayCoin.Builder, io.bumo.sdk.core.extend.protobuf.Chain.OperationPayCoinOrBuilder> 
@@ -14866,13 +16593,13 @@ public final class Chain {
       private com.google.protobuf.SingleFieldBuilderV3<
           io.bumo.sdk.core.extend.protobuf.Chain.OperationLog, io.bumo.sdk.core.extend.protobuf.Chain.OperationLog.Builder, io.bumo.sdk.core.extend.protobuf.Chain.OperationLogOrBuilder> logBuilder_;
       /**
-       * <code>optional .protocol.OperationLog log = 11;</code>
+       * <code>.protocol.OperationLog log = 11;</code>
        */
       public boolean hasLog() {
         return logBuilder_ != null || log_ != null;
       }
       /**
-       * <code>optional .protocol.OperationLog log = 11;</code>
+       * <code>.protocol.OperationLog log = 11;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.OperationLog getLog() {
         if (logBuilder_ == null) {
@@ -14882,7 +16609,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional .protocol.OperationLog log = 11;</code>
+       * <code>.protocol.OperationLog log = 11;</code>
        */
       public Builder setLog(io.bumo.sdk.core.extend.protobuf.Chain.OperationLog value) {
         if (logBuilder_ == null) {
@@ -14898,7 +16625,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.OperationLog log = 11;</code>
+       * <code>.protocol.OperationLog log = 11;</code>
        */
       public Builder setLog(
           io.bumo.sdk.core.extend.protobuf.Chain.OperationLog.Builder builderForValue) {
@@ -14912,7 +16639,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.OperationLog log = 11;</code>
+       * <code>.protocol.OperationLog log = 11;</code>
        */
       public Builder mergeLog(io.bumo.sdk.core.extend.protobuf.Chain.OperationLog value) {
         if (logBuilder_ == null) {
@@ -14930,7 +16657,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.OperationLog log = 11;</code>
+       * <code>.protocol.OperationLog log = 11;</code>
        */
       public Builder clearLog() {
         if (logBuilder_ == null) {
@@ -14944,7 +16671,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.OperationLog log = 11;</code>
+       * <code>.protocol.OperationLog log = 11;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.OperationLog.Builder getLogBuilder() {
         
@@ -14952,7 +16679,7 @@ public final class Chain {
         return getLogFieldBuilder().getBuilder();
       }
       /**
-       * <code>optional .protocol.OperationLog log = 11;</code>
+       * <code>.protocol.OperationLog log = 11;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.OperationLogOrBuilder getLogOrBuilder() {
         if (logBuilder_ != null) {
@@ -14963,7 +16690,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional .protocol.OperationLog log = 11;</code>
+       * <code>.protocol.OperationLog log = 11;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           io.bumo.sdk.core.extend.protobuf.Chain.OperationLog, io.bumo.sdk.core.extend.protobuf.Chain.OperationLog.Builder, io.bumo.sdk.core.extend.protobuf.Chain.OperationLogOrBuilder> 
@@ -14978,14 +16705,131 @@ public final class Chain {
         }
         return logBuilder_;
       }
+
+      private io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilege setPrivilege_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilege, io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilege.Builder, io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilegeOrBuilder> setPrivilegeBuilder_;
+      /**
+       * <code>.protocol.OperationSetPrivilege set_privilege = 12;</code>
+       */
+      public boolean hasSetPrivilege() {
+        return setPrivilegeBuilder_ != null || setPrivilege_ != null;
+      }
+      /**
+       * <code>.protocol.OperationSetPrivilege set_privilege = 12;</code>
+       */
+      public io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilege getSetPrivilege() {
+        if (setPrivilegeBuilder_ == null) {
+          return setPrivilege_ == null ? io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilege.getDefaultInstance() : setPrivilege_;
+        } else {
+          return setPrivilegeBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>.protocol.OperationSetPrivilege set_privilege = 12;</code>
+       */
+      public Builder setSetPrivilege(io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilege value) {
+        if (setPrivilegeBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          setPrivilege_ = value;
+          onChanged();
+        } else {
+          setPrivilegeBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.protocol.OperationSetPrivilege set_privilege = 12;</code>
+       */
+      public Builder setSetPrivilege(
+          io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilege.Builder builderForValue) {
+        if (setPrivilegeBuilder_ == null) {
+          setPrivilege_ = builderForValue.build();
+          onChanged();
+        } else {
+          setPrivilegeBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <code>.protocol.OperationSetPrivilege set_privilege = 12;</code>
+       */
+      public Builder mergeSetPrivilege(io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilege value) {
+        if (setPrivilegeBuilder_ == null) {
+          if (setPrivilege_ != null) {
+            setPrivilege_ =
+              io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilege.newBuilder(setPrivilege_).mergeFrom(value).buildPartial();
+          } else {
+            setPrivilege_ = value;
+          }
+          onChanged();
+        } else {
+          setPrivilegeBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.protocol.OperationSetPrivilege set_privilege = 12;</code>
+       */
+      public Builder clearSetPrivilege() {
+        if (setPrivilegeBuilder_ == null) {
+          setPrivilege_ = null;
+          onChanged();
+        } else {
+          setPrivilege_ = null;
+          setPrivilegeBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <code>.protocol.OperationSetPrivilege set_privilege = 12;</code>
+       */
+      public io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilege.Builder getSetPrivilegeBuilder() {
+        
+        onChanged();
+        return getSetPrivilegeFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.protocol.OperationSetPrivilege set_privilege = 12;</code>
+       */
+      public io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilegeOrBuilder getSetPrivilegeOrBuilder() {
+        if (setPrivilegeBuilder_ != null) {
+          return setPrivilegeBuilder_.getMessageOrBuilder();
+        } else {
+          return setPrivilege_ == null ?
+              io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilege.getDefaultInstance() : setPrivilege_;
+        }
+      }
+      /**
+       * <code>.protocol.OperationSetPrivilege set_privilege = 12;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilege, io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilege.Builder, io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilegeOrBuilder> 
+          getSetPrivilegeFieldBuilder() {
+        if (setPrivilegeBuilder_ == null) {
+          setPrivilegeBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilege, io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilege.Builder, io.bumo.sdk.core.extend.protobuf.Chain.OperationSetPrivilegeOrBuilder>(
+                  getSetPrivilege(),
+                  getParentForChildren(),
+                  isClean());
+          setPrivilege_ = null;
+        }
+        return setPrivilegeBuilder_;
+      }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.setUnknownFieldsProto3(unknownFields);
       }
 
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.mergeUnknownFields(unknownFields);
       }
 
 
@@ -15008,7 +16852,7 @@ public final class Chain {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new Operation(input, extensionRegistry);
+        return new Operation(input, extensionRegistry);
       }
     };
 
@@ -15032,50 +16876,50 @@ public final class Chain {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>optional int64 tx_threshold = 1;</code>
+     * <code>int64 tx_threshold = 1;</code>
      */
     long getTxThreshold();
 
     /**
      * <pre>
-     *type:threshold threshold:0 ɾ͵type
+     *type:threshold, threshold:0 indicate deleting this type
      * </pre>
      *
-     * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
+     * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
      */
     java.util.List<io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold> 
         getTypeThresholdsList();
     /**
      * <pre>
-     *type:threshold threshold:0 ɾ͵type
+     *type:threshold, threshold:0 indicate deleting this type
      * </pre>
      *
-     * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
+     * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
      */
     io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold getTypeThresholds(int index);
     /**
      * <pre>
-     *type:threshold threshold:0 ɾ͵type
+     *type:threshold, threshold:0 indicate deleting this type
      * </pre>
      *
-     * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
+     * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
      */
     int getTypeThresholdsCount();
     /**
      * <pre>
-     *
+     *type:threshold, threshold:0 indicate deleting this type
      * </pre>
      *
-     * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
+     * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
      */
     java.util.List<? extends io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThresholdOrBuilder> 
         getTypeThresholdsOrBuilderList();
     /**
      * <pre>
-     *
+     *type:threshold, threshold:0 indicate deleting this type
      * </pre>
      *
-     * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
+     * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
      */
     io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThresholdOrBuilder getTypeThresholdsOrBuilder(
         int index);
@@ -15087,6 +16931,7 @@ public final class Chain {
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:protocol.OperationSetThreshold)
       OperationSetThresholdOrBuilder {
+  private static final long serialVersionUID = 0L;
     // Use OperationSetThreshold.newBuilder() to construct.
     private OperationSetThreshold(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -15099,14 +16944,19 @@ public final class Chain {
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
-      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+      return this.unknownFields;
     }
     private OperationSetThreshold(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
         boolean done = false;
         while (!done) {
@@ -15116,7 +16966,8 @@ public final class Chain {
               done = true;
               break;
             default: {
-              if (!input.skipField(tag)) {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
               break;
@@ -15126,7 +16977,7 @@ public final class Chain {
               txThreshold_ = input.readInt64();
               break;
             }
-            case 34: {
+            case 18: {
               if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
                 typeThresholds_ = new java.util.ArrayList<io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold>();
                 mutable_bitField0_ |= 0x00000002;
@@ -15146,6 +16997,7 @@ public final class Chain {
         if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
           typeThresholds_ = java.util.Collections.unmodifiableList(typeThresholds_);
         }
+        this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
     }
@@ -15165,30 +17017,30 @@ public final class Chain {
     public static final int TX_THRESHOLD_FIELD_NUMBER = 1;
     private long txThreshold_;
     /**
-     * <code>optional int64 tx_threshold = 1;</code>
+     * <code>int64 tx_threshold = 1;</code>
      */
     public long getTxThreshold() {
       return txThreshold_;
     }
 
-    public static final int TYPE_THRESHOLDS_FIELD_NUMBER = 4;
+    public static final int TYPE_THRESHOLDS_FIELD_NUMBER = 2;
     private java.util.List<io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold> typeThresholds_;
     /**
      * <pre>
-     *
+     *type:threshold, threshold:0 indicate deleting this type
      * </pre>
      *
-     * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
+     * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
      */
     public java.util.List<io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold> getTypeThresholdsList() {
       return typeThresholds_;
     }
     /**
      * <pre>
-     *
+     *type:threshold, threshold:0 indicate deleting this type
      * </pre>
      *
-     * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
+     * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
      */
     public java.util.List<? extends io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThresholdOrBuilder> 
         getTypeThresholdsOrBuilderList() {
@@ -15196,30 +17048,30 @@ public final class Chain {
     }
     /**
      * <pre>
-     *
+     *type:threshold, threshold:0 indicate deleting this type
      * </pre>
      *
-     * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
+     * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
      */
     public int getTypeThresholdsCount() {
       return typeThresholds_.size();
     }
     /**
      * <pre>
-     *
+     *type:threshold, threshold:0 indicate deleting this type
      * </pre>
      *
-     * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
+     * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
      */
     public io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold getTypeThresholds(int index) {
       return typeThresholds_.get(index);
     }
     /**
      * <pre>
-     *
+     *type:threshold, threshold:0 indicate deleting this type
      * </pre>
      *
-     * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
+     * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
      */
     public io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThresholdOrBuilder getTypeThresholdsOrBuilder(
         int index) {
@@ -15242,8 +17094,9 @@ public final class Chain {
         output.writeInt64(1, txThreshold_);
       }
       for (int i = 0; i < typeThresholds_.size(); i++) {
-        output.writeMessage(4, typeThresholds_.get(i));
+        output.writeMessage(2, typeThresholds_.get(i));
       }
+      unknownFields.writeTo(output);
     }
 
     public int getSerializedSize() {
@@ -15257,13 +17110,13 @@ public final class Chain {
       }
       for (int i = 0; i < typeThresholds_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(4, typeThresholds_.get(i));
+          .computeMessageSize(2, typeThresholds_.get(i));
       }
+      size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
     }
 
-    private static final long serialVersionUID = 0L;
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -15279,6 +17132,7 @@ public final class Chain {
           == other.getTxThreshold());
       result = result && getTypeThresholdsList()
           .equals(other.getTypeThresholdsList());
+      result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
 
@@ -15288,7 +17142,7 @@ public final class Chain {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptorForType().hashCode();
+      hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + TX_THRESHOLD_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
           getTxThreshold());
@@ -15301,6 +17155,17 @@ public final class Chain {
       return hash;
     }
 
+    public static io.bumo.sdk.core.extend.protobuf.Chain.OperationSetThreshold parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static io.bumo.sdk.core.extend.protobuf.Chain.OperationSetThreshold parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
     public static io.bumo.sdk.core.extend.protobuf.Chain.OperationSetThreshold parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -15467,7 +17332,7 @@ public final class Chain {
       }
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
       public Builder clearField(
@@ -15480,12 +17345,12 @@ public final class Chain {
       }
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, Object value) {
+          int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -15528,6 +17393,7 @@ public final class Chain {
             }
           }
         }
+        this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
       }
@@ -15557,13 +17423,13 @@ public final class Chain {
 
       private long txThreshold_ ;
       /**
-       * <code>optional int64 tx_threshold = 1;</code>
+       * <code>int64 tx_threshold = 1;</code>
        */
       public long getTxThreshold() {
         return txThreshold_;
       }
       /**
-       * <code>optional int64 tx_threshold = 1;</code>
+       * <code>int64 tx_threshold = 1;</code>
        */
       public Builder setTxThreshold(long value) {
         
@@ -15572,7 +17438,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional int64 tx_threshold = 1;</code>
+       * <code>int64 tx_threshold = 1;</code>
        */
       public Builder clearTxThreshold() {
         
@@ -15595,10 +17461,10 @@ public final class Chain {
 
       /**
        * <pre>
-       *
+       *type:threshold, threshold:0 indicate deleting this type
        * </pre>
        *
-       * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
+       * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
        */
       public java.util.List<io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold> getTypeThresholdsList() {
         if (typeThresholdsBuilder_ == null) {
@@ -15609,10 +17475,10 @@ public final class Chain {
       }
       /**
        * <pre>
-       *
+       *type:threshold, threshold:0 indicate deleting this type
        * </pre>
        *
-       * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
+       * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
        */
       public int getTypeThresholdsCount() {
         if (typeThresholdsBuilder_ == null) {
@@ -15623,10 +17489,10 @@ public final class Chain {
       }
       /**
        * <pre>
-       *
+       *type:threshold, threshold:0 indicate deleting this type
        * </pre>
        *
-       * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
+       * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold getTypeThresholds(int index) {
         if (typeThresholdsBuilder_ == null) {
@@ -15637,10 +17503,10 @@ public final class Chain {
       }
       /**
        * <pre>
-       *
+       *type:threshold, threshold:0 indicate deleting this type
        * </pre>
        *
-       * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
+       * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
        */
       public Builder setTypeThresholds(
           int index, io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold value) {
@@ -15658,10 +17524,10 @@ public final class Chain {
       }
       /**
        * <pre>
-       *
+       *type:threshold, threshold:0 indicate deleting this type
        * </pre>
        *
-       * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
+       * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
        */
       public Builder setTypeThresholds(
           int index, io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold.Builder builderForValue) {
@@ -15676,10 +17542,10 @@ public final class Chain {
       }
       /**
        * <pre>
-       *
+       *type:threshold, threshold:0 indicate deleting this type
        * </pre>
        *
-       * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
+       * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
        */
       public Builder addTypeThresholds(io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold value) {
         if (typeThresholdsBuilder_ == null) {
@@ -15696,10 +17562,10 @@ public final class Chain {
       }
       /**
        * <pre>
-       *
+       *type:threshold, threshold:0 indicate deleting this type
        * </pre>
        *
-       * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
+       * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
        */
       public Builder addTypeThresholds(
           int index, io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold value) {
@@ -15717,10 +17583,10 @@ public final class Chain {
       }
       /**
        * <pre>
-       *
+       *type:threshold, threshold:0 indicate deleting this type
        * </pre>
        *
-       * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
+       * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
        */
       public Builder addTypeThresholds(
           io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold.Builder builderForValue) {
@@ -15735,10 +17601,10 @@ public final class Chain {
       }
       /**
        * <pre>
-       *
+       *type:threshold, threshold:0 indicate deleting this type
        * </pre>
        *
-       * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
+       * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
        */
       public Builder addTypeThresholds(
           int index, io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold.Builder builderForValue) {
@@ -15753,10 +17619,10 @@ public final class Chain {
       }
       /**
        * <pre>
-       *
+       *type:threshold, threshold:0 indicate deleting this type
        * </pre>
        *
-       * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
+       * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
        */
       public Builder addAllTypeThresholds(
           java.lang.Iterable<? extends io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold> values) {
@@ -15772,10 +17638,10 @@ public final class Chain {
       }
       /**
        * <pre>
-       *
+       *type:threshold, threshold:0 indicate deleting this type
        * </pre>
        *
-       * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
+       * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
        */
       public Builder clearTypeThresholds() {
         if (typeThresholdsBuilder_ == null) {
@@ -15789,10 +17655,10 @@ public final class Chain {
       }
       /**
        * <pre>
-       *
+       *type:threshold, threshold:0 indicate deleting this type
        * </pre>
        *
-       * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
+       * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
        */
       public Builder removeTypeThresholds(int index) {
         if (typeThresholdsBuilder_ == null) {
@@ -15806,10 +17672,10 @@ public final class Chain {
       }
       /**
        * <pre>
-       *
+       *type:threshold, threshold:0 indicate deleting this type
        * </pre>
        *
-       * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
+       * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold.Builder getTypeThresholdsBuilder(
           int index) {
@@ -15817,10 +17683,10 @@ public final class Chain {
       }
       /**
        * <pre>
-       *
+       *type:threshold, threshold:0 indicate deleting this type
        * </pre>
        *
-       * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
+       * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThresholdOrBuilder getTypeThresholdsOrBuilder(
           int index) {
@@ -15831,10 +17697,10 @@ public final class Chain {
       }
       /**
        * <pre>
-       *
+       *type:threshold, threshold:0 indicate deleting this type
        * </pre>
        *
-       * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
+       * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
        */
       public java.util.List<? extends io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThresholdOrBuilder> 
            getTypeThresholdsOrBuilderList() {
@@ -15846,10 +17712,10 @@ public final class Chain {
       }
       /**
        * <pre>
-       *
+       *type:threshold, threshold:0 indicate deleting this type
        * </pre>
        *
-       * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
+       * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold.Builder addTypeThresholdsBuilder() {
         return getTypeThresholdsFieldBuilder().addBuilder(
@@ -15857,10 +17723,10 @@ public final class Chain {
       }
       /**
        * <pre>
-       *
+       *type:threshold, threshold:0 indicate deleting this type
        * </pre>
        *
-       * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
+       * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold.Builder addTypeThresholdsBuilder(
           int index) {
@@ -15869,10 +17735,10 @@ public final class Chain {
       }
       /**
        * <pre>
-       *
+       *type:threshold, threshold:0 indicate deleting this type
        * </pre>
        *
-       * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
+       * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
        */
       public java.util.List<io.bumo.sdk.core.extend.protobuf.Chain.OperationTypeThreshold.Builder> 
            getTypeThresholdsBuilderList() {
@@ -15894,12 +17760,12 @@ public final class Chain {
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.setUnknownFieldsProto3(unknownFields);
       }
 
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.mergeUnknownFields(unknownFields);
       }
 
 
@@ -15922,7 +17788,7 @@ public final class Chain {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new OperationSetThreshold(input, extensionRegistry);
+        return new OperationSetThreshold(input, extensionRegistry);
       }
     };
 
@@ -15946,37 +17812,37 @@ public final class Chain {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>optional string source_address = 1;</code>
+     * <code>string source_address = 1;</code>
      */
     java.lang.String getSourceAddress();
     /**
-     * <code>optional string source_address = 1;</code>
+     * <code>string source_address = 1;</code>
      */
     com.google.protobuf.ByteString
         getSourceAddressBytes();
 
     /**
-     * <code>optional int64 nonce = 2;</code>
+     * <code>int64 nonce = 2;</code>
      */
     long getNonce();
 
     /**
-     * <code>optional int64 fee_limit = 3;</code>
+     * <code>int64 fee_limit = 3;</code>
      */
     long getFeeLimit();
 
     /**
-     * <code>optional int64 gas_price = 4;</code>
+     * <code>int64 gas_price = 4;</code>
      */
     long getGasPrice();
 
     /**
-     * <code>optional int64 ceil_ledger_seq = 5;</code>
+     * <code>int64 ceil_ledger_seq = 5;</code>
      */
     long getCeilLedgerSeq();
 
     /**
-     * <code>optional bytes metadata = 6;</code>
+     * <code>bytes metadata = 6;</code>
      */
     com.google.protobuf.ByteString getMetadata();
 
@@ -16011,6 +17877,7 @@ public final class Chain {
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:protocol.Transaction)
       TransactionOrBuilder {
+  private static final long serialVersionUID = 0L;
     // Use Transaction.newBuilder() to construct.
     private Transaction(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -16028,14 +17895,19 @@ public final class Chain {
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
-      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+      return this.unknownFields;
     }
     private Transaction(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
         boolean done = false;
         while (!done) {
@@ -16045,7 +17917,8 @@ public final class Chain {
               done = true;
               break;
             default: {
-              if (!input.skipField(tag)) {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
               break;
@@ -16101,6 +17974,7 @@ public final class Chain {
         if (((mutable_bitField0_ & 0x00000040) == 0x00000040)) {
           operations_ = java.util.Collections.unmodifiableList(operations_);
         }
+        this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
     }
@@ -16218,7 +18092,7 @@ public final class Chain {
     public static final int SOURCE_ADDRESS_FIELD_NUMBER = 1;
     private volatile java.lang.Object sourceAddress_;
     /**
-     * <code>optional string source_address = 1;</code>
+     * <code>string source_address = 1;</code>
      */
     public java.lang.String getSourceAddress() {
       java.lang.Object ref = sourceAddress_;
@@ -16233,7 +18107,7 @@ public final class Chain {
       }
     }
     /**
-     * <code>optional string source_address = 1;</code>
+     * <code>string source_address = 1;</code>
      */
     public com.google.protobuf.ByteString
         getSourceAddressBytes() {
@@ -16252,7 +18126,7 @@ public final class Chain {
     public static final int NONCE_FIELD_NUMBER = 2;
     private long nonce_;
     /**
-     * <code>optional int64 nonce = 2;</code>
+     * <code>int64 nonce = 2;</code>
      */
     public long getNonce() {
       return nonce_;
@@ -16261,7 +18135,7 @@ public final class Chain {
     public static final int FEE_LIMIT_FIELD_NUMBER = 3;
     private long feeLimit_;
     /**
-     * <code>optional int64 fee_limit = 3;</code>
+     * <code>int64 fee_limit = 3;</code>
      */
     public long getFeeLimit() {
       return feeLimit_;
@@ -16270,7 +18144,7 @@ public final class Chain {
     public static final int GAS_PRICE_FIELD_NUMBER = 4;
     private long gasPrice_;
     /**
-     * <code>optional int64 gas_price = 4;</code>
+     * <code>int64 gas_price = 4;</code>
      */
     public long getGasPrice() {
       return gasPrice_;
@@ -16279,7 +18153,7 @@ public final class Chain {
     public static final int CEIL_LEDGER_SEQ_FIELD_NUMBER = 5;
     private long ceilLedgerSeq_;
     /**
-     * <code>optional int64 ceil_ledger_seq = 5;</code>
+     * <code>int64 ceil_ledger_seq = 5;</code>
      */
     public long getCeilLedgerSeq() {
       return ceilLedgerSeq_;
@@ -16288,7 +18162,7 @@ public final class Chain {
     public static final int METADATA_FIELD_NUMBER = 6;
     private com.google.protobuf.ByteString metadata_;
     /**
-     * <code>optional bytes metadata = 6;</code>
+     * <code>bytes metadata = 6;</code>
      */
     public com.google.protobuf.ByteString getMetadata() {
       return metadata_;
@@ -16362,6 +18236,7 @@ public final class Chain {
       for (int i = 0; i < operations_.size(); i++) {
         output.writeMessage(7, operations_.get(i));
       }
+      unknownFields.writeTo(output);
     }
 
     public int getSerializedSize() {
@@ -16396,11 +18271,11 @@ public final class Chain {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(7, operations_.get(i));
       }
+      size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
     }
 
-    private static final long serialVersionUID = 0L;
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -16426,6 +18301,7 @@ public final class Chain {
           .equals(other.getMetadata());
       result = result && getOperationsList()
           .equals(other.getOperationsList());
+      result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
 
@@ -16435,7 +18311,7 @@ public final class Chain {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptorForType().hashCode();
+      hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + SOURCE_ADDRESS_FIELD_NUMBER;
       hash = (53 * hash) + getSourceAddress().hashCode();
       hash = (37 * hash) + NONCE_FIELD_NUMBER;
@@ -16461,6 +18337,17 @@ public final class Chain {
       return hash;
     }
 
+    public static io.bumo.sdk.core.extend.protobuf.Chain.Transaction parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static io.bumo.sdk.core.extend.protobuf.Chain.Transaction parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
     public static io.bumo.sdk.core.extend.protobuf.Chain.Transaction parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -16642,7 +18529,7 @@ public final class Chain {
       }
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
       public Builder clearField(
@@ -16655,12 +18542,12 @@ public final class Chain {
       }
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, Object value) {
+          int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -16719,6 +18606,7 @@ public final class Chain {
             }
           }
         }
+        this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
       }
@@ -16748,7 +18636,7 @@ public final class Chain {
 
       private java.lang.Object sourceAddress_ = "";
       /**
-       * <code>optional string source_address = 1;</code>
+       * <code>string source_address = 1;</code>
        */
       public java.lang.String getSourceAddress() {
         java.lang.Object ref = sourceAddress_;
@@ -16763,7 +18651,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional string source_address = 1;</code>
+       * <code>string source_address = 1;</code>
        */
       public com.google.protobuf.ByteString
           getSourceAddressBytes() {
@@ -16779,7 +18667,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional string source_address = 1;</code>
+       * <code>string source_address = 1;</code>
        */
       public Builder setSourceAddress(
           java.lang.String value) {
@@ -16792,7 +18680,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional string source_address = 1;</code>
+       * <code>string source_address = 1;</code>
        */
       public Builder clearSourceAddress() {
         
@@ -16801,7 +18689,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional string source_address = 1;</code>
+       * <code>string source_address = 1;</code>
        */
       public Builder setSourceAddressBytes(
           com.google.protobuf.ByteString value) {
@@ -16817,13 +18705,13 @@ public final class Chain {
 
       private long nonce_ ;
       /**
-       * <code>optional int64 nonce = 2;</code>
+       * <code>int64 nonce = 2;</code>
        */
       public long getNonce() {
         return nonce_;
       }
       /**
-       * <code>optional int64 nonce = 2;</code>
+       * <code>int64 nonce = 2;</code>
        */
       public Builder setNonce(long value) {
         
@@ -16832,7 +18720,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional int64 nonce = 2;</code>
+       * <code>int64 nonce = 2;</code>
        */
       public Builder clearNonce() {
         
@@ -16843,13 +18731,13 @@ public final class Chain {
 
       private long feeLimit_ ;
       /**
-       * <code>optional int64 fee_limit = 3;</code>
+       * <code>int64 fee_limit = 3;</code>
        */
       public long getFeeLimit() {
         return feeLimit_;
       }
       /**
-       * <code>optional int64 fee_limit = 3;</code>
+       * <code>int64 fee_limit = 3;</code>
        */
       public Builder setFeeLimit(long value) {
         
@@ -16858,7 +18746,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional int64 fee_limit = 3;</code>
+       * <code>int64 fee_limit = 3;</code>
        */
       public Builder clearFeeLimit() {
         
@@ -16869,13 +18757,13 @@ public final class Chain {
 
       private long gasPrice_ ;
       /**
-       * <code>optional int64 gas_price = 4;</code>
+       * <code>int64 gas_price = 4;</code>
        */
       public long getGasPrice() {
         return gasPrice_;
       }
       /**
-       * <code>optional int64 gas_price = 4;</code>
+       * <code>int64 gas_price = 4;</code>
        */
       public Builder setGasPrice(long value) {
         
@@ -16884,7 +18772,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional int64 gas_price = 4;</code>
+       * <code>int64 gas_price = 4;</code>
        */
       public Builder clearGasPrice() {
         
@@ -16895,13 +18783,13 @@ public final class Chain {
 
       private long ceilLedgerSeq_ ;
       /**
-       * <code>optional int64 ceil_ledger_seq = 5;</code>
+       * <code>int64 ceil_ledger_seq = 5;</code>
        */
       public long getCeilLedgerSeq() {
         return ceilLedgerSeq_;
       }
       /**
-       * <code>optional int64 ceil_ledger_seq = 5;</code>
+       * <code>int64 ceil_ledger_seq = 5;</code>
        */
       public Builder setCeilLedgerSeq(long value) {
         
@@ -16910,7 +18798,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional int64 ceil_ledger_seq = 5;</code>
+       * <code>int64 ceil_ledger_seq = 5;</code>
        */
       public Builder clearCeilLedgerSeq() {
         
@@ -16921,13 +18809,13 @@ public final class Chain {
 
       private com.google.protobuf.ByteString metadata_ = com.google.protobuf.ByteString.EMPTY;
       /**
-       * <code>optional bytes metadata = 6;</code>
+       * <code>bytes metadata = 6;</code>
        */
       public com.google.protobuf.ByteString getMetadata() {
         return metadata_;
       }
       /**
-       * <code>optional bytes metadata = 6;</code>
+       * <code>bytes metadata = 6;</code>
        */
       public Builder setMetadata(com.google.protobuf.ByteString value) {
         if (value == null) {
@@ -16939,7 +18827,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional bytes metadata = 6;</code>
+       * <code>bytes metadata = 6;</code>
        */
       public Builder clearMetadata() {
         
@@ -17189,12 +19077,12 @@ public final class Chain {
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.setUnknownFieldsProto3(unknownFields);
       }
 
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.mergeUnknownFields(unknownFields);
       }
 
 
@@ -17217,7 +19105,7 @@ public final class Chain {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new Transaction(input, extensionRegistry);
+        return new Transaction(input, extensionRegistry);
       }
     };
 
@@ -17241,17 +19129,17 @@ public final class Chain {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>optional string address = 1;</code>
+     * <code>string address = 1;</code>
      */
     java.lang.String getAddress();
     /**
-     * <code>optional string address = 1;</code>
+     * <code>string address = 1;</code>
      */
     com.google.protobuf.ByteString
         getAddressBytes();
 
     /**
-     * <code>optional int64 weight = 2;</code>
+     * <code>int64 weight = 2;</code>
      */
     long getWeight();
   }
@@ -17262,6 +19150,7 @@ public final class Chain {
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:protocol.Signer)
       SignerOrBuilder {
+  private static final long serialVersionUID = 0L;
     // Use Signer.newBuilder() to construct.
     private Signer(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -17274,14 +19163,19 @@ public final class Chain {
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
-      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+      return this.unknownFields;
     }
     private Signer(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
         boolean done = false;
         while (!done) {
@@ -17291,7 +19185,8 @@ public final class Chain {
               done = true;
               break;
             default: {
-              if (!input.skipField(tag)) {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
               break;
@@ -17315,6 +19210,7 @@ public final class Chain {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
+        this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
     }
@@ -17431,7 +19327,7 @@ public final class Chain {
     public static final int ADDRESS_FIELD_NUMBER = 1;
     private volatile java.lang.Object address_;
     /**
-     * <code>optional string address = 1;</code>
+     * <code>string address = 1;</code>
      */
     public java.lang.String getAddress() {
       java.lang.Object ref = address_;
@@ -17446,7 +19342,7 @@ public final class Chain {
       }
     }
     /**
-     * <code>optional string address = 1;</code>
+     * <code>string address = 1;</code>
      */
     public com.google.protobuf.ByteString
         getAddressBytes() {
@@ -17465,7 +19361,7 @@ public final class Chain {
     public static final int WEIGHT_FIELD_NUMBER = 2;
     private long weight_;
     /**
-     * <code>optional int64 weight = 2;</code>
+     * <code>int64 weight = 2;</code>
      */
     public long getWeight() {
       return weight_;
@@ -17489,6 +19385,7 @@ public final class Chain {
       if (weight_ != 0L) {
         output.writeInt64(2, weight_);
       }
+      unknownFields.writeTo(output);
     }
 
     public int getSerializedSize() {
@@ -17503,11 +19400,11 @@ public final class Chain {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(2, weight_);
       }
+      size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
     }
 
-    private static final long serialVersionUID = 0L;
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -17523,6 +19420,7 @@ public final class Chain {
           .equals(other.getAddress());
       result = result && (getWeight()
           == other.getWeight());
+      result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
 
@@ -17532,7 +19430,7 @@ public final class Chain {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptorForType().hashCode();
+      hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + ADDRESS_FIELD_NUMBER;
       hash = (53 * hash) + getAddress().hashCode();
       hash = (37 * hash) + WEIGHT_FIELD_NUMBER;
@@ -17543,6 +19441,17 @@ public final class Chain {
       return hash;
     }
 
+    public static io.bumo.sdk.core.extend.protobuf.Chain.Signer parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static io.bumo.sdk.core.extend.protobuf.Chain.Signer parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
     public static io.bumo.sdk.core.extend.protobuf.Chain.Signer parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -17693,7 +19602,7 @@ public final class Chain {
       }
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
       public Builder clearField(
@@ -17706,12 +19615,12 @@ public final class Chain {
       }
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, Object value) {
+          int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -17732,6 +19641,7 @@ public final class Chain {
         if (other.getWeight() != 0L) {
           setWeight(other.getWeight());
         }
+        this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
       }
@@ -17760,7 +19670,7 @@ public final class Chain {
 
       private java.lang.Object address_ = "";
       /**
-       * <code>optional string address = 1;</code>
+       * <code>string address = 1;</code>
        */
       public java.lang.String getAddress() {
         java.lang.Object ref = address_;
@@ -17775,7 +19685,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional string address = 1;</code>
+       * <code>string address = 1;</code>
        */
       public com.google.protobuf.ByteString
           getAddressBytes() {
@@ -17791,7 +19701,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional string address = 1;</code>
+       * <code>string address = 1;</code>
        */
       public Builder setAddress(
           java.lang.String value) {
@@ -17804,7 +19714,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional string address = 1;</code>
+       * <code>string address = 1;</code>
        */
       public Builder clearAddress() {
         
@@ -17813,7 +19723,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional string address = 1;</code>
+       * <code>string address = 1;</code>
        */
       public Builder setAddressBytes(
           com.google.protobuf.ByteString value) {
@@ -17829,13 +19739,13 @@ public final class Chain {
 
       private long weight_ ;
       /**
-       * <code>optional int64 weight = 2;</code>
+       * <code>int64 weight = 2;</code>
        */
       public long getWeight() {
         return weight_;
       }
       /**
-       * <code>optional int64 weight = 2;</code>
+       * <code>int64 weight = 2;</code>
        */
       public Builder setWeight(long value) {
         
@@ -17844,7 +19754,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional int64 weight = 2;</code>
+       * <code>int64 weight = 2;</code>
        */
       public Builder clearWeight() {
         
@@ -17854,12 +19764,12 @@ public final class Chain {
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.setUnknownFieldsProto3(unknownFields);
       }
 
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.mergeUnknownFields(unknownFields);
       }
 
 
@@ -17882,7 +19792,7 @@ public final class Chain {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new Signer(input, extensionRegistry);
+        return new Signer(input, extensionRegistry);
       }
     };
 
@@ -17906,45 +19816,45 @@ public final class Chain {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>optional .protocol.Trigger.TransactionType transaction_type = 1;</code>
+     * <code>.protocol.Trigger.TransactionType transaction_type = 1;</code>
      */
     int getTransactionTypeValue();
     /**
-     * <code>optional .protocol.Trigger.TransactionType transaction_type = 1;</code>
+     * <code>.protocol.Trigger.TransactionType transaction_type = 1;</code>
      */
     io.bumo.sdk.core.extend.protobuf.Chain.Trigger.TransactionType getTransactionType();
 
     /**
      * <pre>
-     *
+     *If it is triggered by a specific block (temporarily not provided)
      * </pre>
      *
-     * <code>optional int64 ledger_seq = 2;</code>
+     * <code>int64 ledger_seq = 2;</code>
      */
     long getLedgerSeq();
 
     /**
      * <pre>
-     *
+     *If it's a transaction triggered
      * </pre>
      *
-     * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
+     * <code>.protocol.Trigger.OperationTrigger transaction = 3;</code>
      */
     boolean hasTransaction();
     /**
      * <pre>
-     *
+     *If it's a transaction triggered
      * </pre>
      *
-     * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
+     * <code>.protocol.Trigger.OperationTrigger transaction = 3;</code>
      */
     io.bumo.sdk.core.extend.protobuf.Chain.Trigger.OperationTrigger getTransaction();
     /**
      * <pre>
-     *
+     *If it's a transaction triggered
      * </pre>
      *
-     * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
+     * <code>.protocol.Trigger.OperationTrigger transaction = 3;</code>
      */
     io.bumo.sdk.core.extend.protobuf.Chain.Trigger.OperationTriggerOrBuilder getTransactionOrBuilder();
   }
@@ -17955,6 +19865,7 @@ public final class Chain {
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:protocol.Trigger)
       TriggerOrBuilder {
+  private static final long serialVersionUID = 0L;
     // Use Trigger.newBuilder() to construct.
     private Trigger(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -17967,14 +19878,19 @@ public final class Chain {
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
-      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+      return this.unknownFields;
     }
     private Trigger(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
         boolean done = false;
         while (!done) {
@@ -17984,7 +19900,8 @@ public final class Chain {
               done = true;
               break;
             default: {
-              if (!input.skipField(tag)) {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
               break;
@@ -18021,6 +19938,7 @@ public final class Chain {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
+        this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
     }
@@ -18139,12 +20057,12 @@ public final class Chain {
         com.google.protobuf.MessageOrBuilder {
 
       /**
-       * <code>optional bytes hash = 1;</code>
+       * <code>bytes hash = 1;</code>
        */
       com.google.protobuf.ByteString getHash();
 
       /**
-       * <code>optional int64 index = 2;</code>
+       * <code>int64 index = 2;</code>
        */
       long getIndex();
     }
@@ -18155,6 +20073,7 @@ public final class Chain {
         com.google.protobuf.GeneratedMessageV3 implements
         // @@protoc_insertion_point(message_implements:protocol.Trigger.OperationTrigger)
         OperationTriggerOrBuilder {
+    private static final long serialVersionUID = 0L;
       // Use OperationTrigger.newBuilder() to construct.
       private OperationTrigger(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
         super(builder);
@@ -18167,14 +20086,19 @@ public final class Chain {
       @java.lang.Override
       public final com.google.protobuf.UnknownFieldSet
       getUnknownFields() {
-        return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+        return this.unknownFields;
       }
       private OperationTrigger(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
         this();
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
         int mutable_bitField0_ = 0;
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+            com.google.protobuf.UnknownFieldSet.newBuilder();
         try {
           boolean done = false;
           while (!done) {
@@ -18184,7 +20108,8 @@ public final class Chain {
                 done = true;
                 break;
               default: {
-                if (!input.skipField(tag)) {
+                if (!parseUnknownFieldProto3(
+                    input, unknownFields, extensionRegistry, tag)) {
                   done = true;
                 }
                 break;
@@ -18207,6 +20132,7 @@ public final class Chain {
           throw new com.google.protobuf.InvalidProtocolBufferException(
               e).setUnfinishedMessage(this);
         } finally {
+          this.unknownFields = unknownFields.build();
           makeExtensionsImmutable();
         }
       }
@@ -18225,7 +20151,7 @@ public final class Chain {
       public static final int HASH_FIELD_NUMBER = 1;
       private com.google.protobuf.ByteString hash_;
       /**
-       * <code>optional bytes hash = 1;</code>
+       * <code>bytes hash = 1;</code>
        */
       public com.google.protobuf.ByteString getHash() {
         return hash_;
@@ -18234,7 +20160,7 @@ public final class Chain {
       public static final int INDEX_FIELD_NUMBER = 2;
       private long index_;
       /**
-       * <code>optional int64 index = 2;</code>
+       * <code>int64 index = 2;</code>
        */
       public long getIndex() {
         return index_;
@@ -18258,6 +20184,7 @@ public final class Chain {
         if (index_ != 0L) {
           output.writeInt64(2, index_);
         }
+        unknownFields.writeTo(output);
       }
 
       public int getSerializedSize() {
@@ -18273,11 +20200,11 @@ public final class Chain {
           size += com.google.protobuf.CodedOutputStream
             .computeInt64Size(2, index_);
         }
+        size += unknownFields.getSerializedSize();
         memoizedSize = size;
         return size;
       }
 
-      private static final long serialVersionUID = 0L;
       @java.lang.Override
       public boolean equals(final java.lang.Object obj) {
         if (obj == this) {
@@ -18293,6 +20220,7 @@ public final class Chain {
             .equals(other.getHash());
         result = result && (getIndex()
             == other.getIndex());
+        result = result && unknownFields.equals(other.unknownFields);
         return result;
       }
 
@@ -18302,7 +20230,7 @@ public final class Chain {
           return memoizedHashCode;
         }
         int hash = 41;
-        hash = (19 * hash) + getDescriptorForType().hashCode();
+        hash = (19 * hash) + getDescriptor().hashCode();
         hash = (37 * hash) + HASH_FIELD_NUMBER;
         hash = (53 * hash) + getHash().hashCode();
         hash = (37 * hash) + INDEX_FIELD_NUMBER;
@@ -18313,6 +20241,17 @@ public final class Chain {
         return hash;
       }
 
+      public static io.bumo.sdk.core.extend.protobuf.Chain.Trigger.OperationTrigger parseFrom(
+          java.nio.ByteBuffer data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+      }
+      public static io.bumo.sdk.core.extend.protobuf.Chain.Trigger.OperationTrigger parseFrom(
+          java.nio.ByteBuffer data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+      }
       public static io.bumo.sdk.core.extend.protobuf.Chain.Trigger.OperationTrigger parseFrom(
           com.google.protobuf.ByteString data)
           throws com.google.protobuf.InvalidProtocolBufferException {
@@ -18463,7 +20402,7 @@ public final class Chain {
         }
         public Builder setField(
             com.google.protobuf.Descriptors.FieldDescriptor field,
-            Object value) {
+            java.lang.Object value) {
           return (Builder) super.setField(field, value);
         }
         public Builder clearField(
@@ -18476,12 +20415,12 @@ public final class Chain {
         }
         public Builder setRepeatedField(
             com.google.protobuf.Descriptors.FieldDescriptor field,
-            int index, Object value) {
+            int index, java.lang.Object value) {
           return (Builder) super.setRepeatedField(field, index, value);
         }
         public Builder addRepeatedField(
             com.google.protobuf.Descriptors.FieldDescriptor field,
-            Object value) {
+            java.lang.Object value) {
           return (Builder) super.addRepeatedField(field, value);
         }
         public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -18501,6 +20440,7 @@ public final class Chain {
           if (other.getIndex() != 0L) {
             setIndex(other.getIndex());
           }
+          this.mergeUnknownFields(other.unknownFields);
           onChanged();
           return this;
         }
@@ -18529,13 +20469,13 @@ public final class Chain {
 
         private com.google.protobuf.ByteString hash_ = com.google.protobuf.ByteString.EMPTY;
         /**
-         * <code>optional bytes hash = 1;</code>
+         * <code>bytes hash = 1;</code>
          */
         public com.google.protobuf.ByteString getHash() {
           return hash_;
         }
         /**
-         * <code>optional bytes hash = 1;</code>
+         * <code>bytes hash = 1;</code>
          */
         public Builder setHash(com.google.protobuf.ByteString value) {
           if (value == null) {
@@ -18547,7 +20487,7 @@ public final class Chain {
           return this;
         }
         /**
-         * <code>optional bytes hash = 1;</code>
+         * <code>bytes hash = 1;</code>
          */
         public Builder clearHash() {
           
@@ -18558,13 +20498,13 @@ public final class Chain {
 
         private long index_ ;
         /**
-         * <code>optional int64 index = 2;</code>
+         * <code>int64 index = 2;</code>
          */
         public long getIndex() {
           return index_;
         }
         /**
-         * <code>optional int64 index = 2;</code>
+         * <code>int64 index = 2;</code>
          */
         public Builder setIndex(long value) {
           
@@ -18573,7 +20513,7 @@ public final class Chain {
           return this;
         }
         /**
-         * <code>optional int64 index = 2;</code>
+         * <code>int64 index = 2;</code>
          */
         public Builder clearIndex() {
           
@@ -18583,12 +20523,12 @@ public final class Chain {
         }
         public final Builder setUnknownFields(
             final com.google.protobuf.UnknownFieldSet unknownFields) {
-          return this;
+          return super.setUnknownFieldsProto3(unknownFields);
         }
 
         public final Builder mergeUnknownFields(
             final com.google.protobuf.UnknownFieldSet unknownFields) {
-          return this;
+          return super.mergeUnknownFields(unknownFields);
         }
 
 
@@ -18611,7 +20551,7 @@ public final class Chain {
             com.google.protobuf.CodedInputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws com.google.protobuf.InvalidProtocolBufferException {
-            return new OperationTrigger(input, extensionRegistry);
+          return new OperationTrigger(input, extensionRegistry);
         }
       };
 
@@ -18633,13 +20573,13 @@ public final class Chain {
     public static final int TRANSACTION_TYPE_FIELD_NUMBER = 1;
     private int transactionType_;
     /**
-     * <code>optional .protocol.Trigger.TransactionType transaction_type = 1;</code>
+     * <code>.protocol.Trigger.TransactionType transaction_type = 1;</code>
      */
     public int getTransactionTypeValue() {
       return transactionType_;
     }
     /**
-     * <code>optional .protocol.Trigger.TransactionType transaction_type = 1;</code>
+     * <code>.protocol.Trigger.TransactionType transaction_type = 1;</code>
      */
     public io.bumo.sdk.core.extend.protobuf.Chain.Trigger.TransactionType getTransactionType() {
       io.bumo.sdk.core.extend.protobuf.Chain.Trigger.TransactionType result = io.bumo.sdk.core.extend.protobuf.Chain.Trigger.TransactionType.valueOf(transactionType_);
@@ -18650,10 +20590,10 @@ public final class Chain {
     private long ledgerSeq_;
     /**
      * <pre>
-     *
+     *If it is triggered by a specific block (temporarily not provided)
      * </pre>
      *
-     * <code>optional int64 ledger_seq = 2;</code>
+     * <code>int64 ledger_seq = 2;</code>
      */
     public long getLedgerSeq() {
       return ledgerSeq_;
@@ -18663,30 +20603,30 @@ public final class Chain {
     private io.bumo.sdk.core.extend.protobuf.Chain.Trigger.OperationTrigger transaction_;
     /**
      * <pre>
-     *
+     *If it's a transaction triggered
      * </pre>
      *
-     * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
+     * <code>.protocol.Trigger.OperationTrigger transaction = 3;</code>
      */
     public boolean hasTransaction() {
       return transaction_ != null;
     }
     /**
      * <pre>
-     *
+     *If it's a transaction triggered
      * </pre>
      *
-     * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
+     * <code>.protocol.Trigger.OperationTrigger transaction = 3;</code>
      */
     public io.bumo.sdk.core.extend.protobuf.Chain.Trigger.OperationTrigger getTransaction() {
       return transaction_ == null ? io.bumo.sdk.core.extend.protobuf.Chain.Trigger.OperationTrigger.getDefaultInstance() : transaction_;
     }
     /**
      * <pre>
-     *
+     *If it's a transaction triggered
      * </pre>
      *
-     * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
+     * <code>.protocol.Trigger.OperationTrigger transaction = 3;</code>
      */
     public io.bumo.sdk.core.extend.protobuf.Chain.Trigger.OperationTriggerOrBuilder getTransactionOrBuilder() {
       return getTransaction();
@@ -18713,6 +20653,7 @@ public final class Chain {
       if (transaction_ != null) {
         output.writeMessage(3, getTransaction());
       }
+      unknownFields.writeTo(output);
     }
 
     public int getSerializedSize() {
@@ -18732,11 +20673,11 @@ public final class Chain {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(3, getTransaction());
       }
+      size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
     }
 
-    private static final long serialVersionUID = 0L;
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -18756,6 +20697,7 @@ public final class Chain {
         result = result && getTransaction()
             .equals(other.getTransaction());
       }
+      result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
 
@@ -18765,7 +20707,7 @@ public final class Chain {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptorForType().hashCode();
+      hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + TRANSACTION_TYPE_FIELD_NUMBER;
       hash = (53 * hash) + transactionType_;
       hash = (37 * hash) + LEDGER_SEQ_FIELD_NUMBER;
@@ -18780,6 +20722,17 @@ public final class Chain {
       return hash;
     }
 
+    public static io.bumo.sdk.core.extend.protobuf.Chain.Trigger parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static io.bumo.sdk.core.extend.protobuf.Chain.Trigger parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
     public static io.bumo.sdk.core.extend.protobuf.Chain.Trigger parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -18941,7 +20894,7 @@ public final class Chain {
       }
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
       public Builder clearField(
@@ -18954,12 +20907,12 @@ public final class Chain {
       }
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, Object value) {
+          int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -18982,6 +20935,7 @@ public final class Chain {
         if (other.hasTransaction()) {
           mergeTransaction(other.getTransaction());
         }
+        this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
       }
@@ -19010,13 +20964,13 @@ public final class Chain {
 
       private int transactionType_ = 0;
       /**
-       * <code>optional .protocol.Trigger.TransactionType transaction_type = 1;</code>
+       * <code>.protocol.Trigger.TransactionType transaction_type = 1;</code>
        */
       public int getTransactionTypeValue() {
         return transactionType_;
       }
       /**
-       * <code>optional .protocol.Trigger.TransactionType transaction_type = 1;</code>
+       * <code>.protocol.Trigger.TransactionType transaction_type = 1;</code>
        */
       public Builder setTransactionTypeValue(int value) {
         transactionType_ = value;
@@ -19024,14 +20978,14 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.Trigger.TransactionType transaction_type = 1;</code>
+       * <code>.protocol.Trigger.TransactionType transaction_type = 1;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.Trigger.TransactionType getTransactionType() {
         io.bumo.sdk.core.extend.protobuf.Chain.Trigger.TransactionType result = io.bumo.sdk.core.extend.protobuf.Chain.Trigger.TransactionType.valueOf(transactionType_);
         return result == null ? io.bumo.sdk.core.extend.protobuf.Chain.Trigger.TransactionType.UNRECOGNIZED : result;
       }
       /**
-       * <code>optional .protocol.Trigger.TransactionType transaction_type = 1;</code>
+       * <code>.protocol.Trigger.TransactionType transaction_type = 1;</code>
        */
       public Builder setTransactionType(io.bumo.sdk.core.extend.protobuf.Chain.Trigger.TransactionType value) {
         if (value == null) {
@@ -19043,7 +20997,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.Trigger.TransactionType transaction_type = 1;</code>
+       * <code>.protocol.Trigger.TransactionType transaction_type = 1;</code>
        */
       public Builder clearTransactionType() {
         
@@ -19055,20 +21009,20 @@ public final class Chain {
       private long ledgerSeq_ ;
       /**
        * <pre>
-       *
+       *If it is triggered by a specific block (temporarily not provided)
        * </pre>
        *
-       * <code>optional int64 ledger_seq = 2;</code>
+       * <code>int64 ledger_seq = 2;</code>
        */
       public long getLedgerSeq() {
         return ledgerSeq_;
       }
       /**
        * <pre>
-       *
+       *If it is triggered by a specific block (temporarily not provided)
        * </pre>
        *
-       * <code>optional int64 ledger_seq = 2;</code>
+       * <code>int64 ledger_seq = 2;</code>
        */
       public Builder setLedgerSeq(long value) {
         
@@ -19078,10 +21032,10 @@ public final class Chain {
       }
       /**
        * <pre>
-       *
+       *If it is triggered by a specific block (temporarily not provided)
        * </pre>
        *
-       * <code>optional int64 ledger_seq = 2;</code>
+       * <code>int64 ledger_seq = 2;</code>
        */
       public Builder clearLedgerSeq() {
         
@@ -19095,20 +21049,20 @@ public final class Chain {
           io.bumo.sdk.core.extend.protobuf.Chain.Trigger.OperationTrigger, io.bumo.sdk.core.extend.protobuf.Chain.Trigger.OperationTrigger.Builder, io.bumo.sdk.core.extend.protobuf.Chain.Trigger.OperationTriggerOrBuilder> transactionBuilder_;
       /**
        * <pre>
-       *
+       *If it's a transaction triggered
        * </pre>
        *
-       * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
+       * <code>.protocol.Trigger.OperationTrigger transaction = 3;</code>
        */
       public boolean hasTransaction() {
         return transactionBuilder_ != null || transaction_ != null;
       }
       /**
        * <pre>
-       *
+       *If it's a transaction triggered
        * </pre>
        *
-       * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
+       * <code>.protocol.Trigger.OperationTrigger transaction = 3;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.Trigger.OperationTrigger getTransaction() {
         if (transactionBuilder_ == null) {
@@ -19119,10 +21073,10 @@ public final class Chain {
       }
       /**
        * <pre>
-       *
+       *If it's a transaction triggered
        * </pre>
        *
-       * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
+       * <code>.protocol.Trigger.OperationTrigger transaction = 3;</code>
        */
       public Builder setTransaction(io.bumo.sdk.core.extend.protobuf.Chain.Trigger.OperationTrigger value) {
         if (transactionBuilder_ == null) {
@@ -19139,10 +21093,10 @@ public final class Chain {
       }
       /**
        * <pre>
-       *
+       *If it's a transaction triggered
        * </pre>
        *
-       * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
+       * <code>.protocol.Trigger.OperationTrigger transaction = 3;</code>
        */
       public Builder setTransaction(
           io.bumo.sdk.core.extend.protobuf.Chain.Trigger.OperationTrigger.Builder builderForValue) {
@@ -19157,10 +21111,10 @@ public final class Chain {
       }
       /**
        * <pre>
-       *
+       *If it's a transaction triggered
        * </pre>
        *
-       * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
+       * <code>.protocol.Trigger.OperationTrigger transaction = 3;</code>
        */
       public Builder mergeTransaction(io.bumo.sdk.core.extend.protobuf.Chain.Trigger.OperationTrigger value) {
         if (transactionBuilder_ == null) {
@@ -19179,10 +21133,10 @@ public final class Chain {
       }
       /**
        * <pre>
-       *
+       *If it's a transaction triggered
        * </pre>
        *
-       * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
+       * <code>.protocol.Trigger.OperationTrigger transaction = 3;</code>
        */
       public Builder clearTransaction() {
         if (transactionBuilder_ == null) {
@@ -19197,10 +21151,10 @@ public final class Chain {
       }
       /**
        * <pre>
-       *
+       *If it's a transaction triggered
        * </pre>
        *
-       * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
+       * <code>.protocol.Trigger.OperationTrigger transaction = 3;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.Trigger.OperationTrigger.Builder getTransactionBuilder() {
         
@@ -19209,10 +21163,10 @@ public final class Chain {
       }
       /**
        * <pre>
-       *
+       *If it's a transaction triggered
        * </pre>
        *
-       * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
+       * <code>.protocol.Trigger.OperationTrigger transaction = 3;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.Trigger.OperationTriggerOrBuilder getTransactionOrBuilder() {
         if (transactionBuilder_ != null) {
@@ -19224,10 +21178,10 @@ public final class Chain {
       }
       /**
        * <pre>
-       *
+       *If it's a transaction triggered
        * </pre>
        *
-       * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
+       * <code>.protocol.Trigger.OperationTrigger transaction = 3;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           io.bumo.sdk.core.extend.protobuf.Chain.Trigger.OperationTrigger, io.bumo.sdk.core.extend.protobuf.Chain.Trigger.OperationTrigger.Builder, io.bumo.sdk.core.extend.protobuf.Chain.Trigger.OperationTriggerOrBuilder> 
@@ -19244,12 +21198,12 @@ public final class Chain {
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.setUnknownFieldsProto3(unknownFields);
       }
 
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.mergeUnknownFields(unknownFields);
       }
 
 
@@ -19272,7 +21226,7 @@ public final class Chain {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new Trigger(input, extensionRegistry);
+        return new Trigger(input, extensionRegistry);
       }
     };
 
@@ -19296,15 +21250,15 @@ public final class Chain {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>optional .protocol.Transaction transaction = 1;</code>
+     * <code>.protocol.Transaction transaction = 1;</code>
      */
     boolean hasTransaction();
     /**
-     * <code>optional .protocol.Transaction transaction = 1;</code>
+     * <code>.protocol.Transaction transaction = 1;</code>
      */
     io.bumo.sdk.core.extend.protobuf.Chain.Transaction getTransaction();
     /**
-     * <code>optional .protocol.Transaction transaction = 1;</code>
+     * <code>.protocol.Transaction transaction = 1;</code>
      */
     io.bumo.sdk.core.extend.protobuf.Chain.TransactionOrBuilder getTransactionOrBuilder();
 
@@ -19333,15 +21287,15 @@ public final class Chain {
         int index);
 
     /**
-     * <code>optional .protocol.Trigger trigger = 3;</code>
+     * <code>.protocol.Trigger trigger = 3;</code>
      */
     boolean hasTrigger();
     /**
-     * <code>optional .protocol.Trigger trigger = 3;</code>
+     * <code>.protocol.Trigger trigger = 3;</code>
      */
     io.bumo.sdk.core.extend.protobuf.Chain.Trigger getTrigger();
     /**
-     * <code>optional .protocol.Trigger trigger = 3;</code>
+     * <code>.protocol.Trigger trigger = 3;</code>
      */
     io.bumo.sdk.core.extend.protobuf.Chain.TriggerOrBuilder getTriggerOrBuilder();
   }
@@ -19352,6 +21306,7 @@ public final class Chain {
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:protocol.TransactionEnv)
       TransactionEnvOrBuilder {
+  private static final long serialVersionUID = 0L;
     // Use TransactionEnv.newBuilder() to construct.
     private TransactionEnv(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -19363,14 +21318,19 @@ public final class Chain {
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
-      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+      return this.unknownFields;
     }
     private TransactionEnv(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
         boolean done = false;
         while (!done) {
@@ -19380,7 +21340,8 @@ public final class Chain {
               done = true;
               break;
             default: {
-              if (!input.skipField(tag)) {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
               break;
@@ -19431,6 +21392,7 @@ public final class Chain {
         if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
           signatures_ = java.util.Collections.unmodifiableList(signatures_);
         }
+        this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
     }
@@ -19450,19 +21412,19 @@ public final class Chain {
     public static final int TRANSACTION_FIELD_NUMBER = 1;
     private io.bumo.sdk.core.extend.protobuf.Chain.Transaction transaction_;
     /**
-     * <code>optional .protocol.Transaction transaction = 1;</code>
+     * <code>.protocol.Transaction transaction = 1;</code>
      */
     public boolean hasTransaction() {
       return transaction_ != null;
     }
     /**
-     * <code>optional .protocol.Transaction transaction = 1;</code>
+     * <code>.protocol.Transaction transaction = 1;</code>
      */
     public io.bumo.sdk.core.extend.protobuf.Chain.Transaction getTransaction() {
       return transaction_ == null ? io.bumo.sdk.core.extend.protobuf.Chain.Transaction.getDefaultInstance() : transaction_;
     }
     /**
-     * <code>optional .protocol.Transaction transaction = 1;</code>
+     * <code>.protocol.Transaction transaction = 1;</code>
      */
     public io.bumo.sdk.core.extend.protobuf.Chain.TransactionOrBuilder getTransactionOrBuilder() {
       return getTransaction();
@@ -19506,19 +21468,19 @@ public final class Chain {
     public static final int TRIGGER_FIELD_NUMBER = 3;
     private io.bumo.sdk.core.extend.protobuf.Chain.Trigger trigger_;
     /**
-     * <code>optional .protocol.Trigger trigger = 3;</code>
+     * <code>.protocol.Trigger trigger = 3;</code>
      */
     public boolean hasTrigger() {
       return trigger_ != null;
     }
     /**
-     * <code>optional .protocol.Trigger trigger = 3;</code>
+     * <code>.protocol.Trigger trigger = 3;</code>
      */
     public io.bumo.sdk.core.extend.protobuf.Chain.Trigger getTrigger() {
       return trigger_ == null ? io.bumo.sdk.core.extend.protobuf.Chain.Trigger.getDefaultInstance() : trigger_;
     }
     /**
-     * <code>optional .protocol.Trigger trigger = 3;</code>
+     * <code>.protocol.Trigger trigger = 3;</code>
      */
     public io.bumo.sdk.core.extend.protobuf.Chain.TriggerOrBuilder getTriggerOrBuilder() {
       return getTrigger();
@@ -19545,6 +21507,7 @@ public final class Chain {
       if (trigger_ != null) {
         output.writeMessage(3, getTrigger());
       }
+      unknownFields.writeTo(output);
     }
 
     public int getSerializedSize() {
@@ -19564,11 +21527,11 @@ public final class Chain {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(3, getTrigger());
       }
+      size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
     }
 
-    private static final long serialVersionUID = 0L;
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -19592,6 +21555,7 @@ public final class Chain {
         result = result && getTrigger()
             .equals(other.getTrigger());
       }
+      result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
 
@@ -19601,7 +21565,7 @@ public final class Chain {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptorForType().hashCode();
+      hash = (19 * hash) + getDescriptor().hashCode();
       if (hasTransaction()) {
         hash = (37 * hash) + TRANSACTION_FIELD_NUMBER;
         hash = (53 * hash) + getTransaction().hashCode();
@@ -19619,6 +21583,17 @@ public final class Chain {
       return hash;
     }
 
+    public static io.bumo.sdk.core.extend.protobuf.Chain.TransactionEnv parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static io.bumo.sdk.core.extend.protobuf.Chain.TransactionEnv parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
     public static io.bumo.sdk.core.extend.protobuf.Chain.TransactionEnv parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -19804,7 +21779,7 @@ public final class Chain {
       }
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
       public Builder clearField(
@@ -19817,12 +21792,12 @@ public final class Chain {
       }
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, Object value) {
+          int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -19868,6 +21843,7 @@ public final class Chain {
         if (other.hasTrigger()) {
           mergeTrigger(other.getTrigger());
         }
+        this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
       }
@@ -19899,13 +21875,13 @@ public final class Chain {
       private com.google.protobuf.SingleFieldBuilderV3<
           io.bumo.sdk.core.extend.protobuf.Chain.Transaction, io.bumo.sdk.core.extend.protobuf.Chain.Transaction.Builder, io.bumo.sdk.core.extend.protobuf.Chain.TransactionOrBuilder> transactionBuilder_;
       /**
-       * <code>optional .protocol.Transaction transaction = 1;</code>
+       * <code>.protocol.Transaction transaction = 1;</code>
        */
       public boolean hasTransaction() {
         return transactionBuilder_ != null || transaction_ != null;
       }
       /**
-       * <code>optional .protocol.Transaction transaction = 1;</code>
+       * <code>.protocol.Transaction transaction = 1;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.Transaction getTransaction() {
         if (transactionBuilder_ == null) {
@@ -19915,7 +21891,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional .protocol.Transaction transaction = 1;</code>
+       * <code>.protocol.Transaction transaction = 1;</code>
        */
       public Builder setTransaction(io.bumo.sdk.core.extend.protobuf.Chain.Transaction value) {
         if (transactionBuilder_ == null) {
@@ -19931,7 +21907,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.Transaction transaction = 1;</code>
+       * <code>.protocol.Transaction transaction = 1;</code>
        */
       public Builder setTransaction(
           io.bumo.sdk.core.extend.protobuf.Chain.Transaction.Builder builderForValue) {
@@ -19945,7 +21921,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.Transaction transaction = 1;</code>
+       * <code>.protocol.Transaction transaction = 1;</code>
        */
       public Builder mergeTransaction(io.bumo.sdk.core.extend.protobuf.Chain.Transaction value) {
         if (transactionBuilder_ == null) {
@@ -19963,7 +21939,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.Transaction transaction = 1;</code>
+       * <code>.protocol.Transaction transaction = 1;</code>
        */
       public Builder clearTransaction() {
         if (transactionBuilder_ == null) {
@@ -19977,7 +21953,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.Transaction transaction = 1;</code>
+       * <code>.protocol.Transaction transaction = 1;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.Transaction.Builder getTransactionBuilder() {
         
@@ -19985,7 +21961,7 @@ public final class Chain {
         return getTransactionFieldBuilder().getBuilder();
       }
       /**
-       * <code>optional .protocol.Transaction transaction = 1;</code>
+       * <code>.protocol.Transaction transaction = 1;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.TransactionOrBuilder getTransactionOrBuilder() {
         if (transactionBuilder_ != null) {
@@ -19996,7 +21972,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional .protocol.Transaction transaction = 1;</code>
+       * <code>.protocol.Transaction transaction = 1;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           io.bumo.sdk.core.extend.protobuf.Chain.Transaction, io.bumo.sdk.core.extend.protobuf.Chain.Transaction.Builder, io.bumo.sdk.core.extend.protobuf.Chain.TransactionOrBuilder> 
@@ -20256,13 +22232,13 @@ public final class Chain {
       private com.google.protobuf.SingleFieldBuilderV3<
           io.bumo.sdk.core.extend.protobuf.Chain.Trigger, io.bumo.sdk.core.extend.protobuf.Chain.Trigger.Builder, io.bumo.sdk.core.extend.protobuf.Chain.TriggerOrBuilder> triggerBuilder_;
       /**
-       * <code>optional .protocol.Trigger trigger = 3;</code>
+       * <code>.protocol.Trigger trigger = 3;</code>
        */
       public boolean hasTrigger() {
         return triggerBuilder_ != null || trigger_ != null;
       }
       /**
-       * <code>optional .protocol.Trigger trigger = 3;</code>
+       * <code>.protocol.Trigger trigger = 3;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.Trigger getTrigger() {
         if (triggerBuilder_ == null) {
@@ -20272,7 +22248,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional .protocol.Trigger trigger = 3;</code>
+       * <code>.protocol.Trigger trigger = 3;</code>
        */
       public Builder setTrigger(io.bumo.sdk.core.extend.protobuf.Chain.Trigger value) {
         if (triggerBuilder_ == null) {
@@ -20288,7 +22264,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.Trigger trigger = 3;</code>
+       * <code>.protocol.Trigger trigger = 3;</code>
        */
       public Builder setTrigger(
           io.bumo.sdk.core.extend.protobuf.Chain.Trigger.Builder builderForValue) {
@@ -20302,7 +22278,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.Trigger trigger = 3;</code>
+       * <code>.protocol.Trigger trigger = 3;</code>
        */
       public Builder mergeTrigger(io.bumo.sdk.core.extend.protobuf.Chain.Trigger value) {
         if (triggerBuilder_ == null) {
@@ -20320,7 +22296,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.Trigger trigger = 3;</code>
+       * <code>.protocol.Trigger trigger = 3;</code>
        */
       public Builder clearTrigger() {
         if (triggerBuilder_ == null) {
@@ -20334,7 +22310,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.Trigger trigger = 3;</code>
+       * <code>.protocol.Trigger trigger = 3;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.Trigger.Builder getTriggerBuilder() {
         
@@ -20342,7 +22318,7 @@ public final class Chain {
         return getTriggerFieldBuilder().getBuilder();
       }
       /**
-       * <code>optional .protocol.Trigger trigger = 3;</code>
+       * <code>.protocol.Trigger trigger = 3;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.TriggerOrBuilder getTriggerOrBuilder() {
         if (triggerBuilder_ != null) {
@@ -20353,7 +22329,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional .protocol.Trigger trigger = 3;</code>
+       * <code>.protocol.Trigger trigger = 3;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           io.bumo.sdk.core.extend.protobuf.Chain.Trigger, io.bumo.sdk.core.extend.protobuf.Chain.Trigger.Builder, io.bumo.sdk.core.extend.protobuf.Chain.TriggerOrBuilder> 
@@ -20370,12 +22346,12 @@ public final class Chain {
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.setUnknownFieldsProto3(unknownFields);
       }
 
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.mergeUnknownFields(unknownFields);
       }
 
 
@@ -20398,7 +22374,7 @@ public final class Chain {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new TransactionEnv(input, extensionRegistry);
+        return new TransactionEnv(input, extensionRegistry);
       }
     };
 
@@ -20422,40 +22398,40 @@ public final class Chain {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>optional .protocol.TransactionEnv transaction_env = 1;</code>
+     * <code>.protocol.TransactionEnv transaction_env = 1;</code>
      */
     boolean hasTransactionEnv();
     /**
-     * <code>optional .protocol.TransactionEnv transaction_env = 1;</code>
+     * <code>.protocol.TransactionEnv transaction_env = 1;</code>
      */
     io.bumo.sdk.core.extend.protobuf.Chain.TransactionEnv getTransactionEnv();
     /**
-     * <code>optional .protocol.TransactionEnv transaction_env = 1;</code>
+     * <code>.protocol.TransactionEnv transaction_env = 1;</code>
      */
     io.bumo.sdk.core.extend.protobuf.Chain.TransactionEnvOrBuilder getTransactionEnvOrBuilder();
 
     /**
-     * <code>optional int32 error_code = 2;</code>
+     * <code>int32 error_code = 2;</code>
      */
     int getErrorCode();
 
     /**
-     * <code>optional string error_desc = 3;</code>
+     * <code>string error_desc = 3;</code>
      */
     java.lang.String getErrorDesc();
     /**
-     * <code>optional string error_desc = 3;</code>
+     * <code>string error_desc = 3;</code>
      */
     com.google.protobuf.ByteString
         getErrorDescBytes();
 
     /**
-     * <code>optional int64 ledger_seq = 4;</code>
+     * <code>int64 ledger_seq = 4;</code>
      */
     long getLedgerSeq();
 
     /**
-     * <code>optional int64 close_time = 5;</code>
+     * <code>int64 close_time = 5;</code>
      */
     long getCloseTime();
 
@@ -20464,12 +22440,12 @@ public final class Chain {
      *for notify
      * </pre>
      *
-     * <code>optional bytes hash = 6;</code>
+     * <code>bytes hash = 6;</code>
      */
     com.google.protobuf.ByteString getHash();
 
     /**
-     * <code>optional int64 actual_fee = 7;</code>
+     * <code>int64 actual_fee = 7;</code>
      */
     long getActualFee();
   }
@@ -20480,6 +22456,7 @@ public final class Chain {
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:protocol.TransactionEnvStore)
       TransactionEnvStoreOrBuilder {
+  private static final long serialVersionUID = 0L;
     // Use TransactionEnvStore.newBuilder() to construct.
     private TransactionEnvStore(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -20496,14 +22473,19 @@ public final class Chain {
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
-      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+      return this.unknownFields;
     }
     private TransactionEnvStore(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
         boolean done = false;
         while (!done) {
@@ -20513,7 +22495,8 @@ public final class Chain {
               done = true;
               break;
             default: {
-              if (!input.skipField(tag)) {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
               break;
@@ -20570,6 +22553,7 @@ public final class Chain {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
+        this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
     }
@@ -20588,19 +22572,19 @@ public final class Chain {
     public static final int TRANSACTION_ENV_FIELD_NUMBER = 1;
     private io.bumo.sdk.core.extend.protobuf.Chain.TransactionEnv transactionEnv_;
     /**
-     * <code>optional .protocol.TransactionEnv transaction_env = 1;</code>
+     * <code>.protocol.TransactionEnv transaction_env = 1;</code>
      */
     public boolean hasTransactionEnv() {
       return transactionEnv_ != null;
     }
     /**
-     * <code>optional .protocol.TransactionEnv transaction_env = 1;</code>
+     * <code>.protocol.TransactionEnv transaction_env = 1;</code>
      */
     public io.bumo.sdk.core.extend.protobuf.Chain.TransactionEnv getTransactionEnv() {
       return transactionEnv_ == null ? io.bumo.sdk.core.extend.protobuf.Chain.TransactionEnv.getDefaultInstance() : transactionEnv_;
     }
     /**
-     * <code>optional .protocol.TransactionEnv transaction_env = 1;</code>
+     * <code>.protocol.TransactionEnv transaction_env = 1;</code>
      */
     public io.bumo.sdk.core.extend.protobuf.Chain.TransactionEnvOrBuilder getTransactionEnvOrBuilder() {
       return getTransactionEnv();
@@ -20609,7 +22593,7 @@ public final class Chain {
     public static final int ERROR_CODE_FIELD_NUMBER = 2;
     private int errorCode_;
     /**
-     * <code>optional int32 error_code = 2;</code>
+     * <code>int32 error_code = 2;</code>
      */
     public int getErrorCode() {
       return errorCode_;
@@ -20618,7 +22602,7 @@ public final class Chain {
     public static final int ERROR_DESC_FIELD_NUMBER = 3;
     private volatile java.lang.Object errorDesc_;
     /**
-     * <code>optional string error_desc = 3;</code>
+     * <code>string error_desc = 3;</code>
      */
     public java.lang.String getErrorDesc() {
       java.lang.Object ref = errorDesc_;
@@ -20633,7 +22617,7 @@ public final class Chain {
       }
     }
     /**
-     * <code>optional string error_desc = 3;</code>
+     * <code>string error_desc = 3;</code>
      */
     public com.google.protobuf.ByteString
         getErrorDescBytes() {
@@ -20652,7 +22636,7 @@ public final class Chain {
     public static final int LEDGER_SEQ_FIELD_NUMBER = 4;
     private long ledgerSeq_;
     /**
-     * <code>optional int64 ledger_seq = 4;</code>
+     * <code>int64 ledger_seq = 4;</code>
      */
     public long getLedgerSeq() {
       return ledgerSeq_;
@@ -20661,7 +22645,7 @@ public final class Chain {
     public static final int CLOSE_TIME_FIELD_NUMBER = 5;
     private long closeTime_;
     /**
-     * <code>optional int64 close_time = 5;</code>
+     * <code>int64 close_time = 5;</code>
      */
     public long getCloseTime() {
       return closeTime_;
@@ -20674,7 +22658,7 @@ public final class Chain {
      *for notify
      * </pre>
      *
-     * <code>optional bytes hash = 6;</code>
+     * <code>bytes hash = 6;</code>
      */
     public com.google.protobuf.ByteString getHash() {
       return hash_;
@@ -20683,7 +22667,7 @@ public final class Chain {
     public static final int ACTUAL_FEE_FIELD_NUMBER = 7;
     private long actualFee_;
     /**
-     * <code>optional int64 actual_fee = 7;</code>
+     * <code>int64 actual_fee = 7;</code>
      */
     public long getActualFee() {
       return actualFee_;
@@ -20722,6 +22706,7 @@ public final class Chain {
       if (actualFee_ != 0L) {
         output.writeInt64(7, actualFee_);
       }
+      unknownFields.writeTo(output);
     }
 
     public int getSerializedSize() {
@@ -20756,11 +22741,11 @@ public final class Chain {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(7, actualFee_);
       }
+      size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
     }
 
-    private static final long serialVersionUID = 0L;
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -20789,6 +22774,7 @@ public final class Chain {
           .equals(other.getHash());
       result = result && (getActualFee()
           == other.getActualFee());
+      result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
 
@@ -20798,7 +22784,7 @@ public final class Chain {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptorForType().hashCode();
+      hash = (19 * hash) + getDescriptor().hashCode();
       if (hasTransactionEnv()) {
         hash = (37 * hash) + TRANSACTION_ENV_FIELD_NUMBER;
         hash = (53 * hash) + getTransactionEnv().hashCode();
@@ -20823,6 +22809,17 @@ public final class Chain {
       return hash;
     }
 
+    public static io.bumo.sdk.core.extend.protobuf.Chain.TransactionEnvStore parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static io.bumo.sdk.core.extend.protobuf.Chain.TransactionEnvStore parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
     public static io.bumo.sdk.core.extend.protobuf.Chain.TransactionEnvStore parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -20996,7 +22993,7 @@ public final class Chain {
       }
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
       public Builder clearField(
@@ -21009,12 +23006,12 @@ public final class Chain {
       }
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, Object value) {
+          int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -21050,6 +23047,7 @@ public final class Chain {
         if (other.getActualFee() != 0L) {
           setActualFee(other.getActualFee());
         }
+        this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
       }
@@ -21080,13 +23078,13 @@ public final class Chain {
       private com.google.protobuf.SingleFieldBuilderV3<
           io.bumo.sdk.core.extend.protobuf.Chain.TransactionEnv, io.bumo.sdk.core.extend.protobuf.Chain.TransactionEnv.Builder, io.bumo.sdk.core.extend.protobuf.Chain.TransactionEnvOrBuilder> transactionEnvBuilder_;
       /**
-       * <code>optional .protocol.TransactionEnv transaction_env = 1;</code>
+       * <code>.protocol.TransactionEnv transaction_env = 1;</code>
        */
       public boolean hasTransactionEnv() {
         return transactionEnvBuilder_ != null || transactionEnv_ != null;
       }
       /**
-       * <code>optional .protocol.TransactionEnv transaction_env = 1;</code>
+       * <code>.protocol.TransactionEnv transaction_env = 1;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.TransactionEnv getTransactionEnv() {
         if (transactionEnvBuilder_ == null) {
@@ -21096,7 +23094,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional .protocol.TransactionEnv transaction_env = 1;</code>
+       * <code>.protocol.TransactionEnv transaction_env = 1;</code>
        */
       public Builder setTransactionEnv(io.bumo.sdk.core.extend.protobuf.Chain.TransactionEnv value) {
         if (transactionEnvBuilder_ == null) {
@@ -21112,7 +23110,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.TransactionEnv transaction_env = 1;</code>
+       * <code>.protocol.TransactionEnv transaction_env = 1;</code>
        */
       public Builder setTransactionEnv(
           io.bumo.sdk.core.extend.protobuf.Chain.TransactionEnv.Builder builderForValue) {
@@ -21126,7 +23124,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.TransactionEnv transaction_env = 1;</code>
+       * <code>.protocol.TransactionEnv transaction_env = 1;</code>
        */
       public Builder mergeTransactionEnv(io.bumo.sdk.core.extend.protobuf.Chain.TransactionEnv value) {
         if (transactionEnvBuilder_ == null) {
@@ -21144,7 +23142,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.TransactionEnv transaction_env = 1;</code>
+       * <code>.protocol.TransactionEnv transaction_env = 1;</code>
        */
       public Builder clearTransactionEnv() {
         if (transactionEnvBuilder_ == null) {
@@ -21158,7 +23156,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.TransactionEnv transaction_env = 1;</code>
+       * <code>.protocol.TransactionEnv transaction_env = 1;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.TransactionEnv.Builder getTransactionEnvBuilder() {
         
@@ -21166,7 +23164,7 @@ public final class Chain {
         return getTransactionEnvFieldBuilder().getBuilder();
       }
       /**
-       * <code>optional .protocol.TransactionEnv transaction_env = 1;</code>
+       * <code>.protocol.TransactionEnv transaction_env = 1;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.TransactionEnvOrBuilder getTransactionEnvOrBuilder() {
         if (transactionEnvBuilder_ != null) {
@@ -21177,7 +23175,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional .protocol.TransactionEnv transaction_env = 1;</code>
+       * <code>.protocol.TransactionEnv transaction_env = 1;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           io.bumo.sdk.core.extend.protobuf.Chain.TransactionEnv, io.bumo.sdk.core.extend.protobuf.Chain.TransactionEnv.Builder, io.bumo.sdk.core.extend.protobuf.Chain.TransactionEnvOrBuilder> 
@@ -21195,13 +23193,13 @@ public final class Chain {
 
       private int errorCode_ ;
       /**
-       * <code>optional int32 error_code = 2;</code>
+       * <code>int32 error_code = 2;</code>
        */
       public int getErrorCode() {
         return errorCode_;
       }
       /**
-       * <code>optional int32 error_code = 2;</code>
+       * <code>int32 error_code = 2;</code>
        */
       public Builder setErrorCode(int value) {
         
@@ -21210,7 +23208,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional int32 error_code = 2;</code>
+       * <code>int32 error_code = 2;</code>
        */
       public Builder clearErrorCode() {
         
@@ -21221,7 +23219,7 @@ public final class Chain {
 
       private java.lang.Object errorDesc_ = "";
       /**
-       * <code>optional string error_desc = 3;</code>
+       * <code>string error_desc = 3;</code>
        */
       public java.lang.String getErrorDesc() {
         java.lang.Object ref = errorDesc_;
@@ -21236,7 +23234,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional string error_desc = 3;</code>
+       * <code>string error_desc = 3;</code>
        */
       public com.google.protobuf.ByteString
           getErrorDescBytes() {
@@ -21252,7 +23250,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional string error_desc = 3;</code>
+       * <code>string error_desc = 3;</code>
        */
       public Builder setErrorDesc(
           java.lang.String value) {
@@ -21265,7 +23263,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional string error_desc = 3;</code>
+       * <code>string error_desc = 3;</code>
        */
       public Builder clearErrorDesc() {
         
@@ -21274,7 +23272,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional string error_desc = 3;</code>
+       * <code>string error_desc = 3;</code>
        */
       public Builder setErrorDescBytes(
           com.google.protobuf.ByteString value) {
@@ -21290,13 +23288,13 @@ public final class Chain {
 
       private long ledgerSeq_ ;
       /**
-       * <code>optional int64 ledger_seq = 4;</code>
+       * <code>int64 ledger_seq = 4;</code>
        */
       public long getLedgerSeq() {
         return ledgerSeq_;
       }
       /**
-       * <code>optional int64 ledger_seq = 4;</code>
+       * <code>int64 ledger_seq = 4;</code>
        */
       public Builder setLedgerSeq(long value) {
         
@@ -21305,7 +23303,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional int64 ledger_seq = 4;</code>
+       * <code>int64 ledger_seq = 4;</code>
        */
       public Builder clearLedgerSeq() {
         
@@ -21316,13 +23314,13 @@ public final class Chain {
 
       private long closeTime_ ;
       /**
-       * <code>optional int64 close_time = 5;</code>
+       * <code>int64 close_time = 5;</code>
        */
       public long getCloseTime() {
         return closeTime_;
       }
       /**
-       * <code>optional int64 close_time = 5;</code>
+       * <code>int64 close_time = 5;</code>
        */
       public Builder setCloseTime(long value) {
         
@@ -21331,7 +23329,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional int64 close_time = 5;</code>
+       * <code>int64 close_time = 5;</code>
        */
       public Builder clearCloseTime() {
         
@@ -21346,7 +23344,7 @@ public final class Chain {
        *for notify
        * </pre>
        *
-       * <code>optional bytes hash = 6;</code>
+       * <code>bytes hash = 6;</code>
        */
       public com.google.protobuf.ByteString getHash() {
         return hash_;
@@ -21356,7 +23354,7 @@ public final class Chain {
        *for notify
        * </pre>
        *
-       * <code>optional bytes hash = 6;</code>
+       * <code>bytes hash = 6;</code>
        */
       public Builder setHash(com.google.protobuf.ByteString value) {
         if (value == null) {
@@ -21372,7 +23370,7 @@ public final class Chain {
        *for notify
        * </pre>
        *
-       * <code>optional bytes hash = 6;</code>
+       * <code>bytes hash = 6;</code>
        */
       public Builder clearHash() {
         
@@ -21383,13 +23381,13 @@ public final class Chain {
 
       private long actualFee_ ;
       /**
-       * <code>optional int64 actual_fee = 7;</code>
+       * <code>int64 actual_fee = 7;</code>
        */
       public long getActualFee() {
         return actualFee_;
       }
       /**
-       * <code>optional int64 actual_fee = 7;</code>
+       * <code>int64 actual_fee = 7;</code>
        */
       public Builder setActualFee(long value) {
         
@@ -21398,7 +23396,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional int64 actual_fee = 7;</code>
+       * <code>int64 actual_fee = 7;</code>
        */
       public Builder clearActualFee() {
         
@@ -21408,12 +23406,12 @@ public final class Chain {
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.setUnknownFieldsProto3(unknownFields);
       }
 
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.mergeUnknownFields(unknownFields);
       }
 
 
@@ -21436,7 +23434,7 @@ public final class Chain {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new TransactionEnvStore(input, extensionRegistry);
+        return new TransactionEnvStore(input, extensionRegistry);
       }
     };
 
@@ -21490,6 +23488,7 @@ public final class Chain {
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:protocol.TransactionEnvSet)
       TransactionEnvSetOrBuilder {
+  private static final long serialVersionUID = 0L;
     // Use TransactionEnvSet.newBuilder() to construct.
     private TransactionEnvSet(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -21501,14 +23500,19 @@ public final class Chain {
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
-      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+      return this.unknownFields;
     }
     private TransactionEnvSet(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
         boolean done = false;
         while (!done) {
@@ -21518,7 +23522,8 @@ public final class Chain {
               done = true;
               break;
             default: {
-              if (!input.skipField(tag)) {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
               break;
@@ -21543,6 +23548,7 @@ public final class Chain {
         if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
           txs_ = java.util.Collections.unmodifiableList(txs_);
         }
+        this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
     }
@@ -21608,6 +23614,7 @@ public final class Chain {
       for (int i = 0; i < txs_.size(); i++) {
         output.writeMessage(2, txs_.get(i));
       }
+      unknownFields.writeTo(output);
     }
 
     public int getSerializedSize() {
@@ -21619,11 +23626,11 @@ public final class Chain {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(2, txs_.get(i));
       }
+      size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
     }
 
-    private static final long serialVersionUID = 0L;
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -21637,6 +23644,7 @@ public final class Chain {
       boolean result = true;
       result = result && getTxsList()
           .equals(other.getTxsList());
+      result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
 
@@ -21646,7 +23654,7 @@ public final class Chain {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptorForType().hashCode();
+      hash = (19 * hash) + getDescriptor().hashCode();
       if (getTxsCount() > 0) {
         hash = (37 * hash) + TXS_FIELD_NUMBER;
         hash = (53 * hash) + getTxsList().hashCode();
@@ -21656,6 +23664,17 @@ public final class Chain {
       return hash;
     }
 
+    public static io.bumo.sdk.core.extend.protobuf.Chain.TransactionEnvSet parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static io.bumo.sdk.core.extend.protobuf.Chain.TransactionEnvSet parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
     public static io.bumo.sdk.core.extend.protobuf.Chain.TransactionEnvSet parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -21817,7 +23836,7 @@ public final class Chain {
       }
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
       public Builder clearField(
@@ -21830,12 +23849,12 @@ public final class Chain {
       }
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, Object value) {
+          int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -21875,6 +23894,7 @@ public final class Chain {
             }
           }
         }
+        this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
       }
@@ -22143,12 +24163,12 @@ public final class Chain {
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.setUnknownFieldsProto3(unknownFields);
       }
 
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.mergeUnknownFields(unknownFields);
       }
 
 
@@ -22171,7 +24191,7 @@ public final class Chain {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new TransactionEnvSet(input, extensionRegistry);
+        return new TransactionEnvSet(input, extensionRegistry);
       }
     };
 
@@ -22251,6 +24271,7 @@ public final class Chain {
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:protocol.ConsensusValueValidation)
       ConsensusValueValidationOrBuilder {
+  private static final long serialVersionUID = 0L;
     // Use ConsensusValueValidation.newBuilder() to construct.
     private ConsensusValueValidation(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -22263,14 +24284,19 @@ public final class Chain {
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
-      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+      return this.unknownFields;
     }
     private ConsensusValueValidation(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
         boolean done = false;
         while (!done) {
@@ -22280,7 +24306,8 @@ public final class Chain {
               done = true;
               break;
             default: {
-              if (!input.skipField(tag)) {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
               break;
@@ -22341,6 +24368,7 @@ public final class Chain {
         if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
           errorTxIds_ = java.util.Collections.unmodifiableList(errorTxIds_);
         }
+        this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
     }
@@ -22453,6 +24481,7 @@ public final class Chain {
       for (int i = 0; i < errorTxIds_.size(); i++) {
         output.writeInt32NoTag(errorTxIds_.get(i));
       }
+      unknownFields.writeTo(output);
     }
 
     public int getSerializedSize() {
@@ -22488,11 +24517,11 @@ public final class Chain {
         }
         errorTxIdsMemoizedSerializedSize = dataSize;
       }
+      size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
     }
 
-    private static final long serialVersionUID = 0L;
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -22508,6 +24537,7 @@ public final class Chain {
           .equals(other.getExpireTxIdsList());
       result = result && getErrorTxIdsList()
           .equals(other.getErrorTxIdsList());
+      result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
 
@@ -22517,7 +24547,7 @@ public final class Chain {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptorForType().hashCode();
+      hash = (19 * hash) + getDescriptor().hashCode();
       if (getExpireTxIdsCount() > 0) {
         hash = (37 * hash) + EXPIRE_TX_IDS_FIELD_NUMBER;
         hash = (53 * hash) + getExpireTxIdsList().hashCode();
@@ -22531,6 +24561,17 @@ public final class Chain {
       return hash;
     }
 
+    public static io.bumo.sdk.core.extend.protobuf.Chain.ConsensusValueValidation parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static io.bumo.sdk.core.extend.protobuf.Chain.ConsensusValueValidation parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
     public static io.bumo.sdk.core.extend.protobuf.Chain.ConsensusValueValidation parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -22690,7 +24731,7 @@ public final class Chain {
       }
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
       public Builder clearField(
@@ -22703,12 +24744,12 @@ public final class Chain {
       }
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, Object value) {
+          int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -22742,6 +24783,7 @@ public final class Chain {
           }
           onChanged();
         }
+        this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
       }
@@ -22958,12 +25000,12 @@ public final class Chain {
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.setUnknownFieldsProto3(unknownFields);
       }
 
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.mergeUnknownFields(unknownFields);
       }
 
 
@@ -22986,7 +25028,7 @@ public final class Chain {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new ConsensusValueValidation(input, extensionRegistry);
+        return new ConsensusValueValidation(input, extensionRegistry);
       }
     };
 
@@ -23010,61 +25052,61 @@ public final class Chain {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>optional .protocol.TransactionEnvSet txset = 1;</code>
+     * <code>.protocol.TransactionEnvSet txset = 1;</code>
      */
     boolean hasTxset();
     /**
-     * <code>optional .protocol.TransactionEnvSet txset = 1;</code>
+     * <code>.protocol.TransactionEnvSet txset = 1;</code>
      */
     io.bumo.sdk.core.extend.protobuf.Chain.TransactionEnvSet getTxset();
     /**
-     * <code>optional .protocol.TransactionEnvSet txset = 1;</code>
+     * <code>.protocol.TransactionEnvSet txset = 1;</code>
      */
     io.bumo.sdk.core.extend.protobuf.Chain.TransactionEnvSetOrBuilder getTxsetOrBuilder();
 
     /**
-     * <code>optional int64 close_time = 2;</code>
+     * <code>int64 close_time = 2;</code>
      */
     long getCloseTime();
 
     /**
-     * <code>optional bytes previous_proof = 3;</code>
+     * <code>bytes previous_proof = 3;</code>
      */
     com.google.protobuf.ByteString getPreviousProof();
 
     /**
-     * <code>optional int64 ledger_seq = 4;</code>
+     * <code>int64 ledger_seq = 4;</code>
      */
     long getLedgerSeq();
 
     /**
-     * <code>optional bytes previous_ledger_hash = 5;</code>
+     * <code>bytes previous_ledger_hash = 5;</code>
      */
     com.google.protobuf.ByteString getPreviousLedgerHash();
 
     /**
-     * <code>optional .protocol.LedgerUpgrade ledger_upgrade = 6;</code>
+     * <code>.protocol.LedgerUpgrade ledger_upgrade = 6;</code>
      */
     boolean hasLedgerUpgrade();
     /**
-     * <code>optional .protocol.LedgerUpgrade ledger_upgrade = 6;</code>
+     * <code>.protocol.LedgerUpgrade ledger_upgrade = 6;</code>
      */
     io.bumo.sdk.core.extend.protobuf.Common.LedgerUpgrade getLedgerUpgrade();
     /**
-     * <code>optional .protocol.LedgerUpgrade ledger_upgrade = 6;</code>
+     * <code>.protocol.LedgerUpgrade ledger_upgrade = 6;</code>
      */
     io.bumo.sdk.core.extend.protobuf.Common.LedgerUpgradeOrBuilder getLedgerUpgradeOrBuilder();
 
     /**
-     * <code>optional .protocol.ConsensusValueValidation validation = 7;</code>
+     * <code>.protocol.ConsensusValueValidation validation = 7;</code>
      */
     boolean hasValidation();
     /**
-     * <code>optional .protocol.ConsensusValueValidation validation = 7;</code>
+     * <code>.protocol.ConsensusValueValidation validation = 7;</code>
      */
     io.bumo.sdk.core.extend.protobuf.Chain.ConsensusValueValidation getValidation();
     /**
-     * <code>optional .protocol.ConsensusValueValidation validation = 7;</code>
+     * <code>.protocol.ConsensusValueValidation validation = 7;</code>
      */
     io.bumo.sdk.core.extend.protobuf.Chain.ConsensusValueValidationOrBuilder getValidationOrBuilder();
   }
@@ -23075,6 +25117,7 @@ public final class Chain {
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:protocol.ConsensusValue)
       ConsensusValueOrBuilder {
+  private static final long serialVersionUID = 0L;
     // Use ConsensusValue.newBuilder() to construct.
     private ConsensusValue(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -23089,14 +25132,19 @@ public final class Chain {
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
-      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+      return this.unknownFields;
     }
     private ConsensusValue(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
         boolean done = false;
         while (!done) {
@@ -23106,7 +25154,8 @@ public final class Chain {
               done = true;
               break;
             default: {
-              if (!input.skipField(tag)) {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
               break;
@@ -23178,6 +25227,7 @@ public final class Chain {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
+        this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
     }
@@ -23196,19 +25246,19 @@ public final class Chain {
     public static final int TXSET_FIELD_NUMBER = 1;
     private io.bumo.sdk.core.extend.protobuf.Chain.TransactionEnvSet txset_;
     /**
-     * <code>optional .protocol.TransactionEnvSet txset = 1;</code>
+     * <code>.protocol.TransactionEnvSet txset = 1;</code>
      */
     public boolean hasTxset() {
       return txset_ != null;
     }
     /**
-     * <code>optional .protocol.TransactionEnvSet txset = 1;</code>
+     * <code>.protocol.TransactionEnvSet txset = 1;</code>
      */
     public io.bumo.sdk.core.extend.protobuf.Chain.TransactionEnvSet getTxset() {
       return txset_ == null ? io.bumo.sdk.core.extend.protobuf.Chain.TransactionEnvSet.getDefaultInstance() : txset_;
     }
     /**
-     * <code>optional .protocol.TransactionEnvSet txset = 1;</code>
+     * <code>.protocol.TransactionEnvSet txset = 1;</code>
      */
     public io.bumo.sdk.core.extend.protobuf.Chain.TransactionEnvSetOrBuilder getTxsetOrBuilder() {
       return getTxset();
@@ -23217,7 +25267,7 @@ public final class Chain {
     public static final int CLOSE_TIME_FIELD_NUMBER = 2;
     private long closeTime_;
     /**
-     * <code>optional int64 close_time = 2;</code>
+     * <code>int64 close_time = 2;</code>
      */
     public long getCloseTime() {
       return closeTime_;
@@ -23226,7 +25276,7 @@ public final class Chain {
     public static final int PREVIOUS_PROOF_FIELD_NUMBER = 3;
     private com.google.protobuf.ByteString previousProof_;
     /**
-     * <code>optional bytes previous_proof = 3;</code>
+     * <code>bytes previous_proof = 3;</code>
      */
     public com.google.protobuf.ByteString getPreviousProof() {
       return previousProof_;
@@ -23235,7 +25285,7 @@ public final class Chain {
     public static final int LEDGER_SEQ_FIELD_NUMBER = 4;
     private long ledgerSeq_;
     /**
-     * <code>optional int64 ledger_seq = 4;</code>
+     * <code>int64 ledger_seq = 4;</code>
      */
     public long getLedgerSeq() {
       return ledgerSeq_;
@@ -23244,7 +25294,7 @@ public final class Chain {
     public static final int PREVIOUS_LEDGER_HASH_FIELD_NUMBER = 5;
     private com.google.protobuf.ByteString previousLedgerHash_;
     /**
-     * <code>optional bytes previous_ledger_hash = 5;</code>
+     * <code>bytes previous_ledger_hash = 5;</code>
      */
     public com.google.protobuf.ByteString getPreviousLedgerHash() {
       return previousLedgerHash_;
@@ -23253,19 +25303,19 @@ public final class Chain {
     public static final int LEDGER_UPGRADE_FIELD_NUMBER = 6;
     private io.bumo.sdk.core.extend.protobuf.Common.LedgerUpgrade ledgerUpgrade_;
     /**
-     * <code>optional .protocol.LedgerUpgrade ledger_upgrade = 6;</code>
+     * <code>.protocol.LedgerUpgrade ledger_upgrade = 6;</code>
      */
     public boolean hasLedgerUpgrade() {
       return ledgerUpgrade_ != null;
     }
     /**
-     * <code>optional .protocol.LedgerUpgrade ledger_upgrade = 6;</code>
+     * <code>.protocol.LedgerUpgrade ledger_upgrade = 6;</code>
      */
     public io.bumo.sdk.core.extend.protobuf.Common.LedgerUpgrade getLedgerUpgrade() {
       return ledgerUpgrade_ == null ? io.bumo.sdk.core.extend.protobuf.Common.LedgerUpgrade.getDefaultInstance() : ledgerUpgrade_;
     }
     /**
-     * <code>optional .protocol.LedgerUpgrade ledger_upgrade = 6;</code>
+     * <code>.protocol.LedgerUpgrade ledger_upgrade = 6;</code>
      */
     public io.bumo.sdk.core.extend.protobuf.Common.LedgerUpgradeOrBuilder getLedgerUpgradeOrBuilder() {
       return getLedgerUpgrade();
@@ -23274,19 +25324,19 @@ public final class Chain {
     public static final int VALIDATION_FIELD_NUMBER = 7;
     private io.bumo.sdk.core.extend.protobuf.Chain.ConsensusValueValidation validation_;
     /**
-     * <code>optional .protocol.ConsensusValueValidation validation = 7;</code>
+     * <code>.protocol.ConsensusValueValidation validation = 7;</code>
      */
     public boolean hasValidation() {
       return validation_ != null;
     }
     /**
-     * <code>optional .protocol.ConsensusValueValidation validation = 7;</code>
+     * <code>.protocol.ConsensusValueValidation validation = 7;</code>
      */
     public io.bumo.sdk.core.extend.protobuf.Chain.ConsensusValueValidation getValidation() {
       return validation_ == null ? io.bumo.sdk.core.extend.protobuf.Chain.ConsensusValueValidation.getDefaultInstance() : validation_;
     }
     /**
-     * <code>optional .protocol.ConsensusValueValidation validation = 7;</code>
+     * <code>.protocol.ConsensusValueValidation validation = 7;</code>
      */
     public io.bumo.sdk.core.extend.protobuf.Chain.ConsensusValueValidationOrBuilder getValidationOrBuilder() {
       return getValidation();
@@ -23325,6 +25375,7 @@ public final class Chain {
       if (validation_ != null) {
         output.writeMessage(7, getValidation());
       }
+      unknownFields.writeTo(output);
     }
 
     public int getSerializedSize() {
@@ -23360,11 +25411,11 @@ public final class Chain {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(7, getValidation());
       }
+      size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
     }
 
-    private static final long serialVersionUID = 0L;
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -23399,6 +25450,7 @@ public final class Chain {
         result = result && getValidation()
             .equals(other.getValidation());
       }
+      result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
 
@@ -23408,7 +25460,7 @@ public final class Chain {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptorForType().hashCode();
+      hash = (19 * hash) + getDescriptor().hashCode();
       if (hasTxset()) {
         hash = (37 * hash) + TXSET_FIELD_NUMBER;
         hash = (53 * hash) + getTxset().hashCode();
@@ -23436,6 +25488,17 @@ public final class Chain {
       return hash;
     }
 
+    public static io.bumo.sdk.core.extend.protobuf.Chain.ConsensusValue parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static io.bumo.sdk.core.extend.protobuf.Chain.ConsensusValue parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
     public static io.bumo.sdk.core.extend.protobuf.Chain.ConsensusValue parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -23625,7 +25688,7 @@ public final class Chain {
       }
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
       public Builder clearField(
@@ -23638,12 +25701,12 @@ public final class Chain {
       }
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, Object value) {
+          int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -23678,6 +25741,7 @@ public final class Chain {
         if (other.hasValidation()) {
           mergeValidation(other.getValidation());
         }
+        this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
       }
@@ -23708,13 +25772,13 @@ public final class Chain {
       private com.google.protobuf.SingleFieldBuilderV3<
           io.bumo.sdk.core.extend.protobuf.Chain.TransactionEnvSet, io.bumo.sdk.core.extend.protobuf.Chain.TransactionEnvSet.Builder, io.bumo.sdk.core.extend.protobuf.Chain.TransactionEnvSetOrBuilder> txsetBuilder_;
       /**
-       * <code>optional .protocol.TransactionEnvSet txset = 1;</code>
+       * <code>.protocol.TransactionEnvSet txset = 1;</code>
        */
       public boolean hasTxset() {
         return txsetBuilder_ != null || txset_ != null;
       }
       /**
-       * <code>optional .protocol.TransactionEnvSet txset = 1;</code>
+       * <code>.protocol.TransactionEnvSet txset = 1;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.TransactionEnvSet getTxset() {
         if (txsetBuilder_ == null) {
@@ -23724,7 +25788,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional .protocol.TransactionEnvSet txset = 1;</code>
+       * <code>.protocol.TransactionEnvSet txset = 1;</code>
        */
       public Builder setTxset(io.bumo.sdk.core.extend.protobuf.Chain.TransactionEnvSet value) {
         if (txsetBuilder_ == null) {
@@ -23740,7 +25804,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.TransactionEnvSet txset = 1;</code>
+       * <code>.protocol.TransactionEnvSet txset = 1;</code>
        */
       public Builder setTxset(
           io.bumo.sdk.core.extend.protobuf.Chain.TransactionEnvSet.Builder builderForValue) {
@@ -23754,7 +25818,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.TransactionEnvSet txset = 1;</code>
+       * <code>.protocol.TransactionEnvSet txset = 1;</code>
        */
       public Builder mergeTxset(io.bumo.sdk.core.extend.protobuf.Chain.TransactionEnvSet value) {
         if (txsetBuilder_ == null) {
@@ -23772,7 +25836,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.TransactionEnvSet txset = 1;</code>
+       * <code>.protocol.TransactionEnvSet txset = 1;</code>
        */
       public Builder clearTxset() {
         if (txsetBuilder_ == null) {
@@ -23786,7 +25850,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.TransactionEnvSet txset = 1;</code>
+       * <code>.protocol.TransactionEnvSet txset = 1;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.TransactionEnvSet.Builder getTxsetBuilder() {
         
@@ -23794,7 +25858,7 @@ public final class Chain {
         return getTxsetFieldBuilder().getBuilder();
       }
       /**
-       * <code>optional .protocol.TransactionEnvSet txset = 1;</code>
+       * <code>.protocol.TransactionEnvSet txset = 1;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.TransactionEnvSetOrBuilder getTxsetOrBuilder() {
         if (txsetBuilder_ != null) {
@@ -23805,7 +25869,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional .protocol.TransactionEnvSet txset = 1;</code>
+       * <code>.protocol.TransactionEnvSet txset = 1;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           io.bumo.sdk.core.extend.protobuf.Chain.TransactionEnvSet, io.bumo.sdk.core.extend.protobuf.Chain.TransactionEnvSet.Builder, io.bumo.sdk.core.extend.protobuf.Chain.TransactionEnvSetOrBuilder> 
@@ -23823,13 +25887,13 @@ public final class Chain {
 
       private long closeTime_ ;
       /**
-       * <code>optional int64 close_time = 2;</code>
+       * <code>int64 close_time = 2;</code>
        */
       public long getCloseTime() {
         return closeTime_;
       }
       /**
-       * <code>optional int64 close_time = 2;</code>
+       * <code>int64 close_time = 2;</code>
        */
       public Builder setCloseTime(long value) {
         
@@ -23838,7 +25902,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional int64 close_time = 2;</code>
+       * <code>int64 close_time = 2;</code>
        */
       public Builder clearCloseTime() {
         
@@ -23849,13 +25913,13 @@ public final class Chain {
 
       private com.google.protobuf.ByteString previousProof_ = com.google.protobuf.ByteString.EMPTY;
       /**
-       * <code>optional bytes previous_proof = 3;</code>
+       * <code>bytes previous_proof = 3;</code>
        */
       public com.google.protobuf.ByteString getPreviousProof() {
         return previousProof_;
       }
       /**
-       * <code>optional bytes previous_proof = 3;</code>
+       * <code>bytes previous_proof = 3;</code>
        */
       public Builder setPreviousProof(com.google.protobuf.ByteString value) {
         if (value == null) {
@@ -23867,7 +25931,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional bytes previous_proof = 3;</code>
+       * <code>bytes previous_proof = 3;</code>
        */
       public Builder clearPreviousProof() {
         
@@ -23878,13 +25942,13 @@ public final class Chain {
 
       private long ledgerSeq_ ;
       /**
-       * <code>optional int64 ledger_seq = 4;</code>
+       * <code>int64 ledger_seq = 4;</code>
        */
       public long getLedgerSeq() {
         return ledgerSeq_;
       }
       /**
-       * <code>optional int64 ledger_seq = 4;</code>
+       * <code>int64 ledger_seq = 4;</code>
        */
       public Builder setLedgerSeq(long value) {
         
@@ -23893,7 +25957,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional int64 ledger_seq = 4;</code>
+       * <code>int64 ledger_seq = 4;</code>
        */
       public Builder clearLedgerSeq() {
         
@@ -23904,13 +25968,13 @@ public final class Chain {
 
       private com.google.protobuf.ByteString previousLedgerHash_ = com.google.protobuf.ByteString.EMPTY;
       /**
-       * <code>optional bytes previous_ledger_hash = 5;</code>
+       * <code>bytes previous_ledger_hash = 5;</code>
        */
       public com.google.protobuf.ByteString getPreviousLedgerHash() {
         return previousLedgerHash_;
       }
       /**
-       * <code>optional bytes previous_ledger_hash = 5;</code>
+       * <code>bytes previous_ledger_hash = 5;</code>
        */
       public Builder setPreviousLedgerHash(com.google.protobuf.ByteString value) {
         if (value == null) {
@@ -23922,7 +25986,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional bytes previous_ledger_hash = 5;</code>
+       * <code>bytes previous_ledger_hash = 5;</code>
        */
       public Builder clearPreviousLedgerHash() {
         
@@ -23935,13 +25999,13 @@ public final class Chain {
       private com.google.protobuf.SingleFieldBuilderV3<
           io.bumo.sdk.core.extend.protobuf.Common.LedgerUpgrade, io.bumo.sdk.core.extend.protobuf.Common.LedgerUpgrade.Builder, io.bumo.sdk.core.extend.protobuf.Common.LedgerUpgradeOrBuilder> ledgerUpgradeBuilder_;
       /**
-       * <code>optional .protocol.LedgerUpgrade ledger_upgrade = 6;</code>
+       * <code>.protocol.LedgerUpgrade ledger_upgrade = 6;</code>
        */
       public boolean hasLedgerUpgrade() {
         return ledgerUpgradeBuilder_ != null || ledgerUpgrade_ != null;
       }
       /**
-       * <code>optional .protocol.LedgerUpgrade ledger_upgrade = 6;</code>
+       * <code>.protocol.LedgerUpgrade ledger_upgrade = 6;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Common.LedgerUpgrade getLedgerUpgrade() {
         if (ledgerUpgradeBuilder_ == null) {
@@ -23951,7 +26015,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional .protocol.LedgerUpgrade ledger_upgrade = 6;</code>
+       * <code>.protocol.LedgerUpgrade ledger_upgrade = 6;</code>
        */
       public Builder setLedgerUpgrade(io.bumo.sdk.core.extend.protobuf.Common.LedgerUpgrade value) {
         if (ledgerUpgradeBuilder_ == null) {
@@ -23967,7 +26031,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.LedgerUpgrade ledger_upgrade = 6;</code>
+       * <code>.protocol.LedgerUpgrade ledger_upgrade = 6;</code>
        */
       public Builder setLedgerUpgrade(
           io.bumo.sdk.core.extend.protobuf.Common.LedgerUpgrade.Builder builderForValue) {
@@ -23981,7 +26045,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.LedgerUpgrade ledger_upgrade = 6;</code>
+       * <code>.protocol.LedgerUpgrade ledger_upgrade = 6;</code>
        */
       public Builder mergeLedgerUpgrade(io.bumo.sdk.core.extend.protobuf.Common.LedgerUpgrade value) {
         if (ledgerUpgradeBuilder_ == null) {
@@ -23999,7 +26063,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.LedgerUpgrade ledger_upgrade = 6;</code>
+       * <code>.protocol.LedgerUpgrade ledger_upgrade = 6;</code>
        */
       public Builder clearLedgerUpgrade() {
         if (ledgerUpgradeBuilder_ == null) {
@@ -24013,7 +26077,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.LedgerUpgrade ledger_upgrade = 6;</code>
+       * <code>.protocol.LedgerUpgrade ledger_upgrade = 6;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Common.LedgerUpgrade.Builder getLedgerUpgradeBuilder() {
         
@@ -24021,7 +26085,7 @@ public final class Chain {
         return getLedgerUpgradeFieldBuilder().getBuilder();
       }
       /**
-       * <code>optional .protocol.LedgerUpgrade ledger_upgrade = 6;</code>
+       * <code>.protocol.LedgerUpgrade ledger_upgrade = 6;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Common.LedgerUpgradeOrBuilder getLedgerUpgradeOrBuilder() {
         if (ledgerUpgradeBuilder_ != null) {
@@ -24032,7 +26096,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional .protocol.LedgerUpgrade ledger_upgrade = 6;</code>
+       * <code>.protocol.LedgerUpgrade ledger_upgrade = 6;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           io.bumo.sdk.core.extend.protobuf.Common.LedgerUpgrade, io.bumo.sdk.core.extend.protobuf.Common.LedgerUpgrade.Builder, io.bumo.sdk.core.extend.protobuf.Common.LedgerUpgradeOrBuilder> 
@@ -24052,13 +26116,13 @@ public final class Chain {
       private com.google.protobuf.SingleFieldBuilderV3<
           io.bumo.sdk.core.extend.protobuf.Chain.ConsensusValueValidation, io.bumo.sdk.core.extend.protobuf.Chain.ConsensusValueValidation.Builder, io.bumo.sdk.core.extend.protobuf.Chain.ConsensusValueValidationOrBuilder> validationBuilder_;
       /**
-       * <code>optional .protocol.ConsensusValueValidation validation = 7;</code>
+       * <code>.protocol.ConsensusValueValidation validation = 7;</code>
        */
       public boolean hasValidation() {
         return validationBuilder_ != null || validation_ != null;
       }
       /**
-       * <code>optional .protocol.ConsensusValueValidation validation = 7;</code>
+       * <code>.protocol.ConsensusValueValidation validation = 7;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.ConsensusValueValidation getValidation() {
         if (validationBuilder_ == null) {
@@ -24068,7 +26132,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional .protocol.ConsensusValueValidation validation = 7;</code>
+       * <code>.protocol.ConsensusValueValidation validation = 7;</code>
        */
       public Builder setValidation(io.bumo.sdk.core.extend.protobuf.Chain.ConsensusValueValidation value) {
         if (validationBuilder_ == null) {
@@ -24084,7 +26148,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.ConsensusValueValidation validation = 7;</code>
+       * <code>.protocol.ConsensusValueValidation validation = 7;</code>
        */
       public Builder setValidation(
           io.bumo.sdk.core.extend.protobuf.Chain.ConsensusValueValidation.Builder builderForValue) {
@@ -24098,7 +26162,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.ConsensusValueValidation validation = 7;</code>
+       * <code>.protocol.ConsensusValueValidation validation = 7;</code>
        */
       public Builder mergeValidation(io.bumo.sdk.core.extend.protobuf.Chain.ConsensusValueValidation value) {
         if (validationBuilder_ == null) {
@@ -24116,7 +26180,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.ConsensusValueValidation validation = 7;</code>
+       * <code>.protocol.ConsensusValueValidation validation = 7;</code>
        */
       public Builder clearValidation() {
         if (validationBuilder_ == null) {
@@ -24130,7 +26194,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.ConsensusValueValidation validation = 7;</code>
+       * <code>.protocol.ConsensusValueValidation validation = 7;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.ConsensusValueValidation.Builder getValidationBuilder() {
         
@@ -24138,7 +26202,7 @@ public final class Chain {
         return getValidationFieldBuilder().getBuilder();
       }
       /**
-       * <code>optional .protocol.ConsensusValueValidation validation = 7;</code>
+       * <code>.protocol.ConsensusValueValidation validation = 7;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.ConsensusValueValidationOrBuilder getValidationOrBuilder() {
         if (validationBuilder_ != null) {
@@ -24149,7 +26213,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional .protocol.ConsensusValueValidation validation = 7;</code>
+       * <code>.protocol.ConsensusValueValidation validation = 7;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           io.bumo.sdk.core.extend.protobuf.Chain.ConsensusValueValidation, io.bumo.sdk.core.extend.protobuf.Chain.ConsensusValueValidation.Builder, io.bumo.sdk.core.extend.protobuf.Chain.ConsensusValueValidationOrBuilder> 
@@ -24166,12 +26230,12 @@ public final class Chain {
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.setUnknownFieldsProto3(unknownFields);
       }
 
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.mergeUnknownFields(unknownFields);
       }
 
 
@@ -24194,7 +26258,7 @@ public final class Chain {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new ConsensusValue(input, extensionRegistry);
+        return new ConsensusValue(input, extensionRegistry);
       }
     };
 
@@ -24218,36 +26282,20 @@ public final class Chain {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <pre>
-     *
-     * </pre>
-     *
-     * <code>optional .protocol.Contract.ContractType type = 1;</code>
+     * <code>.protocol.Contract.ContractType type = 1;</code>
      */
     int getTypeValue();
     /**
-     * <pre>
-     *
-     * </pre>
-     *
-     * <code>optional .protocol.Contract.ContractType type = 1;</code>
+     * <code>.protocol.Contract.ContractType type = 1;</code>
      */
     io.bumo.sdk.core.extend.protobuf.Chain.Contract.ContractType getType();
 
     /**
-     * <pre>
-     *
-     * </pre>
-     *
-     * <code>optional string payload = 2;</code>
+     * <code>string payload = 2;</code>
      */
     java.lang.String getPayload();
     /**
-     * <pre>
-     *
-     * </pre>
-     *
-     * <code>optional string payload = 2;</code>
+     * <code>string payload = 2;</code>
      */
     com.google.protobuf.ByteString
         getPayloadBytes();
@@ -24259,6 +26307,7 @@ public final class Chain {
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:protocol.Contract)
       ContractOrBuilder {
+  private static final long serialVersionUID = 0L;
     // Use Contract.newBuilder() to construct.
     private Contract(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -24271,14 +26320,19 @@ public final class Chain {
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
-      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+      return this.unknownFields;
     }
     private Contract(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
         boolean done = false;
         while (!done) {
@@ -24288,7 +26342,8 @@ public final class Chain {
               done = true;
               break;
             default: {
-              if (!input.skipField(tag)) {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
               break;
@@ -24313,6 +26368,7 @@ public final class Chain {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
+        this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
     }
@@ -24420,21 +26476,13 @@ public final class Chain {
     public static final int TYPE_FIELD_NUMBER = 1;
     private int type_;
     /**
-     * <pre>
-     *
-     * </pre>
-     *
-     * <code>optional .protocol.Contract.ContractType type = 1;</code>
+     * <code>.protocol.Contract.ContractType type = 1;</code>
      */
     public int getTypeValue() {
       return type_;
     }
     /**
-     * <pre>
-     *
-     * </pre>
-     *
-     * <code>optional .protocol.Contract.ContractType type = 1;</code>
+     * <code>.protocol.Contract.ContractType type = 1;</code>
      */
     public io.bumo.sdk.core.extend.protobuf.Chain.Contract.ContractType getType() {
       io.bumo.sdk.core.extend.protobuf.Chain.Contract.ContractType result = io.bumo.sdk.core.extend.protobuf.Chain.Contract.ContractType.valueOf(type_);
@@ -24444,11 +26492,7 @@ public final class Chain {
     public static final int PAYLOAD_FIELD_NUMBER = 2;
     private volatile java.lang.Object payload_;
     /**
-     * <pre>
-     *
-     * </pre>
-     *
-     * <code>optional string payload = 2;</code>
+     * <code>string payload = 2;</code>
      */
     public java.lang.String getPayload() {
       java.lang.Object ref = payload_;
@@ -24463,11 +26507,7 @@ public final class Chain {
       }
     }
     /**
-     * <pre>
-     *
-     * </pre>
-     *
-     * <code>optional string payload = 2;</code>
+     * <code>string payload = 2;</code>
      */
     public com.google.protobuf.ByteString
         getPayloadBytes() {
@@ -24501,6 +26541,7 @@ public final class Chain {
       if (!getPayloadBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 2, payload_);
       }
+      unknownFields.writeTo(output);
     }
 
     public int getSerializedSize() {
@@ -24515,11 +26556,11 @@ public final class Chain {
       if (!getPayloadBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, payload_);
       }
+      size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
     }
 
-    private static final long serialVersionUID = 0L;
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -24534,6 +26575,7 @@ public final class Chain {
       result = result && type_ == other.type_;
       result = result && getPayload()
           .equals(other.getPayload());
+      result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
 
@@ -24543,7 +26585,7 @@ public final class Chain {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptorForType().hashCode();
+      hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + TYPE_FIELD_NUMBER;
       hash = (53 * hash) + type_;
       hash = (37 * hash) + PAYLOAD_FIELD_NUMBER;
@@ -24553,6 +26595,17 @@ public final class Chain {
       return hash;
     }
 
+    public static io.bumo.sdk.core.extend.protobuf.Chain.Contract parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static io.bumo.sdk.core.extend.protobuf.Chain.Contract parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
     public static io.bumo.sdk.core.extend.protobuf.Chain.Contract parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -24703,7 +26756,7 @@ public final class Chain {
       }
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
       public Builder clearField(
@@ -24716,12 +26769,12 @@ public final class Chain {
       }
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, Object value) {
+          int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -24742,6 +26795,7 @@ public final class Chain {
           payload_ = other.payload_;
           onChanged();
         }
+        this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
       }
@@ -24770,21 +26824,13 @@ public final class Chain {
 
       private int type_ = 0;
       /**
-       * <pre>
-       *
-       * </pre>
-       *
-       * <code>optional .protocol.Contract.ContractType type = 1;</code>
+       * <code>.protocol.Contract.ContractType type = 1;</code>
        */
       public int getTypeValue() {
         return type_;
       }
       /**
-       * <pre>
-       *
-       * </pre>
-       *
-       * <code>optional .protocol.Contract.ContractType type = 1;</code>
+       * <code>.protocol.Contract.ContractType type = 1;</code>
        */
       public Builder setTypeValue(int value) {
         type_ = value;
@@ -24792,22 +26838,14 @@ public final class Chain {
         return this;
       }
       /**
-       * <pre>
-       *
-       * </pre>
-       *
-       * <code>optional .protocol.Contract.ContractType type = 1;</code>
+       * <code>.protocol.Contract.ContractType type = 1;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.Contract.ContractType getType() {
         io.bumo.sdk.core.extend.protobuf.Chain.Contract.ContractType result = io.bumo.sdk.core.extend.protobuf.Chain.Contract.ContractType.valueOf(type_);
         return result == null ? io.bumo.sdk.core.extend.protobuf.Chain.Contract.ContractType.UNRECOGNIZED : result;
       }
       /**
-       * <pre>
-       *
-       * </pre>
-       *
-       * <code>optional .protocol.Contract.ContractType type = 1;</code>
+       * <code>.protocol.Contract.ContractType type = 1;</code>
        */
       public Builder setType(io.bumo.sdk.core.extend.protobuf.Chain.Contract.ContractType value) {
         if (value == null) {
@@ -24819,11 +26857,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <pre>
-       *
-       * </pre>
-       *
-       * <code>optional .protocol.Contract.ContractType type = 1;</code>
+       * <code>.protocol.Contract.ContractType type = 1;</code>
        */
       public Builder clearType() {
         
@@ -24834,11 +26868,7 @@ public final class Chain {
 
       private java.lang.Object payload_ = "";
       /**
-       * <pre>
-       *
-       * </pre>
-       *
-       * <code>optional string payload = 2;</code>
+       * <code>string payload = 2;</code>
        */
       public java.lang.String getPayload() {
         java.lang.Object ref = payload_;
@@ -24853,11 +26883,7 @@ public final class Chain {
         }
       }
       /**
-       * <pre>
-       *
-       * </pre>
-       *
-       * <code>optional string payload = 2;</code>
+       * <code>string payload = 2;</code>
        */
       public com.google.protobuf.ByteString
           getPayloadBytes() {
@@ -24873,11 +26899,7 @@ public final class Chain {
         }
       }
       /**
-       * <pre>
-       *
-       * </pre>
-       *
-       * <code>optional string payload = 2;</code>
+       * <code>string payload = 2;</code>
        */
       public Builder setPayload(
           java.lang.String value) {
@@ -24890,11 +26912,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <pre>
-       *
-       * </pre>
-       *
-       * <code>optional string payload = 2;</code>
+       * <code>string payload = 2;</code>
        */
       public Builder clearPayload() {
         
@@ -24903,11 +26921,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <pre>
-       *
-       * </pre>
-       *
-       * <code>optional string payload = 2;</code>
+       * <code>string payload = 2;</code>
        */
       public Builder setPayloadBytes(
           com.google.protobuf.ByteString value) {
@@ -24922,12 +26936,12 @@ public final class Chain {
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.setUnknownFieldsProto3(unknownFields);
       }
 
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.mergeUnknownFields(unknownFields);
       }
 
 
@@ -24950,7 +26964,7 @@ public final class Chain {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new Contract(input, extensionRegistry);
+        return new Contract(input, extensionRegistry);
       }
     };
 
@@ -24974,38 +26988,38 @@ public final class Chain {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>optional string dest_address = 1;</code>
+     * <code>string dest_address = 1;</code>
      */
     java.lang.String getDestAddress();
     /**
-     * <code>optional string dest_address = 1;</code>
+     * <code>string dest_address = 1;</code>
      */
     com.google.protobuf.ByteString
         getDestAddressBytes();
 
     /**
-     * <code>optional .protocol.Contract contract = 2;</code>
+     * <code>.protocol.Contract contract = 2;</code>
      */
     boolean hasContract();
     /**
-     * <code>optional .protocol.Contract contract = 2;</code>
+     * <code>.protocol.Contract contract = 2;</code>
      */
     io.bumo.sdk.core.extend.protobuf.Chain.Contract getContract();
     /**
-     * <code>optional .protocol.Contract contract = 2;</code>
+     * <code>.protocol.Contract contract = 2;</code>
      */
     io.bumo.sdk.core.extend.protobuf.Chain.ContractOrBuilder getContractOrBuilder();
 
     /**
-     * <code>optional .protocol.AccountPrivilege priv = 3;</code>
+     * <code>.protocol.AccountPrivilege priv = 3;</code>
      */
     boolean hasPriv();
     /**
-     * <code>optional .protocol.AccountPrivilege priv = 3;</code>
+     * <code>.protocol.AccountPrivilege priv = 3;</code>
      */
     io.bumo.sdk.core.extend.protobuf.Chain.AccountPrivilege getPriv();
     /**
-     * <code>optional .protocol.AccountPrivilege priv = 3;</code>
+     * <code>.protocol.AccountPrivilege priv = 3;</code>
      */
     io.bumo.sdk.core.extend.protobuf.Chain.AccountPrivilegeOrBuilder getPrivOrBuilder();
 
@@ -25034,31 +27048,28 @@ public final class Chain {
         int index);
 
     /**
-     * <code>optional int64 init_balance = 5;</code>
+     * <code>int64 init_balance = 5;</code>
      */
     long getInitBalance();
 
     /**
-     * <code>optional string init_input = 6;</code>
+     * <code>string init_input = 6;</code>
      */
     java.lang.String getInitInput();
     /**
-     * <code>optional string init_input = 6;</code>
+     * <code>string init_input = 6;</code>
      */
     com.google.protobuf.ByteString
         getInitInputBytes();
   }
   /**
-   * <pre>
-   *˻
-   * </pre>
-   *
    * Protobuf type {@code protocol.OperationCreateAccount}
    */
   public  static final class OperationCreateAccount extends
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:protocol.OperationCreateAccount)
       OperationCreateAccountOrBuilder {
+  private static final long serialVersionUID = 0L;
     // Use OperationCreateAccount.newBuilder() to construct.
     private OperationCreateAccount(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -25073,14 +27084,19 @@ public final class Chain {
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
-      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+      return this.unknownFields;
     }
     private OperationCreateAccount(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
         boolean done = false;
         while (!done) {
@@ -25090,7 +27106,8 @@ public final class Chain {
               done = true;
               break;
             default: {
-              if (!input.skipField(tag)) {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
               break;
@@ -25158,6 +27175,7 @@ public final class Chain {
         if (((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
           metadatas_ = java.util.Collections.unmodifiableList(metadatas_);
         }
+        this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
     }
@@ -25177,7 +27195,7 @@ public final class Chain {
     public static final int DEST_ADDRESS_FIELD_NUMBER = 1;
     private volatile java.lang.Object destAddress_;
     /**
-     * <code>optional string dest_address = 1;</code>
+     * <code>string dest_address = 1;</code>
      */
     public java.lang.String getDestAddress() {
       java.lang.Object ref = destAddress_;
@@ -25192,7 +27210,7 @@ public final class Chain {
       }
     }
     /**
-     * <code>optional string dest_address = 1;</code>
+     * <code>string dest_address = 1;</code>
      */
     public com.google.protobuf.ByteString
         getDestAddressBytes() {
@@ -25211,19 +27229,19 @@ public final class Chain {
     public static final int CONTRACT_FIELD_NUMBER = 2;
     private io.bumo.sdk.core.extend.protobuf.Chain.Contract contract_;
     /**
-     * <code>optional .protocol.Contract contract = 2;</code>
+     * <code>.protocol.Contract contract = 2;</code>
      */
     public boolean hasContract() {
       return contract_ != null;
     }
     /**
-     * <code>optional .protocol.Contract contract = 2;</code>
+     * <code>.protocol.Contract contract = 2;</code>
      */
     public io.bumo.sdk.core.extend.protobuf.Chain.Contract getContract() {
       return contract_ == null ? io.bumo.sdk.core.extend.protobuf.Chain.Contract.getDefaultInstance() : contract_;
     }
     /**
-     * <code>optional .protocol.Contract contract = 2;</code>
+     * <code>.protocol.Contract contract = 2;</code>
      */
     public io.bumo.sdk.core.extend.protobuf.Chain.ContractOrBuilder getContractOrBuilder() {
       return getContract();
@@ -25232,19 +27250,19 @@ public final class Chain {
     public static final int PRIV_FIELD_NUMBER = 3;
     private io.bumo.sdk.core.extend.protobuf.Chain.AccountPrivilege priv_;
     /**
-     * <code>optional .protocol.AccountPrivilege priv = 3;</code>
+     * <code>.protocol.AccountPrivilege priv = 3;</code>
      */
     public boolean hasPriv() {
       return priv_ != null;
     }
     /**
-     * <code>optional .protocol.AccountPrivilege priv = 3;</code>
+     * <code>.protocol.AccountPrivilege priv = 3;</code>
      */
     public io.bumo.sdk.core.extend.protobuf.Chain.AccountPrivilege getPriv() {
       return priv_ == null ? io.bumo.sdk.core.extend.protobuf.Chain.AccountPrivilege.getDefaultInstance() : priv_;
     }
     /**
-     * <code>optional .protocol.AccountPrivilege priv = 3;</code>
+     * <code>.protocol.AccountPrivilege priv = 3;</code>
      */
     public io.bumo.sdk.core.extend.protobuf.Chain.AccountPrivilegeOrBuilder getPrivOrBuilder() {
       return getPriv();
@@ -25288,7 +27306,7 @@ public final class Chain {
     public static final int INIT_BALANCE_FIELD_NUMBER = 5;
     private long initBalance_;
     /**
-     * <code>optional int64 init_balance = 5;</code>
+     * <code>int64 init_balance = 5;</code>
      */
     public long getInitBalance() {
       return initBalance_;
@@ -25297,7 +27315,7 @@ public final class Chain {
     public static final int INIT_INPUT_FIELD_NUMBER = 6;
     private volatile java.lang.Object initInput_;
     /**
-     * <code>optional string init_input = 6;</code>
+     * <code>string init_input = 6;</code>
      */
     public java.lang.String getInitInput() {
       java.lang.Object ref = initInput_;
@@ -25312,7 +27330,7 @@ public final class Chain {
       }
     }
     /**
-     * <code>optional string init_input = 6;</code>
+     * <code>string init_input = 6;</code>
      */
     public com.google.protobuf.ByteString
         getInitInputBytes() {
@@ -25358,6 +27376,7 @@ public final class Chain {
       if (!getInitInputBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 6, initInput_);
       }
+      unknownFields.writeTo(output);
     }
 
     public int getSerializedSize() {
@@ -25387,11 +27406,11 @@ public final class Chain {
       if (!getInitInputBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, initInput_);
       }
+      size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
     }
 
-    private static final long serialVersionUID = 0L;
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -25421,6 +27440,7 @@ public final class Chain {
           == other.getInitBalance());
       result = result && getInitInput()
           .equals(other.getInitInput());
+      result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
 
@@ -25430,7 +27450,7 @@ public final class Chain {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptorForType().hashCode();
+      hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + DEST_ADDRESS_FIELD_NUMBER;
       hash = (53 * hash) + getDestAddress().hashCode();
       if (hasContract()) {
@@ -25455,6 +27475,17 @@ public final class Chain {
       return hash;
     }
 
+    public static io.bumo.sdk.core.extend.protobuf.Chain.OperationCreateAccount parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static io.bumo.sdk.core.extend.protobuf.Chain.OperationCreateAccount parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
     public static io.bumo.sdk.core.extend.protobuf.Chain.OperationCreateAccount parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -25533,10 +27564,6 @@ public final class Chain {
       return builder;
     }
     /**
-     * <pre>
-     *
-     * </pre>
-     *
      * Protobuf type {@code protocol.OperationCreateAccount}
      */
     public static final class Builder extends
@@ -25653,7 +27680,7 @@ public final class Chain {
       }
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
       public Builder clearField(
@@ -25666,12 +27693,12 @@ public final class Chain {
       }
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, Object value) {
+          int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -25728,6 +27755,7 @@ public final class Chain {
           initInput_ = other.initInput_;
           onChanged();
         }
+        this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
       }
@@ -25757,7 +27785,7 @@ public final class Chain {
 
       private java.lang.Object destAddress_ = "";
       /**
-       * <code>optional string dest_address = 1;</code>
+       * <code>string dest_address = 1;</code>
        */
       public java.lang.String getDestAddress() {
         java.lang.Object ref = destAddress_;
@@ -25772,7 +27800,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional string dest_address = 1;</code>
+       * <code>string dest_address = 1;</code>
        */
       public com.google.protobuf.ByteString
           getDestAddressBytes() {
@@ -25788,7 +27816,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional string dest_address = 1;</code>
+       * <code>string dest_address = 1;</code>
        */
       public Builder setDestAddress(
           java.lang.String value) {
@@ -25801,7 +27829,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional string dest_address = 1;</code>
+       * <code>string dest_address = 1;</code>
        */
       public Builder clearDestAddress() {
         
@@ -25810,7 +27838,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional string dest_address = 1;</code>
+       * <code>string dest_address = 1;</code>
        */
       public Builder setDestAddressBytes(
           com.google.protobuf.ByteString value) {
@@ -25828,13 +27856,13 @@ public final class Chain {
       private com.google.protobuf.SingleFieldBuilderV3<
           io.bumo.sdk.core.extend.protobuf.Chain.Contract, io.bumo.sdk.core.extend.protobuf.Chain.Contract.Builder, io.bumo.sdk.core.extend.protobuf.Chain.ContractOrBuilder> contractBuilder_;
       /**
-       * <code>optional .protocol.Contract contract = 2;</code>
+       * <code>.protocol.Contract contract = 2;</code>
        */
       public boolean hasContract() {
         return contractBuilder_ != null || contract_ != null;
       }
       /**
-       * <code>optional .protocol.Contract contract = 2;</code>
+       * <code>.protocol.Contract contract = 2;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.Contract getContract() {
         if (contractBuilder_ == null) {
@@ -25844,7 +27872,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional .protocol.Contract contract = 2;</code>
+       * <code>.protocol.Contract contract = 2;</code>
        */
       public Builder setContract(io.bumo.sdk.core.extend.protobuf.Chain.Contract value) {
         if (contractBuilder_ == null) {
@@ -25860,7 +27888,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.Contract contract = 2;</code>
+       * <code>.protocol.Contract contract = 2;</code>
        */
       public Builder setContract(
           io.bumo.sdk.core.extend.protobuf.Chain.Contract.Builder builderForValue) {
@@ -25874,7 +27902,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.Contract contract = 2;</code>
+       * <code>.protocol.Contract contract = 2;</code>
        */
       public Builder mergeContract(io.bumo.sdk.core.extend.protobuf.Chain.Contract value) {
         if (contractBuilder_ == null) {
@@ -25892,7 +27920,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.Contract contract = 2;</code>
+       * <code>.protocol.Contract contract = 2;</code>
        */
       public Builder clearContract() {
         if (contractBuilder_ == null) {
@@ -25906,7 +27934,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.Contract contract = 2;</code>
+       * <code>.protocol.Contract contract = 2;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.Contract.Builder getContractBuilder() {
         
@@ -25914,7 +27942,7 @@ public final class Chain {
         return getContractFieldBuilder().getBuilder();
       }
       /**
-       * <code>optional .protocol.Contract contract = 2;</code>
+       * <code>.protocol.Contract contract = 2;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.ContractOrBuilder getContractOrBuilder() {
         if (contractBuilder_ != null) {
@@ -25925,7 +27953,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional .protocol.Contract contract = 2;</code>
+       * <code>.protocol.Contract contract = 2;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           io.bumo.sdk.core.extend.protobuf.Chain.Contract, io.bumo.sdk.core.extend.protobuf.Chain.Contract.Builder, io.bumo.sdk.core.extend.protobuf.Chain.ContractOrBuilder> 
@@ -25945,13 +27973,13 @@ public final class Chain {
       private com.google.protobuf.SingleFieldBuilderV3<
           io.bumo.sdk.core.extend.protobuf.Chain.AccountPrivilege, io.bumo.sdk.core.extend.protobuf.Chain.AccountPrivilege.Builder, io.bumo.sdk.core.extend.protobuf.Chain.AccountPrivilegeOrBuilder> privBuilder_;
       /**
-       * <code>optional .protocol.AccountPrivilege priv = 3;</code>
+       * <code>.protocol.AccountPrivilege priv = 3;</code>
        */
       public boolean hasPriv() {
         return privBuilder_ != null || priv_ != null;
       }
       /**
-       * <code>optional .protocol.AccountPrivilege priv = 3;</code>
+       * <code>.protocol.AccountPrivilege priv = 3;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.AccountPrivilege getPriv() {
         if (privBuilder_ == null) {
@@ -25961,7 +27989,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional .protocol.AccountPrivilege priv = 3;</code>
+       * <code>.protocol.AccountPrivilege priv = 3;</code>
        */
       public Builder setPriv(io.bumo.sdk.core.extend.protobuf.Chain.AccountPrivilege value) {
         if (privBuilder_ == null) {
@@ -25977,7 +28005,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.AccountPrivilege priv = 3;</code>
+       * <code>.protocol.AccountPrivilege priv = 3;</code>
        */
       public Builder setPriv(
           io.bumo.sdk.core.extend.protobuf.Chain.AccountPrivilege.Builder builderForValue) {
@@ -25991,7 +28019,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.AccountPrivilege priv = 3;</code>
+       * <code>.protocol.AccountPrivilege priv = 3;</code>
        */
       public Builder mergePriv(io.bumo.sdk.core.extend.protobuf.Chain.AccountPrivilege value) {
         if (privBuilder_ == null) {
@@ -26009,7 +28037,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.AccountPrivilege priv = 3;</code>
+       * <code>.protocol.AccountPrivilege priv = 3;</code>
        */
       public Builder clearPriv() {
         if (privBuilder_ == null) {
@@ -26023,7 +28051,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.AccountPrivilege priv = 3;</code>
+       * <code>.protocol.AccountPrivilege priv = 3;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.AccountPrivilege.Builder getPrivBuilder() {
         
@@ -26031,7 +28059,7 @@ public final class Chain {
         return getPrivFieldBuilder().getBuilder();
       }
       /**
-       * <code>optional .protocol.AccountPrivilege priv = 3;</code>
+       * <code>.protocol.AccountPrivilege priv = 3;</code>
        */
       public io.bumo.sdk.core.extend.protobuf.Chain.AccountPrivilegeOrBuilder getPrivOrBuilder() {
         if (privBuilder_ != null) {
@@ -26042,7 +28070,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional .protocol.AccountPrivilege priv = 3;</code>
+       * <code>.protocol.AccountPrivilege priv = 3;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           io.bumo.sdk.core.extend.protobuf.Chain.AccountPrivilege, io.bumo.sdk.core.extend.protobuf.Chain.AccountPrivilege.Builder, io.bumo.sdk.core.extend.protobuf.Chain.AccountPrivilegeOrBuilder> 
@@ -26300,13 +28328,13 @@ public final class Chain {
 
       private long initBalance_ ;
       /**
-       * <code>optional int64 init_balance = 5;</code>
+       * <code>int64 init_balance = 5;</code>
        */
       public long getInitBalance() {
         return initBalance_;
       }
       /**
-       * <code>optional int64 init_balance = 5;</code>
+       * <code>int64 init_balance = 5;</code>
        */
       public Builder setInitBalance(long value) {
         
@@ -26315,7 +28343,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional int64 init_balance = 5;</code>
+       * <code>int64 init_balance = 5;</code>
        */
       public Builder clearInitBalance() {
         
@@ -26326,7 +28354,7 @@ public final class Chain {
 
       private java.lang.Object initInput_ = "";
       /**
-       * <code>optional string init_input = 6;</code>
+       * <code>string init_input = 6;</code>
        */
       public java.lang.String getInitInput() {
         java.lang.Object ref = initInput_;
@@ -26341,7 +28369,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional string init_input = 6;</code>
+       * <code>string init_input = 6;</code>
        */
       public com.google.protobuf.ByteString
           getInitInputBytes() {
@@ -26357,7 +28385,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional string init_input = 6;</code>
+       * <code>string init_input = 6;</code>
        */
       public Builder setInitInput(
           java.lang.String value) {
@@ -26370,7 +28398,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional string init_input = 6;</code>
+       * <code>string init_input = 6;</code>
        */
       public Builder clearInitInput() {
         
@@ -26379,7 +28407,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional string init_input = 6;</code>
+       * <code>string init_input = 6;</code>
        */
       public Builder setInitInputBytes(
           com.google.protobuf.ByteString value) {
@@ -26394,12 +28422,12 @@ public final class Chain {
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.setUnknownFieldsProto3(unknownFields);
       }
 
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.mergeUnknownFields(unknownFields);
       }
 
 
@@ -26422,7 +28450,7 @@ public final class Chain {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new OperationCreateAccount(input, extensionRegistry);
+        return new OperationCreateAccount(input, extensionRegistry);
       }
     };
 
@@ -26446,36 +28474,36 @@ public final class Chain {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>optional string key = 1;</code>
+     * <code>string key = 1;</code>
      */
     java.lang.String getKey();
     /**
-     * <code>optional string key = 1;</code>
+     * <code>string key = 1;</code>
      */
     com.google.protobuf.ByteString
         getKeyBytes();
 
     /**
-     * <code>optional string value = 2;</code>
+     * <code>string value = 2;</code>
      */
     java.lang.String getValue();
     /**
-     * <code>optional string value = 2;</code>
+     * <code>string value = 2;</code>
      */
     com.google.protobuf.ByteString
         getValueBytes();
 
     /**
      * <pre>
-     *
+     *Optional. The version number of metadata. If set, it must be the same as the existing metadata_version of the account.
      * </pre>
      *
-     * <code>optional int64 version = 3;</code>
+     * <code>int64 version = 3;</code>
      */
     long getVersion();
 
     /**
-     * <code>optional bool delete_flag = 4;</code>
+     * <code>bool delete_flag = 4;</code>
      */
     boolean getDeleteFlag();
   }
@@ -26486,6 +28514,7 @@ public final class Chain {
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:protocol.OperationSetMetadata)
       OperationSetMetadataOrBuilder {
+  private static final long serialVersionUID = 0L;
     // Use OperationSetMetadata.newBuilder() to construct.
     private OperationSetMetadata(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -26500,14 +28529,19 @@ public final class Chain {
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
-      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+      return this.unknownFields;
     }
     private OperationSetMetadata(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
         boolean done = false;
         while (!done) {
@@ -26517,7 +28551,8 @@ public final class Chain {
               done = true;
               break;
             default: {
-              if (!input.skipField(tag)) {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
               break;
@@ -26552,6 +28587,7 @@ public final class Chain {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
+        this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
     }
@@ -26570,7 +28606,7 @@ public final class Chain {
     public static final int KEY_FIELD_NUMBER = 1;
     private volatile java.lang.Object key_;
     /**
-     * <code>optional string key = 1;</code>
+     * <code>string key = 1;</code>
      */
     public java.lang.String getKey() {
       java.lang.Object ref = key_;
@@ -26585,7 +28621,7 @@ public final class Chain {
       }
     }
     /**
-     * <code>optional string key = 1;</code>
+     * <code>string key = 1;</code>
      */
     public com.google.protobuf.ByteString
         getKeyBytes() {
@@ -26604,7 +28640,7 @@ public final class Chain {
     public static final int VALUE_FIELD_NUMBER = 2;
     private volatile java.lang.Object value_;
     /**
-     * <code>optional string value = 2;</code>
+     * <code>string value = 2;</code>
      */
     public java.lang.String getValue() {
       java.lang.Object ref = value_;
@@ -26619,7 +28655,7 @@ public final class Chain {
       }
     }
     /**
-     * <code>optional string value = 2;</code>
+     * <code>string value = 2;</code>
      */
     public com.google.protobuf.ByteString
         getValueBytes() {
@@ -26639,10 +28675,10 @@ public final class Chain {
     private long version_;
     /**
      * <pre>
-     *
+     *Optional. The version number of metadata. If set, it must be the same as the existing metadata_version of the account.
      * </pre>
      *
-     * <code>optional int64 version = 3;</code>
+     * <code>int64 version = 3;</code>
      */
     public long getVersion() {
       return version_;
@@ -26651,7 +28687,7 @@ public final class Chain {
     public static final int DELETE_FLAG_FIELD_NUMBER = 4;
     private boolean deleteFlag_;
     /**
-     * <code>optional bool delete_flag = 4;</code>
+     * <code>bool delete_flag = 4;</code>
      */
     public boolean getDeleteFlag() {
       return deleteFlag_;
@@ -26681,6 +28717,7 @@ public final class Chain {
       if (deleteFlag_ != false) {
         output.writeBool(4, deleteFlag_);
       }
+      unknownFields.writeTo(output);
     }
 
     public int getSerializedSize() {
@@ -26702,11 +28739,11 @@ public final class Chain {
         size += com.google.protobuf.CodedOutputStream
           .computeBoolSize(4, deleteFlag_);
       }
+      size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
     }
 
-    private static final long serialVersionUID = 0L;
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -26726,6 +28763,7 @@ public final class Chain {
           == other.getVersion());
       result = result && (getDeleteFlag()
           == other.getDeleteFlag());
+      result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
 
@@ -26735,7 +28773,7 @@ public final class Chain {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptorForType().hashCode();
+      hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + KEY_FIELD_NUMBER;
       hash = (53 * hash) + getKey().hashCode();
       hash = (37 * hash) + VALUE_FIELD_NUMBER;
@@ -26751,6 +28789,17 @@ public final class Chain {
       return hash;
     }
 
+    public static io.bumo.sdk.core.extend.protobuf.Chain.OperationSetMetadata parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static io.bumo.sdk.core.extend.protobuf.Chain.OperationSetMetadata parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
     public static io.bumo.sdk.core.extend.protobuf.Chain.OperationSetMetadata parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -26907,7 +28956,7 @@ public final class Chain {
       }
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
       public Builder clearField(
@@ -26920,12 +28969,12 @@ public final class Chain {
       }
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, Object value) {
+          int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -26953,6 +29002,7 @@ public final class Chain {
         if (other.getDeleteFlag() != false) {
           setDeleteFlag(other.getDeleteFlag());
         }
+        this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
       }
@@ -26981,7 +29031,7 @@ public final class Chain {
 
       private java.lang.Object key_ = "";
       /**
-       * <code>optional string key = 1;</code>
+       * <code>string key = 1;</code>
        */
       public java.lang.String getKey() {
         java.lang.Object ref = key_;
@@ -26996,7 +29046,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional string key = 1;</code>
+       * <code>string key = 1;</code>
        */
       public com.google.protobuf.ByteString
           getKeyBytes() {
@@ -27012,7 +29062,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional string key = 1;</code>
+       * <code>string key = 1;</code>
        */
       public Builder setKey(
           java.lang.String value) {
@@ -27025,7 +29075,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional string key = 1;</code>
+       * <code>string key = 1;</code>
        */
       public Builder clearKey() {
         
@@ -27034,7 +29084,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional string key = 1;</code>
+       * <code>string key = 1;</code>
        */
       public Builder setKeyBytes(
           com.google.protobuf.ByteString value) {
@@ -27050,7 +29100,7 @@ public final class Chain {
 
       private java.lang.Object value_ = "";
       /**
-       * <code>optional string value = 2;</code>
+       * <code>string value = 2;</code>
        */
       public java.lang.String getValue() {
         java.lang.Object ref = value_;
@@ -27065,7 +29115,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional string value = 2;</code>
+       * <code>string value = 2;</code>
        */
       public com.google.protobuf.ByteString
           getValueBytes() {
@@ -27081,7 +29131,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional string value = 2;</code>
+       * <code>string value = 2;</code>
        */
       public Builder setValue(
           java.lang.String value) {
@@ -27094,7 +29144,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional string value = 2;</code>
+       * <code>string value = 2;</code>
        */
       public Builder clearValue() {
         
@@ -27103,7 +29153,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional string value = 2;</code>
+       * <code>string value = 2;</code>
        */
       public Builder setValueBytes(
           com.google.protobuf.ByteString value) {
@@ -27120,20 +29170,20 @@ public final class Chain {
       private long version_ ;
       /**
        * <pre>
-       *
+       *Optional. The version number of metadata. If set, it must be the same as the existing metadata_version of the account.
        * </pre>
        *
-       * <code>optional int64 version = 3;</code>
+       * <code>int64 version = 3;</code>
        */
       public long getVersion() {
         return version_;
       }
       /**
        * <pre>
-       *
+       *Optional. The version number of metadata. If set, it must be the same as the existing metadata_version of the account.
        * </pre>
        *
-       * <code>optional int64 version = 3;</code>
+       * <code>int64 version = 3;</code>
        */
       public Builder setVersion(long value) {
         
@@ -27143,10 +29193,10 @@ public final class Chain {
       }
       /**
        * <pre>
-       *
+       *Optional. The version number of metadata. If set, it must be the same as the existing metadata_version of the account.
        * </pre>
        *
-       * <code>optional int64 version = 3;</code>
+       * <code>int64 version = 3;</code>
        */
       public Builder clearVersion() {
         
@@ -27157,13 +29207,13 @@ public final class Chain {
 
       private boolean deleteFlag_ ;
       /**
-       * <code>optional bool delete_flag = 4;</code>
+       * <code>bool delete_flag = 4;</code>
        */
       public boolean getDeleteFlag() {
         return deleteFlag_;
       }
       /**
-       * <code>optional bool delete_flag = 4;</code>
+       * <code>bool delete_flag = 4;</code>
        */
       public Builder setDeleteFlag(boolean value) {
         
@@ -27172,7 +29222,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional bool delete_flag = 4;</code>
+       * <code>bool delete_flag = 4;</code>
        */
       public Builder clearDeleteFlag() {
         
@@ -27182,12 +29232,12 @@ public final class Chain {
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.setUnknownFieldsProto3(unknownFields);
       }
 
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.mergeUnknownFields(unknownFields);
       }
 
 
@@ -27210,7 +29260,7 @@ public final class Chain {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new OperationSetMetadata(input, extensionRegistry);
+        return new OperationSetMetadata(input, extensionRegistry);
       }
     };
 
@@ -27305,6 +29355,11 @@ public final class Chain {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_protocol_OperationLog_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_protocol_OperationSetPrivilege_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_protocol_OperationSetPrivilege_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_protocol_Operation_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
@@ -27392,7 +29447,7 @@ public final class Chain {
       "ssuer\030\001 \001(\t\022\014\n\004code\030\002 \001(\t\022\014\n\004type\030\003 \001(\005\"" +
       "8\n\005Asset\022\037\n\003key\030\001 \001(\0132\022.protocol.AssetKe" +
       "y\022\016\n\006amount\030\002 \001(\003\"u\n\rAssetProperty\022\017\n\007de" +
-      "cimal\030\001 \001(\005\022\023\n\013description\030\002 \001(\t\022\022\n\nmax_",
+      "cimal\030\001 \001(\005\022\023\n\013description\030\002 \001(\t\022\022\n\nmax_" +
       "supply\030\003 \001(\003\022\025\n\rissued_amount\030\004 \001(\003\022\023\n\013f" +
       "ee_percent\030\005 \001(\005\"h\n\nAssetStore\022\037\n\003key\030\001 " +
       "\001(\0132\022.protocol.AssetKey\022\016\n\006amount\030\002 \001(\003\022" +
@@ -27402,7 +29457,7 @@ public final class Chain {
       "_tree_hash\030\004 \001(\014\022\022\n\nclose_time\030\005 \001(\003\022\034\n\024" +
       "consensus_value_hash\030\006 \001(\014\022\017\n\007version\030\007 " +
       "\001(\003\022\020\n\010tx_count\030\010 \001(\003\022\027\n\017validators_hash" +
-      "\030\t \001(\014\022\021\n\tfees_hash\030\n \001(\014\022\017\n\007reserve\030\013 \001",
+      "\030\t \001(\014\022\021\n\tfees_hash\030\n \001(\014\022\017\n\007reserve\030\013 \001" +
       "(\t\"d\n\006Ledger\022&\n\006header\030\001 \001(\0132\026.protocol." +
       "LedgerHeader\0222\n\020transaction_envs\030\002 \003(\0132\030" +
       ".protocol.TransactionEnv\"X\n\021OperationPay" +
@@ -27412,7 +29467,7 @@ public final class Chain {
       "tocol.Operation.Type\022\021\n\tthreshold\030\002 \001(\003\"" +
       "|\n\020AccountPrivilege\022\025\n\rmaster_weight\030\001 \001" +
       "(\003\022!\n\007signers\030\002 \003(\0132\020.protocol.Signer\022.\n" +
-      "\nthresholds\030\003 \001(\0132\032.protocol.AccountThre",
+      "\nthresholds\030\003 \001(\0132\032.protocol.AccountThre" +
       "shold\"c\n\020AccountThreshold\022\024\n\014tx_threshol" +
       "d\030\001 \001(\003\0229\n\017type_thresholds\030\002 \003(\0132 .proto" +
       "col.OperationTypeThreshold\"3\n\023OperationI" +
@@ -27422,27 +29477,33 @@ public final class Chain {
       "ationSetSignerWeight\022\025\n\rmaster_weight\030\001 " +
       "\001(\003\022!\n\007signers\030\002 \003(\0132\020.protocol.Signer\"," +
       "\n\014OperationLog\022\r\n\005topic\030\001 \001(\t\022\r\n\005datas\030\002" +
-      " \003(\t\"\230\005\n\tOperation\022&\n\004type\030\001 \001(\0162\030.proto",
-      "col.Operation.Type\022\026\n\016source_address\030\002 \001" +
-      "(\t\022\020\n\010metadata\030\003 \001(\014\0228\n\016create_account\030\004" +
-      " \001(\0132 .protocol.OperationCreateAccount\0222" +
-      "\n\013issue_asset\030\005 \001(\0132\035.protocol.Operation" +
-      "IssueAsset\022.\n\tpay_asset\030\006 \001(\0132\033.protocol" +
-      ".OperationPayAsset\0224\n\014set_metadata\030\007 \001(\013" +
-      "2\036.protocol.OperationSetMetadata\022=\n\021set_" +
-      "signer_weight\030\010 \001(\0132\".protocol.Operation" +
-      "SetSignerWeight\0226\n\rset_threshold\030\t \001(\0132\037" +
-      ".protocol.OperationSetThreshold\022,\n\010pay_c",
-      "oin\030\n \001(\0132\032.protocol.OperationPayCoin\022#\n" +
-      "\003log\030\013 \001(\0132\026.protocol.OperationLog\"\232\001\n\004T" +
-      "ype\022\013\n\007UNKNOWN\020\000\022\022\n\016CREATE_ACCOUNT\020\001\022\017\n\013" +
-      "ISSUE_ASSET\020\002\022\r\n\tPAY_ASSET\020\003\022\020\n\014SET_META" +
-      "DATA\020\004\022\025\n\021SET_SIGNER_WEIGHT\020\005\022\021\n\rSET_THR" +
-      "ESHOLD\020\006\022\014\n\010PAY_COIN\020\007\022\007\n\003LOG\020\010\"h\n\025Opera" +
+      " \003(\t\"\242\001\n\025OperationSetPrivilege\022\025\n\rmaster" +
+      "_weight\030\001 \001(\t\022!\n\007signers\030\002 \003(\0132\020.protoco" +
+      "l.Signer\022\024\n\014tx_threshold\030\003 \001(\t\0229\n\017type_t" +
+      "hresholds\030\004 \003(\0132 .protocol.OperationType" +
+      "Threshold\"\343\005\n\tOperation\022&\n\004type\030\001 \001(\0162\030." +
+      "protocol.Operation.Type\022\026\n\016source_addres" +
+      "s\030\002 \001(\t\022\020\n\010metadata\030\003 \001(\014\0228\n\016create_acco" +
+      "unt\030\004 \001(\0132 .protocol.OperationCreateAcco" +
+      "unt\0222\n\013issue_asset\030\005 \001(\0132\035.protocol.Oper" +
+      "ationIssueAsset\022.\n\tpay_asset\030\006 \001(\0132\033.pro" +
+      "tocol.OperationPayAsset\0224\n\014set_metadata\030" +
+      "\007 \001(\0132\036.protocol.OperationSetMetadata\022=\n" +
+      "\021set_signer_weight\030\010 \001(\0132\".protocol.Oper" +
+      "ationSetSignerWeight\0226\n\rset_threshold\030\t " +
+      "\001(\0132\037.protocol.OperationSetThreshold\022,\n\010" +
+      "pay_coin\030\n \001(\0132\032.protocol.OperationPayCo" +
+      "in\022#\n\003log\030\013 \001(\0132\026.protocol.OperationLog\022" +
+      "6\n\rset_privilege\030\014 \001(\0132\037.protocol.Operat" +
+      "ionSetPrivilege\"\255\001\n\004Type\022\013\n\007UNKNOWN\020\000\022\022\n" +
+      "\016CREATE_ACCOUNT\020\001\022\017\n\013ISSUE_ASSET\020\002\022\r\n\tPA" +
+      "Y_ASSET\020\003\022\020\n\014SET_METADATA\020\004\022\025\n\021SET_SIGNE" +
+      "R_WEIGHT\020\005\022\021\n\rSET_THRESHOLD\020\006\022\014\n\010PAY_COI" +
+      "N\020\007\022\007\n\003LOG\020\010\022\021\n\rSET_PRIVILEGE\020\t\"h\n\025Opera" +
       "tionSetThreshold\022\024\n\014tx_threshold\030\001 \001(\003\0229" +
-      "\n\017type_thresholds\030\004 \003(\0132 .protocol.Opera" +
+      "\n\017type_thresholds\030\002 \003(\0132 .protocol.Opera" +
       "tionTypeThreshold\"\325\001\n\013Transaction\022\026\n\016sou" +
-      "rce_address\030\001 \001(\t\022\r\n\005nonce\030\002 \001(\003\022\021\n\tfee_",
+      "rce_address\030\001 \001(\t\022\r\n\005nonce\030\002 \001(\003\022\021\n\tfee_" +
       "limit\030\003 \001(\003\022\021\n\tgas_price\030\004 \001(\003\022\027\n\017ceil_l" +
       "edger_seq\030\005 \001(\003\022\020\n\010metadata\030\006 \001(\014\022\'\n\nope" +
       "rations\030\007 \003(\0132\023.protocol.Operation\"%\n\005Li" +
@@ -27452,7 +29513,7 @@ public final class Chain {
       "rigger\022;\n\020transaction_type\030\001 \001(\0162!.proto" +
       "col.Trigger.TransactionType\022\022\n\nledger_se" +
       "q\030\002 \001(\003\0227\n\013transaction\030\003 \001(\0132\".protocol." +
-      "Trigger.OperationTrigger\032/\n\020OperationTri",
+      "Trigger.OperationTrigger\032/\n\020OperationTri" +
       "gger\022\014\n\004hash\030\001 \001(\014\022\r\n\005index\030\002 \001(\003\"C\n\017Tra" +
       "nsactionType\022\026\n\022NORMAL_TRANSACTION\020\000\022\030\n\024" +
       "CONTRACT_TRANSACTION\020\001\"\211\001\n\016TransactionEn" +
@@ -27462,7 +29523,7 @@ public final class Chain {
       "er\"\272\001\n\023TransactionEnvStore\0221\n\017transactio" +
       "n_env\030\001 \001(\0132\030.protocol.TransactionEnv\022\022\n" +
       "\nerror_code\030\002 \001(\005\022\022\n\nerror_desc\030\003 \001(\t\022\022\n" +
-      "\nledger_seq\030\004 \001(\003\022\022\n\nclose_time\030\005 \001(\003\022\014\n",
+      "\nledger_seq\030\004 \001(\003\022\022\n\nclose_time\030\005 \001(\003\022\014\n" +
       "\004hash\030\006 \001(\014\022\022\n\nactual_fee\030\007 \001(\003\":\n\021Trans" +
       "actionEnvSet\022%\n\003txs\030\002 \003(\0132\030.protocol.Tra" +
       "nsactionEnv\"G\n\030ConsensusValueValidation\022" +
@@ -27472,7 +29533,7 @@ public final class Chain {
       "e\030\002 \001(\003\022\026\n\016previous_proof\030\003 \001(\014\022\022\n\nledge" +
       "r_seq\030\004 \001(\003\022\034\n\024previous_ledger_hash\030\005 \001(" +
       "\014\022/\n\016ledger_upgrade\030\006 \001(\0132\027.protocol.Led" +
-      "gerUpgrade\0226\n\nvalidation\030\007 \001(\0132\".protoco",
+      "gerUpgrade\0226\n\nvalidation\030\007 \001(\0132\".protoco" +
       "l.ConsensusValueValidation\"j\n\010Contract\022-" +
       "\n\004type\030\001 \001(\0162\037.protocol.Contract.Contrac" +
       "tType\022\017\n\007payload\030\002 \001(\t\"\036\n\014ContractType\022\016" +
@@ -27482,7 +29543,7 @@ public final class Chain {
       "otocol.AccountPrivilege\022$\n\tmetadatas\030\004 \003" +
       "(\0132\021.protocol.KeyPair\022\024\n\014init_balance\030\005 " +
       "\001(\003\022\022\n\ninit_input\030\006 \001(\t\"X\n\024OperationSetM" +
-      "etadata\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\t\022\017\n\007v",
+      "etadata\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\t\022\017\n\007v" +
       "ersion\030\003 \001(\003\022\023\n\013delete_flag\030\004 \001(\010*#\n\005Lim" +
       "it\022\013\n\007UNKNOWN\020\000\022\r\n\tSIGNATURE\020dB\"\n io.bum" +
       "o.sdk.core.extend.protobufb\006proto3"
@@ -27590,32 +29651,38 @@ public final class Chain {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_protocol_OperationLog_descriptor,
         new java.lang.String[] { "Topic", "Datas", });
-    internal_static_protocol_Operation_descriptor =
+    internal_static_protocol_OperationSetPrivilege_descriptor =
       getDescriptor().getMessageTypes().get(15);
+    internal_static_protocol_OperationSetPrivilege_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_protocol_OperationSetPrivilege_descriptor,
+        new java.lang.String[] { "MasterWeight", "Signers", "TxThreshold", "TypeThresholds", });
+    internal_static_protocol_Operation_descriptor =
+      getDescriptor().getMessageTypes().get(16);
     internal_static_protocol_Operation_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_protocol_Operation_descriptor,
-        new java.lang.String[] { "Type", "SourceAddress", "Metadata", "CreateAccount", "IssueAsset", "PayAsset", "SetMetadata", "SetSignerWeight", "SetThreshold", "PayCoin", "Log", });
+        new java.lang.String[] { "Type", "SourceAddress", "Metadata", "CreateAccount", "IssueAsset", "PayAsset", "SetMetadata", "SetSignerWeight", "SetThreshold", "PayCoin", "Log", "SetPrivilege", });
     internal_static_protocol_OperationSetThreshold_descriptor =
-      getDescriptor().getMessageTypes().get(16);
+      getDescriptor().getMessageTypes().get(17);
     internal_static_protocol_OperationSetThreshold_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_protocol_OperationSetThreshold_descriptor,
         new java.lang.String[] { "TxThreshold", "TypeThresholds", });
     internal_static_protocol_Transaction_descriptor =
-      getDescriptor().getMessageTypes().get(17);
+      getDescriptor().getMessageTypes().get(18);
     internal_static_protocol_Transaction_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_protocol_Transaction_descriptor,
         new java.lang.String[] { "SourceAddress", "Nonce", "FeeLimit", "GasPrice", "CeilLedgerSeq", "Metadata", "Operations", });
     internal_static_protocol_Signer_descriptor =
-      getDescriptor().getMessageTypes().get(18);
+      getDescriptor().getMessageTypes().get(19);
     internal_static_protocol_Signer_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_protocol_Signer_descriptor,
         new java.lang.String[] { "Address", "Weight", });
     internal_static_protocol_Trigger_descriptor =
-      getDescriptor().getMessageTypes().get(19);
+      getDescriptor().getMessageTypes().get(20);
     internal_static_protocol_Trigger_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_protocol_Trigger_descriptor,
@@ -27627,49 +29694,49 @@ public final class Chain {
         internal_static_protocol_Trigger_OperationTrigger_descriptor,
         new java.lang.String[] { "Hash", "Index", });
     internal_static_protocol_TransactionEnv_descriptor =
-      getDescriptor().getMessageTypes().get(20);
+      getDescriptor().getMessageTypes().get(21);
     internal_static_protocol_TransactionEnv_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_protocol_TransactionEnv_descriptor,
         new java.lang.String[] { "Transaction", "Signatures", "Trigger", });
     internal_static_protocol_TransactionEnvStore_descriptor =
-      getDescriptor().getMessageTypes().get(21);
+      getDescriptor().getMessageTypes().get(22);
     internal_static_protocol_TransactionEnvStore_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_protocol_TransactionEnvStore_descriptor,
         new java.lang.String[] { "TransactionEnv", "ErrorCode", "ErrorDesc", "LedgerSeq", "CloseTime", "Hash", "ActualFee", });
     internal_static_protocol_TransactionEnvSet_descriptor =
-      getDescriptor().getMessageTypes().get(22);
+      getDescriptor().getMessageTypes().get(23);
     internal_static_protocol_TransactionEnvSet_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_protocol_TransactionEnvSet_descriptor,
         new java.lang.String[] { "Txs", });
     internal_static_protocol_ConsensusValueValidation_descriptor =
-      getDescriptor().getMessageTypes().get(23);
+      getDescriptor().getMessageTypes().get(24);
     internal_static_protocol_ConsensusValueValidation_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_protocol_ConsensusValueValidation_descriptor,
         new java.lang.String[] { "ExpireTxIds", "ErrorTxIds", });
     internal_static_protocol_ConsensusValue_descriptor =
-      getDescriptor().getMessageTypes().get(24);
+      getDescriptor().getMessageTypes().get(25);
     internal_static_protocol_ConsensusValue_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_protocol_ConsensusValue_descriptor,
         new java.lang.String[] { "Txset", "CloseTime", "PreviousProof", "LedgerSeq", "PreviousLedgerHash", "LedgerUpgrade", "Validation", });
     internal_static_protocol_Contract_descriptor =
-      getDescriptor().getMessageTypes().get(25);
+      getDescriptor().getMessageTypes().get(26);
     internal_static_protocol_Contract_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_protocol_Contract_descriptor,
         new java.lang.String[] { "Type", "Payload", });
     internal_static_protocol_OperationCreateAccount_descriptor =
-      getDescriptor().getMessageTypes().get(26);
+      getDescriptor().getMessageTypes().get(27);
     internal_static_protocol_OperationCreateAccount_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_protocol_OperationCreateAccount_descriptor,
         new java.lang.String[] { "DestAddress", "Contract", "Priv", "Metadatas", "InitBalance", "InitInput", });
     internal_static_protocol_OperationSetMetadata_descriptor =
-      getDescriptor().getMessageTypes().get(27);
+      getDescriptor().getMessageTypes().get(28);
     internal_static_protocol_OperationSetMetadata_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_protocol_OperationSetMetadata_descriptor,

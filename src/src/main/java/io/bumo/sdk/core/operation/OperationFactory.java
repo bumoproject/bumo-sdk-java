@@ -1,9 +1,13 @@
 package io.bumo.sdk.core.operation;
 
 import io.bumo.sdk.core.adapter.bc.OperationType;
+import io.bumo.sdk.core.adapter.bc.common.Signer;
+import io.bumo.sdk.core.adapter.bc.response.TypeThreshold;
 import io.bumo.sdk.core.adapter.bc.response.operation.SetMetadata;
 import io.bumo.sdk.core.exception.SdkException;
 import io.bumo.sdk.core.operation.impl.*;
+
+import java.util.List;
 
 /**
  * @author bumo
@@ -27,11 +31,12 @@ public class OperationFactory{
      * Create new account operation
      *
      * @param sourceAddress Source Address
-     * @param destAddress the address of destination account
      * @param initBalance Initial balance of BU token
+     * @param payload The code of Javascript
+     * @param initInput The input of init function
      */
-    public static CreateAccountOperation newCreateContractOperation(String sourceAddress, String destAddress, long initBalance, String payload, String initInput) throws SdkException{
-        return new CreateAccountOperation.Builder().buildOperationSourceAddress(sourceAddress).buildDestAddress(destAddress).buildScript(payload).buildAddInitInput(initInput).buildAddInitBalance(initBalance).build();
+    public static CreateAccountOperation newCreateContractOperation(String sourceAddress, long initBalance, String payload, String initInput) throws SdkException{
+        return new CreateAccountOperation.Builder().buildOperationSourceAddress(sourceAddress).buildScript(payload).buildAddInitInput(initInput).buildAddInitBalance(initBalance).build();
     }
 
     /**
@@ -132,7 +137,7 @@ public class OperationFactory{
      * @param value metadata-value
      */
     @SuppressWarnings("unused")
-	private static SetMetadataOperation newSetMetadataOperation(String sourceAddress, String key, String value) throws SdkException{
+	public static SetMetadataOperation newSetMetadataOperation(String sourceAddress, String key, String value) throws SdkException{
         return new SetMetadataOperation.Builder().buildOperationSourceAddress(sourceAddress).buildMetadata(key, value).build();
     }
 
@@ -145,7 +150,7 @@ public class OperationFactory{
      * @param version Version that is currently querying, no 0
      */
     @SuppressWarnings("unused")
-	private static SetMetadataOperation newSetMetadataOperation(String sourceAddress, String key, String value, long version) throws SdkException{
+	public static SetMetadataOperation newSetMetadataOperation(String sourceAddress, String key, String value, long version) throws SdkException{
         return new SetMetadataOperation.Builder().buildOperationSourceAddress(sourceAddress).buildMetadata(key, value, version).build();
     }
 
@@ -193,6 +198,17 @@ public class OperationFactory{
     @SuppressWarnings("unused")
 	private static SetThresholdOperation newSetThresholdOperation(String sourceAddress, long txThreshold) throws SdkException{
         return new SetThresholdOperation.Builder().buildOperationSourceAddress(sourceAddress).buildTxThreshold(txThreshold).build();
+    }
+
+    /**
+     * Set / update transaction threshold
+     *
+     * @param sourceAddress Source Address
+     * @param txThreshold Trading threshold
+     */
+    @SuppressWarnings("unused")
+    public static SetPrivilegeOperation newSetPrivilegeOperation(String sourceAddress, String masterWeight, List<Signer> signers, String txThreshold, List<TypeThreshold> typeThresholds) throws SdkException{
+        return new SetPrivilegeOperation.Builder().buildOperationSourceAddress(sourceAddress).buildTxThreshold(txThreshold).buildSigners(signers).buildTypeThreshold(typeThresholds).build();
     }
 
     /**

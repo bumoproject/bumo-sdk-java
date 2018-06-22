@@ -111,6 +111,7 @@ public class TxFailManager extends AbstractEventHandler<LedgerSeqEventMessage>{
         private FailProcessor(RpcService rpcService, Set<TransactionExecutedEventMessage> executedEventMessages){
             this.rpcService = rpcService;
             this.executedEventMessages = executedEventMessages == null ? new HashSet<>() : executedEventMessages;
+
         }
 
         private FailProcessor(RpcService rpcService, TransactionExecutedEventMessage executedEventMessage){
