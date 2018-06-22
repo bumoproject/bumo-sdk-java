@@ -108,14 +108,9 @@ public class DigitalAssetsDemo {
 		// Public private key pair and block chain address of a random Bumo block account
 		BlockchainKeyPair keyPair = SecureKeyGenerator.generateBumoKeyPair();
 
-		// Note: the developer system needs to record the public and private key and address of the account
-		String accountAddress = keyPair.getBumoAddress(); // Block chain account address
-		String accountSk = keyPair.getPriKey(); // Block chain account private key
-		String accountPk = keyPair.getPubKey(); // Block chain account public key
-
 		try {
 			// Create an account operation
-			CreateAccountOperation operation = OperationFactory.newCreateContractOperation(address, accountAddress, ToBaseUnit.BU2MO("0.1"),
+			CreateAccountOperation operation = OperationFactory.newCreateContractOperation(address, ToBaseUnit.BU2MO("0.1"),
 					"\"use strict\";function init(bar){/*init whatever you want*/return;}function main(input){issueAsset(\"FMR\", \"10000\");}function query(input){ let sender_balance = getBalance(sender);let this_balance = getBalance(thisAddress);log(sender_balance);log(this_balance);return input;}",
 					"");
 
@@ -132,10 +127,6 @@ public class DigitalAssetsDemo {
 
 			// Commit Tx
 			TransactionCommittedResult result = transaction.commit();
-
-			System.out.println("new address:" + accountAddress);
-			System.out.println("new publickey :" + accountPk);
-			System.out.println("new private key:" + accountSk);
 
 			// Get the hash of Tx
 			System.out.println(result.getHash());
