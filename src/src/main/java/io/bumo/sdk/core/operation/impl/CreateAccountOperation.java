@@ -34,7 +34,10 @@ public class CreateAccountOperation extends AbstractBcOperation{
     @Override
     protected void buildOperationContinue(Chain.Operation.Builder operation){
         Chain.OperationCreateAccount.Builder operationCreateAccount = Chain.OperationCreateAccount.newBuilder();
-        operationCreateAccount.setDestAddress(createAccount.getDestAddress());
+        if(createAccount.getDestAddress() != null && !createAccount.getDestAddress().isEmpty()) {
+            operationCreateAccount.setDestAddress(createAccount.getDestAddress());
+        }
+
         operationCreateAccount.setInitBalance(createAccount.getInitBalance());
         if(createAccount.getInitInput() != null){
             operationCreateAccount.setInitInput(createAccount.getInitInput());
