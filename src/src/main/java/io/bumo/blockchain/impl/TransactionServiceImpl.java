@@ -56,17 +56,8 @@ public class TransactionServiceImpl implements TransactionService {
             if (nonce == null || (nonce != null && nonce < 1)) {
                 throw new SDKException(SdkError.INVALID_NONCE_ERROR);
             }
-            //check amount
-            BaseOperation[] arrBaseOperation = transactionBuildBlobRequest.getOperations();
-            for(BaseOperation baseOperation : arrBaseOperation){
-            	if(baseOperation instanceof BUSendOperation){
-            		Long amount = ((BUSendOperation) baseOperation).getAmount();
-            		if(amount ==null || amount<=0){
-            			throw new SDKException(SdkError.INVALID_AMOUNT_ERROR);
-            		}
-            	}
-            }
-            
+
+
             // check gasPrice
             Long gasPrice = transactionBuildBlobRequest.getGasPrice();
             if (gasPrice == null || (gasPrice != null && gasPrice < 1000)) {

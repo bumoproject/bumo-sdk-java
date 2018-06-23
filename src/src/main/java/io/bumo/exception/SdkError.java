@@ -59,7 +59,6 @@ public enum SdkError {
     INVALID_BLOCKNUMBER_ERROR(11060, "BlockNumber must bigger than 0"),
     URL_EMPTY_ERROR(11062, "url cannot be empty"),
     CONNECTN_BLOCKCHAIN_ERROR(11063, "Connect blockchain failed"),
-    INVALID_AMOUNT_ERROR(11064, "Invalid amount"),
     SYSTEM_ERROR(20000, "System error"),
     ;
 	
