@@ -8,7 +8,7 @@ import io.bumo.model.response.result.TokenGetNameResult;
  * @Author riven
  * @Date 2018/7/6 15:35
  */
-public class TokenGetNameResponse extends ResponseBase {
+public class TokenGetNameResponse extends BaseResponse {
     @JSONField(name = "result")
     private TokenGetNameResult result;
 

@@ -8,7 +8,7 @@ import io.bumo.model.response.result.AccountGetBalanceResult;
  * @Author riven
  * @Date 2018/7/4 16:58
  */
-public class AccountGetBalanceResponse extends ResponseBase {
+public class AccountGetBalanceResponse extends BaseResponse {
     @JSONField(name = "result")
     private AccountGetBalanceResult result;
 

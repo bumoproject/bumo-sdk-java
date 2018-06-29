@@ -8,7 +8,7 @@ import io.bumo.exception.SdkError;
  * @Author riven
  * @Date 2018/7/4 09:54
  */
-public class AccountCheckValidResponse extends ResponseBase {
+public class AccountCheckValidResponse extends BaseResponse {
     @JSONField(name = "result")
     private AccountCheckValidResult result;
 

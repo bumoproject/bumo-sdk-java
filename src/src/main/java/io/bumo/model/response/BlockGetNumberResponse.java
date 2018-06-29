@@ -8,7 +8,7 @@ import io.bumo.model.response.result.BlockGetNumberResult;
  * @Author riven
  * @Date 2018/7/6 01:54
  */
-public class BlockGetNumberResponse extends ResponseBase {
+public class BlockGetNumberResponse extends BaseResponse {
     @JSONField(name = "result")
     private BlockGetNumberResult result;
 

@@ -19,7 +19,7 @@ public class TransactionBuildBlobRequest {
 
     /**
      * @Author riven
-     * @Method getSourceAddress
+     * @Method getAddress
      * @Params []
      * @Return java.lang.String
      * @Date 2018/7/5 15:48
@@ -30,7 +30,7 @@ public class TransactionBuildBlobRequest {
 
     /**
      * @Author riven
-     * @Method setSourceAddress
+     * @Method setAddress
      * @Params [sourceAddress]
      * @Return void
      * @Date 2018/7/5 15:49

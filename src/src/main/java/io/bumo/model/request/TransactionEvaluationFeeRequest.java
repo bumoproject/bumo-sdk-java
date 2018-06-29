@@ -18,7 +18,7 @@ public class TransactionEvaluationFeeRequest {
 
     /**
      * @Author riven
-     * @Method getSourceAddress
+     * @Method getAddress
      * @Params []
      * @Return java.lang.String
      * @Date 2018/7/5 15:54
@@ -29,7 +29,7 @@ public class TransactionEvaluationFeeRequest {
 
     /**
      * @Author riven
-     * @Method setSourceAddress
+     * @Method setAddress
      * @Params [sourceAddress]
      * @Return void
      * @Date 2018/7/5 15:54

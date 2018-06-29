@@ -8,7 +8,7 @@ import io.bumo.model.response.result.AssetGetInfoResult;
  * @Author riven
  * @Date 2018/7/5 11:47
  */
-public class AssetGetInfoResponse extends ResponseBase {
+public class AssetGetInfoResponse extends BaseResponse {
     @JSONField(name = "result")
     private AssetGetInfoResult result;
 

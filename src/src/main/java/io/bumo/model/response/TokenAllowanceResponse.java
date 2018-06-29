@@ -9,7 +9,7 @@ import io.bumo.model.response.result.TokenErrorResult;
  * @Author riven
  * @Date 2018/7/6 12:43
  */
-public class TokenAllowanceResponse extends ResponseBase {
+public class TokenAllowanceResponse extends BaseResponse {
     @JSONField(name = "result")
     private TokenAllowanceResult result;
 

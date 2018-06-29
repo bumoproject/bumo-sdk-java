@@ -2,24 +2,24 @@ package io.bumo.model.response;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import io.bumo.exception.SdkError;
-import io.bumo.model.response.result.AccountGetAssetsResult;
+import io.bumo.model.response.result.TokenMessageResult;
 
 /**
  * @Author riven
- * @Date 2018/7/5 11:55
+ * @Date 2018/7/15 15:51
  */
-public class AccountGetAssetsResponse extends BaseResponse {
+public class TokenMessageResponse extends BaseResponse {
     @JSONField(name = "result")
-    private AccountGetAssetsResult result;
+    private TokenMessageResult result;
 
     /**
      * @Author riven
      * @Method getResult
      * @Params []
-     * @Return io.bumo.model.response.result.AccountGetAssetsResult
-     * @Date 2018/7/5 11:58
+     * @Return io.bumo.model.response.result.TokenGetNameResult
+     * @Date 2018/7/6 15:36
      */
-    public AccountGetAssetsResult getResult() {
+    public TokenMessageResult getResult() {
         return result;
     }
 
@@ -28,9 +28,9 @@ public class AccountGetAssetsResponse extends BaseResponse {
      * @Method setResult
      * @Params [result]
      * @Return void
-     * @Date 2018/7/5 11:58
+     * @Date 2018/7/6 15:36
      */
-    public void setResult(AccountGetAssetsResult result) {
+    public void setResult(TokenMessageResult result) {
         this.result = result;
     }
 
@@ -39,9 +39,9 @@ public class AccountGetAssetsResponse extends BaseResponse {
      * @Method buildResponse
      * @Params [sdkError, result]
      * @Return void
-     * @Date 2018/7/5 11:59
+     * @Date 2018/7/4 15:07
      */
-    public void buildResponse(SdkError sdkError, AccountGetAssetsResult result) {
+    public void buildResponse(SdkError sdkError, TokenMessageResult result) {
         this.errorCode = sdkError.getCode();
         this.errorDesc = sdkError.getDescription();
         this.result = result;
@@ -52,9 +52,9 @@ public class AccountGetAssetsResponse extends BaseResponse {
      * @Method buildResponse
      * @Params [errorCode, errorDesc, result]
      * @Return void
-     * @Date 2018/7/5 11:59
+     * @Date 2018/7/4 15:07
      */
-    public void buildResponse(int errorCode, String errorDesc, AccountGetAssetsResult result) {
+    public void buildResponse(int errorCode, String errorDesc, TokenMessageResult result) {
         this.errorCode = errorCode;
         this.errorDesc = errorDesc;
         this.result = result;

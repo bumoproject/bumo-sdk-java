@@ -2,6 +2,7 @@ package io.bumo.asset;
 
 import io.bumo.model.request.*;
 import io.bumo.model.response.*;
+import io.bumo.model.response.result.TokenCheckValidResult;
 
 /**
  * @Author riven
@@ -9,6 +10,14 @@ import io.bumo.model.response.*;
  */
 
 public interface TokenService {
+    /**
+     * @Author riven
+     * @Method checkValid
+     * @Params [tokenCheckValidRequest]
+     * @Return io.bumo.model.response.TokenCheckValidResponse
+     * @Date 2018/7/15 15:36
+     */
+    public TokenCheckValidResponse checkValid(TokenCheckValidRequest tokenCheckValidRequest);
     /**
      * @Author riven
      * @Method allowance

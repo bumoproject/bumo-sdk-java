@@ -8,7 +8,7 @@ import io.bumo.model.response.result.ContractCheckValidResult;
  * @Author riven
  * @Date 2018/7/5 15:30
  */
-public class ContractCheckValidResponse extends ResponseBase {
+public class ContractCheckValidResponse extends BaseResponse {
 
     @JSONField(name = "result")
     private ContractCheckValidResult result;

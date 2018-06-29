@@ -12,7 +12,7 @@ public class TestTx {
 
     /**
      * @Author riven
-     * @Method getTransactionEnv
+     * @Method getTxs
      * @Params []
      * @Return io.bumo.model.response.result.data.TransactionEnv
      * @Date 2018/7/5 23:52
@@ -23,7 +23,7 @@ public class TestTx {
 
     /**
      * @Author riven
-     * @Method setTransactionEnv
+     * @Method setTxs
      * @Params [transactionEnv]
      * @Return void
      * @Date 2018/7/5 23:52

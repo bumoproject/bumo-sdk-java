@@ -12,7 +12,11 @@ public class General {
     }
 
     public static String accountGetAssetsUrl(String address) {
-        return  url + "/getAccountService?address=" + address;
+        return  url + "/getAccount?address=" + address;
+    }
+
+    public static String accountGetMetadataUrl(String address, String key) {
+        return url + "/getAccount?address=" + address + "&key=" + key;
     }
 
     public static String assetGetUrl(String address, String code, String issuer) {

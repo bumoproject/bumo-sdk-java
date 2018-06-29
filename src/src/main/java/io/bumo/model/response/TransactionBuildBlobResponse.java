@@ -8,7 +8,7 @@ import io.bumo.model.response.result.TransactionBuildBlobResult;
  * @Author riven
  * @Date 2018/7/5 15:51
  */
-public class TransactionBuildBlobResponse extends ResponseBase {
+public class TransactionBuildBlobResponse extends BaseResponse {
     @JSONField(name = "result")
     private TransactionBuildBlobResult result;
 

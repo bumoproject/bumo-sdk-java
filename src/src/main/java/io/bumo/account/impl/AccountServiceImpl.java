@@ -115,7 +115,7 @@ public class AccountServiceImpl implements AccountService {
             SdkError.checkErrorCode(accountGetInfoResponse);
             Integer errorCode = accountGetInfoResponse.getErrorCode();
             if (errorCode != null && errorCode.intValue() == 4) {
-                throw new SDKException(errorCode, "AccountService (" + address +") not exist");
+                throw new SDKException(errorCode, "Account (" + address +") not exist");
             }
         } catch (SDKException apiException) {
             Integer errorCode = apiException.getErrorCode();
@@ -153,7 +153,7 @@ public class AccountServiceImpl implements AccountService {
             SdkError.checkErrorCode(accountGetNonceResponse);
             Integer errorCode = accountGetNonceResponse.getErrorCode();
             if (errorCode != null && errorCode.intValue() == 4) {
-                throw new SDKException(errorCode, "AccountService (" + address +") not exist");
+                throw new SDKException(errorCode, "Account (" + address +") not exist");
             }
             if (accountGetNonceResponse.getResult().getNonce() == null) {
                 accountGetNonceResponse.getResult().setNonce(0L);
@@ -194,7 +194,7 @@ public class AccountServiceImpl implements AccountService {
             SdkError.checkErrorCode(accountGetBalanceResponse);
             Integer errorCode = accountGetBalanceResponse.getErrorCode();
             if (errorCode != null && errorCode.intValue() == 4) {
-                throw new SDKException(errorCode, "AccountService (" + address +") not exist");
+                throw new SDKException(errorCode, "Account (" + address +") not exist");
             }
         } catch (SDKException apiException) {
             Integer errorCode = apiException.getErrorCode();
@@ -230,7 +230,7 @@ public class AccountServiceImpl implements AccountService {
             SdkError.checkErrorCode(accountGetAssetsResponse);
             Integer errorCode = accountGetAssetsResponse.getErrorCode();
             if (errorCode != null && errorCode.intValue() == 4) {
-                throw new SDKException(errorCode, "AccountService (" + address +") not exist");
+                throw new SDKException(errorCode, "Account (" + address +") not exist");
             }
         } catch (SDKException apiException) {
             Integer errorCode = apiException.getErrorCode();
@@ -243,6 +243,47 @@ public class AccountServiceImpl implements AccountService {
         }
 
         return accountGetAssetsResponse;
+    }
+
+    /**
+     * @Author riven
+     * @Method getMetadata
+     * @Params [accountGetMetadataRequest]
+     * @Return io.bumo.model.response.AccountGetMetadataResponse
+     * @Date 2018/7/15 15:03
+     */
+    @Override
+    public AccountGetMetadataResponse getMetadata(AccountGetMetadataRequest accountGetMetadataRequest) {
+        AccountGetMetadataResponse accountGetMetadataResponse = new AccountGetMetadataResponse();
+        AccountGetMetadataResult accountGetMetadataResult = new AccountGetMetadataResult();
+        try {
+            String address = accountGetMetadataRequest.getAddress();
+            if (!PublicKey.isAddressValid(address)) {
+                throw new SDKException(SdkError.INVALID_ADDRESS_ERROR);
+            }
+            String key = accountGetMetadataRequest.getKey();
+            if (key != null && (key.length() > 1024 || key.length() < 1)) {
+                throw new SDKException(SdkError.INVALID_DATAKEY_ERROR);
+            }
+            String accountGetInfoUrl = General.accountGetMetadataUrl(address, key);
+            String result = HttpKit.get(accountGetInfoUrl);
+            accountGetMetadataResponse = JSON.parseObject(result, AccountGetMetadataResponse.class);
+            SdkError.checkErrorCode(accountGetMetadataResponse);
+            Integer errorCode = accountGetMetadataResponse.getErrorCode();
+            if (errorCode != null && errorCode.intValue() == 4) {
+                throw new SDKException(errorCode, "Account (" + address +") not exist");
+            }
+        } catch (SDKException apiException) {
+            Integer errorCode = apiException.getErrorCode();
+            String errorDesc = apiException.getErrorDesc();
+            accountGetMetadataResponse.buildResponse(errorCode, errorDesc, accountGetMetadataResult);
+        } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
+            accountGetMetadataResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, accountGetMetadataResult);
+        } catch (Exception e) {
+            accountGetMetadataResponse.buildResponse(SdkError.SYSTEM_ERROR, accountGetMetadataResult);
+        }
+
+        return accountGetMetadataResponse;
     }
 
     /**

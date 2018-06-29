@@ -8,7 +8,7 @@ import io.bumo.model.response.result.BlockCheckStatusResult;
  * @Author riven
  * @Date 2018/7/6 02:08
  */
-public class BlockCheckStatusResponse extends ResponseBase {
+public class BlockCheckStatusResponse extends BaseResponse {
     @JSONField(name = "result")
     private BlockCheckStatusResult result;
 

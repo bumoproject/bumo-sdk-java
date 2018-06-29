@@ -2,24 +2,17 @@ package io.bumo.model.response;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import io.bumo.exception.SdkError;
-import io.bumo.model.response.result.AccountGetAssetsResult;
+import io.bumo.model.response.result.AccountGetMetadataResult;
 
 /**
  * @Author riven
- * @Date 2018/7/5 11:55
+ * @Date 2018/7/15 15:00
  */
-public class AccountGetAssetsResponse extends BaseResponse {
+public class AccountGetMetadataResponse extends BaseResponse {
     @JSONField(name = "result")
-    private AccountGetAssetsResult result;
+    private AccountGetMetadataResult result;
 
-    /**
-     * @Author riven
-     * @Method getResult
-     * @Params []
-     * @Return io.bumo.model.response.result.AccountGetAssetsResult
-     * @Date 2018/7/5 11:58
-     */
-    public AccountGetAssetsResult getResult() {
+    public AccountGetMetadataResult getResult() {
         return result;
     }
 
@@ -28,9 +21,9 @@ public class AccountGetAssetsResponse extends BaseResponse {
      * @Method setResult
      * @Params [result]
      * @Return void
-     * @Date 2018/7/5 11:58
+     * @Date 2018/7/4 15:07
      */
-    public void setResult(AccountGetAssetsResult result) {
+    public void setResult(AccountGetMetadataResult result) {
         this.result = result;
     }
 
@@ -39,9 +32,9 @@ public class AccountGetAssetsResponse extends BaseResponse {
      * @Method buildResponse
      * @Params [sdkError, result]
      * @Return void
-     * @Date 2018/7/5 11:59
+     * @Date 2018/7/4 15:07
      */
-    public void buildResponse(SdkError sdkError, AccountGetAssetsResult result) {
+    public void buildResponse(SdkError sdkError, AccountGetMetadataResult result) {
         this.errorCode = sdkError.getCode();
         this.errorDesc = sdkError.getDescription();
         this.result = result;
@@ -52,9 +45,9 @@ public class AccountGetAssetsResponse extends BaseResponse {
      * @Method buildResponse
      * @Params [errorCode, errorDesc, result]
      * @Return void
-     * @Date 2018/7/5 11:59
+     * @Date 2018/7/4 15:10
      */
-    public void buildResponse(int errorCode, String errorDesc, AccountGetAssetsResult result) {
+    public void buildResponse(int errorCode, String errorDesc, AccountGetMetadataResult result) {
         this.errorCode = errorCode;
         this.errorDesc = errorDesc;
         this.result = result;

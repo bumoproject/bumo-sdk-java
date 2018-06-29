@@ -7,7 +7,7 @@ import io.bumo.exception.SdkError;
  * @Author riven
  * @Date 2018/7/4 10:24
  */
-public class ResponseBase {
+public class BaseResponse {
     @JSONField(name = "error_code")
     protected Integer errorCode;
 

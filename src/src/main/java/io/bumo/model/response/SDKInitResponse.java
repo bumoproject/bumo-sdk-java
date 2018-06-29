@@ -8,7 +8,7 @@ import io.bumo.model.response.result.SDKInitResult;
  * @Author riven
  * @Date 2018/7/4 14:35
  */
-public class SDKInitResponse extends ResponseBase {
+public class SDKInitResponse extends BaseResponse {
     @JSONField(name = "result")
     private SDKInitResult result;
 

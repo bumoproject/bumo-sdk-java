@@ -8,7 +8,7 @@ import io.bumo.model.response.result.ContractGetInfoResult;
  * @Author riven
  * @Date 2018/7/5 14:10
  */
-public class ContractGetInfoResponse extends ResponseBase {
+public class ContractGetInfoResponse extends BaseResponse {
     @JSONField(name = "result")
     private ContractGetInfoResult result;
 

@@ -3,13 +3,12 @@ package io.bumo.model.response;
 import com.alibaba.fastjson.annotation.JSONField;
 import io.bumo.model.response.result.BlockGetLatestFeesResult;
 import io.bumo.exception.SdkError;
-import io.bumo.model.response.ResponseBase;
 
 /**
  * @Author riven
  * @Date 2018/7/4 09:55
  */
-public class BlockGetLatestFeesResponse extends ResponseBase {
+public class BlockGetLatestFeesResponse extends BaseResponse {
     @JSONField(name = "result")
     private BlockGetLatestFeesResult result;
 

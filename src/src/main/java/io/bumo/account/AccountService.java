@@ -2,6 +2,7 @@ package io.bumo.account;
 
 import io.bumo.model.request.*;
 import io.bumo.model.response.*;
+import io.bumo.model.response.result.AccountGetMetadataResult;
 
 /**
  * @Author riven
@@ -62,4 +63,13 @@ public interface AccountService {
      * @Date 2018/7/5 12:04
      */
     public AccountGetAssetsResponse getAssets(AccountGetAssetsRequest accountGetAssetsRequest);
+
+    /**
+     * @Author riven
+     * @Method getMetadata
+     * @Params [accountGetMetadataRequest]
+     * @Return io.bumo.model.response.AccountGetMetadataResponse
+     * @Date 2018/7/15 15:02
+     */
+    public AccountGetMetadataResponse getMetadata(AccountGetMetadataRequest accountGetMetadataRequest);
 }

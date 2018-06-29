@@ -61,7 +61,7 @@ public class Operation {
 
     /**
      * @Author riven
-     * @Method getSourceAddress
+     * @Method getAddress
      * @Params []
      * @Return java.lang.String
      * @Date 2018/7/5 16:48
@@ -72,7 +72,7 @@ public class Operation {
 
     /**
      * @Author riven
-     * @Method setSourceAddress
+     * @Method setAddress
      * @Params [sourceAddress]
      * @Return void
      * @Date 2018/7/5 16:48

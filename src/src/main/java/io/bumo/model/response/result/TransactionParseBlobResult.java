@@ -26,7 +26,7 @@ public class TransactionParseBlobResult {
 
     /**
      * @Author riven
-     * @Method getSourceAddress
+     * @Method getAddress
      * @Params []
      * @Return java.lang.String
      * @Date 2018/7/6 00:33
@@ -37,7 +37,7 @@ public class TransactionParseBlobResult {
 
     /**
      * @Author riven
-     * @Method setSourceAddress
+     * @Method setAddress
      * @Params [sourceAddress]
      * @Return void
      * @Date 2018/7/6 00:33

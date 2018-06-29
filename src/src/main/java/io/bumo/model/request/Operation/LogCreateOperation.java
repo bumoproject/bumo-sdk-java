@@ -6,7 +6,7 @@ import io.bumo.common.OperationType;
  * @Author riven
  * @Date 2018/7/9 17:29
  */
-public class LogCreateOperation {
+public class LogCreateOperation extends BaseOperation {
     private OperationType operationType = OperationType.LOG_CREATE;
     private String topic;
     private String[] data;

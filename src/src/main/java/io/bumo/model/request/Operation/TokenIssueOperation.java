@@ -13,7 +13,6 @@ public class TokenIssueOperation extends BaseOperation {
     private String symbol;
     private Integer decimals;
     private String totalSupply;
-    private String tokenOwner;
 
     /**
      * @Author riven
@@ -134,27 +133,5 @@ public class TokenIssueOperation extends BaseOperation {
      */
     public void setTotalSupply(String totalSupply) {
         this.totalSupply = totalSupply;
-    }
-
-    /**
-     * @Author riven
-     * @Method getTokenOwner
-     * @Params []
-     * @Return java.lang.String
-     * @Date 2018/7/9 17:07
-     */
-    public String getTokenOwner() {
-        return tokenOwner;
-    }
-
-    /**
-     * @Author riven
-     * @Method setTokenOwner
-     * @Params [tokenOwner]
-     * @Return void
-     * @Date 2018/7/9 17:07
-     */
-    public void setTokenOwner(String tokenOwner) {
-        this.tokenOwner = tokenOwner;
     }
 }

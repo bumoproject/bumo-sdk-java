@@ -8,7 +8,7 @@ import io.bumo.exception.SdkError;
  * @Author riven
  * @Date 2018/7/4 09:55
  */
-public class BlockGetFeesResponse extends ResponseBase {
+public class BlockGetFeesResponse extends BaseResponse {
     @JSONField(name = "result")
     private BlockGetFeesResult result;
 

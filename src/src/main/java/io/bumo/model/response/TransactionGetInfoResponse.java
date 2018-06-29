@@ -8,7 +8,7 @@ import io.bumo.model.response.result.TransactionGetInfoResult;
  * @Author riven
  * @Date 2018/7/5 16:52
  */
-public class TransactionGetInfoResponse extends ResponseBase {
+public class TransactionGetInfoResponse extends BaseResponse {
     @JSONField(name = "result")
     private TransactionGetInfoResult result;
 
