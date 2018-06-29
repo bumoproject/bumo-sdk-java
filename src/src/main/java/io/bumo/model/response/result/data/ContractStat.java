@@ -14,7 +14,32 @@ public class ContractStat {
     private Long memoryUsage;
 
     @JSONField(name = "stack_usage")
+    private Long stackUsage;
+
+    @JSONField(name = "stack_usage")
     private Long step;
+
+    /**
+     * @Author riven
+     * @Method getStackUsage
+     * @Params []
+     * @Return java.lang.Long
+     * @Date 2018/7/17 11:42
+     */
+    public Long getStackUsage() {
+        return stackUsage;
+    }
+
+    /**
+     * @Author riven
+     * @Method setStackUsage
+     * @Params [stackUsage]
+     * @Return void
+     * @Date 2018/7/17 11:42
+     */
+    public void setStackUsage(Long stackUsage) {
+        this.stackUsage = stackUsage;
+    }
 
     /**
      * @Author riven

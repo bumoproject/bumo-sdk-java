@@ -10,6 +10,8 @@ import io.bumo.exception.SDKException;
 import io.bumo.model.request.Operation.AccountActiviateOperation;
 import io.bumo.model.request.Operation.AccountSetMetadataOperation;
 import io.bumo.model.request.Operation.AccountSetPrivilegeOperation;
+import io.bumo.model.response.result.data.AssetInfo;
+import io.bumo.model.response.result.data.MetadataInfo;
 import io.bumo.model.response.result.data.Signer;
 import io.bumo.model.response.result.data.TypeThreshold;
 import io.bumo.model.request.*;
@@ -232,6 +234,10 @@ public class AccountServiceImpl implements AccountService {
             if (errorCode != null && errorCode.intValue() == 4) {
                 throw new SDKException(errorCode, "Account (" + address +") not exist");
             }
+            AssetInfo[] assetInfos = accountGetAssetsResponse.getResult().getAssets();
+            if (null == assetInfos || (assetInfos != null && assetInfos.length == 0)) {
+                throw new SDKException(SdkError.NO_ASSET_ERROR);
+            }
         } catch (SDKException apiException) {
             Integer errorCode = apiException.getErrorCode();
             String errorDesc = apiException.getErrorDesc();
@@ -272,6 +278,10 @@ public class AccountServiceImpl implements AccountService {
             Integer errorCode = accountGetMetadataResponse.getErrorCode();
             if (errorCode != null && errorCode.intValue() == 4) {
                 throw new SDKException(errorCode, "Account (" + address +") not exist");
+            }
+            MetadataInfo[] metadataInfos = accountGetMetadataResponse.getResult().getMetadatas();
+            if (null == metadataInfos || (metadataInfos != null && metadataInfos.length == 0)) {
+                throw new SDKException(SdkError.NO_METADATA_ERROR);
             }
         } catch (SDKException apiException) {
             Integer errorCode = apiException.getErrorCode();

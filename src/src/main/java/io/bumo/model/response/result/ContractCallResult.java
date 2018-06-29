@@ -1,6 +1,5 @@
 package io.bumo.model.response.result;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONField;
@@ -25,7 +24,7 @@ public class ContractCallResult<T> {
     private ContractStat stat;
 
     @JSONField(name = "txs")
-    private TransactionEnvs[] transactionEnv;
+    private TransactionEnvs[] txs;
 
     /**
      * @Author riven
@@ -117,23 +116,23 @@ public class ContractCallResult<T> {
 
     /**
      * @Author riven
-     * @Method getTransactionEnv
+     * @Method getTxs
      * @Params []
      * @Return io.bumo.model.response.result.data.TransactionEnv[]
      * @Date 2018/7/11 18:47
      */
-    public TransactionEnvs[] getTransactionEnv() {
-        return transactionEnv;
+    public TransactionEnvs[] getTxs() {
+        return txs;
     }
 
     /**
      * @Author riven
-     * @Method setTransactionEnv
-     * @Params [transactionEnv]
+     * @Method setTxs
+     * @Params [txs]
      * @Return void
      * @Date 2018/7/11 18:48
      */
-    public void setTransactionEnv(TransactionEnvs[] transactionEnv) {
-        this.transactionEnv = transactionEnv;
+    public void setTxs(TransactionEnvs[] txs) {
+        this.txs = txs;
     }
 }

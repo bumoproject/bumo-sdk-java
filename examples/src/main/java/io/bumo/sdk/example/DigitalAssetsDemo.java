@@ -13,6 +13,7 @@ import io.bumo.model.request.Operation.AssetSendOperation;
 import io.bumo.model.request.Operation.BUSendOperation;
 import io.bumo.model.response.*;
 import io.bumo.model.response.result.*;
+import io.bumo.model.response.result.data.TransactionFees;
 import io.bumo.model.response.result.data.ValidatorRewardInfo;
 import org.junit.Test;
 
@@ -163,6 +164,9 @@ public class DigitalAssetsDemo {
         String txHash = sendAsset(senderPrivateKey, destAddress, assetCode, assetIssue, amount, nonce, gasPrice, feeLimit);
     }
 
+    /**
+     * 查询所有资产
+     */
     @Test
     public void getAssets() {
         AccountGetAssetsRequest accountGetAssetsRequest = new AccountGetAssetsRequest();
@@ -193,6 +197,18 @@ public class DigitalAssetsDemo {
         } else {
             System.out.println(assetGetInfoResponse.getErrorDesc());
         }
+    }
+
+    @Test
+    public void evaluationTxFees() throws Exception {
+        String senderPrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq"; // 发送方私钥
+        String destAddress = "buQswSaKDACkrFsnP1wcVsLAUzXQsemauE";// 接收方账户地址
+        Long amount = ToBaseUnit.BU2MO("10.9"); // 发送转出10.9BU给接收方（目标账户）
+        Long gasPrice = 1000L; // 固定写 1000L ，单位是MO
+        Long feeLimit = ToBaseUnit.BU2MO("0.01");//设置最多费用 0.01BU ，固定填写
+        Long nonce = 1L; // 参考getAccountNonce()获取账户Nonce + 1;
+
+        TransactionFees transactionFees = evaluationFees(senderPrivateKey,destAddress,amount,nonce,gasPrice,feeLimit);
     }
 
     /**
@@ -536,6 +552,31 @@ public class DigitalAssetsDemo {
             System.out.println("error: " + lockGetLatestRewardResponse.getErrorDesc());
         }
     }
+
+
+
+    @Test
+    public void getBlockFees() {
+        BlockGetFeesRequest request = new BlockGetFeesRequest();
+        request.setBlockNumber(629743L);
+        BlockGetFeesResponse response = sdk.getBlockService().getFees(request);
+        if (response.getErrorCode() == 0) {
+            System.out.println(JSON.toJSONString(response.getResult(), true));
+        } else {
+            System.out.println("error: " + response.getErrorDesc());
+        }
+    }
+
+    @Test
+    public void getBlockLatestFees() {
+        BlockGetLatestFeesResponse response = sdk.getBlockService().getLatestFees();
+        if (response.getErrorCode() == 0) {
+            System.out.println(JSON.toJSONString(response.getResult(), true));
+        } else {
+            System.out.println("error: " + response.getErrorDesc());
+        }
+    }
+
     /**
      *
      *
@@ -696,6 +737,32 @@ public class DigitalAssetsDemo {
         return txHash;
     }
 
+    private TransactionFees evaluationFees(String senderPrivateKey, String destAddress, Long amount, Long nonce, Long gasPrice, Long feeLimit) throws Exception {
+        // 1. 获取交易发送账户地址
+        String senderAddresss = getAddressByPrivateKey(senderPrivateKey); // BU发送者账户地址
+
+        // 2. 构建sendBU操作
+        BUSendOperation buSendOperation = new BUSendOperation();
+        buSendOperation.setSourceAddress(senderAddresss);
+        buSendOperation.setDestAddress(destAddress);
+        buSendOperation.setAmount(amount);
+
+        // 3. 评估交易费用
+        TransactionEvaluationFeeRequest request = new TransactionEvaluationFeeRequest();
+        request.addOperation(buSendOperation);
+        request.setSourceAddress(senderAddresss);
+        request.setNonce(nonce);
+        request.setSignatureNumber(1);
+        request.setMetadata(HexFormat.byteToHex("evaluation fees".getBytes()));
+
+        TransactionEvaluationFeeResponse response = sdk.getTransactionService().evaluationFee(request);
+        if (response.getErrorCode() == 0) {
+            return response.getResult().getTxs()[0].getTransactionEnv().getTransactionFees();
+        } else {
+            System.out.println("error: " + response.getErrorDesc());
+            return null;
+        }
+    }
 
     private Long getNonceOfAccount(String senderAddresss){
         AccountGetNonceRequest accountGetNonceRequest = new AccountGetNonceRequest();

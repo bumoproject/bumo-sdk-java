@@ -8,7 +8,7 @@ import io.bumo.model.response.result.BlockGetLatestValidatorsResult;
  * @Author riven
  * @Date 2018/7/12 01:08
  */
-public class BlockGetLatestValidatorsResponse extends ResponseBase {
+public class BlockGetLatestValidatorsResponse extends BaseResponse {
     @JSONField(name = "result")
     private BlockGetLatestValidatorsResult result;
 

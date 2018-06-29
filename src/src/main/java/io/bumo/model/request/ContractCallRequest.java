@@ -38,7 +38,7 @@ public class ContractCallRequest {
 
     /**
      * @Author riven
-     * @Method getSourceAddress
+     * @Method getAddress
      * @Params []
      * @Return java.lang.String
      * @Date 2018/7/7 07:00
@@ -49,7 +49,7 @@ public class ContractCallRequest {
 
     /**
      * @Author riven
-     * @Method setSourceAddress
+     * @Method setAddress
      * @Params [sourceAddress]
      * @Return void
      * @Date 2018/7/7 07:00

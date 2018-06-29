@@ -53,4 +53,8 @@ public class TransactionSubmitRequest {
     public void setSignatures(Signature[] signatures) {
         this.signatures = signatures;
     }
+
+    public void addSignatures(Signature[] signatures) {
+        this.signatures = signatures;
+    }
 }

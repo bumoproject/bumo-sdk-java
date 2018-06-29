@@ -45,10 +45,7 @@ public class ContractServiceImpl implements ContractService {
             if (!PublicKey.isAddressValid(contractAddress)) {
                 throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
             }
-            String contractGetInfoUrl = General.accountGetInfoUrl(contractAddress);
-            String result = HttpKit.get(contractGetInfoUrl);
-            contractGetInfoResponse = JSON.parseObject(result, ContractGetInfoResponse.class);
-            SdkError.checkErrorCode(contractGetInfoResponse);
+            contractGetInfoResponse = getContractInfo(contractAddress);
         } catch (SDKException apiException) {
             Integer errorCode = apiException.getErrorCode();
             String errorDesc = apiException.getErrorDesc();
@@ -74,24 +71,8 @@ public class ContractServiceImpl implements ContractService {
         ContractCheckValidResponse contractCheckValidResponse = new ContractCheckValidResponse();
         ContractCheckValidResult contractCheckValidResult = new ContractCheckValidResult();
         try {
-            contractCheckValidResult.setValid(true);
-            ContractGetInfoRequest contractGetInfoRequest = new ContractGetInfoRequest();
-            contractGetInfoRequest.setContractAddress(contractCheckValidRequest.getContractAddress());
-            ContractGetInfoResponse contractGetInfoResponse = getInfo(contractGetInfoRequest);
-            Integer errorCode = contractGetInfoResponse.getErrorCode();
-            if (errorCode != 0) {
-                String errorDesc = contractGetInfoResponse.getErrorDesc();
-                throw new SDKException(errorCode, errorDesc);
-            }
-            ContractInfo contractInfo = contractGetInfoResponse.getResult().getContract();
-            if (contractInfo == null) {
-                contractCheckValidResult.setValid(false);
-            } else {
-                String payload = contractInfo.getPayload();
-                if (payload == null || !payload.isEmpty()) {
-                    contractCheckValidResult.setValid(false);
-                }
-            }
+            boolean isValid = checkContractValid(contractCheckValidRequest.getContractAddress());
+            contractCheckValidResult.setValid(isValid);
             contractCheckValidResponse.buildResponse(SdkError.SUCCESS, contractCheckValidResult);
         } catch (SDKException apiException) {
             Integer errorCode = apiException.getErrorCode();
@@ -208,6 +189,9 @@ public class ContractServiceImpl implements ContractService {
             if (metadata != null && !HexFormat.isHexString(metadata)) {
                 throw new SDKException(SdkError.METADATA_NOT_HEX_STRING_ERROR);
             }
+            if (!checkContractValid(contractAddress)) {
+                throw new SDKException(SdkError.CONTRACTADDRESS_NOT_CONTRACTACCOUNT_ERROR);
+            }
             String input = contractInvokeByAssetOperation.getInput();
 
             // build operation
@@ -268,6 +252,9 @@ public class ContractServiceImpl implements ContractService {
             String metadata = contractInvokeByBUOperation.getMetadata();
             if (metadata != null && !HexFormat.isHexString(metadata)) {
                 throw new SDKException(SdkError.METADATA_NOT_HEX_STRING_ERROR);
+            }
+            if (!checkContractValid(contractAddress)) {
+                throw new SDKException(SdkError.CONTRACTADDRESS_NOT_CONTRACTACCOUNT_ERROR);
             }
             String input = contractInvokeByBUOperation.getInput();
 
@@ -368,5 +355,32 @@ public class ContractServiceImpl implements ContractService {
             contractCallResponse.buildResponse(SdkError.SYSTEM_ERROR, contractCallResult);
         }
         return contractCallResponse;
+    }
+
+    private static ContractGetInfoResponse getContractInfo(String contractAddress) throws KeyManagementException, NoSuchAlgorithmException, NoSuchProviderException, IOException, SDKException {
+        ContractGetInfoResponse contractGetInfoResponse;
+        String contractGetInfoUrl = General.accountGetInfoUrl(contractAddress);
+        String result = HttpKit.get(contractGetInfoUrl);
+        contractGetInfoResponse = JSON.parseObject(result, ContractGetInfoResponse.class);
+        SdkError.checkErrorCode(contractGetInfoResponse);
+        ContractInfo contractInfo = contractGetInfoResponse.getResult().getContract();
+        if (contractInfo == null) {
+            throw new SDKException(SdkError.CONTRACTADDRESS_NOT_CONTRACTACCOUNT_ERROR);
+        }
+        String payLoad = contractInfo.getPayload();
+        if (null == payLoad || (payLoad != null && payLoad.isEmpty())) {
+            throw new SDKException(SdkError.CONTRACTADDRESS_NOT_CONTRACTACCOUNT_ERROR);
+        }
+        return contractGetInfoResponse;
+    }
+
+    private static boolean checkContractValid(String contractAddress) throws IOException, NoSuchAlgorithmException, NoSuchProviderException, KeyManagementException {
+        boolean isValid = false;
+        try {
+            getContractInfo(contractAddress);
+            isValid = true;
+        } catch (SDKException sdkException) {
+        }
+        return isValid;
     }
 }

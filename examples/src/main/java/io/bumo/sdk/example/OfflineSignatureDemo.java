@@ -13,6 +13,7 @@ import io.bumo.model.request.*;
 import io.bumo.model.request.Operation.BUSendOperation;
 import io.bumo.model.response.*;
 import io.bumo.model.response.result.*;
+import io.bumo.model.response.result.data.Signature;
 import org.junit.Test;
 
 /**
@@ -106,6 +107,9 @@ public class OfflineSignatureDemo {
         if (hash != null) {
             System.out.println("transaction hash: " + hash);
         }
+        Signature signature1 = new Signature();
+        signature1.setSignData("D2B5E3045F2C1B7D363D4F58C1858C30ABBBB0F41E4B2E18AF680553CA9C3689078E215C097086E47A4393BCA715C7A5D2C180D8750F35C6798944F79CC5000A");
+        signature1.setPublicKey("b0011765082a9352e04678ef38d38046dc01306edef676547456c0c23e270aaed7ffe9e31477");
     }
 
     /**

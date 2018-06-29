@@ -8,7 +8,7 @@ import io.bumo.model.response.result.BlockGetLatestInfoResult;
  * @Author riven
  * @Date 2018/7/12 00:36
  */
-public class BlockGetLatestInfoResponse extends ResponseBase {
+public class BlockGetLatestInfoResponse extends BaseResponse {
     @JSONField(name = "result")
     private BlockGetLatestInfoResult result;
 

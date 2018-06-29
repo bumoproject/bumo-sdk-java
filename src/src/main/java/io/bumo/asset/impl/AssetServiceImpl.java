@@ -16,6 +16,7 @@ import io.bumo.model.request.Operation.AssetIssueOperation;
 import io.bumo.model.request.Operation.AssetSendOperation;
 import io.bumo.model.response.AssetGetInfoResponse;
 import io.bumo.model.response.result.AssetGetInfoResult;
+import io.bumo.model.response.result.data.AssetInfo;
 
 import java.io.IOException;
 import java.security.KeyManagementException;
@@ -60,6 +61,10 @@ public class AssetServiceImpl implements AssetService {
             if (errorCode != null && errorCode.intValue() == 4) {
                 throw new SDKException(errorCode, "Code (" + code +") not exist");
             }
+            AssetInfo[] assetInfos = assetGetResponse.getResult().getAssets();
+            if (null == assetInfos || (assetInfos != null && assetInfos.length == 0)) {
+                throw new SDKException(SdkError.NO_ASSET_ERROR);
+            }
         } catch (SDKException sdkException) {
             Integer errorCode = sdkException.getErrorCode();
             String errorDesc = sdkException.getErrorDesc();
@@ -81,7 +86,7 @@ public class AssetServiceImpl implements AssetService {
      * @Date 2018/7/5 11:36
      */
     public static Chain.Operation issue(AssetIssueOperation assetIssueOperation) throws SDKException {
-        Chain.Operation.Builder operation = null;
+        Chain.Operation.Builder operation;
         try {
             String sourceAddress = assetIssueOperation.getSourceAddress();
             if (sourceAddress != null && !PublicKey.isAddressValid(sourceAddress)) {
@@ -146,13 +151,8 @@ public class AssetServiceImpl implements AssetService {
             if (code == null || (code != null && (code.length() < 1 || code.length() > 1024))) {
                 throw new SDKException(SdkError.INVALID_ASSET_CODE_ERROR);
             }
-            String issuer;
-            try {
-                issuer = assetSendOperation.getIssuer();
-                if (!PublicKey.isAddressValid(issuer)) {
-                    throw new SDKException(SdkError.INVALID_ISSUER_ADDRESS_ERROR);
-                }
-            } catch (EncException e) {
+            String issuer= assetSendOperation.getIssuer();
+            if (!PublicKey.isAddressValid(issuer)) {
                 throw new SDKException(SdkError.INVALID_ISSUER_ADDRESS_ERROR);
             }
             Long amount = assetSendOperation.getAmount();

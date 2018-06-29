@@ -8,7 +8,7 @@ import io.bumo.model.response.result.BlockGetValidatorsResult;
  * @Author riven
  * @Date 2018/7/12 01:08
  */
-public class BlockGetValidatorsResponse extends ResponseBase {
+public class BlockGetValidatorsResponse extends BaseResponse {
     @JSONField(name = "result")
     private BlockGetValidatorsResult result;
 

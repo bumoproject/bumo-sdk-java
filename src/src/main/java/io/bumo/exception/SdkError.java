@@ -1,6 +1,6 @@
 package io.bumo.exception;
 
-import io.bumo.model.response.ResponseBase;
+import io.bumo.model.response.BaseResponse;
 
 public enum SdkError {
 
@@ -15,6 +15,8 @@ public enum SdkError {
     INVALID_ADDRESS_ERROR(11006, "Invalid address"),
     CONNECTNETWORK_ERROR(11007, "Connect network failed"),
     METADATA_NOT_HEX_STRING_ERROR(11008, "Metadata must be a hex string"),
+    NO_ASSET_ERROR(11009, "The account does not have the asset"),
+    NO_METADATA_ERROR(11010, "The account does not have the metadata"),
     INVALID_DATAKEY_ERROR(11011, "The length of key must between 1 and 1024"),
     INVALID_DATAVALUE_ERROR(11012, "The length of value must between 0 and 256000"),
     INVALID_DATAVERSION_ERROR(11013, "The version must be bigger than 0"),
@@ -28,12 +30,12 @@ public enum SdkError {
     INVALID_ASSET_AMOUNT_ERROR(11024, "Mount must between 0 and max(int64)"),
     INVALID_BU_AMOUNT_ERROR(11026, "Amount must between 0 and max(int64)"),
     INVALID_ISSUER_ADDRESS_ERROR(11027, "Invalid issuer address"),
+    NO_SUCH_TOKEN_ERROR(11030, "No such token"),
     INVALID_TOKEN_NAME_ERROR(11031, "The length of token name must between 1 and 1024"),
     INVALID_TOKEN_SYMBOL_ERROR(11032, "The length of symbol must between 1 and 1024"),
     INVALID_TOKEN_DECIMALS_ERROR(11033, "Decimals must less than 8"),
     INVALID_TOKEN_TOTALSUPPLY_ERROR(11034, "TotalSupply must between 1 and max(int64)"),
     INVALID_TOKENOWNER_ERRPR(11035, "Invalid token owner"),
-    GET_ALLOWANCE_ERRPR(11036, "Get allowance failed"),
     INVALID_CONTRACTADDRESS_ERROR(11037, "Invalid contract address"),
     CONTRACTADDRESS_NOT_CONTRACTACCOUNT_ERROR(11038, "contractAddress is not a contract account"),
     INVALID_TOKEN_AMOUNT_ERROR(11039, "Amount must between 1 and max(int64)"),
@@ -62,6 +64,8 @@ public enum SdkError {
     URL_EMPTY_ERROR(11062, "Url cannot be empty"),
     CONTRACTADDRESS_CODE_BOTH_NULL_ERROR(11063, "ContractAddress and code cannot be empty at the same time"),
     INVALID_OPTTYPE_ERROR(11064, "OptType must between 0 and 2"),
+    GET_ALLOWANCE_ERRPR(11065, "Get allowance failed"),
+    GET_TOKEN_INFO_ERRPR(11066, "Get token info failed"),
     CONNECTN_BLOCKCHAIN_ERROR(19999, "Connect blockchain failed"),
     SYSTEM_ERROR(20000, "System error"),
     ;
@@ -83,14 +87,14 @@ public enum SdkError {
         return description;
     }
 
-    public static void checkErrorCode(ResponseBase responseBase) throws SDKException {
+    public static void checkErrorCode(BaseResponse baseResponse) throws SDKException {
         do {
-            Integer errorCode = responseBase.getErrorCode();
+            Integer errorCode = baseResponse.getErrorCode();
             if (null == errorCode) {
                 throw new SDKException(SdkError.CONNECTNETWORK_ERROR);
             }
             if (errorCode != null && errorCode.intValue() != 0) {
-                String errorDesc = responseBase.getErrorDesc();
+                String errorDesc = baseResponse.getErrorDesc();
                 throw new SDKException(errorCode, errorDesc);
             }
         } while (false);

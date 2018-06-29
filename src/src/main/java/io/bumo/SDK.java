@@ -24,9 +24,24 @@ import io.bumo.exception.SdkError;
  */
 public class SDK {
     public static SDK sdk = null;
+
+    /**
+ * @Author riven
+ * @Method Structure
+ * @Params [url]
+ * @Date 2018/7/15 14:50
+ */
     private SDK(String url) {
         General.url = url;
     }
+    
+    /**
+     * @Author riven
+     * @Method getInstance
+     * @Params [url]
+     * @Return io.bumo.SDK
+     * @Date 2018/7/15 14:51
+     */
     public synchronized static SDK getInstance(String url) throws SDKException {
         if (sdk == null) {
             sdk = new SDK(url);
@@ -34,25 +49,80 @@ public class SDK {
         //sdk.init(url);
         return sdk;
     }
+    
+    /**
+     * @Author riven
+     * @Method getAccountService
+     * @Params []
+     * @Return io.bumo.account.AccountService
+     * @Date 2018/7/15 14:50
+     */
     public AccountService getAccountService() {
         return new AccountServiceImpl();
     }
+    
+    /**
+     * @Author riven
+     * @Method getAssetService
+     * @Params []
+     * @Return io.bumo.asset.AssetService
+     * @Date 2018/7/15 14:50
+     */
     public AssetService getAssetService() {
         return new AssetServiceImpl();
     }
+    
+    /**
+     * @Author riven
+     * @Method getTransactionService
+     * @Params []
+     * @Return io.bumo.blockchain.TransactionService
+     * @Date 2018/7/15 14:50
+     */
     public TransactionService getTransactionService() {
         return new TransactionServiceImpl();
     }
+    
+    /**
+     * @Author riven
+     * @Method getBlockService
+     * @Params []
+     * @Return io.bumo.blockchain.BlockService
+     * @Date 2018/7/15 14:50
+     */
     public BlockService getBlockService() {
         return new BlockServiceImpl();
     }
+    
+    /**
+     * @Author riven
+     * @Method getContractService
+     * @Params []
+     * @Return io.bumo.contract.ContractService
+     * @Date 2018/7/15 14:50
+     */
     public ContractService getContractService() {
         return new ContractServiceImpl();
     }
+    
+    /**
+     * @Author riven
+     * @Method getTokenService
+     * @Params []
+     * @Return io.bumo.asset.TokenService
+     * @Date 2018/7/15 14:50
+     */
     public TokenService getTokenService() {
         return new TokenServiceImpl();
     }
 
+    /**
+     * @Author riven
+     * @Method init
+     * @Params [url]
+     * @Return void
+     * @Date 2018/7/15 14:50
+     */
     private void init(String url) throws SDKException {
         if (url == null || url.isEmpty()) {
             throw new SDKException(SdkError.URL_EMPTY_ERROR);
@@ -60,6 +130,13 @@ public class SDK {
         hello(url);
     }
 
+    /**
+     * @Author riven
+     * @Method hello
+     * @Params [url]
+     * @Return void
+     * @Date 2018/7/15 14:51
+     */
     private void hello(String url) throws SDKException {
         try {
             String helloUrl = url + "/hello";
