@@ -5,8 +5,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.google.protobuf.ByteString;
 import io.bumo.asset.TokenService;
 import io.bumo.common.Constant;
+import io.bumo.common.General;
 import io.bumo.contract.ContractService;
 import io.bumo.contract.impl.ContractServiceImpl;
+import io.bumo.crypto.http.HttpKit;
 import io.bumo.crypto.protobuf.Chain;
 import io.bumo.encryption.key.PublicKey;
 import io.bumo.encryption.utils.hex.HexFormat;
@@ -16,8 +18,14 @@ import io.bumo.model.request.*;
 import io.bumo.model.request.Operation.*;
 import io.bumo.model.response.*;
 import io.bumo.model.response.result.*;
-import io.bumo.model.response.result.data.TokenErrorInfo;
+import io.bumo.model.response.result.data.ContractInfo;
+import io.bumo.model.response.result.data.MetadataInfo;
+import io.bumo.model.response.result.data.TokenInfo;
 
+import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 import java.util.regex.Pattern;
 
 /**
@@ -25,6 +33,36 @@ import java.util.regex.Pattern;
  * @Date 2018/7/6 11:08
  */
 public class TokenServiceImpl implements TokenService {
+    /**
+     * @Author riven
+     * @Method checkValid
+     * @Params [tokenCheckValidRequest]
+     * @Return io.bumo.model.response.TokenCheckValidResponse
+     * @Date 2018/7/15 15:36
+     */
+    @Override
+    public TokenCheckValidResponse checkValid(TokenCheckValidRequest tokenCheckValidRequest) {
+        TokenCheckValidResponse tokenCheckValidResponse = new TokenCheckValidResponse();
+        TokenCheckValidResult tokenCheckValidResult = new TokenCheckValidResult();
+        try {
+            String address = tokenCheckValidRequest.getContractAddress();
+            if (!PublicKey.isAddressValid(address)) {
+                throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
+            }
+            boolean isValid = checkTokenValid(address);
+            tokenCheckValidResult.setValid(isValid);
+            tokenCheckValidResponse.buildResponse(SdkError.SUCCESS, tokenCheckValidResult);
+        } catch (SDKException apiException) {
+            Integer errorCode = apiException.getErrorCode();
+            String errorDesc = apiException.getErrorDesc();
+            tokenCheckValidResponse.buildResponse(errorCode, errorDesc, tokenCheckValidResult);
+        } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
+            tokenCheckValidResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, tokenCheckValidResult);
+        } catch (Exception e) {
+            tokenCheckValidResponse.buildResponse(SdkError.SYSTEM_ERROR, tokenCheckValidResult);
+        }
+        return tokenCheckValidResponse;
+    }
     /**
      * @Author riven
      * @Method allowance
@@ -49,6 +87,11 @@ public class TokenServiceImpl implements TokenService {
             if (!PublicKey.isAddressValid(spender)) {
                 throw new SDKException(SdkError.INVALID_SPENDER_ERROR);
             }
+            boolean isContractValid = checkTokenValid(contractAddress);
+            if (false == isContractValid) {
+                throw new SDKException(SdkError.NO_SUCH_TOKEN_ERROR);
+            }
+
             JSONObject input = new JSONObject();
             input.put("method", "allowance");
             JSONObject params = new JSONObject();
@@ -69,6 +112,8 @@ public class TokenServiceImpl implements TokenService {
             Integer errorCode = sdkException.getErrorCode();
             String errorDesc = sdkException.getErrorDesc();
             tokenAllowanceResponse.buildResponse(errorCode, errorDesc, tokenAllowanceResult);
+        } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
+            tokenAllowanceResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, tokenAllowanceResult);
         } catch (Exception e) {
             tokenAllowanceResponse.buildResponse(SdkError.SYSTEM_ERROR, tokenAllowanceResult);
         }
@@ -92,6 +137,10 @@ public class TokenServiceImpl implements TokenService {
             if (!PublicKey.isAddressValid(contractAddress)) {
                 throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
             }
+            boolean isContractValid = checkTokenValid(contractAddress);
+            if (false == isContractValid) {
+                throw new SDKException(SdkError.NO_SUCH_TOKEN_ERROR);
+            }
 
             JSONObject input = new JSONObject();
             input.put("method", "contractInfo");
@@ -101,7 +150,7 @@ public class TokenServiceImpl implements TokenService {
             if (null == result) {
                 TokenErrorResult errorResult = tokenQueryResponse.getError();
                 String errorDesc = errorResult.getData().getException();
-                throw new SDKException(SdkError.GET_ALLOWANCE_ERRPR.getCode(), errorDesc);
+                throw new SDKException(SdkError.GET_TOKEN_INFO_ERRPR.getCode(), errorDesc);
             }
             tokenGetInfoResult =  JSONObject.parseObject(result.getValue(), TokenGetInfoResult.class);
             tokenGetInfoResponse.buildResponse(SdkError.SUCCESS, tokenGetInfoResult);
@@ -109,6 +158,8 @@ public class TokenServiceImpl implements TokenService {
             Integer errorCode = sdkException.getErrorCode();
             String errorDesc = sdkException.getErrorDesc();
             tokenGetInfoResponse.buildResponse(errorCode, errorDesc, tokenGetInfoResult);
+        } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
+            tokenGetInfoResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, tokenGetInfoResult);
         } catch (Exception e) {
             tokenGetInfoResponse.buildResponse(SdkError.SYSTEM_ERROR, tokenGetInfoResult);
         }
@@ -131,6 +182,10 @@ public class TokenServiceImpl implements TokenService {
             if (!PublicKey.isAddressValid(contractAddress)) {
                 throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
             }
+            boolean isContractValid = checkTokenValid(contractAddress);
+            if (false == isContractValid) {
+                throw new SDKException(SdkError.NO_SUCH_TOKEN_ERROR);
+            }
 
             JSONObject input = new JSONObject();
             input.put("method", "name");
@@ -140,7 +195,7 @@ public class TokenServiceImpl implements TokenService {
             if (null == result) {
                 TokenErrorResult errorResult = tokenQueryResponse.getError();
                 String errorDesc = errorResult.getData().getException();
-                throw new SDKException(SdkError.GET_ALLOWANCE_ERRPR.getCode(), errorDesc);
+                throw new SDKException(SdkError.GET_TOKEN_INFO_ERRPR.getCode(), errorDesc);
             }
             tokenGetNameResult =  JSONObject.parseObject(result.getValue(), TokenGetNameResult.class);
             tokenGetNameResponse.buildResponse(SdkError.SUCCESS, tokenGetNameResult);
@@ -148,6 +203,8 @@ public class TokenServiceImpl implements TokenService {
             Integer errorCode = sdkException.getErrorCode();
             String errorDesc = sdkException.getErrorDesc();
             tokenGetNameResponse.buildResponse(errorCode, errorDesc, tokenGetNameResult);
+        } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
+            tokenGetNameResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, tokenGetNameResult);
         } catch (Exception e) {
             tokenGetNameResponse.buildResponse(SdkError.SYSTEM_ERROR, tokenGetNameResult);
         }
@@ -170,6 +227,10 @@ public class TokenServiceImpl implements TokenService {
             if (!PublicKey.isAddressValid(contractAddress)) {
                 throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
             }
+            boolean isContractValid = checkTokenValid(contractAddress);
+            if (false == isContractValid) {
+                throw new SDKException(SdkError.NO_SUCH_TOKEN_ERROR);
+            }
 
             JSONObject input = new JSONObject();
             input.put("method", "symbol");
@@ -179,7 +240,7 @@ public class TokenServiceImpl implements TokenService {
             if (null == result) {
                 TokenErrorResult errorResult = tokenQueryResponse.getError();
                 String errorDesc = errorResult.getData().getException();
-                throw new SDKException(SdkError.GET_ALLOWANCE_ERRPR.getCode(), errorDesc);
+                throw new SDKException(SdkError.GET_TOKEN_INFO_ERRPR.getCode(), errorDesc);
             }
             tokenGetSymbolResult =  JSONObject.parseObject(result.getValue(), TokenGetSymbolResult.class);
             tokenGetSymbolResponse.buildResponse(SdkError.SUCCESS, tokenGetSymbolResult);
@@ -187,6 +248,8 @@ public class TokenServiceImpl implements TokenService {
             Integer errorCode = sdkException.getErrorCode();
             String errorDesc = sdkException.getErrorDesc();
             tokenGetSymbolResponse.buildResponse(errorCode, errorDesc, tokenGetSymbolResult);
+        } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
+            tokenGetSymbolResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, tokenGetSymbolResult);
         } catch (Exception e) {
             tokenGetSymbolResponse.buildResponse(SdkError.SYSTEM_ERROR, tokenGetSymbolResult);
         }
@@ -202,6 +265,10 @@ public class TokenServiceImpl implements TokenService {
             if (!PublicKey.isAddressValid(contractAddress)) {
                 throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
             }
+            boolean isContractValid = checkTokenValid(contractAddress);
+            if (false == isContractValid) {
+                throw new SDKException(SdkError.NO_SUCH_TOKEN_ERROR);
+            }
 
             JSONObject input = new JSONObject();
             input.put("method", "decimals");
@@ -211,7 +278,7 @@ public class TokenServiceImpl implements TokenService {
             if (null == result) {
                 TokenErrorResult errorResult = tokenQueryResponse.getError();
                 String errorDesc = errorResult.getData().getException();
-                throw new SDKException(SdkError.GET_ALLOWANCE_ERRPR.getCode(), errorDesc);
+                throw new SDKException(SdkError.GET_TOKEN_INFO_ERRPR.getCode(), errorDesc);
             }
             tokenGetDecimalsResult =  JSONObject.parseObject(result.getValue(), TokenGetDecimalsResult.class);
             tokenGetDecimalsResponse.buildResponse(SdkError.SUCCESS, tokenGetDecimalsResult);
@@ -219,6 +286,8 @@ public class TokenServiceImpl implements TokenService {
             Integer errorCode = sdkException.getErrorCode();
             String errorDesc = sdkException.getErrorDesc();
             tokenGetDecimalsResponse.buildResponse(errorCode, errorDesc, tokenGetDecimalsResult);
+        } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
+            tokenGetDecimalsResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, tokenGetDecimalsResult);
         } catch (Exception e) {
             tokenGetDecimalsResponse.buildResponse(SdkError.SYSTEM_ERROR, tokenGetDecimalsResult);
         }
@@ -241,6 +310,10 @@ public class TokenServiceImpl implements TokenService {
             if (!PublicKey.isAddressValid(contractAddress)) {
                 throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
             }
+            boolean isContractValid = checkTokenValid(contractAddress);
+            if (false == isContractValid) {
+                throw new SDKException(SdkError.NO_SUCH_TOKEN_ERROR);
+            }
             JSONObject input = new JSONObject();
             input.put("method", "totalSupply");
             JSONObject queryResult = queryContract(contractAddress, input);
@@ -249,7 +322,7 @@ public class TokenServiceImpl implements TokenService {
             if (null == result) {
                 TokenErrorResult errorResult = tokenQueryResponse.getError();
                 String errorDesc = errorResult.getData().getException();
-                throw new SDKException(SdkError.GET_ALLOWANCE_ERRPR.getCode(), errorDesc);
+                throw new SDKException(SdkError.GET_TOKEN_INFO_ERRPR.getCode(), errorDesc);
             }
             tokenGetTotalSupplyResult =  JSONObject.parseObject(result.getValue(), TokenGetTotalSupplyResult.class);
             tokenGetTotalSupplyResponse.buildResponse(SdkError.SUCCESS, tokenGetTotalSupplyResult);
@@ -257,6 +330,8 @@ public class TokenServiceImpl implements TokenService {
             Integer errorCode = sdkException.getErrorCode();
             String errorDesc = sdkException.getErrorDesc();
             tokenGetTotalSupplyResponse.buildResponse(errorCode, errorDesc, tokenGetTotalSupplyResult);
+        } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
+            tokenGetTotalSupplyResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, tokenGetTotalSupplyResult);
         } catch (Exception e) {
             tokenGetTotalSupplyResponse.buildResponse(SdkError.SYSTEM_ERROR, tokenGetTotalSupplyResult);
         }
@@ -283,6 +358,10 @@ public class TokenServiceImpl implements TokenService {
             if (!PublicKey.isAddressValid(tokenOwner)) {
                 throw new SDKException(SdkError.INVALID_TOKENOWNER_ERRPR);
             }
+            boolean isContractValid = checkTokenValid(contractAddress);
+            if (false == isContractValid) {
+                throw new SDKException(SdkError.NO_SUCH_TOKEN_ERROR);
+            }
             JSONObject input = new JSONObject();
             input.put("method", "balanceOf");
             JSONObject params = new JSONObject();
@@ -294,7 +373,7 @@ public class TokenServiceImpl implements TokenService {
             if (null == result) {
                 TokenErrorResult errorResult = tokenQueryResponse.getError();
                 String errorDesc = errorResult.getData().getException();
-                throw new SDKException(SdkError.GET_ALLOWANCE_ERRPR.getCode(), errorDesc);
+                throw new SDKException(SdkError.GET_TOKEN_INFO_ERRPR.getCode(), errorDesc);
             }
             tokenGetBalanceResult = JSONObject.parseObject(result.getValue(), TokenGetBalanceResult.class);
             tokenGetBalanceResponse.buildResponse(SdkError.SUCCESS, tokenGetBalanceResult);
@@ -302,6 +381,8 @@ public class TokenServiceImpl implements TokenService {
             Integer errorCode = sdkException.getErrorCode();
             String errorDesc = sdkException.getErrorDesc();
             tokenGetBalanceResponse.buildResponse(errorCode, errorDesc, tokenGetBalanceResult);
+        } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
+            tokenGetBalanceResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, tokenGetBalanceResult);
         } catch (Exception e) {
             tokenGetBalanceResponse.buildResponse(SdkError.SYSTEM_ERROR, tokenGetBalanceResult);
         }
@@ -345,10 +426,6 @@ public class TokenServiceImpl implements TokenService {
             if (!isNumber || (isNumber && Long.valueOf(totalSupply) < 1)) {
                 throw new SDKException(SdkError.INVALID_TOKEN_TOTALSUPPLY_ERROR);
             }
-            String tokenOwner = tokenIssueResult.getTokenOwner();
-            if (!PublicKey.isAddressValid(tokenOwner)) {
-                throw new SDKException(SdkError.INVALID_TOKENOWNER_ERRPR);
-            }
             String metadata = tokenIssueResult.getMetadata();
             if (metadata != null && !HexFormat.isHexString(metadata)) {
                 throw new SDKException(SdkError.METADATA_NOT_HEX_STRING_ERROR);
@@ -362,7 +439,6 @@ public class TokenServiceImpl implements TokenService {
             params.put("symbol", symbol);
             params.put("decimals", decimals);
             params.put("totalSupply", totalSupply);
-            params.put("contractOwner", tokenOwner);
             initInput.put("params", params);
 
             // build operation
@@ -434,9 +510,9 @@ public class TokenServiceImpl implements TokenService {
             if (metadata != null && !HexFormat.isHexString(metadata)) {
                 throw new SDKException(SdkError.METADATA_NOT_HEX_STRING_ERROR);
             }
-            boolean isContractValid = checkContractValid(contractAddress);
+            boolean isContractValid = checkTokenValid(contractAddress);
             if (false == isContractValid) {
-                throw new SDKException(SdkError.CONTRACTADDRESS_NOT_CONTRACTACCOUNT_ERROR);
+                throw new SDKException(SdkError.NO_SUCH_TOKEN_ERROR);
             }
 
             // build init
@@ -450,6 +526,8 @@ public class TokenServiceImpl implements TokenService {
             operation = invokeContract(sourceAddress, contractAddress, input.toJSONString(), metadata);
         } catch (SDKException sdkException) {
             throw sdkException;
+        } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
+            throw new SDKException(SdkError.CONNECTNETWORK_ERROR);
         } catch (Exception exception) {
             throw new SDKException(SdkError.SYSTEM_ERROR);
         }
@@ -499,6 +577,10 @@ public class TokenServiceImpl implements TokenService {
             if (metadata != null && !HexFormat.isHexString(metadata)) {
                 throw new SDKException(SdkError.METADATA_NOT_HEX_STRING_ERROR);
             }
+            boolean isContractValid = checkTokenValid(contractAddress);
+            if (false == isContractValid) {
+                throw new SDKException(SdkError.NO_SUCH_TOKEN_ERROR);
+            }
             // build input
             JSONObject input = new JSONObject();
             JSONObject params = new JSONObject();
@@ -510,6 +592,8 @@ public class TokenServiceImpl implements TokenService {
             operation = invokeContract(sourceAddress, contractAddress, input.toJSONString(), metadata);
         } catch (SDKException sdkException) {
             throw sdkException;
+        } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
+            throw new SDKException(SdkError.CONNECTNETWORK_ERROR);
         } catch (Exception exception) {
             throw new SDKException(SdkError.SYSTEM_ERROR);
         }
@@ -551,6 +635,10 @@ public class TokenServiceImpl implements TokenService {
             if (metadata != null && !HexFormat.isHexString(metadata)) {
                 throw new SDKException(SdkError.METADATA_NOT_HEX_STRING_ERROR);
             }
+            boolean isContractValid = checkTokenValid(contractAddress);
+            if (false == isContractValid) {
+                throw new SDKException(SdkError.NO_SUCH_TOKEN_ERROR);
+            }
             // build input
             JSONObject input = new JSONObject();
             JSONObject params = new JSONObject();
@@ -561,6 +649,8 @@ public class TokenServiceImpl implements TokenService {
             operation = invokeContract(sourceAddress, contractAddress, input.toJSONString(), metadata);
         } catch (SDKException sdkException) {
             throw sdkException;
+        } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
+            throw new SDKException(SdkError.CONNECTNETWORK_ERROR);
         } catch (Exception exception) {
             throw new SDKException(SdkError.SYSTEM_ERROR);
         }
@@ -602,6 +692,10 @@ public class TokenServiceImpl implements TokenService {
             if (metadata != null && !HexFormat.isHexString(metadata)) {
                 throw new SDKException(SdkError.METADATA_NOT_HEX_STRING_ERROR);
             }
+            boolean isContractValid = checkTokenValid(contractAddress);
+            if (false == isContractValid) {
+                throw new SDKException(SdkError.NO_SUCH_TOKEN_ERROR);
+            }
             // build input
             JSONObject input = new JSONObject();
             JSONObject params = new JSONObject();
@@ -612,6 +706,8 @@ public class TokenServiceImpl implements TokenService {
             operation = invokeContract(sourceAddress, contractAddress, input.toJSONString(), metadata);
         } catch (SDKException sdkException) {
             throw sdkException;
+        } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
+            throw new SDKException(SdkError.CONNECTNETWORK_ERROR);
         } catch (Exception exception) {
             throw new SDKException(SdkError.SYSTEM_ERROR);
         }
@@ -643,10 +739,13 @@ public class TokenServiceImpl implements TokenService {
             if (!PublicKey.isAddressValid(tokenOwner)) {
                 throw new SDKException(SdkError.INVALID_TOKENOWNER_ERRPR);
             }
-
             String metadata = tokenChangeOwnerOperation.getMetadata();
             if (metadata != null && !HexFormat.isHexString(metadata)) {
                 throw new SDKException(SdkError.METADATA_NOT_HEX_STRING_ERROR);
+            }
+            boolean isContractValid = checkTokenValid(contractAddress);
+            if (false == isContractValid) {
+                throw new SDKException(SdkError.NO_SUCH_TOKEN_ERROR);
             }
             // build input
             JSONObject input = new JSONObject();
@@ -657,6 +756,8 @@ public class TokenServiceImpl implements TokenService {
             operation = invokeContract(sourceAddress, contractAddress, input.toJSONString(), metadata);
         } catch (SDKException sdkException) {
             throw sdkException;
+        } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
+            throw new SDKException(SdkError.CONNECTNETWORK_ERROR);
         } catch (Exception exception) {
             throw new SDKException(SdkError.SYSTEM_ERROR);
         }
@@ -670,13 +771,63 @@ public class TokenServiceImpl implements TokenService {
      * @Return boolean
      * @Date 2018/7/10 11:41
      */
-    private static boolean checkContractValid(String contractAddress) throws SDKException {
-        ContractCheckValidRequest contractCheckValidRequest = new ContractCheckValidRequest();
-        contractCheckValidRequest.setContractAddress(contractAddress);
-        ContractService contract = new ContractServiceImpl();
-        ContractCheckValidResponse contractCheckValidResponse = contract.checkValid(contractCheckValidRequest);
-        boolean isValid = contractCheckValidResponse.getResult().getValid();
+    private static boolean checkTokenValid(String contractAddress) throws SDKException, KeyManagementException, NoSuchAlgorithmException, NoSuchProviderException, IOException {
+        String key = "global_attribute";
 
+        String accountGetInfoUrl = General.accountGetMetadataUrl(contractAddress, key);
+        String result = HttpKit.get(accountGetInfoUrl);
+
+        TokenMessageResponse tokenMessageResponse;
+        TokenMessageResult tokenMessageResult;
+        tokenMessageResponse = JSON.parseObject(result, TokenMessageResponse.class);
+        SdkError.checkErrorCode(tokenMessageResponse);
+        Integer errorCode = tokenMessageResponse.getErrorCode();
+        if (errorCode != null && errorCode.intValue() == 4) {
+            throw new SDKException(errorCode, "Account (" + contractAddress +") not exist");
+        }
+        boolean isValid = false;
+        do {
+            tokenMessageResult = tokenMessageResponse.getResult();
+            ContractInfo contractInfo = tokenMessageResult.getContract();
+            MetadataInfo[] metadataInfos = tokenMessageResult.getMetadatas();
+            if (null == contractInfo || (contractInfo != null && (contractInfo.getPayload() == null)
+                    || contractInfo.getPayload().isEmpty()) || null == metadataInfos
+                    || (metadataInfos != null && metadataInfos.length == 0)) {
+                break;
+            }
+            String tokenInfoJson = metadataInfos[0].getValue();
+            if (tokenInfoJson == null || (tokenInfoJson != null && tokenInfoJson.isEmpty())) {
+                break;
+            }
+            TokenInfo tokenInfo =  JSONObject.parseObject(tokenInfoJson, TokenInfo.class);
+            String ctp = tokenInfo.getCtp();
+            if (null == ctp || (ctp != null && ctp != "1.0")) {
+                break;
+            }
+            String name = tokenInfo.getName();
+            if (null == name || (name != null && (name.length() < 1 || name.length() > 1024))) {
+                break;
+            }
+            String symbol = tokenInfo.getSymbol();
+            if (null == symbol || (symbol != null && (symbol.length() < 1 || symbol.length() > 2014))) {
+                break;
+            }
+            Integer decimals = tokenInfo.getDecimals();
+            if (null == decimals || (decimals != null && (decimals < 0 || decimals > 8))) {
+                break;
+            }
+            String totalSupply = tokenInfo.getTotalSupply();
+            Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
+            boolean isNumber = pattern.matcher(totalSupply).matches();
+            if (!isNumber || (isNumber && Long.valueOf(totalSupply) < 1)) {
+                break;
+            }
+            String tokenOwner = tokenInfo.getContractOwner();
+            if (!PublicKey.isAddressValid(tokenOwner)) {
+                break;
+            }
+            isValid = true;
+        } while (false);
         return isValid;
     }
 
