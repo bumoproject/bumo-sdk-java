@@ -3,7 +3,7 @@
 ## Introduction
 Java developers can easily operate Bumo blockchain via the Bumo Java SDK. And you can complete the installation of the SDK in Maven or by downloading the jar package in a few minutes.
 
-1. [docs](/docs) are the usage documentations for the Bumo Java SDK.
+1. [docs](/docs) are the usage documentations for the Bumo Java SDK. 
 2. [examples](/examples) are some examples of a project based on Maven.
 3. [libs](/libs) are the jar package and the dependency packages for the Bumo Java SDK.
 4. [src](/src)  is the source code for the Bumo Java SDK.
