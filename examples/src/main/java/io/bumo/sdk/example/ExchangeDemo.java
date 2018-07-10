@@ -1,125 +1,248 @@
 package io.bumo.sdk.example;
 
-import io.bumo.sdk.core.adapter.bc.response.Account;
-import io.bumo.sdk.core.adapter.bc.response.TransactionHistory;
-import io.bumo.sdk.core.adapter.bc.response.ledger.Ledger;
-import io.bumo.sdk.core.config.SDKConfig;
-import io.bumo.sdk.core.config.SDKProperties;
-import io.bumo.sdk.core.exception.SdkException;
-import io.bumo.sdk.core.operation.OperationFactory;
-import io.bumo.sdk.core.operation.impl.PayCoinOperation;
-import io.bumo.sdk.core.spi.OperationService;
-import io.bumo.sdk.core.spi.QueryService;
-import io.bumo.sdk.core.transaction.Transaction;
-import io.bumo.sdk.core.transaction.model.TransactionCommittedResult;
-import io.bumo.sdk.core.utils.ToBaseUnit;
-import io.bumo.sdk.core.utils.blockchain.BlockchainKeyPair;
-import io.bumo.sdk.core.utils.blockchain.SecureKeyGenerator;
+import com.alibaba.fastjson.JSON;
+import io.bumo.SDK;
+import io.bumo.common.ToBaseUnit;
+import io.bumo.crypto.Keypair;
+import io.bumo.encryption.key.PrivateKey;
+import io.bumo.model.request.*;
+import io.bumo.model.request.Operation.BUSendOperation;
+import io.bumo.model.response.*;
+import io.bumo.model.response.result.AccountGetNonceResult;
+import io.bumo.model.response.result.TransactionBuildBlobResult;
+import org.junit.Test;
 
 public class ExchangeDemo {
-	private static String address = "buQgQ3s2qY5DTFLezXzqf7NWLcVXufCyN93L";
-	private static String publicKey = "b001a8d29c772472953b51358ae05aa082c2de6af5b585e909bdb6078ae013d39bb41644d4a7";
-	private static String privateKey = "privbxpwDNRMe7xAshHChrnUdbLK5GpxgvqwhNcMMXA6byaX6VM85ThD";
-	public static void main(String[] args) throws SdkException, InterruptedException {
-        // config in codes
-		String eventUtis = "ws://127.0.0.1:26003";
-        String ips = "127.0.0.1:26002";
+    SDK sdk = SDK.getInstance("http://seed1.bumotest.io:26002");
 
-        SDKConfig config = new SDKConfig();
-        SDKProperties sdkProperties = new SDKProperties();
-        sdkProperties.setEventUtis(eventUtis);
-        sdkProperties.setIps(ips);
-        sdkProperties.setRedisSeqManagerEnable(true);
-        sdkProperties.setRedisHost("192.168.100.33");
-        sdkProperties.setRedisPort(36009);
-        sdkProperties.setRedisPassword("xxxxxx");
-        config.configSdk(sdkProperties);
-        OperationService operationService = config.getOperationService();
-        QueryService queryService = config.getQueryService();
+    /**
+     * 检测连接的节点是否区块同步正常
+     */
+    @Test
+    public void checkBlockStatus(){
+        BlockCheckStatusResponse response = sdk.getBlockService().checkStatus();
+        System.out.println(response.getResult().getSynchronous());
+    }
 
-        // config in config.properties
-//		SDKEngine sdkEngine = SDKEngine.getInstance();
-//        OperationService operationService = sdkEngine.getOperationService();
-//        QueryService queryService = sdkEngine.getQueryService();
+    /**
+     * 生成账户私钥，公钥及地址
+     */
+    @Test
+    public void createAccount(){
+        Keypair keypair = Keypair.generator();
+        System.out.println(JSON.toJSONString(keypair,true));
+    }
 
-        // create simple account
-        createBuChainAccount();
-
-        // send BU token
-        sendBuToken(operationService);
-
-        // query account
-        queryAccount(queryService);
-	}
-	
-	/**
-	 *
-	 * create exchange wallet or the user's Buchain account
-	 *
-	 * @return the account address and public-private key pairs
-	 */
-
-	public static BlockchainKeyPair createBuChainAccount(){
-		// Public private key pair and block chain address of a random Bumo block account
-		BlockchainKeyPair keyPair = SecureKeyGenerator.generateBumoKeyPair();
-		// Note: the system needs to record the public and private key and address of the account
-		String accountAddress = keyPair.getBumoAddress(); // Block chain account address
-		String accountSk = keyPair.getPriKey(); // Block chain account private key
-		String accountPk = keyPair.getPubKey(); // Block chain account public key
-		
-		return keyPair;
-	}
-	
-	public static void sendBuToken(OperationService operationService) {
-		String txSubmitAccountAddress = address;// Trade author block chain account address
-		String targetAddress = "buQchyqkRdJeyfrRwQVCEMdxEV2BPSoeQsGx";
-		Long sendTokenAmount = ToBaseUnit.BU2MO("0.6");
-		try {
-			// Creating asset distribution operations
-			PayCoinOperation operation = OperationFactory.newPayCoinOperation(address, targetAddress, sendTokenAmount);
+    /**
+     * 校验账户地址
+     */
+    @Test
+    public void checkAccountAddress(){
+        String address = "buQemmMwmRQY1JkcU7w3nhruoX5N3j6C29uo";
+        AccountCheckValidRequest accountCheckValidRequest = new AccountCheckValidRequest();
+        accountCheckValidRequest.setAddress(address);
+        AccountCheckValidResponse accountCheckValidResponse = sdk.getAccountService().checkValid(accountCheckValidRequest);
+        if(0 == accountCheckValidResponse.getErrorCode()){
+            System.out.println(accountCheckValidResponse.getResult().isValid());
+        }else{
+            System.out.println(JSON.toJSONString(accountCheckValidResponse,true));
+        }
+    }
 
 
-			// Get start Tx
-			Transaction transaction = operationService.newTransaction(txSubmitAccountAddress);
+    /**
+     * 查询账户信息
+     */
+    @Test
+    public void getAccountInfo(){
+        String accountAddress = "buQemmMwmRQY1JkcU7w3nhruoX5N3j6C29uo";
+        AccountGetInfoRequest request = new AccountGetInfoRequest();
+        request.setAddress(accountAddress);
 
-			// Bind operation
-			transaction.buildAddOperation(operation)
-					.buildTxMetadata("send BU token")
-					.buildAddGasPrice(1000) // 【required】 the price of Gas, at least 1000MO
-					.buildAddFeeLimit(ToBaseUnit.BU2MO("0.01")) // 【required】Service Charge (1000000MO = 0.01BU)
-					.buildAddSigner(publicKey, privateKey);
+        AccountGetInfoResponse response =  sdk.getAccountService().getInfo(request);
+        System.out.println(JSON.toJSONString(response,true));
 
-			// Commit Tx
-			TransactionCommittedResult result = transaction.commit();
+    }
 
-			// Get the hash of Tx
-			System.out.println(result.getHash());
-		} catch (SdkException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	
-	public static void queryAccount(QueryService queryService) {
-		String address = "buQYBzc87B71wDp4TyikrSkvti8YTMjYN8LT"; 
-		Account account = queryService.getAccount(address);
-		System.out.println(account);
-	}
-	
-	public static void queryTransactionByHash(QueryService queryService) {
-		String txHash = "";
-		TransactionHistory tx = queryService.getTransactionHistoryByHash(txHash);
-		System.out.println(tx.getTotalCount());
-	}
-	
-	public static void queryTransactionBySeq(QueryService queryService) {
-		Long seq = 1L;
-		TransactionHistory tx = queryService.getTransactionHistoryByLedgerSeq(seq);
-		System.out.println(tx.getTotalCount());
-	}
-	
-	public static void queryLatestLedger(QueryService queryService) {
-		Ledger ledger = queryService.getLatestLedger();
-		System.out.println(ledger.getHeader().getHash());
-	}
+    /**
+     * 获取账户BU余额
+     */
+    @Test
+    public void getAccountBalance(){
+        String accountAddress = "buQswSaKDACkrFsnP1wcVsLAUzXQsemauEjf";
+        AccountGetBalanceRequest request = new AccountGetBalanceRequest();
+        request.setAddress(accountAddress);
+
+        AccountGetBalanceResponse response = sdk.getAccountService().getBalance(request);
+
+        System.out.println(JSON.toJSONString(response,true));
+        if(0 == response.getErrorCode()){
+            System.out.println("BU余额：" + ToBaseUnit.MO2BU(response.getResult().getBalance().toString()) + "BU");
+        }
+    }
+
+    /**
+     * 获取账户Nonce
+     */
+    @Test
+    public void getAccountNonce(){
+        String accountAddress = "buQswSaKDACkrFsnP1wcVsLAUzXQsemauEjf";
+        AccountGetNonceRequest request = new AccountGetNonceRequest();
+        request.setAddress(accountAddress);
+
+        AccountGetNonceResponse response = sdk.getAccountService().getNonce(request);
+        if(0 == response.getErrorCode()){
+            System.out.println("账户Nonce:" + response.getResult().getNonce());
+        }
+    }
+
+    /**
+     * 发送一笔BU交易
+     * @throws Exception
+     */
+    @Test
+    public void sendBu() throws Exception {
+        String senderPrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq"; // 发送方私钥
+        String destAddress = "buQswSaKDACkrFsnP1wcVsLAUzXQsemauEjf";// 接收方账户地址
+        Long amount = ToBaseUnit.BU2MO("10.9"); // 发送转出10.9BU给接收方（目标账户）
+        Long gasPrice = 1000L; // 固定写 1000L ，单位是MO
+        Long feeLimit = ToBaseUnit.BU2MO("0.01");//设置最多费用 0.01BU ，固定填写
+        Long nonce = 1L; // 参考getAccountNonce()获取账户Nonce + 1;
+
+        // 记录txhash ，以便后续再次确认交易真实结果
+        // 推荐5个区块后再次通过txhash再次调用`根据交易Hash获取交易信息`(参考示例：getTxByHash()）来确认交易终态结果
+        String txhash = sendBu(senderPrivateKey,destAddress,amount,nonce,gasPrice,feeLimit);
+
+    }
+
+    /**
+     * 根据交易Hash获取交易信息
+     */
+    @Test
+    public void getTxByHash(){
+        String txHash = "fba9c3f73705ca3eb865c7ec2959c30bd27534509796fd5b208b0576ab155d95";
+        TransactionGetInfoRequest request = new TransactionGetInfoRequest();
+        request.setHash(txHash);
+        TransactionGetInfoResponse response = sdk.getTransactionService().getInfo(request);
+        if(0 == response.getErrorCode()){
+            System.out.println(JSON.toJSONString(response,true));
+        }else{
+            System.out.println("失败\n"+ JSON.toJSONString(response,true));
+        }
+    }
+
+    /**
+     * 探测用户充值
+     *
+     * 通过解析区块下的交易，来探测用户的充值动作
+     *
+     */
+    @Test
+    public void getTransactionOfBolck(){
+        Long blockNumber = 617247L;// 第617247区块
+        BlockGetTransactionsRequest request = new BlockGetTransactionsRequest();
+        request.setBlockNumber(blockNumber);
+        BlockGetTransactionsResponse response = sdk.getBlockService().getTransactions(request);
+        if(0 == response.getErrorCode()){
+            System.out.println(JSON.toJSONString(response,true));
+        }else{
+            System.out.println("失败\n"+ JSON.toJSONString(response,true));
+        }
+        // 探测某账户是否有充值BU
+        // 解析 transactions[n].transaction.operations[n].pay_coin.dest_address 即可
+
+        // 注意！！！！！
+        // operations是数组，有可能有多笔转账操作
+    }
+
+    @Test
+    public void getLastBlockNumber(){
+        BlockGetNumberResponse response = sdk.getBlockService().getNumber();
+        System.out.println(response.getResult().getHeader().getBlockNumber());
+    }
+
+    /**
+     *
+     *
+     * @param senderPrivateKey 转出方账户私钥
+     * @param destAddress 接收方账户地址
+     * @param amount 转出BU数量
+     * @param senderNonce 转出方nonce ，通过sdk.getAccountService().getNonce(request)获取到的Nonce 加 1；
+     * @param gasPrice 燃料单价
+     * @param feeLimit 最多支付交易费用
+     * @throws Exception
+     */
+    private String sendBu(String senderPrivateKey,String destAddress,Long amount,Long senderNonce,Long gasPrice,Long feeLimit) throws Exception {
+
+        // 1. 获取交易发送账户地址
+        String senderAddresss = getAddressByPrivateKey(senderPrivateKey); // BU发送者账户地址
+
+        // 2. 构建sendBU操作
+
+        BUSendOperation buSendOperation = new BUSendOperation();
+        buSendOperation.setSourceAddress(senderAddresss);
+        buSendOperation.setDestAddress(destAddress);
+        buSendOperation.setAmount(amount);
+
+        // 3. 构建交易
+
+        TransactionBuildBlobRequest transactionBuildBlobRequest = new TransactionBuildBlobRequest();
+        transactionBuildBlobRequest.setSourceAddress(senderAddresss);
+        transactionBuildBlobRequest.setNonce(senderNonce);
+        transactionBuildBlobRequest.setFeeLimit(feeLimit);
+        transactionBuildBlobRequest.setGasPrice(gasPrice);
+        transactionBuildBlobRequest.addOperation(buSendOperation);
+
+        // 4. 获取交易BLob串
+        String transactionBlob = null;
+        TransactionBuildBlobResponse transactionBuildBlobResponse = sdk.getTransactionService().buildBlob(transactionBuildBlobRequest);
+        TransactionBuildBlobResult transactionBuildBlobResult = transactionBuildBlobResponse.getResult();
+        String txHash = transactionBuildBlobResult.getHash();
+        transactionBlob = transactionBuildBlobResult.getTransactionBlob();
+
+        // 5. 签名交易BLob(交易发送账户签名交易Blob串)
+
+        String []signerPrivateKeyArr = {senderPrivateKey};
+        TransactionSignRequest transactionSignRequest = new TransactionSignRequest();
+        transactionSignRequest.setBlob(transactionBlob);
+        for (int i = 0; i < signerPrivateKeyArr.length; i++) {
+            transactionSignRequest.addPrivateKey(signerPrivateKeyArr[i]);
+        }
+        TransactionSignResponse transactionSignResponse = sdk.getTransactionService().sign(transactionSignRequest);
+
+        // 6. 广播交易
+
+        TransactionSubmitRequest transactionSubmitRequest = new TransactionSubmitRequest();
+        transactionSubmitRequest.setTransactionBlob(transactionBlob);
+        transactionSubmitRequest.setSignatures(transactionSignResponse.getResult().getSignatures());
+        TransactionSubmitResponse transactionSubmitResponse = sdk.getTransactionService().submit(transactionSubmitRequest);
+        if (0 == transactionSubmitResponse.getErrorCode()) { // 交易广播成功
+            System.out.println("交易广播成功，hash=" + transactionSubmitResponse.getResult().getHash());
+        }else{
+            System.out.println("交易广播失败，hash=" + transactionSubmitResponse.getResult().getHash() + "");
+            System.out.println(JSON.toJSONString(transactionSubmitResponse, true));
+        }
+        return txHash;
+    }
+
+
+    private Long getNonceOfAccount(String senderAddresss){
+        AccountGetNonceRequest accountGetNonceRequest = new AccountGetNonceRequest();
+        accountGetNonceRequest.setAddress(senderAddresss);
+
+        AccountGetNonceResponse accountGetNonceResponse =  sdk.getAccountService().getNonce(accountGetNonceRequest);
+        if (accountGetNonceResponse.getErrorCode() == 0) {
+            AccountGetNonceResult accountGetNonceResult = accountGetNonceResponse.getResult();
+            return accountGetNonceResult.getNonce();
+        }
+        else {
+            return null;
+        }
+    }
+
+    private String getAddressByPrivateKey(String privatekey) throws Exception {
+        String publicKey = PrivateKey.getEncPublicKey(privatekey);
+        String address = PrivateKey.getEncAddress(publicKey);
+        return address;
+    }
 }
