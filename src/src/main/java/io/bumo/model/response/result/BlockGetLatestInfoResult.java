@@ -2,24 +2,23 @@ package io.bumo.model.response.result;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import io.bumo.model.response.result.data.BlockHeader;
-import io.bumo.model.response.result.data.BlockNumber;
 
 /**
  * @Author riven
- * @Date 2018/7/6 01:52
+ * @Date 2018/7/12 00:34
  */
-public class BlockGetNumberResult {
+public class BlockGetLatestInfoResult {
     @JSONField(name = "header")
-    private BlockNumber header;
+    private BlockHeader header;
 
     /**
      * @Author riven
      * @Method getHeader
      * @Params []
      * @Return io.bumo.model.response.result.data.BlockHeader
-     * @Date 2018/7/6 01:53
+     * @Date 2018/7/12 10:27
      */
-    public BlockNumber getHeader() {
+    public BlockHeader getHeader() {
         return header;
     }
 
@@ -28,9 +27,9 @@ public class BlockGetNumberResult {
      * @Method setHeader
      * @Params [header]
      * @Return void
-     * @Date 2018/7/6 02:03
+     * @Date 2018/7/12 10:27
      */
-    public void setHeader(BlockNumber header) {
+    public void setHeader(BlockHeader header) {
         this.header = header;
     }
 }

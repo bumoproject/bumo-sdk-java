@@ -5,32 +5,9 @@ package io.bumo.model.request;
  * @Date 2018/7/6 12:26
  */
 public class TokenAllowanceRequest {
-    private String sourceAddress;
     private String contractAddress;
     private String tokenOwner;
     private String spender;
-
-    /**
-     * @Author riven
-     * @Method getSourceAddress
-     * @Params []
-     * @Return java.lang.String
-     * @Date 2018/7/7 06:26
-     */
-    public String getSourceAddress() {
-        return sourceAddress;
-    }
-
-    /**
-     * @Author riven
-     * @Method setSourceAddress
-     * @Params [sourceAddress]
-     * @Return void
-     * @Date 2018/7/7 06:30
-     */
-    public void setSourceAddress(String sourceAddress) {
-        this.sourceAddress = sourceAddress;
-    }
 
     /**
      * @Author riven

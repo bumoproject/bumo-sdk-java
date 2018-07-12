@@ -2,25 +2,24 @@ package io.bumo.model.response;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import io.bumo.exception.SdkError;
-import io.bumo.model.response.result.TokenAllowanceResult;
-import io.bumo.model.response.result.TokenErrorResult;
+import io.bumo.model.response.result.TokenGetDecimalsResult;
 
 /**
  * @Author riven
- * @Date 2018/7/6 12:43
+ * @Date 2018/7/11 23:06
  */
-public class TokenAllowanceResponse extends ResponseBase {
+public class TokenGetDecimalsResponse extends ResponseBase {
     @JSONField(name = "result")
-    private TokenAllowanceResult result;
+    private TokenGetDecimalsResult result;
 
     /**
      * @Author riven
      * @Method getResult
      * @Params []
-     * @Return io.bumo.model.response.result.TokenAllowanceResult
-     * @Date 2018/7/6 12:44
+     * @Return io.bumo.model.response.result.TokenGetNameResult
+     * @Date 2018/7/6 15:36
      */
-    public TokenAllowanceResult getResult() {
+    public TokenGetDecimalsResult getResult() {
         return result;
     }
 
@@ -29,9 +28,9 @@ public class TokenAllowanceResponse extends ResponseBase {
      * @Method setResult
      * @Params [result]
      * @Return void
-     * @Date 2018/7/6 12:44
+     * @Date 2018/7/6 15:36
      */
-    public void setResult(TokenAllowanceResult result) {
+    public void setResult(TokenGetDecimalsResult result) {
         this.result = result;
     }
 
@@ -42,7 +41,7 @@ public class TokenAllowanceResponse extends ResponseBase {
      * @Return void
      * @Date 2018/7/4 15:07
      */
-    public void buildResponse(SdkError sdkError, TokenAllowanceResult result) {
+    public void buildResponse(SdkError sdkError, TokenGetDecimalsResult result) {
         this.errorCode = sdkError.getCode();
         this.errorDesc = sdkError.getDescription();
         this.result = result;
@@ -55,7 +54,7 @@ public class TokenAllowanceResponse extends ResponseBase {
      * @Return void
      * @Date 2018/7/4 15:07
      */
-    public void buildResponse(int errorCode, String errorDesc, TokenAllowanceResult result) {
+    public void buildResponse(int errorCode, String errorDesc, TokenGetDecimalsResult result) {
         this.errorCode = errorCode;
         this.errorDesc = errorDesc;
         this.result = result;

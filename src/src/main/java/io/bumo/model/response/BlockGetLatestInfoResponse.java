@@ -2,25 +2,24 @@ package io.bumo.model.response;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import io.bumo.exception.SdkError;
-import io.bumo.model.response.result.TokenAllowanceResult;
-import io.bumo.model.response.result.TokenErrorResult;
+import io.bumo.model.response.result.BlockGetLatestInfoResult;
 
 /**
  * @Author riven
- * @Date 2018/7/6 12:43
+ * @Date 2018/7/12 00:36
  */
-public class TokenAllowanceResponse extends ResponseBase {
+public class BlockGetLatestInfoResponse extends ResponseBase {
     @JSONField(name = "result")
-    private TokenAllowanceResult result;
+    private BlockGetLatestInfoResult result;
 
     /**
      * @Author riven
      * @Method getResult
      * @Params []
-     * @Return io.bumo.model.response.result.TokenAllowanceResult
-     * @Date 2018/7/6 12:44
+     * @Return io.bumo.model.response.result.BlockGetFeesResult
+     * @Date 2018/7/4 15:08
      */
-    public TokenAllowanceResult getResult() {
+    public BlockGetLatestInfoResult getResult() {
         return result;
     }
 
@@ -29,9 +28,9 @@ public class TokenAllowanceResponse extends ResponseBase {
      * @Method setResult
      * @Params [result]
      * @Return void
-     * @Date 2018/7/6 12:44
+     * @Date 2018/7/4 15:08
      */
-    public void setResult(TokenAllowanceResult result) {
+    public void setResult(BlockGetLatestInfoResult result) {
         this.result = result;
     }
 
@@ -40,9 +39,9 @@ public class TokenAllowanceResponse extends ResponseBase {
      * @Method buildResponse
      * @Params [sdkError, result]
      * @Return void
-     * @Date 2018/7/4 15:07
+     * @Date 2018/7/4 15:08
      */
-    public void buildResponse(SdkError sdkError, TokenAllowanceResult result) {
+    public void buildResponse(SdkError sdkError, BlockGetLatestInfoResult result) {
         this.errorCode = sdkError.getCode();
         this.errorDesc = sdkError.getDescription();
         this.result = result;
@@ -53,9 +52,9 @@ public class TokenAllowanceResponse extends ResponseBase {
      * @Method buildResponse
      * @Params [errorCode, errorDesc, result]
      * @Return void
-     * @Date 2018/7/4 15:07
+     * @Date 2018/7/4 15:10
      */
-    public void buildResponse(int errorCode, String errorDesc, TokenAllowanceResult result) {
+    public void buildResponse(int errorCode, String errorDesc, BlockGetLatestInfoResult result) {
         this.errorCode = errorCode;
         this.errorDesc = errorDesc;
         this.result = result;

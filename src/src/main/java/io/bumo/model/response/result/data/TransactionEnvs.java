@@ -4,20 +4,20 @@ import com.alibaba.fastjson.annotation.JSONField;
 
 /**
  * @Author riven
- * @Date 2018/7/5 23:49
+ * @Date 2018/7/11 20:47
  */
-public class TestTx {
+public class TransactionEnvs {
     @JSONField(name = "transaction_env")
-    private TestTransactionFees transactionEnv;
+    private TransactionEnv transactionEnv;
 
     /**
      * @Author riven
      * @Method getTransactionEnv
      * @Params []
      * @Return io.bumo.model.response.result.data.TransactionEnv
-     * @Date 2018/7/5 23:52
+     * @Date 2018/7/11 20:48
      */
-    public TestTransactionFees getTransactionEnv() {
+    public TransactionEnv getTransactionEnv() {
         return transactionEnv;
     }
 
@@ -26,9 +26,9 @@ public class TestTx {
      * @Method setTransactionEnv
      * @Params [transactionEnv]
      * @Return void
-     * @Date 2018/7/5 23:52
+     * @Date 2018/7/11 22:09
      */
-    public void setTransactionEnv(TestTransactionFees transactionEnv) {
+    public void setTransactionEnv(TransactionEnv transactionEnv) {
         this.transactionEnv = transactionEnv;
     }
 }

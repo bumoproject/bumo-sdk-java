@@ -28,6 +28,11 @@ import io.bumo.model.response.*;
 import io.bumo.model.response.result.*;
 import io.bumo.model.response.result.data.Signature;
 
+import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+
 /**
  * @Author riven
  * @Date 2018/7/3 17:22
@@ -84,6 +89,7 @@ public class TransactionServiceImpl implements TransactionService {
             Chain.Transaction.Builder transaction = Chain.Transaction.newBuilder();
             BaseOperation[] baseOperations = transactionBuildBlobRequest.getOperations();
             buildOperations(baseOperations, transaction);
+
             transaction.setSourceAddress(sourceAddress);
             transaction.setNonce(nonce);
             transaction.setFeeLimit(feeLimit);
@@ -116,7 +122,7 @@ public class TransactionServiceImpl implements TransactionService {
             String errorDesc = apiException.getErrorDesc();
             transactionBuildBlobResponse.buildResponse(errorCode, errorDesc, transactionBuildBlobResult);
         } catch (Exception exception) {
-            transactionBuildBlobResponse.buildResponse(SdkError.INVALID_BLOB_ERROR, transactionBuildBlobResult);
+            transactionBuildBlobResponse.buildResponse(SdkError.SYSTEM_ERROR, transactionBuildBlobResult);
         }
 
         return transactionBuildBlobResponse;
@@ -142,7 +148,7 @@ public class TransactionServiceImpl implements TransactionService {
             transactionParseBlobResponse.buildResponse(errorCode, errorDesc, transactionParseBlobResult);
         } catch (Exception exception) {
             exception.printStackTrace();
-            transactionParseBlobResponse.buildResponse(SdkError.INVALID_BLOB_ERROR, transactionParseBlobResult);
+            transactionParseBlobResponse.buildResponse(SdkError.SYSTEM_ERROR, transactionParseBlobResult);
         }
 
         return transactionParseBlobResponse;
@@ -220,8 +226,10 @@ public class TransactionServiceImpl implements TransactionService {
             Integer errorCode = apiException.getErrorCode();
             String errorDesc = apiException.getErrorDesc();
             transactionEvaluationFeeResponse.buildResponse(errorCode, errorDesc, transactionEvaluationFeeResult);
-        } catch (Exception e) {
+        } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
             transactionEvaluationFeeResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, transactionEvaluationFeeResult);
+        } catch (Exception exception) {
+            transactionEvaluationFeeResponse.buildResponse(SdkError.SYSTEM_ERROR, transactionEvaluationFeeResult);
         }
         return transactionEvaluationFeeResponse;
     }
@@ -239,10 +247,11 @@ public class TransactionServiceImpl implements TransactionService {
         TransactionSignResult transactionSignResult = new TransactionSignResult();
         try {
             String blob = transactionSignRequest.getBlob();
-            byte[] blobBytes = HexFormat.hexToByte(blob);
-             {
-                Chain.Transaction.parseFrom(blobBytes);
+            if (null == blob) {
+                throw new SDKException(SdkError.INVALID_BLOB_ERROR);
             }
+            byte[] blobBytes = HexFormat.hexToByte(blob);
+            Chain.Transaction.parseFrom(blobBytes);
             String[] privateKeys = transactionSignRequest.getPrivateKeys();
             int i = 0;
             int length = privateKeys.length;
@@ -285,6 +294,9 @@ public class TransactionServiceImpl implements TransactionService {
         TransactionSubmitResult transactionSubmitResult = new TransactionSubmitResult();
         try {
             String blob = transactionSubmitRequest.getTransactionBlob();
+            if (null == blob) {
+                throw new SDKException(SdkError.INVALID_BLOB_ERROR);
+            }
             Chain.Transaction.parseFrom(HexFormat.hexToByte(blob));
             // build transaction request
             JSONObject transactionItemsRequest = new JSONObject();
@@ -298,8 +310,16 @@ public class TransactionServiceImpl implements TransactionService {
             for (; i < length; i++) {
                 JSONObject signatureItem = new JSONObject();
                 Signature signature = signatures[i];
-                signatureItem.put("sign_data", signature.getSignData());
-                signatureItem.put("public_key", signature.getPublicKey());
+                String signData = signature.getSignData();
+                if (null == signData || signData.isEmpty()) {
+                    throw new SDKException(SdkError.SIGNDATA_NULL_ERROR);
+                }
+                String publicKey = signature.getPublicKey();
+                if (null == publicKey || publicKey.isEmpty()) {
+                    throw new SDKException(SdkError.PUBLICKEY_NULL_ERROR);
+                }
+                signatureItem.put("sign_data", signData);
+                signatureItem.put("public_key", publicKey);
                 signatureItems.add(signatureItem);
             }
             transactionItem.put("signatures", signatureItems);
@@ -323,10 +343,10 @@ public class TransactionServiceImpl implements TransactionService {
             Integer errorCode = apiException.getErrorCode();
             String errorDesc = apiException.getErrorDesc();
             transactionSubmitResponse.buildResponse(errorCode, errorDesc, transactionSubmitResult);
-        } catch (InvalidProtocolBufferException e) {
-            transactionSubmitResponse.buildResponse(SdkError.INVALID_BLOB_ERROR, transactionSubmitResult);
-        } catch (Exception e) {
+        } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
             transactionSubmitResponse.buildResponse(SdkError.CONNECTN_BLOCKCHAIN_ERROR, transactionSubmitResult);
+        } catch (Exception exception) {
+            transactionSubmitResponse.buildResponse(SdkError.SYSTEM_ERROR, transactionSubmitResult);
         }
         return  transactionSubmitResponse;
     }
@@ -354,8 +374,10 @@ public class TransactionServiceImpl implements TransactionService {
             Integer errorCode = apiException.getErrorCode();
             String errorDesc = apiException.getErrorDesc();
             transactionGetInfoResponse.buildResponse(errorCode, errorDesc, transactionGetInfoResult);
-        } catch (Exception e) {
+        } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
             transactionGetInfoResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, transactionGetInfoResult);
+        } catch (Exception exception) {
+            transactionGetInfoResponse.buildResponse(SdkError.SYSTEM_ERROR, transactionGetInfoResult);
         }
         return transactionGetInfoResponse;
     }

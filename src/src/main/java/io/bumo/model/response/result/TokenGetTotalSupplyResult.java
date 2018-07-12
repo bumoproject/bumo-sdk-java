@@ -8,27 +8,27 @@ import com.alibaba.fastjson.annotation.JSONField;
  */
 public class TokenGetTotalSupplyResult {
     @JSONField(name = "totalSupply")
-    private String decimals;
+    private String totalSupply;
 
     /**
      * @Author riven
-     * @Method getDecimals
+     * @Method getTotalSupply
      * @Params []
      * @Return java.lang.String
-     * @Date 2018/7/6 15:48
+     * @Date 2018/7/11 22:53
      */
-    public String getDecimals() {
-        return decimals;
+    public String getTotalSupply() {
+        return totalSupply;
     }
 
     /**
      * @Author riven
-     * @Method setDecimals
-     * @Params [decimals]
+     * @Method setTotalSupply
+     * @Params [totalSupply]
      * @Return void
-     * @Date 2018/7/6 15:48
+     * @Date 2018/7/11 22:53
      */
-    public void setDecimals(String decimals) {
-        this.decimals = decimals;
+    public void setTotalSupply(String totalSupply) {
+        this.totalSupply = totalSupply;
     }
 }

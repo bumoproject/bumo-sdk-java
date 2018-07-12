@@ -19,6 +19,10 @@ public class General {
         return url + "/getAccountService?address=" + address + "&code=" + code + "&issuer=" + issuer;
     }
 
+    public static String contractCallUrl() {
+        return url + "/callContract";
+    }
+
 
     public static String transactionEvaluationFee() {
         return url + "/testTransaction";
@@ -43,6 +47,30 @@ public class General {
 
     public static String blockGetTransactionsUrl(Long blockNumber) {
         return url + "/getTransactionHistory?ledger_seq=" + blockNumber;
+    }
+
+    public static String blockGetInfoUrl(Long blockNumber) {
+        return url + "/getLedger?ledger_seq=" + blockNumber;
+    }
+
+    public static String blockGetLatestInfoUrl() {
+        return url + "/getLedger";
+    }
+
+    public static String blockGetValidatorsUrl(Long blockNumber) {
+        return url + "/getLedger?ledger_seq=" + blockNumber + "&with_validator=true";
+    }
+
+    public static String blockGetLatestValidatorsUrl() {
+        return url + "/getLedger?with_validator=true";
+    }
+
+    public static String blockGetRewardUrl(Long blockNumber) {
+        return url + "/getLedger?ledger_seq=" + blockNumber + "&with_block_reward=true";
+    }
+
+    public static String blockGetLatestRewardUrl() {
+        return url + "/getLedger?with_block_reward=true";
     }
 
     public static String blockGetFeesUrl(Long blockNumber) {

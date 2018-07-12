@@ -1,7 +1,6 @@
 package io.bumo.blockchain;
 
-import io.bumo.model.request.BlockGetFeesRequest;
-import io.bumo.model.request.BlockGetTransactionsRequest;
+import io.bumo.model.request.*;
 import io.bumo.model.response.*;
 
 /**
@@ -38,6 +37,60 @@ public interface BlockService {
 
     /**
      * @Author riven
+     * @Method getInfo
+     * @Params [blockGetInfoRequest]
+     * @Return io.bumo.model.response.BlockGetInfoResponse
+     * @Date 2018/7/12 00:39
+     */
+    public BlockGetInfoResponse getInfo(BlockGetInfoRequest blockGetInfoRequest);
+
+    /**
+     * @Author riven
+     * @Method getLatestInfo
+     * @Params []
+     * @Return io.bumo.model.response.BlockGetLatestInfoResponse
+     * @Date 2018/7/12 00:59
+     */
+    public BlockGetLatestInfoResponse getLatestInfo();
+
+    /**
+     * @Author riven
+     * @Method getValidators
+     * @Params [blockGetValidatorsRequest]
+     * @Return io.bumo.model.response.BlockGetValidatorsResponse
+     * @Date 2018/7/12 01:24
+     */
+    public BlockGetValidatorsResponse getValidators(BlockGetValidatorsRequest blockGetValidatorsRequest);
+
+    /**
+     * @Author riven
+     * @Method getLatestValidators
+     * @Params []
+     * @Return io.bumo.model.response.BlockGetLatestValidatorsResponse
+     * @Date 2018/7/12 01:36
+     */
+    public BlockGetLatestValidatorsResponse getLatestValidators();
+
+    /**
+     * @Author riven
+     * @Method getReward
+     * @Params [blockGetRewardRequest]
+     * @Return io.bumo.model.response.BlockGetRewardResponse
+     * @Date 2018/7/12 01:48
+     */
+    public BlockGetRewardResponse getReward(BlockGetRewardRequest blockGetRewardRequest);
+
+    /**
+     * @Author riven
+     * @Method getLatestReward
+     * @Params []
+     * @Return io.bumo.model.response.BlockGetLatestRewardResponse
+     * @Date 2018/7/12 02:08
+     */
+    public BlockGetLatestRewardResponse getLatestReward();
+
+    /**
+     * @Author riven
      * @Method getFees
      * @Params [blockGetFeesRequest]
      * @Return io.bumo.model.response.BlockGetFeesResponse
@@ -53,5 +106,6 @@ public interface BlockService {
      * @Date 2018/7/4 15:14
      */
     public BlockGetLatestFeesResponse getLatestFees();
+
 
 }

@@ -29,7 +29,7 @@ public class AccountCheckValidResult {
      * @Return void
      * @Date 2018/7/4 15:10
      */
-    public void setValid(boolean isValid) {
+    private void setValid(boolean isValid) {
         this.isValid = isValid;
     }
 }

@@ -4,31 +4,56 @@ import com.alibaba.fastjson.annotation.JSONField;
 
 /**
  * @Author riven
- * @Date 2018/7/5 23:50
+ * @Date 2018/7/11 18:41
  */
 public class TransactionEnv {
     @JSONField(name = "transaction")
-    private TransactionFees transactionFees;
+    private TransactionInfo transaction;
+
+    @JSONField(name = "trigger")
+    private ContractTrigger trigger;
 
     /**
      * @Author riven
-     * @Method getTransactionFees
+     * @Method getTransaction
      * @Params []
-     * @Return io.bumo.model.response.result.data.TransactionFees
-     * @Date 2018/7/5 23:53
+     * @Return io.bumo.model.response.result.data.TransactionInfo
+     * @Date 2018/7/11 18:46
      */
-    public TransactionFees getTransactionFees() {
-        return transactionFees;
+    public TransactionInfo getTransaction() {
+        return transaction;
     }
 
     /**
      * @Author riven
-     * @Method setTransactionFees
-     * @Params [transactionFees]
+     * @Method setTransaction
+     * @Params [transaction]
      * @Return void
-     * @Date 2018/7/5 23:53
+     * @Date 2018/7/11 18:46
      */
-    public void setTransactionFees(TransactionFees transactionFees) {
-        this.transactionFees = transactionFees;
+    public void setTransaction(TransactionInfo transaction) {
+        this.transaction = transaction;
+    }
+
+    /**
+     * @Author riven
+     * @Method getTrigger
+     * @Params []
+     * @Return io.bumo.model.response.result.data.ContractTrigger
+     * @Date 2018/7/11 18:46
+     */
+    public ContractTrigger getTrigger() {
+        return trigger;
+    }
+
+    /**
+     * @Author riven
+     * @Method setTrigger
+     * @Params [trigger]
+     * @Return void
+     * @Date 2018/7/11 18:46
+     */
+    public void setTrigger(ContractTrigger trigger) {
+        this.trigger = trigger;
     }
 }

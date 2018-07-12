@@ -1,5 +1,6 @@
 package io.bumo.model.response;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import io.bumo.exception.SdkError;
 import io.bumo.model.response.result.ContractCheckValidResult;
 
@@ -9,6 +10,7 @@ import io.bumo.model.response.result.ContractCheckValidResult;
  */
 public class ContractCheckValidResponse extends ResponseBase {
 
+    @JSONField(name = "result")
     private ContractCheckValidResult result;
 
     /**

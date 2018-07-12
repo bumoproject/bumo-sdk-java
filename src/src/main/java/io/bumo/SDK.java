@@ -4,7 +4,9 @@ import com.alibaba.fastjson.JSONObject;
 import io.bumo.account.AccountService;
 import io.bumo.account.impl.AccountServiceImpl;
 import io.bumo.asset.AssetService;
+import io.bumo.asset.TokenService;
 import io.bumo.asset.impl.AssetServiceImpl;
+import io.bumo.asset.impl.TokenServiceImpl;
 import io.bumo.blockchain.BlockService;
 import io.bumo.blockchain.TransactionService;
 import io.bumo.blockchain.impl.BlockServiceImpl;
@@ -47,7 +49,9 @@ public class SDK {
     public ContractService getContractService() {
         return new ContractServiceImpl();
     }
-
+    public TokenService getTokenService() {
+        return new TokenServiceImpl();
+    }
 
     private void init(String url) throws SDKException {
         if (url == null || url.isEmpty()) {

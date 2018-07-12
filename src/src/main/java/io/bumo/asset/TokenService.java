@@ -47,6 +47,15 @@ public interface TokenService {
 
     /**
      * @Author riven
+     * @Method getDecimals
+     * @Params [tokenGetDecimalsRequest]
+     * @Return io.bumo.model.response.TokenGetDecimalsResponse
+     * @Date 2018/7/11 23:07
+     */
+    public TokenGetDecimalsResponse getDecimals(TokenGetDecimalsRequest tokenGetDecimalsRequest);
+
+    /**
+     * @Author riven
      * @Method getTotalSupply
      * @Params [tokenGetTotalSupplyRequest]
      * @Return io.bumo.model.response.TokenGetTotalSupplyResponse

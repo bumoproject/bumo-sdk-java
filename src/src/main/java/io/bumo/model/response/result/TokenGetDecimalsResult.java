@@ -8,7 +8,7 @@ import com.alibaba.fastjson.annotation.JSONField;
  */
 public class TokenGetDecimalsResult {
     @JSONField(name = "decimals")
-    private String decimals;
+    private Integer decimals;
 
     /**
      * @Author riven
@@ -17,7 +17,7 @@ public class TokenGetDecimalsResult {
      * @Return java.lang.String
      * @Date 2018/7/6 15:48
      */
-    public String getDecimals() {
+    public Integer getDecimals() {
         return decimals;
     }
 
@@ -28,7 +28,7 @@ public class TokenGetDecimalsResult {
      * @Return void
      * @Date 2018/7/6 16:13
      */
-    public void setDecimals(String decimals) {
+    public void setDecimals(Integer decimals) {
         this.decimals = decimals;
     }
 }

@@ -25,4 +25,13 @@ public interface ContractService {
      * @Date 2018/7/5 15:37
      */
     public ContractCheckValidResponse checkValid(ContractCheckValidRequest contractCheckValidRequest);
+
+    /**
+     * @Author riven
+     * @Method call
+     * @Params [contractCallRequest]
+     * @Return io.bumo.model.response.ContractCallResponse
+     * @Date 2018/7/11 18:50
+     */
+    public ContractCallResponse call(ContractCallRequest contractCallRequest);
 }

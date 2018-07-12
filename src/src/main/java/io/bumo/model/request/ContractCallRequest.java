@@ -10,8 +10,31 @@ public class ContractCallRequest {
     private String code;
     private String input;
     private Long contractBalance;
+    private Integer optType;
     private Long feeLimit;
     private Long gasPrice;
+
+    /**
+     * @Author riven
+     * @Method getOptType
+     * @Params []
+     * @Return java.lang.Integer
+     * @Date 2018/7/11 20:10
+     */
+    public Integer getOptType() {
+        return optType;
+    }
+
+    /**
+     * @Author riven
+     * @Method setOptType
+     * @Params [optType]
+     * @Return void
+     * @Date 2018/7/11 20:10
+     */
+    public void setOptType(Integer optType) {
+        this.optType = optType;
+    }
 
     /**
      * @Author riven

@@ -5,6 +5,7 @@ import com.google.protobuf.ByteString;
 import io.bumo.account.AccountService;
 import io.bumo.common.General;
 import io.bumo.crypto.http.HttpKit;
+import io.bumo.encryption.exception.EncException;
 import io.bumo.exception.SDKException;
 import io.bumo.model.request.Operation.AccountActiviateOperation;
 import io.bumo.model.request.Operation.AccountSetMetadataOperation;
@@ -19,6 +20,13 @@ import io.bumo.encryption.key.PrivateKey;
 import io.bumo.encryption.key.PublicKey;
 import io.bumo.encryption.utils.hex.HexFormat;
 import io.bumo.exception.SdkError;
+
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 
 /**
  * @Author riven
@@ -38,14 +46,24 @@ public class AccountServiceImpl implements AccountService {
     public AccountCheckValidResponse checkValid(AccountCheckValidRequest accountCheckValidRequest) {
         AccountCheckValidResponse accountCheckValidResponse = new AccountCheckValidResponse();
         AccountCheckValidResult accountCheckValidResult = new AccountCheckValidResult();
-        boolean isValid = false;
+        boolean isValid;
         try{
         	isValid = PublicKey.isAddressValid(accountCheckValidRequest.getAddress());
-        }catch(Exception e){
+        } catch(EncException e){
         	isValid =false;
         }
-        accountCheckValidResult.setValid(isValid);
-        accountCheckValidResponse.buildResponse(SdkError.SUCCESS, accountCheckValidResult);
+
+        try {
+            // invoke the private method setValid
+            Class cls = accountCheckValidResult.getClass();
+            Method method = cls.getDeclaredMethod("setValid",  new Class[]{boolean.class});
+            method.setAccessible(true);
+            method.invoke(accountCheckValidResult, isValid);
+            //accountCheckValidResult.setValid(isValid);
+            accountCheckValidResponse.buildResponse(SdkError.SUCCESS, accountCheckValidResult);
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+            accountCheckValidResponse.buildResponse(SdkError.SYSTEM_ERROR, accountCheckValidResult);
+        }
         return accountCheckValidResponse;
     }
 
@@ -87,14 +105,10 @@ public class AccountServiceImpl implements AccountService {
         AccountGetInfoResult accountGetInfoResult = new AccountGetInfoResult();
         try {
             String address = accountGetInfoRequest.getAddress();
-            try{
-            	if (!PublicKey.isAddressValid(address)) {
-                    throw new SDKException(SdkError.INVALID_ADDRESS_ERROR);
-                }
-            }catch(Exception e){
-            	throw new SDKException(SdkError.INVALID_ADDRESS_ERROR);
+            if (!PublicKey.isAddressValid(address)) {
+                throw new SDKException(SdkError.INVALID_ADDRESS_ERROR);
             }
-            
+
             String accountGetInfoUrl = General.accountGetInfoUrl(address);
             String result = HttpKit.get(accountGetInfoUrl);
             accountGetInfoResponse = JSON.parseObject(result, AccountGetInfoResponse.class);
@@ -107,9 +121,10 @@ public class AccountServiceImpl implements AccountService {
             Integer errorCode = apiException.getErrorCode();
             String errorDesc = apiException.getErrorDesc();
             accountGetInfoResponse.buildResponse(errorCode, errorDesc, accountGetInfoResult);
-        }
-        catch (Exception e) {
+        } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
             accountGetInfoResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, accountGetInfoResult);
+        } catch (Exception e) {
+            accountGetInfoResponse.buildResponse(SdkError.SYSTEM_ERROR, accountGetInfoResult);
         }
 
         return accountGetInfoResponse;
@@ -147,9 +162,11 @@ public class AccountServiceImpl implements AccountService {
             Integer errorCode = apiException.getErrorCode();
             String errorDesc = apiException.getErrorDesc();
             accountGetNonceResponse.buildResponse(errorCode, errorDesc, accountGetNonceResult);
+        } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
+            accountGetNonceResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, accountGetNonceResult);
         } catch (Exception e) {
-        accountGetNonceResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, accountGetNonceResult);
-    }
+            accountGetNonceResponse.buildResponse(SdkError.SYSTEM_ERROR, accountGetNonceResult);
+        }
 
         return accountGetNonceResponse;
     }
@@ -167,14 +184,10 @@ public class AccountServiceImpl implements AccountService {
         AccountGetBalanceResult accountGetBalanceResult = new AccountGetBalanceResult();
         try {
             String address = accountGetBalanceRequest.getAddress();
-            try{
-            	 if (!PublicKey.isAddressValid(address)) {
-                     throw new SDKException(SdkError.INVALID_ADDRESS_ERROR);
-                 }
-            }catch(Exception e){
-            	throw new SDKException(SdkError.INVALID_ADDRESS_ERROR);
+            if (!PublicKey.isAddressValid(address)) {
+                throw new SDKException(SdkError.INVALID_ADDRESS_ERROR);
             }
-           
+
             String accountGetInfoUrl = General.accountGetInfoUrl(address);
             String result = HttpKit.get(accountGetInfoUrl);
             accountGetBalanceResponse = JSON.parseObject(result, AccountGetBalanceResponse.class);
@@ -187,8 +200,10 @@ public class AccountServiceImpl implements AccountService {
             Integer errorCode = apiException.getErrorCode();
             String errorDesc = apiException.getErrorDesc();
             accountGetBalanceResponse.buildResponse(errorCode, errorDesc, accountGetBalanceResult);
-        } catch (Exception e) {
+        } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
             accountGetBalanceResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, accountGetBalanceResult);
+        } catch (Exception e) {
+            accountGetBalanceResponse.buildResponse(SdkError.SYSTEM_ERROR, accountGetBalanceResult);
         }
 
         return accountGetBalanceResponse;
@@ -221,8 +236,10 @@ public class AccountServiceImpl implements AccountService {
             Integer errorCode = apiException.getErrorCode();
             String errorDesc = apiException.getErrorDesc();
             accountGetAssetsResponse.buildResponse(errorCode, errorDesc, accountGetAssetsResult);
-        } catch (Exception e) {
+        } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
             accountGetAssetsResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, accountGetAssetsResult);
+        } catch (Exception e) {
+            accountGetAssetsResponse.buildResponse(SdkError.SYSTEM_ERROR, accountGetAssetsResult);
         }
 
         return accountGetAssetsResponse;
@@ -236,42 +253,49 @@ public class AccountServiceImpl implements AccountService {
      * @Date 2018/7/4 18:19
      */
     public static Chain.Operation activate(AccountActiviateOperation accountActiviateOperation) throws SDKException {
-        String sourceAddress = accountActiviateOperation.getSourceAddress();
-        if (sourceAddress != null && !PublicKey.isAddressValid(sourceAddress)) {
-            throw new SDKException(SdkError.INVALID_SOURCEADDRESS_ERROR);
-        }
-        String destAddress = accountActiviateOperation.getDestAddress();
-        if (!PublicKey.isAddressValid(destAddress)) {
-            throw new SDKException(SdkError.INVALID_DESTADDRESS_ERROR);
-        }
-        if (sourceAddress != null && sourceAddress.equals(destAddress)) {
-            throw new SDKException(SdkError.SOURCEADDRESS_EQUAL_DESTADDRESS_ERROR);
-        }
-        Long initBalance = accountActiviateOperation.getInitBalance();
-        if (initBalance <= 0) {
-            throw new SDKException(SdkError.INVALID_INITBALANCE_ERROR);
-        }
-        String metadata = accountActiviateOperation.getMetadata();
-        if (metadata != null && !HexFormat.isHexString(metadata)) {
-            throw new SDKException(SdkError.METADATA_NOT_HEX_STRING_ERROR);
-        }
+        Chain.Operation.Builder operation;
+        try {
+            String sourceAddress= accountActiviateOperation.getSourceAddress();
+            if (sourceAddress != null && !PublicKey.isAddressValid(sourceAddress)) {
+                throw new SDKException(SdkError.INVALID_SOURCEADDRESS_ERROR);
+            }
+            String destAddress = accountActiviateOperation.getDestAddress();
+            if (!PublicKey.isAddressValid(destAddress)) {
+                throw new SDKException(SdkError.INVALID_DESTADDRESS_ERROR);
+            }
+            if (sourceAddress != null && sourceAddress.equals(destAddress)) {
+                throw new SDKException(SdkError.SOURCEADDRESS_EQUAL_DESTADDRESS_ERROR);
+            }
+            Long initBalance = accountActiviateOperation.getInitBalance();
+            if (initBalance <= 0) {
+                throw new SDKException(SdkError.INVALID_INITBALANCE_ERROR);
+            }
+            String metadata = accountActiviateOperation.getMetadata();
+            if (metadata != null && !HexFormat.isHexString(metadata)) {
+                throw new SDKException(SdkError.METADATA_NOT_HEX_STRING_ERROR);
+            }
 
-        // build Operation
-        Chain.Operation.Builder operation = Chain.Operation.newBuilder();
-        operation.setType(Chain.Operation.Type.CREATE_ACCOUNT);
-        if (sourceAddress != null) {
-            operation.setSourceAddress(sourceAddress);
+            // build Operation
+            operation = Chain.Operation.newBuilder();
+            operation.setType(Chain.Operation.Type.CREATE_ACCOUNT);
+            if (sourceAddress != null) {
+                operation.setSourceAddress(sourceAddress);
+            }
+            if (metadata != null) {
+                operation.setMetadata(ByteString.copyFromUtf8(metadata));
+            }
+            Chain.OperationCreateAccount.Builder operationCreateAccount = operation.getCreateAccountBuilder();
+            operationCreateAccount.setDestAddress(destAddress);
+            operationCreateAccount.setInitBalance(initBalance);
+            Chain.AccountPrivilege.Builder accountPrivilege = operationCreateAccount.getPrivBuilder();
+            accountPrivilege.setMasterWeight(1);
+            Chain.AccountThreshold.Builder accountThreshold = accountPrivilege.getThresholdsBuilder();
+            accountThreshold.setTxThreshold(1);
+        } catch (SDKException sdkException) {
+            throw sdkException;
+        } catch (Exception exception) {
+            throw new SDKException(SdkError.SYSTEM_ERROR);
         }
-        if (metadata != null) {
-            operation.setMetadata(ByteString.copyFromUtf8(metadata));
-        }
-        Chain.OperationCreateAccount.Builder operationCreateAccount = operation.getCreateAccountBuilder();
-        operationCreateAccount.setDestAddress(destAddress);
-        operationCreateAccount.setInitBalance(initBalance);
-        Chain.AccountPrivilege.Builder accountPrivilege = operationCreateAccount.getPrivBuilder();
-        accountPrivilege.setMasterWeight(1);
-        Chain.AccountThreshold.Builder accountThreshold = accountPrivilege.getThresholdsBuilder();
-        accountThreshold.setTxThreshold(1);
 
         return operation.build();
     }
@@ -284,47 +308,54 @@ public class AccountServiceImpl implements AccountService {
      * @Date 2018/7/4 18:27
      */
     public static Chain.Operation setMetadata(AccountSetMetadataOperation accountSetMetadataOperation) throws SDKException {
-        String sourceAddress = accountSetMetadataOperation.getSourceAddress();
-        if (sourceAddress != null && !PublicKey.isAddressValid(sourceAddress)) {
-            throw new SDKException(SdkError.INVALID_SOURCEADDRESS_ERROR);
-        }
-        String key = accountSetMetadataOperation.getKey();
-        if (key == null || (key != null && key.length() < 1 || key.length() > 1024)) {
-            throw new SDKException(SdkError.INVALID_DATAKEY_ERROR);
-        }
-        String value = accountSetMetadataOperation.getValue();
-        if (value == null || (value != null && value.length() < 0 || value.length() > 256000)) {
-            throw new SDKException(SdkError.INVALID_DATAVALUE_ERROR);
-        }
-        Long version = accountSetMetadataOperation.getVersion();
-        if (version < 0) {
-            throw new SDKException(SdkError.INVALID_DATAVERSION_ERROR);
-        }
+        Chain.Operation.Builder operation;
+        try {
+            String sourceAddress = accountSetMetadataOperation.getSourceAddress();
+            if (sourceAddress != null && !PublicKey.isAddressValid(sourceAddress)) {
+                throw new SDKException(SdkError.INVALID_SOURCEADDRESS_ERROR);
+            }
+            String key = accountSetMetadataOperation.getKey();
+            if (key == null || (key != null && key.length() < 1 || key.length() > 1024)) {
+                throw new SDKException(SdkError.INVALID_DATAKEY_ERROR);
+            }
+            String value = accountSetMetadataOperation.getValue();
+            if (value == null || (value != null && value.length() < 0 || value.length() > 256000)) {
+                throw new SDKException(SdkError.INVALID_DATAVALUE_ERROR);
+            }
+            Long version = accountSetMetadataOperation.getVersion();
+            if (version < 0) {
+                throw new SDKException(SdkError.INVALID_DATAVERSION_ERROR);
+            }
 
-        Boolean deleteFlag = accountSetMetadataOperation.getDeleteFlag();
+            Boolean deleteFlag = accountSetMetadataOperation.getDeleteFlag();
 
-        String metadata = accountSetMetadataOperation.getMetadata();
-        if (metadata != null && !HexFormat.isHexString(metadata)) {
-            throw new SDKException(SdkError.METADATA_NOT_HEX_STRING_ERROR);
-        }
+            String metadata = accountSetMetadataOperation.getMetadata();
+            if (metadata != null && !HexFormat.isHexString(metadata)) {
+                throw new SDKException(SdkError.METADATA_NOT_HEX_STRING_ERROR);
+            }
 
-        // build Operation
-        Chain.Operation.Builder operation = Chain.Operation.newBuilder();
-        operation.setType(Chain.Operation.Type.SET_METADATA);
-        if (sourceAddress != null) {
-            operation.setSourceAddress(sourceAddress);
-        }
-        if (metadata != null) {
-            operation.setMetadata(ByteString.copyFromUtf8(metadata));
-        }
-        Chain.OperationSetMetadata.Builder operationSetMetadata = operation.getSetMetadataBuilder();
-        operationSetMetadata.setKey(key);
-        operationSetMetadata.setValue(value);
-        if (version != null && version > 0) {
-            operationSetMetadata.setVersion(version);
-        }
-        if (deleteFlag != null) {
-            operationSetMetadata.setDeleteFlag(deleteFlag);
+            // build Operation
+            operation = Chain.Operation.newBuilder();
+            operation.setType(Chain.Operation.Type.SET_METADATA);
+            if (sourceAddress != null) {
+                operation.setSourceAddress(sourceAddress);
+            }
+            if (metadata != null) {
+                operation.setMetadata(ByteString.copyFromUtf8(metadata));
+            }
+            Chain.OperationSetMetadata.Builder operationSetMetadata = operation.getSetMetadataBuilder();
+            operationSetMetadata.setKey(key);
+            operationSetMetadata.setValue(value);
+            if (version != null && version > 0) {
+                operationSetMetadata.setVersion(version);
+            }
+            if (deleteFlag != null) {
+                operationSetMetadata.setDeleteFlag(deleteFlag);
+            }
+        } catch (SDKException sdkException) {
+            throw sdkException;
+        } catch (Exception exception) {
+            throw new SDKException(SdkError.SYSTEM_ERROR);
         }
 
         return operation.build();
@@ -338,84 +369,89 @@ public class AccountServiceImpl implements AccountService {
      * @Date 2018/7/5 00:45
      */
     public static Chain.Operation setPrivilege(AccountSetPrivilegeOperation accountSetPrivilegeOperation) throws SDKException {
-        String sourceAddress = accountSetPrivilegeOperation.getSourceAddress();
-        if (sourceAddress != null && !PublicKey.isAddressValid(sourceAddress)) {
-            throw new SDKException(SdkError.INVALID_SOURCEADDRESS_ERROR);
-        }
-        String masterWeight = accountSetPrivilegeOperation.getMasterWeight();
-        long maxInt = 1;
-        if (masterWeight == null || (masterWeight != null && Long.valueOf(masterWeight) < 0 || Long.valueOf(masterWeight) > ((maxInt<<32) - 1))) {
-            throw new SDKException(SdkError.INVALID_MASTERWEIGHT_ERROR);
-        }
-        String txThreshold = accountSetPrivilegeOperation.getTxThreshold();
-        if (txThreshold == null || (txThreshold != null && Long.valueOf(masterWeight) < 0 || Long.valueOf(masterWeight) > ((maxInt<<(64-1)) - 1))) {
-            throw new SDKException(SdkError.INVALID_TX_THRESHOLD_ERROR);
-        }
-        String metadata = accountSetPrivilegeOperation.getMetadata();
-        if (metadata != null && !HexFormat.isHexString(metadata)) {
-            throw new SDKException(SdkError.METADATA_NOT_HEX_STRING_ERROR);
-        }
-
-        // build Operation
-        Chain.Operation.Builder operation = Chain.Operation.newBuilder();
-        operation.setType(Chain.Operation.Type.SET_PRIVILEGE);
-        if (sourceAddress != null) {
-            operation.setSourceAddress(sourceAddress);
-        }
-        if (metadata != null) {
-            operation.setMetadata(ByteString.copyFromUtf8(metadata));
-        }
-        Chain.OperationSetPrivilege.Builder operationSetPrivilege = operation.getSetPrivilegeBuilder();
-        if(masterWeight != null) {
-            operationSetPrivilege.setMasterWeight(masterWeight);
-        }
-        if (txThreshold != null) {
-            operationSetPrivilege.setTxThreshold(txThreshold);
-        }
-
-        // add signers
-        Signer[] signers = accountSetPrivilegeOperation.getSigners();
-        if (signers != null && signers.length > 0) {
-            int i = 0;
-            int signersLength = signers.length;
-            for (; i < signersLength; i++) {
-                Signer signer = signers[i];
-                String signerAddress = signer.getAddress();
-                if(!PublicKey.isAddressValid(signerAddress)) {
-                    throw new SDKException(SdkError.INVALID_SIGNER_ADDRESS_ERROR);
-                }
-                Long signerWeight = signer.getWeight();
-                if (signerWeight == null || (signerWeight != null && (signerWeight < 0 || signerWeight > (maxInt << (64 - 1)) - 1))) {
-                    throw new SDKException(SdkError.INVALID_SIGNER_WEIGHT_ERROR);
-                }
-                Chain.Signer.Builder signerBuilder = operationSetPrivilege.addSignersBuilder();
-                signerBuilder.setAddress(signerAddress);
-                signerBuilder.setWeight(signerWeight);
+        Chain.Operation.Builder operation;
+        try {
+            String sourceAddress = accountSetPrivilegeOperation.getSourceAddress();
+            if (sourceAddress != null && !PublicKey.isAddressValid(sourceAddress)) {
+                throw new SDKException(SdkError.INVALID_SOURCEADDRESS_ERROR);
             }
-        }
-
-        // add type_thresholds
-        TypeThreshold[] typeThresholds = accountSetPrivilegeOperation.getTypeThresholds();
-        if (typeThresholds != null && typeThresholds.length > 0) {
-            int i = 0;
-            int typeThresholdsLength = typeThresholds.length;
-            for (; i < typeThresholdsLength; i++) {
-                TypeThreshold typeThreshold = typeThresholds[i];
-                Integer type = typeThreshold.getType();
-                if (type == null || (type != null && (type < 1 || type > 100))) {
-                    throw new SDKException(SdkError.INVALID_OPERATION_TYPE_ERROR);
-                }
-                Long threshold = typeThreshold.getThreshold();
-                if (threshold == null || (threshold != null && (threshold < 0 || threshold > (maxInt << (64 - 1)) - 1))) {
-                    throw new SDKException(SdkError.INVALID_TYPE_THRESHOLD_ERROR);
-                }
-                Chain.OperationTypeThreshold.Builder typeThresholdBuilder = operationSetPrivilege.addTypeThresholdsBuilder();
-                typeThresholdBuilder.setType(Chain.Operation.Type.forNumber(type));
-                typeThresholdBuilder.setThreshold(threshold);
+            String masterWeight = accountSetPrivilegeOperation.getMasterWeight();
+            long maxInt = 1;
+            if (masterWeight == null || (masterWeight != null && Long.valueOf(masterWeight) < 0 || Long.valueOf(masterWeight) > ((maxInt << 32) - 1))) {
+                throw new SDKException(SdkError.INVALID_MASTERWEIGHT_ERROR);
             }
+            String txThreshold = accountSetPrivilegeOperation.getTxThreshold();
+            if (txThreshold == null || (txThreshold != null && Long.valueOf(masterWeight) < 0 || Long.valueOf(masterWeight) > ((maxInt << (64 - 1)) - 1))) {
+                throw new SDKException(SdkError.INVALID_TX_THRESHOLD_ERROR);
+            }
+            String metadata = accountSetPrivilegeOperation.getMetadata();
+            if (metadata != null && !HexFormat.isHexString(metadata)) {
+                throw new SDKException(SdkError.METADATA_NOT_HEX_STRING_ERROR);
+            }
+
+            // build Operation
+            operation = Chain.Operation.newBuilder();
+            operation.setType(Chain.Operation.Type.SET_PRIVILEGE);
+            if (sourceAddress != null) {
+                operation.setSourceAddress(sourceAddress);
+            }
+            if (metadata != null) {
+                operation.setMetadata(ByteString.copyFromUtf8(metadata));
+            }
+            Chain.OperationSetPrivilege.Builder operationSetPrivilege = operation.getSetPrivilegeBuilder();
+            if (masterWeight != null) {
+                operationSetPrivilege.setMasterWeight(masterWeight);
+            }
+            if (txThreshold != null) {
+                operationSetPrivilege.setTxThreshold(txThreshold);
+            }
+
+            // add signers
+            Signer[] signers = accountSetPrivilegeOperation.getSigners();
+            if (signers != null && signers.length > 0) {
+                int i = 0;
+                int signersLength = signers.length;
+                for (; i < signersLength; i++) {
+                    Signer signer = signers[i];
+                    String signerAddress = signer.getAddress();
+                    if (!PublicKey.isAddressValid(signerAddress)) {
+                        throw new SDKException(SdkError.INVALID_SIGNER_ADDRESS_ERROR);
+                    }
+                    Long signerWeight = signer.getWeight();
+                    if (signerWeight == null || (signerWeight != null && (signerWeight < 0 || signerWeight > (maxInt << (64 - 1)) - 1))) {
+                        throw new SDKException(SdkError.INVALID_SIGNER_WEIGHT_ERROR);
+                    }
+                    Chain.Signer.Builder signerBuilder = operationSetPrivilege.addSignersBuilder();
+                    signerBuilder.setAddress(signerAddress);
+                    signerBuilder.setWeight(signerWeight);
+                }
+            }
+
+            // add type_thresholds
+            TypeThreshold[] typeThresholds = accountSetPrivilegeOperation.getTypeThresholds();
+            if (typeThresholds != null && typeThresholds.length > 0) {
+                int i = 0;
+                int typeThresholdsLength = typeThresholds.length;
+                for (; i < typeThresholdsLength; i++) {
+                    TypeThreshold typeThreshold = typeThresholds[i];
+                    Integer type = typeThreshold.getType();
+                    if (type == null || (type != null && (type < 1 || type > 100))) {
+                        throw new SDKException(SdkError.INVALID_OPERATION_TYPE_ERROR);
+                    }
+                    Long threshold = typeThreshold.getThreshold();
+                    if (threshold == null || (threshold != null && (threshold < 0 || threshold > (maxInt << (64 - 1)) - 1))) {
+                        throw new SDKException(SdkError.INVALID_TYPE_THRESHOLD_ERROR);
+                    }
+                    Chain.OperationTypeThreshold.Builder typeThresholdBuilder = operationSetPrivilege.addTypeThresholdsBuilder();
+                    typeThresholdBuilder.setType(Chain.Operation.Type.forNumber(type));
+                    typeThresholdBuilder.setThreshold(threshold);
+                }
+            }
+        } catch (SDKException sdkException) {
+            throw sdkException;
+        } catch (Exception exception) {
+            throw new SDKException(SdkError.SYSTEM_ERROR);
         }
-
-
         return operation.build();
     }
 }
