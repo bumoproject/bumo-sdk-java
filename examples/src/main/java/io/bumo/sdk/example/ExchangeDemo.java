@@ -156,15 +156,20 @@ public class ExchangeDemo {
         // operations是数组，有可能有多笔转账操作
     }
 
+    /**
+     * 查询最新的区块高度
+     */
     @Test
     public void getLastBlockNumber(){
         BlockGetNumberResponse response = sdk.getBlockService().getNumber();
         System.out.println(response.getResult().getHeader());
     }
 
+    /**
+     * 调用合约
+     */
     @Test
     public void callContract() {
-        // issueAsset('FRM', '1000');
         ContractCallRequest contractCallRequest = new ContractCallRequest();
         contractCallRequest.setCode("\"use strict\";log(undefined);function query() { getBalance(thisAddress); }");
         contractCallRequest.setFeeLimit(1000000000L);
@@ -179,12 +184,18 @@ public class ExchangeDemo {
         }
     }
 
+    /**
+     * 查询合约信息
+     */
     @Test
     public void getContractInfo() {
         ContractGetInfoRequest contractGetInfoRequest = new ContractGetInfoRequest();
         contractGetInfoRequest.setContractAddress("");
     }
 
+    /**
+     * 查询账户下合约Token的余额
+     */
     @Test
     public void getTokenBalance() {
         TokenGetBalanceRequest tokenGetBalanceRequest = new TokenGetBalanceRequest();
@@ -199,6 +210,9 @@ public class ExchangeDemo {
         }
     }
 
+    /**
+     * 获取合约Token的精度
+     */
     @Test
     public void getTokenDecimals() {
         TokenGetDecimalsRequest tokenGetDecimalsRequest = new TokenGetDecimalsRequest();
@@ -212,6 +226,9 @@ public class ExchangeDemo {
         }
     }
 
+    /**
+     * 获取合约Token总供应量
+     */
     @Test
     public void getTokenTotalSupply() {
         TokenGetTotalSupplyRequest tokenGetTotalSupplyRequest = new TokenGetTotalSupplyRequest();
@@ -225,6 +242,9 @@ public class ExchangeDemo {
         }
     }
 
+    /**
+     * 查询合约Token的符号名
+     */
     @Test
     public void getTokenSymbol() {
         TokenGetSymbolRequest tokenGetSymbolRequest = new TokenGetSymbolRequest();
@@ -238,6 +258,9 @@ public class ExchangeDemo {
         }
     }
 
+    /**
+     * 查询合约Token的名称
+     */
     @Test
     public void getTokenName() {
         TokenGetNameRequest tokenGetNameRequest = new TokenGetNameRequest();
@@ -251,6 +274,9 @@ public class ExchangeDemo {
         }
     }
 
+    /**
+     * 查询合约Token的信息
+     */
     @Test
     public void getTokenInfo() {
         TokenGetInfoRequest tokenGetInfoRequest = new TokenGetInfoRequest();
@@ -264,6 +290,10 @@ public class ExchangeDemo {
             System.out.println(tokenGetInfoResponse.getErrorDesc());
         }
     }
+
+    /**
+     * 查询授权用户的可用的合约Token数量
+     */
     @Test
     public void getTokenAllowance() {
         TokenAllowanceRequest tokenAllowanceRequest = new TokenAllowanceRequest();
@@ -280,6 +310,9 @@ public class ExchangeDemo {
         }
     }
 
+    /**
+     * 查询指定区块高度的区块信息
+     */
     @Test
     public void getBlockInfo() {
         BlockGetInfoRequest blockGetInfoRequest = new BlockGetInfoRequest();
@@ -293,6 +326,10 @@ public class ExchangeDemo {
             System.out.println(lockGetInfoResponse.getErrorDesc());
         }
     }
+
+    /**
+     * 查询最新的区块信息
+     */
     @Test
     public void getBlockLatestInfo() {
         BlockGetLatestInfoResponse lockGetLatestInfoResponse = sdk.getBlockService().getLatestInfo();
@@ -305,6 +342,9 @@ public class ExchangeDemo {
         }
     }
 
+    /**
+     * 查询指定区块高度的验证节点信息
+     */
     @Test
     public void getBlockValidators() {
         BlockGetValidatorsRequest blockGetValidatorsRequest = new BlockGetValidatorsRequest();
@@ -318,6 +358,10 @@ public class ExchangeDemo {
             System.out.println(lockGetValidatorsResponse.getErrorDesc());
         }
     }
+
+    /**
+     * 查询最新区块的验证节点信息
+     */
     @Test
     public void getLatestBlockValidators() {
         BlockGetLatestValidatorsResponse lockGetLatestValidatorsResponse = sdk.getBlockService().getLatestValidators();
@@ -330,6 +374,9 @@ public class ExchangeDemo {
         }
     }
 
+    /**
+     * 查询指定区块高度的区块奖励和验证节点奖励
+     */
     @Test
     public void getBlockReward() {
         BlockGetRewardRequest blockGetRewardRequest = new BlockGetRewardRequest();
@@ -347,6 +394,10 @@ public class ExchangeDemo {
             System.out.println(lockGetRewardResponse.getErrorDesc());
         }
     }
+
+    /**
+     * 查询最新区块奖励和验证节点奖励
+     */
     @Test
     public void getLatestBlockReward() {
         BlockGetLatestRewardResponse lockGetLatestRewardResponse = sdk.getBlockService().getLatestReward();
@@ -379,15 +430,10 @@ public class ExchangeDemo {
         String senderAddresss = getAddressByPrivateKey(senderPrivateKey); // BU发送者账户地址
 
         // 2. 构建sendBU操作
-        AccountActiviateOperation accountActiviateOperation = new AccountActiviateOperation();
-        accountActiviateOperation.setSourceAddress(senderAddresss);
-        accountActiviateOperation.setDestAddress(destAddress);
-        accountActiviateOperation.setInitBalance(100000000L);
-
-//        BUSendOperation buSendOperation = new BUSendOperation();
-//        buSendOperation.setSourceAddress(senderAddresss);
-//        buSendOperation.setDestAddress(destAddress);
-//        buSendOperation.setAmount(amount);
+       BUSendOperation buSendOperation = new BUSendOperation();
+       buSendOperation.setSourceAddress(senderAddresss);
+       buSendOperation.setDestAddress(destAddress);
+       buSendOperation.setAmount(amount);
 
         // 3. 构建交易
 
@@ -396,7 +442,7 @@ public class ExchangeDemo {
         transactionBuildBlobRequest.setNonce(senderNonce);
         transactionBuildBlobRequest.setFeeLimit(feeLimit);
         transactionBuildBlobRequest.setGasPrice(gasPrice);
-        transactionBuildBlobRequest.addOperation(accountActiviateOperation);
+        transactionBuildBlobRequest.addOperation(buSendOperation);
 
         // 4. 获取交易BLob串
         String transactionBlob = null;
