@@ -229,10 +229,11 @@ public class OfflineSignatureDemo {
     }
 
     /**
+     * @Description 广播交易
      * @Author riven
      * @Method submitTransaction
      * @Params transactionBlob: 交易Blob
-     *         signature: 签名私钥
+     *         signature: 签名结果，包括签名信息和公钥
      * @Return java.lang.String
      * @Date 2018/7/12 16:21
      */
