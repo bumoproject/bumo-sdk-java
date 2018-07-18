@@ -64,7 +64,7 @@
 
 ## 名词解析
 
-操作BU区块链： 向BU区块链写入或修改数据
+操作BU区块链： 向BU区块链写入或修改数据
 
 广播交易： 向BU区块链写入或修改数据
 
@@ -74,7 +74,7 @@
 
 资产服务： 提供资产相关的查询接口
 
-合约服务： 提供合约相关的有效性校验与查询接口
+合约服务： 提供合约相关的有效性校验与查询接口
 
 交易服务： 提供操写入BU区块链与查询接口
 
@@ -88,7 +88,7 @@
 
 接口的请求参数的类名，是[服务名][方法名]Request，比如: 账户服务下的getInfo接口的请求参数格式是AccountGetInfoRequest。
 
-请求参数的成员，是各个接口的入参的成员。例如：账户服务下的getInfo接口的入参成员是address，那么该接口的请求参数的的完整结构如下：
+请求参数的成员，是各个接口的入参的成员。例如：账户服务下的getInfo接口的入参成员是address，那么该接口的请求参数的的完整结构如下：
 ```
 Class AccountGetInfoRequest {
 	String address;
@@ -97,7 +97,7 @@ Class AccountGetInfoRequest {
 
 ### 响应数据
 
-接口的响应数据的类名，是[服务名][方法名]Response，比如：账户服务下的getNonce接口的响应数据格式是AccountGetNonceResponse。
+接口的响应数据的类名，是[服务名][方法名]Response，比如：账户服务下的getNonce接口的响应数据格式是AccountGetNonceResponse。
 
 响应数据的成员，包括错误码、错误描述和返回结果，比如资产服务下的getInfo接口的响应数据的成员如下：
 ```
@@ -111,7 +111,7 @@ Class AccountGetNonceResponse {
 说明：
 1. errorCode: 错误码。0表示无错误，大于0表示有错误
 2. errorDesc: 错误描述。
-3. result: 返回结果。一个结构体，其类名是[服务名][方法名]Result，其成员是各个接口返回值的成员，例如：账户服务下的getNonce接口的结果类名是AccountGetNonceResult，成员有nonce, 完整结构如下：
+3. result: 返回结果。一个结构体，其类名是[服务名][方法名]Result，其成员是各个接口返回值的成员，例如：账户服务下的getNonce接口的结果类名是AccountGetNonceResult，成员有nonce, 完整结构如下：
 ```
 Class AccountGetNonceResult {
 	Long nonce;
@@ -158,7 +158,7 @@ if(0 == response.getErrorCode()) {
 ### 查询
 此接口用于查询BU区块链上的数据，直接调用相应的接口即可，比如，查询账户信息，调用如下：
 ```
-// 初始化请求参数
+// 初始化请求参数
 String accountAddress = "buQemmMwmRQY1JkcU7w3nhruo%X5N3j6C29uo";
 AccountGetInfoRequest request = new AccountGetInfoRequest();
 request.setAddress(accountAddress);
