@@ -2430,7 +2430,7 @@ PRIVATEKEY_ONE_ERROR|11058|One of privateKeys error
 URL_EMPTY_ERROR|11062|Url cannot be empty
 CONTRACTADDRESS_CODE_BOTH_NULL_ERROR|11063|ContractAddress and code cannot be empty at the same time
 INVALID_OPTTYPE_ERROR|11064|OptType must between 0 and 2
-GET_ALLOWANCE_ERROR|11065|底层错误描述
-GET_TOKEN_INFO_ERROR|11066|底层错误描述
+GET_ALLOWANCE_ERROR|11065|Get allowance failed
+GET_TOKEN_INFO_ERROR|11066|Get token info failed
 CONNECTN_BLOCKCHAIN_ERROR|19999|Connect blockchain failed
 SYSTEM_ERROR|20000|System error
