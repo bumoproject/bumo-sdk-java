@@ -14,7 +14,7 @@ public class TransactionHistory {
     private Long closeTime;
 
     @JSONField(name = "error_code")
-    private Long errorCode;
+    private Integer errorCode;
 
     @JSONField(name = "error_desc")
     private String errorDesc;
@@ -85,7 +85,7 @@ public class TransactionHistory {
      * @Return java.lang.Long
      * @Date 2018/7/5 16:24
      */
-    public Long getErrorCode() {
+    public Integer getErrorCode() {
         return errorCode;
     }
 
@@ -96,7 +96,7 @@ public class TransactionHistory {
      * @Return void
      * @Date 2018/7/5 16:24
      */
-    public void setErrorCode(Long errorCode) {
+    public void setErrorCode(Integer errorCode) {
         this.errorCode = errorCode;
     }
 
