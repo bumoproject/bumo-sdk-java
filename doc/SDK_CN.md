@@ -27,7 +27,7 @@
 	- [getAssets](#getassets)
 	- [getMetadata](#getmetadata)
 - [资产服务](#资产服务)
-    - [getInfo](#getinfo)
+    - [getInfo](#getinfo)
 - [Token服务](#token服务)
     - [checkValid-Token](#checkvalid-Token)
 	- [allowance](#allowance)
@@ -99,28 +99,28 @@ Class AccountGetInfoRequest {
 
 接口的响应数据的类名，是[服务名][方法名]Response，比如：账户服务下的getNonce接口的响应数据格式是AccountGetNonceResponse。
 
-响应数据的成员，包括错误码、错误描述和返回结果，比如资产服务下的getInfo接口的响应数据的成员如下：
+响应数据的成员，包括错误码、错误描述和返回结果，比如资产服务下的getInfo接口的响应数据的成员如下：
 ```
-Class AccountGetNonceResponse {
+Class AccountGetNonceResponse {
 	Integer errorCode;
 	String errorDesc;
-	AccountGetNonceResult result;
+	AccountGetNonceResult result;
 }
 ```
 
 说明：
 1. errorCode: 错误码。0表示无错误，大于0表示有错误
 2. errorDesc: 错误描述。
-3. result: 返回结果。一个结构体，其类名是[服务名][方法名]Result，其成员是各个接口返回值的成员，例如：账户服务下的getNonce接口的结果类名是AccountGetNonceResult，成员有nonce, 完整结构如下：
+3. result: 返回结果。一个结构体，其类名是[服务名][方法名]Result，其成员是各个接口返回值的成员，例如：账户服务下的getNonce接口的结果类名是AccountGetNonceResult，成员有nonce, 完整结构如下：
 ```
-Class AccountGetNonceResult {
+Class AccountGetNonceResult {
 	Long nonce;
 }
 ```
 
 ## 使用方法
 
-这里介绍SDK的使用流程，首先需要生成SDK实现，然后调用相应服务的接口，其中服务包括账户服务、资产服务、token服务、合约服务、交易服务、区块服务，接口按使用分类分为生成公私钥地址接口、有效性校验接口、查询接口、提交交易相关接口
+这里介绍SDK的使用流程，首先需要生成SDK实现，然后调用相应服务的接口，其中服务包括账户服务、资产服务、token服务、合约服务、交易服务、区块服务，接口按使用分类分为生成公私钥地址接口、有效性校验接口、查询接口、提交交易相关接口
 
 ### 生成SDK实例
 
@@ -138,9 +138,9 @@ Keypair keypair = Keypair.generator();
 ```
 
 ### 有效性校验
-此接口用于校验信息的有效性的，直接调用相应的接口即可，比如，校验账户地址有效性，调用如下：
+此接口用于校验信息的有效性的，直接调用相应的接口即可，比如，校验账户地址有效性，调用如下：
 ```
-// 初始化请求参数
+// 初始化请求参数
 String address = "buQemmMwmRQY1JkcU7w3nhruoX5N3j6C29uo";
 AccountCheckValidRequest request = new AccountCheckValidRequest();
 request.setAddress(address);
@@ -156,7 +156,7 @@ if(0 == response.getErrorCode()) {
 ```
 
 ### 查询
-此接口用于查询BU区块链上的数据，直接调用相应的接口即可，比如，查询账户信息，调用如下：
+此接口用于查询BU区块链上的数据，直接调用相应的接口即可，比如，查询账户信息，调用如下：
 ```
 // 初始化请求参数
 String accountAddress = "buQemmMwmRQY1JkcU7w3nhruo%X5N3j6C29uo";
@@ -169,11 +169,11 @@ System.out.println(JSON.toJSONString(response,true));
 ```
 
 ### 提交交易
-提交交易的过程包括以下几步：获取账户nonce值，构建操作，构建交易Blob，签名交易和广播交易。
+提交交易的过程包括以下几步：获取账户nonce值，构建操作，构建交易Blob，签名交易和广播交易。
 
 #### 获取账户nonce值
 
-开发者可自己维护各个账户nonce，在提交完一个交易后，自动递增1，这样可以在短时间内发送多笔交易，否则，必须等上一个交易执行完成后，账户的nonce值才会加1。接口调用如下：
+开发者可自己维护各个账户nonce，在提交完一个交易后，自动递增1，这样可以在短时间内发送多笔交易，否则，必须等上一个交易执行完成后，账户的nonce值才会加1。接口调用如下：
 ```
 // 初始化请求参数
 String senderAddress = "buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp";
@@ -234,7 +234,7 @@ if (response.getErrorCode() == 0) {
 
 #### 签名交易
 
-该接口用于交易发起者使用私钥对交易进行签名。接口调用如下：
+该接口用于交易发起者使用私钥对交易进行签名。接口调用如下：
 ```
 // 初始化请求参数
 String []signerPrivateKeyArr = {senderPrivateKey};
@@ -258,7 +258,7 @@ if (reponse.getErrorCode() == 0) {
 
 该接口用于向BU区块链发送交易，触发交易的执行。接口调用如下：
 ```
-// 初始化请求参数
+// 初始化请求参数
  TransactionSubmitRequest request = new TransactionSubmitRequest();
 request.setTransactionBlob(transactionBlob);
 request.setSignatures(transactionSignResponse.getResult().getSignatures());
@@ -1070,7 +1070,7 @@ if (response.getErrorCode() == 0) {
 
 账户服务主要是合约相关的接口，目前有3个接口：checkValid, getInfo, call
 
-### checkValid 
+### checkValid 
 
 > 接口说明
 
@@ -1665,12 +1665,12 @@ transactionEnv| [TestTransactionFees](#testtransactionfees)| 评估交易费用
 
 #### TestTransactionFees
 
-   成员变量      |     类型     |        描述       |
+   成员变量      |     类型     |        描述       |
 ----------- | ------------ | ---------------- |
 transactionFees|[TransactionFees](#transactionfees)|交易费用
 
 #### TransactionFees
-   成员变量      |     类型     |        描述       |
+   成员变量      |     类型     |        描述       |
 ----------- | ------------ | ---------------- |
 feeLimit|Long|交易费用
 gasPrice|Long|打包费用
@@ -2128,7 +2128,7 @@ validators|[ValidatorInfo](#validatorinfo)[]|验证节点列表
 
 #### ValidatorInfo
 
-   成员变量  |     类型     |        描述       |
+   成员变量  |     类型     |        描述       |
 ----------- | ------------ | ---------------- |
 address|String|共识节点地址
 plegeCoinAmount|int64|验证节点押金
@@ -2219,7 +2219,7 @@ validatorsReward|[ValidatorReward](#validatorreward)[]|验证节点奖励情况
 
 #### ValidatorReward
 
-   成员变量  |     类型     |        描述       |
+   成员变量  |     类型     |        描述       |
 ----------- | ------------ | ---------------- |
   validator|String|验证节点地址
   reward|int64|验证节点奖励
