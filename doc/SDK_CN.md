@@ -621,7 +621,7 @@ if (response.getErrorCode() == 0) {
 
 > 接口说明
 
-   该接口用于获取账户指定资产信息
+   该接口用于获取账户指定资产信息
 
 > 调用方法
 
@@ -1659,7 +1659,7 @@ txs     |   [TestTx](#testtx)[]     |  评估交易集   |
 
 #### TestTx
 
-   成员变量      |     类型     |        描述       |
+   成员变量      |     类型     |        描述       |
 ----------- | ------------ | ---------------- |
 transactionEnv| [TestTransactionFees](#testtransactionfees)| 评估交易费用
 
