@@ -377,7 +377,7 @@ threshold    |    Long      |    门限
    异常       |     错误码   |   描述   
 -----------  | ----------- | -------- 
 INVALID_ADDRESS_ERROR| 11006 | Invalid address
-CONNECTNETWORK _ERROR| 11007| Connect network failed
+CONNECTNETWORK_ERROR| 11007| Connect network failed
 SYSTEM_ERROR |   20000     |  System error 
 
 > 示例
@@ -425,7 +425,7 @@ nonce       |   Long     |  该账户的交易序列号
    异常       |     错误码   |   描述   
 -----------  | ----------- | -------- 
 INVALID_ADDRESS_ERROR| 11006 | Invalid address
-CONNECTNETWORK _ERROR| 11007| Connect network failed
+CONNECTNETWORK_ERROR| 11007| Connect network failed
 SYSTEM_ERROR |   20000     |  System error 
 
 > 示例
@@ -472,7 +472,7 @@ balance     |   Long     |  该账户的]余额
    异常       |     错误码   |   描述   
 -----------  | ----------- | -------- 
 INVALID_ADDRESS_ERROR| 11006 | Invalid address
-CONNECTNETWORK _ERROR| 11007| Connect network failed
+CONNECTNETWORK_ERROR| 11007| Connect network failed
 SYSTEM_ERROR |   20000     |  System error 
 
 > 示例
@@ -533,7 +533,7 @@ issuer   |   String    |   资产发行账户地址
    异常       |     错误码   |   描述   
 -----------  | ----------- | -------- 
 INVALID_ADDRESS_ERROR| 11006 | Invalid address
-CONNECTNETWORK _ERROR| 11007| Connect network failed
+CONNECTNETWORK_ERROR| 11007| Connect network failed
 NO_ASSET_ERROR|11009|The account does not have the asset
 SYSTEM_ERROR |   20000     |  System error
 
@@ -590,7 +590,7 @@ version     |  int64      |  metadata的版本
    异常       |     错误码   |   描述   
 -----------  | ----------- | -------- 
 INVALID_ADDRESS_ERROR | 11006 | Invalid address
-CONNECTNETWORK _ERROR | 11007 | Connect network failed
+CONNECTNETWORK_ERROR | 11007 | Connect network failed
 NO_METADATA_ERROR|11010|The account does not have the metadata
 INVALID_DATAKEY_ERROR | 11011 | The length of key must between 1 and 1024
 SYSTEM_ERROR | 20000| System error
@@ -648,8 +648,8 @@ asset	    | [AssetInfo](#AssetInfo)[] |账户资产
    异常       |     错误码   |   描述   |
 -----------  | ----------- | -------- |
 INVALID_ADDRESS_ERROR|11006|Invalid address
-CONNECTNETWORK _ERROR|11007|Connect network failed
-INVALID_ASSET_CODE _ERROR|11023|The length of asset code must between 1 and 1024
+CONNECTNETWORK_ERROR|11007|Connect network failed
+INVALID_ASSET_CODE_ERROR|11023|The length of asset code must between 1 and 1024
 INVALID_ISSUER_ADDRESS_ERROR|11027|Invalid issuer address
 SYSTEM_ERROR|20000|System error
 
@@ -1152,7 +1152,7 @@ payload|String|合约代码
 -----------  | ----------- | -------- |
 INVALID_CONTRACTADDRESS_ERROR|11037|Invalid contract address
 CONTRACTADDRESS_NOT_CONTRACTACCOUNT_ERROR|11038|contractAddress is not a contract account
-CONNECTNETWORK _ERROR|19999|Connect network failed
+CONNECTNETWORK_ERROR|11007|Connect network failed
 SYSTEM_ERROR|20000|System error
 
 > 示例
@@ -1345,7 +1345,7 @@ INVALID_SOURCEADDRESS_ERROR|11002|Invalid sourceAddress
 INVALID_CONTRACTADDRESS_ERROR|11037|Invalid contract address
 CONTRACTADDRESS_CODE_BOTH_NULL_ERROR|11063|ContractAddress and code cannot be empty at the same time
 INVALID_OPTTYPE_ERROR|11064|OptType must between 0 and 2
-CONNECTNETWORK _ERROR|11007|Connect network failed
+CONNECTNETWORK_ERROR|11007|Connect network failed
 SYSTEM_ERROR|20000|System error
 
 > 示例
@@ -1590,9 +1590,9 @@ hash|String|交易hash
    异常       |     错误码   |   描述   |
 -----------  | ----------- | -------- |
 INVALID_SOURCEADDRESS_ERROR|11002|Invalid sourceAddress
-INVALID_NONCE _ERROR|11048|Nonce must between 1 and max(int64)
+INVALID_NONCE_ERROR|11048|Nonce must between 1 and max(int64)
 INVALID_ GASPRICE_ERROR|11049|Amount must between gasPrice in block and max(int64)
-INVALID_FEELIMIT _ERROR|11050|FeeLimit must between 1000000 and max(int64)
+INVALID_FEELIMIT_ERROR|11050|FeeLimit must between 1000000 and max(int64)
 INVALID_OPERATION_ERROR|11051|Operation cannot be resolved
 INVALID_CEILLEDGERSEQ_ERROR|11052|CeilLedgerSeq must be equal or bigger than 0
 SYSTEM_ERROR|20000|System error
@@ -1682,7 +1682,7 @@ gasPrice|Long|打包费用
    异常       |     错误码   |   描述   |
 -----------  | ----------- | -------- |
 INVALID_SOURCEADDRESS_ERROR|11002|Invalid sourceAddress
-INVALID_NONCE _ERROR|11045|Nonce must between 1 and max(int64)
+INVALID_NONCE_ERROR|11045|Nonce must between 1 and max(int64)
 INVALID_OPERATION_ERROR|11051|Operation cannot be resolved
 OPERATIONS_ONE_ERROR|11053|One of operations error
 INVALID_SIGNATURENUMBER_ERROR|11054|SignagureNumber must between 1 and max(int32)
@@ -1874,7 +1874,7 @@ txSize|int64|交易大小
    异常       |     错误码   |   描述   |
 -----------  | ----------- | -------- |
 INVALID_HASH_ERROR|11055|Invalid transaction hash
-CONNECTNETWORK _ERROR|11007|Connect network failed
+CONNECTNETWORK_ERROR|11007|Connect network failed
 SYSTEM_ERROR|20000|System error
 
 > 示例
@@ -1918,7 +1918,7 @@ blockNumber|int64|最新的区块高度，对应底层字段seq
 
    异常       |     错误码   |   描述   |
 -----------  | ----------- | -------- |
-CONNECTNETWORK _ERROR|11007|Connect network failed
+CONNECTNETWORK_ERROR|11007|Connect network failed
 SYSTEM_ERROR|20000|System error
 
 > 示例
@@ -1953,7 +1953,7 @@ isSynchronous    |   boolean     |  区块是否同步   |
 
    异常       |     错误码   |   描述   |
 -----------  | ----------- | -------- |
-CONNECTNETWORK _ERROR|11007|Connect network failed
+CONNECTNETWORK_ERROR|11007|Connect network failed
 SYSTEM_ERROR|20000|System error
 
 > 示例
@@ -1996,7 +1996,7 @@ transactions|[TransactionHistory](#transactionhistory)[]|交易内容
    异常       |     错误码   |   描述   |
 -----------  | ----------- | -------- |
 INVALID_BLOCKNUMBER_ERROR|11060|BlockNumber must bigger than 0
-CONNECTNETWORK _ERROR|11007|Connect network failed
+CONNECTNETWORK_ERROR|11007|Connect network failed
 SYSTEM_ERROR|20000|System error
 
 > 示例
@@ -2046,7 +2046,7 @@ version|String|区块版本
    异常       |     错误码   |   描述   |
 -----------  | ----------- | -------- |
 INVALID_BLOCKNUMBER_ERROR|11060|BlockNumber must bigger than 0
-CONNECTNETWORK _ERROR|11007|Connect network failed
+CONNECTNETWORK_ERROR|11007|Connect network failed
 SYSTEM_ERROR|20000|System error
 
 > 示例
@@ -2090,7 +2090,7 @@ version|String|区块版本
 
    异常       |     错误码   |   描述   |
 -----------  | ----------- | -------- |
-CONNECTNETWORK _ERROR|11007|Connect network failed
+CONNECTNETWORK_ERROR|11007|Connect network failed
 SYSTEM_ERROR|20000|System error
 
 > 示例
@@ -2140,7 +2140,7 @@ plegeCoinAmount|int64|验证节点押金
    异常       |     错误码   |   描述   |
 -----------  | ----------- | -------- |
 INVALID_BLOCKNUMBER_ERROR|11060|BlockNumber must bigger than 0
-CONNECTNETWORK _ERROR|11007|Connect network failed
+CONNECTNETWORK_ERROR|11007|Connect network failed
 SYSTEM_ERROR|20000|System error
 
 > 示例
@@ -2180,7 +2180,7 @@ validators|[ValidatorInfo](#validatorinfo)[]|验证节点列表
 
    异常       |     错误码   |   描述   |
 -----------  | ----------- | -------- |
-CONNECTNETWORK _ERROR|11007|Connect network failed
+CONNECTNETWORK_ERROR|11007|Connect network failed
 SYSTEM_ERROR|20000|System error
 
 > 示例
@@ -2232,7 +2232,7 @@ validatorsReward|[ValidatorReward](#validatorreward)[]|验证节点奖励情况
    异常       |     错误码   |   描述   |
 -----------  | ----------- | -------- |
 INVALID_BLOCKNUMBER_ERROR|11060|BlockNumber must bigger than 0
-CONNECTNETWORK _ERROR|11007|Connect network failed
+CONNECTNETWORK_ERROR|11007|Connect network failed
 SYSTEM_ERROR|20000|System error
 
 > 示例
@@ -2273,7 +2273,7 @@ validatorsReward|[ValidatorReward](#validatorreward)[]|验证节点奖励情况
 
    异常       |     错误码   |   描述   |
 -----------  | ----------- | -------- |
-CONNECTNETWORK _ERROR|11007|Connect network failed
+CONNECTNETWORK_ERROR|11007|Connect network failed
 SYSTEM_ERROR|20000|System error
 
 > 示例
@@ -2323,7 +2323,7 @@ gasPrice|int64|打包费用，单位MO，1 BU = 10^8 MO
    异常       |     错误码   |   描述   |
 -----------  | ----------- | -------- |
 INVALID_BLOCKNUMBER_ERROR|11060|BlockNumber must bigger than 0
-CONNECTNETWORK _ERROR|11007|Connect network failed
+CONNECTNETWORK_ERROR|11007|Connect network failed
 SYSTEM_ERROR|20000|System error
 
 > 示例
@@ -2362,7 +2362,7 @@ fees|[Fees](#fees)|费用
 
    异常       |     错误码   |   描述   |
 -----------  | ----------- | -------- |
-CONNECTNETWORK _ERROR|11007|Connect network failed
+CONNECTNETWORK_ERROR|11007|Connect network failed
 SYSTEM_ERROR|20000|System error
 
 > 示例
@@ -2418,7 +2418,7 @@ INVALID_FROMADDRESS_ERROR|11041|Invalid fromAddress
 FROMADDRESS_EQUAL_DESTADDRESS_ERROR|11042|FromAddress cannot be equal to destAddress
 INVALID_SPENDER_ERROR|11043|Invalid spender
 INVALID_LOG_TOPIC_ERROR|11045|The length of log topic must between 1 and 128
-INVALID_LOG_DATA _ERROR|11046|The length of one of log data must between 1 and 1024
+INVALID_LOG_DATA_ERROR|11046|The length of one of log data must between 1 and 1024
 INVALID_NONCE_ERROR|11048|Nonce must between 1 and max(int64)
 INVALID_GASPRICE_ERROR|11049|Amount must between gasPrice in block and max(int64)
 INVALID_FEELIMIT_ERROR|11050|FeeLimit must between 1 and max(int64)
