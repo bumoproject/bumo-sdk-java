@@ -387,7 +387,7 @@ public class TransactionServiceImpl implements TransactionService {
             Chain.Operation operation = null;
             switch (operationBase[i].getOperationType()) {
                 case ACCOUNT_ACTIVATE:
-                    operation = AccountServiceImpl.activate((AccountActiviateOperation)operationBase[i]);
+                    operation = AccountServiceImpl.activate((AccountActivateOperation)operationBase[i]);
                     break;
                 case ACCOUNT_SET_METADATA:
                     operation = AccountServiceImpl.setMetadata((AccountSetMetadataOperation) operationBase[i]);

@@ -7,7 +7,7 @@ import io.bumo.common.General;
 import io.bumo.crypto.http.HttpKit;
 import io.bumo.encryption.exception.EncException;
 import io.bumo.exception.SDKException;
-import io.bumo.model.request.Operation.AccountActiviateOperation;
+import io.bumo.model.request.Operation.AccountActivateOperation;
 import io.bumo.model.request.Operation.AccountSetMetadataOperation;
 import io.bumo.model.request.Operation.AccountSetPrivilegeOperation;
 import io.bumo.model.response.result.data.AssetInfo;
@@ -303,25 +303,25 @@ public class AccountServiceImpl implements AccountService {
      * @Return io.bumo.model.response.AccountActivateResponse
      * @Date 2018/7/4 18:19
      */
-    public static Chain.Operation activate(AccountActiviateOperation accountActiviateOperation) throws SDKException {
+    public static Chain.Operation activate(AccountActivateOperation accountActivateOperation) throws SDKException {
         Chain.Operation.Builder operation;
         try {
-            String sourceAddress= accountActiviateOperation.getSourceAddress();
+            String sourceAddress= accountActivateOperation.getSourceAddress();
             if (sourceAddress != null && !PublicKey.isAddressValid(sourceAddress)) {
                 throw new SDKException(SdkError.INVALID_SOURCEADDRESS_ERROR);
             }
-            String destAddress = accountActiviateOperation.getDestAddress();
+            String destAddress = accountActivateOperation.getDestAddress();
             if (!PublicKey.isAddressValid(destAddress)) {
                 throw new SDKException(SdkError.INVALID_DESTADDRESS_ERROR);
             }
             if (sourceAddress != null && sourceAddress.equals(destAddress)) {
                 throw new SDKException(SdkError.SOURCEADDRESS_EQUAL_DESTADDRESS_ERROR);
             }
-            Long initBalance = accountActiviateOperation.getInitBalance();
+            Long initBalance = accountActivateOperation.getInitBalance();
             if (initBalance <= 0) {
                 throw new SDKException(SdkError.INVALID_INITBALANCE_ERROR);
             }
-            String metadata = accountActiviateOperation.getMetadata();
+            String metadata = accountActivateOperation.getMetadata();
             if (metadata != null && !HexFormat.isHexString(metadata)) {
                 throw new SDKException(SdkError.METADATA_NOT_HEX_STRING_ERROR);
             }
