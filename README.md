@@ -48,4 +48,4 @@ Add the following in the dependencies tag：
 ## Example project
 Bumo Java SDK provides rich examples for developers' reference
 
-[Sample document entry](docs/SDK_CN.md "")
+[Sample document entry](doc/SDK_CN.md "")
