@@ -56,11 +56,12 @@ public class AssetServiceImpl implements AssetService {
             String accountGetInfoUrl = General.assetGetUrl(address, code, issuer);
             String result = HttpKit.get(accountGetInfoUrl);
             assetGetResponse = JSON.parseObject(result, AssetGetInfoResponse.class);
-            SdkError.checkErrorCode(assetGetResponse);
             Integer errorCode = assetGetResponse.getErrorCode();
+            String errorDesc = assetGetResponse.getErrorDesc();
             if (errorCode != null && errorCode.intValue() == 4) {
-                throw new SDKException(errorCode, "Code (" + code +") not exist");
+                throw new SDKException(errorCode, (null == errorDesc ? "Code (" + code +") not exist" : errorDesc));
             }
+            SdkError.checkErrorCode(assetGetResponse);
             AssetInfo[] assetInfos = assetGetResponse.getResult().getAssets();
             if (null == assetInfos || (assetInfos != null && assetInfos.length == 0)) {
                 throw new SDKException(SdkError.NO_ASSET_ERROR);

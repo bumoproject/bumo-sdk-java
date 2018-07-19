@@ -135,10 +135,12 @@ public class BlockServiceImpl implements BlockService {
             String getInfoUrl = General.blockGetInfoUrl(blockNumber);
             String result = HttpKit.get(getInfoUrl);
             blockGetInfoResponse = JSONObject.parseObject(result, BlockGetInfoResponse.class);
-            SdkError.checkErrorCode(blockGetInfoResponse);
-            if (blockGetInfoResponse.getErrorCode() == 4) {
-                throw new SDKException(4, "Block (" + blockNumber + ") does not exist");
+            Integer errorCode = blockGetInfoResponse.getErrorCode();
+            String errorDesc = blockGetInfoResponse.getErrorDesc();
+            if (errorCode != null && errorCode == 4) {
+                throw new SDKException(4, (null == errorDesc? "Block (" + blockNumber + ") does not exist" : errorDesc));
             }
+            SdkError.checkErrorCode(blockGetInfoResponse);
         } catch (SDKException apiException) {
             Integer errorCode = apiException.getErrorCode();
             String errorDesc = apiException.getErrorDesc();
@@ -198,10 +200,12 @@ public class BlockServiceImpl implements BlockService {
             String getInfoUrl = General.blockGetValidatorsUrl(blockNumber);
             String result = HttpKit.get(getInfoUrl);
             blockGetValidatorsResponse = JSONObject.parseObject(result, BlockGetValidatorsResponse.class);
-            SdkError.checkErrorCode(blockGetValidatorsResponse);
-            if (blockGetValidatorsResponse.getErrorCode() == 4) {
-                throw new SDKException(4, "Block (" + blockNumber + ") does not exist");
+            Integer errorCode = blockGetValidatorsResponse.getErrorCode();
+            String errorDesc = blockGetValidatorsResponse.getErrorDesc();
+            if (errorCode != null && errorCode == 4) {
+                throw new SDKException(4, (null == errorDesc? "Block (" + blockNumber + ") does not exist" : errorDesc));
             }
+            SdkError.checkErrorCode(blockGetValidatorsResponse);
         } catch (SDKException apiException) {
             Integer errorCode = apiException.getErrorCode();
             String errorDesc = apiException.getErrorDesc();
@@ -231,6 +235,7 @@ public class BlockServiceImpl implements BlockService {
             String getInfoUrl = General.blockGetLatestValidatorsUrl();
             String result = HttpKit.get(getInfoUrl);
             blockGetLatestValidatorsResponse = JSONObject.parseObject(result, BlockGetLatestValidatorsResponse.class);
+            SdkError.checkErrorCode(blockGetLatestValidatorsResponse);
         } catch (SDKException apiException) {
             Integer errorCode = apiException.getErrorCode();
             String errorDesc = apiException.getErrorDesc();
@@ -263,10 +268,12 @@ public class BlockServiceImpl implements BlockService {
             String getInfoUrl = General.blockGetRewardUrl(blockNumber);
             String result = HttpKit.get(getInfoUrl);
             BlockRewardJsonResponse blockRewardJsonResponse = JSONObject.parseObject(result, BlockRewardJsonResponse.class);
-            SdkError.checkErrorCode(blockRewardJsonResponse);
-            if (blockRewardJsonResponse.getErrorCode() == 4) {
-                throw new SDKException(4, "Block (" + blockNumber + ") does not exist");
+            Integer errorCode = blockRewardJsonResponse.getErrorCode();
+            String errorDesc = blockRewardJsonResponse.getErrorDesc();
+            if (errorCode != null && errorCode == 4) {
+                throw new SDKException(4, (null == errorDesc? "Block (" + blockNumber + ") does not exist" : errorDesc));
             }
+            SdkError.checkErrorCode(blockRewardJsonResponse);
             Long blockReward = blockRewardJsonResponse.getResult().getBlockReward();
             JSONObject getRewardsJson = blockRewardJsonResponse.getResult().getValidatorsReward();
             for (Map.Entry<String, Object> entry : getRewardsJson.entrySet()) {
@@ -304,6 +311,7 @@ public class BlockServiceImpl implements BlockService {
             String getInfoUrl = General.blockGetLatestRewardUrl();
             String result = HttpKit.get(getInfoUrl);
             BlockRewardJsonResponse blockRewardJsonResponse = JSONObject.parseObject(result, BlockRewardJsonResponse.class);
+            SdkError.checkErrorCode(blockRewardJsonResponse);
             JSONObject getLatestRewardsJson = blockRewardJsonResponse.getResult().getValidatorsReward();
             Long blockReward = blockRewardJsonResponse.getResult().getBlockReward();
             for (Map.Entry<String, Object> entry : getLatestRewardsJson.entrySet()) {
@@ -345,6 +353,11 @@ public class BlockServiceImpl implements BlockService {
             String blockGetFeesUrl = General.blockGetFeesUrl(blockNumber);
             String result = HttpKit.get(blockGetFeesUrl);
             blockGetFeesResponse = JSON.parseObject(result, BlockGetFeesResponse.class);
+            Integer errorCode = blockGetFeesResponse.getErrorCode();
+            String errorDesc = blockGetFeesResponse.getErrorDesc();
+            if (errorCode != null && errorCode == 4) {
+                throw new SDKException(4, (null == errorDesc? "Block (" + blockNumber + ") does not exist" : errorDesc));
+            }
             SdkError.checkErrorCode(blockGetFeesResponse);
         } catch (SDKException apiException) {
             Integer errorCode = apiException.getErrorCode();

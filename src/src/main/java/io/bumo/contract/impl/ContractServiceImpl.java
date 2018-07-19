@@ -362,6 +362,11 @@ public class ContractServiceImpl implements ContractService {
         String contractGetInfoUrl = General.accountGetInfoUrl(contractAddress);
         String result = HttpKit.get(contractGetInfoUrl);
         contractGetInfoResponse = JSON.parseObject(result, ContractGetInfoResponse.class);
+        Integer errorCode = contractGetInfoResponse.getErrorCode();
+        String errorDesc = contractGetInfoResponse.getErrorDesc();
+        if (errorCode != null && errorCode == 4) {
+            throw new SDKException(errorCode, (null == errorDesc ? "contract account (" + contractAddress + ") doest not exist" : errorDesc));
+        }
         SdkError.checkErrorCode(contractGetInfoResponse);
         ContractInfo contractInfo = contractGetInfoResponse.getResult().getContract();
         if (contractInfo == null) {

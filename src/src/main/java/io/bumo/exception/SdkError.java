@@ -16,7 +16,7 @@ public enum SdkError {
     CONNECTNETWORK_ERROR(11007, "Connect network failed"),
     METADATA_NOT_HEX_STRING_ERROR(11008, "Metadata must be a hex string"),
     NO_ASSET_ERROR(11009, "The account does not have the asset"),
-    NO_METADATA_ERROR(11010, "The account does not have the metadata"),
+    NO_METADATA_ERROR(11010, "The account does not have this metadata"),
     INVALID_DATAKEY_ERROR(11011, "The length of key must between 1 and 1024"),
     INVALID_DATAVALUE_ERROR(11012, "The length of value must between 0 and 256000"),
     INVALID_DATAVERSION_ERROR(11013, "The version must be bigger than 0"),

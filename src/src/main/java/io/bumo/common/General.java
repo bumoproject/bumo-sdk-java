@@ -1,5 +1,8 @@
 package io.bumo.common;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 /**
  * @Author riven
  * @Date 2018/7/4 15:27
@@ -7,20 +10,21 @@ package io.bumo.common;
 public class General {
     public static String url;
 
-    public static String accountGetInfoUrl(String address) {
-        return  url + "/getAccountBase?address=" + address;
+    public static String accountGetInfoUrl(String address) throws UnsupportedEncodingException {
+        return  url + "/getAccountBase?address=" + URLEncoder.encode(address, "utf8");
     }
 
     public static String accountGetAssetsUrl(String address) {
         return  url + "/getAccount?address=" + address;
     }
 
-    public static String accountGetMetadataUrl(String address, String key) {
-        return url + "/getAccount?address=" + address + "&key=" + key;
+    public static String accountGetMetadataUrl(String address, String key) throws UnsupportedEncodingException {
+        return url + "/getAccount?address=" + URLEncoder.encode(address, "utf8") + "&key=" + URLEncoder.encode(key, "utf8");
     }
 
-    public static String assetGetUrl(String address, String code, String issuer) {
-        return url + "/getAccountService?address=" + address + "&code=" + code + "&issuer=" + issuer;
+    public static String assetGetUrl(String address, String code, String issuer) throws UnsupportedEncodingException {
+        return url + "/getAccountService?address=" + URLEncoder.encode(address, "utf8") + "&code=" +
+                URLEncoder.encode(code, "utf8")  + "&issuer=" + URLEncoder.encode(issuer, "utf8");
     }
 
     public static String contractCallUrl() {
@@ -36,8 +40,8 @@ public class General {
         return url + "/submitTransaction";
     }
 
-    public static String transactionGetInfoUrl(String hash) {
-        return url + "/getTransactionHistory?hash=" + hash;
+    public static String transactionGetInfoUrl(String hash) throws UnsupportedEncodingException {
+        return url + "/getTransactionHistory?hash=" + URLEncoder.encode(hash, "utf8");
     }
 
 

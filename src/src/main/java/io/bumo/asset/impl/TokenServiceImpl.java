@@ -780,11 +780,12 @@ public class TokenServiceImpl implements TokenService {
         TokenMessageResponse tokenMessageResponse;
         TokenMessageResult tokenMessageResult;
         tokenMessageResponse = JSON.parseObject(result, TokenMessageResponse.class);
-        SdkError.checkErrorCode(tokenMessageResponse);
         Integer errorCode = tokenMessageResponse.getErrorCode();
+        String errorDesc = tokenMessageResponse.getErrorDesc();
         if (errorCode != null && errorCode.intValue() == 4) {
-            throw new SDKException(errorCode, "Account (" + contractAddress +") not exist");
+            throw new SDKException(errorCode, (null == errorDesc ? "Account (" + contractAddress +") not exist" : errorDesc));
         }
+        SdkError.checkErrorCode(tokenMessageResponse);
         boolean isValid = false;
         do {
             tokenMessageResult = tokenMessageResponse.getResult();
