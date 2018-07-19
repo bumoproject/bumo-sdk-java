@@ -374,7 +374,7 @@ public class AccountServiceImpl implements AccountService {
                 throw new SDKException(SdkError.INVALID_DATAVALUE_ERROR);
             }
             Long version = accountSetMetadataOperation.getVersion();
-            if (version < 0) {
+            if (version != null && version < 0) {
                 throw new SDKException(SdkError.INVALID_DATAVERSION_ERROR);
             }
 

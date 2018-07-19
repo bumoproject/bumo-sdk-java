@@ -1371,7 +1371,7 @@ if (response.getErrorCode() == 0) {
 
 交易服务主要是交易相关的接口，目前有5个接口：buildBlob, evaluationFee, sign, submit, getInfo。
 
-其中调用buildBlob之前需要构建一些操作，目前操作有16种，分别是AccountActivateOperation，AccountSetMetadataOperation, AccountSetPrivilegeOperation, AssetIssueOperation, AssetSendOperation, BUSendOperation, TokenIssueOperation, TokenTransferOperation, TokenTransferFromOperation, TokenApproveOperation, TokenAssignOperation, TokenChangeOwnerOperation, ContractCreateOperation, ContractInvokeByAssetOperation, ContractInvokeByBUOperation, LogCreateOperation
+其中调用buildBlob之前需要构建一些操作，目前操作有16种，分别是AccountActivateOperation，AccountSetMetadataOperation, AccountSetPrivilegeOperation, AssetIssueOperation, AssetSendOperation, BUSendOperation, TokenIssueOperation, TokenTransferOperation, TokenTransferFromOperation, TokenApproveOperation, TokenAssignOperation, TokenChangeOwnerOperation, ContractCreateOperation, ContractInvokeByAssetOperation, ContractInvokeByBUOperation, LogCreateOperation
 
 ### 操作说明
 
@@ -1399,11 +1399,11 @@ metadata|String|选填，备注
 
    成员变量    |     类型   |        描述                         
 ------------- | --------- | ------------------------------- 
-sourceAddress |   String |  选填，操作源账户   
-key           |   String  |  必填，metadata的关键词，长度[1, 1024] 
-value         |   String  |  必填，metadata的内容，长度[0, 256000] 
-version       |   Long    |  选填，metadata的版本                 
-deleteFlag    |   Long    |  选填，是否删除metadata
+sourceAddress |   String |  选填，操作源账户
+key           |   String  |  必填，metadata的关键词，长度[1, 1024]
+value         |   String  |  必填，metadata的内容，长度[0, 256000]
+version       |   Long    |  选填，metadata的版本
+deleteFlag    |   Boolean |  选填，是否删除metadata
 metadata|String|选填，备注           
 
 > AccountSetPrivilegeOperation
@@ -1416,7 +1416,7 @@ sourceAddress |   String |  选填，操作源账户
 masterWeight|String|选填，账户自身权重，大小[0, max(uint32)]
 signers|[Signer](#signer)[]|选填，签名者权重列表
 txThreshold|String|选填，交易门限，大小[0, max(int64)]
-typeThreshold|[TypeThreshold](#typethreshold)|选填，指定类型交易门限
+typeThreshold|[TypeThreshold](#typethreshold)[]|选填，指定类型交易门限
 metadata|String|选填，备注
 
 > AssetIssueOperation
@@ -2422,12 +2422,13 @@ INVALID_LOG_DATA_ERROR|11046|The length of one of log data must between 1 and 10
 INVALID_NONCE_ERROR|11048|Nonce must between 1 and max(int64)
 INVALID_GASPRICE_ERROR|11049|Amount must between gasPrice in block and max(int64)
 INVALID_FEELIMIT_ERROR|11050|FeeLimit must between 1 and max(int64)
-OPERATIONS_EMPTY_ERROR|1105O|perations cannot be empty
+OPERATIONS_EMPTY_ERROR|1105O|Operations cannot be empty
 INVALID_CEILLEDGERSEQ_ERROR|11052|CeilLedgerSeq must be equal or bigger than 0
 OPERATIONS_ONE_ERROR|11053|One of operations error
 INVALID_SIGNATURENUMBER_ERROR|11054|SignagureNumber must between 1 and max(int32)
 INVALID_HASH_ERROR|11055|Invalid transaction hash
-INVALID_BLOB_ERROR|11056|Invalid blobPRIVATEKEY_NULL_ERROR	11057	PrivateKeys cannot be empty
+INVALID_BLOB_ERROR|11056|Invalid blob
+PRIVATEKEY_NULL_ERROR|11057|PrivateKeys cannot be empty
 PRIVATEKEY_ONE_ERROR|11058|One of privateKeys error
 URL_EMPTY_ERROR|11062|Url cannot be empty
 CONTRACTADDRESS_CODE_BOTH_NULL_ERROR|11063|ContractAddress and code cannot be empty at the same time
