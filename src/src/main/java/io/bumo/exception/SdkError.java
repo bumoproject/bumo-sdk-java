@@ -95,7 +95,7 @@ public enum SdkError {
             }
             if (errorCode != null && errorCode.intValue() != 0) {
                 String errorDesc = baseResponse.getErrorDesc();
-                throw new SDKException(errorCode, (null == errorDesc ? "error" : errorDesc));
+                throw new SDKException(errorCode, errorDesc);
             }
         } while (false);
     }
