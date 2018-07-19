@@ -331,12 +331,16 @@ public class TransactionServiceImpl implements TransactionService {
             TransactionSubmitHttpResponse transactionSubmitHttpResponse = JSONObject.parseObject(result, TransactionSubmitHttpResponse.class);
             Integer successCount = transactionSubmitHttpResponse.getSuccessCount();
             TransactionSubmitHttpResult[] httpResults = transactionSubmitHttpResponse.getResults();
-            if (0 == successCount) {
-                Integer errorCode = httpResults[0].getErrorCode();
-                String errorDesc = httpResults[0].getErrorDesc();
-                throw new SDKException(errorCode, errorDesc);
+            if (httpResults != null && httpResults.length != 0) {
+                transactionSubmitResult.setHash(httpResults[0].getHash());
+                if (0 == successCount) {
+                    Integer errorCode = httpResults[0].getErrorCode();
+                    String errorDesc = httpResults[0].getErrorDesc();
+                    throw new SDKException(errorCode, errorDesc);
+                }
+            } else {
+                throw new SDKException(SdkError.SYSTEM_ERROR);
             }
-            transactionSubmitResult.setHash(httpResults[0].getHash());
 
             transactionSubmitResponse.buildResponse(SdkError.SUCCESS, transactionSubmitResult);
         } catch (SDKException apiException) {

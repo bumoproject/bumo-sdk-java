@@ -63,7 +63,7 @@ public class DigitalAssetsDemo {
      */
     @Test
     public void getAccountInfo(){
-        String accountAddress = "buQemmMwmRQY1JkcU7w3nhruo%X5N3j6C29uo";
+        String accountAddress = "buQemmMwmRQY1JkcU7w3nhruoX5N3j6C29uo";
         AccountGetInfoRequest request = new AccountGetInfoRequest();
         request.setAddress(accountAddress);
 
