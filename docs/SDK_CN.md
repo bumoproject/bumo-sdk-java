@@ -1384,7 +1384,7 @@ metadata      |   String |  选填，备注，必须是16进制字符串
 
 >  AccountActivateOperation
 
-继承于BaseOperation
+继承于BaseOperation，feeLimit固定是0.01 BU
 
    成员变量    |     类型  |        描述                           
 ------------- | -------- | ---------------------------------- 
@@ -1395,7 +1395,7 @@ metadata|String|选填，备注
 
 > AccountSetMetadataOperation
 
-继承于BaseOperation
+继承于BaseOperation，feeLimit固定是0.01 BU
 
    成员变量    |     类型   |        描述                         
 ------------- | --------- | ------------------------------- 
@@ -1408,7 +1408,7 @@ metadata|String|选填，备注
 
 > AccountSetPrivilegeOperation
 
-继承于BaseOperation
+继承于BaseOperation，feeLimit固定是0.01 BU
 
    成员变量    |     类型   |        描述               
 ------------- | --------- | --------------------------
@@ -1421,7 +1421,7 @@ metadata|String|选填，备注
 
 > AssetIssueOperation
 
-继承于BaseOperation
+继承于BaseOperation，feeLimit固定是50.01 BU
 
    成员变量    |     类型   |        描述             
 ------------- | --------- | ------------------------
@@ -1432,7 +1432,7 @@ metadata|String|选填，备注
 
 > AssetSendOperation
 
-继承于BaseOperation
+继承于BaseOperation，feeLimit固定是0.01 BU
 
    成员变量    |     类型   |        描述            
 ------------- | --------- | ----------------------
@@ -1445,6 +1445,8 @@ metadata|String|选填，备注
 
 > BUSendOperation
 
+继承于BaseOperation，feeLimit固定是0.01 BU
+
    成员变量    |     类型   |        描述          
 ------------- | --------- | ---------------------
 sourceAddress|String|选填，发起该操作的源账户地址
@@ -1453,6 +1455,8 @@ buAmount|int64|必填，资产发行数量，大小[0, max(int64)]
 metadata|String|选填，备注
 
 > TokenIssueOperation
+
+继承于BaseOperation，feeLimit固定是50.02 BU
 
    成员变量    |     类型   |        描述          
 ------------- | --------- | ---------------------
@@ -1466,6 +1470,8 @@ metadata|String|选填，备注
 
 > TokenTransferOperation
 
+继承于BaseOperation，feeLimit固定是0.02 BU
+
    成员变量    |     类型   |        描述          
 ------------- | --------- | ---------------------
 sourceAddress|String|选填，发起该操作的源账户地址
@@ -1475,6 +1481,8 @@ tokenAmount|String|必填，待转移的token数量，大小[1, int(64)]
 metadata|String|选填，备注
 
 > TokenTransferFromOperation
+
+继承于BaseOperation，feeLimit固定是0.02 BU
 
    成员变量    |     类型   |        描述          
 ------------- | --------- | ---------------------
@@ -1487,6 +1495,8 @@ metadata|String|选填，备注
 
 > TokenApproveOperation
 
+继承于BaseOperation，feeLimit固定是0.02 MO
+
    成员变量    |     类型   |        描述          
 ------------- | --------- | ---------------------
 sourceAddress|String|选填，发起该操作的源账户地址
@@ -1496,6 +1506,8 @@ tokenAmount|String|必填，被授权的待转移的token数量，大小[1, int(
 metadata|String|选填，备注
 
 > TokenAssignOperation
+
+继承于BaseOperation，feeLimit固定是0.02 BU
 
    成员变量    |     类型   |        描述          
 ------------- | --------- | ---------------------
@@ -1507,6 +1519,8 @@ metadata|String|选填，备注
 
 > TokenChangeOwnerOperation
 
+继承于BaseOperation，feeLimit固定是0.02 BU
+
    成员变量    |     类型   |        描述          
 ------------- | --------- | ---------------------
 sourceAddress|String|选填，发起该操作的源账户地址
@@ -1515,6 +1529,8 @@ tokenOwner|String|必填，待分配的目标账户地址
 metadata|String|选填，备注
 
 > ContractCreateOperation
+
+继承于BaseOperation，feeLimit固定是0.02 BU
 
    成员变量    |     类型   |        描述          
 ------------- | --------- | ---------------------
@@ -1525,6 +1541,8 @@ payload|String|必填，对应语种的合约代码
 metadata|String|选填，备注
 
 > ContractInvokeByAssetOperation
+
+继承于BaseOperation，feeLimit要根据合约中执行交易来做添加手续费，首先发起交易手续费是0.01BU，然后合约中的交易也需要交易发起者添加相应交易的手续费
 
    成员变量    |     类型   |        描述          
 ------------- | --------- | ---------------------
@@ -1538,6 +1556,8 @@ metadata|String|选填，备注
 
 > ContractInvokeByBUOperation
 
+继承于BaseOperation，feeLimit要根据合约中执行交易来做添加手续费，首先发起交易手续费是0.01BU，然后合约中的交易也需要交易发起者添加相应交易的手续费
+
    成员变量    |     类型   |        描述          
 ------------- | --------- | ---------------------
 sourceAddress|String|选填，发起该操作的源账户地址
@@ -1547,6 +1567,8 @@ input|String|选填，待触发的合约的main()入参
 metadata|String|选填，备注
 
 > LogCreateOperation
+
+继承于BaseOperation，feeLimit固定是0.01 BU
 
    成员变量    |     类型   |        描述          
 ------------- | --------- | ---------------------

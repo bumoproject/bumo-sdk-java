@@ -8,10 +8,7 @@ import io.bumo.crypto.Keypair;
 import io.bumo.encryption.key.PrivateKey;
 import io.bumo.encryption.utils.hex.HexFormat;
 import io.bumo.model.request.*;
-import io.bumo.model.request.Operation.AccountSetMetadataOperation;
-import io.bumo.model.request.Operation.AssetIssueOperation;
-import io.bumo.model.request.Operation.AssetSendOperation;
-import io.bumo.model.request.Operation.BUSendOperation;
+import io.bumo.model.request.Operation.*;
 import io.bumo.model.response.*;
 import io.bumo.model.response.result.*;
 import io.bumo.model.response.result.data.TransactionFees;
@@ -126,6 +123,21 @@ public class DigitalAssetsDemo {
         if(0 == response.getErrorCode()){
             System.out.println("账户Nonce:" + response.getResult().getNonce());
         }
+    }
+
+    @Test
+    public void activateAccount() throws Exception {
+        String activatePrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq";
+        String destAccount = "buQoy16FgMQ42xdLhZA6NrsQLT3MwPXnRvYX";
+        Long initBalance = ToBaseUnit.BU2MO("0.1");
+        String metadata = HexFormat.byteToHex("issue TST".getBytes()); // 备注，必须是16进制字符串
+        Long gasPrice = 1000L; // 固定写 1000L ，单位是MO
+        Long feeLimit = ToBaseUnit.BU2MO("0.01"); // 设置最多费用 0.01BU ，固定填写
+        Long nonce = 1L; // 资产发行方账户Nonce，必须Nonce + 1
+
+        // 记录txhash ，以便后续再次确认交易真实结果
+        // 推荐5个区块后再次通过txhash再次调用`根据交易Hash获取交易信息`(参考示例：getTxByHash()）来确认交易终态结果
+        String txHash = activateAccount(activatePrivateKey, destAccount, initBalance, nonce, gasPrice, feeLimit, metadata);
     }
 
     /**
@@ -680,6 +692,55 @@ public class DigitalAssetsDemo {
 
         // 5. 签名交易BLob(交易发送账户签名交易Blob串)
         String []signerPrivateKeyArr = {issuePrivateKey};
+        TransactionSignRequest transactionSignRequest = new TransactionSignRequest();
+        transactionSignRequest.setBlob(transactionBlob);
+        for (int i = 0; i < signerPrivateKeyArr.length; i++) {
+            transactionSignRequest.addPrivateKey(signerPrivateKeyArr[i]);
+        }
+        TransactionSignResponse transactionSignResponse = sdk.getTransactionService().sign(transactionSignRequest);
+
+        // 6. 广播交易
+        TransactionSubmitRequest transactionSubmitRequest = new TransactionSubmitRequest();
+        transactionSubmitRequest.setTransactionBlob(transactionBlob);
+        transactionSubmitRequest.setSignatures(transactionSignResponse.getResult().getSignatures());
+        TransactionSubmitResponse transactionSubmitResponse = sdk.getTransactionService().submit(transactionSubmitRequest);
+        if (0 == transactionSubmitResponse.getErrorCode()) { // 交易广播成功
+            System.out.println("交易广播成功，hash=" + transactionSubmitResponse.getResult().getHash());
+        }else{
+            System.out.println("交易广播失败，hash=" + transactionSubmitResponse.getResult().getHash() + "");
+            System.out.println(JSON.toJSONString(transactionSubmitResponse, true));
+        }
+        return txHash;
+    }
+
+    private String activateAccount(String activatePrivateKey, String destAccount, Long initBalance, Long nonce, Long gasPrice, Long feeLimit, String metadata) throws Exception {
+        // 1. 获取交易发送账户地址
+        String activateAddresss = getAddressByPrivateKey(activatePrivateKey); // BU发送者账户地址
+
+        // 2. 构建sendAsset操作
+        AccountActivateOperation operation = new AccountActivateOperation();
+        operation.setSourceAddress(activateAddresss);
+        operation.setDestAddress(destAccount);
+        operation.setInitBalance(initBalance);
+        operation.setMetadata(HexFormat.byteToHex("activate account".getBytes()));
+
+        // 3. 构建交易
+        TransactionBuildBlobRequest transactionBuildBlobRequest = new TransactionBuildBlobRequest();
+        transactionBuildBlobRequest.setSourceAddress(activateAddresss);
+        transactionBuildBlobRequest.setNonce(nonce);
+        transactionBuildBlobRequest.setFeeLimit(feeLimit);
+        transactionBuildBlobRequest.setGasPrice(gasPrice);
+        transactionBuildBlobRequest.addOperation(operation);
+
+        // 4. 获取交易BLob串
+        String transactionBlob = null;
+        TransactionBuildBlobResponse transactionBuildBlobResponse = sdk.getTransactionService().buildBlob(transactionBuildBlobRequest);
+        TransactionBuildBlobResult transactionBuildBlobResult = transactionBuildBlobResponse.getResult();
+        String txHash = transactionBuildBlobResult.getHash();
+        transactionBlob = transactionBuildBlobResult.getTransactionBlob();
+
+        // 5. 签名交易BLob(交易发送账户签名交易Blob串)
+        String []signerPrivateKeyArr = {activateAddresss};
         TransactionSignRequest transactionSignRequest = new TransactionSignRequest();
         transactionSignRequest.setBlob(transactionBlob);
         for (int i = 0; i < signerPrivateKeyArr.length; i++) {
