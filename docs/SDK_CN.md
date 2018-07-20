@@ -20,26 +20,26 @@
 		- [签名交易](#签名交易)
 		- [广播交易](#广播交易)
 - [账户服务](#账户服务)
-	- [checkValid-账户](#checkvalid-账户)
-	- [getInfo-账户](#getinfo-账户)
+	- [checkValid](#checkvalid-账户)
+	- [getInfo](#getinfo-账户)
 	- [getNonce](#getnonce)
-	- [getBalance-账户](#getbalance-账户)
+	- [getBalance](#getbalance-账户)
 	- [getAssets](#getassets)
 	- [getMetadata](#getmetadata)
 - [资产服务](#资产服务)
     - [getInfo](#getinfo)
 - [Token服务](#token服务)
-    - [checkValid-Token](#checkvalid-Token)
+    - [checkValid](#checkvalid-Token)
 	- [allowance](#allowance)
-	- [getInfo-Token](#getinfo-Token)
+	- [getInfo](#getinfo-Token)
 	- [getName](#getname)
 	- [getSymbol](#getsymbol)
 	- [getDecimals](#getdecimals)
 	- [getTotalSupply](#gettotalsupply)
-	- [getBalance-Token](#getbalance-Token)
+	- [getBalance](#getbalance-Token)
 - [合约服务](#合约服务)
-    - [checkValid-合约](#checkvalid-合约)
-	- [getInfo-合约](#getinfo-合约)
+    - [checkValid](#checkvalid-合约)
+	- [getInfo](#getinfo-合约)
 	- [call](#call)
 - [交易服务](#交易服务)
     - [操作说明](#操作说明)
@@ -649,7 +649,7 @@ asset	    | [AssetInfo](#AssetInfo)[] |账户资产
 -----------  | ----------- | -------- |
 INVALID_ADDRESS_ERROR|11006|Invalid address
 CONNECTNETWORK_ERROR|11007|Connect network failed
-INVALID_ASSET_CODE_ERROR|11023|The length of asset code must between 1 and 1024
+INVALID_ASSET_CODE_ERROR|11023|The length of asset code must between 1 and 64
 INVALID_ISSUER_ADDRESS_ERROR|11027|Invalid issuer address
 SYSTEM_ERROR|20000|System error
 
@@ -2400,7 +2400,7 @@ INVALID_SIGNER_WEIGHT_ERROR|11017|Signer weight must between 0 and max(uint32)
 INVALID_TX_THRESHOLD_ERROR|11018|TxThreshold must between 0 and max(int64)
 INVALID_OPERATION_TYPE_ERROR|11019|Operation type must between 1 and 100
 INVALID_TYPE_THRESHOLD_ERROR|11020|TypeThreshold must between 0 and max(int64)
-INVALID_ASSET_CODE_ERROR|11023|The length of key must between 1 and 1024
+INVALID_ASSET_CODE_ERROR|11023|The length of key must between 1 and 64
 INVALID_ASSET_AMOUNT_ERROR|11024|AssetMount must between 0 and max(int64)
 INVALID_BU_AMOUNT_ERROR|11026|BuAmount must between 0 and max(int64)
 INVALID_ISSUER_ADDRESS_ERROR|11027|Invalid issuer address
