@@ -12,7 +12,7 @@ public class TokenIssueOperation extends BaseOperation {
     private String name;
     private String symbol;
     private Integer decimals;
-    private String totalSupply;
+    private String supply;
 
     /**
      * @Author riven
@@ -115,23 +115,23 @@ public class TokenIssueOperation extends BaseOperation {
 
     /**
      * @Author riven
-     * @Method getTotalSupply
+     * @Method getSupply
      * @Params []
      * @Return java.lang.String
      * @Date 2018/7/9 17:07
      */
-    public String getTotalSupply() {
-        return totalSupply;
+    public String getSupply() {
+        return supply;
     }
 
     /**
      * @Author riven
-     * @Method setTotalSupply
-     * @Params [totalSupply]
+     * @Method setSupply
+     * @Params [supply]
      * @Return void
      * @Date 2018/7/9 17:07
      */
-    public void setTotalSupply(String totalSupply) {
-        this.totalSupply = totalSupply;
+    public void setSupply(String supply) {
+        this.supply = supply;
     }
 }

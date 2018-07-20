@@ -420,10 +420,10 @@ public class TokenServiceImpl implements TokenService {
             if (decimals == null || (decimals != null && (decimals < 0 || decimals > 8))) {
                 throw new SDKException(SdkError.INVALID_TOKEN_DECIMALS_ERROR);
             }
-            String totalSupply = tokenIssueResult.getTotalSupply();
+            String supply = tokenIssueResult.getSupply();
             Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
-            boolean isNumber = pattern.matcher(totalSupply).matches();
-            if (!isNumber || (isNumber && Long.valueOf(totalSupply) < 1)) {
+            boolean isNumber = pattern.matcher(supply).matches();
+            if (!isNumber || (isNumber && Long.valueOf(supply) < 1)) {
                 throw new SDKException(SdkError.INVALID_TOKEN_TOTALSUPPLY_ERROR);
             }
             String metadata = tokenIssueResult.getMetadata();
@@ -438,7 +438,7 @@ public class TokenServiceImpl implements TokenService {
             params.put("name", name);
             params.put("symbol", symbol);
             params.put("decimals", decimals);
-            params.put("supply", totalSupply);
+            params.put("supply", supply);
             initInput.put("params", params);
 
             // build operation

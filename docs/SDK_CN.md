@@ -1465,7 +1465,7 @@ initBalance|int64|必填，给合约账户的初始化资产，大小[1, max(64)
 name|String|必填，token名称，长度[1, 1024]
 symbol|String|必填，token符号，长度[1, 1024]
 decimals|int|必填，token数量的精度，大小[0, 8]
-totalSupply|String|必填，token发行的总供应量，大小[1, max(int64)]
+supply|String|必填，token发行的总供应量(不带精度)，大小[1, max(int64)]
 metadata|String|选填，备注
 
 > TokenTransferOperation
