@@ -630,6 +630,7 @@ public class DigitalAssetsDemo {
         TransactionBuildBlobRequest transactionBuildBlobRequest = new TransactionBuildBlobRequest();
         transactionBuildBlobRequest.setSourceAddress(senderAddresss);
         transactionBuildBlobRequest.setNonce(senderNonce);
+        transactionBuildBlobRequest.setCelLedgerSeq(1000L);
         transactionBuildBlobRequest.setFeeLimit(feeLimit);
         transactionBuildBlobRequest.setGasPrice(gasPrice);
         transactionBuildBlobRequest.addOperation(buSendOperation);

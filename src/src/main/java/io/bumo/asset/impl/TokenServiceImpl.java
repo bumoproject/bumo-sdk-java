@@ -438,7 +438,7 @@ public class TokenServiceImpl implements TokenService {
             params.put("name", name);
             params.put("symbol", symbol);
             params.put("decimals", decimals);
-            params.put("totalSupply", totalSupply);
+            params.put("supply", totalSupply);
             initInput.put("params", params);
 
             // build operation
