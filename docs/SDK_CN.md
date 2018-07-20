@@ -90,7 +90,7 @@ Token服务：提供合约资产相关的有效性校验与查询接口
 
 接口的请求参数的类名，是[服务名][方法名]Request，比如: 账户服务下的getInfo接口的请求参数格式是AccountGetInfoRequest。
 
-请求参数的成员，是各个接口的入参的成员。例如：账户服务下的getInfo接口的入参成员是address，那么该接口的请求参数的的完整结构如下：
+请求参数的成员，是各个接口的入参的成员。例如：账户服务下的getInfo接口的入参成员是address，那么该接口的请求参数的完整结构如下：
 ```
 Class AccountGetInfoRequest {
 	String address;
@@ -465,7 +465,7 @@ address     |   String     |  必填，待检测的账户地址
 
    参数      |     类型     |        描述       
 ----------- | ------------ | ---------------- 
-balance     |   Long     |  该账户的]余额   
+balance     |   Long     |  BU的余额   
 
 > 错误码
 
@@ -1037,7 +1037,7 @@ tokenOwner|String|必填，合约Token拥有者的账户地址
 
    参数      |     类型     |        描述       |
 ----------- | ------------ | ---------------- |
-balance     |   Long     |  余额   |
+balance     |   Long     |  token的余额   |
 
 > 错误码
 
