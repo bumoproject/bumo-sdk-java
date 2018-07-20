@@ -246,7 +246,7 @@ public class ContractServiceImpl implements ContractService {
                 throw new SDKException(SdkError.SOURCEADDRESS_EQUAL_CONTRACTADDRESS_ERROR);
             }
             Long amount = contractInvokeByBUOperation.getAmount();
-            if (amount == null || (amount != null && amount <= 0)) {
+            if (amount == null || (amount != null && amount < 0)) {
                 throw new SDKException(SdkError.INVALID_ASSET_AMOUNT_ERROR);
             }
             String metadata = contractInvokeByBUOperation.getMetadata();

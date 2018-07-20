@@ -1538,6 +1538,7 @@ sourceAddress|String|选填，发起该操作的源账户地址
 initBalance|int64|必填，给合约账户的初始化资产，大小[1, max(64)]
 type|Integer|选填，合约的语种，默认是0
 payload|String|必填，对应语种的合约代码
+initInput|String|选填，合约代码中init方法的入参
 metadata|String|选填，备注
 
 > ContractInvokeByAssetOperation

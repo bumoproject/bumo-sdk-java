@@ -241,6 +241,21 @@ public class DigitalAssetsDemo {
         TransactionFees transactionFees = evaluationFees(senderPrivateKey,destAddress,amount,nonce,gasPrice,feeLimit);
     }
 
+    @Test
+    public void invokeContractByBU() throws Exception {
+        String senderPrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq"; // 发送方私钥
+        String destAddress = "buQswSaKDACkrFsnP1wcVsLAUzXQsemauE";// 接收方账户地址
+        Long amount = 0L;//ToBaseUnit.BU2MO("10.9"); // 发送转出10.9BU给接收方（目标账户）
+        Long gasPrice = 1000L; // 固定写 1000L ，单位是MO
+        Long feeLimit = ToBaseUnit.BU2MO("0.01");//设置最多费用 0.01BU ，固定填写
+        Long nonce = 1L; // 参考getAccountNonce()获取账户Nonce + 1;
+        String input = "";
+
+        // 记录txhash ，以便后续再次确认交易真实结果
+        // 推荐5个区块后再次通过txhash再次调用`根据交易Hash获取交易信息`(参考示例：getTxByHash()）来确认交易终态结果
+        String txhash = invokeContractByBU(senderPrivateKey,destAddress,amount,nonce,input,gasPrice,feeLimit);
+    }
+
     /**
      * 发送一笔BU交易
      * @throws Exception
@@ -328,6 +343,9 @@ public class DigitalAssetsDemo {
         }
     }
 
+    /**
+     * 验证合约Token的有效性
+     */
     @Test
     public void checkTokenValid() {
         TokenCheckValidRequest tokenCheckValidRequest = new TokenCheckValidRequest();
@@ -341,6 +359,9 @@ public class DigitalAssetsDemo {
         }
     }
 
+    /**
+     * 验证合约账户的有效性
+     */
     @Test
     public void checkContractValid() {
         ContractCheckValidRequest request = new ContractCheckValidRequest();
@@ -583,8 +604,9 @@ public class DigitalAssetsDemo {
         }
     }
 
-
-
+    /**
+     * 获取指定区块的费用标准
+     */
     @Test
     public void getBlockFees() {
         BlockGetFeesRequest request = new BlockGetFeesRequest();
@@ -597,6 +619,9 @@ public class DigitalAssetsDemo {
         }
     }
 
+    /**
+     * 获取最新区块的费用标准
+     */
     @Test
     public void getBlockLatestFees() {
         BlockGetLatestFeesResponse response = sdk.getBlockService().getLatestFees();
@@ -668,6 +693,75 @@ public class DigitalAssetsDemo {
         return txHash;
     }
 
+    /**
+     *
+     *
+     * @param senderPrivateKey 转出方账户私钥
+     * @param destAddress 接收方账户地址
+     * @param amount 转出BU数量
+     * @param senderNonce 转出方nonce ，通过sdk.getAccountService().getNonce(request)获取到的Nonce 加 1；
+     * @param gasPrice 燃料单价
+     * @param feeLimit 最多支付交易费用
+     * @throws Exception
+     */
+    private String invokeContractByBU(String senderPrivateKey,String destAddress,Long amount,Long senderNonce,String input, Long gasPrice,Long feeLimit) throws Exception {
+
+        // 1. 获取交易发送账户地址
+        String senderAddresss = getAddressByPrivateKey(senderPrivateKey); // BU发送者账户地址
+
+        // 2. 构建sendBU操作
+        ContractInvokeByBUOperation operation = new ContractInvokeByBUOperation();
+        operation.setSourceAddress(senderAddresss);
+        operation.setContractAddress(destAddress);
+        operation.setAmount(amount);
+        operation.setInput(input);
+
+        // 3. 构建交易
+        TransactionBuildBlobRequest transactionBuildBlobRequest = new TransactionBuildBlobRequest();
+        transactionBuildBlobRequest.setSourceAddress(senderAddresss);
+        transactionBuildBlobRequest.setNonce(senderNonce);
+        transactionBuildBlobRequest.setCelLedgerSeq(1000L);
+        transactionBuildBlobRequest.setFeeLimit(feeLimit);
+        transactionBuildBlobRequest.setGasPrice(gasPrice);
+        transactionBuildBlobRequest.addOperation(operation);
+
+        // 4. 获取交易BLob串
+        String transactionBlob = null;
+        TransactionBuildBlobResponse transactionBuildBlobResponse = sdk.getTransactionService().buildBlob(transactionBuildBlobRequest);
+        TransactionBuildBlobResult transactionBuildBlobResult = transactionBuildBlobResponse.getResult();
+        String txHash = transactionBuildBlobResult.getHash();
+        transactionBlob = transactionBuildBlobResult.getTransactionBlob();
+
+        // 5. 签名交易BLob(交易发送账户签名交易Blob串)
+        String []signerPrivateKeyArr = {senderPrivateKey};
+        TransactionSignRequest transactionSignRequest = new TransactionSignRequest();
+        transactionSignRequest.setBlob(transactionBlob);
+        for (int i = 0; i < signerPrivateKeyArr.length; i++) {
+            transactionSignRequest.addPrivateKey(signerPrivateKeyArr[i]);
+        }
+        TransactionSignResponse transactionSignResponse = sdk.getTransactionService().sign(transactionSignRequest);
+
+        // 6. 广播交易
+        TransactionSubmitRequest transactionSubmitRequest = new TransactionSubmitRequest();
+        transactionSubmitRequest.setTransactionBlob(transactionBlob);
+        transactionSubmitRequest.setSignatures(transactionSignResponse.getResult().getSignatures());
+        TransactionSubmitResponse transactionSubmitResponse = sdk.getTransactionService().submit(transactionSubmitRequest);
+        if (0 == transactionSubmitResponse.getErrorCode()) { // 交易广播成功
+            System.out.println("交易广播成功，hash=" + transactionSubmitResponse.getResult().getHash());
+        }else{
+            System.out.println("交易广播失败，hash=" + transactionSubmitResponse.getResult().getHash() + "");
+            System.out.println(JSON.toJSONString(transactionSubmitResponse, true));
+        }
+        return txHash;
+    }
+
+    /**
+     * @Author riven
+     * @Method issueAsset
+     * @Params [issuePrivateKey, assetCode, assetAmount, issueNonce, gasPrice, feeLimit, metadata]
+     * @Return java.lang.String
+     * @Date 2018/7/20 17:39
+     */
     private String issueAsset(String issuePrivateKey, String assetCode, Long assetAmount, Long issueNonce, Long gasPrice, Long feeLimit, String metadata) throws Exception {
         // 1. 获取交易发送账户地址
         String issueAddresss = getAddressByPrivateKey(issuePrivateKey); // BU发送者账户地址
@@ -717,6 +811,13 @@ public class DigitalAssetsDemo {
         return txHash;
     }
 
+    /**
+     * @Author riven
+     * @Method activateAccount
+     * @Params [activatePrivateKey, destAccount, initBalance, nonce, gasPrice, feeLimit, metadata]
+     * @Return java.lang.String
+     * @Date 2018/7/20 17:39
+     */
     private String activateAccount(String activatePrivateKey, String destAccount, Long initBalance, Long nonce, Long gasPrice, Long feeLimit, String metadata) throws Exception {
         // 1. 获取交易发送账户地址
         String activateAddresss = getAddressByPrivateKey(activatePrivateKey); // BU发送者账户地址
@@ -766,6 +867,13 @@ public class DigitalAssetsDemo {
         return txHash;
     }
 
+    /**
+     * @Author riven
+     * @Method setMetadata
+     * @Params [accountPrivateKey, key, value, gasPrice, feeLimit, nonce]
+     * @Return java.lang.String
+     * @Date 2018/7/20 17:39
+     */
     private String setMetadata(String accountPrivateKey, String key, String value, Long gasPrice, Long feeLimit, Long nonce) throws Exception {
         // 1. 获取交易发送账户地址
         String senderAddresss = getAddressByPrivateKey(accountPrivateKey); // BU发送者账户地址
@@ -815,6 +923,13 @@ public class DigitalAssetsDemo {
         return txHash;
     }
 
+    /**
+     * @Author riven
+     * @Method sendAsset
+     * @Params [senderPrivateKey, destAddress, assetCode, assetIssuer, amount, senderNonce, gasPrice, feeLimit]
+     * @Return java.lang.String
+     * @Date 2018/7/20 17:40
+     */
     private String sendAsset(String senderPrivateKey, String destAddress, String assetCode, String assetIssuer, Long amount, Long senderNonce, Long gasPrice, Long feeLimit) throws Exception {
         // 1. 获取交易发送账户地址
         String senderAddresss = getAddressByPrivateKey(senderPrivateKey); // BU发送者账户地址
@@ -866,6 +981,13 @@ public class DigitalAssetsDemo {
         return txHash;
     }
 
+    /**
+     * @Author riven
+     * @Method evaluationFees
+     * @Params [senderPrivateKey, destAddress, amount, nonce, gasPrice, feeLimit]
+     * @Return io.bumo.model.response.result.data.TransactionFees
+     * @Date 2018/7/20 17:40
+     */
     private TransactionFees evaluationFees(String senderPrivateKey, String destAddress, Long amount, Long nonce, Long gasPrice, Long feeLimit) throws Exception {
         // 1. 获取交易发送账户地址
         String senderAddresss = getAddressByPrivateKey(senderPrivateKey); // BU发送者账户地址
@@ -893,6 +1015,13 @@ public class DigitalAssetsDemo {
         }
     }
 
+    /**
+     * @Author riven
+     * @Method getNonceOfAccount
+     * @Params [senderAddresss]
+     * @Return java.lang.Long
+     * @Date 2018/7/20 17:40
+     */
     private Long getNonceOfAccount(String senderAddresss){
         AccountGetNonceRequest accountGetNonceRequest = new AccountGetNonceRequest();
         accountGetNonceRequest.setAddress(senderAddresss);
@@ -907,6 +1036,13 @@ public class DigitalAssetsDemo {
         }
     }
 
+    /**
+     * @Author riven
+     * @Method getAddressByPrivateKey
+     * @Params [privatekey]
+     * @Return java.lang.String
+     * @Date 2018/7/20 17:40
+     */
     private String getAddressByPrivateKey(String privatekey) throws Exception {
         String publicKey = PrivateKey.getEncPublicKey(privatekey);
         String address = PrivateKey.getEncAddress(publicKey);
