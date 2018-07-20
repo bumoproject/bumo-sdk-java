@@ -943,7 +943,7 @@ contractAddress     |   String     |  待查询的合约账户地址   |
 
    参数      |     类型     |        描述       |
 ----------- | ------------ | ---------------- |
-isValid     |   String     |  账户地址是否有效   |
+decimals     |   Integer     |  合约token精度   |
 
 > 错误码
 
