@@ -1024,7 +1024,7 @@ if (response.getErrorCode() == 0) {
 
 > 调用方法
 
-AccounCheckValidResponse checkValid(AccountCheckValidRequest)
+AccounCheckValidResponse getBalance(AccountCheckValidRequest)
 
 > 请求参数
 
@@ -1037,7 +1037,7 @@ tokenOwner|String|必填，合约Token拥有者的账户地址
 
    参数      |     类型     |        描述       |
 ----------- | ------------ | ---------------- |
-balance     |   String     |  余额   |
+balance     |   Long     |  余额   |
 
 > 错误码
 
