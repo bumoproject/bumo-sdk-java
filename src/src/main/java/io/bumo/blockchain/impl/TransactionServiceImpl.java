@@ -22,6 +22,7 @@ import io.bumo.encryption.utils.hash.HashUtil;
 import io.bumo.encryption.utils.hex.HexFormat;
 import io.bumo.exception.SDKException;
 import io.bumo.exception.SdkError;
+import io.bumo.log.LogServiceImpl;
 import io.bumo.model.request.*;
 import io.bumo.model.request.Operation.*;
 import io.bumo.model.response.*;
@@ -434,6 +435,9 @@ public class TransactionServiceImpl implements TransactionService {
                     break;
                 case CONTRACT_INVOKE_BY_BU:
                     operation = ContractServiceImpl.invokeByBU((ContractInvokeByBUOperation) operationBase[i]);
+                    break;
+                case LOG_CREATE:
+                    operation = LogServiceImpl.create((LogCreateOperation) operationBase[i]);
                     break;
             }
             transaction.addOperations(operation);
