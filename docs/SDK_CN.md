@@ -2444,7 +2444,6 @@ INVALID_LOG_DATA_ERROR|11046|The length of one of log data must between 1 and 10
 INVALID_NONCE_ERROR|11048|Nonce must between 1 and max(int64)
 INVALID_GASPRICE_ERROR|11049|Amount must between gasPrice in block and max(int64)
 INVALID_FEELIMIT_ERROR|11050|FeeLimit must between 1 and max(int64)
-OPERATIONS_EMPTY_ERROR|1105O|Operations cannot be empty
 INVALID_CEILLEDGERSEQ_ERROR|11052|CeilLedgerSeq must be equal or bigger than 0
 OPERATIONS_ONE_ERROR|11053|One of operations error
 INVALID_SIGNATURENUMBER_ERROR|11054|SignagureNumber must between 1 and max(int32)
