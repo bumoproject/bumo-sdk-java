@@ -125,6 +125,9 @@ public class DigitalAssetsDemo {
         }
     }
 
+    /**
+     * 激活账户
+     */
     @Test
     public void activateAccount() throws Exception {
         String activatePrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq";
