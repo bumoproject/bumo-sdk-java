@@ -1456,7 +1456,7 @@ metadata|String|选填，备注
 
 > TokenIssueOperation
 
-继承于BaseOperation，feeLimit固定是50.02 BU
+继承于BaseOperation，feeLimit固定是0.02 BU
 
    成员变量    |     类型   |        描述          
 ------------- | --------- | ---------------------
@@ -1495,7 +1495,7 @@ metadata|String|选填，备注
 
 > TokenApproveOperation
 
-继承于BaseOperation，feeLimit固定是0.02 MO
+继承于BaseOperation，feeLimit固定是0.02 BU
 
    成员变量    |     类型   |        描述          
 ------------- | --------- | ---------------------
@@ -1543,7 +1543,7 @@ metadata|String|选填，备注
 
 > ContractInvokeByAssetOperation
 
-继承于BaseOperation，feeLimit要根据合约中执行交易来做添加手续费，首先发起交易手续费是0.01BU，然后合约中的交易也需要交易发起者添加相应交易的手续费
+继承于BaseOperation，feeLimit要根据合约中执行交易来做添加手续费，首先发起交易手续费是0.01BU，然后合约中的交易也需要交易发起者添加相应交易的手续费
 
    成员变量    |     类型   |        描述          
 ------------- | --------- | ---------------------
@@ -1557,7 +1557,7 @@ metadata|String|选填，备注
 
 > ContractInvokeByBUOperation
 
-继承于BaseOperation，feeLimit要根据合约中执行交易来做添加手续费，首先发起交易手续费是0.01BU，然后合约中的交易也需要交易发起者添加相应交易的手续费
+继承于BaseOperation，feeLimit要根据合约中执行交易来做添加手续费，首先发起交易手续费是0.01BU，然后合约中的交易也需要交易发起者添加相应交易的手续费
 
    成员变量    |     类型   |        描述          
 ------------- | --------- | ---------------------
