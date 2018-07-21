@@ -6,7 +6,7 @@ import io.bumo.common.ToBaseUnit;
 import io.bumo.crypto.Keypair;
 import io.bumo.encryption.key.PrivateKey;
 import io.bumo.model.request.*;
-import io.bumo.model.request.Operation.*;
+import io.bumo.model.request.operation.*;
 import io.bumo.model.response.*;
 import io.bumo.model.response.result.*;
 import io.bumo.model.response.result.data.Signature;
@@ -20,7 +20,7 @@ import org.junit.Test;
  */
 
 public class DigitalAssetsDemo {
-    SDK sdk = SDK.getInstance("http://seed1.bumotest.io:26002");
+    SDK sdk = SDK.getInstance("http://127.0.0.1:36002");
 
     @Test
     public void checkSDKGetinstance() {
@@ -295,7 +295,7 @@ public class DigitalAssetsDemo {
      */
     @Test
     public void getTxByHash() {
-        String txHash = "44246c5ba1b8b835a5cbc29bdc9454cdb9a9d049870e41227f2dcfbcf7a07689";
+        String txHash = "389d53e55929c997d22f25d3757b088e2e869403ac0f2d13712ba877762b3d45";
         // Init request
         TransactionGetInfoRequest request = new TransactionGetInfoRequest();
         request.setHash(txHash);
@@ -484,16 +484,17 @@ public class DigitalAssetsDemo {
     public void activateAccount() {
         // The account private key to activate a new account
         String activatePrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq";
-        Long initBalance = ToBaseUnit.BU2MO("0.1");
+        Long initBalance = ToBaseUnit.BU2MO("1000");
         // The fixed write 1000L, the unit is MO
         Long gasPrice = 1000L;
         // Set up the maximum cost 0.01BU
         Long feeLimit = ToBaseUnit.BU2MO("0.01");
         // Transaction initiation account's nonce + 1
-        Long nonce = 1L;
+        Long nonce = 8L;
 
         // Generate a new account to be activated
         Keypair keypair = Keypair.generator();
+        System.out.println(JSON.toJSONString(keypair, true));
         String destAccount = keypair.getAddress();
 
         // 1. Get the account address to send this transaction
@@ -506,10 +507,11 @@ public class DigitalAssetsDemo {
         operation.setInitBalance(initBalance);
         operation.setMetadata("activate account");
 
+        String[] signerPrivateKeyArr = {activatePrivateKey};
         // Record txhash for subsequent confirmation of the real result of the transaction.
         // After recommending five blocks, call again through txhash `Get the transaction information
         // from the transaction Hash'(see example: getTxByHash ()) to confirm the final result of the transaction
-        String txHash = submitTransaction(activatePrivateKey, activateAddresss, operation, nonce, gasPrice, feeLimit);
+        String txHash = submitTransaction(signerPrivateKeyArr, activateAddresss, operation, nonce, gasPrice, feeLimit);
         if (txHash != null) {
             System.out.println("hash: " + txHash);
         }
@@ -533,7 +535,7 @@ public class DigitalAssetsDemo {
         //Set up the maximum cost 0.01BU
         Long feeLimit = ToBaseUnit.BU2MO("0.01");
         // Transaction initiation account's nonce + 1
-        Long nonce = 45L;
+        Long nonce = 6L;
 
         // 1. Get the account address to send this transaction
         String accountAddresss = getAddressByPrivateKey(accountPrivateKey);
@@ -544,10 +546,11 @@ public class DigitalAssetsDemo {
         operation.setKey(key);
         operation.setValue(value);
 
+        String[] signerPrivateKeyArr = {accountPrivateKey};
         // Record txhash for subsequent confirmation of the real result of the transaction.
         // After recommending five blocks, call again through txhash `Get the transaction information
         // from the transaction Hash'(see example: getTxByHash ()) to confirm the final result of the transaction
-        String txHash = submitTransaction(accountPrivateKey, accountAddresss, operation, nonce, gasPrice, feeLimit);
+        String txHash = submitTransaction(signerPrivateKeyArr, accountAddresss, operation, nonce, gasPrice, feeLimit);
         if (txHash != null) {
             System.out.println("hash: " + txHash);
         }
@@ -566,7 +569,7 @@ public class DigitalAssetsDemo {
         // Set up the maximum cost 0.01BU
         Long feeLimit = ToBaseUnit.BU2MO("0.01");
         // Transaction initiation account's nonce + 1
-        Long nonce = 64L;
+        Long nonce = 6L;
 
         // 1. Get the account address to send this transaction
         String accountAddresss = getAddressByPrivateKey(accountPrivateKey);
@@ -574,22 +577,17 @@ public class DigitalAssetsDemo {
         // 2. Build setPrivilege
         AccountSetPrivilegeOperation operation = new AccountSetPrivilegeOperation();
         operation.setSourceAddress(accountAddresss);
-        System.out.println(Integer.MAX_VALUE * 2L);
-        operation.setMasterWeight("4294967295");
-        Signer signer = new Signer();
-        signer.setAddress("buQsurH1M4rjLkfjzkxR9KXJ6jSu2r9xBNEw");
-        signer.setWeight(0L);
         Signer signer2 = new Signer();
-        signer2.setAddress("buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq");
+        signer2.setAddress("buQhapCK83xPPdjQeDuBLJtFNvXYZEKb6tKB");
         signer2.setWeight(2L);
-        operation.addSigner(signer);
         operation.addSigner(signer2);
         operation.setTxThreshold("1");
 
+        String[] signerPrivateKeyArr = {accountPrivateKey};
         // Record txhash for subsequent confirmation of the real result of the transaction.
         // After recommending five blocks, call again through txhash `Get the transaction information
         // from the transaction Hash'(see example: getTxByHash ()) to confirm the final result of the transaction
-        String txHash = submitTransaction(accountPrivateKey, accountAddresss, operation, nonce, gasPrice, feeLimit);
+        String txHash = submitTransaction(signerPrivateKeyArr, accountAddresss, operation, nonce, gasPrice, feeLimit);
         if (txHash != null) {
             System.out.println("hash: " + txHash);
         }
@@ -602,7 +600,7 @@ public class DigitalAssetsDemo {
     public void issueAsset() {
         // Init variable
         // The account private key to issue asset
-        String issuePrivateKey = "privbUdwf6xV1d5Jvkcakuz8T8nfFn4U7d5s55VUbwmi79DPxqNWSD1n";
+        String issuePrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq";
         // Asset code
         String assetCode = "TST";
         // Asset amount
@@ -614,7 +612,7 @@ public class DigitalAssetsDemo {
         // Set up the maximum cost 50.01BU
         Long feeLimit = ToBaseUnit.BU2MO("50.01");
         // Transaction initiation account's nonce + 1
-        Long nonce = 31L;
+        Long nonce = 7L;
 
         // 1. Get the account address to send this transaction
         String issueAddresss = getAddressByPrivateKey(issuePrivateKey);
@@ -626,10 +624,12 @@ public class DigitalAssetsDemo {
         assetIssueOperation.setAmount(assetAmount);
         assetIssueOperation.setMetadata(metadata);
 
+
+        String[] signerPrivateKeyArr = {issuePrivateKey};
         // Record txhash for subsequent confirmation of the real result of the transaction.
         // After recommending five blocks, call again through txhash `Get the transaction information
         // from the transaction Hash'(see example: getTxByHash ()) to confirm the final result of the transaction
-        String txHash = submitTransaction(issuePrivateKey, issueAddresss, assetIssueOperation, nonce, gasPrice, feeLimit);
+        String txHash = submitTransaction(signerPrivateKeyArr, issueAddresss, assetIssueOperation, nonce, gasPrice, feeLimit);
         if (txHash != null) {
             System.out.println("hash: " + txHash);
         }
@@ -641,22 +641,22 @@ public class DigitalAssetsDemo {
     @Test
     public void sendAsset() {
         // Init variable
-        // The account private key to send asset
+        // The account private key to start this transaction
         String senderPrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq";
         // The account to receive asset
-        String destAddress = "buQswSaKDACkrFsnP1wcVsLAUzXQsemauE";
+        String destAddress = "buQhapCK83xPPdjQeDuBLJtFNvXYZEKb6tKB";
         // Asset code
         String assetCode = "TST";
         // The accout address of issuing asset
-        String assetIssuer = "buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp";
+        String assetIssuer = "buQcGP2a1PY45dauMfhk9QsFbn7a6BKKAM9x";
         // The asset amount to be sent
-        Long amount = ToBaseUnit.BU2MO("10.9");
+        Long amount = ToBaseUnit.BU2MO("100000");
         // The fixed write 1000L, the unit is MO
         Long gasPrice = 1000L;
         // Set up the maximum cost 0.01BU
         Long feeLimit = ToBaseUnit.BU2MO("0.01");
         // Transaction initiation account's nonce + 1
-        Long nonce = 1L;
+        Long nonce = 2L;
 
         // 1. Get the account address to send this transaction
         String senderAddresss = getAddressByPrivateKey(senderPrivateKey);
@@ -670,10 +670,11 @@ public class DigitalAssetsDemo {
         assetSendOperation.setAmount(amount);
         assetSendOperation.setMetadata("send token");
 
+        String[] signerPrivateKeyArr = {senderPrivateKey};
         // Record txhash for subsequent confirmation of the real result of the transaction.
         // After recommending five blocks, call again through txhash `Get the transaction information
         // from the transaction Hash'(see example: getTxByHash ()) to confirm the final result of the transaction
-        String txHash = submitTransaction(senderPrivateKey, senderAddresss, assetSendOperation, nonce, gasPrice, feeLimit);
+        String txHash = submitTransaction(signerPrivateKeyArr, senderAddresss, assetSendOperation, nonce, gasPrice, feeLimit);
         if (txHash != null) {
             System.out.println("hash: " + txHash);
         }
@@ -688,7 +689,7 @@ public class DigitalAssetsDemo {
         // The account private key to send bu
         String senderPrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq";
         // The account address to receive bu
-        String destAddress = "buQswSaKDACkrFsnP1wcVsLAUzXQsemauE";
+        String destAddress = "buQsurH1M4rjLkfjzkxR9KXJ6jSu2r9xBNEw";
         // The amount to be sent
         Long amount = ToBaseUnit.BU2MO("0.01");
         // The fixed write 1000L, the unit is MO
@@ -696,21 +697,22 @@ public class DigitalAssetsDemo {
         // Set up the maximum cost 0.01BU
         Long feeLimit = ToBaseUnit.BU2MO("0.01");
         // Transaction initiation account's nonce + 1
-        Long nonce = 1L;
+        Long nonce = 25L;
 
         // 1. Get the account address to send this transaction
         String senderAddresss = getAddressByPrivateKey(senderPrivateKey);
 
         // 2. Build sendBU
-        BUSendOperation buSendOperation = new BUSendOperation();
-        buSendOperation.setSourceAddress(senderAddresss);
-        buSendOperation.setDestAddress(destAddress);
-        buSendOperation.setAmount(amount);
+        BUSendOperation operation = new BUSendOperation();
+        operation.setSourceAddress(senderAddresss);
+        operation.setDestAddress(destAddress);
+        operation.setAmount(amount);
 
+        String[] signerPrivateKeyArr = {senderPrivateKey};
         // Record txhash for subsequent confirmation of the real result of the transaction.
         // After recommending five blocks, call again through txhash `Get the transaction information
         // from the transaction Hash'(see example: getTxByHash ()) to confirm the final result of the transaction
-        String txHash = submitTransaction(senderPrivateKey, senderAddresss, buSendOperation, nonce, gasPrice, feeLimit);
+        String txHash = submitTransaction(signerPrivateKeyArr, senderAddresss, operation, nonce, gasPrice, feeLimit);
         if (txHash != null) {
             System.out.println("hash: " + txHash);
         }
@@ -748,26 +750,27 @@ public class DigitalAssetsDemo {
         operation.addData(data);
         operation.setMetadata(metadata);
 
+        String[] signerPrivateKeyArr = {createPrivateKey};
         // Record txhash for subsequent confirmation of the real result of the transaction.
         // After recommending five blocks, call again through txhash `Get the transaction information
         // from the transaction Hash'(see example: getTxByHash ()) to confirm the final result of the transaction
-        String txHash = submitTransaction(createPrivateKey, createAddresss, operation, nonce, gasPrice, feeLimit);
+        String txHash = submitTransaction(signerPrivateKeyArr, createAddresss, operation, nonce, gasPrice, feeLimit);
         if (txHash != null) {
             System.out.println("hash: " + txHash);
         }
     }
 
     /**
-     * @param senderPrivateKey The account private key to start transaction
+     * @param senderPrivateKeys The account private keys to sign transaction
      * @param senderAddresss   The account address to start transaction
-     * @param operation        Operation
+     * @param operation        operation
      * @param senderNonce      Transaction initiation account's Nonce
      * @param gasPrice         Gas price
      * @param feeLimit         fee limit
      * @return java.lang.String transaction hash
      * @author riven
      */
-    private String submitTransaction(String senderPrivateKey, String senderAddresss, BaseOperation operation, Long senderNonce, Long gasPrice, Long feeLimit) {
+    private String submitTransaction(String[] senderPrivateKeys, String senderAddresss, BaseOperation operation, Long senderNonce, Long gasPrice, Long feeLimit) {
         // 3. Build transaction
         TransactionBuildBlobRequest transactionBuildBlobRequest = new TransactionBuildBlobRequest();
         transactionBuildBlobRequest.setSourceAddress(senderAddresss);
@@ -789,7 +792,7 @@ public class DigitalAssetsDemo {
         transactionBlob = transactionBuildBlobResult.getTransactionBlob();
 
         // 5. Sign transaction BLob
-        String[] signerPrivateKeyArr = {senderPrivateKey};
+        String[] signerPrivateKeyArr = senderPrivateKeys;
         TransactionSignRequest transactionSignRequest = new TransactionSignRequest();
         transactionSignRequest.setBlob(transactionBlob);
         for (int i = 0; i < signerPrivateKeyArr.length; i++) {

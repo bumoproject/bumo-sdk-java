@@ -15,7 +15,7 @@ public enum SdkError {
     /*
      * ACCOUNT_CREATE_ERROR
      */
-    ACCOUNT_CREATE_ERROR(11001, "Create account failed"),
+    ACCOUNT_CREATE_ERROR(11001, "Failed to create the account"),
 
     /*
      * INVALID_SOURCEADDRESS_ERROR
@@ -40,7 +40,7 @@ public enum SdkError {
     /*
      * CONNECTNETWORK_ERROR
      */
-    CONNECTNETWORK_ERROR(11007, "Fail to connect network"),
+    CONNECTNETWORK_ERROR(11007, "Failed to connect to the network"),
     /*
      * INVALID_ISSUE_AMOUNT_ERROR
      */
@@ -64,7 +64,7 @@ public enum SdkError {
     /*
      * INVALID_DATAVERSION_ERROR
      */
-    INVALID_DATAVERSION_ERROR(11013, "The version must be bigger than 0"),
+    INVALID_DATAVERSION_ERROR(11013, "The version must be equal to or greater than 0"),
     /*
      * INVALID_MASTERWEIGHT_ERROR
      */
@@ -172,11 +172,11 @@ public enum SdkError {
     /*
      * INVALID_LOG_TOPIC_ERROR
      */
-    INVALID_LOG_TOPIC_ERROR(11045, "The length of log topic must be between 1 and 128"),
+    INVALID_LOG_TOPIC_ERROR(11045, "The length of a log topic must be between 1 and 128"),
     /*
      * INVALID_LOG_DATA_ERROR
      */
-    INVALID_LOG_DATA_ERROR(11046, "The length of one of log data must be between 1 and 1024"),
+    INVALID_LOG_DATA_ERROR(11046, "The length of one piece of log data must be between 1 and 1024"),
     /*
      * INVALID_CONTRACT_TYPE_ERROR
      */
@@ -200,15 +200,15 @@ public enum SdkError {
     /*
      * INVALID_CEILLEDGERSEQ_ERROR
      */
-    INVALID_CEILLEDGERSEQ_ERROR(11052, "CeilLedgerSeq must be equal or bigger than 0"),
+    INVALID_CEILLEDGERSEQ_ERROR(11052, "CeilLedgerSeq must be equal to or greater than 0"),
     /*
      * OPERATIONS_ONE_ERROR
      */
-    OPERATIONS_ONE_ERROR(11053, "One of operations cannot be resoled"),
+    OPERATIONS_ONE_ERROR(11053, "One of the operations cannot be resolved"),
     /*
      * INVALID_SIGNATURENUMBER_ERROR
      */
-    INVALID_SIGNATURENUMBER_ERROR(11054, "SignagureNumber must be between 1 and max(Integer)"),
+    INVALID_SIGNATURENUMBER_ERROR(11054, "SignagureNumber must be between 1 and Integer.MAX_VALUE"),
     /*
      * INVALID_HASH_ERROR
      */
@@ -250,13 +250,13 @@ public enum SdkError {
      */
     INVALID_OPTTYPE_ERROR(11064, "OptType must be between 0 and 2"),
     /*
-     * GET_ALLOWANCE_ERRPR
+     * GET_ALLOWANCE_ERROR
      */
-    GET_ALLOWANCE_ERRPR(11065, "Fail to get allowance"),
+    GET_ALLOWANCE_ERROR(11065, "Failed to get allowance"),
     /*
-     * GET_TOKEN_INFO_ERRPR
+     * GET_TOKEN_INFO_ERROR
      */
-    GET_TOKEN_INFO_ERRPR(11066, "Fail to get token info"),
+    GET_TOKEN_INFO_ERROR(11066, "Failed to get token info"),
     /*
      * SIGNATURE_EMPTY_ERROR
      */
@@ -274,9 +274,10 @@ public enum SdkError {
      */
     INVALID_TOKEN_DESCRIPTION_ERROR(11070 ,"The length of description must be between 1 and 1024"),
     /*
-     * INVALID_TOKEN_NOW_SUPPLY_ERROR
+     * INVALID_LIMITED_TOKEN_NOW_SUPPLY_ERROR
      */
-    INVALID_TOKEN_NOW_SUPPLY_ERROR(11071, "The nowSupply must be between 1 and supply"),
+    INVALID_LIMITED_TOKEN_NOW_SUPPLY_ERROR
+            (11071, "The nowSupply must be between 1 and supply in the limited issuance"),
     /*
      * INVALID_ONE_OFF_NOWSUPPLY_NOT_EQUAL_SUPPLY_ERROR
      */
@@ -286,16 +287,27 @@ public enum SdkError {
      * INVALID_TOKEN_APPEND_SUPPLY_ERROR
      */
     INVALID_TOKEN_APPEND_SUPPLY_ERROR
-            (11073, "The appendSupply must be between 1 and max(int64)"),
+            (11073, "The appendSupply must be between 1 and Long.MAX_VALUE"),
+    /*
+     * INVALID_UNLIMITED_TOKEN_NOW_SUPPLY_ERROR
+     */
+    INVALID_UNLIMITED_TOKEN_NOW_SUPPLY_ERROR
+
+            (11074, "The nowSupply must be between 1 and Long.MAX_VALUE in the unlimited issuance"),
     /*
      * INVALID_ATP10TOKEN_HASH_ERROR
      */
     INVALID_ATP10TOKEN_HASH_ERROR
             (11075, "Invalid transaction hash to issue atp1.0 token"),
     /*
+     * TOKEN_NOT_EXIST_ERROR
+     */
+    TOKEN_NOT_FOUND_ERROR
+            (11076, "The token is not found"),
+    /*
      * CONNECTN_BLOCKCHAIN_ERROR
      */
-    CONNECTN_BLOCKCHAIN_ERROR(19999, "Fail to connect blockchain"),
+    CONNECTN_BLOCKCHAIN_ERROR(19999, "Failed to connect blockchain"),
     /*
      * SYSTEM_ERROR
      */

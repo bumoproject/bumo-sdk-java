@@ -14,9 +14,9 @@ import io.bumo.encryption.key.PublicKey;
 import io.bumo.exception.SDKException;
 import io.bumo.exception.SdkError;
 import io.bumo.model.request.*;
-import io.bumo.model.request.Operation.AccountActivateOperation;
-import io.bumo.model.request.Operation.AccountSetMetadataOperation;
-import io.bumo.model.request.Operation.AccountSetPrivilegeOperation;
+import io.bumo.model.request.operation.AccountActivateOperation;
+import io.bumo.model.request.operation.AccountSetMetadataOperation;
+import io.bumo.model.request.operation.AccountSetPrivilegeOperation;
 import io.bumo.model.response.*;
 import io.bumo.model.response.result.*;
 import io.bumo.model.response.result.data.AssetInfo;
@@ -62,7 +62,8 @@ public class AccountServiceImpl implements AccountService {
             if (!PublicKey.isAddressValid(destAddress)) {
                 throw new SDKException(SdkError.INVALID_DESTADDRESS_ERROR);
             }
-            if ((!Tools.isEmpty(sourceAddress) && sourceAddress.equals(destAddress)) || transSourceAddress.equals(destAddress)) {
+            boolean isNotValid = (!Tools.isEmpty(sourceAddress) && sourceAddress.equals(destAddress)) || transSourceAddress.equals(destAddress);
+            if (isNotValid) {
                 throw new SDKException(SdkError.SOURCEADDRESS_EQUAL_DESTADDRESS_ERROR);
             }
             Long initBalance = accountActivateOperation.getInitBalance();
@@ -70,7 +71,7 @@ public class AccountServiceImpl implements AccountService {
                 throw new SDKException(SdkError.INVALID_INITBALANCE_ERROR);
             }
             String metadata = accountActivateOperation.getMetadata();
-            // build Operation
+            // build operation
             operation = buildActivateOperation(sourceAddress, destAddress, initBalance, metadata);
         } catch (SDKException sdkException) {
             throw sdkException;
@@ -109,7 +110,7 @@ public class AccountServiceImpl implements AccountService {
             }
             Boolean deleteFlag = accountSetMetadataOperation.getDeleteFlag();
             String metadata = accountSetMetadataOperation.getMetadata();
-            // build Operation
+            // build operation
             operation = Chain.Operation.newBuilder();
             operation.setType(Chain.Operation.Type.SET_METADATA);
             if (!Tools.isEmpty(sourceAddress)) {
@@ -167,7 +168,7 @@ public class AccountServiceImpl implements AccountService {
                 }
             }
             String metadata = accountSetPrivilegeOperation.getMetadata();
-            // build Operation
+            // build operation
             Signer[] signers = accountSetPrivilegeOperation.getSigners();
             TypeThreshold[] typeThresholds = accountSetPrivilegeOperation.getTypeThresholds();
             operation = buildSetPrivilegeOperation(sourceAddress, masterWeight, txThreshold, signers, typeThresholds, metadata);

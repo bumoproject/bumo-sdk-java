@@ -11,8 +11,8 @@ import io.bumo.encryption.key.PublicKey;
 import io.bumo.exception.SDKException;
 import io.bumo.exception.SdkError;
 import io.bumo.model.request.AssetGetInfoRequest;
-import io.bumo.model.request.Operation.AssetIssueOperation;
-import io.bumo.model.request.Operation.AssetSendOperation;
+import io.bumo.model.request.operation.AssetIssueOperation;
+import io.bumo.model.request.operation.AssetSendOperation;
 import io.bumo.model.response.AssetGetInfoResponse;
 import io.bumo.model.response.result.AssetGetInfoResult;
 import io.bumo.model.response.result.data.AssetInfo;
@@ -54,7 +54,7 @@ public class AssetServiceImpl implements AssetService {
                 throw new SDKException(SdkError.INVALID_ISSUE_AMOUNT_ERROR);
             }
             String metadata = assetIssueOperation.getMetadata();
-            // build Operation
+            // build operation
             operation = buildIssueOperation(sourceAddress, code, amount, metadata);
         } catch (SDKException sdkException) {
             throw sdkException;
@@ -87,7 +87,9 @@ public class AssetServiceImpl implements AssetService {
             if (!PublicKey.isAddressValid(destAddress)) {
                 throw new SDKException(SdkError.INVALID_DESTADDRESS_ERROR);
             }
-            if ((!Tools.isEmpty(sourceAddress) && sourceAddress.equals(destAddress) || transSourceAddress.equals(destAddress))) {
+            boolean isNotValid = (!Tools.isEmpty(sourceAddress) && sourceAddress.equals(destAddress) ||
+                    (Tools.isEmpty(sourceAddress) && transSourceAddress.equals(destAddress)));
+            if (isNotValid) {
                 throw new SDKException(SdkError.SOURCEADDRESS_EQUAL_DESTADDRESS_ERROR);
             }
             String code = assetSendOperation.getCode();
@@ -103,7 +105,7 @@ public class AssetServiceImpl implements AssetService {
                 throw new SDKException(SdkError.INVALID_ASSET_AMOUNT_ERROR);
             }
             String metadata = assetSendOperation.getMetadata();
-            // build Operation
+            // build operation
             operation = buildSendOperation(sourceAddress, destAddress, code, issuer, amount, metadata);
 
         } catch (SDKException sdkException) {
@@ -175,7 +177,7 @@ public class AssetServiceImpl implements AssetService {
 
     public static Chain.Operation buildIssueOperation(String sourceAddress, String code, long amount, String metadata) {
         Chain.Operation.Builder operation = Chain.Operation.newBuilder();
-        // build Operation
+        // build operation
         operation.setType(Chain.Operation.Type.ISSUE_ASSET);
         if (!Tools.isEmpty(sourceAddress)) {
             operation.setSourceAddress(sourceAddress);

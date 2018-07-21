@@ -6,10 +6,10 @@ import io.bumo.SDK;
 import io.bumo.common.ToBaseUnit;
 import io.bumo.encryption.key.PrivateKey;
 import io.bumo.model.request.*;
-import io.bumo.model.request.Operation.BaseOperation;
-import io.bumo.model.request.Operation.ContractCreateOperation;
-import io.bumo.model.request.Operation.ContractInvokeByAssetOperation;
-import io.bumo.model.request.Operation.ContractInvokeByBUOperation;
+import io.bumo.model.request.operation.BaseOperation;
+import io.bumo.model.request.operation.ContractCreateOperation;
+import io.bumo.model.request.operation.ContractInvokeByAssetOperation;
+import io.bumo.model.request.operation.ContractInvokeByBUOperation;
 import io.bumo.model.response.*;
 import io.bumo.model.response.result.ContractCallResult;
 import io.bumo.model.response.result.ContractCheckValidResult;
@@ -247,7 +247,7 @@ public class ContractDemo {
     /**
      * @param senderPrivateKey The account private key to start transaction
      * @param senderAddresss   The account address to start transaction
-     * @param operation        Operation
+     * @param operation        operation
      * @param senderNonce      Transaction initiation account's Nonce
      * @param gasPrice         Gas price
      * @param feeLimit         fee limit

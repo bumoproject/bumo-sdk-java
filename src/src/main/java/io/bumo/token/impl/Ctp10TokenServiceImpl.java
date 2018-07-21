@@ -13,7 +13,7 @@ import io.bumo.encryption.key.PublicKey;
 import io.bumo.exception.SDKException;
 import io.bumo.exception.SdkError;
 import io.bumo.model.request.*;
-import io.bumo.model.request.Operation.*;
+import io.bumo.model.request.operation.*;
 import io.bumo.model.response.*;
 import io.bumo.model.response.result.*;
 import io.bumo.model.response.result.data.ContractInfo;
@@ -36,7 +36,7 @@ public class Ctp10TokenServiceImpl implements Ctp10TokenService {
      * @Author riven
      * @Method issue
      * @Params [tokenIssueResult]
-     * @Return io.bumo.crypto.protobuf.Chain.Operation
+     * @Return io.bumo.crypto.protobuf.Chain.operation
      * @Date 2018/7/10 11:41
      */
     public static Chain.Operation issue(Ctp10TokenIssueOperation ctp10TokenIssueOperation) throws SDKException {
@@ -68,7 +68,7 @@ public class Ctp10TokenServiceImpl implements Ctp10TokenService {
             }
             Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
             boolean isNumber = pattern.matcher(supply).matches();
-            if (!isNumber || Long.valueOf(supply) < 1 || Long.valueOf(supply) * decimals < 1) {
+            if (!isNumber || Long.valueOf(supply) < 1 || Math.multiplyExact(Long.valueOf(supply), decimals) < 1) {
                 throw new SDKException(SdkError.INVALID_TOKEN_SUPPLY_ERROR);
             }
             String metadata = ctp10TokenIssueOperation.getMetadata();
@@ -119,7 +119,7 @@ public class Ctp10TokenServiceImpl implements Ctp10TokenService {
      * @Author riven
      * @Method transfer
      * @Params [tokenTransferOperation]
-     * @Return io.bumo.crypto.protobuf.Chain.Operation
+     * @Return io.bumo.crypto.protobuf.Chain.operation
      * @Date 2018/7/10 11:41
      */
     public static Chain.Operation transfer(Ctp10TokenTransferOperation ctp10TokenTransferOperation, String transSourceAddress) throws SDKException {
@@ -133,14 +133,17 @@ public class Ctp10TokenServiceImpl implements Ctp10TokenService {
             if (!PublicKey.isAddressValid(contractAddress)) {
                 throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
             }
-            if ((!Tools.isEmpty(sourceAddress) && sourceAddress.equals(contractAddress)) || transSourceAddress.equals(contractAddress)) {
+            boolean isContractNotValid = (!Tools.isEmpty(sourceAddress) && sourceAddress.equals(contractAddress)) || transSourceAddress.equals(contractAddress);
+            if (isContractNotValid) {
                 throw new SDKException(SdkError.SOURCEADDRESS_EQUAL_CONTRACTADDRESS_ERROR);
             }
             String destAddress = ctp10TokenTransferOperation.getDestAddress();
             if (!PublicKey.isAddressValid(destAddress)) {
                 throw new SDKException(SdkError.INVALID_DESTADDRESS_ERROR);
             }
-            if ((!Tools.isEmpty(sourceAddress) && sourceAddress.equals(destAddress) || transSourceAddress.equals(destAddress))) {
+            boolean isDestNotValid = (!Tools.isEmpty(sourceAddress) && sourceAddress.equals(destAddress) ||
+                    (Tools.isEmpty(sourceAddress) && transSourceAddress.equals(destAddress)));
+            if (isDestNotValid) {
                 throw new SDKException(SdkError.SOURCEADDRESS_EQUAL_DESTADDRESS_ERROR);
             }
             String tokenAmount = ctp10TokenTransferOperation.getTokenAmount();
@@ -185,7 +188,7 @@ public class Ctp10TokenServiceImpl implements Ctp10TokenService {
      * @Author riven
      * @Method transferFrom
      * @Params [tokenTransferFromOperation]
-     * @Return io.bumo.crypto.protobuf.Chain.Operation
+     * @Return io.bumo.crypto.protobuf.Chain.operation
      * @Date 2018/7/10 11:41
      */
     public static Chain.Operation transferFrom(Ctp10TokenTransferFromOperation ctp10TokenTransferFromOperation, String transSourceAddress) throws SDKException {
@@ -254,7 +257,7 @@ public class Ctp10TokenServiceImpl implements Ctp10TokenService {
      * @Author riven
      * @Method approve
      * @Params [tokenApproveOperation]
-     * @Return io.bumo.crypto.protobuf.Chain.Operation
+     * @Return io.bumo.crypto.protobuf.Chain.operation
      * @Date 2018/7/10 11:41
      */
     public static Chain.Operation approve(Ctp10TokenApproveOperation ctp10TokenApproveOperation, String transSourceAddress) throws SDKException {
@@ -314,7 +317,7 @@ public class Ctp10TokenServiceImpl implements Ctp10TokenService {
      * @Author riven
      * @Method assign
      * @Params [ctp10TokenAssignResponse]
-     * @Return io.bumo.crypto.protobuf.Chain.Operation
+     * @Return io.bumo.crypto.protobuf.Chain.operation
      * @Date 2018/7/10 11:41
      */
     public static Chain.Operation assign(Ctp10TokenAssignOperation ctp10TokenAssignResponse, String transSourceAddress) throws SDKException {
@@ -374,7 +377,7 @@ public class Ctp10TokenServiceImpl implements Ctp10TokenService {
      * @Author riven
      * @Method changeOwner
      * @Params [tokenChangeOwnerOperation]
-     * @Return io.bumo.crypto.protobuf.Chain.Operation
+     * @Return io.bumo.crypto.protobuf.Chain.operation
      * @Date 2018/7/10 11:41
      */
     public static Chain.Operation changeOwner(Ctp10TokenChangeOwnerOperation ctp10TokenChangeOwnerOperation, String transSourceAddress) {
@@ -503,7 +506,7 @@ public class Ctp10TokenServiceImpl implements Ctp10TokenService {
      * @Author riven
      * @Method invokeContract
      * @Params [sourceAddress, contractAddress, input, metadata]
-     * @Return io.bumo.crypto.protobuf.Chain.Operation
+     * @Return io.bumo.crypto.protobuf.Chain.operation
      * @Date 2018/7/10 11:41
      */
     private static Chain.Operation invokeContract(String sourceAddress, String contractAddress, String input, String metadata) throws SDKException {
@@ -599,7 +602,7 @@ public class Ctp10TokenServiceImpl implements Ctp10TokenService {
             if (Tools.isEmpty(result)) {
                 TokenErrorResult errorResult = tokenQueryResponse.getError();
                 String errorDesc = errorResult.getData().getException();
-                throw new SDKException(SdkError.GET_ALLOWANCE_ERRPR.getCode(), errorDesc);
+                throw new SDKException(SdkError.GET_ALLOWANCE_ERROR.getCode(), errorDesc);
             }
             tokenAllowanceResult = JSONObject.parseObject(result.getValue(), TokenAllowanceResult.class);
             ctp10TokenAllowanceResponse.buildResponse(SdkError.SUCCESS, tokenAllowanceResult);
@@ -648,7 +651,7 @@ public class Ctp10TokenServiceImpl implements Ctp10TokenService {
             if (Tools.isEmpty(result)) {
                 TokenErrorResult errorResult = tokenQueryResponse.getError();
                 String errorDesc = errorResult.getData().getException();
-                throw new SDKException(SdkError.GET_TOKEN_INFO_ERRPR.getCode(), errorDesc);
+                throw new SDKException(SdkError.GET_TOKEN_INFO_ERROR.getCode(), errorDesc);
             }
             tokenGetInfoResult = JSONObject.parseObject(result.getValue(), TokenGetInfoResult.class);
             ctp10TokenGetInfoResponse.buildResponse(SdkError.SUCCESS, tokenGetInfoResult);
@@ -696,7 +699,7 @@ public class Ctp10TokenServiceImpl implements Ctp10TokenService {
             if (Tools.isEmpty(result)) {
                 TokenErrorResult errorResult = tokenQueryResponse.getError();
                 String errorDesc = errorResult.getData().getException();
-                throw new SDKException(SdkError.GET_TOKEN_INFO_ERRPR.getCode(), errorDesc);
+                throw new SDKException(SdkError.GET_TOKEN_INFO_ERROR.getCode(), errorDesc);
             }
             tokenGetNameResult = JSONObject.parseObject(result.getValue(), TokenGetNameResult.class);
             ctp10TokenGetNameResponse.buildResponse(SdkError.SUCCESS, tokenGetNameResult);
@@ -744,7 +747,7 @@ public class Ctp10TokenServiceImpl implements Ctp10TokenService {
             if (Tools.isEmpty(result)) {
                 TokenErrorResult errorResult = tokenQueryResponse.getError();
                 String errorDesc = errorResult.getData().getException();
-                throw new SDKException(SdkError.GET_TOKEN_INFO_ERRPR.getCode(), errorDesc);
+                throw new SDKException(SdkError.GET_TOKEN_INFO_ERROR.getCode(), errorDesc);
             }
             tokenGetSymbolResult = JSONObject.parseObject(result.getValue(), TokenGetSymbolResult.class);
             ctp10TokenGetSymbolResponse.buildResponse(SdkError.SUCCESS, tokenGetSymbolResult);
@@ -785,7 +788,7 @@ public class Ctp10TokenServiceImpl implements Ctp10TokenService {
             if (Tools.isEmpty(result)) {
                 TokenErrorResult errorResult = tokenQueryResponse.getError();
                 String errorDesc = errorResult.getData().getException();
-                throw new SDKException(SdkError.GET_TOKEN_INFO_ERRPR.getCode(), errorDesc);
+                throw new SDKException(SdkError.GET_TOKEN_INFO_ERROR.getCode(), errorDesc);
             }
             tokenGetDecimalsResult = JSONObject.parseObject(result.getValue(), TokenGetDecimalsResult.class);
             ctp10TokenGetDecimalsResponse.buildResponse(SdkError.SUCCESS, tokenGetDecimalsResult);
@@ -832,7 +835,7 @@ public class Ctp10TokenServiceImpl implements Ctp10TokenService {
             if (Tools.isEmpty(result)) {
                 TokenErrorResult errorResult = tokenQueryResponse.getError();
                 String errorDesc = errorResult.getData().getException();
-                throw new SDKException(SdkError.GET_TOKEN_INFO_ERRPR.getCode(), errorDesc);
+                throw new SDKException(SdkError.GET_TOKEN_INFO_ERROR.getCode(), errorDesc);
             }
             tokenGetTotalSupplyResult = JSONObject.parseObject(result.getValue(), TokenGetTotalSupplyResult.class);
             ctp10TokenGetTotalSupplyResponse.buildResponse(SdkError.SUCCESS, tokenGetTotalSupplyResult);
@@ -886,7 +889,7 @@ public class Ctp10TokenServiceImpl implements Ctp10TokenService {
             if (Tools.isEmpty(result)) {
                 TokenErrorResult errorResult = tokenQueryResponse.getError();
                 String errorDesc = errorResult.getData().getException();
-                throw new SDKException(SdkError.GET_TOKEN_INFO_ERRPR.getCode(), errorDesc);
+                throw new SDKException(SdkError.GET_TOKEN_INFO_ERROR.getCode(), errorDesc);
             }
             tokenGetBalanceResult = JSONObject.parseObject(result.getValue(), TokenGetBalanceResult.class);
             ctp10TokenGetBalanceResponse.buildResponse(SdkError.SUCCESS, tokenGetBalanceResult);

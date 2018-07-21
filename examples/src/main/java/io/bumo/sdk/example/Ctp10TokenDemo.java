@@ -5,7 +5,7 @@ import io.bumo.SDK;
 import io.bumo.common.ToBaseUnit;
 import io.bumo.encryption.key.PrivateKey;
 import io.bumo.model.request.*;
-import io.bumo.model.request.Operation.*;
+import io.bumo.model.request.operation.*;
 import io.bumo.model.response.*;
 import io.bumo.model.response.result.*;
 import org.junit.Test;
@@ -179,7 +179,7 @@ public class Ctp10TokenDemo {
     public void issueToken() {
         // Init variable
         // The account private key to create contract token
-        String sourcePrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq";
+        String sourcePrivateKey = "privbvTuL1k8z27i9eyBrFDUvAVVCSxKeLtzjMMZEqimFwbNchnejS81";
         // The initialization BU of the contract to be created
         Long initBalance = ToBaseUnit.BU2MO("0.1");
         // The decimals of token amount
@@ -187,11 +187,11 @@ public class Ctp10TokenDemo {
         // Token name
         String name = "TST";
         // Token supply amount (not include decimals)，actually it is (10 ^ 8) * (10 ^ decimals)
-        String supply = "9223372036854775808";
+        String supply = "10000000000";
         // Token symbol
         String symbol = "TST";
         // Transaction initiation account's nonce + 1
-        Long nonce = 36L;
+        Long nonce = 23L;
         // The fixed write 1000L, the unit is MO
         Long gasPrice = 1000L;
         // Set up the maximum cost 10.08BU
@@ -422,7 +422,7 @@ public class Ctp10TokenDemo {
     /**
      * @param senderPrivateKey The account private key to start transaction
      * @param senderAddresss   The account address to start transaction
-     * @param operation        Operation
+     * @param operation        operation
      * @param senderNonce      Transaction initiation account's Nonce
      * @param gasPrice         Gas price
      * @param feeLimit         fee limit
