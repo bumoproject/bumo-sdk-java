@@ -185,7 +185,7 @@ public final class Chain {
                         "Asset\022\024\n\014dest_address\030\001 \001(\t\022\036\n\005asset\030\002 \001" +
                         "(\0132\017.protocol.Asset\022\r\n\005input\030\003 \001(\t\"S\n\026Op" +
                         "erationTypeThreshold\022&\n\004type\030\001 \001(\0162\030.pro" +
-                        "tocol.Operation.Type\022\021\n\tthreshold\030\002 \001(\003\"" +
+                        "tocol.operation.Type\022\021\n\tthreshold\030\002 \001(\003\"" +
                         "|\n\020AccountPrivilege\022\025\n\rmaster_weight\030\001 \001" +
                         "(\003\022!\n\007signers\030\002 \003(\0132\020.protocol.Signer\022.\n" +
                         "\nthresholds\030\003 \001(\0132\032.protocol.AccountThre" +
@@ -202,8 +202,8 @@ public final class Chain {
                         "_weight\030\001 \001(\t\022!\n\007signers\030\002 \003(\0132\020.protoco" +
                         "l.Signer\022\024\n\014tx_threshold\030\003 \001(\t\0229\n\017type_t" +
                         "hresholds\030\004 \003(\0132 .protocol.OperationType" +
-                        "Threshold\"\343\005\n\tOperation\022&\n\004type\030\001 \001(\0162\030." +
-                        "protocol.Operation.Type\022\026\n\016source_addres" +
+                        "Threshold\"\343\005\n\toperation\022&\n\004type\030\001 \001(\0162\030." +
+                        "protocol.operation.Type\022\026\n\016source_addres" +
                         "s\030\002 \001(\t\022\020\n\010metadata\030\003 \001(\014\0228\n\016create_acco" +
                         "unt\030\004 \001(\0132 .protocol.OperationCreateAcco" +
                         "unt\0222\n\013issue_asset\030\005 \001(\0132\035.protocol.Oper" +
@@ -227,7 +227,7 @@ public final class Chain {
                         "rce_address\030\001 \001(\t\022\r\n\005nonce\030\002 \001(\003\022\021\n\tfee_" +
                         "limit\030\003 \001(\003\022\021\n\tgas_price\030\004 \001(\003\022\027\n\017ceil_l" +
                         "edger_seq\030\005 \001(\003\022\020\n\010metadata\030\006 \001(\014\022\'\n\nope" +
-                        "rations\030\007 \003(\0132\023.protocol.Operation\"%\n\005Li" +
+                        "rations\030\007 \003(\0132\023.protocol.operation\"%\n\005Li" +
                         "mit\022\013\n\007UNKNOWN\020\000\022\017\n\nOPERATIONS\020\350\007\"O\n\006Sig" +
                         "ner\022\017\n\007address\030\001 \001(\t\022\016\n\006weight\030\002 \001(\003\"$\n\005" +
                         "Limit\022\017\n\013SIGNER_NONE\020\000\022\n\n\006SIGNER\020d\"\211\002\n\007T" +
@@ -964,12 +964,12 @@ public final class Chain {
             com.google.protobuf.MessageOrBuilder {
 
         /**
-         * <code>.protocol.Operation.Type type = 1;</code>
+         * <code>.protocol.operation.Type type = 1;</code>
          */
         int getTypeValue();
 
         /**
-         * <code>.protocol.Operation.Type type = 1;</code>
+         * <code>.protocol.operation.Type type = 1;</code>
          */
         io.bumo.crypto.protobuf.Chain.Operation.Type getType();
 
@@ -1303,16 +1303,16 @@ public final class Chain {
                 int index);
     }
     public interface OperationOrBuilder extends
-            // @@protoc_insertion_point(interface_extends:protocol.Operation)
+            // @@protoc_insertion_point(interface_extends:protocol.operation)
             com.google.protobuf.MessageOrBuilder {
 
         /**
-         * <code>.protocol.Operation.Type type = 1;</code>
+         * <code>.protocol.operation.Type type = 1;</code>
          */
         int getTypeValue();
 
         /**
-         * <code>.protocol.Operation.Type type = 1;</code>
+         * <code>.protocol.operation.Type type = 1;</code>
          */
         io.bumo.crypto.protobuf.Chain.Operation.Type getType();
 
@@ -1574,29 +1574,29 @@ public final class Chain {
         com.google.protobuf.ByteString getMetadata();
 
         /**
-         * <code>repeated .protocol.Operation operations = 7;</code>
+         * <code>repeated .protocol.operation operations = 7;</code>
          */
         java.util.List<io.bumo.crypto.protobuf.Chain.Operation>
         getOperationsList();
 
         /**
-         * <code>repeated .protocol.Operation operations = 7;</code>
+         * <code>repeated .protocol.operation operations = 7;</code>
          */
         io.bumo.crypto.protobuf.Chain.Operation getOperations(int index);
 
         /**
-         * <code>repeated .protocol.Operation operations = 7;</code>
+         * <code>repeated .protocol.operation operations = 7;</code>
          */
         int getOperationsCount();
 
         /**
-         * <code>repeated .protocol.Operation operations = 7;</code>
+         * <code>repeated .protocol.operation operations = 7;</code>
          */
         java.util.List<? extends io.bumo.crypto.protobuf.Chain.OperationOrBuilder>
         getOperationsOrBuilderList();
 
         /**
-         * <code>repeated .protocol.Operation operations = 7;</code>
+         * <code>repeated .protocol.operation operations = 7;</code>
          */
         io.bumo.crypto.protobuf.Chain.OperationOrBuilder getOperationsOrBuilder(
                 int index);
@@ -9687,14 +9687,14 @@ public final class Chain {
         }
 
         /**
-         * <code>.protocol.Operation.Type type = 1;</code>
+         * <code>.protocol.operation.Type type = 1;</code>
          */
         public int getTypeValue() {
             return type_;
         }
 
         /**
-         * <code>.protocol.Operation.Type type = 1;</code>
+         * <code>.protocol.operation.Type type = 1;</code>
          */
         public io.bumo.crypto.protobuf.Chain.Operation.Type getType() {
             io.bumo.crypto.protobuf.Chain.Operation.Type result = io.bumo.crypto.protobuf.Chain.Operation.Type.valueOf(type_);
@@ -9956,14 +9956,14 @@ public final class Chain {
             }
 
             /**
-             * <code>.protocol.Operation.Type type = 1;</code>
+             * <code>.protocol.operation.Type type = 1;</code>
              */
             public int getTypeValue() {
                 return type_;
             }
 
             /**
-             * <code>.protocol.Operation.Type type = 1;</code>
+             * <code>.protocol.operation.Type type = 1;</code>
              */
             public Builder setTypeValue(int value) {
                 type_ = value;
@@ -9972,7 +9972,7 @@ public final class Chain {
             }
 
             /**
-             * <code>.protocol.Operation.Type type = 1;</code>
+             * <code>.protocol.operation.Type type = 1;</code>
              */
             public io.bumo.crypto.protobuf.Chain.Operation.Type getType() {
                 io.bumo.crypto.protobuf.Chain.Operation.Type result = io.bumo.crypto.protobuf.Chain.Operation.Type.valueOf(type_);
@@ -9980,7 +9980,7 @@ public final class Chain {
             }
 
             /**
-             * <code>.protocol.Operation.Type type = 1;</code>
+             * <code>.protocol.operation.Type type = 1;</code>
              */
             public Builder setType(io.bumo.crypto.protobuf.Chain.Operation.Type value) {
                 if (value == null) {
@@ -9993,7 +9993,7 @@ public final class Chain {
             }
 
             /**
-             * <code>.protocol.Operation.Type type = 1;</code>
+             * <code>.protocol.operation.Type type = 1;</code>
              */
             public Builder clearType() {
 
@@ -16391,11 +16391,11 @@ public final class Chain {
     }
 
     /**
-     * Protobuf type {@code protocol.Operation}
+     * Protobuf type {@code protocol.operation}
      */
     public static final class Operation extends
             com.google.protobuf.GeneratedMessageV3 implements
-            // @@protoc_insertion_point(message_implements:protocol.Operation)
+            // @@protoc_insertion_point(message_implements:protocol.operation)
             OperationOrBuilder {
         public static final int TYPE_FIELD_NUMBER = 1;
         public static final int SOURCE_ADDRESS_FIELD_NUMBER = 2;
@@ -16410,7 +16410,7 @@ public final class Chain {
         public static final int LOG_FIELD_NUMBER = 11;
         public static final int SET_PRIVILEGE_FIELD_NUMBER = 12;
         private static final long serialVersionUID = 0L;
-        // @@protoc_insertion_point(class_scope:protocol.Operation)
+        // @@protoc_insertion_point(class_scope:protocol.operation)
         private static final io.bumo.crypto.protobuf.Chain.Operation DEFAULT_INSTANCE;
         private static final com.google.protobuf.Parser<Operation>
                 PARSER = new com.google.protobuf.AbstractParser<Operation>() {
@@ -16440,7 +16440,7 @@ public final class Chain {
         private io.bumo.crypto.protobuf.Chain.OperationSetPrivilege setPrivilege_;
         private byte memoizedIsInitialized = -1;
 
-        // Use Operation.newBuilder() to construct.
+        // Use operation.newBuilder() to construct.
         private Operation(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
             super(builder);
         }
@@ -16739,14 +16739,14 @@ public final class Chain {
         }
 
         /**
-         * <code>.protocol.Operation.Type type = 1;</code>
+         * <code>.protocol.operation.Type type = 1;</code>
          */
         public int getTypeValue() {
             return type_;
         }
 
         /**
-         * <code>.protocol.Operation.Type type = 1;</code>
+         * <code>.protocol.operation.Type type = 1;</code>
          */
         public io.bumo.crypto.protobuf.Chain.Operation.Type getType() {
             io.bumo.crypto.protobuf.Chain.Operation.Type result = io.bumo.crypto.protobuf.Chain.Operation.Type.valueOf(type_);
@@ -17243,7 +17243,7 @@ public final class Chain {
         }
 
         /**
-         * Protobuf enum {@code protocol.Operation.Type}
+         * Protobuf enum {@code protocol.operation.Type}
          */
         public enum Type
                 implements com.google.protobuf.ProtocolMessageEnum {
@@ -17418,15 +17418,15 @@ public final class Chain {
                 return getDescriptor();
             }
 
-            // @@protoc_insertion_point(enum_scope:protocol.Operation.Type)
+            // @@protoc_insertion_point(enum_scope:protocol.operation.Type)
         }
 
         /**
-         * Protobuf type {@code protocol.Operation}
+         * Protobuf type {@code protocol.operation}
          */
         public static final class Builder extends
                 com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-                // @@protoc_insertion_point(builder_implements:protocol.Operation)
+                // @@protoc_insertion_point(builder_implements:protocol.operation)
                 io.bumo.crypto.protobuf.Chain.OperationOrBuilder {
             private int type_ = 0;
             private java.lang.Object sourceAddress_ = "";
@@ -17459,7 +17459,7 @@ public final class Chain {
             private com.google.protobuf.SingleFieldBuilderV3<
                     io.bumo.crypto.protobuf.Chain.OperationSetPrivilege, io.bumo.crypto.protobuf.Chain.OperationSetPrivilege.Builder, io.bumo.crypto.protobuf.Chain.OperationSetPrivilegeOrBuilder> setPrivilegeBuilder_;
 
-            // Construct using io.bumo.crypto.protobuf.Chain.Operation.newBuilder()
+            // Construct using io.bumo.crypto.protobuf.Chain.operation.newBuilder()
             private Builder() {
                 maybeForceBuilderInitialization();
             }
@@ -17732,14 +17732,14 @@ public final class Chain {
             }
 
             /**
-             * <code>.protocol.Operation.Type type = 1;</code>
+             * <code>.protocol.operation.Type type = 1;</code>
              */
             public int getTypeValue() {
                 return type_;
             }
 
             /**
-             * <code>.protocol.Operation.Type type = 1;</code>
+             * <code>.protocol.operation.Type type = 1;</code>
              */
             public Builder setTypeValue(int value) {
                 type_ = value;
@@ -17748,7 +17748,7 @@ public final class Chain {
             }
 
             /**
-             * <code>.protocol.Operation.Type type = 1;</code>
+             * <code>.protocol.operation.Type type = 1;</code>
              */
             public io.bumo.crypto.protobuf.Chain.Operation.Type getType() {
                 io.bumo.crypto.protobuf.Chain.Operation.Type result = io.bumo.crypto.protobuf.Chain.Operation.Type.valueOf(type_);
@@ -17756,7 +17756,7 @@ public final class Chain {
             }
 
             /**
-             * <code>.protocol.Operation.Type type = 1;</code>
+             * <code>.protocol.operation.Type type = 1;</code>
              */
             public Builder setType(io.bumo.crypto.protobuf.Chain.Operation.Type value) {
                 if (value == null) {
@@ -17769,7 +17769,7 @@ public final class Chain {
             }
 
             /**
-             * <code>.protocol.Operation.Type type = 1;</code>
+             * <code>.protocol.operation.Type type = 1;</code>
              */
             public Builder clearType() {
 
@@ -19016,7 +19016,7 @@ public final class Chain {
             }
 
 
-            // @@protoc_insertion_point(builder_scope:protocol.Operation)
+            // @@protoc_insertion_point(builder_scope:protocol.operation)
         }
 
     }
@@ -20279,14 +20279,14 @@ public final class Chain {
         }
 
         /**
-         * <code>repeated .protocol.Operation operations = 7;</code>
+         * <code>repeated .protocol.operation operations = 7;</code>
          */
         public java.util.List<io.bumo.crypto.protobuf.Chain.Operation> getOperationsList() {
             return operations_;
         }
 
         /**
-         * <code>repeated .protocol.Operation operations = 7;</code>
+         * <code>repeated .protocol.operation operations = 7;</code>
          */
         public java.util.List<? extends io.bumo.crypto.protobuf.Chain.OperationOrBuilder>
         getOperationsOrBuilderList() {
@@ -20294,21 +20294,21 @@ public final class Chain {
         }
 
         /**
-         * <code>repeated .protocol.Operation operations = 7;</code>
+         * <code>repeated .protocol.operation operations = 7;</code>
          */
         public int getOperationsCount() {
             return operations_.size();
         }
 
         /**
-         * <code>repeated .protocol.Operation operations = 7;</code>
+         * <code>repeated .protocol.operation operations = 7;</code>
          */
         public io.bumo.crypto.protobuf.Chain.Operation getOperations(int index) {
             return operations_.get(index);
         }
 
         /**
-         * <code>repeated .protocol.Operation operations = 7;</code>
+         * <code>repeated .protocol.operation operations = 7;</code>
          */
         public io.bumo.crypto.protobuf.Chain.OperationOrBuilder getOperationsOrBuilder(
                 int index) {
@@ -21018,7 +21018,7 @@ public final class Chain {
             }
 
             /**
-             * <code>repeated .protocol.Operation operations = 7;</code>
+             * <code>repeated .protocol.operation operations = 7;</code>
              */
             public java.util.List<io.bumo.crypto.protobuf.Chain.Operation> getOperationsList() {
                 if (operationsBuilder_ == null) {
@@ -21029,7 +21029,7 @@ public final class Chain {
             }
 
             /**
-             * <code>repeated .protocol.Operation operations = 7;</code>
+             * <code>repeated .protocol.operation operations = 7;</code>
              */
             public int getOperationsCount() {
                 if (operationsBuilder_ == null) {
@@ -21040,7 +21040,7 @@ public final class Chain {
             }
 
             /**
-             * <code>repeated .protocol.Operation operations = 7;</code>
+             * <code>repeated .protocol.operation operations = 7;</code>
              */
             public io.bumo.crypto.protobuf.Chain.Operation getOperations(int index) {
                 if (operationsBuilder_ == null) {
@@ -21051,7 +21051,7 @@ public final class Chain {
             }
 
             /**
-             * <code>repeated .protocol.Operation operations = 7;</code>
+             * <code>repeated .protocol.operation operations = 7;</code>
              */
             public Builder setOperations(
                     int index, io.bumo.crypto.protobuf.Chain.Operation value) {
@@ -21069,7 +21069,7 @@ public final class Chain {
             }
 
             /**
-             * <code>repeated .protocol.Operation operations = 7;</code>
+             * <code>repeated .protocol.operation operations = 7;</code>
              */
             public Builder setOperations(
                     int index, io.bumo.crypto.protobuf.Chain.Operation.Builder builderForValue) {
@@ -21084,7 +21084,7 @@ public final class Chain {
             }
 
             /**
-             * <code>repeated .protocol.Operation operations = 7;</code>
+             * <code>repeated .protocol.operation operations = 7;</code>
              */
             public Builder addOperations(io.bumo.crypto.protobuf.Chain.Operation value) {
                 if (operationsBuilder_ == null) {
@@ -21101,7 +21101,7 @@ public final class Chain {
             }
 
             /**
-             * <code>repeated .protocol.Operation operations = 7;</code>
+             * <code>repeated .protocol.operation operations = 7;</code>
              */
             public Builder addOperations(
                     int index, io.bumo.crypto.protobuf.Chain.Operation value) {
@@ -21119,7 +21119,7 @@ public final class Chain {
             }
 
             /**
-             * <code>repeated .protocol.Operation operations = 7;</code>
+             * <code>repeated .protocol.operation operations = 7;</code>
              */
             public Builder addOperations(
                     io.bumo.crypto.protobuf.Chain.Operation.Builder builderForValue) {
@@ -21134,7 +21134,7 @@ public final class Chain {
             }
 
             /**
-             * <code>repeated .protocol.Operation operations = 7;</code>
+             * <code>repeated .protocol.operation operations = 7;</code>
              */
             public Builder addOperations(
                     int index, io.bumo.crypto.protobuf.Chain.Operation.Builder builderForValue) {
@@ -21149,7 +21149,7 @@ public final class Chain {
             }
 
             /**
-             * <code>repeated .protocol.Operation operations = 7;</code>
+             * <code>repeated .protocol.operation operations = 7;</code>
              */
             public Builder addAllOperations(
                     java.lang.Iterable<? extends io.bumo.crypto.protobuf.Chain.Operation> values) {
@@ -21165,7 +21165,7 @@ public final class Chain {
             }
 
             /**
-             * <code>repeated .protocol.Operation operations = 7;</code>
+             * <code>repeated .protocol.operation operations = 7;</code>
              */
             public Builder clearOperations() {
                 if (operationsBuilder_ == null) {
@@ -21179,7 +21179,7 @@ public final class Chain {
             }
 
             /**
-             * <code>repeated .protocol.Operation operations = 7;</code>
+             * <code>repeated .protocol.operation operations = 7;</code>
              */
             public Builder removeOperations(int index) {
                 if (operationsBuilder_ == null) {
@@ -21193,7 +21193,7 @@ public final class Chain {
             }
 
             /**
-             * <code>repeated .protocol.Operation operations = 7;</code>
+             * <code>repeated .protocol.operation operations = 7;</code>
              */
             public io.bumo.crypto.protobuf.Chain.Operation.Builder getOperationsBuilder(
                     int index) {
@@ -21201,7 +21201,7 @@ public final class Chain {
             }
 
             /**
-             * <code>repeated .protocol.Operation operations = 7;</code>
+             * <code>repeated .protocol.operation operations = 7;</code>
              */
             public io.bumo.crypto.protobuf.Chain.OperationOrBuilder getOperationsOrBuilder(
                     int index) {
@@ -21213,7 +21213,7 @@ public final class Chain {
             }
 
             /**
-             * <code>repeated .protocol.Operation operations = 7;</code>
+             * <code>repeated .protocol.operation operations = 7;</code>
              */
             public java.util.List<? extends io.bumo.crypto.protobuf.Chain.OperationOrBuilder>
             getOperationsOrBuilderList() {
@@ -21225,7 +21225,7 @@ public final class Chain {
             }
 
             /**
-             * <code>repeated .protocol.Operation operations = 7;</code>
+             * <code>repeated .protocol.operation operations = 7;</code>
              */
             public io.bumo.crypto.protobuf.Chain.Operation.Builder addOperationsBuilder() {
                 return getOperationsFieldBuilder().addBuilder(
@@ -21233,7 +21233,7 @@ public final class Chain {
             }
 
             /**
-             * <code>repeated .protocol.Operation operations = 7;</code>
+             * <code>repeated .protocol.operation operations = 7;</code>
              */
             public io.bumo.crypto.protobuf.Chain.Operation.Builder addOperationsBuilder(
                     int index) {
@@ -21242,7 +21242,7 @@ public final class Chain {
             }
 
             /**
-             * <code>repeated .protocol.Operation operations = 7;</code>
+             * <code>repeated .protocol.operation operations = 7;</code>
              */
             public java.util.List<io.bumo.crypto.protobuf.Chain.Operation.Builder>
             getOperationsBuilderList() {

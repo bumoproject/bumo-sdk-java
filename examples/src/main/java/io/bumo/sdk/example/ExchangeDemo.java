@@ -6,7 +6,7 @@ import io.bumo.common.ToBaseUnit;
 import io.bumo.crypto.Keypair;
 import io.bumo.encryption.key.PrivateKey;
 import io.bumo.model.request.*;
-import io.bumo.model.request.Operation.BUSendOperation;
+import io.bumo.model.request.operation.BUSendOperation;
 import io.bumo.model.response.*;
 import io.bumo.model.response.result.AccountGetNonceResult;
 import io.bumo.model.response.result.BlockGetInfoResult;

@@ -10,7 +10,7 @@ import io.bumo.encryption.key.PrivateKey;
 import io.bumo.encryption.utils.hash.HashUtil;
 import io.bumo.encryption.utils.hex.HexFormat;
 import io.bumo.model.request.AccountGetNonceRequest;
-import io.bumo.model.request.Operation.BUSendOperation;
+import io.bumo.model.request.operation.BUSendOperation;
 import io.bumo.model.request.TransactionBuildBlobRequest;
 import io.bumo.model.request.TransactionParseBlobRequest;
 import io.bumo.model.request.TransactionSubmitRequest;

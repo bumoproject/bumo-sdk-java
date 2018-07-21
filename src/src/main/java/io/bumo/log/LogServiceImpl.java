@@ -7,7 +7,7 @@ import io.bumo.crypto.protobuf.Chain;
 import io.bumo.encryption.key.PublicKey;
 import io.bumo.exception.SDKException;
 import io.bumo.exception.SdkError;
-import io.bumo.model.request.Operation.LogCreateOperation;
+import io.bumo.model.request.operation.LogCreateOperation;
 
 import java.util.List;
 
@@ -45,7 +45,7 @@ public class LogServiceImpl {
                 }
             }
             String metadata = logCreateOperation.getMetadata();
-            // build Operation
+            // build operation
             operation = Chain.Operation.newBuilder();
             operation.setType(Chain.Operation.Type.LOG);
             if (!Tools.isEmpty(sourceAddress)) {

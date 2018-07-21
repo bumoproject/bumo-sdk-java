@@ -6,7 +6,7 @@ import io.bumo.crypto.protobuf.Chain;
 import io.bumo.encryption.key.PublicKey;
 import io.bumo.exception.SDKException;
 import io.bumo.exception.SdkError;
-import io.bumo.model.request.Operation.BUSendOperation;
+import io.bumo.model.request.operation.BUSendOperation;
 
 /**
  * @Author riven
@@ -25,7 +25,9 @@ public class BUServiceImpl {
             if (!PublicKey.isAddressValid(destAddress)) {
                 throw new SDKException(SdkError.INVALID_DESTADDRESS_ERROR);
             }
-            if ((!Tools.isEmpty(sourceAddress) && sourceAddress.equals(destAddress)) || transSourceAddress.equals(destAddress)) {
+            boolean isNotValid = (!Tools.isEmpty(sourceAddress) && sourceAddress.equals(destAddress)) ||
+                    (Tools.isEmpty(sourceAddress) && transSourceAddress.equals(destAddress));
+            if (isNotValid) {
                 throw new SDKException(SdkError.SOURCEADDRESS_EQUAL_DESTADDRESS_ERROR);
             }
             Long amount = buSendOperation.getAmount();
@@ -33,7 +35,7 @@ public class BUServiceImpl {
                 throw new SDKException(SdkError.INVALID_BU_AMOUNT_ERROR);
             }
             String metadata = buSendOperation.getMetadata();
-            // build Operation
+            // build operation
             operation = Chain.Operation.newBuilder();
             operation.setType(Chain.Operation.Type.PAY_COIN);
             if (!Tools.isEmpty(sourceAddress)) {

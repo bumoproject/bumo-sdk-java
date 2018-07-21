@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import io.bumo.SDK;
 import io.bumo.common.ToBaseUnit;
 import io.bumo.model.request.AccountGetNonceRequest;
-import io.bumo.model.request.Operation.BUSendOperation;
+import io.bumo.model.request.operation.BUSendOperation;
 import io.bumo.model.request.TransactionBuildBlobRequest;
 import io.bumo.model.request.TransactionSignRequest;
 import io.bumo.model.request.TransactionSubmitRequest;

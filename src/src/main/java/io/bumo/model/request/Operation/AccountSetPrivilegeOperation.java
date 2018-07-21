@@ -1,4 +1,4 @@
-package io.bumo.model.request.Operation;
+package io.bumo.model.request.operation;
 
 import io.bumo.common.OperationType;
 import io.bumo.model.response.result.data.Signer;
@@ -11,11 +11,14 @@ import java.util.Arrays;
  * @Date 2018/7/9 16:48
  */
 public class AccountSetPrivilegeOperation extends BaseOperation {
-    private OperationType operationType = OperationType.ACCOUNT_SET_PRIVILEGE;
     private String masterWeight;
     private Signer[] signers;
     private String txThreshold;
     private TypeThreshold[] typeThresholds;
+
+    public AccountSetPrivilegeOperation() {
+        operationType = OperationType.ACCOUNT_SET_PRIVILEGE;
+    }
 
     /**
      * @Author riven

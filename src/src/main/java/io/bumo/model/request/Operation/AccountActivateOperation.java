@@ -1,4 +1,4 @@
-package io.bumo.model.request.Operation;
+package io.bumo.model.request.operation;
 
 import io.bumo.common.OperationType;
 
@@ -7,9 +7,12 @@ import io.bumo.common.OperationType;
  * @Date 2018/7/9 16:45
  */
 public class AccountActivateOperation extends BaseOperation {
-    private OperationType operationType = OperationType.ACCOUNT_ACTIVATE;
     private String destAddress;
     private Long initBalance;
+
+    public AccountActivateOperation() {
+        operationType = OperationType.ACCOUNT_ACTIVATE;
+    }
 
     /**
      * @Author riven
