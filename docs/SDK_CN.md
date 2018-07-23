@@ -26,7 +26,7 @@
 	- [getAssets](#getassets)
 	- [getMetadata](#getmetadata)
 - [资产服务](#资产服务)
-    - [getInfo](#getinfo)
+    - [getInfo](#getinfo-资产)
 - [Token服务](#token服务)
     - [checkValid](#checkvalid-Token)
 	- [allowance](#allowance)
@@ -618,7 +618,7 @@ if (response.getErrorCode() == 0) {
 
 账户服务主要是资产相关的接口，目前有1个接口：getInfo
 
-### getInfo
+### getInfo-资产
 
 > 接口说明
 
@@ -775,7 +775,7 @@ if (response.getErrorCode() == 0) {
 }
 ```
 
-### getInfo 
+### getInfo-Token
 
 > 接口说明
 
@@ -1116,7 +1116,7 @@ if (response.getErrorCode() == 0) {
 }
 ```
 
-### getInfo 
+### getInfo-合约
 
 > 接口说明
 
