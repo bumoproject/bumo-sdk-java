@@ -346,14 +346,13 @@ public class AccountServiceImpl implements AccountService {
                 throw new SDKException(SdkError.SOURCEADDRESS_EQUAL_DESTADDRESS_ERROR);
             }
             Long initBalance = accountActivateOperation.getInitBalance();
-            if (initBalance <= 0) {
+            if (null == initBalance || (initBalance != null && initBalance <= 0)) {
                 throw new SDKException(SdkError.INVALID_INITBALANCE_ERROR);
             }
             String metadata = accountActivateOperation.getMetadata();
             if (metadata != null && !HexFormat.isHexString(metadata)) {
                 throw new SDKException(SdkError.METADATA_NOT_HEX_STRING_ERROR);
             }
-
             // build Operation
             operation = Chain.Operation.newBuilder();
             operation.setType(Chain.Operation.Type.CREATE_ACCOUNT);
