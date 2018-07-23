@@ -8,9 +8,9 @@
 	- [请求参数](#请求参数)
 	- [响应数据](#响应数据)
 - [使用方法](#使用方法)
-    - [生成SDK实例](#生成SDK实例)
+    - [生成SDK实例](#生成sdk实例)
     - [生成公私钥地址](#生成公私钥地址)
-    - [有效性校验](#有效性校验接口)
+    - [有效性校验](#有效性校验)
     - [查询](#查询)
 	- [提交交易](#提交交易)
 		- [获取账户nonce值](#获取账户nonce值)
@@ -675,7 +675,7 @@ if (response.getErrorCode() == 0) {
 
  账户服务主要是Token相关的接口，目前有8个接口：checkValid, allowance, getInfo, getName, getSymbol, getDecimals, getTotalSupply, getBalance
 
- ### checkValid
+ ### checkValid-Token
 
 > 接口说明
 
@@ -1015,7 +1015,7 @@ if (response.getErrorCode() == 0) {
 }
 ```
 
-### getBalance 
+### getBalance-Token
 
 > 接口说明
 
@@ -1071,7 +1071,7 @@ if (response.getErrorCode() == 0) {
 
 账户服务主要是合约相关的接口，目前有3个接口：checkValid, getInfo, call
 
-### checkValid 
+### checkvalid-合约
 
 > 接口说明
 
