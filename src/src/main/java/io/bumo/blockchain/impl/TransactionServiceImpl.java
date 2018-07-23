@@ -62,17 +62,15 @@ public class TransactionServiceImpl implements TransactionService {
             if (nonce == null || (nonce != null && nonce < 1)) {
                 throw new SDKException(SdkError.INVALID_NONCE_ERROR);
             }
-
-
             // check gasPrice
             Long gasPrice = transactionBuildBlobRequest.getGasPrice();
-            if (gasPrice == null || (gasPrice != null && gasPrice < 1000)) {
+            if (null == gasPrice || (gasPrice != null && gasPrice < 1000)) {
                 throw new SDKException(SdkError.INVALID_GASPRICE_ERROR);
             }
 
             // check feeLimit
             Long feeLimit = transactionBuildBlobRequest.getFeeLimit();
-            if (feeLimit == null || (feeLimit != null && feeLimit < 1)) {
+            if (null == feeLimit || (feeLimit != null && feeLimit < 1)) {
                 throw new SDKException(SdkError.INVALID_FEELIMIT_ERROR);
             }
 
@@ -89,6 +87,9 @@ public class TransactionServiceImpl implements TransactionService {
             // check operation and build transaction
             Chain.Transaction.Builder transaction = Chain.Transaction.newBuilder();
             BaseOperation[] baseOperations = transactionBuildBlobRequest.getOperations();
+            if (null == baseOperations || (baseOperations != null && baseOperations.length == 0)) {
+                throw new SDKException(SdkError.OPERATIONS_EMPTY_ERROR);
+            }
             buildOperations(baseOperations, transaction);
 
             transaction.setSourceAddress(sourceAddress);
@@ -203,6 +204,9 @@ public class TransactionServiceImpl implements TransactionService {
             // build transaction
             Chain.Transaction.Builder transaction = Chain.Transaction.newBuilder();
             BaseOperation[] baseOperations = transactionEvaluateFeeRequest.getOperations();
+            if (null == baseOperations || (baseOperations != null && baseOperations.length == 0)) {
+                throw new SDKException(SdkError.OPERATIONS_EMPTY_ERROR);
+            }
             buildOperations(baseOperations, transaction);
             transaction.setSourceAddress(sourceAddress);
             transaction.setNonce(nonce);
@@ -212,7 +216,6 @@ public class TransactionServiceImpl implements TransactionService {
             if (ceilLedgerSeq != null) {
                 transaction.setCeilLedgerSeq(ceilLedgerSeq);
             }
-
             // protocol buffer to json
             JsonFormat jsonFormat = new JsonFormat();
             String transactionStr = jsonFormat.printToString(transaction.build());
@@ -453,8 +456,12 @@ public class TransactionServiceImpl implements TransactionService {
                 case LOG_CREATE:
                     operation = LogServiceImpl.create((LogCreateOperation) operationBase[i]);
                     break;
+                default:
+                    throw new SDKException(SdkError.OPERATIONS_ONE_ERROR);
             }
-            transaction.addOperations(operation);
+            if (operation != null) {
+                transaction.addOperations(operation);
+            }
         }
     }
 }

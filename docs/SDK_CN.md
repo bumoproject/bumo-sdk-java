@@ -1615,7 +1615,8 @@ INVALID_SOURCEADDRESS_ERROR|11002|Invalid sourceAddress
 INVALID_NONCE_ERROR|11048|Nonce must between 1 and max(int64)
 INVALID_ GASPRICE_ERROR|11049|Amount must between gasPrice in block and max(int64)
 INVALID_FEELIMIT_ERROR|11050|FeeLimit must between 1000000 and max(int64)
-INVALID_OPERATION_ERROR|11051|Operation cannot be resolved
+OPERATIONS_EMPTY_ERROR|11051|Operations cannot be empty
+OPERATIONS_ONE_ERROR|11053|One of operations cannot be resolved
 INVALID_CEILLEDGERSEQ_ERROR|11052|CeilLedgerSeq must be equal or bigger than 0
 SYSTEM_ERROR|20000|System error
 
@@ -1672,7 +1673,8 @@ TransactionEvaluationFeeResponse evaluationFee (TransactionEvaluationFeeRequest)
 sourceAddress|String|必填，发起该操作的源账户地址
 nonce|int64|必填，待发起的交易序列号，大小[1, max(int64)]
 operation|OperationBase[]|必填，待提交的操作列表，不能为空
-signtureNumber|int32|选填，待签名者的数量，默认是1，大小[1, max(int32)]
+signtureNumber|Integer|选填，待签名者的数量，默认是1，大小[1, max(int32)]
+ceilLedgerSeq|Long|选填，区块高度限制，大于等于0，是0时不限制
 metadata|String|选填，备注
 
 > 响应数据
@@ -1705,8 +1707,8 @@ gasPrice|Long|打包费用
 -----------  | ----------- | -------- |
 INVALID_SOURCEADDRESS_ERROR|11002|Invalid sourceAddress
 INVALID_NONCE_ERROR|11045|Nonce must between 1 and max(int64)
-INVALID_OPERATION_ERROR|11051|Operation cannot be resolved
-OPERATIONS_ONE_ERROR|11053|One of operations error
+OPERATIONS_EMPTY_ERROR|11051|Operations cannot be empty
+OPERATIONS_ONE_ERROR|11053|One of operations cannot be resolved
 INVALID_SIGNATURENUMBER_ERROR|11054|SignagureNumber must between 1 and max(int32)
 SYSTEM_ERROR|20000|System error
 
@@ -1782,7 +1784,7 @@ signatures|[Signature](#signature)	签名后的数据列表
 -----------  | ----------- | -------- |
 INVALID_BLOB_ERROR|11056|Invalid blob
 PRIVATEKEY_NULL_ERROR|11057|PrivateKeys cannot be empty
-PRIVATEKEY_ONE_ERROR|11058|One of privateKeys error
+PRIVATEKEY_ONE_ERROR|11058|One of privateKeys is invalid
 SYSTEM_ERROR|20000|System error
 
 > 示例
@@ -2444,13 +2446,14 @@ INVALID_LOG_DATA_ERROR|11046|The length of one of log data must between 1 and 10
 INVALID_NONCE_ERROR|11048|Nonce must between 1 and max(int64)
 INVALID_GASPRICE_ERROR|11049|GasPrice must between 1 and max(int64)
 INVALID_FEELIMIT_ERROR|11050|FeeLimit must between 1 and max(int64)
+OPERATIONS_EMPTY_ERROR|11051|Operations cannot be empty
 INVALID_CEILLEDGERSEQ_ERROR|11052|CeilLedgerSeq must be equal or bigger than 0
-OPERATIONS_ONE_ERROR|11053|One of operations error
+OPERATIONS_ONE_ERROR|11053|One of operations cannot be resolved
 INVALID_SIGNATURENUMBER_ERROR|11054|SignagureNumber must between 1 and max(int32)
 INVALID_HASH_ERROR|11055|Invalid transaction hash
 INVALID_BLOB_ERROR|11056|Invalid blob
 PRIVATEKEY_NULL_ERROR|11057|PrivateKeys cannot be empty
-PRIVATEKEY_ONE_ERROR|11058|One of privateKeys error
+PRIVATEKEY_ONE_ERROR|11058|One of privateKeys is invalid
 URL_EMPTY_ERROR|11062|Url cannot be empty
 CONTRACTADDRESS_CODE_BOTH_NULL_ERROR|11063|ContractAddress and code cannot be empty at the same time
 INVALID_OPTTYPE_ERROR|11064|OptType must between 0 and 2
