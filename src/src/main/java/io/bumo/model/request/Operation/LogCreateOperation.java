@@ -2,6 +2,10 @@ package io.bumo.model.request.Operation;
 
 import io.bumo.common.OperationType;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * @Author riven
  * @Date 2018/7/9 17:29
@@ -9,7 +13,7 @@ import io.bumo.common.OperationType;
 public class LogCreateOperation extends BaseOperation {
     private OperationType operationType = OperationType.LOG_CREATE;
     private String topic;
-    private String[] data;
+    private List<String> datas;
 
     /**
      * @Author riven
@@ -46,23 +50,37 @@ public class LogCreateOperation extends BaseOperation {
 
     /**
      * @Author riven
-     * @Method getData
+     * @Method getDatas
      * @Params []
-     * @Return java.lang.String[]
-     * @Date 2018/7/9 17:30
+     * @Return java.util.List<java.lang.String>
+     * @Date 2018/7/23 15:16
      */
-    public String[] getData() {
-        return data;
+    public List<String> getDatas() {
+        return datas;
     }
 
     /**
      * @Author riven
-     * @Method setData
+     * @Method setDatas
+     * @Params [datas]
+     * @Return void
+     * @Date 2018/7/23 15:16
+     */
+    public void setDatas(List<String> datas) {
+        this.datas = datas;
+    }
+
+    /**
+     * @Author riven
+     * @Method addData
      * @Params [data]
      * @Return void
-     * @Date 2018/7/9 17:33
+     * @Date 2018/7/23 15:17
      */
-    public void setData(String[] data) {
-        this.data = data;
+    public void addData(String data) {
+        if (null == datas) {
+            datas = new ArrayList<String>();
+        }
+        datas.add(data);
     }
 }

@@ -139,7 +139,7 @@ public class DigitalAssetsDemo {
         Long nonce = 1L; // 资产发行方账户Nonce，必须Nonce + 1
 
         // 1. 获取交易发送账户地址
-        String activateAddresss = getAddressByPrivateKey(activatePrivateKey); // BU发送者账户地址
+        String activateAddresss = getAddressByPrivateKey(activatePrivateKey);
 
         // 2. 构建sendAsset操作
         AccountActivateOperation operation = new AccountActivateOperation();
@@ -167,7 +167,7 @@ public class DigitalAssetsDemo {
         Long nonce = 1L; // 资产发行方账户Nonce，必须Nonce + 1
 
         // 1. 获取交易发送账户地址
-        String issueAddresss = getAddressByPrivateKey(issuePrivateKey); // BU发送者账户地址
+        String issueAddresss = getAddressByPrivateKey(issuePrivateKey);
 
         // 2. 构建issueAsset操作
         AssetIssueOperation assetIssueOperation = new AssetIssueOperation();
@@ -194,7 +194,7 @@ public class DigitalAssetsDemo {
         Long nonce = 1L; // 参考getAccountNonce()获取账户Nonce + 1;
 
         // 1. 获取交易发送账户地址
-        String senderAddresss = getAddressByPrivateKey(accountPrivateKey); // BU发送者账户地址
+        String senderAddresss = getAddressByPrivateKey(accountPrivateKey);
 
         // 2. 构建sendAsset操作
         AccountSetMetadataOperation operation = new AccountSetMetadataOperation();
@@ -224,7 +224,7 @@ public class DigitalAssetsDemo {
         Long feeLimit = ToBaseUnit.BU2MO("10.08"); // 设置最多费用10.08BU，固定填写
 
         // 1. 获取创建合约Token方地址
-        String sourceAddress = getAddressByPrivateKey(sourcePrivateKey); // BU发送者账户地址
+        String sourceAddress = getAddressByPrivateKey(sourcePrivateKey);
 
 
         // 2. 构建issueToken操作
@@ -252,7 +252,7 @@ public class DigitalAssetsDemo {
         Long feeLimit = ToBaseUnit.BU2MO("0.02"); // 设置最多费用10.08BU，固定填写
 
         // 1. 触发合约方地址
-        String invokeAddress = getAddressByPrivateKey(invokePrivateKey); // BU发送者账户地址
+        String invokeAddress = getAddressByPrivateKey(invokePrivateKey);
 
         // 2. 构建assignToken操作
         TokenAssignOperation operation = new TokenAssignOperation();
@@ -286,7 +286,7 @@ public class DigitalAssetsDemo {
         Long nonce = 1L; // 发送方账户Nonce，必须Nonce + 1
 
         // 1. 获取交易发送账户地址
-        String senderAddresss = getAddressByPrivateKey(senderPrivateKey); // BU发送者账户地址
+        String senderAddresss = getAddressByPrivateKey(senderPrivateKey);
 
         // 2. 构建sendAsset操作
         AssetSendOperation assetSendOperation = new AssetSendOperation();
@@ -360,7 +360,7 @@ public class DigitalAssetsDemo {
         String input = "";
 
         // 1. 获取交易发送账户地址
-        String senderAddresss = getAddressByPrivateKey(senderPrivateKey); // BU发送者账户地址
+        String senderAddresss = getAddressByPrivateKey(senderPrivateKey);
 
         // 2. 发送BU，并触发交易
         ContractInvokeByBUOperation operation = new ContractInvokeByBUOperation();
@@ -400,6 +400,34 @@ public class DigitalAssetsDemo {
         // 推荐5个区块后再次通过txhash再次调用`根据交易Hash获取交易信息`(参考示例：getTxByHash()）来确认交易终态结果
         String txhash = submitTransaction(senderPrivateKey,senderAddresss,buSendOperation,nonce,gasPrice,feeLimit);
 
+    }
+
+    /**
+     * 向BU区块链写日志
+     */
+    @Test
+    public void createLog() throws Exception {
+        String createPrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq"; // 创建日志方私钥
+        String topic = "test"; // 日志标题
+        String data = "this is not a error"; // 日志内容
+        String metadata = HexFormat.byteToHex("create log".getBytes()); // 必须是16进制字符串
+        Long gasPrice = 1000L; // 固定写 1000L ，单位是MO
+        Long feeLimit = ToBaseUnit.BU2MO("0.01"); // 设置最多费用 0.01BU ，固定填写
+        Long nonce = 39L; // 发送方账户Nonce，必须Nonce + 1
+
+        // 1. 获取交易发送账户地址
+        String createAddresss = getAddressByPrivateKey(createPrivateKey); // BU发送者账户地址
+
+        // 构建createLog操作
+        LogCreateOperation operation = new LogCreateOperation();
+        operation.setSourceAddress(createAddresss);
+        operation.setTopic(topic);
+        operation.addData(data);
+        operation.setMetadata(metadata);
+
+        // 记录txhash ，以便后续再次确认交易真实结果
+        // 推荐5个区块后再次通过txhash再次调用`根据交易Hash获取交易信息`(参考示例：getTxByHash()）来确认交易终态结果
+        String txhash = submitTransaction(createPrivateKey,createAddresss,operation,nonce,gasPrice,feeLimit);
     }
 
     /**

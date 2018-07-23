@@ -1574,7 +1574,7 @@ metadata|String|选填，备注
 ------------- | --------- | ---------------------
 sourceAddress|String|选填，发起该操作的源账户地址
 topic|String|必填，日志主题，长度[1, 128]
-data|String[]|必填，日志内容，每个字符串长度[1, 1024]
+datas|List<String>|必填，日志内容，每个字符串长度[1, 1024]
 metadata|String|选填，备注
 
 ### buildBlob
@@ -2434,7 +2434,7 @@ INVALID_TOKEN_TOTALSUPPLY_ERROR|11034|TotalSupply must between 1 and max(int64)
 INVALID_TOKENOWNER_ERRPR|11035|Invalid token owner
 INVALID_CONTRACTADDRESS_ERROR|11037|Invalid contract address
 CONTRACTADDRESS_NOT_CONTRACTACCOUNT_ERROR|11038|contractAddress is not a contract account
-INVALID_TOKEN_AMOUNT_ERROR|11039|Amount must between 1 and max(int64)
+INVALID_TOKEN_AMOUNT_ERROR|11039|TokenAmount must between 1 and max(int64)
 SOURCEADDRESS_EQUAL_CONTRACTADDRESS_ERROR|11040|SourceAddress cannot be equal to contractAddress
 INVALID_FROMADDRESS_ERROR|11041|Invalid fromAddress
 FROMADDRESS_EQUAL_DESTADDRESS_ERROR|11042|FromAddress cannot be equal to destAddress
@@ -2442,7 +2442,7 @@ INVALID_SPENDER_ERROR|11043|Invalid spender
 INVALID_LOG_TOPIC_ERROR|11045|The length of log topic must between 1 and 128
 INVALID_LOG_DATA_ERROR|11046|The length of one of log data must between 1 and 1024
 INVALID_NONCE_ERROR|11048|Nonce must between 1 and max(int64)
-INVALID_GASPRICE_ERROR|11049|Amount must between gasPrice in block and max(int64)
+INVALID_GASPRICE_ERROR|11049|GasPrice must between 1 and max(int64)
 INVALID_FEELIMIT_ERROR|11050|FeeLimit must between 1 and max(int64)
 INVALID_CEILLEDGERSEQ_ERROR|11052|CeilLedgerSeq must be equal or bigger than 0
 OPERATIONS_ONE_ERROR|11053|One of operations error

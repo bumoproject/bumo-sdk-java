@@ -9,6 +9,8 @@ import io.bumo.exception.SDKException;
 import io.bumo.exception.SdkError;
 import io.bumo.model.request.Operation.LogCreateOperation;
 
+import java.util.List;
+
 /**
  * @Author riven
  * @Date 2018/7/15 14:37
@@ -32,12 +34,12 @@ public class LogServiceImpl {
             if (null == topic || (topic != null && (topic.length() < 1 || topic.length() > 128))) {
                 throw new SDKException(SdkError.INVALID_LOG_TOPIC_ERROR);
             }
-            String[] datas = logCreateOperation.getData();
-            if (null == datas || (datas != null && datas.length == 0)) {
+            List<String> datas = logCreateOperation.getDatas();
+            if (null == datas || (datas != null && datas.size() == 0)) {
                 throw new SDKException(SdkError.INVALID_LOG_DATA_ERROR);
             }
-            for (int i = 0;i < datas.length; i++) {
-                String data = datas[i];
+            for (int i = 0;i < datas.size(); i++) {
+                String data = datas.get(i);
                 if (data.length() < 1 || data.length() > 1024) {
                     throw new SDKException(SdkError.INVALID_LOG_DATA_ERROR);
                 }
@@ -58,10 +60,10 @@ public class LogServiceImpl {
             }
             Chain.OperationLog.Builder operationLog = operation.getLogBuilder();
             if (sourceAddress != null) {
-                logCreateOperation.setSourceAddress(sourceAddress);
+                operation.setSourceAddress(sourceAddress);
             }
-            logCreateOperation.setTopic(topic);
-            logCreateOperation.setData(datas);
+            operationLog.setTopic(topic);
+            operationLog.addAllDatas(datas);
             if (metadata != null) {
                 logCreateOperation.setMetadata(metadata);
             }
