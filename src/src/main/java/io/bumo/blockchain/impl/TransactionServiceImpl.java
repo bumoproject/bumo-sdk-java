@@ -129,6 +129,13 @@ public class TransactionServiceImpl implements TransactionService {
         return transactionBuildBlobResponse;
     }
 
+    /**
+     * @Author riven
+     * @Method parseBlob
+     * @Params [transactionParseBlobRequest]
+     * @Return io.bumo.model.response.TransactionParseBlobResponse
+     * @Date 2018/7/23 10:01
+     */
     @Override
     public TransactionParseBlobResponse parseBlob(TransactionParseBlobRequest transactionParseBlobRequest) {
         TransactionParseBlobResponse transactionParseBlobResponse = new TransactionParseBlobResponse();
@@ -157,45 +164,45 @@ public class TransactionServiceImpl implements TransactionService {
 
     /**
      * @Author riven
-     * @Method evaluationFee
+     * @Method evaluateFee
      * @Params [transactionEvaluationFeeRequest]
      * @Return io.bumo.model.response.TransactionEvaluationFeeResponse
      * @Date 2018/7/5 19:04
      */
     @Override
-    public TransactionEvaluationFeeResponse evaluationFee(TransactionEvaluationFeeRequest transactionEvaluationFeeRequest) {
-        TransactionEvaluationFeeResponse transactionEvaluationFeeResponse = new TransactionEvaluationFeeResponse();
+    public TransactionEvaluateFeeResponse evaluateFee(TransactionEvaluateFeeRequest transactionEvaluateFeeRequest) {
+        TransactionEvaluateFeeResponse transactionEvaluateFeeResponse = new TransactionEvaluateFeeResponse();
         TransactionEvaluationFeeResult transactionEvaluationFeeResult = new TransactionEvaluationFeeResult();
         try {
             // check sourceAddress
-            String sourceAddress = transactionEvaluationFeeRequest.getSourceAddress();
+            String sourceAddress = transactionEvaluateFeeRequest.getSourceAddress();
             if (!PublicKey.isAddressValid(sourceAddress)) {
                 throw new SDKException(SdkError.INVALID_SOURCEADDRESS_ERROR);
             }
             // check nonce
-            Long nonce = transactionEvaluationFeeRequest.getNonce();
+            Long nonce = transactionEvaluateFeeRequest.getNonce();
             if (nonce == null || (nonce != null && nonce < 1)) {
                 throw new SDKException(SdkError.INVALID_NONCE_ERROR);
             }
             // check signatureNum
-            Integer signatureNum = transactionEvaluationFeeRequest.getSignatureNumber();
+            Integer signatureNum = transactionEvaluateFeeRequest.getSignatureNumber();
             if (signatureNum == null || (signatureNum != null && signatureNum < 1)) {
                 throw new SDKException(SdkError.INVALID_SIGNATURENUMBER_ERROR);
             }
             // check ceilLedgerSeq
-            Long ceilLedgerSeq = transactionEvaluationFeeRequest.getCeilLedgerSeq();
+            Long ceilLedgerSeq = transactionEvaluateFeeRequest.getCeilLedgerSeq();
             if (ceilLedgerSeq != null && ceilLedgerSeq < 0) {
                 throw new SDKException(SdkError.INVALID_CEILLEDGERSEQ_ERROR);
             }
             // check metadata
-            String metadata = transactionEvaluationFeeRequest.getMetadata();
+            String metadata = transactionEvaluateFeeRequest.getMetadata();
             if (metadata != null && !HexFormat.isHexString(metadata)) {
                 throw new SDKException(SdkError.METADATA_NOT_HEX_STRING_ERROR);
             }
 
             // build transaction
             Chain.Transaction.Builder transaction = Chain.Transaction.newBuilder();
-            BaseOperation[] baseOperations = transactionEvaluationFeeRequest.getOperations();
+            BaseOperation[] baseOperations = transactionEvaluateFeeRequest.getOperations();
             buildOperations(baseOperations, transaction);
             transaction.setSourceAddress(sourceAddress);
             transaction.setNonce(nonce);
@@ -221,18 +228,18 @@ public class TransactionServiceImpl implements TransactionService {
 
             String evaluationFeeUrl = General.transactionEvaluationFee();
             String result = HttpKit.post(evaluationFeeUrl, testTransactionRequest.toJSONString());
-            transactionEvaluationFeeResponse = JSON.parseObject(result,TransactionEvaluationFeeResponse.class);
+            transactionEvaluateFeeResponse = JSON.parseObject(result,TransactionEvaluateFeeResponse.class);
 
         } catch (SDKException apiException) {
             Integer errorCode = apiException.getErrorCode();
             String errorDesc = apiException.getErrorDesc();
-            transactionEvaluationFeeResponse.buildResponse(errorCode, errorDesc, transactionEvaluationFeeResult);
+            transactionEvaluateFeeResponse.buildResponse(errorCode, errorDesc, transactionEvaluationFeeResult);
         } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
-            transactionEvaluationFeeResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, transactionEvaluationFeeResult);
+            transactionEvaluateFeeResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, transactionEvaluationFeeResult);
         } catch (Exception exception) {
-            transactionEvaluationFeeResponse.buildResponse(SdkError.SYSTEM_ERROR, transactionEvaluationFeeResult);
+            transactionEvaluateFeeResponse.buildResponse(SdkError.SYSTEM_ERROR, transactionEvaluationFeeResult);
         }
-        return transactionEvaluationFeeResponse;
+        return transactionEvaluateFeeResponse;
     }
 
     /**
@@ -387,6 +394,13 @@ public class TransactionServiceImpl implements TransactionService {
         return transactionGetInfoResponse;
     }
 
+    /**
+     * @Author riven
+     * @Method buildOperations
+     * @Params [operationBase, transaction]
+     * @Return void
+     * @Date 2018/7/23 10:01
+     */
     private void buildOperations(BaseOperation[] operationBase, Chain.Transaction.Builder transaction) throws SDKException {
         for (int i = 0; i < operationBase.length; i++) {
             Chain.Operation operation = null;

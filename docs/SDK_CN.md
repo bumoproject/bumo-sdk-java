@@ -914,11 +914,11 @@ request.setContractAddress("buQfnVYgXuMo3rvCEpKA6SfRrDpaz8D8A9Ea");
 
 // 调用getSymbol接口
 TokenGetSymbolResponse response = sdk.getTokenService().getSymbol(request);
-if (tokenGetSymbolResponse.getErrorCode() == 0) {
-    TokenGetSymbolResult tokenGetSymbolResult = tokenGetSymbolResponse.getResult();
-    System.out.println(tokenGetSymbolResult.getSymbol());
+if (response.getErrorCode() == 0) {
+    TokenGetSymbolResult result = response.getResult();
+    System.out.println(result.getSymbol());
 } else {
-    System.out.println("error: " + tokenGetSymbolResponse.getErrorDesc());
+    System.out.println("error: " + response.getErrorDesc());
 }
 ```
 
@@ -954,16 +954,16 @@ SYSTEM_ERROR |   20000     |  系统错误 |
 
 ```
 // 初始化请求参数
-String address = "buQemmMwmRQY1JkcU7w3nhruoX5N3j6C29uo";
-AccountCheckValidRequest accountCheckValidRequest = new AccountCheckValidRequest();
-accountCheckValidRequest.setAddress(address);
+TokenGetDecimalsRequest request = new TokenGetDecimalsRequest();
+request.setContractAddress("buQfnVYgXuMo3rvCEpKA6SfRrDpaz8D8A9Ea");
 
-// 调用checkValid
-AccountCheckValidResponse accountCheckValidResponse = sdk.getAccountService().checkValid(accountCheckValidRequest);
-if(0 == accountCheckValidResponse.getErrorCode()){
-	System.out.println(accountCheckValidResponse.getResult().isValid());
-}else{
-	System.out.println(JSON.toJSONString(accountCheckValidResponse,true));
+// 调用getDecimals接口
+TokenGetDecimalsResponse response = sdk.getTokenService().getDecimals(request);
+if (response.getErrorCode() == 0) {
+    TokenGetSymbolResult result = response.getResult();
+    System.out.println(result.getSymbol());
+} else {
+    System.out.println("error: " + response.getErrorDesc());
 }
 ```
 

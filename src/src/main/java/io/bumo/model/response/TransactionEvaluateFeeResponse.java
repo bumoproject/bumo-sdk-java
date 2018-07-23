@@ -8,7 +8,7 @@ import io.bumo.model.response.result.TransactionEvaluationFeeResult;
  * @Author riven
  * @Date 2018/7/5 15:56
  */
-public class TransactionEvaluationFeeResponse extends BaseResponse {
+public class TransactionEvaluateFeeResponse extends BaseResponse {
     @JSONField(name = "result")
     private TransactionEvaluationFeeResult result;
 

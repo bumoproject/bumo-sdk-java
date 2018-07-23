@@ -2,7 +2,6 @@ package io.bumo.blockchain;
 
 import io.bumo.model.request.*;
 import io.bumo.model.response.*;
-import io.bumo.model.response.result.TransactionParseBlobResult;
 
 /**
  * @Author riven
@@ -29,12 +28,12 @@ public interface TransactionService {
 
     /**
      * @Author riven
-     * @Method evaluationFee
+     * @Method evaluateFee
      * @Params [transactionEvaluationFeeRequest]
      * @Return io.bumo.model.response.TransactionEvaluationFeeResponse
      * @Date 2018/7/5 16:57
      */
-    public TransactionEvaluationFeeResponse evaluationFee(TransactionEvaluationFeeRequest transactionEvaluationFeeRequest);
+    public TransactionEvaluateFeeResponse evaluateFee(TransactionEvaluateFeeRequest transactionEvaluateFeeRequest);
 
     /**
      * @Author riven
