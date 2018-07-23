@@ -399,7 +399,7 @@ public class TransactionServiceImpl implements TransactionService {
      * @Method buildOperations
      * @Params [operationBase, transaction]
      * @Return void
-     * @Date 2018/7/23 10:01
+     * @Date 2018/7/23 10:19
      */
     private void buildOperations(BaseOperation[] operationBase, Chain.Transaction.Builder transaction) throws SDKException {
         for (int i = 0; i < operationBase.length; i++) {

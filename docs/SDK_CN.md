@@ -1455,7 +1455,7 @@ metadata|String|选填，备注
 
 > TokenIssueOperation
 
-继承于BaseOperation，feeLimit固定是0.02 BU
+继承于BaseOperation，feeLimit固定是10.08 BU
 
    成员变量    |     类型   |        描述          
 ------------- | --------- | ---------------------

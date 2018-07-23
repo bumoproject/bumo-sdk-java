@@ -517,6 +517,7 @@ public class TokenServiceImpl implements TokenService {
 
             // build init
             JSONObject input = new JSONObject();
+            input.put("method", "transfer");
             JSONObject params = new JSONObject();
             params.put("to", destAddress);
             params.put("value", amount);
@@ -583,6 +584,7 @@ public class TokenServiceImpl implements TokenService {
             }
             // build input
             JSONObject input = new JSONObject();
+            input.put("method", "transferFrom");
             JSONObject params = new JSONObject();
             params.put("from", fromAddress);
             params.put("value", amount);
@@ -641,6 +643,7 @@ public class TokenServiceImpl implements TokenService {
             }
             // build input
             JSONObject input = new JSONObject();
+            input.put("method", "approve");
             JSONObject params = new JSONObject();
             params.put("spender", spender);
             params.put("value", amount);
@@ -698,6 +701,7 @@ public class TokenServiceImpl implements TokenService {
             }
             // build input
             JSONObject input = new JSONObject();
+            input.put("method", "assign");
             JSONObject params = new JSONObject();
             params.put("to", destAddress);
             params.put("value", amount);
@@ -749,6 +753,7 @@ public class TokenServiceImpl implements TokenService {
             }
             // build input
             JSONObject input = new JSONObject();
+            input.put("method", "changeOwner");
             JSONObject params = new JSONObject();
             params.put("address", tokenOwner);
             input.put("params", params);
@@ -802,7 +807,7 @@ public class TokenServiceImpl implements TokenService {
             }
             TokenInfo tokenInfo =  JSONObject.parseObject(tokenInfoJson, TokenInfo.class);
             String ctp = tokenInfo.getCtp();
-            if (null == ctp || (ctp != null && ctp != "1.0")) {
+            if (null == ctp || (ctp != null && !ctp.equals("1.0"))) {
                 break;
             }
             String name = tokenInfo.getName();

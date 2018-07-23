@@ -208,9 +208,62 @@ public class DigitalAssetsDemo {
         String hash = submitTransaction(accountPrivateKey, senderAddresss, operation, nonce, gasPrice, feeLimit);
     }
 
+    /**
+     * 发行Token
+     */
     @Test
     public void issueToken() throws Exception {
+        String sourcePrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq"; // 创建合约Token方私钥
+        Long initBalance = 100000000L; // 待创建合约Token的初始化资产
+        Integer decimals = 8; // token数值的精度
+        String name = "TST"; // token名称
+        String supply = "10000000000"; // token的供应量，不带精度，实际是1000000000 * (10 ^ decimals)
+        String symbol = "TST"; // token的符号
+        Long nonce = 36L; // 35 + 1
+        Long gasPrice = 1000L; // 固定写 1000L ，单位是MO
+        Long feeLimit = ToBaseUnit.BU2MO("10.08"); // 设置最多费用10.08BU，固定填写
 
+        // 1. 获取创建合约Token方地址
+        String sourceAddress = getAddressByPrivateKey(sourcePrivateKey); // BU发送者账户地址
+
+
+        // 2. 构建issueToken操作
+        TokenIssueOperation operation = new TokenIssueOperation();
+        operation.setSourceAddress(sourceAddress);
+        operation.setDecimals(decimals);
+        operation.setInitBalance(initBalance);
+        operation.setName(name);
+        operation.setSupply(supply);
+        operation.setSymbol(symbol);
+
+        // 记录txhash ，以便后续再次确认交易真实结果
+        // 推荐5个区块后再次通过txhash再次调用`根据交易Hash获取交易信息`(参考示例：getTxByHash()）来确认交易终态结果
+        String txHash = submitTransaction(sourcePrivateKey, sourceAddress, operation, nonce, gasPrice, feeLimit);
+    }
+
+    @Test
+    public void assignToken() throws Exception {
+        String invokePrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq"; // 触发合约方私钥
+        String contractAddress = "buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq"; // 合约token代码所在的合约账户地址
+        String destAddress = "buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp"; // 待分配token的账户
+        String amount = "1000000";
+        Long nonce = 38L; // 36 + 1
+        Long gasPrice = 1000L; // 固定写 1000L ，单位是MO
+        Long feeLimit = ToBaseUnit.BU2MO("0.02"); // 设置最多费用10.08BU，固定填写
+
+        // 1. 触发合约方地址
+        String invokeAddress = getAddressByPrivateKey(invokePrivateKey); // BU发送者账户地址
+
+        // 2. 构建assignToken操作
+        TokenAssignOperation operation = new TokenAssignOperation();
+        operation.setSourceAddress(invokeAddress);
+        operation.setContractAddress(contractAddress);
+        operation.setDestAddress(destAddress);
+        operation.setAmount(amount);
+
+        // 记录txhash ，以便后续再次确认交易真实结果
+        // 推荐5个区块后再次通过txhash再次调用`根据交易Hash获取交易信息`(参考示例：getTxByHash()）来确认交易终态结果
+        String txHash = submitTransaction(invokePrivateKey, invokeAddress, operation, nonce, gasPrice, feeLimit);
     }
 
     /**
@@ -221,7 +274,7 @@ public class DigitalAssetsDemo {
         String senderPrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq"; // 发送方私钥
         String destAddress = "buQswSaKDACkrFsnP1wcVsLAUzXQsemauE";// 接收方账户地址
         String assetCode = "TST";  // 待发送和资产编号
-        String assetIssuer = "buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp"; //
+        String assetIssuer = "buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp"; // 资产发行方地址
         Long amount = ToBaseUnit.BU2MO("10.9"); // 发送转出10.9BU给接收方（目标账户）
         Long gasPrice = 1000L; // 固定写 1000L ，单位是MO
         Long feeLimit = ToBaseUnit.BU2MO("0.01"); // 设置最多费用 0.01BU ，固定填写
@@ -720,9 +773,14 @@ public class DigitalAssetsDemo {
         // 4. 获取交易BLob串
         String transactionBlob = null;
         TransactionBuildBlobResponse transactionBuildBlobResponse = sdk.getTransactionService().buildBlob(transactionBuildBlobRequest);
+        if (transactionBuildBlobResponse.getErrorCode() != 0) {
+            System.out.println("error: " + transactionBuildBlobResponse.getErrorDesc());
+            return null;
+        }
         TransactionBuildBlobResult transactionBuildBlobResult = transactionBuildBlobResponse.getResult();
         String txHash = transactionBuildBlobResult.getHash();
         transactionBlob = transactionBuildBlobResult.getTransactionBlob();
+
 
         // 5. 签名交易BLob(交易发送账户签名交易Blob串)
         String []signerPrivateKeyArr = {senderPrivateKey};
