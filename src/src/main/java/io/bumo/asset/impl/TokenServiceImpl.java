@@ -45,6 +45,9 @@ public class TokenServiceImpl implements TokenService {
         TokenCheckValidResponse tokenCheckValidResponse = new TokenCheckValidResponse();
         TokenCheckValidResult tokenCheckValidResult = new TokenCheckValidResult();
         try {
+            if (null == tokenCheckValidRequest) {
+                throw new SDKException(SdkError.REQUEST_NULL_ERROR);
+            }
             String address = tokenCheckValidRequest.getContractAddress();
             if (!PublicKey.isAddressValid(address)) {
                 throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
@@ -75,6 +78,9 @@ public class TokenServiceImpl implements TokenService {
         TokenAllowanceResponse tokenAllowanceResponse = new TokenAllowanceResponse();
         TokenAllowanceResult tokenAllowanceResult = new TokenAllowanceResult();
         try {
+            if (null == tokenAllowanceRequest) {
+                throw new SDKException(SdkError.REQUEST_NULL_ERROR);
+            }
             String contractAddress = tokenAllowanceRequest.getContractAddress();
             if (!PublicKey.isAddressValid(contractAddress)) {
                 throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
@@ -133,6 +139,9 @@ public class TokenServiceImpl implements TokenService {
         TokenGetInfoResponse tokenGetInfoResponse = new TokenGetInfoResponse();
         TokenGetInfoResult tokenGetInfoResult = new TokenGetInfoResult();
         try {
+            if (null == tokenGetInfoRequest) {
+                throw new SDKException(SdkError.REQUEST_NULL_ERROR);
+            }
             String contractAddress = tokenGetInfoRequest.getContractAddress();
             if (!PublicKey.isAddressValid(contractAddress)) {
                 throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
@@ -178,6 +187,9 @@ public class TokenServiceImpl implements TokenService {
         TokenGetNameResponse tokenGetNameResponse = new TokenGetNameResponse();
         TokenGetNameResult tokenGetNameResult = new TokenGetNameResult();
         try {
+            if (null == tokenGetNameRequest) {
+                throw new SDKException(SdkError.REQUEST_NULL_ERROR);
+            }
             String contractAddress = tokenGetNameRequest.getContractAddress();
             if (!PublicKey.isAddressValid(contractAddress)) {
                 throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
@@ -223,6 +235,9 @@ public class TokenServiceImpl implements TokenService {
         TokenGetSymbolResponse tokenGetSymbolResponse = new TokenGetSymbolResponse();
         TokenGetSymbolResult tokenGetSymbolResult = new TokenGetSymbolResult();
         try {
+            if (null == tokenGetSymbolRequest) {
+                throw new SDKException(SdkError.REQUEST_NULL_ERROR);
+            }
             String contractAddress = tokenGetSymbolRequest.getContractAddress();
             if (!PublicKey.isAddressValid(contractAddress)) {
                 throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
@@ -261,6 +276,9 @@ public class TokenServiceImpl implements TokenService {
         TokenGetDecimalsResponse tokenGetDecimalsResponse = new TokenGetDecimalsResponse();
         TokenGetDecimalsResult tokenGetDecimalsResult = new TokenGetDecimalsResult();
         try {
+            if (null == tokenGetDecimalsRequest) {
+                throw new SDKException(SdkError.REQUEST_NULL_ERROR);
+            }
             String contractAddress = tokenGetDecimalsRequest.getContractAddress();
             if (!PublicKey.isAddressValid(contractAddress)) {
                 throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
@@ -306,6 +324,9 @@ public class TokenServiceImpl implements TokenService {
         TokenGetTotalSupplyResponse tokenGetTotalSupplyResponse = new TokenGetTotalSupplyResponse();
         TokenGetTotalSupplyResult tokenGetTotalSupplyResult = new TokenGetTotalSupplyResult();
         try {
+            if (null == tokenGetTotalSupplyRequest) {
+                throw new SDKException(SdkError.REQUEST_NULL_ERROR);
+            }
             String contractAddress = tokenGetTotalSupplyRequest.getContractAddress();
             if (!PublicKey.isAddressValid(contractAddress)) {
                 throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
@@ -350,6 +371,9 @@ public class TokenServiceImpl implements TokenService {
         TokenGetBalanceResponse tokenGetBalanceResponse = new TokenGetBalanceResponse();
         TokenGetBalanceResult tokenGetBalanceResult = new TokenGetBalanceResult();
         try {
+            if (null == tokenGetBalanceRequest) {
+                throw new SDKException(SdkError.REQUEST_NULL_ERROR);
+            }
             String contractAddress = tokenGetBalanceRequest.getContractAddress();
             if (!PublicKey.isAddressValid(contractAddress)) {
                 throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
@@ -397,36 +421,36 @@ public class TokenServiceImpl implements TokenService {
      * @Return io.bumo.crypto.protobuf.Chain.Operation
      * @Date 2018/7/10 11:41
      */
-    public static Chain.Operation issue(TokenIssueOperation tokenIssueResult) throws SDKException {
+    public static Chain.Operation issue(TokenIssueOperation tokenIssueOperation) throws SDKException {
         Chain.Operation.Builder operation;
         try {
-            String sourceAddress = tokenIssueResult.getSourceAddress();
+            String sourceAddress = tokenIssueOperation.getSourceAddress();
             if (sourceAddress != null && !PublicKey.isAddressValid(sourceAddress)) {
                 throw new SDKException(SdkError.INVALID_SOURCEADDRESS_ERROR);
             }
-            Long initBalance = tokenIssueResult.getInitBalance();
+            Long initBalance = tokenIssueOperation.getInitBalance();
             if (initBalance <= 0) {
                 throw new SDKException(SdkError.INVALID_INITBALANCE_ERROR);
             }
-            String name = tokenIssueResult.getName();
+            String name = tokenIssueOperation.getName();
             if (name == null || (name != null && (name.length() < 1 || name.length() > 1024))) {
                 throw new SDKException(SdkError.INVALID_TOKEN_NAME_ERROR);
             }
-            String symbol = tokenIssueResult.getSymbol();
+            String symbol = tokenIssueOperation.getSymbol();
             if (symbol == null || (symbol != null && (symbol.length() < 1 || symbol.length() > 2014))) {
                 throw new SDKException(SdkError.INVALID_TOKEN_SYMBOL_ERROR);
             }
-            Integer decimals = tokenIssueResult.getDecimals();
+            Integer decimals = tokenIssueOperation.getDecimals();
             if (decimals == null || (decimals != null && (decimals < 0 || decimals > 8))) {
                 throw new SDKException(SdkError.INVALID_TOKEN_DECIMALS_ERROR);
             }
-            String supply = tokenIssueResult.getSupply();
+            String supply = tokenIssueOperation.getSupply();
             Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
             boolean isNumber = pattern.matcher(supply).matches();
             if (!isNumber || (isNumber && Long.valueOf(supply) < 1)) {
                 throw new SDKException(SdkError.INVALID_TOKEN_TOTALSUPPLY_ERROR);
             }
-            String metadata = tokenIssueResult.getMetadata();
+            String metadata = tokenIssueOperation.getMetadata();
             if (metadata != null && !HexFormat.isHexString(metadata)) {
                 throw new SDKException(SdkError.METADATA_NOT_HEX_STRING_ERROR);
             }

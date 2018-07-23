@@ -97,6 +97,9 @@ public class BlockServiceImpl implements BlockService {
         BlockGetTransactionsResponse blockGetTransactions = new BlockGetTransactionsResponse();
         BlockGetTransactionsResult transactionGetInfoResult = new BlockGetTransactionsResult();
         try {
+            if (null == blockGetTransactionsRequest) {
+                throw new SDKException(SdkError.REQUEST_NULL_ERROR);
+            }
             Long blockNumber = blockGetTransactionsRequest.getBlockNumber();
             if (blockNumber == null || (blockNumber != null && blockNumber < 1)) {
                 throw new SDKException(SdkError.INVALID_HASH_ERROR);
@@ -128,6 +131,9 @@ public class BlockServiceImpl implements BlockService {
         BlockGetInfoResponse blockGetInfoResponse = new BlockGetInfoResponse();
         BlockGetInfoResult blockGetInfoResult = new BlockGetInfoResult();
         try {
+            if (null == blockGetInfoRequest) {
+                throw new SDKException(SdkError.REQUEST_NULL_ERROR);
+            }
             Long blockNumber = blockGetInfoRequest.getBlockNumber();
             if (blockNumber == null || (blockNumber != null && blockNumber < 1)) {
                 throw new SDKException(SdkError.INVALID_HASH_ERROR);
@@ -193,6 +199,9 @@ public class BlockServiceImpl implements BlockService {
         BlockGetValidatorsResponse blockGetValidatorsResponse = new BlockGetValidatorsResponse();
         BlockGetValidatorsResult blockGetValidatorsResult = new BlockGetValidatorsResult();
         try {
+            if (null == blockGetValidatorsRequest) {
+                throw new SDKException(SdkError.REQUEST_NULL_ERROR);
+            }
             Long blockNumber = blockGetValidatorsRequest.getBlockNumber();
             if (blockNumber == null || (blockNumber != null && blockNumber < 1)) {
                 throw new SDKException(SdkError.INVALID_HASH_ERROR);
@@ -231,7 +240,6 @@ public class BlockServiceImpl implements BlockService {
         BlockGetLatestValidatorsResponse blockGetLatestValidatorsResponse = new BlockGetLatestValidatorsResponse();
         BlockGetLatestValidatorsResult blockGetLatestValidatorsResult = new BlockGetLatestValidatorsResult();
         try {
-
             String getInfoUrl = General.blockGetLatestValidatorsUrl();
             String result = HttpKit.get(getInfoUrl);
             blockGetLatestValidatorsResponse = JSONObject.parseObject(result, BlockGetLatestValidatorsResponse.class);
@@ -261,6 +269,9 @@ public class BlockServiceImpl implements BlockService {
         BlockGetRewardResponse blockGetRewardResponse = new BlockGetRewardResponse();
         BlockGetRewardResult blockGetRewardResult = new BlockGetRewardResult();
         try {
+            if (null == blockGetRewardRequest) {
+                throw new SDKException(SdkError.REQUEST_NULL_ERROR);
+            }
             Long blockNumber = blockGetRewardRequest.getBlockNumber();
             if (blockNumber == null || (blockNumber != null && blockNumber < 1)) {
                 throw new SDKException(SdkError.INVALID_HASH_ERROR);
@@ -346,6 +357,9 @@ public class BlockServiceImpl implements BlockService {
         BlockGetFeesResponse blockGetFeesResponse = new BlockGetFeesResponse();
         BlockGetFeesResult blockGetFeesResult = new BlockGetFeesResult();
         try {
+            if (null == blockGetFeesRequest) {
+                throw new SDKException(SdkError.REQUEST_NULL_ERROR);
+            }
             Long blockNumber = blockGetFeesRequest.getBlockNumber();
             if (null == blockNumber || blockNumber <= 0) {
                 throw new SDKException(SdkError.INVALID_BLOCKNUMBER_ERROR);

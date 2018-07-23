@@ -66,6 +66,10 @@ public class AccountServiceImpl implements AccountService {
             method.invoke(accountCheckValidResult, isValid);
             //accountCheckValidResult.setValid(isValid);
             accountCheckValidResponse.buildResponse(SdkError.SUCCESS, accountCheckValidResult);
+        } catch (SDKException apiException) {
+            Integer errorCode = apiException.getErrorCode();
+            String errorDesc = apiException.getErrorDesc();
+            accountCheckValidResponse.buildResponse(errorCode, errorDesc, accountCheckValidResult);
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             accountCheckValidResponse.buildResponse(SdkError.SYSTEM_ERROR, accountCheckValidResult);
         }
@@ -109,11 +113,13 @@ public class AccountServiceImpl implements AccountService {
 
         AccountGetInfoResult accountGetInfoResult = new AccountGetInfoResult();
         try {
+            if (null == accountGetInfoRequest) {
+                throw new SDKException(SdkError.REQUEST_NULL_ERROR);
+            }
             String address = accountGetInfoRequest.getAddress();
             if (!PublicKey.isAddressValid(address)) {
                 throw new SDKException(SdkError.INVALID_ADDRESS_ERROR);
             }
-
             String accountGetInfoUrl = General.accountGetInfoUrl(address);
             String result = HttpKit.get(accountGetInfoUrl);
             accountGetInfoResponse = JSON.parseObject(result, AccountGetInfoResponse.class);
@@ -149,6 +155,9 @@ public class AccountServiceImpl implements AccountService {
 
         AccountGetNonceResult accountGetNonceResult = new AccountGetNonceResult();
         try {
+            if (null == accountGetNonceRequest) {
+                throw new SDKException(SdkError.REQUEST_NULL_ERROR);
+            }
             String address = accountGetNonceRequest.getAddress();
             if (!PublicKey.isAddressValid(address)) {
                 throw new SDKException(SdkError.INVALID_ADDRESS_ERROR);
@@ -190,11 +199,13 @@ public class AccountServiceImpl implements AccountService {
         AccountGetBalanceResponse accountGetBalanceResponse = new AccountGetBalanceResponse();
         AccountGetBalanceResult accountGetBalanceResult = new AccountGetBalanceResult();
         try {
+            if (null == accountGetBalanceRequest) {
+                throw new SDKException(SdkError.REQUEST_NULL_ERROR);
+            }
             String address = accountGetBalanceRequest.getAddress();
             if (!PublicKey.isAddressValid(address)) {
                 throw new SDKException(SdkError.INVALID_ADDRESS_ERROR);
             }
-
             String accountGetInfoUrl = General.accountGetInfoUrl(address);
             String result = HttpKit.get(accountGetInfoUrl);
             accountGetBalanceResponse = JSON.parseObject(result, AccountGetBalanceResponse.class);
@@ -228,6 +239,9 @@ public class AccountServiceImpl implements AccountService {
         AccountGetAssetsResponse accountGetAssetsResponse = new AccountGetAssetsResponse();
         AccountGetAssetsResult accountGetAssetsResult = new AccountGetAssetsResult();
         try {
+            if (null == accountGetAssetsRequest) {
+                throw new SDKException(SdkError.REQUEST_NULL_ERROR);
+            }
             String address = accountGetAssetsRequest.getAddress();
             if (!PublicKey.isAddressValid(address)) {
                 throw new SDKException(SdkError.INVALID_ADDRESS_ERROR);
@@ -270,6 +284,9 @@ public class AccountServiceImpl implements AccountService {
         AccountGetMetadataResponse accountGetMetadataResponse = new AccountGetMetadataResponse();
         AccountGetMetadataResult accountGetMetadataResult = new AccountGetMetadataResult();
         try {
+            if (null == accountGetMetadataRequest) {
+                throw new SDKException(SdkError.REQUEST_NULL_ERROR);
+            }
             String address = accountGetMetadataRequest.getAddress();
             if (!PublicKey.isAddressValid(address)) {
                 throw new SDKException(SdkError.INVALID_ADDRESS_ERROR);
@@ -314,6 +331,9 @@ public class AccountServiceImpl implements AccountService {
     public static Chain.Operation activate(AccountActivateOperation accountActivateOperation) throws SDKException {
         Chain.Operation.Builder operation;
         try {
+            if (null == accountActivateOperation) {
+                throw new SDKException(SdkError.REQUEST_NULL_ERROR);
+            }
             String sourceAddress= accountActivateOperation.getSourceAddress();
             if (sourceAddress != null && !PublicKey.isAddressValid(sourceAddress)) {
                 throw new SDKException(SdkError.INVALID_SOURCEADDRESS_ERROR);
@@ -369,6 +389,9 @@ public class AccountServiceImpl implements AccountService {
     public static Chain.Operation setMetadata(AccountSetMetadataOperation accountSetMetadataOperation) throws SDKException {
         Chain.Operation.Builder operation;
         try {
+            if (null == accountSetMetadataOperation) {
+                throw new SDKException(SdkError.REQUEST_NULL_ERROR);
+            }
             String sourceAddress = accountSetMetadataOperation.getSourceAddress();
             if (sourceAddress != null && !PublicKey.isAddressValid(sourceAddress)) {
                 throw new SDKException(SdkError.INVALID_SOURCEADDRESS_ERROR);
@@ -430,6 +453,9 @@ public class AccountServiceImpl implements AccountService {
     public static Chain.Operation setPrivilege(AccountSetPrivilegeOperation accountSetPrivilegeOperation) throws SDKException {
         Chain.Operation.Builder operation;
         try {
+            if (null == accountSetPrivilegeOperation) {
+                throw new SDKException(SdkError.REQUEST_NULL_ERROR);
+            }
             String sourceAddress = accountSetPrivilegeOperation.getSourceAddress();
             if (sourceAddress != null && !PublicKey.isAddressValid(sourceAddress)) {
                 throw new SDKException(SdkError.INVALID_SOURCEADDRESS_ERROR);
