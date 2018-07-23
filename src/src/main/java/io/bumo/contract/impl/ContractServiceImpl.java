@@ -71,7 +71,11 @@ public class ContractServiceImpl implements ContractService {
         ContractCheckValidResponse contractCheckValidResponse = new ContractCheckValidResponse();
         ContractCheckValidResult contractCheckValidResult = new ContractCheckValidResult();
         try {
-            boolean isValid = checkContractValid(contractCheckValidRequest.getContractAddress());
+            String contractAddress = contractCheckValidRequest.getContractAddress();
+            if (!PublicKey.isAddressValid(contractAddress)) {
+                throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
+            }
+            boolean isValid = checkContractValid(contractAddress);
             contractCheckValidResult.setValid(isValid);
             contractCheckValidResponse.buildResponse(SdkError.SUCCESS, contractCheckValidResult);
         } catch (SDKException apiException) {

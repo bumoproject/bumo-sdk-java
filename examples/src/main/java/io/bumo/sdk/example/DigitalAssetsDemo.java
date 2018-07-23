@@ -247,7 +247,7 @@ public class DigitalAssetsDemo {
         String contractAddress = "buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq"; // 合约token代码所在的合约账户地址
         String destAddress = "buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp"; // 待分配token的账户
         String amount = "1000000";
-        Long nonce = 38L; // 36 + 1
+        Long nonce = 38L; // 37 + 1
         Long gasPrice = 1000L; // 固定写 1000L ，单位是MO
         Long feeLimit = ToBaseUnit.BU2MO("0.02"); // 设置最多费用10.08BU，固定填写
 
@@ -264,6 +264,11 @@ public class DigitalAssetsDemo {
         // 记录txhash ，以便后续再次确认交易真实结果
         // 推荐5个区块后再次通过txhash再次调用`根据交易Hash获取交易信息`(参考示例：getTxByHash()）来确认交易终态结果
         String txHash = submitTransaction(invokePrivateKey, invokeAddress, operation, nonce, gasPrice, feeLimit);
+    }
+
+    @Test
+    public void transfer() throws Exception {
+
     }
 
     /**
@@ -471,7 +476,7 @@ public class DigitalAssetsDemo {
     @Test
     public void checkTokenValid() {
         TokenCheckValidRequest tokenCheckValidRequest = new TokenCheckValidRequest();
-        tokenCheckValidRequest.setContractAddress("buQfnVYgXuMo3rvCEpKA6SfRrDpaz8D8A9Ea");
+        tokenCheckValidRequest.setContractAddress("buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp");
         TokenCheckValidResponse tokenCheckValidResponse = sdk.getTokenService().checkValid(tokenCheckValidRequest);
         if (tokenCheckValidResponse.getErrorCode() == 0) {
             TokenCheckValidResult tokenCheckValidResult = tokenCheckValidResponse.getResult();
@@ -487,7 +492,7 @@ public class DigitalAssetsDemo {
     @Test
     public void checkContractValid() {
         ContractCheckValidRequest request = new ContractCheckValidRequest();
-        request.setContractAddress("buQfnVYgXuMo3rvCEpKA6SfRrDpaz8D8A9Ea");
+        request.setContractAddress("buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp");
 
         ContractCheckValidResponse response = sdk.getContractService().checkValid(request);
         if (response.getErrorCode() == 0) {

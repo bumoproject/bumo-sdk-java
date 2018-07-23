@@ -56,6 +56,9 @@ public class AccountServiceImpl implements AccountService {
         }
 
         try {
+            if (null == accountCheckValidRequest) {
+                throw new SDKException(SdkError.REQUEST_NULL_ERROR);
+            }
             // invoke the private method setValid
             Class cls = accountCheckValidResult.getClass();
             Method method = cls.getDeclaredMethod("setValid",  new Class[]{boolean.class});

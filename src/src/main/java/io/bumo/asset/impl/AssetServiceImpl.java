@@ -41,6 +41,9 @@ public class AssetServiceImpl implements AssetService {
         AssetGetInfoResult assetGetResult = new AssetGetInfoResult();
 
         try {
+            if (null == assetGetRequest) {
+                throw new SDKException(SdkError.REQUEST_NULL_ERROR);
+            }
             String address = assetGetRequest.getAddress();
             if (!PublicKey.isAddressValid(address)) {
                 throw new SDKException(SdkError.INVALID_ADDRESS_ERROR);
@@ -89,6 +92,9 @@ public class AssetServiceImpl implements AssetService {
     public static Chain.Operation issue(AssetIssueOperation assetIssueOperation) throws SDKException {
         Chain.Operation.Builder operation;
         try {
+            if (null == assetIssueOperation) {
+                throw new SDKException(SdkError.REQUEST_NULL_ERROR);
+            }
             String sourceAddress = assetIssueOperation.getSourceAddress();
             if (sourceAddress != null && !PublicKey.isAddressValid(sourceAddress)) {
                 throw new SDKException(SdkError.INVALID_SOURCEADDRESS_ERROR);
@@ -137,6 +143,9 @@ public class AssetServiceImpl implements AssetService {
     public static Chain.Operation send(AssetSendOperation assetSendOperation) throws SDKException {
         Chain.Operation.Builder operation = null;
         try {
+            if (null == assetSendOperation) {
+                throw new SDKException(SdkError.REQUEST_NULL_ERROR);
+            }
             String sourceAddress = assetSendOperation.getSourceAddress();
             if (sourceAddress != null && !PublicKey.isAddressValid(sourceAddress)) {
                 throw new SDKException(SdkError.INVALID_SOURCEADDRESS_ERROR);

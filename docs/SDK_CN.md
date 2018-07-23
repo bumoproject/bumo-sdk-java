@@ -2458,3 +2458,4 @@ GET_ALLOWANCE_ERROR|11065|Get allowance failed
 GET_TOKEN_INFO_ERROR|11066|Get token info failed
 CONNECTN_BLOCKCHAIN_ERROR|19999|Connect blockchain failed
 SYSTEM_ERROR|20000|System error
+REQUEST_NULL_ERROR|13001|Request parameter cannot be null
