@@ -391,7 +391,7 @@ threshold    |    Long      |    门限值，大小限制[0, Long.MAX_VALUE]
 -----------  | ----------- | -------- 
 INVALID_ADDRESS_ERROR| 11006 | Invalid address
 REQUEST_NULL_ERROR|12001|Request parameter cannot be null
-CONNECTNETWORK_ERROR| 11007| Fail to connect network
+CONNECTNETWORK_ERROR| 11007| Failed to connect to the network
 SYSTEM_ERROR |   20000     |  System error 
 
 > 示例
@@ -440,7 +440,7 @@ nonce       |   Long       |  账户交易序列号
 -----------  | ----------- | -------- 
 INVALID_ADDRESS_ERROR| 11006 | Invalid address
 REQUEST_NULL_ERROR|12001|Request parameter cannot be null
-CONNECTNETWORK_ERROR| 11007| Fail to connect network
+CONNECTNETWORK_ERROR| 11007| Failed to connect to the network
 SYSTEM_ERROR |   20000     |  System error 
 
 > 示例
@@ -488,7 +488,7 @@ balance     |   Long       |  BU的余额, 单位MO，1 BU = 10^8 MO,
 -----------  | ----------- | -------- 
 INVALID_ADDRESS_ERROR| 11006 | Invalid address
 REQUEST_NULL_ERROR|12001|Request parameter cannot be null
-CONNECTNETWORK_ERROR| 11007| Fail to connect network
+CONNECTNETWORK_ERROR| 11007| Failed to connect to the network
 SYSTEM_ERROR |   20000     |  System error 
 
 > 示例
@@ -551,7 +551,7 @@ issuer   |   String    |   资产发行账户地址
 -----------  | ----------- | -------- 
 INVALID_ADDRESS_ERROR| 11006 | Invalid address
 REQUEST_NULL_ERROR|12001|Request parameter cannot be null
-CONNECTNETWORK_ERROR| 11007| Fail to connect network
+CONNECTNETWORK_ERROR| 11007| Failed to connect to the network
 NO_ASSET_ERROR|11009|The account does not have the asset
 SYSTEM_ERROR|20000|System error
 
@@ -609,7 +609,7 @@ version     |  Long      |  metadata的版本
 -----------  | ----------- | -------- 
 INVALID_ADDRESS_ERROR | 11006 | Invalid address
 REQUEST_NULL_ERROR|12001|Request parameter cannot be null
-CONNECTNETWORK_ERROR | 11007 | Fail to connect network
+CONNECTNETWORK_ERROR | 11007 | Failed to connect to the network
 NO_METADATA_ERROR|11010|The account does not have the metadata
 INVALID_DATAKEY_ERROR | 11011 | The length of key must be between 1 and 1024
 SYSTEM_ERROR | 20000| System error
@@ -668,7 +668,7 @@ asset	    | [AssetInfo](#AssetInfo)[] |账户资产
 -----------  | ----------- | -------- |
 INVALID_ADDRESS_ERROR|11006|Invalid address
 REQUEST_NULL_ERROR|12001|Request parameter cannot be null
-CONNECTNETWORK_ERROR|11007|Fail to connect network
+CONNECTNETWORK_ERROR|11007|Failed to connect to the network
 INVALID_ASSET_CODE_ERROR|11023|The length of asset code must be between 1 and 64
 INVALID_ISSUER_ADDRESS_ERROR|11027|Invalid issuer address
 SYSTEM_ERROR|20000|System error
@@ -775,7 +775,7 @@ INVALID_CONTRACTADDRESS_ERROR|11037|Invalid contract address
 NO_SUCH_TOKEN_ERROR|11030|No such token
 INVALID_TOKENOWNER_ERRPR|11035|Invalid token owner
 INVALID_SPENDER_ERROR|11043|Invalid spender
-GET_ALLOWNANCE_ERROR|11036|Fail to get allowance
+GET_ALLOWNANCE_ERROR|11036|Failed to get allowance
 REQUEST_NULL_ERROR|12001|Request parameter cannot be null
 SYSTEM_ERROR|20000|System error
 
@@ -831,7 +831,7 @@ contractOwner|String|合约Token的拥有者
 -----------  | ----------- | -------- |
 INVALID_CONTRACTADDRESS_ERROR|11037|Invalid contract address
 NO_SUCH_TOKEN_ERROR|11030|No such token
-GET_TOKEN_INFO_ERROR|11066|Fail to get token info
+GET_TOKEN_INFO_ERROR|11066|Failed to get token info
 REQUEST_NULL_ERROR|12001|Request parameter cannot be null
 SYSTEM_ERROR|20000|System error
 
@@ -880,7 +880,7 @@ name     |   String     |  合约Token的名称   |
 -----------  | ----------- | -------- |
 INVALID_CONTRACTADDRESS_ERROR|11037|Invalid contract address
 NO_SUCH_TOKEN_ERROR|11030|No such token
-GET_TOKEN_INFO_ERROR|11066|Fail to get token info
+GET_TOKEN_INFO_ERROR|11066|Failed to get token info
 REQUEST_NULL_ERROR|12001|Request parameter cannot be null
 SYSTEM_ERROR|20000|System error
 
@@ -929,7 +929,7 @@ symbol     |   String     |  合约Token的符号   |
 -----------  | ----------- | -------- |
 INVALID_CONTRACTADDRESS_ERROR|11037|Invalid contract address
 NO_SUCH_TOKEN_ERROR|11030|No such token
-GET_TOKEN_INFO_ERROR|11066|Fail to get token info
+GET_TOKEN_INFO_ERROR|11066|Failed to get token info
 REQUEST_NULL_ERROR|12001|Request parameter cannot be null
 SYSTEM_ERROR|20000|System error
 
@@ -978,7 +978,7 @@ decimals     |   Integer     |  合约token精度   |
 -----------  | ----------- | -------- |
 INVALID_CONTRACTADDRESS_ERROR|11037|Invalid contract address
 NO_SUCH_TOKEN_ERROR|11030|No such token
-GET_TOKEN_INFO_ERROR|11066|Fail to get token info
+GET_TOKEN_INFO_ERROR|11066|Failed to get token info
 REQUEST_NULL_ERROR|12001|Request parameter cannot be null
 SYSTEM_ERROR |   20000     |  System error |
 
@@ -1027,7 +1027,7 @@ totalSupply     |   String     |   合约Token的总供应量  |
 -----------  | ----------- | -------- |
 INVALID_CONTRACTADDRESS_ERROR|11037|Invalid contract address
 NO_SUCH_TOKEN_ERROR|11030|No such token
-GET_TOKEN_INFO_ERROR|11066|Fail to get token info
+GET_TOKEN_INFO_ERROR|11066|Failed to get token info
 REQUEST_NULL_ERROR|12001|Request parameter cannot be null
 SYSTEM_ERROR|20000|System error
 
@@ -1078,7 +1078,7 @@ balance     |   Long     |  token的余额   |
 INVALID_TOKENOWNER_ERRPR|11035|Invalid token owner
 INVALID_CONTRACTADDRESS_ERROR|11037|Invalid contract address
 NO_SUCH_TOKEN_ERROR|11030|No such token
-GET_TOKEN_INFO_ERROR|11066|Fail to get token info
+GET_TOKEN_INFO_ERROR|11066|Failed to get token info
 REQUEST_NULL_ERROR|12001|Request parameter cannot be null
 SYSTEM_ERROR|20000|System error
 
@@ -1188,7 +1188,7 @@ payload|String|合约代码
 INVALID_CONTRACTADDRESS_ERROR|11037|Invalid contract address
 CONTRACTADDRESS_NOT_CONTRACTACCOUNT_ERROR|11038|contractAddress is not a contract account
 NO_SUCH_TOKEN_ERROR|11030|No such token
-GET_TOKEN_INFO_ERROR|11066|Fail to get token info
+GET_TOKEN_INFO_ERROR|11066|Failed to get token info
 REQUEST_NULL_ERROR|12001|Request parameter cannot be null
 SYSTEM_ERROR|20000|System error
 
@@ -1242,7 +1242,7 @@ operationIndex|Integer|所在操作的下标
 异常       |     错误码   |   描述   |
 -----------  | ----------- | -------- |
 INVALID_HASH_ERROR|11055|Invalid transaction hash
-CONNECTNETWORK_ERROR|11007|Fail to connect network
+CONNECTNETWORK_ERROR|11007|Failed to connect to the network
 REQUEST_NULL_ERROR|12001|Request parameter cannot be null
 SYSTEM_ERROR|20000|System error
 
@@ -1436,7 +1436,7 @@ INVALID_CONTRACTADDRESS_ERROR|11037|Invalid contract address
 CONTRACTADDRESS_CODE_BOTH_NULL_ERROR|11063|ContractAddress and code cannot be empty at the same time
 INVALID_OPTTYPE_ERROR|11064|OptType must be between 0 and 2
 REQUEST_NULL_ERROR|12001|Request parameter cannot be null
-CONNECTNETWORK_ERROR|11007|Fail to connect network
+CONNECTNETWORK_ERROR|11007|Failed to connect to the network
 SYSTEM_ERROR|20000|System error
 
 > 示例
@@ -1710,7 +1710,7 @@ SOURCEADDRESS_EQUAL_DESTADDRESS_ERROR|11005|SourceAddress cannot be equal to des
 INVALID_ISSUE_AMMOUNT_ERROR|11008|AssetAmount this will be issued must be between 1 and Long.MAX_VALUE
 INVALID_DATAKEY_ERROR|11011|The length of key must be between 1 and 1024
 INVALID_DATAVALUE_ERROR|11012|The length of value must be between 0 and 256000
-INVALID_DATAVERSION_ERROR|11013|The version must be equal or bigger than 0
+INVALID_DATAVERSION_ERROR|11013|The version must be equal to or greater than 0 
 INVALID_MASTERWEIGHT _ERROR|11015|MasterWeight must be between 0 and (Integer.MAX_VALUE * 2L + 1)
 INVALID_SIGNER_ADDRESS_ERROR|11016|Invalid signer address
 INVALID_SIGNER_WEIGHT _ERROR|11017|Signer weight must be between 0 and (Integer.MAX_VALUE * 2L + 1)
@@ -1735,15 +1735,15 @@ INVALID_FROMADDRESS_ERROR|11041|Invalid fromAddress
 FROMADDRESS_EQUAL_DESTADDRESS_ERROR|11042|FromAddress cannot be equal to destAddress
 INVALID_SPENDER_ERROR|11043|Invalid spender
 PAYLOAD_EMPTY_ERROR|11044|Payload cannot be empty
-INVALID_LOG_TOPIC _ERROR|11045|The length of key must be between 1 and 128
-INVALID_LOG_DATA _ERROR|11046|The length of value must be between 1 and 1024
+INVALID_LOG_TOPIC_ERROR|11045|The length of a log topic must be between 1 and 128
+INVALID_LOG_DATA_ERROR|11046|The length of one piece of log data must be between 1 and1024
 INVALID_CONTRACT_TYPE_ERROR|11047|Type must be equal or bigger than 0 
 INVALID_NONCE_ERROR|11048|Nonce must be between 1 and Long.MAX_VALUE
 INVALID_ GASPRICE_ERROR|11049|GasPrice must be between 1000 and Long.MAX_VALUE
 INVALID_FEELIMIT_ERROR|11050|FeeLimit must be between 1 and Long.MAX_VALUE
 OPERATIONS_EMPTY_ERROR|11051|Operations cannot be empty
-INVALID_CEILLEDGERSEQ_ERROR|11052|CeilLedgerSeq must be equal or bigger than 0
-OPERATIONS_ONE_ERROR|11053|One of operations cannot be resolved
+INVALID_CEILLEDGERSEQ_ERROR|11052|CeilLedgerSeq must be equal to or greater than 0
+OPERATIONS_ONE_ERROR|11053|One of the operations cannot be resolved
 REQUEST_NULL_ERROR|12001|Request parameter cannot be null
 SYSTEM_ERROR|20000|System error
 
@@ -1835,7 +1835,7 @@ gasPrice|Long|交易燃料单价
 INVALID_SOURCEADDRESS_ERROR|11002|Invalid sourceAddress
 INVALID_NONCE_ERROR|11045|Nonce must be between 1 and Long.MAX_VALUE
 OPERATIONS_EMPTY_ERROR|11051|Operations cannot be empty
-OPERATIONS_ONE_ERROR|11053|One of operations cannot be resolved
+OPERATIONS_ONE_ERROR|11053|One of the operations cannot be resolved
 INVALID_SIGNATURENUMBER_ERROR|11054|SignagureNumber must be between 1 and Integer.MAX_VALUE
 REQUEST_NULL_ERROR|12001|Request parameter cannot be null
 SYSTEM_ERROR|20000|System error
@@ -2032,7 +2032,7 @@ txSize|Long|交易大小
 -----------  | ----------- | -------- |
 INVALID_HASH_ERROR|11055|Invalid transaction hash
 REQUEST_NULL_ERROR|12001|Request parameter cannot be null
-CONNECTNETWORK_ERROR|11007|Fail to connect network
+CONNECTNETWORK_ERROR|11007|Failed to connect to the network
 SYSTEM_ERROR|20000|System error
 
 > 示例
@@ -2077,7 +2077,7 @@ blockNumber|Long|最新的区块高度，对应底层字段seq
 
    异常       |     错误码   |   描述   |
 -----------  | ----------- | -------- |
-CONNECTNETWORK_ERROR|11007|Fail to connect network
+CONNECTNETWORK_ERROR|11007|Failed to connect to the network
 SYSTEM_ERROR|20000|System error
 
 > 示例
@@ -2112,7 +2112,7 @@ isSynchronous    |   Boolean     |  区块是否同步   |
 
    异常       |     错误码   |   描述   |
 -----------  | ----------- | -------- |
-CONNECTNETWORK_ERROR|11007|Fail to connect network
+CONNECTNETWORK_ERROR|11007|Failed to connect to the network
 SYSTEM_ERROR|20000|System error
 
 > 示例
@@ -2156,7 +2156,7 @@ transactions|[TransactionHistory](#transactionhistory)[]|交易内容
 -----------  | ----------- | -------- |
 INVALID_BLOCKNUMBER_ERROR|11060|BlockNumber must bigger than 0
 REQUEST_NULL_ERROR|12001|Request parameter cannot be null
-CONNECTNETWORK_ERROR|11007|Fail to connect network
+CONNECTNETWORK_ERROR|11007|Failed to connect to the network
 SYSTEM_ERROR|20000|System error
 
 > 示例
@@ -2207,7 +2207,7 @@ version|String|区块版本
 -----------  | ----------- | -------- |
 INVALID_BLOCKNUMBER_ERROR|11060|BlockNumber must bigger than 0
 REQUEST_NULL_ERROR|12001|Request parameter cannot be null
-CONNECTNETWORK_ERROR|11007|Fail to connect network
+CONNECTNETWORK_ERROR|11007|Failed to connect to the network
 SYSTEM_ERROR|20000|System error
 
 > 示例
@@ -2251,7 +2251,7 @@ version|String|区块版本
 
    异常       |     错误码   |   描述   |
 -----------  | ----------- | -------- |
-CONNECTNETWORK_ERROR|11007|Fail to connect network
+CONNECTNETWORK_ERROR|11007|Failed to connect to the network
 SYSTEM_ERROR|20000|System error
 
 > 示例
@@ -2302,7 +2302,7 @@ plegeCoinAmount|Long|验证节点押金
 -----------  | ----------- | -------- |
 INVALID_BLOCKNUMBER_ERROR|11060|BlockNumber must bigger than 0
 REQUEST_NULL_ERROR|12001|Request parameter cannot be null
-CONNECTNETWORK_ERROR|11007|Fail to connect network
+CONNECTNETWORK_ERROR|11007|Failed to connect to the network
 SYSTEM_ERROR|20000|System error
 
 > 示例
@@ -2342,7 +2342,7 @@ validators|[ValidatorInfo](#validatorinfo)[]|验证节点列表
 
    异常       |     错误码   |   描述   |
 -----------  | ----------- | -------- |
-CONNECTNETWORK_ERROR|11007|Fail to connect network
+CONNECTNETWORK_ERROR|11007|Failed to connect to the network
 SYSTEM_ERROR|20000|System error
 
 > 示例
@@ -2395,7 +2395,7 @@ validatorsReward|[ValidatorReward](#validatorreward)[]|验证节点奖励情况
 -----------  | ----------- | -------- |
 INVALID_BLOCKNUMBER_ERROR|11060|BlockNumber must bigger than 0
 REQUEST_NULL_ERROR|12001|Request parameter cannot be null
-CONNECTNETWORK_ERROR|11007|Fail to connect network
+CONNECTNETWORK_ERROR|11007|Failed to connect to the network
 SYSTEM_ERROR|20000|System error
 
 > 示例
@@ -2436,7 +2436,7 @@ validatorsReward|[ValidatorReward](#validatorreward)[]|验证节点奖励情况
 
    异常       |     错误码   |   描述   |
 -----------  | ----------- | -------- |
-CONNECTNETWORK_ERROR|11007|Fail to connect network
+CONNECTNETWORK_ERROR|11007|Failed to connect to the network
 SYSTEM_ERROR|20000|System error
 
 > 示例
@@ -2487,7 +2487,7 @@ gasPrice|Long|交易燃料单价，单位MO，1 BU = 10^8 MO
 -----------  | ----------- | -------- |
 INVALID_BLOCKNUMBER_ERROR|11060|BlockNumber must bigger than 0
 REQUEST_NULL_ERROR|12001|Request parameter cannot be null
-CONNECTNETWORK_ERROR|11007|Fail to connect network
+CONNECTNETWORK_ERROR|11007|Failed to connect to the network
 SYSTEM_ERROR|20000|System error
 
 > 示例
@@ -2526,7 +2526,7 @@ fees|[Fees](#fees)|费用
 
    异常       |     错误码   |   描述   |
 -----------  | ----------- | -------- |
-CONNECTNETWORK_ERROR|11007|Fail to connect network
+CONNECTNETWORK_ERROR|11007|Failed to connect to the network
 SYSTEM_ERROR|20000|System error
 
 > 示例
@@ -2545,19 +2545,19 @@ if (response.getErrorCode() == 0) {
 
    异常       |     错误码   |   描述   |
 -----------  | ----------- | -------- |
-ACCOUNT_CREATE_ERROR|11001|Create account failed
+ACCOUNT_CREATE_ERROR|11001|Failed to create the account 
 INVALID_SOURCEADDRESS_ERROR|11002|Invalid sourceAddress
 INVALID_DESTADDRESS_ERROR|11003|Invalid destAddress
 INVALID_INITBALANCE_ERROR|11004|InitBalance must be between 1 and Long.MAX_VALUE 
 SOURCEADDRESS_EQUAL_DESTADDRESS_ERROR|11005|SourceAddress cannot be equal to destAddress
 INVALID_ADDRESS_ERROR|11006|Invalid address
-CONNECTNETWORK_ERROR|11007|Fail to connect network
+CONNECTNETWORK_ERROR|11007|Failed to connect to the network
 INVALID_ISSUE_AMOUNT_ERROR|11008|Amount of the token to be issued must be between 1 and Long.MAX_VALUE
 NO_ASSET_ERROR|11009|The account does not have the asset
 NO_METADATA_ERROR|11010|The account does not have the metadata
 INVALID_DATAKEY_ERROR|11011|The length of key must be between 1 and 1024
 INVALID_DATAVALUE_ERROR|11012|The length of value must be between 0 and 256000
-INVALID_DATAVERSION_ERROR|11013|The version must be equal or bigger than 0
+INVALID_DATAVERSION_ERROR|11013|The version must be equal to or greater than 0 
 INVALID_MASTERWEIGHT_ERROR|11015|MasterWeight must be between 0 and (Integer.MAX_VALUE * 2L + 1)
 INVALID_SIGNER_ADDRESS_ERROR|11016|Invalid signer address
 INVALID_SIGNER_WEIGHT_ERROR|11017|Signer weight must be between 0 and (Integer.MAX_VALUE * 2L + 1)
@@ -2582,27 +2582,29 @@ INVALID_FROMADDRESS_ERROR|11041|Invalid fromAddress
 FROMADDRESS_EQUAL_DESTADDRESS_ERROR|11042|FromAddress cannot be equal to destAddress
 INVALID_SPENDER_ERROR|11043|Invalid spender
 PAYLOAD_EMPTY_ERROR|11044|Payload cannot be empty
-INVALID_LOG_TOPIC_ERROR|11045|The length of log topic must be between 1 and 128
-INVALID_LOG_DATA_ERROR|11046|The length of one of log data must be between 1 and 1024
+INVALID_LOG_TOPIC_ERROR|11045|The length of a log topic must be between 1 and 128
+INVALID_LOG_DATA_ERROR|11046|The length of one piece of log data must be between 1 and1024
 INVALID_CONTRACT_TYPE_ERROR|11047|Invalid contract type
 INVALID_NONCE_ERROR|11048|Nonce must be between 1 and Long.MAX_VALUE
 INVALID_GASPRICE_ERROR|11049|GasPrice must be between 1000 and Long.MAX_VALUE
 INVALID_FEELIMIT_ERROR|11050|FeeLimit must be between 1 and Long.MAX_VALUE
 OPERATIONS_EMPTY_ERROR|11051|Operations cannot be empty
-INVALID_CEILLEDGERSEQ_ERROR|11052|CeilLedgerSeq must be equal or bigger than 0
-OPERATIONS_ONE_ERROR|11053|One of operations cannot be resolved
+INVALID_CEILLEDGERSEQ_ERROR|11052|CeilLedgerSeq must be equal to or greater than 0
+OPERATIONS_ONE_ERROR|11053|One of the operations cannot be resolved
 INVALID_SIGNATURENUMBER_ERROR|11054|SignagureNumber must be between 1 and Integer.MAX_VALUE
 INVALID_HASH_ERROR|11055|Invalid transaction hash
 INVALID_BLOB_ERROR|11056|Invalid blob
 PRIVATEKEY_NULL_ERROR|11057|PrivateKeys cannot be empty
 PRIVATEKEY_ONE_ERROR|11058|One of privateKeys is invalid
+SIGNDATA_NULL_ERROR|11059|SignData cannot be empty
+INVALID_BLOCKNUMBER_ERROR|11060|BlockNumber must be bigger than 0
 PUBLICKEY_NULL_ERROR|11061|PublicKey cannot be empty
 URL_EMPTY_ERROR|11062|Url cannot be empty
 CONTRACTADDRESS_CODE_BOTH_NULL_ERROR|11063|ContractAddress and code cannot be empty at the same time
 INVALID_OPTTYPE_ERROR|11064|OptType must be between 0 and 2
-GET_ALLOWANCE_ERROR|11065|Get allowance failed
-GET_TOKEN_INFO_ERROR|11066|Fail to get token info
+GET_ALLOWANCE_ERROR|11065|Failed to get allowance
+GET_TOKEN_INFO_ERROR|11066|Failed to get token info
 SIGNATURE_EMPTY_ERROR|11067|The signatures cannot be empty
 REQUEST_NULL_ERROR|12001|Request parameter cannot be null
-CONNECTN_BLOCKCHAIN_ERROR|19999|Connect blockchain failed
+CONNECTN_BLOCKCHAIN_ERROR|19999|Failed to connect to the blockchain 
 SYSTEM_ERROR|20000|System error

@@ -1,4 +1,4 @@
-package io.bumo.model.request.Operation;
+package io.bumo.model.request.operation;
 
 import io.bumo.common.OperationType;
 
@@ -7,12 +7,15 @@ import io.bumo.common.OperationType;
  * @Date 2018/7/9 16:57
  */
 public class Ctp10TokenIssueOperation extends BaseOperation {
-    private OperationType operationType = OperationType.TOKEN_ISSUE;
     private Long initBalance;
     private String name;
     private String symbol;
     private Integer decimals;
     private String supply;
+
+    public Ctp10TokenIssueOperation() {
+        operationType = OperationType.TOKEN_ISSUE;
+    }
 
     /**
      * @Author riven

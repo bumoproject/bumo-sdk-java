@@ -1,4 +1,4 @@
-package io.bumo.model.request.Operation;
+package io.bumo.model.request.operation;
 
 import io.bumo.common.OperationType;
 

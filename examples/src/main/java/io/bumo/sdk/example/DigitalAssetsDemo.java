@@ -1,18 +1,12 @@
 package io.bumo.sdk.example;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import io.bumo.SDK;
-import io.bumo.common.General;
 import io.bumo.common.ToBaseUnit;
 import io.bumo.crypto.Keypair;
-import io.bumo.crypto.http.HttpKit;
-import io.bumo.crypto.protobuf.Chain;
 import io.bumo.encryption.key.PrivateKey;
-import io.bumo.encryption.utils.hex.HexFormat;
 import io.bumo.model.request.*;
-import io.bumo.model.request.Operation.*;
+import io.bumo.model.request.operation.*;
 import io.bumo.model.response.*;
 import io.bumo.model.response.result.*;
 import io.bumo.model.response.result.data.Signature;
@@ -20,18 +14,13 @@ import io.bumo.model.response.result.data.Signer;
 import io.bumo.model.response.result.data.TransactionFees;
 import org.junit.Test;
 
-import java.io.IOException;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
-
 /**
  * @author riven
  * @date 2018/7/15 14:32
  */
 
 public class DigitalAssetsDemo {
-    SDK sdk = SDK.getInstance("http://seed1.bumotest.io:26002");
+    SDK sdk = SDK.getInstance("http://127.0.0.1:36002");
 
     @Test
     public void checkSDKGetinstance() {
@@ -39,7 +28,7 @@ public class DigitalAssetsDemo {
     }
 
     /**
-     * 检测连接的节点是否区块同步正常
+     * Check whether the nodes in the connection are block synchronously
      */
     @Test
     public void checkBlockStatus() {
@@ -48,7 +37,7 @@ public class DigitalAssetsDemo {
     }
 
     /**
-     * 生成账户私钥，公钥及地址
+     * Generate an account private key, public key and address
      */
     @Test
     public void createAccount() {
@@ -57,16 +46,16 @@ public class DigitalAssetsDemo {
     }
 
     /**
-     * 校验账户地址
+     * Check whether account address is valid
      */
     @Test
     public void checkAccountAddress() {
-        // 初始化请求参数
+        // Init request
         String address = "buQemmMwmRQY1JkcU7w3nhruoX5N3j6C29uo";
         AccountCheckValidRequest request = new AccountCheckValidRequest();
         request.setAddress(address);
 
-        // 调用checkValid
+        // Call checkValid
         AccountCheckValidResponse response = sdk.getAccountService().checkValid(request);
         if (0 == response.getErrorCode()) {
             System.out.println(response.getResult().isValid());
@@ -76,16 +65,16 @@ public class DigitalAssetsDemo {
     }
 
     /**
-     * 查询账户信息
+     * Get account info
      */
     @Test
     public void getAccountInfo() {
-        // 初始化请求参数
+        // Init request
         String accountAddress = "buQemmMwmRQY1JkcU7w3nhruoX5N3j6C29uo";
         AccountGetInfoRequest request = new AccountGetInfoRequest();
         request.setAddress(accountAddress);
 
-        // 调用getInfo接口
+        // Call getInfo
         AccountGetInfoResponse response = sdk.getAccountService().getInfo(request);
         if (response.getErrorCode() == 0) {
             AccountGetInfoResult result = response.getResult();
@@ -96,16 +85,16 @@ public class DigitalAssetsDemo {
     }
 
     /**
-     * 获取账户Nonce
+     * Get account nonce
      */
     @Test
     public void getAccountNonce() {
-        // 初始化请求参数
+        // Init request
         String accountAddress = "buQswSaKDACkrFsnP1wcVsLAUzXQsemauEjf";
         AccountGetNonceRequest request = new AccountGetNonceRequest();
         request.setAddress(accountAddress);
 
-        // 调用getNonce接口
+        // Call getNonce
         AccountGetNonceResponse response = sdk.getAccountService().getNonce(request);
         if (0 == response.getErrorCode()) {
             System.out.println("账户nonce:" + response.getResult().getNonce());
@@ -115,16 +104,16 @@ public class DigitalAssetsDemo {
     }
 
     /**
-     * 获取账户BU余额
+     * Get account BU balance
      */
     @Test
     public void getAccountBalance() {
-        // 初始化请求参数
+        // Init request
         String accountAddress = "buQswSaKDACkrFsnP1wcVsLAUzXQsemauEjf";
         AccountGetBalanceRequest request = new AccountGetBalanceRequest();
         request.setAddress(accountAddress);
 
-        // 调用getBalance接口
+        // Call getBalance
         AccountGetBalanceResponse response = sdk.getAccountService().getBalance(request);
         if (0 == response.getErrorCode()) {
             AccountGetBalanceResult result = response.getResult();
@@ -135,15 +124,15 @@ public class DigitalAssetsDemo {
     }
 
     /**
-     * 查询指定账户下的所有资产
+     * Query all assets under the specified account
      */
     @Test
     public void getAccountAssets() {
-        // 初始化请求参数
+        // Init request
         AccountGetAssetsRequest request = new AccountGetAssetsRequest();
         request.setAddress("buQsurH1M4rjLkfjzkxR9KXJ6jSu2r9xBNEw");
 
-        // 调用getAssets接口
+        // Call getAssets
         AccountGetAssetsResponse response = sdk.getAccountService().getAssets(request);
         if (response.getErrorCode() == 0) {
             AccountGetAssetsResult result = response.getResult();
@@ -154,17 +143,17 @@ public class DigitalAssetsDemo {
     }
 
     /**
-     * 查询账户Metadata
+     * Get account metadata
      */
     @Test
     public void getAccountMetadata() {
-        // 初始化请求参数
+        // Init request
         String accountAddress = "buQsurH1M4rjLkfjzkxR9KXJ6jSu2r9xBNEw";
         AccountGetMetadataRequest request = new AccountGetMetadataRequest();
         request.setAddress(accountAddress);
         request.setKey("20180704");
 
-        // 调用getMetadata接口
+        // Call getMetadata
         AccountGetMetadataResponse response = sdk.getAccountService().getMetadata(request);
         if (response.getErrorCode() == 0) {
             AccountGetMetadataResult result = response.getResult();
@@ -175,17 +164,17 @@ public class DigitalAssetsDemo {
     }
 
     /**
-     * 查询指定账户的指定资产
+     * Query the specified assets of the specified account
      */
     @Test
     public void getAssetInfo() {
-        // 初始化请求参数
+        // Init request
         AssetGetInfoRequest request = new AssetGetInfoRequest();
         request.setAddress("buQhBoJh7zLoVCsArUYJN1EDPD7B7SRXzPS9");
         request.setIssuer("buQBjJD1BSJ7nzAbzdTenAhpFjmxRVEEtmxH");
         request.setCode("HNC");
 
-        // 调用getInfo消息
+        // Call getInfo
         AssetGetInfoResponse response = sdk.getAssetService().getInfo(request);
         if (response.getErrorCode() == 0) {
             AssetGetInfoResult result = response.getResult();
@@ -196,257 +185,11 @@ public class DigitalAssetsDemo {
     }
 
     /**
-     * 验证合约Token的有效性
-     */
-    @Test
-    public void checkTokenValid() {
-        // 初始化请求参数
-        Ctp10TokenCheckValidRequest request = new Ctp10TokenCheckValidRequest();
-        request.setContractAddress("buQfnVYgXuMo3rvCEpKA6SfRrDpaz8D8A9Ea");
-
-        // 调用checkValid接口
-        Ctp10TokenCheckValidResponse response = sdk.getCtp10TokenService().checkValid(request);
-        if (response.getErrorCode() == 0) {
-            TokenCheckValidResult result = response.getResult();
-            System.out.println(result.getValid());
-        } else {
-            System.out.println("error: " + response.getErrorDesc());
-        }
-    }
-
-    /**
-     * 查询授权用户的可用的合约Token数量
-     */
-    @Test
-    public void getCtp10TokenAllowance() {
-        // 初始化请求参数
-        Ctp10TokenAllowanceRequest request = new Ctp10TokenAllowanceRequest();
-        request.setContractAddress("buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq");
-        request.setTokenOwner("buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp");
-        request.setSpender("buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp");
-
-        // 调用allowance接口
-        Ctp10TokenAllowanceResponse response = sdk.getCtp10TokenService().allowance(request);
-        if (response.getErrorCode() == 0) {
-            TokenAllowanceResult result = response.getResult();
-            System.out.println(JSON.toJSONString(result, true));
-        } else {
-            System.out.println("error: " + response.getErrorDesc());
-        }
-    }
-
-    /**
-     * 查询合约Token的信息
-     */
-    @Test
-    public void getCtp10TokenInfo() {
-        // 初始化请求参数
-        Ctp10TokenGetInfoRequest request = new Ctp10TokenGetInfoRequest();
-        request.setContractAddress("buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq");
-
-        // 调用getInfo接口
-        Ctp10TokenGetInfoResponse response = sdk.getCtp10TokenService().getInfo(request);
-        if (response.getErrorCode() == 0) {
-            TokenGetInfoResult result = response.getResult();
-            System.out.println(JSON.toJSONString(result, true));
-        } else {
-            System.out.println("error: " + response.getErrorDesc());
-        }
-    }
-
-    /**
-     * 查询合约Token的名称
-     */
-    @Test
-    public void getCtp10TokenName() {
-        // 初始化请求参数
-        Ctp10TokenGetNameRequest request = new Ctp10TokenGetNameRequest();
-        request.setContractAddress("buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq");
-
-        // 调用getName接口
-        Ctp10TokenGetNameResponse response = sdk.getCtp10TokenService().getName(request);
-        if (response.getErrorCode() == 0) {
-            TokenGetNameResult result = response.getResult();
-            System.out.println(result.getName());
-        } else {
-            System.out.println("error: " + response.getErrorDesc());
-        }
-    }
-
-    /**
-     * 查询合约Token的符号名
-     */
-    @Test
-    public void getCtp10TokenSymbol() {
-        // 初始化请求参数
-        Ctp10TokenGetSymbolRequest request = new Ctp10TokenGetSymbolRequest();
-        request.setContractAddress("buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq");
-
-        // 调用getSymbol接口
-        Ctp10TokenGetSymbolResponse response = sdk.getCtp10TokenService().getSymbol(request);
-        if (response.getErrorCode() == 0) {
-            TokenGetSymbolResult result = response.getResult();
-            System.out.println(result.getSymbol());
-        } else {
-            System.out.println("error: " + response.getErrorDesc());
-        }
-    }
-
-    /**
-     * 获取合约Token的精度
-     */
-    @Test
-    public void getCtp10TokenDecimals() {
-        // 初始化请求参数
-        Ctp10TokenGetDecimalsRequest request = new Ctp10TokenGetDecimalsRequest();
-        request.setContractAddress("buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq");
-
-        // 调用getDecimals接口
-        Ctp10TokenGetDecimalsResponse response = sdk.getCtp10TokenService().getDecimals(request);
-        if (response.getErrorCode() == 0) {
-            TokenGetDecimalsResult result = response.getResult();
-            System.out.println(result.getDecimals());
-        } else {
-            System.out.println("error: " + response.getErrorDesc());
-        }
-    }
-
-    /**
-     * 获取合约Token总供应量
-     */
-    @Test
-    public void getCtp10TokenTotalSupply() {
-        // 初始化请求参数
-        Ctp10TokenGetTotalSupplyRequest request = new Ctp10TokenGetTotalSupplyRequest();
-        request.setContractAddress("buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq");
-
-        // 调用getTotalSupply接口
-        Ctp10TokenGetTotalSupplyResponse response = sdk.getCtp10TokenService().getTotalSupply(request);
-        if (response.getErrorCode() == 0) {
-            TokenGetTotalSupplyResult result = response.getResult();
-            System.out.println(result.getTotalSupply());
-        } else {
-            System.out.println("error: " + response.getErrorDesc());
-        }
-    }
-
-    /**
-     * 查询账户下合约Token的余额
-     */
-    @Test
-    public void getCtp10TokenBalance() {
-        // 初始化请求参数
-        Ctp10TokenGetBalanceRequest request = new Ctp10TokenGetBalanceRequest();
-        request.setContractAddress("buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq");
-        request.setTokenOwner("buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp");
-
-        // 调用getBalance接口
-        Ctp10TokenGetBalanceResponse response = sdk.getCtp10TokenService().getBalance(request);
-        if (response.getErrorCode() == 0) {
-            TokenGetBalanceResult result = response.getResult();
-            System.out.println(result.getBalance());
-        } else {
-            System.out.println("error: " + response.getErrorDesc());
-        }
-    }
-
-    /**
-     * 验证合约账户的有效性
-     */
-    @Test
-    public void checkContractValid() {
-        // 初始化请求参数
-        ContractCheckValidRequest request = new ContractCheckValidRequest();
-        request.setContractAddress("buQfnVYgXuMo3rvCEpKA6SfRrDpaz8D8A9Ea");
-
-        // 调用checkValid接口
-        ContractCheckValidResponse response = sdk.getContractService().checkValid(request);
-        if (response.getErrorCode() == 0) {
-            ContractCheckValidResult result = response.getResult();
-            System.out.println(result.getValid());
-        } else {
-            System.out.println("error: " + response.getErrorDesc());
-        }
-    }
-
-    /**
-     * 查询合约信息
-     */
-    @Test
-    public void getContractInfo() {
-        // 初始化请求参数
-        ContractGetInfoRequest request = new ContractGetInfoRequest();
-        request.setContractAddress("buQfnVYgXuMo3rvCEpKA6SfRrDpaz8D8A9Ea");
-
-        // 调用getInfo接口
-        ContractGetInfoResponse response = sdk.getContractService().getInfo(request);
-        if (response.getErrorCode() == 0) {
-            System.out.println(JSON.toJSONString(response.getResult(), true));
-        } else {
-            System.out.println("error: " + response.getErrorDesc());
-        }
-    }
-
-    @Test
-    public void getContractAddress() {
-        // 初始化请求参数
-        String hash = "44246c5ba1b8b835a5cbc29bdc9454cdb9a9d049870e41227f2dcfbcf7a07689";
-        ContractGetAddressRequest request = new ContractGetAddressRequest();
-        request.setHash(hash);
-
-        // 调用getAddress接口
-        ContractGetAddressResponse response = sdk.getContractService().getAddress(request);
-        if (response.getErrorCode() == 0) {
-            System.out.println(JSON.toJSONString(response.getResult(), true));
-        } else {
-            System.out.println("error: " + response.getErrorDesc());
-        }
-    }
-
-    /**
-     * 调用合约
-     */
-    @Test
-    public void callContract() {
-        // 初始化变量
-        // 合约账户
-        String contractAddress = "buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq";
-        // 待分配token的账户
-        String spender = "buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp";
-        // 授权的数量
-        String amount = "1000000";
-
-        // 初始化input
-        JSONObject input = new JSONObject();
-        input.put("method", "approve");
-        JSONObject params = new JSONObject();
-        params.put("spender", spender);
-        params.put("value", amount);
-        input.put("params", params);
-
-        // 初始化请求参数
-        ContractCallRequest request = new ContractCallRequest();
-        request.setContractAddress(contractAddress);
-        request.setFeeLimit(1000000000L);
-        request.setOptType(1);
-        request.setInput(input.toJSONString());
-
-        // 调用call接口
-        ContractCallResponse response = sdk.getContractService().call(request);
-        if (response.getErrorCode() == 0) {
-            ContractCallResult result = response.getResult();
-            System.out.println(JSON.toJSONString(result, true));
-        } else {
-            System.out.println("error: " + response.getErrorDesc());
-        }
-    }
-
-    /**
-     * 序列化交易，生成交易Blob
+     * Serialize the transaction and generate the transaction blob
      */
     @Test
     public void buildTransactionBlob() {
-        // 初始化变量
+        // Init variable
         String senderAddresss = "buQfnVYgXuMo3rvCEpKA6SfRrDpaz8D8A9Ea";
         String destAddress = "buQsurH1M4rjLkfjzkxR9KXJ6jSu2r9xBNEw";
         Long amount = ToBaseUnit.BU2MO("10.9");
@@ -454,13 +197,13 @@ public class DigitalAssetsDemo {
         Long feeLimit = ToBaseUnit.BU2MO("0.01");
         Long nonce = 1L;
 
-        // 构建sendBU操作
+        // Build sendBU
         BUSendOperation operation = new BUSendOperation();
         operation.setSourceAddress(senderAddresss);
         operation.setDestAddress(destAddress);
         operation.setAmount(amount);
 
-        // 初始化请求参数
+        // Init request
         TransactionBuildBlobRequest request = new TransactionBuildBlobRequest();
         request.setSourceAddress(senderAddresss);
         request.setNonce(nonce);
@@ -468,7 +211,7 @@ public class DigitalAssetsDemo {
         request.setGasPrice(gasPrice);
         request.addOperation(operation);
 
-        // 调用buildBlob接口
+        // Call buildBlob
         TransactionBuildBlobResponse response = sdk.getTransactionService().buildBlob(request);
         if (response.getErrorCode() == 0) {
             TransactionBuildBlobResult result = response.getResult();
@@ -479,22 +222,22 @@ public class DigitalAssetsDemo {
     }
 
     /**
-     * 评估交易费用
+     * Evaluation of transaction costs
      */
     @Test
     public void evaluateTxFees() throws Exception {
-        // 初始化变量
+        // Init variable
         // 发送方私钥
         String senderPrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq";
         // 接收方账户地址
         String destAddress = "buQsurH1M4rjLkfjzkxR9KXJ6jSu2r9xBNEw";
         // 发送转出10.9BU给接收方（目标账户）
         Long amount = ToBaseUnit.BU2MO("10.9");
-        // 固定写 1000L ，单位是MO
+        // The fixed write 1000L, the unit is MO
         Long gasPrice = 1000L;
-        //设置最多费用 0.01BU ，固定填写
+        //Set up the maximum cost 0.01BU
         Long feeLimit = ToBaseUnit.BU2MO("0.01");
-        // 交易发起账户Nonce + 1;
+        // Transaction initiation account's nonce + 1;
         Long nonce = 42L;
 
         // 评估费用
@@ -503,11 +246,11 @@ public class DigitalAssetsDemo {
     }
 
     /**
-     * 签名交易
+     * Sign transaction
      */
     @Test
     public void signTransaction() {
-        // 初始化请求参数
+        // Init request
         String issuePrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq";
         String[] signerPrivateKeyArr = {issuePrivateKey};
         String transactionBlob = "123";
@@ -525,11 +268,11 @@ public class DigitalAssetsDemo {
     }
 
     /**
-     * 提交交易
+     * Submit transaction
      */
     @Test
     public void submitTransaction() {
-        // 初始化请求参数
+        // Init request
         String transactionBlob = "0A246275516E6E5545425245773268423670574847507A77616E5837643238786B364B566370102118C0843D20E8073A56080712246275516E6E5545425245773268423670574847507A77616E5837643238786B364B566370522C0A24627551426A4A443142534A376E7A41627A6454656E416870466A6D7852564545746D78481080A9E08704";
         Signature signature = new Signature();
         signature.setSignData("D2B5E3045F2C1B7D363D4F58C1858C30ABBBB0F41E4B2E18AF680553CA9C3689078E215C097086E47A4393BCA715C7A5D2C180D8750F35C6798944F79CC5000A");
@@ -538,7 +281,7 @@ public class DigitalAssetsDemo {
         request.setTransactionBlob(transactionBlob);
         request.addSignature(signature);
 
-        // 调用submit接口
+        // Call submit
         TransactionSubmitResponse response = sdk.getTransactionService().submit(request);
         if (0 == response.getErrorCode()) {
             System.out.println(JSON.toJSONString(response.getResult(), true));
@@ -548,16 +291,16 @@ public class DigitalAssetsDemo {
     }
 
     /**
-     * 根据交易Hash获取交易信息
+     * Get transaction information according to the transaction Hash
      */
     @Test
     public void getTxByHash() {
-        String txHash = "44246c5ba1b8b835a5cbc29bdc9454cdb9a9d049870e41227f2dcfbcf7a07689";
-        // 初始化请求参数
+        String txHash = "389d53e55929c997d22f25d3757b088e2e869403ac0f2d13712ba877762b3d45";
+        // Init request
         TransactionGetInfoRequest request = new TransactionGetInfoRequest();
         request.setHash(txHash);
 
-        // 调用getInfo接口
+        // Call getInfo
         TransactionGetInfoResponse response = sdk.getTransactionService().getInfo(request);
         if (response.getErrorCode() == 0) {
             System.out.println(JSON.toJSONString(response.getResult(), true));
@@ -567,18 +310,18 @@ public class DigitalAssetsDemo {
     }
 
     /**
-     * 探测用户充值
+     * Probe user recharge
      * <p>
-     * 通过解析区块下的交易，来探测用户的充值动作
+     * Through the analysis of transactions under the block, to detect the user's charging action
      */
     @Test
     public void getTransactionOfBolck() {
-        // 初始化请求参数
+        // Init request
         Long blockNumber = 617247L;
         BlockGetTransactionsRequest request = new BlockGetTransactionsRequest();
         request.setBlockNumber(blockNumber);
 
-        // 调用getTransactions接口
+        // Call getTransactions
         BlockGetTransactionsResponse response = sdk.getBlockService().getTransactions(request);
         if (0 == response.getErrorCode()) {
             System.out.println(JSON.toJSONString(response.getResult(), true));
@@ -588,11 +331,11 @@ public class DigitalAssetsDemo {
     }
 
     /**
-     * 查询最新的区块高度
+     * Get the latest block number
      */
     @Test
     public void getLastBlockNumber() {
-        // 调用getNumber接口
+        // Call getNumber
         BlockGetNumberResponse response = sdk.getBlockService().getNumber();
         if (0 == response.getErrorCode()) {
             System.out.println(JSON.toJSONString(response.getResult(), true));
@@ -602,15 +345,15 @@ public class DigitalAssetsDemo {
     }
 
     /**
-     * 查询指定区块高度的区块信息
+     * Get the block info according to the specified block number
      */
     @Test
     public void getBlockInfo() {
-        // 初始化请求参数
+        // Init request
         BlockGetInfoRequest request = new BlockGetInfoRequest();
         request.setBlockNumber(629743L);
 
-        // 调用getInfo接口
+        // Call getInfo
         BlockGetInfoResponse response = sdk.getBlockService().getInfo(request);
         if (response.getErrorCode() == 0) {
             BlockGetInfoResult result = response.getResult();
@@ -621,11 +364,11 @@ public class DigitalAssetsDemo {
     }
 
     /**
-     * 查询最新的区块信息
+     * Get latest block info
      */
     @Test
     public void getBlockLatestInfo() {
-        // 调用getLatestInfo接口
+        // Call getLatestInfo
         BlockGetLatestInfoResponse response = sdk.getBlockService().getLatestInfo();
         if (response.getErrorCode() == 0) {
             BlockGetLatestInfoResult result = response.getResult();
@@ -636,16 +379,15 @@ public class DigitalAssetsDemo {
     }
 
     /**
-     * R
-     * 查询指定区块高度的验证节点信息
+     * Get the authentication node information of the specified block height
      */
     @Test
     public void getBlockValidators() {
-        // 初始化请求参数
+        // Init request
         BlockGetValidatorsRequest request = new BlockGetValidatorsRequest();
         //request.setBlockNumber(629743L);
 
-        // 调用getValidators接口
+        // Call getValidators
         BlockGetValidatorsResponse response = sdk.getBlockService().getValidators(request);
         if (response.getErrorCode() == 0) {
             BlockGetValidatorsResult result = response.getResult();
@@ -656,7 +398,7 @@ public class DigitalAssetsDemo {
     }
 
     /**
-     * 查询最新区块的验证节点信息
+     * Get the validation node information of the latest block
      */
     @Test
     public void getLatestBlockValidators() {
@@ -670,15 +412,15 @@ public class DigitalAssetsDemo {
     }
 
     /**
-     * 查询指定区块高度的区块奖励和验证节点奖励
+     * Get block award and verification node reward for specifying block height
      */
     @Test
     public void getBlockReward() {
-        // 初始化请求参数
+        // Init request
         BlockGetRewardRequest request = new BlockGetRewardRequest();
         request.setBlockNumber(629743L);
 
-        // 调用getReward接口
+        // Call getReward
         BlockGetRewardResponse response = sdk.getBlockService().getReward(request);
         if (response.getErrorCode() == 0) {
             BlockGetRewardResult result = response.getResult();
@@ -689,11 +431,11 @@ public class DigitalAssetsDemo {
     }
 
     /**
-     * 查询最新区块奖励和验证节点奖励
+     * Get the latest block award and verification node Awards
      */
     @Test
     public void getLatestBlockReward() {
-        // 调用getLatestReward接口
+        // Call getLatestReward
         BlockGetLatestRewardResponse response = sdk.getBlockService().getLatestReward();
         if (response.getErrorCode() == 0) {
             BlockGetLatestRewardResult result = response.getResult();
@@ -704,15 +446,15 @@ public class DigitalAssetsDemo {
     }
 
     /**
-     * 获取指定区块的费用标准
+     * Get the cost standard for the specified block
      */
     @Test
     public void getBlockFees() {
-        // 初始化请求参数
+        // Init request
         BlockGetFeesRequest request = new BlockGetFeesRequest();
         request.setBlockNumber(629743L);
 
-        // 调用getFees接口
+        // Call getFees
         BlockGetFeesResponse response = sdk.getBlockService().getFees(request);
         if (response.getErrorCode() == 0) {
             System.out.println(JSON.toJSONString(response.getResult(), true));
@@ -722,11 +464,11 @@ public class DigitalAssetsDemo {
     }
 
     /**
-     * 获取最新区块的费用标准
+     * Get the cost standard for the latest block
      */
     @Test
     public void getBlockLatestFees() {
-        // 调用getLatestFees接口
+        // Call getLatestFees
         BlockGetLatestFeesResponse response = sdk.getBlockService().getLatestFees();
         if (response.getErrorCode() == 0) {
             System.out.println(JSON.toJSONString(response.getResult(), true));
@@ -736,37 +478,40 @@ public class DigitalAssetsDemo {
     }
 
     /**
-     * 激活账户
+     * Activate a new account
      */
     @Test
     public void activateAccount() {
-        // 发起激活操作的账户
+        // The account private key to activate a new account
         String activatePrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq";
-        Long initBalance = ToBaseUnit.BU2MO("0.1");
-        // 固定写 1000L ，单位是MO
+        Long initBalance = ToBaseUnit.BU2MO("1000");
+        // The fixed write 1000L, the unit is MO
         Long gasPrice = 1000L;
-        // 设置最多费用 0.01BU ，固定填写
+        // Set up the maximum cost 0.01BU
         Long feeLimit = ToBaseUnit.BU2MO("0.01");
-        // 交易发起账户Nonce + 1
-        Long nonce = 1L;
+        // Transaction initiation account's nonce + 1
+        Long nonce = 8L;
 
+        // Generate a new account to be activated
         Keypair keypair = Keypair.generator();
-        // 待激活账户地址
+        System.out.println(JSON.toJSONString(keypair, true));
         String destAccount = keypair.getAddress();
 
-        // 1. 获取交易发送账户地址
+        // 1. Get the account address to send this transaction
         String activateAddresss = getAddressByPrivateKey(activatePrivateKey);
 
-        // 2. 构建activateAccount操作
+        // 2. Build activateAccount
         AccountActivateOperation operation = new AccountActivateOperation();
         operation.setSourceAddress(activateAddresss);
         operation.setDestAddress(destAccount);
         operation.setInitBalance(initBalance);
         operation.setMetadata("activate account");
 
-        // 记录txhash ，以便后续再次确认交易真实结果
-        // 推荐5个区块后再次通过txhash再次调用`根据交易Hash获取交易信息`(参考示例：getTxByHash()）来确认交易终态结果
-        String txHash = submitTransaction(activatePrivateKey, activateAddresss, operation, nonce, gasPrice, feeLimit);
+        String[] signerPrivateKeyArr = {activatePrivateKey};
+        // Record txhash for subsequent confirmation of the real result of the transaction.
+        // After recommending five blocks, call again through txhash `Get the transaction information
+        // from the transaction Hash'(see example: getTxByHash ()) to confirm the final result of the transaction
+        String txHash = submitTransaction(signerPrivateKeyArr, activateAddresss, operation, nonce, gasPrice, feeLimit);
         if (txHash != null) {
             System.out.println("hash: " + txHash);
         }
@@ -774,148 +519,149 @@ public class DigitalAssetsDemo {
 
 
     /**
-     * 设置metadata
+     * Set account metadata
      */
     @Test
     public void setAccountMetadata() {
-        // 初始化变量
-        // 账户私钥
+        // Init variable
+        // The account private key to set metadata
         String accountPrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq";
-        // 发送转出10.9BU给接收方（目标账户）
+        // The metadata key
         String key = "test  ";
+        // The metadata value
         String value = "asdfasdfa";
-        // 固定写 1000L ，单位是MO
+        // The fixed write 1000L, the unit is MO
         Long gasPrice = 1000L;
-        //设置最多费用 0.01BU ，固定填写
+        //Set up the maximum cost 0.01BU
         Long feeLimit = ToBaseUnit.BU2MO("0.01");
-        // 交易发起账户Nonce + 1
-        Long nonce = 45L;
+        // Transaction initiation account's nonce + 1
+        Long nonce = 6L;
 
-        // 1. 获取交易发送账户地址
+        // 1. Get the account address to send this transaction
         String accountAddresss = getAddressByPrivateKey(accountPrivateKey);
 
-        // 2. 构建setMetadata操作
+        // 2. Build setMetadata
         AccountSetMetadataOperation operation = new AccountSetMetadataOperation();
         operation.setSourceAddress(accountAddresss);
-        //operation.setKey(key);
+        operation.setKey(key);
         operation.setValue(value);
-        operation.setValue("你是外国人吧？");
 
-        // 记录txhash ，以便后续再次确认交易真实结果
-        // 推荐5个区块后再次通过txhash再次调用`根据交易Hash获取交易信息`(参考示例：getTxByHash()）来确认交易终态结果
-        String txHash = submitTransaction(accountPrivateKey, accountAddresss, operation, nonce, gasPrice, feeLimit);
+        String[] signerPrivateKeyArr = {accountPrivateKey};
+        // Record txhash for subsequent confirmation of the real result of the transaction.
+        // After recommending five blocks, call again through txhash `Get the transaction information
+        // from the transaction Hash'(see example: getTxByHash ()) to confirm the final result of the transaction
+        String txHash = submitTransaction(signerPrivateKeyArr, accountAddresss, operation, nonce, gasPrice, feeLimit);
         if (txHash != null) {
             System.out.println("hash: " + txHash);
         }
     }
 
     /**
-     * 设置权限
+     * Set account privilege
      */
     @Test
     public void setAccountPrivilege() {
-        // 初始化变量
-        // 设置权限的账户私钥
+        // Init variable
+        // The account private key to set privilege
         String accountPrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq";
-        // 固定写 1000L ，单位是MO
+        // The fixed write 1000L, the unit is MO
         Long gasPrice = 1000L;
-        //设置最多费用 0.01BU ，固定填写
+        // Set up the maximum cost 0.01BU
         Long feeLimit = ToBaseUnit.BU2MO("0.01");
-        // 交易发起账户Nonce + 1
-        Long nonce = 64L;
+        // Transaction initiation account's nonce + 1
+        Long nonce = 6L;
 
-        // 1. 获取交易发送账户地址
+        // 1. Get the account address to send this transaction
         String accountAddresss = getAddressByPrivateKey(accountPrivateKey);
 
-        // 2. 构建setPrivilege操作
+        // 2. Build setPrivilege
         AccountSetPrivilegeOperation operation = new AccountSetPrivilegeOperation();
         operation.setSourceAddress(accountAddresss);
-        System.out.println(Integer.MAX_VALUE * 2L);
-        operation.setMasterWeight("4294967295");
-        Signer signer = new Signer();
-        signer.setAddress("buQsurH1M4rjLkfjzkxR9KXJ6jSu2r9xBNEw");
-        signer.setWeight(0L);
         Signer signer2 = new Signer();
-        signer2.setAddress("buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq");
+        signer2.setAddress("buQhapCK83xPPdjQeDuBLJtFNvXYZEKb6tKB");
         signer2.setWeight(2L);
-        operation.addSigner(signer);
         operation.addSigner(signer2);
         operation.setTxThreshold("1");
 
-        // 记录txhash ，以便后续再次确认交易真实结果
-        // 推荐5个区块后再次通过txhash再次调用`根据交易Hash获取交易信息`(参考示例：getTxByHash()）来确认交易终态结果
-        String txHash = submitTransaction(accountPrivateKey, accountAddresss, operation, nonce, gasPrice, feeLimit);
+        String[] signerPrivateKeyArr = {accountPrivateKey};
+        // Record txhash for subsequent confirmation of the real result of the transaction.
+        // After recommending five blocks, call again through txhash `Get the transaction information
+        // from the transaction Hash'(see example: getTxByHash ()) to confirm the final result of the transaction
+        String txHash = submitTransaction(signerPrivateKeyArr, accountAddresss, operation, nonce, gasPrice, feeLimit);
         if (txHash != null) {
             System.out.println("hash: " + txHash);
         }
     }
 
     /**
-     * 发行资产
+     * Issue asset
      */
     @Test
     public void issueAsset() {
-        // 初始化变量
-        // 资产发行方私钥
+        // Init variable
+        // The account private key to issue asset
         String issuePrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq";
-        // 待发行的资产编号
+        // Asset code
         String assetCode = "TST";
-        // 待发行的资产数量
+        // Asset amount
         Long assetAmount = 10000000000000L;
-        // 备注，必须是16进制字符串
-        String metadata = HexFormat.byteToHex("issue TST".getBytes());
-        // 固定写 1000L ，单位是MO
+        // metadata
+        String metadata = "issue TST";
+        // The fixed write 1000L, the unit is MO
         Long gasPrice = 1000L;
-        // 设置最多费用 50.01BU ，固定填写
+        // Set up the maximum cost 50.01BU
         Long feeLimit = ToBaseUnit.BU2MO("50.01");
-        // 交易发起账户Nonce + 1
-        Long nonce = 1L;
+        // Transaction initiation account's nonce + 1
+        Long nonce = 7L;
 
-        // 1. 获取交易发送账户地址
+        // 1. Get the account address to send this transaction
         String issueAddresss = getAddressByPrivateKey(issuePrivateKey);
 
-        // 2. 构建issueAsset操作
+        // 2. Build issueAsset
         AssetIssueOperation assetIssueOperation = new AssetIssueOperation();
         assetIssueOperation.setSourceAddress(issueAddresss);
         assetIssueOperation.setCode(assetCode);
         assetIssueOperation.setAmount(assetAmount);
         assetIssueOperation.setMetadata(metadata);
 
-        // 记录txhash ，以便后续再次确认交易真实结果
-        // 推荐5个区块后再次通过txhash再次调用`根据交易Hash获取交易信息`(参考示例：getTxByHash()）来确认交易终态结果
-        String txHash = submitTransaction(issuePrivateKey, issueAddresss, assetIssueOperation, nonce, gasPrice, feeLimit);
+
+        String[] signerPrivateKeyArr = {issuePrivateKey};
+        // Record txhash for subsequent confirmation of the real result of the transaction.
+        // After recommending five blocks, call again through txhash `Get the transaction information
+        // from the transaction Hash'(see example: getTxByHash ()) to confirm the final result of the transaction
+        String txHash = submitTransaction(signerPrivateKeyArr, issueAddresss, assetIssueOperation, nonce, gasPrice, feeLimit);
         if (txHash != null) {
             System.out.println("hash: " + txHash);
         }
     }
 
     /**
-     * 转移资产
+     * Send asset
      */
     @Test
     public void sendAsset() {
-        // 初始化变量
-        // 发送方私钥
+        // Init variable
+        // The account private key to start this transaction
         String senderPrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq";
-        // 接收方账户地址
-        String destAddress = "buQswSaKDACkrFsnP1wcVsLAUzXQsemauE";
-        // 待发送和资产编号
+        // The account to receive asset
+        String destAddress = "buQhapCK83xPPdjQeDuBLJtFNvXYZEKb6tKB";
+        // Asset code
         String assetCode = "TST";
-        // 资产发行方地址
-        String assetIssuer = "buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp";
-        // 发送转出10.9BU给接收方（目标账户）
-        Long amount = ToBaseUnit.BU2MO("10.9");
-        // 固定写 1000L ，单位是MO
+        // The accout address of issuing asset
+        String assetIssuer = "buQcGP2a1PY45dauMfhk9QsFbn7a6BKKAM9x";
+        // The asset amount to be sent
+        Long amount = ToBaseUnit.BU2MO("100000");
+        // The fixed write 1000L, the unit is MO
         Long gasPrice = 1000L;
-        // 设置最多费用 0.01BU ，固定填写
+        // Set up the maximum cost 0.01BU
         Long feeLimit = ToBaseUnit.BU2MO("0.01");
-        // 交易发起账户Nonce + 1
-        Long nonce = 1L;
+        // Transaction initiation account's nonce + 1
+        Long nonce = 2L;
 
-        // 1. 获取交易发送账户地址
+        // 1. Get the account address to send this transaction
         String senderAddresss = getAddressByPrivateKey(senderPrivateKey);
 
-        // 2. 构建sendAsset操作
+        // 2. Build sendAsset
         AssetSendOperation assetSendOperation = new AssetSendOperation();
         assetSendOperation.setSourceAddress(senderAddresss);
         assetSendOperation.setDestAddress(destAddress);
@@ -924,475 +670,117 @@ public class DigitalAssetsDemo {
         assetSendOperation.setAmount(amount);
         assetSendOperation.setMetadata("send token");
 
-        // 记录txhash ，以便后续再次确认交易真实结果
-        // 推荐5个区块后再次通过txhash再次调用`根据交易Hash获取交易信息`(参考示例：getTxByHash()）来确认交易终态结果
-        String txHash = submitTransaction(senderPrivateKey, senderAddresss, assetSendOperation, nonce, gasPrice, feeLimit);
+        String[] signerPrivateKeyArr = {senderPrivateKey};
+        // Record txhash for subsequent confirmation of the real result of the transaction.
+        // After recommending five blocks, call again through txhash `Get the transaction information
+        // from the transaction Hash'(see example: getTxByHash ()) to confirm the final result of the transaction
+        String txHash = submitTransaction(signerPrivateKeyArr, senderAddresss, assetSendOperation, nonce, gasPrice, feeLimit);
         if (txHash != null) {
             System.out.println("hash: " + txHash);
         }
     }
 
     /**
-     * 发送一笔BU交易
+     * Send a transaction of sending bu
      */
     @Test
     public void sendBu() {
-        // 初始化变量
-        // 发送方私钥
+        // Init variable
+        // The account private key to send bu
         String senderPrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq";
-        // 接收方账户地址
-        String destAddress = "buQswSaKDACkrFsnP1wcVsLAUzXQsemauE";
-        // 发送转出10.9BU给接收方（目标账户）
+        // The account address to receive bu
+        String destAddress = "buQsurH1M4rjLkfjzkxR9KXJ6jSu2r9xBNEw";
+        // The amount to be sent
         Long amount = ToBaseUnit.BU2MO("0.01");
-        Long gasPrice = 1000L; // 固定写 1000L ，单位是MO
-        //设置最多费用 0.01BU ，固定填写
+        // The fixed write 1000L, the unit is MO
+        Long gasPrice = 1000L;
+        // Set up the maximum cost 0.01BU
         Long feeLimit = ToBaseUnit.BU2MO("0.01");
-        // 交易发起账户Nonce + 1
-        Long nonce = 1L;
+        // Transaction initiation account's nonce + 1
+        Long nonce = 25L;
 
-        // 1. 获取交易发送账户地址
+        // 1. Get the account address to send this transaction
         String senderAddresss = getAddressByPrivateKey(senderPrivateKey);
 
-        // 2. 构建sendBU操作
-        BUSendOperation buSendOperation = new BUSendOperation();
-        buSendOperation.setSourceAddress(senderAddresss);
-        buSendOperation.setDestAddress(destAddress);
-        buSendOperation.setAmount(amount);
-
-        // 记录txhash ，以便后续再次确认交易真实结果
-        // 推荐5个区块后再次通过txhash再次调用`根据交易Hash获取交易信息`(参考示例：getTxByHash()）来确认交易终态结果
-        String txHash = submitTransaction(senderPrivateKey, senderAddresss, buSendOperation, nonce, gasPrice, feeLimit);
-        if (txHash != null) {
-            System.out.println("hash: " + txHash);
-        }
-
-    }
-
-    /**
-     * 发行Token
-     */
-    @Test
-    public void issueToken() {
-        // 初始化变量
-        // 创建合约Token方私钥
-        String sourcePrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq";
-        // 待创建合约Token的初始化资产
-        Long initBalance = 100000000L;
-        // token数值的精度
-        Integer decimals = 8;
-        // token名称
-        String name = "TST";
-        // token的供应量，不带精度，实际是1000000000 * (10 ^ decimals)
-        System.out.println(Long.MAX_VALUE);
-        String supply = "9223372036854775808";
-        // token的符号
-        String symbol = "TST";
-        // 交易发起账户Nonce + 1
-        Long nonce = 36L;
-        // 固定写 1000L ，单位是MO
-        Long gasPrice = 1000L;
-        // 设置最多费用10.08BU，固定填写
-        Long feeLimit = ToBaseUnit.BU2MO("10.08");
-
-        // 1. 获取创建合约Token方地址
-        String sourceAddress = getAddressByPrivateKey(sourcePrivateKey);
-
-        // 2. 构建issueToken操作
-        Ctp10TokenIssueOperation operation = new Ctp10TokenIssueOperation();
-        operation.setSourceAddress(sourceAddress);
-        operation.setDecimals(decimals);
-        operation.setInitBalance(initBalance);
-        operation.setName(name);
-        operation.setSupply(supply);
-        operation.setSymbol(symbol);
-
-        // 记录txhash ，以便后续再次确认交易真实结果
-        // 推荐5个区块后再次通过txhash再次调用`根据交易Hash获取交易信息`(参考示例：getTxByHash()）来确认交易终态结果
-        String txHash = submitTransaction(sourcePrivateKey, sourceAddress, operation, nonce, gasPrice, feeLimit);
-        if (txHash != null) {
-            System.out.println("hash: " + txHash);
-        }
-    }
-
-    /**
-     * 分配Token
-     */
-    @Test
-    public void assignToken() {
-        // 初始化变量
-        // 触发合约方私钥
-        String invokePrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq";
-        // 合约token代码所在的合约账户地址
-        String contractAddress = "buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq";
-        // 待分配token的账户
-        String destAddress = "buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp";
-        // 待分配token的数量
-        String amount = "1000000";
-        // 交易发起账户Nonce + 1
-        Long nonce = 38L;
-        // 固定写 1000L ，单位是MO
-        Long gasPrice = 1000L;
-        // 设置最多费用0.02BU，固定填写
-        Long feeLimit = ToBaseUnit.BU2MO("0.02");
-
-        // 1. 触发合约方地址
-        String invokeAddress = getAddressByPrivateKey(invokePrivateKey);
-
-        // 2. 构建assignToken操作
-        Ctp10TokenAssignOperation operation = new Ctp10TokenAssignOperation();
-        operation.setSourceAddress(invokeAddress);
-        operation.setContractAddress(contractAddress);
+        // 2. Build sendBU
+        BUSendOperation operation = new BUSendOperation();
+        operation.setSourceAddress(senderAddresss);
         operation.setDestAddress(destAddress);
-        operation.setTokenAmount(amount);
+        operation.setAmount(amount);
 
-        // 记录txhash ，以便后续再次确认交易真实结果
-        // 推荐5个区块后再次通过txhash再次调用`根据交易Hash获取交易信息`(参考示例：getTxByHash()）来确认交易终态结果
-        String txHash = submitTransaction(invokePrivateKey, invokeAddress, operation, nonce, gasPrice, feeLimit);
+        String[] signerPrivateKeyArr = {senderPrivateKey};
+        // Record txhash for subsequent confirmation of the real result of the transaction.
+        // After recommending five blocks, call again through txhash `Get the transaction information
+        // from the transaction Hash'(see example: getTxByHash ()) to confirm the final result of the transaction
+        String txHash = submitTransaction(signerPrivateKeyArr, senderAddresss, operation, nonce, gasPrice, feeLimit);
         if (txHash != null) {
             System.out.println("hash: " + txHash);
         }
+
     }
 
     /**
-     * 转移Token
-     */
-    @Test
-    public void transferToken() {
-        // 初始化变量
-        // 触发合约方私钥
-        String invokePrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq";
-        // 合约token代码所在的合约账户地址
-        String contractAddress = "buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq";
-        // 待转移token的账户
-        String destAddress = "buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq";
-        // 待转移token的数量
-        String amount = "1000000";
-        // 交易发起账户Nonce + 1
-        Long nonce = 38L;
-        // 固定写 1000L ，单位是MO
-        Long gasPrice = 1000L;
-        // 设置最多费用0.02BU，固定填写
-        Long feeLimit = ToBaseUnit.BU2MO("0.02");
-
-        // 1. 触发合约方地址
-        String invokeAddress = getAddressByPrivateKey(invokePrivateKey);
-
-        // 2. 构建transferToken操作
-        Ctp10TokenTransferOperation operation = new Ctp10TokenTransferOperation();
-        operation.setSourceAddress(invokeAddress);
-        operation.setContractAddress(contractAddress);
-        operation.setDestAddress(destAddress);
-        operation.setTokenAmount(amount);
-
-        // 记录txhash ，以便后续再次确认交易真实结果
-        // 推荐5个区块后再次通过txhash再次调用`根据交易Hash获取交易信息`(参考示例：getTxByHash()）来确认交易终态结果
-        String txHash = submitTransaction(invokePrivateKey, invokeAddress, operation, nonce, gasPrice, feeLimit);
-        if (txHash != null) {
-            System.out.println("hash: " + txHash);
-        }
-    }
-
-    /**
-     * 从指定账户转移Token
-     */
-    @Test
-    public void transferTokenFrom() {
-        // 初始化变量
-        // 触发合约方私钥
-        String invokePrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq";
-        // 合约token代码所在的合约账户地址
-        String contractAddress = "buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq";
-        // 待发送token的账户
-        String fromAddress = "buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp";
-        // 待接收token的账户
-        String destAddress = "buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq";
-        // 待发送token的数量
-        String amount = "100000";
-        // 交易发起账户Nonce + 1
-        Long nonce = 54L;
-        // 固定写 1000L ，单位是MO
-        Long gasPrice = 1000L;
-        // 设置最多费用0.02BU，固定填写
-        Long feeLimit = ToBaseUnit.BU2MO("0.02");
-
-        // 1. 触发合约方地址
-        String invokeAddress = getAddressByPrivateKey(invokePrivateKey);
-
-        // 2. 构建transferToken操作
-        Ctp10TokenTransferFromOperation operation = new Ctp10TokenTransferFromOperation();
-        operation.setSourceAddress(invokeAddress);
-        operation.setContractAddress(contractAddress);
-        operation.setFromAddress(fromAddress);
-        operation.setDestAddress(destAddress);
-        operation.setTokenAmount(amount);
-
-        // 记录txhash ，以便后续再次确认交易真实结果
-        // 推荐5个区块后再次通过txhash再次调用`根据交易Hash获取交易信息`(参考示例：getTxByHash()）来确认交易终态结果
-        String txHash = submitTransaction(invokePrivateKey, invokeAddress, operation, nonce, gasPrice, feeLimit);
-        if (txHash != null) {
-            System.out.println("hash: " + txHash);
-        }
-    }
-
-    /**
-     * 授权转移指定数量的Token
-     */
-    @Test
-    public void approveToken() {
-        // 初始化变量
-        // 触发合约方私钥
-        String invokePrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq";
-        // 合约token代码所在的合约账户地址
-        String contractAddress = "buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq";
-        // 待分配token的账户
-        String spender = "buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp";
-        // 授权的数量
-        String amount = "1000000";
-        // 交易发起账户Nonce + 1
-        Long nonce = 50L;
-        // 固定写 1000L ，单位是MO
-        Long gasPrice = 1000L;
-        // 设置最多费用0.02BU，固定填写
-        Long feeLimit = ToBaseUnit.BU2MO("0.02");
-
-        // 1. 触发合约方地址
-        String invokeAddress = getAddressByPrivateKey(invokePrivateKey);
-
-        // 2. 构建transferToken操作
-        Ctp10TokenApproveOperation operation = new Ctp10TokenApproveOperation();
-        operation.setSourceAddress(invokeAddress);
-        operation.setContractAddress(contractAddress);
-        operation.setSpender(spender);
-        operation.setTokenAmount(amount);
-
-        // 记录txhash ，以便后续再次确认交易真实结果
-        // 推荐5个区块后再次通过txhash再次调用`根据交易Hash获取交易信息`(参考示例：getTxByHash()）来确认交易终态结果
-        String txHash = submitTransaction(invokePrivateKey, invokeAddress, operation, nonce, gasPrice, feeLimit);
-        if (txHash != null) {
-            System.out.println("hash: " + txHash);
-        }
-    }
-
-    /**
-     * 修改Token的拥有者
-     */
-    @Test
-    public void changeTokenOwner() {
-        // 初始化变量
-        // 触发合约方私钥
-        String invokePrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq";
-        // 合约token代码所在的合约账户地址
-        String contractAddress = "buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq";
-        // token的拥有者账户
-        String tokenOwner = "buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp";
-        // 交易发起账户Nonce + 1
-        Long nonce = 55L;
-        // 固定写 1000L ，单位是MO
-        Long gasPrice = 1000L;
-        // 设置最多费用0.02BU，固定填写
-        Long feeLimit = ToBaseUnit.BU2MO("0.02");
-
-        // 1. 触发合约方地址
-        String invokeAddress = getAddressByPrivateKey(invokePrivateKey);
-
-        // 2. 构建changeOwner操作
-        Ctp10TokenChangeOwnerOperation operation = new Ctp10TokenChangeOwnerOperation();
-        operation.setSourceAddress(invokeAddress);
-        operation.setContractAddress(contractAddress);
-        operation.setTokenOwner(tokenOwner);
-        operation.setMetadata("");
-
-        // 记录txhash ，以便后续再次确认交易真实结果
-        // 推荐5个区块后再次通过txhash再次调用`根据交易Hash获取交易信息`(参考示例：getTxByHash()）来确认交易终态结果
-        String txHash = submitTransaction(invokePrivateKey, invokeAddress, operation, nonce, gasPrice, feeLimit);
-        if (txHash != null) {
-            System.out.println("hash: " + txHash);
-        }
-    }
-
-    /**
-     * 创建合约
-     */
-    @Test
-    public void createContract() {
-        // 待创建合约的账户私钥
-        String createPrivateKey = "privbUdwf6xV1d5Jvkcakuz8T8nfFn4U7d5s55VUbwmi79DPxqNWSD1n";
-        // 合约账户初始化资产，单位MO，1 BU = 10^8 MO
-        Long initBalance = 100000000L;//ToBaseUnit.BU2MO("0.1");
-        // 合约代码
-        String payload = "\n          \"use strict\";\n          function init(bar)\n          {\n            /*init whatever you want*/\n            return;\n          }\n          \n          function main(input)\n          {\n            let para = JSON.parse(input);\n            if (para.do_foo)\n            {\n              let x = {\n                \'hello\' : \'world\'\n              };\n            }\n          }\n          \n          function query(input)\n          { \n            return input;\n          }\n        ";
-        // 固定写 1000L ，单位是MO
-        Long gasPrice = 1000L;
-        // 设置最多费用 10.01BU ，固定填写
-        Long feeLimit = 1015076000L;//ToBaseUnit.BU2MO("10.01");
-        // 交易发起账户Nonce + 1
-        Long nonce = 18L;
-        // 合约init函数入参
-        String initInput = "";
-
-        // 1. 获取交易发送账户地址
-        String createAddresss = getAddressByPrivateKey(createPrivateKey);
-
-        // 2. 构建activateAccount操作
-        ContractCreateOperation operation = new ContractCreateOperation();
-        operation.setSourceAddress(createAddresss);
-        operation.setInitBalance(initBalance);
-        operation.setPayload(payload);
-        operation.setInitInput(initInput);
-        //operation.setMetadata("create contract");
-
-        // 记录txhash ，以便后续再次确认交易真实结果
-        // 推荐5个区块后再次通过txhash再次调用`根据交易Hash获取交易信息`(参考示例：getTxByHash()）来确认交易终态结果
-        String txHash = submitTransaction(createPrivateKey, createAddresss, operation, nonce, gasPrice, feeLimit);
-        if (txHash != null) {
-            System.out.println("hash: " + txHash);
-        }
-    }
-
-    /**
-     * 转移资产，并触发合约
-     */
-    @Test
-    public void invokeContractByAsset() {
-        // 初始化变量
-        // 触发合约账户私钥
-        String invokePrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq";
-        // 接收方账户地址
-        String destAddress = "buQd7e8E5XMa7Yg6FJe4BeLWfqpGmurxzZ5F";
-        // 待发送和资产编号
-        String assetCode = "TST";
-        // 资产发行方地址
-        String assetIssuer = "buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp";
-        // 0表示仅触发合约
-        Long amount = 0L;
-        // 固定写 1000L ，单位是MO
-        Long gasPrice = 1000L;
-        // 设置最多费用 0.01BU ，固定填写
-        Long feeLimit = ToBaseUnit.BU2MO("0.01");
-        // 交易发起账户Nonce + 1
-        Long nonce = 57L;
-        // 合约main函数入参
-        String input = "";
-
-        // 1. 获取交易发送账户地址
-        String invokeAddresss = getAddressByPrivateKey(invokePrivateKey);
-
-        // 2. 构建sendAsset操作
-        ContractInvokeByAssetOperation operation = new ContractInvokeByAssetOperation();
-        operation.setSourceAddress(invokeAddresss);
-        operation.setContractAddress(destAddress);
-        operation.setCode(assetCode);
-        operation.setIssuer(assetIssuer);
-        operation.setAssetAmount(amount);
-        operation.setInput(input);
-        operation.setMetadata("send token");
-
-        // 记录txhash ，以便后续再次确认交易真实结果
-        // 推荐5个区块后再次通过txhash再次调用`根据交易Hash获取交易信息`(参考示例：getTxByHash()）来确认交易终态结果
-        String txHash = submitTransaction(invokePrivateKey, invokeAddresss, operation, nonce, gasPrice, feeLimit);
-        if (txHash != null) {
-            System.out.println("hash: " + txHash);
-        }
-    }
-
-    /**
-     * 发送BU，并触发合约
-     */
-    @Test
-    public void invokeContractByBU() {
-        // 初始化变量
-        // 发送方私钥
-        String invokePrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq";
-        // 接收方账户地址
-        String destAddress = "buQd7e8E5XMa7Yg6FJe4BeLWfqpGmurxzZ5F";
-        // 0表示仅触发合约
-        Long amount = 0L;
-        // 固定写 1000L ，单位是MO
-        Long gasPrice = 1000L;
-        //设置最多费用 0.01BU ，固定填写
-        Long feeLimit = ToBaseUnit.BU2MO("0.01");
-        // 交易发起账户Nonce + 1
-        Long nonce = 58L;
-        String input = "";
-
-        // 1. 获取交易发送账户地址
-        String invokeAddresss = getAddressByPrivateKey(invokePrivateKey);
-
-        // 2. 发送BU，并触发交易
-        ContractInvokeByBUOperation operation = new ContractInvokeByBUOperation();
-        operation.setSourceAddress(invokeAddresss);
-        operation.setContractAddress(destAddress);
-        operation.setBuAmount(amount);
-        operation.setInput(input);
-
-        // 记录txhash ，以便后续再次确认交易真实结果
-        // 推荐5个区块后再次通过txhash再次调用`根据交易Hash获取交易信息`(参考示例：getTxByHash()）来确认交易终态结果
-        String txHash = submitTransaction(invokePrivateKey, invokeAddresss, operation, nonce, gasPrice, feeLimit);
-        if (txHash != null) {
-            System.out.println("hash: " + txHash);
-        }
-    }
-
-    /**
-     * 向BU区块链写日志
+     * Write logs to the BU block chain
      */
     @Test
     public void createLog() {
-        // 初始化变量
-        // 创建日志方私钥
+        // Init variable
+        // The account private key to create log
         String createPrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq";
-        // 日志标题
+        // Log topic
         String topic = "test";
-        // 日志内容
+        // Log content
         String data = "this is not a error";
-        // 必须是16进制字符串
-        String metadata = HexFormat.byteToHex("create log".getBytes());
-        // 固定写 1000L ，单位是MO
+        // notes
+        String metadata = "create log";
+        // The fixed write 1000L, the unit is MO
         Long gasPrice = 1000L;
-        // 设置最多费用 0.01BU ，固定填写
+        // Set up the maximum cost 0.01BU
         Long feeLimit = ToBaseUnit.BU2MO("0.01");
-        // 交易发起账户Nonce + 1
+        // Transaction initiation account's nonce + 1
         Long nonce = 59L;
 
-        // 1. 获取交易发送账户地址
+        // 1. Get the account address to send this transaction
         String createAddresss = getAddressByPrivateKey(createPrivateKey);
 
-        // 构建createLog操作
+        // Build createLog
         LogCreateOperation operation = new LogCreateOperation();
         operation.setSourceAddress(createAddresss);
         operation.setTopic(topic);
         operation.addData(data);
         operation.setMetadata(metadata);
 
-        // 记录txhash ，以便后续再次确认交易真实结果
-        // 推荐5个区块后再次通过txhash再次调用`根据交易Hash获取交易信息`(参考示例：getTxByHash()）来确认交易终态结果
-        String txHash = submitTransaction(createPrivateKey, createAddresss, operation, nonce, gasPrice, feeLimit);
+        String[] signerPrivateKeyArr = {createPrivateKey};
+        // Record txhash for subsequent confirmation of the real result of the transaction.
+        // After recommending five blocks, call again through txhash `Get the transaction information
+        // from the transaction Hash'(see example: getTxByHash ()) to confirm the final result of the transaction
+        String txHash = submitTransaction(signerPrivateKeyArr, createAddresss, operation, nonce, gasPrice, feeLimit);
         if (txHash != null) {
             System.out.println("hash: " + txHash);
         }
     }
 
     /**
-     * @param senderPrivateKey 交易发送方私钥
-     * @param senderAddresss   交易发送方地址
-     * @param operation        操作
-     * @param senderNonce      交易发送方的账户nonce
-     * @param gasPrice         交易燃料单价
-     * @param feeLimit         交易最低手续费
-     * @return java.lang.String 交易hash
+     * @param senderPrivateKeys The account private keys to sign transaction
+     * @param senderAddresss   The account address to start transaction
+     * @param operation        operation
+     * @param senderNonce      Transaction initiation account's Nonce
+     * @param gasPrice         Gas price
+     * @param feeLimit         fee limit
+     * @return java.lang.String transaction hash
      * @author riven
      */
-    private String submitTransaction(String senderPrivateKey, String senderAddresss, BaseOperation operation, Long senderNonce, Long gasPrice, Long feeLimit) {
-        // 3. 构建交易
+    private String submitTransaction(String[] senderPrivateKeys, String senderAddresss, BaseOperation operation, Long senderNonce, Long gasPrice, Long feeLimit) {
+        // 3. Build transaction
         TransactionBuildBlobRequest transactionBuildBlobRequest = new TransactionBuildBlobRequest();
         transactionBuildBlobRequest.setSourceAddress(senderAddresss);
         transactionBuildBlobRequest.setNonce(senderNonce);
         transactionBuildBlobRequest.setFeeLimit(feeLimit);
         transactionBuildBlobRequest.setGasPrice(gasPrice);
         transactionBuildBlobRequest.addOperation(operation);
-        //transactionBuildBlobRequest.setMetadata("abc");
+        // transactionBuildBlobRequest.setMetadata("abc");
 
-        // 4. 获取交易BLob串
+        // 4. Build transaction BLob
         String transactionBlob;
         TransactionBuildBlobResponse transactionBuildBlobResponse = sdk.getTransactionService().buildBlob(transactionBuildBlobRequest);
         if (transactionBuildBlobResponse.getErrorCode() != 0) {
@@ -1403,8 +791,8 @@ public class DigitalAssetsDemo {
         String txHash = transactionBuildBlobResult.getHash();
         transactionBlob = transactionBuildBlobResult.getTransactionBlob();
 
-        // 5. 签名交易BLob(交易发送账户签名交易Blob串)
-        String[] signerPrivateKeyArr = {senderPrivateKey};
+        // 5. Sign transaction BLob
+        String[] signerPrivateKeyArr = senderPrivateKeys;
         TransactionSignRequest transactionSignRequest = new TransactionSignRequest();
         transactionSignRequest.setBlob(transactionBlob);
         for (int i = 0; i < signerPrivateKeyArr.length; i++) {
@@ -1415,52 +803,43 @@ public class DigitalAssetsDemo {
             System.out.println("error: " + transactionSignResponse.getErrorDesc());
             return null;
         }
-//        System.out.println(transactionBlob);
-//
-//        Chain.Transaction tran = null;
-//        try {
-//            tran = Chain.Transaction.parseFrom(HexFormat.hexToByte(transactionBlob));
-//        } catch (InvalidProtocolBufferException e) {
-//            e.printStackTrace();
-//        }
-//        System.out.println(tran);
 
-        // 6. 广播交易
+        // 6. Broadcast
         TransactionSubmitRequest transactionSubmitRequest = new TransactionSubmitRequest();
         transactionSubmitRequest.setTransactionBlob(transactionBlob);
         transactionSubmitRequest.setSignatures(transactionSignResponse.getResult().getSignatures());
         TransactionSubmitResponse transactionSubmitResponse = sdk.getTransactionService().submit(transactionSubmitRequest);
         if (0 == transactionSubmitResponse.getErrorCode()) {
-            System.out.println("交易广播成功，hash=" + transactionSubmitResponse.getResult().getHash());
+            System.out.println("Success，hash=" + transactionSubmitResponse.getResult().getHash());
         } else {
-            System.out.println("交易广播失败，hash=" + transactionSubmitResponse.getResult().getHash() + "");
+            System.out.println("Failure，hash=" + transactionSubmitResponse.getResult().getHash() + "");
             System.out.println(JSON.toJSONString(transactionSubmitResponse, true));
         }
         return txHash;
     }
 
     /**
-     * @param senderPrivateKey 交易发送方私钥
-     * @param destAddress      接收方地址
-     * @param amount           BU数量
-     * @param nonce            交易发送方nonce
-     * @param gasPrice         交易燃料单价
-     * @param feeLimit         交易最低手续费
-     * @return io.bumo.model.response.result.data.TransactionFees 交易费用
+     * @param senderPrivateKey The account private key to start transaction
+     * @param destAddress      The account to receive bu
+     * @param amount           BU amount
+     * @param nonce            The account nonce to start transaction
+     * @param gasPrice         Gas price
+     * @param feeLimit         Fee limit
+     * @return io.bumo.model.response.result.data.TransactionFees transaction fees
      * @author riven
      */
     private TransactionFees evaluateFees(String senderPrivateKey, String destAddress, Long amount, Long nonce, Long gasPrice, Long feeLimit) throws Exception {
-        // 1. 获取交易发送账户地址
+        // 1. Get the account address to send this transaction
         String senderAddresss = getAddressByPrivateKey(senderPrivateKey);
 
-        // 2. 构建sendBU操作
+        // 2. Build sendBU
         BUSendOperation buSendOperation = new BUSendOperation();
         buSendOperation.setSourceAddress(senderAddresss);
         buSendOperation.setDestAddress(destAddress);
         buSendOperation.setAmount(amount);
         buSendOperation.setMetadata("616263");
 
-        // 3. 评估交易费用
+        // 3. Init request
         TransactionEvaluateFeeRequest request = new TransactionEvaluateFeeRequest();
         request.addOperation(buSendOperation);
         request.setSourceAddress(senderAddresss);
@@ -1478,8 +857,8 @@ public class DigitalAssetsDemo {
     }
 
     /**
-     * @param privatekey 私钥
-     * @return java.lang.String 账户地址
+     * @param privatekey private key
+     * @return java.lang.String Account address
      * @author riven
      */
     private String getAddressByPrivateKey(String privatekey) {

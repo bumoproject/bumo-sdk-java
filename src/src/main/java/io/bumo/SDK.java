@@ -2,10 +2,6 @@ package io.bumo;
 
 import io.bumo.account.AccountService;
 import io.bumo.account.impl.AccountServiceImpl;
-import io.bumo.token.AssetService;
-import io.bumo.token.Ctp10TokenService;
-import io.bumo.token.impl.AssetServiceImpl;
-import io.bumo.token.impl.Ctp10TokenServiceImpl;
 import io.bumo.blockchain.BlockService;
 import io.bumo.blockchain.TransactionService;
 import io.bumo.blockchain.impl.BlockServiceImpl;
@@ -16,6 +12,10 @@ import io.bumo.contract.ContractService;
 import io.bumo.contract.impl.ContractServiceImpl;
 import io.bumo.exception.SDKException;
 import io.bumo.exception.SdkError;
+import io.bumo.token.AssetService;
+import io.bumo.token.Ctp10TokenService;
+import io.bumo.token.impl.AssetServiceImpl;
+import io.bumo.token.impl.Ctp10TokenServiceImpl;
 
 /**
  * @Author riven

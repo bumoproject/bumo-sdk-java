@@ -1,4 +1,4 @@
-package io.bumo.model.request.Operation;
+package io.bumo.model.request.operation;
 
 import io.bumo.common.OperationType;
 
@@ -7,10 +7,12 @@ import io.bumo.common.OperationType;
  * @Date 2018/7/9 16:53
  */
 public class AssetIssueOperation extends BaseOperation {
-    private OperationType operationType = OperationType.ASSET_ISSUE;
     private String code;
     private Long amount;
 
+    public AssetIssueOperation() {
+        operationType = OperationType.ASSET_ISSUE;
+    }
 
     /**
      * @Author riven

@@ -1,4 +1,4 @@
-package io.bumo.model.request.Operation;
+package io.bumo.model.request.operation;
 
 import io.bumo.common.OperationType;
 
@@ -7,11 +7,14 @@ import io.bumo.common.OperationType;
  * @Date 2018/7/9 17:09
  */
 public class Ctp10TokenTransferFromOperation extends BaseOperation {
-    private OperationType operationType = OperationType.TOKEN_TRANSFER_FROM;
     private String contractAddress;
     private String fromAddress;
     private String destAddress;
     private String tokenAmount;
+
+    public Ctp10TokenTransferFromOperation() {
+        operationType = OperationType.TOKEN_TRANSFER_FROM;
+    }
 
     /**
      * @Author riven

@@ -1,4 +1,4 @@
-package io.bumo.model.request.Operation;
+package io.bumo.model.request.operation;
 
 import io.bumo.common.OperationType;
 
@@ -7,10 +7,13 @@ import io.bumo.common.OperationType;
  * @Date 2018/7/9 17:12
  */
 public class Ctp10TokenApproveOperation extends BaseOperation {
-    private OperationType operationType = OperationType.TOKEN_APPROVE;
     private String contractAddress;
     private String spender;
     private String tokenAmount;
+
+    public Ctp10TokenApproveOperation() {
+        operationType = OperationType.TOKEN_APPROVE;
+    }
 
     /**
      * @Author riven

@@ -1,4 +1,4 @@
-package io.bumo.model.request.Operation;
+package io.bumo.model.request.operation;
 
 import io.bumo.common.OperationType;
 
@@ -7,11 +7,14 @@ import io.bumo.common.OperationType;
  * @Date 2018/7/9 17:17
  */
 public class ContractCreateOperation extends BaseOperation {
-    private OperationType operationType = OperationType.CONTRACT_CREATE;
     private Long initBalance;
     private Integer type;
     private String payload;
     private String initInput;
+
+    public ContractCreateOperation() {
+        operationType = OperationType.CONTRACT_CREATE;
+    }
 
     /**
      * @Author riven
