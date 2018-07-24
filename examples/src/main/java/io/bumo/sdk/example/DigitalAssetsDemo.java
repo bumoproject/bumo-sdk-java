@@ -146,7 +146,7 @@ public class DigitalAssetsDemo {
         operation.setSourceAddress(activateAddresss);
         operation.setDestAddress(destAccount);
         operation.setInitBalance(initBalance);
-        operation.setMetadata(HexFormat.byteToHex("activate account".getBytes()));
+        operation.setMetadata("activate account");
         System.out.println(JSON.toJSONString(operation, true));
 
         // 记录txhash ，以便后续再次确认交易真实结果
@@ -296,7 +296,7 @@ public class DigitalAssetsDemo {
         assetSendOperation.setCode(assetCode);
         assetSendOperation.setIssuer(assetIssuer);
         assetSendOperation.setAmount(amount);
-        assetSendOperation.setMetadata(HexFormat.byteToHex("send asset".getBytes()));
+        assetSendOperation.setMetadata("send asset");
 
         // 记录txhash ，以便后续再次确认交易真实结果
         // 推荐5个区块后再次通过txhash再次调用`根据交易Hash获取交易信息`(参考示例：getTxByHash()）来确认交易终态结果
