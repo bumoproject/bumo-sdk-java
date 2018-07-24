@@ -452,11 +452,11 @@ public class AccountServiceImpl implements AccountService {
             }
             String masterWeight = accountSetPrivilegeOperation.getMasterWeight();
             long maxInt = 1;
-            if (masterWeight == null || (masterWeight != null && Long.valueOf(masterWeight) < 0 || Long.valueOf(masterWeight) > ((maxInt << 32) - 1))) {
+            if (masterWeight != null && Long.valueOf(masterWeight) < 0 || Long.valueOf(masterWeight) > ((maxInt << 32) - 1)) {
                 throw new SDKException(SdkError.INVALID_MASTERWEIGHT_ERROR);
             }
             String txThreshold = accountSetPrivilegeOperation.getTxThreshold();
-            if (txThreshold == null || (txThreshold != null && Long.valueOf(masterWeight) < 0 || Long.valueOf(masterWeight) > ((maxInt << (64 - 1)) - 1))) {
+            if (txThreshold != null && Long.valueOf(masterWeight) < 0 || Long.valueOf(masterWeight) > ((maxInt << (64 - 1)) - 1)) {
                 throw new SDKException(SdkError.INVALID_TX_THRESHOLD_ERROR);
             }
             String metadata = accountSetPrivilegeOperation.getMetadata();
