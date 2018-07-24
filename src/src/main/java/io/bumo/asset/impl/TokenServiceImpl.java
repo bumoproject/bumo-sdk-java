@@ -451,10 +451,6 @@ public class TokenServiceImpl implements TokenService {
                 throw new SDKException(SdkError.INVALID_TOKEN_TOTALSUPPLY_ERROR);
             }
             String metadata = tokenIssueOperation.getMetadata();
-            if (metadata != null && !HexFormat.isHexString(metadata)) {
-                throw new SDKException(SdkError.METADATA_NOT_HEX_STRING_ERROR);
-            }
-
             String payload = Constant.TOKEN_PAYLOAD;
             // build initInput
             JSONObject initInput = new JSONObject();
@@ -503,7 +499,7 @@ public class TokenServiceImpl implements TokenService {
      * @Return io.bumo.crypto.protobuf.Chain.Operation
      * @Date 2018/7/10 11:41
      */
-    public static Chain.Operation transfer(TokenTransferOperation tokenTransferOperation) throws SDKException {
+    public static Chain.Operation transfer(TokenTransferOperation tokenTransferOperation, String transSourceAddress) throws SDKException {
         Chain.Operation operation;
         try {
             String sourceAddress = tokenTransferOperation.getSourceAddress();
@@ -514,14 +510,14 @@ public class TokenServiceImpl implements TokenService {
             if (!PublicKey.isAddressValid(contractAddress)) {
                 throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
             }
-            if (sourceAddress != null && sourceAddress.equals(contractAddress)) {
+            if ((sourceAddress != null && sourceAddress.equals(contractAddress)) || transSourceAddress.equals(contractAddress)) {
                 throw new SDKException(SdkError.SOURCEADDRESS_EQUAL_CONTRACTADDRESS_ERROR);
             }
             String destAddress = tokenTransferOperation.getDestAddress();
             if (!PublicKey.isAddressValid(destAddress)) {
                 throw new SDKException(SdkError.INVALID_DESTADDRESS_ERROR);
             }
-            if (sourceAddress.equals(destAddress)) {
+            if ((sourceAddress != null && sourceAddress.equals(destAddress) || transSourceAddress.equals(destAddress))) {
                 throw new SDKException(SdkError.SOURCEADDRESS_EQUAL_DESTADDRESS_ERROR);
             }
             String amount = tokenTransferOperation.getAmount();
@@ -531,9 +527,6 @@ public class TokenServiceImpl implements TokenService {
                 throw new SDKException(SdkError.INVALID_TOKEN_AMOUNT_ERROR);
             }
             String metadata = tokenTransferOperation.getMetadata();
-            if (metadata != null && !HexFormat.isHexString(metadata)) {
-                throw new SDKException(SdkError.METADATA_NOT_HEX_STRING_ERROR);
-            }
             boolean isContractValid = checkTokenValid(contractAddress);
             if (false == isContractValid) {
                 throw new SDKException(SdkError.NO_SUCH_TOKEN_ERROR);
@@ -567,7 +560,7 @@ public class TokenServiceImpl implements TokenService {
      * @Return io.bumo.crypto.protobuf.Chain.Operation
      * @Date 2018/7/10 11:41
      */
-    public static Chain.Operation transferFrom(TokenTransferFromOperation tokenTransferFromOperation) throws SDKException {
+    public static Chain.Operation transferFrom(TokenTransferFromOperation tokenTransferFromOperation, String transSourceAddress) throws SDKException {
         Chain.Operation operation;
         try {
             String sourceAddress = tokenTransferFromOperation.getSourceAddress();
@@ -582,7 +575,7 @@ public class TokenServiceImpl implements TokenService {
             if (!PublicKey.isAddressValid(fromAddress)) {
                 throw new SDKException(SdkError.INVALID_FROMADDRESS_ERROR);
             }
-            if (sourceAddress != null && sourceAddress.equals(contractAddress)) {
+            if ((sourceAddress != null && sourceAddress.equals(contractAddress)) || transSourceAddress.equals(contractAddress)) {
                 throw new SDKException(SdkError.SOURCEADDRESS_EQUAL_DESTADDRESS_ERROR);
             }
             String destAddress = tokenTransferFromOperation.getDestAddress();
@@ -599,9 +592,6 @@ public class TokenServiceImpl implements TokenService {
                 throw new SDKException(SdkError.INVALID_TOKEN_AMOUNT_ERROR);
             }
             String metadata = tokenTransferFromOperation.getMetadata();
-            if (metadata != null && !HexFormat.isHexString(metadata)) {
-                throw new SDKException(SdkError.METADATA_NOT_HEX_STRING_ERROR);
-            }
             boolean isContractValid = checkTokenValid(contractAddress);
             if (false == isContractValid) {
                 throw new SDKException(SdkError.NO_SUCH_TOKEN_ERROR);
@@ -658,9 +648,6 @@ public class TokenServiceImpl implements TokenService {
                 throw new SDKException(SdkError.INVALID_TOKEN_AMOUNT_ERROR);
             }
             String metadata = tokenApproveOperation.getMetadata();
-            if (metadata != null && !HexFormat.isHexString(metadata)) {
-                throw new SDKException(SdkError.METADATA_NOT_HEX_STRING_ERROR);
-            }
             boolean isContractValid = checkTokenValid(contractAddress);
             if (false == isContractValid) {
                 throw new SDKException(SdkError.NO_SUCH_TOKEN_ERROR);
@@ -716,9 +703,6 @@ public class TokenServiceImpl implements TokenService {
                 throw new SDKException(SdkError.INVALID_TOKEN_AMOUNT_ERROR);
             }
             String metadata = tokenAssignResponse.getMetadata();
-            if (metadata != null && !HexFormat.isHexString(metadata)) {
-                throw new SDKException(SdkError.METADATA_NOT_HEX_STRING_ERROR);
-            }
             boolean isContractValid = checkTokenValid(contractAddress);
             if (false == isContractValid) {
                 throw new SDKException(SdkError.NO_SUCH_TOKEN_ERROR);
@@ -768,9 +752,6 @@ public class TokenServiceImpl implements TokenService {
                 throw new SDKException(SdkError.INVALID_TOKENOWNER_ERRPR);
             }
             String metadata = tokenChangeOwnerOperation.getMetadata();
-            if (metadata != null && !HexFormat.isHexString(metadata)) {
-                throw new SDKException(SdkError.METADATA_NOT_HEX_STRING_ERROR);
-            }
             boolean isContractValid = checkTokenValid(contractAddress);
             if (false == isContractValid) {
                 throw new SDKException(SdkError.NO_SUCH_TOKEN_ERROR);

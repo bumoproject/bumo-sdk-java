@@ -2412,7 +2412,6 @@ INVALID_INITBALANCE_ERROR|11004|InitBalance must between 1 and max(int64)
 SOURCEADDRESS_EQUAL_DESTADDRESS_ERROR|11005|SourceAddress cannot be equal to destAddress
 INVALID_ADDRESS_ERROR|11006|Invalid address
 CONNECTNETWORK_ERROR|11007|Connect network failed
-METADATA_NOT_HEX_STRING_ERROR|11008|Metadata must be a hex string
 NO_ASSET_ERROR|11009|The account does not have the asset
 NO_METADATA_ERROR|11010|The account does not have the metadata
 INVALID_DATAKEY_ERROR|11011|The length of key must between 1 and 1024

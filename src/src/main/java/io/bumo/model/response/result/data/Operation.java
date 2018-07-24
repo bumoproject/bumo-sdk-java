@@ -1,6 +1,7 @@
 package io.bumo.model.response.result.data;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import io.bumo.encryption.utils.hex.HexFormat;
 
 /**
  * @Author riven
@@ -100,7 +101,7 @@ public class Operation {
      * @Date 2018/7/5 16:48
      */
     public void setMetadata(String metadata) {
-        this.metadata = metadata;
+        this.metadata = new String(HexFormat.hexToByte(metadata));
     }
 
     /**

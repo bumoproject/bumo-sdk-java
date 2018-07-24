@@ -131,7 +131,7 @@ public class DigitalAssetsDemo {
     @Test
     public void activateAccount() throws Exception {
         String activatePrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq";
-        String destAccount = "buQoy16FgMQ42xdLhZA6NrsQLT3MwPXnRvYX";
+        String destAccount = "buQgT9ht3M4Xnb7sFfrsyipcGpaRhPHXgA6b";
         Long initBalance = ToBaseUnit.BU2MO("0.1");
         String metadata = HexFormat.byteToHex("issue TST".getBytes()); // 备注，必须是16进制字符串
         Long gasPrice = 1000L; // 固定写 1000L ，单位是MO
@@ -139,14 +139,15 @@ public class DigitalAssetsDemo {
         Long nonce = 1L; // 资产发行方账户Nonce，必须Nonce + 1
 
         // 1. 获取交易发送账户地址
-        String activateAddresss = getAddressByPrivateKey(activatePrivateKey);
+        String activateAddresss = "buQgT9ht3M4Xnb7sFfrsyipcGpaRhPHXgA6b";//getAddressByPrivateKey(activatePrivateKey);
 
-        // 2. 构建sendAsset操作
+        // 2. 构建activateAccount操作
         AccountActivateOperation operation = new AccountActivateOperation();
         operation.setSourceAddress(activateAddresss);
         operation.setDestAddress(destAccount);
         operation.setInitBalance(initBalance);
         operation.setMetadata(HexFormat.byteToHex("activate account".getBytes()));
+        System.out.println(JSON.toJSONString(operation, true));
 
         // 记录txhash ，以便后续再次确认交易真实结果
         // 推荐5个区块后再次通过txhash再次调用`根据交易Hash获取交易信息`(参考示例：getTxByHash()）来确认交易终态结果
@@ -191,7 +192,7 @@ public class DigitalAssetsDemo {
         String value = "asdfasdfa";
         Long gasPrice = 1000L; // 固定写 1000L ，单位是MO
         Long feeLimit = ToBaseUnit.BU2MO("0.01");//设置最多费用 0.01BU ，固定填写
-        Long nonce = 1L; // 参考getAccountNonce()获取账户Nonce + 1;
+        Long nonce = 45L; // 参考getAccountNonce()获取账户Nonce + 1;
 
         // 1. 获取交易发送账户地址
         String senderAddresss = getAddressByPrivateKey(accountPrivateKey);
@@ -201,7 +202,7 @@ public class DigitalAssetsDemo {
         operation.setSourceAddress(senderAddresss);
         operation.setKey(key);
         operation.setValue(value);
-        operation.setMetadata(HexFormat.byteToHex("send asset".getBytes()));
+        operation.setValue("你是外国人吧？");
 
         // 记录txhash ，以便后续再次确认交易真实结果
         // 推荐5个区块后再次通过txhash再次调用`根据交易Hash获取交易信息`(参考示例：getTxByHash()）来确认交易终态结果
@@ -340,11 +341,11 @@ public class DigitalAssetsDemo {
     @Test
     public void evaluationTxFees() throws Exception {
         String senderPrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq"; // 发送方私钥
-        String destAddress = "buQswSaKDACkrFsnP1wcVsLAUzXQsemauE";// 接收方账户地址
+        String destAddress = "buQsurH1M4rjLkfjzkxR9KXJ6jSu2r9xBNEw";// 接收方账户地址
         Long amount = ToBaseUnit.BU2MO("10.9"); // 发送转出10.9BU给接收方（目标账户）
         Long gasPrice = 1000L; // 固定写 1000L ，单位是MO
         Long feeLimit = ToBaseUnit.BU2MO("0.01");//设置最多费用 0.01BU ，固定填写
-        Long nonce = 1L; // 参考getAccountNonce()获取账户Nonce + 1;
+        Long nonce = 42L; // 参考getAccountNonce()获取账户Nonce + 1;
 
         TransactionFees transactionFees = evaluationFees(senderPrivateKey,destAddress,amount,nonce,gasPrice,feeLimit);
     }
@@ -382,7 +383,7 @@ public class DigitalAssetsDemo {
     public void sendBu() throws Exception {
         String senderPrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq"; // 发送方私钥
         String destAddress = "buQswSaKDACkrFsnP1wcVsLAUzXQsemauE";// 接收方账户地址
-        Long amount = ToBaseUnit.BU2MO("10.9"); // 发送转出10.9BU给接收方（目标账户）
+        Long amount = ToBaseUnit.BU2MO("0.01"); // 发送转出10.9BU给接收方（目标账户）
         Long gasPrice = 1000L; // 固定写 1000L ，单位是MO
         Long feeLimit = ToBaseUnit.BU2MO("0.01");//设置最多费用 0.01BU ，固定填写
         Long nonce = 1L; // 参考getAccountNonce()获取账户Nonce + 1;
@@ -435,7 +436,7 @@ public class DigitalAssetsDemo {
      */
     @Test
     public void getTxByHash(){
-        String txHash = "fba9c3f73705ca3eb865c7ec2959c30bd27534509796fd5b208b0576ab155d95";
+        String txHash = "1653f54fbba1134f7e35acee49592a7c29384da10f2f629c9a214f6e54747705";
         TransactionGetInfoRequest request = new TransactionGetInfoRequest();
         request.setHash(txHash);
         TransactionGetInfoResponse response = sdk.getTransactionService().getInfo(request);
@@ -802,6 +803,7 @@ public class DigitalAssetsDemo {
         transactionBuildBlobRequest.setFeeLimit(feeLimit);
         transactionBuildBlobRequest.setGasPrice(gasPrice);
         transactionBuildBlobRequest.addOperation(operation);
+        transactionBuildBlobRequest.setMetadata("abc");
 
         // 4. 获取交易BLob串
         String transactionBlob = null;
@@ -854,6 +856,7 @@ public class DigitalAssetsDemo {
         buSendOperation.setSourceAddress(senderAddresss);
         buSendOperation.setDestAddress(destAddress);
         buSendOperation.setAmount(amount);
+        buSendOperation.setMetadata("616263");
 
         // 3. 评估交易费用
         TransactionEvaluateFeeRequest request = new TransactionEvaluateFeeRequest();
@@ -861,7 +864,7 @@ public class DigitalAssetsDemo {
         request.setSourceAddress(senderAddresss);
         request.setNonce(nonce);
         request.setSignatureNumber(1);
-        request.setMetadata(HexFormat.byteToHex("evaluation fees".getBytes()));
+        request.setMetadata("616263");
 
         TransactionEvaluateFeeResponse response = sdk.getTransactionService().evaluateFee(request);
         if (response.getErrorCode() == 0) {

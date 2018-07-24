@@ -15,7 +15,7 @@ import io.bumo.model.request.Operation.BUSendOperation;
  */
 public class BUServiceImpl {
 
-    public static Chain.Operation send(BUSendOperation buSendOperation) throws SDKException {
+    public static Chain.Operation send(BUSendOperation buSendOperation, String transSourceAddress) throws SDKException {
         Chain.Operation.Builder operation;
         try {
             String sourceAddress = buSendOperation.getSourceAddress();
@@ -26,7 +26,7 @@ public class BUServiceImpl {
             if (!PublicKey.isAddressValid(destAddress)) {
                 throw new SDKException(SdkError.INVALID_DESTADDRESS_ERROR);
             }
-            if (sourceAddress != null && sourceAddress.equals(destAddress)) {
+            if ((sourceAddress != null && sourceAddress.equals(destAddress)) || transSourceAddress.equals(destAddress)) {
                 throw new SDKException(SdkError.SOURCEADDRESS_EQUAL_DESTADDRESS_ERROR);
             }
             Long amount = buSendOperation.getAmount();
@@ -34,10 +34,6 @@ public class BUServiceImpl {
                 throw new SDKException(SdkError.INVALID_ASSET_AMOUNT_ERROR);
             }
             String metadata = buSendOperation.getMetadata();
-            if (metadata != null && !HexFormat.isHexString(metadata)) {
-                throw new SDKException(SdkError.METADATA_NOT_HEX_STRING_ERROR);
-            }
-
             // build Operation
             operation = Chain.Operation.newBuilder();
             operation.setType(Chain.Operation.Type.PAY_COIN);

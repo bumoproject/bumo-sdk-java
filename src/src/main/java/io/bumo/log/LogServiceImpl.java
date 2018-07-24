@@ -2,9 +2,7 @@ package io.bumo.log;
 
 import com.google.protobuf.ByteString;
 import io.bumo.crypto.protobuf.Chain;
-import io.bumo.encryption.exception.EncException;
 import io.bumo.encryption.key.PublicKey;
-import io.bumo.encryption.utils.hex.HexFormat;
 import io.bumo.exception.SDKException;
 import io.bumo.exception.SdkError;
 import io.bumo.model.request.Operation.LogCreateOperation;
@@ -24,7 +22,7 @@ public class LogServiceImpl {
      * @Date 2018/7/5 11:45
      */
     public static Chain.Operation create(LogCreateOperation logCreateOperation) throws SDKException {
-        Chain.Operation.Builder operation = null;
+        Chain.Operation.Builder operation;
         try {
             String sourceAddress = logCreateOperation.getSourceAddress();
             if (sourceAddress != null && !PublicKey.isAddressValid(sourceAddress)) {
@@ -45,10 +43,6 @@ public class LogServiceImpl {
                 }
             }
             String metadata = logCreateOperation.getMetadata();
-            if (metadata != null && !HexFormat.isHexString(metadata)) {
-                throw new SDKException(SdkError.METADATA_NOT_HEX_STRING_ERROR);
-            }
-
             // build Operation
             operation = Chain.Operation.newBuilder();
             operation.setType(Chain.Operation.Type.LOG);

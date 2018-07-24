@@ -108,9 +108,6 @@ public class AssetServiceImpl implements AssetService {
                 throw new SDKException(SdkError.INVALID_ASSET_AMOUNT_ERROR);
             }
             String metadata = assetIssueOperation.getMetadata();
-            if (metadata != null && !HexFormat.isHexString(metadata)) {
-                throw new SDKException(SdkError.METADATA_NOT_HEX_STRING_ERROR);
-            }
             operation = Chain.Operation.newBuilder();
             // build Operation
             operation.setType(Chain.Operation.Type.ISSUE_ASSET);
@@ -140,7 +137,7 @@ public class AssetServiceImpl implements AssetService {
      * @Return io.bumo.model.response.AssetSendResponse
      * @Date 2018/7/5 11:45
      */
-    public static Chain.Operation send(AssetSendOperation assetSendOperation) throws SDKException {
+    public static Chain.Operation send(AssetSendOperation assetSendOperation, String transSourceAddress) throws SDKException {
         Chain.Operation.Builder operation = null;
         try {
             if (null == assetSendOperation) {
@@ -154,7 +151,7 @@ public class AssetServiceImpl implements AssetService {
             if (!PublicKey.isAddressValid(destAddress)) {
                 throw new SDKException(SdkError.INVALID_DESTADDRESS_ERROR);
             }
-            if (sourceAddress != null && sourceAddress.equals(destAddress)) {
+            if ((sourceAddress != null && sourceAddress.equals(destAddress) || transSourceAddress.equals(destAddress))) {
                 throw new SDKException(SdkError.SOURCEADDRESS_EQUAL_DESTADDRESS_ERROR);
             }
             String code = assetSendOperation.getCode();
@@ -170,10 +167,6 @@ public class AssetServiceImpl implements AssetService {
                 throw new SDKException(SdkError.INVALID_ASSET_AMOUNT_ERROR);
             }
             String metadata = assetSendOperation.getMetadata();
-            if (metadata != null && !HexFormat.isHexString(metadata)) {
-                throw new SDKException(SdkError.METADATA_NOT_HEX_STRING_ERROR);
-            }
-
             // build Operation
             operation = Chain.Operation.newBuilder();
             operation.setType(Chain.Operation.Type.PAY_ASSET);

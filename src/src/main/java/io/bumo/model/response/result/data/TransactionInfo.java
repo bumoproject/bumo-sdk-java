@@ -1,6 +1,7 @@
 package io.bumo.model.response.result.data;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import io.bumo.encryption.utils.hex.HexFormat;
 
 /**
  * @Author riven
@@ -19,8 +20,33 @@ public class TransactionInfo {
     @JSONField(name = "nonce")
     private Long nonce;
 
+    @JSONField(name = "metadata")
+    private String metadata;
+
     @JSONField(name = "operations")
     private Operation[] operations;
+
+    /**
+     * @Author riven
+     * @Method getMetadata
+     * @Params []
+     * @Return java.lang.String
+     * @Date 2018/7/24 12:00
+     */
+    public String getMetadata() {
+        return metadata;
+    }
+
+    /**
+     * @Author riven
+     * @Method setMetadata
+     * @Params [metadata]
+     * @Return void
+     * @Date 2018/7/24 12:00
+     */
+    public void setMetadata(String metadata) {
+        this.metadata = new String(HexFormat.hexToByte(metadata));
+    }
 
     /**
      * @Author riven

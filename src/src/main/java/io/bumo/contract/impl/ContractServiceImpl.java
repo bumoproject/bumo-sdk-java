@@ -116,13 +116,8 @@ public class ContractServiceImpl implements ContractService {
             if (payload == null || (payload != null && payload.isEmpty())) {
                 throw new SDKException(SdkError.PAYLOAD_EMPTY_ERROR);
             }
-
             String metadata = contractCreateOperation.getMetadata();
-            if (metadata != null && !HexFormat.isHexString(metadata)) {
-                throw new SDKException(SdkError.METADATA_NOT_HEX_STRING_ERROR);
-            }
             String initInput = contractCreateOperation.getInitInput();
-
             // build operation
             operation = Chain.Operation.newBuilder();
             operation.setType(Chain.Operation.Type.CREATE_ACCOUNT);
@@ -190,9 +185,6 @@ public class ContractServiceImpl implements ContractService {
                 throw new SDKException(SdkError.INVALID_ASSET_AMOUNT_ERROR);
             }
             String metadata = contractInvokeByAssetOperation.getMetadata();
-            if (metadata != null && !HexFormat.isHexString(metadata)) {
-                throw new SDKException(SdkError.METADATA_NOT_HEX_STRING_ERROR);
-            }
             if (!checkContractValid(contractAddress)) {
                 throw new SDKException(SdkError.CONTRACTADDRESS_NOT_CONTRACTACCOUNT_ERROR);
             }
@@ -254,9 +246,6 @@ public class ContractServiceImpl implements ContractService {
                 throw new SDKException(SdkError.INVALID_ASSET_AMOUNT_ERROR);
             }
             String metadata = contractInvokeByBUOperation.getMetadata();
-            if (metadata != null && !HexFormat.isHexString(metadata)) {
-                throw new SDKException(SdkError.METADATA_NOT_HEX_STRING_ERROR);
-            }
             if (!checkContractValid(contractAddress)) {
                 throw new SDKException(SdkError.CONTRACTADDRESS_NOT_CONTRACTACCOUNT_ERROR);
             }

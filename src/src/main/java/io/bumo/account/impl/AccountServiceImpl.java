@@ -328,7 +328,7 @@ public class AccountServiceImpl implements AccountService {
      * @Return io.bumo.model.response.AccountActivateResponse
      * @Date 2018/7/4 18:19
      */
-    public static Chain.Operation activate(AccountActivateOperation accountActivateOperation) throws SDKException {
+    public static Chain.Operation activate(AccountActivateOperation accountActivateOperation, String transSourceAddress) throws SDKException {
         Chain.Operation.Builder operation;
         try {
             if (null == accountActivateOperation) {
@@ -342,7 +342,7 @@ public class AccountServiceImpl implements AccountService {
             if (!PublicKey.isAddressValid(destAddress)) {
                 throw new SDKException(SdkError.INVALID_DESTADDRESS_ERROR);
             }
-            if (sourceAddress != null && sourceAddress.equals(destAddress)) {
+            if ((sourceAddress != null && sourceAddress.equals(destAddress)) || transSourceAddress.equals(destAddress)) {
                 throw new SDKException(SdkError.SOURCEADDRESS_EQUAL_DESTADDRESS_ERROR);
             }
             Long initBalance = accountActivateOperation.getInitBalance();
@@ -350,9 +350,6 @@ public class AccountServiceImpl implements AccountService {
                 throw new SDKException(SdkError.INVALID_INITBALANCE_ERROR);
             }
             String metadata = accountActivateOperation.getMetadata();
-            if (metadata != null && !HexFormat.isHexString(metadata)) {
-                throw new SDKException(SdkError.METADATA_NOT_HEX_STRING_ERROR);
-            }
             // build Operation
             operation = Chain.Operation.newBuilder();
             operation.setType(Chain.Operation.Type.CREATE_ACCOUNT);
@@ -407,14 +404,8 @@ public class AccountServiceImpl implements AccountService {
             if (version != null && version < 0) {
                 throw new SDKException(SdkError.INVALID_DATAVERSION_ERROR);
             }
-
             Boolean deleteFlag = accountSetMetadataOperation.getDeleteFlag();
-
             String metadata = accountSetMetadataOperation.getMetadata();
-            if (metadata != null && !HexFormat.isHexString(metadata)) {
-                throw new SDKException(SdkError.METADATA_NOT_HEX_STRING_ERROR);
-            }
-
             // build Operation
             operation = Chain.Operation.newBuilder();
             operation.setType(Chain.Operation.Type.SET_METADATA);
@@ -469,10 +460,6 @@ public class AccountServiceImpl implements AccountService {
                 throw new SDKException(SdkError.INVALID_TX_THRESHOLD_ERROR);
             }
             String metadata = accountSetPrivilegeOperation.getMetadata();
-            if (metadata != null && !HexFormat.isHexString(metadata)) {
-                throw new SDKException(SdkError.METADATA_NOT_HEX_STRING_ERROR);
-            }
-
             // build Operation
             operation = Chain.Operation.newBuilder();
             operation.setType(Chain.Operation.Type.SET_PRIVILEGE);

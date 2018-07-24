@@ -81,16 +81,16 @@ public class TransactionServiceImpl implements TransactionService {
 
             // check metadata
             String metadata = transactionBuildBlobRequest.getMetadata();
-            if (metadata != null && !HexFormat.isHexString(metadata)) {
-                throw new SDKException(SdkError.METADATA_NOT_HEX_STRING_ERROR);
-            }
+//            if (metadata != null && !HexFormat.isHexString(metadata)) {
+//                throw new SDKException(SdkError.METADATA_NOT_HEX_STRING_ERROR);
+//            }
             // check operation and build transaction
             Chain.Transaction.Builder transaction = Chain.Transaction.newBuilder();
             BaseOperation[] baseOperations = transactionBuildBlobRequest.getOperations();
             if (null == baseOperations || (baseOperations != null && baseOperations.length == 0)) {
                 throw new SDKException(SdkError.OPERATIONS_EMPTY_ERROR);
             }
-            buildOperations(baseOperations, transaction);
+            buildOperations(baseOperations, sourceAddress, transaction);
 
             transaction.setSourceAddress(sourceAddress);
             transaction.setNonce(nonce);
@@ -197,17 +197,13 @@ public class TransactionServiceImpl implements TransactionService {
             }
             // check metadata
             String metadata = transactionEvaluateFeeRequest.getMetadata();
-            if (metadata != null && !HexFormat.isHexString(metadata)) {
-                throw new SDKException(SdkError.METADATA_NOT_HEX_STRING_ERROR);
-            }
-
             // build transaction
             Chain.Transaction.Builder transaction = Chain.Transaction.newBuilder();
             BaseOperation[] baseOperations = transactionEvaluateFeeRequest.getOperations();
             if (null == baseOperations || (baseOperations != null && baseOperations.length == 0)) {
                 throw new SDKException(SdkError.OPERATIONS_EMPTY_ERROR);
             }
-            buildOperations(baseOperations, transaction);
+            buildOperations(baseOperations, sourceAddress, transaction);
             transaction.setSourceAddress(sourceAddress);
             transaction.setNonce(nonce);
             if (metadata != null) {
@@ -404,12 +400,12 @@ public class TransactionServiceImpl implements TransactionService {
      * @Return void
      * @Date 2018/7/23 10:19
      */
-    private void buildOperations(BaseOperation[] operationBase, Chain.Transaction.Builder transaction) throws SDKException {
+    private void buildOperations(BaseOperation[] operationBase, String transSourceAddress, Chain.Transaction.Builder transaction) throws SDKException {
         for (int i = 0; i < operationBase.length; i++) {
             Chain.Operation operation = null;
             switch (operationBase[i].getOperationType()) {
                 case ACCOUNT_ACTIVATE:
-                    operation = AccountServiceImpl.activate((AccountActivateOperation)operationBase[i]);
+                    operation = AccountServiceImpl.activate((AccountActivateOperation)operationBase[i], transSourceAddress);
                     break;
                 case ACCOUNT_SET_METADATA:
                     operation = AccountServiceImpl.setMetadata((AccountSetMetadataOperation) operationBase[i]);
@@ -421,19 +417,19 @@ public class TransactionServiceImpl implements TransactionService {
                     operation = AssetServiceImpl.issue((AssetIssueOperation) operationBase[i]);
                     break;
                 case ASSET_SEND:
-                    operation = AssetServiceImpl.send((AssetSendOperation) operationBase[i]);
+                    operation = AssetServiceImpl.send((AssetSendOperation) operationBase[i], transSourceAddress);
                     break;
                 case BU_SEND:
-                    operation = BUServiceImpl.send((BUSendOperation) operationBase[i]);
+                    operation = BUServiceImpl.send((BUSendOperation) operationBase[i], transSourceAddress);
                     break;
                 case TOKEN_ISSUE:
                     operation = TokenServiceImpl.issue((TokenIssueOperation) operationBase[i]);
                     break;
                 case TOKEN_TRANSFER:
-                    operation = TokenServiceImpl.transfer((TokenTransferOperation) operationBase[i]);
+                    operation = TokenServiceImpl.transfer((TokenTransferOperation) operationBase[i], transSourceAddress);
                     break;
                 case TOKEN_TRANSFER_FROM:
-                    operation = TokenServiceImpl.transferFrom((TokenTransferFromOperation) operationBase[i]);
+                    operation = TokenServiceImpl.transferFrom((TokenTransferFromOperation) operationBase[i], transSourceAddress);
                     break;
                 case TOKEN_APPROVE:
                     operation = TokenServiceImpl.approve((TokenApproveOperation) operationBase[i]);
