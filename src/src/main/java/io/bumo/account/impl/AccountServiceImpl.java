@@ -125,7 +125,7 @@ public class AccountServiceImpl implements AccountService {
             accountGetInfoResponse = JSON.parseObject(result, AccountGetInfoResponse.class);
             Integer errorCode = accountGetInfoResponse.getErrorCode();
             String errorDesc = accountGetInfoResponse.getErrorDesc();
-            if (errorCode != null && errorCode.intValue() == 4) {
+            if (errorCode != null && errorCode == 4) {
                 throw new SDKException(errorCode, (null == errorDesc? "Account (" + address +") not exist" : errorDesc));
             }
             SdkError.checkErrorCode(accountGetInfoResponse);
@@ -167,7 +167,7 @@ public class AccountServiceImpl implements AccountService {
             accountGetNonceResponse = JSON.parseObject(result, AccountGetNonceResponse.class);
             Integer errorCode = accountGetNonceResponse.getErrorCode();
             String errorDesc = accountGetNonceResponse.getErrorDesc();
-            if (errorCode != null && errorCode.intValue() == 4) {
+            if (errorCode != null && errorCode == 4) {
                 throw new SDKException(errorCode, (null == errorDesc? "Account (" + address +") not exist" : errorDesc));
             }
             SdkError.checkErrorCode(accountGetNonceResponse);
@@ -211,7 +211,7 @@ public class AccountServiceImpl implements AccountService {
             accountGetBalanceResponse = JSON.parseObject(result, AccountGetBalanceResponse.class);
             Integer errorCode = accountGetBalanceResponse.getErrorCode();
             String errorDesc = accountGetBalanceResponse.getErrorDesc();
-            if (errorCode != null && errorCode.intValue() == 4) {
+            if (errorCode != null && errorCode == 4) {
                 throw new SDKException(errorCode, (null == errorDesc? "Account (" + address +") not exist" : errorDesc));
             }
             SdkError.checkErrorCode(accountGetBalanceResponse);
@@ -251,7 +251,7 @@ public class AccountServiceImpl implements AccountService {
             accountGetAssetsResponse = JSON.parseObject(result, AccountGetAssetsResponse.class);
             Integer errorCode = accountGetAssetsResponse.getErrorCode();
             String errorDesc = accountGetAssetsResponse.getErrorDesc();
-            if (errorCode != null && errorCode.intValue() == 4) {
+            if (errorCode != null && errorCode == 4) {
                 throw new SDKException(errorCode, (null == errorDesc? "Account (" + address +") not exist" : errorDesc));
             }
             SdkError.checkErrorCode(accountGetAssetsResponse);
@@ -300,7 +300,7 @@ public class AccountServiceImpl implements AccountService {
             accountGetMetadataResponse = JSON.parseObject(result, AccountGetMetadataResponse.class);
             Integer errorCode = accountGetMetadataResponse.getErrorCode();
             String errorDesc = accountGetMetadataResponse.getErrorDesc();
-            if (errorCode != null && errorCode.intValue() == 4) {
+            if (errorCode != null && errorCode == 4) {
                 throw new SDKException(errorCode, (null == errorDesc? "Account (" + address +") not exist" : errorDesc));
             }
             SdkError.checkErrorCode(accountGetMetadataResponse);
