@@ -197,12 +197,34 @@ public class DigitalAssetsDemo {
         // 1. 获取交易发送账户地址
         String senderAddresss = getAddressByPrivateKey(accountPrivateKey);
 
-        // 2. 构建sendAsset操作
+        // 2. 构建sendAccountMetadata操作
         AccountSetMetadataOperation operation = new AccountSetMetadataOperation();
         operation.setSourceAddress(senderAddresss);
         operation.setKey(key);
         operation.setValue(value);
         operation.setValue("你是外国人吧？");
+
+        // 记录txhash ，以便后续再次确认交易真实结果
+        // 推荐5个区块后再次通过txhash再次调用`根据交易Hash获取交易信息`(参考示例：getTxByHash()）来确认交易终态结果
+        String hash = submitTransaction(accountPrivateKey, senderAddresss, operation, nonce, gasPrice, feeLimit);
+    }
+
+    /**
+     * 设置权限
+     */
+    @Test
+    public void setAccountPrivilege() throws Exception {
+        String accountPrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq"; // 账户私钥
+        Long gasPrice = 1000L; // 固定写 1000L ，单位是MO
+        Long feeLimit = ToBaseUnit.BU2MO("0.01");//设置最多费用 0.01BU ，固定填写
+        Long nonce = 46L; // 参考getAccountNonce()获取账户Nonce + 1;
+
+        // 1. 获取交易发送账户地址
+        String senderAddresss = getAddressByPrivateKey(accountPrivateKey);
+
+        // 2. 构建setPrivilege操作
+        AccountSetPrivilegeOperation operation = new AccountSetPrivilegeOperation();
+        operation.setSourceAddress(senderAddresss);
 
         // 记录txhash ，以便后续再次确认交易真实结果
         // 推荐5个区块后再次通过txhash再次调用`根据交易Hash获取交易信息`(参考示例：getTxByHash()）来确认交易终态结果

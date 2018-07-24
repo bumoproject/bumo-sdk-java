@@ -87,7 +87,7 @@ public class TokenServiceImpl implements TokenService {
             }
             String tokenOwner = tokenAllowanceRequest.getTokenOwner();
             if (!PublicKey.isAddressValid(tokenOwner)) {
-                throw new SDKException(SdkError.INVALID_TOKENOWNER_ERRPR);
+                throw new SDKException(SdkError.INVALID_TOKENOWNER_ERROR);
             }
             String spender = tokenAllowanceRequest.getSpender();
             if (!PublicKey.isAddressValid(spender)) {
@@ -380,7 +380,7 @@ public class TokenServiceImpl implements TokenService {
             }
             String tokenOwner = tokenGetBalanceRequest.getTokenOwner();
             if (!PublicKey.isAddressValid(tokenOwner)) {
-                throw new SDKException(SdkError.INVALID_TOKENOWNER_ERRPR);
+                throw new SDKException(SdkError.INVALID_TOKENOWNER_ERROR);
             }
             boolean isContractValid = checkTokenValid(contractAddress);
             if (false == isContractValid) {
@@ -749,7 +749,7 @@ public class TokenServiceImpl implements TokenService {
             }
             String tokenOwner = tokenChangeOwnerOperation.getTokenOwner();
             if (!PublicKey.isAddressValid(tokenOwner)) {
-                throw new SDKException(SdkError.INVALID_TOKENOWNER_ERRPR);
+                throw new SDKException(SdkError.INVALID_TOKENOWNER_ERROR);
             }
             String metadata = tokenChangeOwnerOperation.getMetadata();
             boolean isContractValid = checkTokenValid(contractAddress);

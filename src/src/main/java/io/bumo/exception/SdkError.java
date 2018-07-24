@@ -34,7 +34,7 @@ public enum SdkError {
     INVALID_TOKEN_SYMBOL_ERROR(11032, "The length of symbol must between 1 and 1024"),
     INVALID_TOKEN_DECIMALS_ERROR(11033, "Decimals must less than 8"),
     INVALID_TOKEN_TOTALSUPPLY_ERROR(11034, "TotalSupply must between 1 and max(int64)"),
-    INVALID_TOKENOWNER_ERRPR(11035, "Invalid token owner"),
+    INVALID_TOKENOWNER_ERROR(11035, "Invalid token owner"),
     INVALID_CONTRACTADDRESS_ERROR(11037, "Invalid contract address"),
     CONTRACTADDRESS_NOT_CONTRACTACCOUNT_ERROR(11038, "contractAddress is not a contract account"),
     INVALID_TOKEN_AMOUNT_ERROR(11039, "TokenAmount must between 1 and max(int64)"),
