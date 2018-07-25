@@ -1595,7 +1595,7 @@ sourceAddress|String|必填，发起该操作的源账户地址
 nonce|int64|必填，待发起的交易序列号，函数里+1，大小[1, max(int64)]
 gasPrice|int64|必填，交易打包费用，单位MO，1 BU = 10^8 MO，大小[1000, max(int64)]
 feeLimit|int64|必填，交易手续费，单位MO，1 BU = 10^8 MO，大小[1000000, max(int64)]
-operation|OperationBase[]|必填，待提交的操作列表，不能为空
+operation|BaseOperation[]|必填，待提交的操作列表，不能为空
 ceilLedgerSeq|long|选填，区块高度限制，大于等于0，是0时不限制
 metadata|String|选填，备注
 
@@ -1796,7 +1796,7 @@ TransactionSignResponse sign(TransactionSignRequest);
 
    参数      |     类型     |        描述       |
 ----------- | ------------ | ---------------- |
-blob|String|必填，发起该操作的源账户地址
+blob|String|必填，待签名的交易Blob
 privateKeys|String[]|必填，私钥列表
 
 
