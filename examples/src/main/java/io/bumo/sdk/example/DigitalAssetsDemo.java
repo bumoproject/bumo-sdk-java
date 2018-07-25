@@ -266,6 +266,9 @@ public class DigitalAssetsDemo {
         String txHash = submitTransaction(sourcePrivateKey, sourceAddress, operation, nonce, gasPrice, feeLimit);
     }
 
+    /**
+     * 分配Token
+     */
     @Test
     public void assignToken() throws Exception {
         String invokePrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq"; // 触发合约方私钥
@@ -291,10 +294,93 @@ public class DigitalAssetsDemo {
         String txHash = submitTransaction(invokePrivateKey, invokeAddress, operation, nonce, gasPrice, feeLimit);
     }
 
+    /**
+     * 转移Token
+     */
     @Test
     public void transfer() throws Exception {
+        String invokePrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq"; // 触发合约方私钥
+        String contractAddress = "buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq"; // 合约token代码所在的合约账户地址
+        String destAddress = "buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp"; // 待分配token的账户
+        String amount = "1000000";
+        Long nonce = 38L; // 37 + 1
+        Long gasPrice = 1000L; // 固定写 1000L ，单位是MO
+        Long feeLimit = ToBaseUnit.BU2MO("0.02"); // 设置最多费用10.08BU，固定填写
 
+        // 1. 触发合约方地址
+        String invokeAddress = getAddressByPrivateKey(invokePrivateKey);
+
+        // 2. 构建transferToken操作
+        TokenTransferOperation operation = new TokenTransferOperation();
+        operation.setSourceAddress(invokeAddress);
+        operation.setContractAddress(contractAddress);
+        operation.setDestAddress(destAddress);
+        operation.setAmount(amount);
+
+        // 记录txhash ，以便后续再次确认交易真实结果
+        // 推荐5个区块后再次通过txhash再次调用`根据交易Hash获取交易信息`(参考示例：getTxByHash()）来确认交易终态结果
+        String txHash = submitTransaction(invokePrivateKey, invokeAddress, operation, nonce, gasPrice, feeLimit);
     }
+
+    /**
+     * 从指定账户转移Token
+     */
+    @Test
+    public void transferFrom() throws Exception {
+        String invokePrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq"; // 触发合约方私钥
+        String contractAddress = "buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq"; // 合约token代码所在的合约账户地址
+        String fromAddress = "buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq"; // 待发送token的账户
+        String destAddress = "buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp"; // 待分配token的账户
+        String amount = "1000000";
+        Long nonce = 38L; // 37 + 1
+        Long gasPrice = 1000L; // 固定写 1000L ，单位是MO
+        Long feeLimit = ToBaseUnit.BU2MO("0.02"); // 设置最多费用10.08BU，固定填写
+
+        // 1. 触发合约方地址
+        String invokeAddress = getAddressByPrivateKey(invokePrivateKey);
+
+        // 2. 构建transferToken操作
+        TokenTransferFromOperation operation = new TokenTransferFromOperation();
+        operation.setSourceAddress(invokeAddress);
+        operation.setContractAddress(contractAddress);
+        operation.setFromAddress(fromAddress);
+        operation.setDestAddress(destAddress);
+        operation.setAmount(amount);
+
+        // 记录txhash ，以便后续再次确认交易真实结果
+        // 推荐5个区块后再次通过txhash再次调用`根据交易Hash获取交易信息`(参考示例：getTxByHash()）来确认交易终态结果
+        String txHash = submitTransaction(invokePrivateKey, invokeAddress, operation, nonce, gasPrice, feeLimit);
+    }
+
+    /**
+     * 授权转移指定数量的Token
+     */
+    @Test
+    public void approve() throws Exception {
+        String invokePrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq"; // 触发合约方私钥
+        String contractAddress = "buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq"; // 合约token代码所在的合约账户地址
+        String spender = "buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp"; // 待分配token的账户
+        String amount = "1000000";
+        Long nonce = 38L; // 37 + 1
+        Long gasPrice = 1000L; // 固定写 1000L ，单位是MO
+        Long feeLimit = ToBaseUnit.BU2MO("0.02"); // 设置最多费用10.08BU，固定填写
+
+        // 1. 触发合约方地址
+        String invokeAddress = getAddressByPrivateKey(invokePrivateKey);
+
+        // 2. 构建transferToken操作
+        TokenApproveOperation operation = new TokenApproveOperation();
+        operation.setSourceAddress(invokeAddress);
+        operation.setContractAddress(contractAddress);
+        operation.setSpender(spender);
+        operation.setAmount(amount);
+
+        // 记录txhash ，以便后续再次确认交易真实结果
+        // 推荐5个区块后再次通过txhash再次调用`根据交易Hash获取交易信息`(参考示例：getTxByHash()）来确认交易终态结果
+        String txHash = submitTransaction(invokePrivateKey, invokeAddress, operation, nonce, gasPrice, feeLimit);
+    }
+
+
 
     /**
      * 转移资产

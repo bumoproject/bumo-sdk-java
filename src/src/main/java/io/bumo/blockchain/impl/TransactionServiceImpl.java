@@ -260,6 +260,9 @@ public class TransactionServiceImpl implements TransactionService {
             byte[] blobBytes = HexFormat.hexToByte(blob);
             Chain.Transaction.parseFrom(blobBytes);
             String[] privateKeys = transactionSignRequest.getPrivateKeys();
+            if (null == privateKeys || (privateKeys != null && privateKeys.length == 0)) {
+                throw new SDKException(SdkError.PRIVATEKEY_NULL_ERROR);
+            }
             int i = 0;
             int length = privateKeys.length;
             Signature[] signatures = new Signature[length];
