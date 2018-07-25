@@ -164,8 +164,8 @@ public class TransactionServiceImpl implements TransactionService {
     /**
      * @Author riven
      * @Method evaluateFee
-     * @Params [transactionEvaluationFeeRequest]
-     * @Return io.bumo.model.response.TransactionEvaluationFeeResponse
+     * @Params [TransactionEvaluateFeeRequest]
+     * @Return io.bumo.model.response.TransactionEvaluateFeeResponse
      * @Date 2018/7/5 19:04
      */
     @Override

@@ -43,7 +43,7 @@
 - [交易服务](#交易服务)
     - [操作说明](#操作说明)
 	- [buildBlob](#buildblob)
-	- [evaluationFee](#evaluationfee)
+	- [evaluateFee](#evaluatefee)
 	- [sign](#sign)
 	- [submit](#submit)
 	- [getInfo-交易](#getinfo-交易)
@@ -1368,7 +1368,7 @@ if (response.getErrorCode() == 0) {
 
 ## 交易服务
 
-交易服务主要是交易相关的接口，目前有5个接口：buildBlob, evaluationFee, sign, submit, getInfo。
+交易服务主要是交易相关的接口，目前有5个接口：buildBlob, evaluateFee, sign, submit, getInfo。
 
 其中调用buildBlob之前需要构建一些操作，目前操作有16种，分别是AccountActivateOperation，AccountSetMetadataOperation, AccountSetPrivilegeOperation, AssetIssueOperation, AssetSendOperation, BUSendOperation, TokenIssueOperation, TokenTransferOperation, TokenTransferFromOperation, TokenApproveOperation, TokenAssignOperation, TokenChangeOwnerOperation, ContractCreateOperation, ContractInvokeByAssetOperation, ContractInvokeByBUOperation, LogCreateOperation
 
@@ -1691,7 +1691,7 @@ if (response.getErrorCode == 0) {
 }
 ```
 
-### evaluationFee
+### evaluateFee
 
 > 接口说明
 
@@ -1699,7 +1699,7 @@ if (response.getErrorCode == 0) {
 
 > 调用方法
 
-TransactionEvaluationFeeResponse evaluationFee (TransactionEvaluationFeeRequest);
+TransactionEvaluateFeeResponse evaluateFee (TransactionEvaluateFeeRequest);
 
 > 请求参数
 
@@ -1773,7 +1773,7 @@ request.setSignatureNumber(1);
 request.setMetadata(HexFormat.byteToHex("evaluation fees".getBytes()));
 
 // 调用evaluationFee接口
-TransactionEvaluationFeeResponse response = sdk.getTransactionService().evaluationFee(request);
+TransactionEvaluationFeeResponse response = sdk.getTransactionService().evaluateFee(request);
 if (response.getErrorCode() == 0) {
     TransactionEvaluationFeeResult result = response.getResult();
     System.out.println(JSON.toJSONString(result, true));
