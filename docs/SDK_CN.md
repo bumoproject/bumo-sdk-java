@@ -290,13 +290,13 @@ AccounCheckValidResponse checkValid(AccountCheckValidRequest)
 
    参数      |     类型     |        描述       
 ----------- | ------------ | ---------------- 
-address     |   String     |  必填，待检测的账户地址   
+address     |   String     |  必填，待检查的区块链账户地址   
 
 > 响应数据
 
    参数      |     类型     |        描述       
 ----------- | ------------ | ---------------- 
-isValid     |   String     |  账户地址是否有效   
+isValid     |   String     |  是否有效   
 
 > 错误码
 
@@ -335,7 +335,7 @@ AccountGetInfoResponse GetInfo(AccountGetInfoRequest);
 
    参数      |     类型     |        描述       
 ----------- | ------------ | ---------------- 
-address     |   String     |  必填，待查询的账户地址   
+address     |   String     |  必填，待查询的区块链账户地址   
 
 > 响应数据
 
@@ -350,14 +350,14 @@ priv	  | [Priv](#priv) |    账户权限
    成员       |     类型     |        描述       
 -----------  | ------------ | ---------------- 
 masterWeight |	 Long	    |   账户自身权重
-signers	     |[Signer](#signer)[]|   签名者权重
+signers	     |[Signer](#signer)[]|   签名者权重列表
 threshold	 |[Threshold](#Threshold)|	门限
 
 #### Signer
    成员       |     类型     |        描述       
 -----------  | ------------ | ---------------- 
-address	     |   String	    |   签名账户地址
-weight	     |   Long	    |   签名账户权重
+address	     |   String	    |   签名者区块链账户地址
+weight	     |   Long	    |   签名者权重
 
 #### Threshold
    成员       |     类型     |        描述       
@@ -2459,7 +2459,7 @@ INVALID_TX_THRESHOLD_ERROR|11018|TxThreshold must between 0 and max(int64)
 INVALID_OPERATION_TYPE_ERROR|11019|Operation type must between 1 and 100
 INVALID_TYPE_THRESHOLD_ERROR|11020|TypeThreshold must between 0 and max(int64)
 INVALID_ASSET_CODE_ERROR|11023|The length of key must between 1 and 64
-INVALID_ASSET_AMOUNT_ERROR|11024|AssetMount must between 0 and max(int64)
+INVALID_ASSET_AMOUNT_ERROR|11024|AssetAMount must between 0 and max(int64)
 INVALID_BU_AMOUNT_ERROR|11026|BuAmount must between 0 and max(int64)
 INVALID_ISSUER_ADDRESS_ERROR|11027|Invalid issuer address
 NO_SUCH_TOKEN_ERROR|11030|No such token
