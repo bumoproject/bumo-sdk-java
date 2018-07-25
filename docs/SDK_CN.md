@@ -1869,7 +1869,7 @@ hash|String|交易hash
 
    异常       |     错误码   |   描述   |
 -----------  | ----------- | -------- |
-INVALID_BLOB_ERROR|11052|Invalid blob
+INVALID_BLOB_ERROR|11056|Invalid blob
 SYSTEM_ERROR|20000|System error
 
 > 示例
