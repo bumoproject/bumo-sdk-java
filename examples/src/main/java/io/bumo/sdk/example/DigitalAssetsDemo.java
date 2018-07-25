@@ -11,6 +11,7 @@ import io.bumo.model.request.*;
 import io.bumo.model.request.Operation.*;
 import io.bumo.model.response.*;
 import io.bumo.model.response.result.*;
+import io.bumo.model.response.result.data.Signer;
 import io.bumo.model.response.result.data.TransactionFees;
 import io.bumo.model.response.result.data.ValidatorRewardInfo;
 import org.junit.Test;
@@ -45,6 +46,7 @@ public class DigitalAssetsDemo {
      */
     @Test
     public void checkAccountAddress(){
+        //String address = "buQemmMwmRQY1JkcU7w3nhruoX5N3j6C29uo";
         String address = "buQemmMwmRQY1JkcU7w3nhruoX5N3j6C29uo";
         AccountCheckValidRequest accountCheckValidRequest = new AccountCheckValidRequest();
         accountCheckValidRequest.setAddress(address);
@@ -217,7 +219,7 @@ public class DigitalAssetsDemo {
         String accountPrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq"; // 账户私钥
         Long gasPrice = 1000L; // 固定写 1000L ，单位是MO
         Long feeLimit = ToBaseUnit.BU2MO("0.01");//设置最多费用 0.01BU ，固定填写
-        Long nonce = 46L; // 参考getAccountNonce()获取账户Nonce + 1;
+        Long nonce = 49L; // 参考getAccountNonce()获取账户Nonce + 1;
 
         // 1. 获取交易发送账户地址
         String senderAddresss = getAddressByPrivateKey(accountPrivateKey);
@@ -225,6 +227,10 @@ public class DigitalAssetsDemo {
         // 2. 构建setPrivilege操作
         AccountSetPrivilegeOperation operation = new AccountSetPrivilegeOperation();
         operation.setSourceAddress(senderAddresss);
+        Signer signer = new Signer();
+        signer.setAddress("buQsurH1M4rjLkfjzkxR9KXJ6jSu2r9xBNEw");
+        signer.setWeight(0L);
+        operation.addSigner(signer);
 
         // 记录txhash ，以便后续再次确认交易真实结果
         // 推荐5个区块后再次通过txhash再次调用`根据交易Hash获取交易信息`(参考示例：getTxByHash()）来确认交易终态结果

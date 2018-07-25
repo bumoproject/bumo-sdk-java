@@ -456,7 +456,7 @@ public class AccountServiceImpl implements AccountService {
                 throw new SDKException(SdkError.INVALID_MASTERWEIGHT_ERROR);
             }
             String txThreshold = accountSetPrivilegeOperation.getTxThreshold();
-            if (txThreshold != null && (Long.valueOf(masterWeight) < 0 || Long.valueOf(masterWeight) > ((maxInt << (64 - 1)) - 1))) {
+            if (txThreshold != null && (Long.valueOf(txThreshold) < 0 || Long.valueOf(txThreshold) > ((maxInt << (64 - 1)) - 1))) {
                 throw new SDKException(SdkError.INVALID_TX_THRESHOLD_ERROR);
             }
             String metadata = accountSetPrivilegeOperation.getMetadata();

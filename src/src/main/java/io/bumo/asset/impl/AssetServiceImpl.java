@@ -105,7 +105,7 @@ public class AssetServiceImpl implements AssetService {
             }
             Long amount = assetIssueOperation.getAmount();
             if (amount == null || (amount != null && amount <= 0)) {
-                throw new SDKException(SdkError.INVALID_ASSET_AMOUNT_ERROR);
+                throw new SDKException(SdkError.INVALID_ISSUE_AMMOUNT_ERROR);
             }
             String metadata = assetIssueOperation.getMetadata();
             operation = Chain.Operation.newBuilder();
