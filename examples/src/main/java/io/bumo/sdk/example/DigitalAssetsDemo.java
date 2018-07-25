@@ -225,10 +225,8 @@ public class DigitalAssetsDemo {
         // 2. 构建setPrivilege操作
         AccountSetPrivilegeOperation operation = new AccountSetPrivilegeOperation();
         operation.setSourceAddress(senderAddresss);
-        TypeThreshold typeThreshold = new TypeThreshold();
-        typeThreshold.setType(50);
-        typeThreshold.setThreshold(11L);
-        operation.addTypeThreshold(typeThreshold);
+        String txThreshold = "-1";
+        operation.setTxThreshold(txThreshold);
 
         // 记录txhash ，以便后续再次确认交易真实结果
         // 推荐5个区块后再次通过txhash再次调用`根据交易Hash获取交易信息`(参考示例：getTxByHash()）来确认交易终态结果

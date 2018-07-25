@@ -49,7 +49,7 @@ public class AssetServiceImpl implements AssetService {
                 throw new SDKException(SdkError.INVALID_ADDRESS_ERROR);
             }
             String code = assetGetRequest.getCode();
-            if (code == null || (code != null && code.length() < 1 || code.length() > 1024)) {
+            if (code == null || (code != null && code.length() < 1 || code.length() > 64)) {
                 throw new SDKException(SdkError.INVALID_ASSET_CODE_ERROR);
             }
             String issuer = assetGetRequest.getIssuer();
@@ -100,7 +100,7 @@ public class AssetServiceImpl implements AssetService {
                 throw new SDKException(SdkError.INVALID_SOURCEADDRESS_ERROR);
             }
             String code = assetIssueOperation.getCode();
-            if (code == null || (code != null && (code.length() < 1 || code.length() > 1024))) {
+            if (code == null || (code != null && (code.length() < 1 || code.length() > 64))) {
                 throw new SDKException(SdkError.INVALID_ASSET_CODE_ERROR);
             }
             Long amount = assetIssueOperation.getAmount();
@@ -155,7 +155,7 @@ public class AssetServiceImpl implements AssetService {
                 throw new SDKException(SdkError.SOURCEADDRESS_EQUAL_DESTADDRESS_ERROR);
             }
             String code = assetSendOperation.getCode();
-            if (code == null || (code != null && (code.length() < 1 || code.length() > 1024))) {
+            if (code == null || (code != null && (code.length() < 1 || code.length() > 64))) {
                 throw new SDKException(SdkError.INVALID_ASSET_CODE_ERROR);
             }
             String issuer= assetSendOperation.getIssuer();

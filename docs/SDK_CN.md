@@ -633,7 +633,7 @@ AssetGetInfoResponse getInfo(AssetGetInfoRequest);
    参数      |     类型     |        描述       
 ----------- | ------------ | ---------------- 
 address     |   String    |  必填，待查询的账户地址
-code        |   String    |  必填，资产编码，长度[1 1024]
+code        |   String    |  必填，资产编码，长度[1, 64]
 issuer      |   String    |  必填，资产发行账户地址
 
 > 响应数据
@@ -1425,7 +1425,7 @@ metadata|String|选填，备注
    成员变量    |     类型   |        描述             
 ------------- | --------- | ------------------------
 sourceAddress|String|选填，发起该操作的源账户地址
-code|String|必填，资产编码，长度[1 1024]
+code|String|必填，资产编码，长度[1, 64]
 assetAmount|int64|必填，资产发行数量，大小[0, max(int64)]
 metadata|String|选填，备注
 
@@ -1437,7 +1437,7 @@ metadata|String|选填，备注
 ------------- | --------- | ----------------------
 sourceAddress|String|选填，发起该操作的源账户地址
 destAddress|String|必填，目标账户地址
-code|String|必填，资产编码，长度[1 1024]
+code|String|必填，资产编码，长度[1, 64]
 issuer|String|必填，资产发行账户地址
 assetAmount|int64|必填，资产数量，大小[ 0, max(int64)]
 metadata|String|选填，备注
