@@ -78,12 +78,8 @@ public class TransactionServiceImpl implements TransactionService {
             if (ceilLedgerSeq != null && ceilLedgerSeq < 0) {
                 throw new SDKException(SdkError.INVALID_CEILLEDGERSEQ_ERROR);
             }
-
             // check metadata
             String metadata = transactionBuildBlobRequest.getMetadata();
-//            if (metadata != null && !HexFormat.isHexString(metadata)) {
-//                throw new SDKException(SdkError.METADATA_NOT_HEX_STRING_ERROR);
-//            }
             // check operation and build transaction
             Chain.Transaction.Builder transaction = Chain.Transaction.newBuilder();
             BaseOperation[] baseOperations = transactionBuildBlobRequest.getOperations();
@@ -155,6 +151,8 @@ public class TransactionServiceImpl implements TransactionService {
             Integer errorCode = sdkException.getErrorCode();
             String errorDesc = sdkException.getErrorDesc();
             transactionParseBlobResponse.buildResponse(errorCode, errorDesc, transactionParseBlobResult);
+        } catch (InvalidProtocolBufferException e) {
+            transactionParseBlobResponse.buildResponse(SdkError.INVALID_BLOB_ERROR, transactionParseBlobResult);
         } catch (Exception exception) {
             exception.printStackTrace();
             transactionParseBlobResponse.buildResponse(SdkError.SYSTEM_ERROR, transactionParseBlobResult);
@@ -357,6 +355,8 @@ public class TransactionServiceImpl implements TransactionService {
             Integer errorCode = apiException.getErrorCode();
             String errorDesc = apiException.getErrorDesc();
             transactionSubmitResponse.buildResponse(errorCode, errorDesc, transactionSubmitResult);
+        } catch (InvalidProtocolBufferException e) {
+            transactionSubmitResponse.buildResponse(SdkError.INVALID_BLOB_ERROR, transactionSubmitResult);
         } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
             transactionSubmitResponse.buildResponse(SdkError.CONNECTN_BLOCKCHAIN_ERROR, transactionSubmitResult);
         } catch (Exception exception) {
