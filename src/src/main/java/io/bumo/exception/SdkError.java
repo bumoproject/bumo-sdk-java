@@ -24,7 +24,7 @@ public enum SdkError {
     INVALID_SIGNER_ADDRESS_ERROR(11016, "Invalid signer address"),
     INVALID_SIGNER_WEIGHT_ERROR(11017, "Signer weight must between 0 and max(uint32)"),
     INVALID_TX_THRESHOLD_ERROR(11018, "TxThreshold must between 0 and max(int64)"),
-    INVALID_OPERATION_TYPE_ERROR(11019, "Operation type must between 1 and 9"),
+    INVALID_TYPETHRESHOLD_TYPE_ERROR(11019, "Type of TypeThreshold is invalid"),
     INVALID_TYPE_THRESHOLD_ERROR(11020, "TypeThreshold must between 0 and max(int64)"),
     INVALID_ASSET_CODE_ERROR(11023, "The length of key must between 1 and 64"),
     INVALID_ASSET_AMOUNT_ERROR(11024, "AssetMount must between 0 and max(int64)"),

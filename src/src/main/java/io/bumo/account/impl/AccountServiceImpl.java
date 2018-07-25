@@ -506,15 +506,19 @@ public class AccountServiceImpl implements AccountService {
                 for (; i < typeThresholdsLength; i++) {
                     TypeThreshold typeThreshold = typeThresholds[i];
                     Integer type = typeThreshold.getType();
-                    if (type == null || (type != null && (type < 1 || type > 100))) {
-                        throw new SDKException(SdkError.INVALID_OPERATION_TYPE_ERROR);
+                    if (type == null) {
+                        throw new SDKException(SdkError.INVALID_TYPETHRESHOLD_TYPE_ERROR);
                     }
                     Long threshold = typeThreshold.getThreshold();
                     if (threshold == null || (threshold != null && (threshold < 0 || threshold > (maxInt << (64 - 1)) - 1))) {
                         throw new SDKException(SdkError.INVALID_TYPE_THRESHOLD_ERROR);
                     }
                     Chain.OperationTypeThreshold.Builder typeThresholdBuilder = operationSetPrivilege.addTypeThresholdsBuilder();
-                    typeThresholdBuilder.setType(Chain.Operation.Type.forNumber(type));
+                    Chain.Operation.Type operationType = Chain.Operation.Type.forNumber(type);
+                    if (null == operationType) {
+                        throw new SDKException(SdkError.INVALID_TYPETHRESHOLD_TYPE_ERROR);
+                    }
+                    typeThresholdBuilder.setType(operationType);
                     typeThresholdBuilder.setThreshold(threshold);
                 }
             }
