@@ -429,7 +429,7 @@ public class TokenServiceImpl implements TokenService {
                 throw new SDKException(SdkError.INVALID_SOURCEADDRESS_ERROR);
             }
             Long initBalance = tokenIssueOperation.getInitBalance();
-            if (initBalance <= 0) {
+            if (null == initBalance || initBalance <= 0) {
                 throw new SDKException(SdkError.INVALID_INITBALANCE_ERROR);
             }
             String name = tokenIssueOperation.getName();
@@ -437,7 +437,7 @@ public class TokenServiceImpl implements TokenService {
                 throw new SDKException(SdkError.INVALID_TOKEN_NAME_ERROR);
             }
             String symbol = tokenIssueOperation.getSymbol();
-            if (symbol == null || (symbol != null && (symbol.length() < 1 || symbol.length() > 2014))) {
+            if (symbol == null || (symbol != null && (symbol.length() < 1 || symbol.length() > 1024))) {
                 throw new SDKException(SdkError.INVALID_TOKEN_SYMBOL_ERROR);
             }
             Integer decimals = tokenIssueOperation.getDecimals();
@@ -445,9 +445,13 @@ public class TokenServiceImpl implements TokenService {
                 throw new SDKException(SdkError.INVALID_TOKEN_DECIMALS_ERROR);
             }
             String supply = tokenIssueOperation.getSupply();
+            if (null == supply) {
+                throw new SDKException(SdkError.INVALID_TOKEN_TOTALSUPPLY_ERROR);
+            }
             Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
             boolean isNumber = pattern.matcher(supply).matches();
-            if (!isNumber || (isNumber && Long.valueOf(supply) < 1)) {
+            Long maxInt = 1L;
+            if (!isNumber || (isNumber && Long.valueOf(supply) < 1  || Long.valueOf(supply) > (maxInt << (64 - 1)) - 1)) {
                 throw new SDKException(SdkError.INVALID_TOKEN_TOTALSUPPLY_ERROR);
             }
             String metadata = tokenIssueOperation.getMetadata();
@@ -521,9 +525,13 @@ public class TokenServiceImpl implements TokenService {
                 throw new SDKException(SdkError.SOURCEADDRESS_EQUAL_DESTADDRESS_ERROR);
             }
             String amount = tokenTransferOperation.getAmount();
+            if (null == amount) {
+                throw new SDKException(SdkError.INVALID_TOKEN_AMOUNT_ERROR);
+            }
             Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
             boolean isNumber = pattern.matcher(amount).matches();
-            if (!isNumber || (isNumber && (Long.valueOf(amount) < 1))) {
+            Long maxInt = 1L;
+            if (!isNumber || (isNumber && (Long.valueOf(amount) < 1 || Long.valueOf(amount) > (maxInt << (64 - 1)) - 1))) {
                 throw new SDKException(SdkError.INVALID_TOKEN_AMOUNT_ERROR);
             }
             String metadata = tokenTransferOperation.getMetadata();
@@ -586,9 +594,13 @@ public class TokenServiceImpl implements TokenService {
                 throw new SDKException(SdkError.FROMADDRESS_EQUAL_DESTADDRESS_ERROR);
             }
             String amount = tokenTransferFromOperation.getAmount();
+            if (null == amount) {
+                throw new SDKException(SdkError.INVALID_TOKEN_AMOUNT_ERROR);
+            }
             Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
             boolean isNumber = pattern.matcher(amount).matches();
-            if (!isNumber || (isNumber && (Long.valueOf(amount) < 1))) {
+            Long maxInt = 1L;
+            if (!isNumber || (isNumber && (Long.valueOf(amount) < 1 || Long.valueOf(amount) > (maxInt << (64 - 1)) - 1))) {
                 throw new SDKException(SdkError.INVALID_TOKEN_AMOUNT_ERROR);
             }
             String metadata = tokenTransferFromOperation.getMetadata();
@@ -642,9 +654,13 @@ public class TokenServiceImpl implements TokenService {
                 throw new SDKException(SdkError.INVALID_SPENDER_ERROR);
             }
             String amount = tokenApproveOperation.getAmount();
+            if (null == amount) {
+                throw new SDKException(SdkError.INVALID_TOKEN_AMOUNT_ERROR);
+            }
             Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
             boolean isNumber = pattern.matcher(amount).matches();
-            if (!isNumber || (isNumber && (Long.valueOf(amount) < 1))) {
+            Long maxInt = 1L;
+            if (!isNumber || (isNumber && (Long.valueOf(amount) < 1) || Long.valueOf(amount) > (maxInt << (64 - 1)) - 1)) {
                 throw new SDKException(SdkError.INVALID_TOKEN_AMOUNT_ERROR);
             }
             String metadata = tokenApproveOperation.getMetadata();
@@ -697,9 +713,13 @@ public class TokenServiceImpl implements TokenService {
                 throw new SDKException(SdkError.INVALID_DESTADDRESS_ERROR);
             }
             String amount = tokenAssignResponse.getAmount();
+            if (null == amount) {
+                throw new SDKException(SdkError.INVALID_TOKEN_AMOUNT_ERROR);
+            }
             Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
             boolean isNumber = pattern.matcher(amount).matches();
-            if (!isNumber || (isNumber && (Long.valueOf(amount) < 1))) {
+            Long maxInt = 1L;
+            if (!isNumber || (isNumber && (Long.valueOf(amount) < 1 || Long.valueOf(amount) > (maxInt << (64 - 1)) - 1))) {
                 throw new SDKException(SdkError.INVALID_TOKEN_AMOUNT_ERROR);
             }
             String metadata = tokenAssignResponse.getMetadata();
@@ -828,6 +848,9 @@ public class TokenServiceImpl implements TokenService {
                 break;
             }
             String totalSupply = tokenInfo.getTotalSupply();
+            if (null == totalSupply) {
+                break;
+            }
             Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
             boolean isNumber = pattern.matcher(totalSupply).matches();
             if (!isNumber || (isNumber && Long.valueOf(totalSupply) < 1)) {

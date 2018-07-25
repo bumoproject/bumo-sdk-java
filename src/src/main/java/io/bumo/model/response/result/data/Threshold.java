@@ -64,7 +64,7 @@ public class Threshold {
      * @Method addTypeThresholds
      * @Params [typeThreshold]
      * @Return void
-     * @Date 2018/7/25 10:55
+     * @Date 2018/7/25 14:43
      */
     public void addTypeThresholds(TypeThreshold typeThreshold) {
         if (null == typeThresholds) {

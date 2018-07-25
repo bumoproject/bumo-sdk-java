@@ -33,7 +33,7 @@ public enum SdkError {
     NO_SUCH_TOKEN_ERROR(11030, "No such token"),
     INVALID_TOKEN_NAME_ERROR(11031, "The length of token name must between 1 and 1024"),
     INVALID_TOKEN_SYMBOL_ERROR(11032, "The length of symbol must between 1 and 1024"),
-    INVALID_TOKEN_DECIMALS_ERROR(11033, "Decimals must less than 8"),
+    INVALID_TOKEN_DECIMALS_ERROR(11033, "Decimals must between 0 and 8"),
     INVALID_TOKEN_TOTALSUPPLY_ERROR(11034, "TotalSupply must between 1 and max(int64)"),
     INVALID_TOKENOWNER_ERROR(11035, "Invalid token owner"),
     INVALID_CONTRACTADDRESS_ERROR(11037, "Invalid contract address"),
