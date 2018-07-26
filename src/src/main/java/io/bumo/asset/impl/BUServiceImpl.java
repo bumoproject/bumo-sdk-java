@@ -40,7 +40,7 @@ public class BUServiceImpl {
             if (sourceAddress != null) {
                 operation.setSourceAddress(sourceAddress);
             }
-            if (metadata != null) {
+            if (metadata != null && !metadata.isEmpty()) {
                 operation.setMetadata(ByteString.copyFromUtf8(metadata));
             }
             Chain.OperationPayCoin.Builder operationPayCoin = operation.getPayCoinBuilder();

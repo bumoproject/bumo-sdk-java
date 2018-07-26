@@ -760,8 +760,6 @@ public class DigitalAssetsDemo {
         // 2. 构建setPrivilege操作
         AccountSetPrivilegeOperation operation = new AccountSetPrivilegeOperation();
         operation.setSourceAddress(accountAddresss);
-        String txThreshold = "-1";
-        operation.setTxThreshold(txThreshold);
 
         // 记录txhash ，以便后续再次确认交易真实结果
         // 推荐5个区块后再次通过txhash再次调用`根据交易Hash获取交易信息`(参考示例：getTxByHash()）来确认交易终态结果
@@ -927,7 +925,7 @@ public class DigitalAssetsDemo {
         operation.setSourceAddress(invokeAddress);
         operation.setContractAddress(contractAddress);
         operation.setDestAddress(destAddress);
-        operation.setAmount(amount);
+        operation.setTokenAmount(amount);
 
         // 记录txhash ，以便后续再次确认交易真实结果
         // 推荐5个区块后再次通过txhash再次调用`根据交易Hash获取交易信息`(参考示例：getTxByHash()）来确认交易终态结果
@@ -959,7 +957,7 @@ public class DigitalAssetsDemo {
         operation.setSourceAddress(invokeAddress);
         operation.setContractAddress(contractAddress);
         operation.setDestAddress(destAddress);
-        operation.setAmount(amount);
+        operation.setTokenAmount(amount);
 
         // 记录txhash ，以便后续再次确认交易真实结果
         // 推荐5个区块后再次通过txhash再次调用`根据交易Hash获取交易信息`(参考示例：getTxByHash()）来确认交易终态结果
@@ -993,7 +991,7 @@ public class DigitalAssetsDemo {
         operation.setContractAddress(contractAddress);
         operation.setFromAddress(fromAddress);
         operation.setDestAddress(destAddress);
-        operation.setAmount(amount);
+        operation.setTokenAmount(amount);
 
         // 记录txhash ，以便后续再次确认交易真实结果
         // 推荐5个区块后再次通过txhash再次调用`根据交易Hash获取交易信息`(参考示例：getTxByHash()）来确认交易终态结果
@@ -1025,7 +1023,7 @@ public class DigitalAssetsDemo {
         operation.setSourceAddress(invokeAddress);
         operation.setContractAddress(contractAddress);
         operation.setSpender(spender);
-        operation.setAmount(amount);
+        operation.setTokenAmount(amount);
 
         // 记录txhash ，以便后续再次确认交易真实结果
         // 推荐5个区块后再次通过txhash再次调用`根据交易Hash获取交易信息`(参考示例：getTxByHash()）来确认交易终态结果
@@ -1124,7 +1122,7 @@ public class DigitalAssetsDemo {
         operation.setContractAddress(destAddress);
         operation.setCode(assetCode);
         operation.setIssuer(assetIssuer);
-        operation.setAmount(amount);
+        operation.setAssetAmount(amount);
         operation.setInput(input);
         operation.setMetadata("send asset");
 
@@ -1157,7 +1155,7 @@ public class DigitalAssetsDemo {
         ContractInvokeByBUOperation operation = new ContractInvokeByBUOperation();
         operation.setSourceAddress(senderAddresss);
         operation.setContractAddress(destAddress);
-        operation.setAmount(amount);
+        operation.setBuAmount(amount);
         operation.setInput(input);
 
         // 记录txhash ，以便后续再次确认交易真实结果

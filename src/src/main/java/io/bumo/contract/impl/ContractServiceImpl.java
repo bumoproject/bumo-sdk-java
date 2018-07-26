@@ -8,7 +8,6 @@ import io.bumo.contract.ContractService;
 import io.bumo.crypto.http.HttpKit;
 import io.bumo.crypto.protobuf.Chain;
 import io.bumo.encryption.key.PublicKey;
-import io.bumo.encryption.utils.hex.HexFormat;
 import io.bumo.exception.SDKException;
 import io.bumo.exception.SdkError;
 import io.bumo.model.request.*;
@@ -180,8 +179,8 @@ public class ContractServiceImpl implements ContractService {
             if (issuer != null && !PublicKey.isAddressValid(issuer)) {
                 throw new SDKException(SdkError.INVALID_ISSUER_ADDRESS_ERROR);
             }
-            Long amount = contractInvokeByAssetOperation.getAmount();
-            if (amount != null && amount < 0) {
+            Long assetAmount = contractInvokeByAssetOperation.getAssetAmount();
+            if (assetAmount != null && assetAmount < 0) {
                 throw new SDKException(SdkError.INVALID_ASSET_AMOUNT_ERROR);
             }
             String metadata = contractInvokeByAssetOperation.getMetadata();
@@ -205,12 +204,12 @@ public class ContractServiceImpl implements ContractService {
             if (input != null && !input.isEmpty()) {
                 operationPayAsset.setInput(input);
             }
-            if (code != null && issuer != null && amount != null && amount != 0) {
+            if (code != null && issuer != null && assetAmount != null && assetAmount != 0) {
                 Chain.Asset.Builder asset = operationPayAsset.getAssetBuilder();
                 Chain.AssetKey.Builder assetKey = asset.getKeyBuilder();
                 assetKey.setCode(code);
                 assetKey.setIssuer(issuer);
-                asset.setAmount(amount);
+                asset.setAmount(assetAmount);
             }
         } catch (SDKException sdkException) {
             throw sdkException;
@@ -241,8 +240,8 @@ public class ContractServiceImpl implements ContractService {
             if (sourceAddress != null && sourceAddress.equals(contractAddress)) {
                 throw new SDKException(SdkError.SOURCEADDRESS_EQUAL_CONTRACTADDRESS_ERROR);
             }
-            Long amount = contractInvokeByBUOperation.getAmount();
-            if (amount == null || (amount != null && amount < 0)) {
+            Long buAmount = contractInvokeByBUOperation.getBuAmount();
+            if (buAmount == null || (buAmount != null && buAmount < 0)) {
                 throw new SDKException(SdkError.INVALID_ASSET_AMOUNT_ERROR);
             }
             String metadata = contractInvokeByBUOperation.getMetadata();
@@ -263,7 +262,7 @@ public class ContractServiceImpl implements ContractService {
 
             Chain.OperationPayCoin.Builder operationPayCoin = operation.getPayCoinBuilder();
             operationPayCoin.setDestAddress(contractAddress);
-            operationPayCoin.setAmount(amount);
+            operationPayCoin.setAmount(buAmount);
             if (input != null && !input.isEmpty()) {
                 operationPayCoin.setInput(input);
             }

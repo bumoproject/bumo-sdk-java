@@ -209,12 +209,12 @@ else {
 ```
 String senderAddress = "buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp";
 String destAddress = "buQsurH1M4rjLkfjzkxR9KXJ6jSu2r9xBNEw";
-Long amount = ToBaseUnit.BU2MO("10.9");
+Long buAmount = ToBaseUnit.BU2MO("10.9");
 
 BUSendOperation operation = new BUSendOperation();
 operation.setSourceAddress(senderAddress);
 operation.setDestAddress(destAddress);
-operation.setAmount(amount);
+operation.setAmount(buAmount);
 ```
 
 #### 序列化交易
@@ -531,7 +531,7 @@ asset	    | [AssetInfo](#AssetInfo)[] |账户资产
    成员      |     类型     |        描述       
 ----------- | ------------ | ---------------- 
   key       | [Key](#Key)  | 资产惟一标识
-  amount    | Long        | 资产数量
+  assetAmount    | Long        | 资产数量
  
  #### Key
 
@@ -1309,7 +1309,7 @@ version|Long|metadata的版本
    成员      |     类型     |        描述       |
 ----------- | ------------ | ---------------- |
 code|String|资产编码
-amount|Long|资产数量
+assetAmount|Long|资产数量
 
 #### OperationPayAsset
 
@@ -1324,7 +1324,7 @@ input|String|合约main函数入参
    成员      |     类型     |        描述       |
 ----------- | ------------ | ---------------- |
 destAddress|String|待转移的目标账户地址
-amount|Long|待转移的BU数量
+buAmount|Long|待转移的BU数量
 input|String|合约main函数入参
 
 #### OperationSetMetadata
@@ -1564,9 +1564,9 @@ metadata|String|选填，备注
 ------------- | --------- | ---------------------
 sourceAddress|String|选填，操作源账户地址
 contractAddress|String|必填，合约账户地址
-code|String|选填，资产编码，长度[0, 1024]，当null时，仅触发合约
+code|String|[选填]`资产编码`; 规则:长度[0, 1024];当null时，仅触发合约;ß
 issuer|String|选填，资产发行账户地址，当null时，仅触发合约
-amount|Long|选填资产数量，大小[0, max(Long)]，当是0时，仅触发合约
+assetAmount|Long|选填，资产数量，大小[0, max(Long)]，当是0时，仅触发合约
 input|String|选填，待触发的合约的main()入参
 metadata|String|选填，备注
 
@@ -1578,7 +1578,7 @@ metadata|String|选填，备注
 ------------- | --------- | ---------------------
 sourceAddress|String|选填，操作源账户地址
 contractAddress|String|必填，合约账户地址
-amount|Long|选填，资产发行数量，大小[0, max(Long)]，当0时仅触发合约
+buAmount|Long|选填，资产发行数量，大小[0, max(Long)]，当0时仅触发合约
 input|String|选填，待触发的合约的main()入参
 metadata|String|选填，备注
 
@@ -1652,7 +1652,7 @@ INVALID_TOKEN_DECIMALS_ERROR|11033|Decimals must less than 8
 INVALID_TOKEN_TOTALSUPPLY_ERROR|11034|TotalSupply must be between 1 and max(Long)
 INVALID_TOKENOWNER_ERRPR|11035|Invalid token owner
 INVALID_CONTRACTADDRESS_ERROR|11037|Invalid contract address
-CONTRACTADDRESS_NOT_CONTRACTACCOUNT_ERROR|11038|contractAddress is not a contract account
+CONTRACTADDRESS_NOT_CONTRACTACCOUNT_ERROR|11038|ContractAddress is not a contract account
 INVALID_TOKEN_AMOUNT_ERROR|11039|Token amount must be between 1 and max(Long)
 SOURCEADDRESS_EQUAL_CONTRACTADDRESS_ERROR|11040|SourceAddress cannot be equal to contractAddress
 INVALID_FROMADDRESS_ERROR|11041|Invalid fromAddress
@@ -1676,7 +1676,7 @@ SYSTEM_ERROR|20000|System error
 // 初始化变量
 String senderAddresss = "buQfnVYgXuMo3rvCEpKA6SfRrDpaz8D8A9Ea";
 String destAddress = "buQsurH1M4rjLkfjzkxR9KXJ6jSu2r9xBNEw";
-Long amount = ToBaseUnit.BU2MO("10.9");
+Long buAmount = ToBaseUnit.BU2MO("10.9");
 Long gasPrice = 1000L;
 Long feeLimit = ToBaseUnit.BU2MO("0.01");
 Long nonce = 1L;
@@ -1685,7 +1685,7 @@ Long nonce = 1L;
 BUSendOperation operation = new BUSendOperation();
 operation.setSourceAddress(senderAddresss);
 operation.setDestAddress(destAddress);
-operation.setAmount(amount);
+operation.setAmount(buAmount);
 
 // 初始化请求参数
 TransactionBuildBlobRequest request = new TransactionBuildBlobRequest();
@@ -1768,7 +1768,7 @@ SYSTEM_ERROR|20000|System error
 // 初始化变量
 String senderAddresss = "buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp";
 String destAddress = "buQfnVYgXuMo3rvCEpKA6SfRrDpaz8D8A9Ea";
-Long amount = ToBaseUnit.BU2MO("10.9");
+Long buAmount = ToBaseUnit.BU2MO("10.9");
 Long gasPrice = 1000L;
 Long feeLimit = ToBaseUnit.BU2MO("0.01");
 Long nonce = 51L;
@@ -1777,7 +1777,7 @@ Long nonce = 51L;
 BUSendOperation buSendOperation = new BUSendOperation();
 buSendOperation.setSourceAddress(senderAddresss);
 buSendOperation.setDestAddress(destAddress);
-buSendOperation.setAmount(amount);
+buSendOperation.setAmount(buAmount);
 
 // 初始化评估交易请求参数
 TransactionEvaluateFeeRequest request = new TransactionEvaluateFeeRequest();
@@ -2054,7 +2054,7 @@ if(0 == response.getErrorCode()){
 
 > 调用方法
 
-   BlockGetTransactionsResponse getTransactions (BlockGetTransactionsRequest);
+   BlockGetTransactionsResponse getTransactions(BlockGetTransactionsRequest);
 
 > 请求参数
 

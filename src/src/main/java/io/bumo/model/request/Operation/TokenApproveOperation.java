@@ -10,7 +10,7 @@ public class TokenApproveOperation extends BaseOperation {
     private OperationType operationType = OperationType.TOKEN_APPROVE;
     private String contractAddress;
     private String spender;
-    private String amount;
+    private String tokenAmount;
 
     /**
      * @Author riven
@@ -69,23 +69,23 @@ public class TokenApproveOperation extends BaseOperation {
 
     /**
      * @Author riven
-     * @Method getAmount
+     * @Method getTokenAmount
      * @Params []
      * @Return java.lang.String
      * @Date 2018/7/9 17:13
      */
-    public String getAmount() {
-        return amount;
+    public String getTokenAmount() {
+        return tokenAmount;
     }
 
     /**
      * @Author riven
-     * @Method setAmount
-     * @Params [amount]
+     * @Method setTokenAmount
+     * @Params [tokenAmount]
      * @Return void
      * @Date 2018/7/9 17:13
      */
-    public void setAmount(String amount) {
-        this.amount = amount;
+    public void setTokenAmount(String tokenAmount) {
+        this.tokenAmount = tokenAmount;
     }
 }

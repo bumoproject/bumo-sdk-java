@@ -9,7 +9,7 @@ import io.bumo.common.OperationType;
 public class ContractInvokeByBUOperation extends BaseOperation {
     private OperationType operationType = OperationType.CONTRACT_INVOKE_BY_BU;
     private String contractAddress;
-    private Long amount;
+    private Long buAmount;
     private String input;
 
     /**
@@ -47,24 +47,24 @@ public class ContractInvokeByBUOperation extends BaseOperation {
 
     /**
      * @Author riven
-     * @Method getAmount
+     * @Method getTokenAmount
      * @Params []
      * @Return java.lang.Long
      * @Date 2018/7/9 17:21
      */
-    public Long getAmount() {
-        return amount;
+    public Long getBuAmount() {
+        return buAmount;
     }
 
     /**
      * @Author riven
-     * @Method setAmount
-     * @Params [amount]
+     * @Method setTokenAmount
+     * @Params [buAmount]
      * @Return void
      * @Date 2018/7/9 17:21
      */
-    public void setAmount(Long amount) {
-        this.amount = amount;
+    public void setBuAmount(Long buAmount) {
+        this.buAmount = buAmount;
     }
 
     /**

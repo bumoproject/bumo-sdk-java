@@ -11,7 +11,6 @@ import io.bumo.contract.impl.ContractServiceImpl;
 import io.bumo.crypto.http.HttpKit;
 import io.bumo.crypto.protobuf.Chain;
 import io.bumo.encryption.key.PublicKey;
-import io.bumo.encryption.utils.hex.HexFormat;
 import io.bumo.exception.SDKException;
 import io.bumo.exception.SdkError;
 import io.bumo.model.request.*;
@@ -471,7 +470,7 @@ public class TokenServiceImpl implements TokenService {
             if (sourceAddress != null) {
                 operation.setSourceAddress(sourceAddress);
             }
-            if (metadata != null) {
+            if (metadata != null && !metadata.isEmpty()) {
                 operation.setMetadata(ByteString.copyFromUtf8(metadata));
             }
 
@@ -524,14 +523,14 @@ public class TokenServiceImpl implements TokenService {
             if ((sourceAddress != null && sourceAddress.equals(destAddress) || transSourceAddress.equals(destAddress))) {
                 throw new SDKException(SdkError.SOURCEADDRESS_EQUAL_DESTADDRESS_ERROR);
             }
-            String amount = tokenTransferOperation.getAmount();
-            if (null == amount) {
+            String tokenAmount = tokenTransferOperation.getTokenAmount();
+            if (null == tokenAmount) {
                 throw new SDKException(SdkError.INVALID_TOKEN_AMOUNT_ERROR);
             }
             Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
-            boolean isNumber = pattern.matcher(amount).matches();
+            boolean isNumber = pattern.matcher(tokenAmount).matches();
             Long maxInt = 1L;
-            if (!isNumber || (isNumber && (Long.valueOf(amount) < 1 || Long.valueOf(amount) > (maxInt << (64 - 1)) - 1))) {
+            if (!isNumber || (isNumber && (Long.valueOf(tokenAmount) < 1 || Long.valueOf(tokenAmount) > (maxInt << (64 - 1)) - 1))) {
                 throw new SDKException(SdkError.INVALID_TOKEN_AMOUNT_ERROR);
             }
             String metadata = tokenTransferOperation.getMetadata();
@@ -545,7 +544,7 @@ public class TokenServiceImpl implements TokenService {
             input.put("method", "transfer");
             JSONObject params = new JSONObject();
             params.put("to", destAddress);
-            params.put("value", amount);
+            params.put("value", tokenAmount);
             input.put("params", params);
 
             // invoke contract
@@ -593,14 +592,14 @@ public class TokenServiceImpl implements TokenService {
             if (fromAddress.equals(destAddress)) {
                 throw new SDKException(SdkError.FROMADDRESS_EQUAL_DESTADDRESS_ERROR);
             }
-            String amount = tokenTransferFromOperation.getAmount();
-            if (null == amount) {
+            String tokenAmount = tokenTransferFromOperation.getTokenAmount();
+            if (null == tokenAmount) {
                 throw new SDKException(SdkError.INVALID_TOKEN_AMOUNT_ERROR);
             }
             Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
-            boolean isNumber = pattern.matcher(amount).matches();
+            boolean isNumber = pattern.matcher(tokenAmount).matches();
             Long maxInt = 1L;
-            if (!isNumber || (isNumber && (Long.valueOf(amount) < 1 || Long.valueOf(amount) > (maxInt << (64 - 1)) - 1))) {
+            if (!isNumber || (isNumber && (Long.valueOf(tokenAmount) < 1 || Long.valueOf(tokenAmount) > (maxInt << (64 - 1)) - 1))) {
                 throw new SDKException(SdkError.INVALID_TOKEN_AMOUNT_ERROR);
             }
             String metadata = tokenTransferFromOperation.getMetadata();
@@ -614,7 +613,7 @@ public class TokenServiceImpl implements TokenService {
             JSONObject params = new JSONObject();
             params.put("from", fromAddress);
             params.put("to", destAddress);
-            params.put("value", amount);
+            params.put("value", tokenAmount);
             input.put("params", params);
 
             // invoke contract
@@ -654,14 +653,14 @@ public class TokenServiceImpl implements TokenService {
             if (!PublicKey.isAddressValid(spender)) {
                 throw new SDKException(SdkError.INVALID_SPENDER_ERROR);
             }
-            String amount = tokenApproveOperation.getAmount();
-            if (null == amount) {
+            String tokenAmount = tokenApproveOperation.getTokenAmount();
+            if (null == tokenAmount) {
                 throw new SDKException(SdkError.INVALID_TOKEN_AMOUNT_ERROR);
             }
             Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
-            boolean isNumber = pattern.matcher(amount).matches();
+            boolean isNumber = pattern.matcher(tokenAmount).matches();
             Long maxInt = 1L;
-            if (!isNumber || (isNumber && (Long.valueOf(amount) < 1) || Long.valueOf(amount) > (maxInt << (64 - 1)) - 1)) {
+            if (!isNumber || (isNumber && (Long.valueOf(tokenAmount) < 1) || Long.valueOf(tokenAmount) > (maxInt << (64 - 1)) - 1)) {
                 throw new SDKException(SdkError.INVALID_TOKEN_AMOUNT_ERROR);
             }
             String metadata = tokenApproveOperation.getMetadata();
@@ -674,7 +673,7 @@ public class TokenServiceImpl implements TokenService {
             input.put("method", "approve");
             JSONObject params = new JSONObject();
             params.put("spender", spender);
-            params.put("value", amount);
+            params.put("value", tokenAmount);
             input.put("params", params);
             // invoke contract
             operation = invokeContract(sourceAddress, contractAddress, input.toJSONString(), metadata);
@@ -713,14 +712,14 @@ public class TokenServiceImpl implements TokenService {
             if (!PublicKey.isAddressValid(destAddress)) {
                 throw new SDKException(SdkError.INVALID_DESTADDRESS_ERROR);
             }
-            String amount = tokenAssignResponse.getAmount();
-            if (null == amount) {
+            String tokenAmount = tokenAssignResponse.getTokenAmount();
+            if (null == tokenAmount) {
                 throw new SDKException(SdkError.INVALID_TOKEN_AMOUNT_ERROR);
             }
             Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
-            boolean isNumber = pattern.matcher(amount).matches();
+            boolean isNumber = pattern.matcher(tokenAmount).matches();
             Long maxInt = 1L;
-            if (!isNumber || (isNumber && (Long.valueOf(amount) < 1 || Long.valueOf(amount) > (maxInt << (64 - 1)) - 1))) {
+            if (!isNumber || (isNumber && (Long.valueOf(tokenAmount) < 1 || Long.valueOf(tokenAmount) > (maxInt << (64 - 1)) - 1))) {
                 throw new SDKException(SdkError.INVALID_TOKEN_AMOUNT_ERROR);
             }
             String metadata = tokenAssignResponse.getMetadata();
@@ -733,7 +732,7 @@ public class TokenServiceImpl implements TokenService {
             input.put("method", "assign");
             JSONObject params = new JSONObject();
             params.put("to", destAddress);
-            params.put("value", amount);
+            params.put("value", tokenAmount);
             input.put("params", params);
             // invoke contract
             operation = invokeContract(sourceAddress, contractAddress, input.toJSONString(), metadata);
@@ -884,9 +883,9 @@ public class TokenServiceImpl implements TokenService {
             contractInvokeByBUOperation.setSourceAddress(sourceAddress);
         }
         contractInvokeByBUOperation.setContractAddress(contractAddress);
-        contractInvokeByBUOperation.setAmount(0L);
+        contractInvokeByBUOperation.setBuAmount(0L);
         contractInvokeByBUOperation.setInput(input);
-        if (metadata != null) {
+        if (metadata != null && !metadata.isEmpty()) {
             contractInvokeByBUOperation.setMetadata(metadata);
         }
         ContractService contract = new ContractServiceImpl();

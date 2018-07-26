@@ -11,7 +11,7 @@ public class TokenTransferFromOperation extends BaseOperation {
     private String contractAddress;
     private String fromAddress;
     private String destAddress;
-    private String amount;
+    private String tokenAmount;
 
     /**
      * @Author riven
@@ -92,23 +92,23 @@ public class TokenTransferFromOperation extends BaseOperation {
 
     /**
      * @Author riven
-     * @Method getAmount
+     * @Method getTokenAmount
      * @Params []
      * @Return java.lang.String
      * @Date 2018/7/9 17:11
      */
-    public String getAmount() {
-        return amount;
+    public String getTokenAmount() {
+        return tokenAmount;
     }
 
     /**
      * @Author riven
-     * @Method setAmount
-     * @Params [amount]
+     * @Method setTokenAmount
+     * @Params [tokenAmount]
      * @Return void
      * @Date 2018/7/9 17:13
      */
-    public void setAmount(String amount) {
-        this.amount = amount;
+    public void setTokenAmount(String tokenAmount) {
+        this.tokenAmount = tokenAmount;
     }
 }

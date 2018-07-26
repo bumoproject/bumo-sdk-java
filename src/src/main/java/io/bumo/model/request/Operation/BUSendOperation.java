@@ -46,7 +46,7 @@ public class BUSendOperation extends BaseOperation {
 
     /**
      * @Author riven
-     * @Method getAmount
+     * @Method getTokenAmount
      * @Params []
      * @Return java.lang.Long
      * @Date 2018/7/9 16:57
@@ -57,7 +57,7 @@ public class BUSendOperation extends BaseOperation {
 
     /**
      * @Author riven
-     * @Method setAmount
+     * @Method setTokenAmount
      * @Params [amount]
      * @Return void
      * @Date 2018/7/9 16:57

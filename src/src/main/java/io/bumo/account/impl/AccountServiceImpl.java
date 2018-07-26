@@ -29,6 +29,7 @@ import java.lang.reflect.Method;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
+import java.util.regex.Pattern;
 
 /**
  * @Author riven
@@ -356,7 +357,7 @@ public class AccountServiceImpl implements AccountService {
             if (sourceAddress != null) {
                 operation.setSourceAddress(sourceAddress);
             }
-            if (metadata != null) {
+            if (metadata != null && !metadata.isEmpty()) {
                 operation.setMetadata(ByteString.copyFromUtf8(metadata));
             }
             Chain.OperationCreateAccount.Builder operationCreateAccount = operation.getCreateAccountBuilder();
@@ -412,7 +413,7 @@ public class AccountServiceImpl implements AccountService {
             if (sourceAddress != null) {
                 operation.setSourceAddress(sourceAddress);
             }
-            if (metadata != null) {
+            if (metadata != null && !metadata.isEmpty()) {
                 operation.setMetadata(ByteString.copyFromUtf8(metadata));
             }
             Chain.OperationSetMetadata.Builder operationSetMetadata = operation.getSetMetadataBuilder();
@@ -452,12 +453,20 @@ public class AccountServiceImpl implements AccountService {
             }
             String masterWeight = accountSetPrivilegeOperation.getMasterWeight();
             long maxInt = 1;
-            if (masterWeight != null && (Long.valueOf(masterWeight) < 0 || Long.valueOf(masterWeight) > ((maxInt << 32) - 1))) {
-                throw new SDKException(SdkError.INVALID_MASTERWEIGHT_ERROR);
+            if (masterWeight != null) {
+                Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
+                boolean isNumber = pattern.matcher(masterWeight).matches();
+                if(!isNumber || (isNumber && (Long.valueOf(masterWeight) < 0 || Long.valueOf(masterWeight) > ((maxInt << 32) - 1)))) {
+                    throw new SDKException(SdkError.INVALID_MASTERWEIGHT_ERROR);
+                }
             }
             String txThreshold = accountSetPrivilegeOperation.getTxThreshold();
-            if (txThreshold != null && (Long.valueOf(txThreshold) < 0 || Long.valueOf(txThreshold) > ((maxInt << (64 - 1)) - 1))) {
-                throw new SDKException(SdkError.INVALID_TX_THRESHOLD_ERROR);
+            if (txThreshold != null) {
+                Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
+                boolean isNumber = pattern.matcher(masterWeight).matches();
+                if (!isNumber || (isNumber && Long.valueOf(txThreshold) < 0 || Long.valueOf(txThreshold) > ((maxInt << (64 - 1)) - 1))) {
+                    throw new SDKException(SdkError.INVALID_TX_THRESHOLD_ERROR);
+                }
             }
             String metadata = accountSetPrivilegeOperation.getMetadata();
             // build Operation
@@ -466,11 +475,11 @@ public class AccountServiceImpl implements AccountService {
             if (sourceAddress != null) {
                 operation.setSourceAddress(sourceAddress);
             }
-            if (metadata != null) {
+            if (metadata != null && !metadata.isEmpty()) {
                 operation.setMetadata(ByteString.copyFromUtf8(metadata));
             }
             Chain.OperationSetPrivilege.Builder operationSetPrivilege = operation.getSetPrivilegeBuilder();
-            if (masterWeight != null) {
+            if (masterWeight != null && !masterWeight.isEmpty()) {
                 operationSetPrivilege.setMasterWeight(masterWeight);
             }
             if (txThreshold != null) {

@@ -92,7 +92,7 @@ public class AssetSendOperation extends BaseOperation {
 
     /**
      * @Author riven
-     * @Method getAmount
+     * @Method getTokenAmount
      * @Params []
      * @Return java.lang.Long
      * @Date 2018/7/9 16:56
@@ -103,7 +103,7 @@ public class AssetSendOperation extends BaseOperation {
 
     /**
      * @Author riven
-     * @Method setAmount
+     * @Method setTokenAmount
      * @Params [amount]
      * @Return void
      * @Date 2018/7/9 16:56

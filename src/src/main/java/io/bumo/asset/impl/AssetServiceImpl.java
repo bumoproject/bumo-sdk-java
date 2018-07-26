@@ -115,7 +115,7 @@ public class AssetServiceImpl implements AssetService {
             if (sourceAddress != null) {
                 operation.setSourceAddress(sourceAddress);
             }
-            if (metadata != null) {
+            if (metadata != null && !metadata.isEmpty()) {
                 operation.setMetadata(ByteString.copyFromUtf8(metadata));
             }
             Chain.OperationIssueAsset.Builder operationIssueAsset = operation.getIssueAssetBuilder();
@@ -174,7 +174,7 @@ public class AssetServiceImpl implements AssetService {
             if (sourceAddress != null) {
                 operation.setSourceAddress(sourceAddress);
             }
-            if (metadata != null) {
+            if (metadata != null && !metadata.isEmpty()) {
                 operation.setMetadata(ByteString.copyFromUtf8(metadata));
             }
             Chain.OperationPayAsset.Builder operationPayAsset = operation.getPayAssetBuilder();

@@ -93,7 +93,7 @@ public class TransactionServiceImpl implements TransactionService {
             transaction.setFeeLimit(feeLimit);
             transaction.setGasPrice(gasPrice);
 
-            if (metadata != null) {
+            if (metadata != null && !metadata.isEmpty()) {
                 transaction.setMetadata(ByteString.copyFromUtf8(metadata));
             }
             if (ceilLedgerSeq != null) {
@@ -204,7 +204,7 @@ public class TransactionServiceImpl implements TransactionService {
             buildOperations(baseOperations, sourceAddress, transaction);
             transaction.setSourceAddress(sourceAddress);
             transaction.setNonce(nonce);
-            if (metadata != null) {
+            if (metadata != null && !metadata.isEmpty()) {
                 transaction.setMetadata(ByteString.copyFromUtf8(metadata));
             }
             if (ceilLedgerSeq != null) {

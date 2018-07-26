@@ -11,7 +11,7 @@ public class ContractInvokeByAssetOperation extends BaseOperation {
     private String contractAddress;
     private String code;
     private String issuer;
-    private Long amount;
+    private Long assetAmount;
     private String input;
 
     /**
@@ -93,24 +93,24 @@ public class ContractInvokeByAssetOperation extends BaseOperation {
 
     /**
      * @Author riven
-     * @Method getAmount
+     * @Method getTokenAmount
      * @Params []
      * @Return java.lang.Long
      * @Date 2018/7/9 17:19
      */
-    public Long getAmount() {
-        return amount;
+    public Long getAssetAmount() {
+        return assetAmount;
     }
 
     /**
      * @Author riven
-     * @Method setAmount
-     * @Params [amount]
+     * @Method setTokenAmount
+     * @Params [assetAmount]
      * @Return void
      * @Date 2018/7/9 17:19
      */
-    public void setAmount(Long amount) {
-        this.amount = amount;
+    public void setAssetAmount(Long assetAmount) {
+        this.assetAmount = assetAmount;
     }
 
     /**
