@@ -6,9 +6,7 @@ import io.bumo.asset.AssetService;
 import io.bumo.common.General;
 import io.bumo.crypto.http.HttpKit;
 import io.bumo.crypto.protobuf.Chain;
-import io.bumo.encryption.exception.EncException;
 import io.bumo.encryption.key.PublicKey;
-import io.bumo.encryption.utils.hex.HexFormat;
 import io.bumo.exception.SDKException;
 import io.bumo.exception.SdkError;
 import io.bumo.model.request.AssetGetInfoRequest;
@@ -106,7 +104,7 @@ public class AssetServiceImpl implements AssetService {
             }
             Long amount = assetIssueOperation.getAmount();
             if (amount == null || (amount != null && amount <= 0)) {
-                throw new SDKException(SdkError.INVALID_ISSUE_AMMOUNT_ERROR);
+                throw new SDKException(SdkError.INVALID_ISSUE_AMOUNT_ERROR);
             }
             String metadata = assetIssueOperation.getMetadata();
             operation = Chain.Operation.newBuilder();
