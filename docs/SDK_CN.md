@@ -1748,7 +1748,7 @@ transactionFees|[TransactionFees](#transactionfees)|交易费用
 #### TransactionFees
    成员变量      |     类型     |        描述    |
 ----------- | ------------ | ---------------- |
-feeLimit|Long|交易要求的最低费用
+feeLimit|Long|交易要求的最低费用
 gasPrice|Long|交易燃料单价
 
 > 错误码
