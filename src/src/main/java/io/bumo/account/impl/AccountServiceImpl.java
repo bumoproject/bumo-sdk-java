@@ -489,7 +489,7 @@ public class AccountServiceImpl implements AccountService {
                         throw new SDKException(SdkError.INVALID_SIGNER_ADDRESS_ERROR);
                     }
                     Long signerWeight = signer.getWeight();
-                    if (signerWeight == null || (signerWeight != null && (signerWeight < 0 || signerWeight > (maxInt << (64 - 1)) - 1))) {
+                    if (signerWeight == null || (signerWeight != null && signerWeight < 0)) {
                         throw new SDKException(SdkError.INVALID_SIGNER_WEIGHT_ERROR);
                     }
                     Chain.Signer.Builder signerBuilder = operationSetPrivilege.addSignersBuilder();
@@ -506,11 +506,11 @@ public class AccountServiceImpl implements AccountService {
                 for (; i < typeThresholdsLength; i++) {
                     TypeThreshold typeThreshold = typeThresholds[i];
                     Integer type = typeThreshold.getType();
-                    if (type == null) {
+                    if (type == null || type < 1) {
                         throw new SDKException(SdkError.INVALID_TYPETHRESHOLD_TYPE_ERROR);
                     }
                     Long threshold = typeThreshold.getThreshold();
-                    if (threshold == null || (threshold != null && (threshold < 0 || threshold > (maxInt << (64 - 1)) - 1))) {
+                    if (threshold == null || (threshold != null && threshold < 0)) {
                         throw new SDKException(SdkError.INVALID_TYPE_THRESHOLD_ERROR);
                     }
                     Chain.OperationTypeThreshold.Builder typeThresholdBuilder = operationSetPrivilege.addTypeThresholdsBuilder();

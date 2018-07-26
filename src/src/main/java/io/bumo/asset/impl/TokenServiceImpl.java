@@ -613,6 +613,7 @@ public class TokenServiceImpl implements TokenService {
             input.put("method", "transferFrom");
             JSONObject params = new JSONObject();
             params.put("from", fromAddress);
+            params.put("to", destAddress);
             params.put("value", amount);
             input.put("params", params);
 
@@ -832,7 +833,12 @@ public class TokenServiceImpl implements TokenService {
             }
             TokenInfo tokenInfo =  JSONObject.parseObject(tokenInfoJson, TokenInfo.class);
             String ctp = tokenInfo.getCtp();
-            if (null == ctp || (ctp != null && !ctp.equals("1.0"))) {
+            if (null == ctp) {
+                break;
+            }
+            Pattern ctpPattern = Pattern.compile("^([1-9]*)+(.[0-9]{1,2})?$");
+            boolean isCtp = ctpPattern.matcher(ctp).matches();
+            if (!isCtp) {
                 break;
             }
             String name = tokenInfo.getName();

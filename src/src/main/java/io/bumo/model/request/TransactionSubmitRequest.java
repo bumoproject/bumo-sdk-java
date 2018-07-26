@@ -2,6 +2,8 @@ package io.bumo.model.request;
 
 import io.bumo.model.response.result.data.Signature;
 
+import java.util.Arrays;
+
 /**
  * @Author riven
  * @Date 2018/7/5 16:11
@@ -54,7 +56,12 @@ public class TransactionSubmitRequest {
         this.signatures = signatures;
     }
 
-    public void addSignatures(Signature[] signatures) {
-        this.signatures = signatures;
+    public void addSignature(Signature signature) {
+        if (null == signatures) {
+            signatures = new Signature[1];
+        } else {
+            signatures = Arrays.copyOf(signatures, signatures.length + 1);
+        }
+        signatures[signatures.length - 1] = signature;
     }
 }

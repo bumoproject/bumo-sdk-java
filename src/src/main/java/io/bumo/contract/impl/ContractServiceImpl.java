@@ -162,7 +162,7 @@ public class ContractServiceImpl implements ContractService {
         Chain.Operation.Builder operation;
         try {
             String sourceAddress = contractInvokeByAssetOperation.getSourceAddress();
-            if (sourceAddress != null && PublicKey.isAddressValid(sourceAddress)) {
+            if (sourceAddress != null && !PublicKey.isAddressValid(sourceAddress)) {
                 throw new SDKException(SdkError.INVALID_SOURCEADDRESS_ERROR);
             }
             String contractAddress = contractInvokeByAssetOperation.getContractAddress();

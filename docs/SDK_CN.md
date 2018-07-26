@@ -121,7 +121,7 @@ Class AccountGetNonceResult {
 
 ## 使用方法
 
-这里介绍SDK的使用流程，首先需要生成SDK实现，然后调用相应服务的接口，其中服务包括账户服务、资产服务、token服务、合约服务、交易服务、区块服务，接口按使用分类分为生成公私钥地址接口、有效性校验接口、查询接口、提交交易相关接口
+这里介绍SDK的使用流程，首先需要生成SDK实现，然后调用相应服务的接口，其中服务包括账户服务、资产服务、token服务、合约服务、交易服务、区块服务，接口按使用分类分为生成公私钥地址接口、有效性校验接口、查询接口、广播交易相关接口
 
 ### 生成SDK实例
 
@@ -178,10 +178,10 @@ else {
 }
 ```
 
-### 提交交易
-提交交易的过程包括以下几步：获取账户nonce值，构建操作，构建交易Blob，签名交易和广播交易。
+### 广播交易
+广播交易的过程包括以下几步：获取交易发起的账户nonce值 -> 构建操作 -> 序列化交易 -> 签名交易 -> 提交交易。
 
-#### 获取账户nonce值
+#### 获取交易发起的账户nonce值
 
 开发者可自己维护各个账户nonce，在提交完一个交易后，自动递增1，这样可以在短时间内发送多笔交易，否则，必须等上一个交易执行完成后，账户的nonce值才会加1。接口调用如下：
 ```
@@ -205,7 +205,7 @@ else {
 
 #### 构建操作
 
-这里的操作是指在交易中做的一些动作。 例如：构建发送BU操作BUSendOperation，接口调用如下：
+这里的操作是指在交易中做的一些动作，便于序列化交易和评估费用 例如：构建发送BU操作BUSendOperation，接口调用如下：
 ```
 String senderAddress = "buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp";
 String destAddress = "buQsurH1M4rjLkfjzkxR9KXJ6jSu2r9xBNEw";
@@ -217,9 +217,9 @@ operation.setDestAddress(destAddress);
 operation.setAmount(amount);
 ```
 
-#### 构建交易Blob
+#### 序列化交易
 
-该接口用于生成交易Blob串。其中nonce和operation是上面接口得到的，接口调用如下：
+该接口用于序列化交易，并生成交易Blob串，便于网络传输。其中nonce和operation是上面接口得到的，接口调用如下：
 ```
 // 初始化变量
 String senderAddress = "buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp";
@@ -246,7 +246,7 @@ if (buildBlobResponse.getErrorCode() == 0) {
 
 #### 签名交易
 
-该接口用于交易发起者使用私钥对交易进行签名。其中transactionBlob是上面接口得到的，接口调用如下：
+该接口用于交易发起者使用其账户私钥对交易进行签名。其中transactionBlob是上面接口得到的，接口调用如下：
 ```
 // 初始化请求参数
 String senderPrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq";
@@ -267,9 +267,9 @@ if (signResponse.getErrorCode() == 0) {
 }
 ```
 
-#### 广播交易
+#### 提交交易
 
-该接口用于向BU区块链发送交易，触发交易的执行。其中transactionBlob和signResult是上面接口得到的，接口调用如下：
+该接口用于向BU区块链发送交易请求，触发交易的执行。其中transactionBlob和signResult是上面接口得到的，接口调用如下：
 ```
 // 初始化请求参数
 TransactionSubmitRequest submitRequest = new TransactionSubmitRequest();
@@ -354,14 +354,14 @@ address     |   String     |  必填，待查询的区块链账户地址
    参数    |     类型      |        描述       
 --------- | ------------- | ---------------- 
 address	  |    String     |    账户地址       
-balance	  |    Long       |    账户余额       
-nonce	  |    Long       |    账户交易序列号
+balance	  |    Long       |    账户余额，必须大于0
+nonce	  |    Long       |    账户交易序列号，必须大于0
 priv	  | [Priv](#priv) |    账户权限
 
 #### Priv
    成员       |     类型     |        描述       
 -----------  | ------------ | ---------------- 
-masterWeight |	 Long	    |   账户自身权重
+masterWeight |	 Long	    |   账户自身权重，大小[0, MAX(Integer) * 2]
 signers	     |[Signer](#signer)[]|   签名者权重列表
 threshold	 |[Threshold](#Threshold)|	门限
 
@@ -369,19 +369,19 @@ threshold	 |[Threshold](#Threshold)|	门限
    成员       |     类型     |        描述       
 -----------  | ------------ | ---------------- 
 address	     |   String	    |   签名者区块链账户地址
-weight	     |   Long	    |   签名者权重
+weight	     |   Long	    |   签名者权重，大小[0, MAX(Integer) * 2]
 
 #### Threshold
    成员       |     类型     |        描述       
 -----------  | ------------ | ---------------- 
-txThreshold	 |    Long	    |   交易默认门限
+txThreshold	 |    Long	    |   交易默认门限，大小[0, max(Long)]
 typeThresholds|[TypeThreshold](#typethreshold)[]|不同类型交易的门限
 
 #### TypeThreshold
    成员       |     类型     |        描述       
 -----------  | ------------ | ---------------- 
-type         |    Long	    |    操作类型
-threshold    |    Long      |    门限值
+type         |    Long	    |    操作类型，必须大于0
+threshold    |    Long      |    门限值，大小[0, max(Long)]
 
 > 错误码
 
@@ -1202,12 +1202,12 @@ ContractCallesponse call(ContractCallRequest);
 ----------- | ------------ | ---------------- |
 sourceAddress|String|选填，合约触发账户地址
 contractAddress|String|选填，合约账户地址，与code不能同时为空
-code|String|选填，合约代码，与contractAddress不能同时为空
+code|String|选填，合约代码，与contractAddress不能同时为空，长度[1, 64]
 input|String|选填，合约入参
-contractBalance|String|选填，赋予合约的初始 BU 余额
+contractBalance|String|选填，赋予合约的初始 BU 余额, 大小[1, max(Long)]
 optType|Integer|必填，0: 调用合约的读写接口 init, 1: 调用合约的读写接口 main, 2 :调用只读接口 query
-feeLimit|Long|交易要求的最低手续费
-gasPrice|Long|交易燃料费用
+feeLimit|Long|交易要求的最低手续费， 大小[1, max(Long)]
+gasPrice|Long|交易燃料单价，大小[1000, max(Long)]
 
 
 > 响应数据
@@ -1248,7 +1248,7 @@ trigger|[ContractTrigger](#contracttrigger)|合约触发者
 ----------- | ------------ | ---------------- |
 sourceAddress|String|交易发起的源账户地址
 feeLimit|Long|交易要求的最低费用
-gasPrice|Long|交易燃料费用
+gasPrice|Long|交易燃料单价
 nonce|Long|交易序列号
 operations|[Operation](#operation)[]|操作列表
 
@@ -1455,7 +1455,7 @@ sourceAddress|String|选填，操作源账户地址
 destAddress|String|必填，目标账户地址
 code|String|必填，资产编码，长度[1, 64]
 issuer|String|必填，资产发行账户地址
-assetAmount|Long|必填，资产数量，大小[ 0, max(Long)]
+assetAmount|Long|必填，资产数量，大小[0, max(Long)]
 metadata|String|选填，备注
 
 > BUSendOperation
@@ -1545,7 +1545,7 @@ metadata|String|选填，备注
 
 > ContractCreateOperation
 
-继承于BaseOperation，feeLimit目前(2018.07.26)固定是0.02 BU
+继承于BaseOperation，feeLimit目前(2018.07.26)固定是10.01 BU
 
    成员变量    |     类型   |        描述          
 ------------- | --------- | ---------------------
@@ -1597,7 +1597,7 @@ metadata|String|选填，备注
 
 > 接口说明
 
-   该接口用于交易Blob的生成
+   该接口用于序列化交易，生成交易Blob串，便于网络传输
 
 > 调用方法
 
@@ -1609,7 +1609,7 @@ TransactionBuildBlobResponse buildBlob(TransactionBuildBlobRequest);
 ----------- | ------------ | ---------------- 
 sourceAddress|String|必填，发起该操作的源账户地址
 nonce|Long|必填，待发起的交易序列号，函数里+1，大小[1, max(Long)]
-gasPrice|Long|必填，交易燃料费用，单位MO，1 BU = 10^8 MO，大小[1, max(Long)]
+gasPrice|Long|必填，交易燃料单价，单位MO，1 BU = 10^8 MO，大小[1000, max(Long)]
 feeLimit|Long|必填，交易要求的最低的手续费，单位MO，1 BU = 10^8 MO，大小[1, max(Long)]
 operation|BaseOperation[]|必填，待提交的操作列表，不能为空
 ceilLedgerSeq|long|选填，距离当前区块高度指定差值的区块内执行的限制，当区块超出当时区块高度与所设差值的和后，交易执行失败。必须大于等于0，是0时不限制
@@ -1749,7 +1749,7 @@ transactionFees|[TransactionFees](#transactionfees)|交易费用
    成员变量      |     类型     |        描述    |
 ----------- | ------------ | ---------------- |
 feeLimit|Long|交易要求的最低费用
-gasPrice|Long|燃料费用
+gasPrice|Long|交易燃料单价
 
 > 错误码
 
@@ -1861,7 +1861,7 @@ if(0 == response.getErrorCode()){
 
 > 接口说明
 
-   该接口用于实现交易的提交，只有提交交易中有失败的，就抛出Exception，提示有交易失败，具体哪个交易失败，遍历返回数组中TransactionResult的错误码和错误描述
+   该接口用于实现交易的提交。
 
 > 调用方法
 
@@ -1885,6 +1885,7 @@ hash|String|交易hash
    异常       |     错误码   |   描述   |
 -----------  | ----------- | -------- |
 INVALID_BLOB_ERROR|11056|Invalid blob
+SIGNATURE_EMPTY_ERROR|11067|The signatures cannot be empty
 SYSTEM_ERROR|20000|System error
 
 > 示例
@@ -1897,11 +1898,13 @@ signature.setSignData("D2B5E3045F2C1B7D363D4F58C1858C30ABBBB0F41E4B2E18AF680553C
 signature.setPublicKey("b0011765082a9352e04678ef38d38046dc01306edef676547456c0c23e270aaed7ffe9e31477");
 TransactionSubmitRequest request = new TransactionSubmitRequest();
 request.setTransactionBlob(transactionBlob);
-request.setSignatures();
+request.addSignature(signature);
+
+// 调用submit接口
 TransactionSubmitResponse response = sdk.getTransactionService().submit(request);
-if (0 == response.getErrorCode()) { // 交易广播成功
+if (0 == response.getErrorCode()) { // 交易提交成功
     System.out.println(JSON.toJSONString(response.getResult(), true));
-}else{
+} else{
     System.out.println("error: " + response.getErrorDesc());
 }
 ```
@@ -1955,8 +1958,9 @@ SYSTEM_ERROR|20000|System error
 
 ```
 // 初始化请求参数
+String txHash = "1653f54fbba1134f7e35acee49592a7c29384da10f2f629c9a214f6e54747705";
 TransactionGetInfoRequest request = new TransactionGetInfoRequest();
-request.setHash("0d67997af3777b977deb648082c8288b4ba46b09d910d016f0942bcd853ad518");
+request.setHash(txHash);
 
 // 调用getInfo接口
 TransactionGetInfoResponse response = sdk.getTransactionService().getInfo(request);
@@ -2021,7 +2025,7 @@ BlockCheckStatusResponse checkStatus();
 
    参数      |     类型     |        描述       |
 ----------- | ------------ | ---------------- |
-isSynchronous    |   boolean     |  区块是否同步   |
+isSynchronous    |   Boolean     |  区块是否同步   |
 
 > 错误码
 
@@ -2050,13 +2054,13 @@ if(0 == response.getErrorCode()){
 
 > 调用方法
 
-   BlockGetTransactionsResponse getTransactions (BlockGetTransactionRequest);
+   BlockGetTransactionsResponse getTransactions (BlockGetTransactionsRequest);
 
 > 请求参数
 
    参数      |     类型     |        描述       |
 ----------- | ------------ | ---------------- |
-blockNumber|Long|必填，待查询的区块高度
+blockNumber|Long|必填，待查询的区块高度，必须大于0
 
 > 响应数据
 
@@ -2194,7 +2198,7 @@ BlockGetValidatorsResponse getValidators(BlockGetValidatorsRequest);
 
    参数      |     类型     |        描述       |
 ----------- | ------------ | ---------------- |
-blockNumber|Long|必填，待查询的区块高度
+blockNumber|Long|必填，待查询的区块高度，必须大于0
 
 > 响应数据
 
@@ -2284,7 +2288,7 @@ BlockGetRewardResponse getReward(BlockGetRewardRequest);
 
    参数      |     类型     |        描述       |
 ----------- | ------------ | ---------------- |
-blockNumber|Long|必填，待查询的区块高度
+blockNumber|Long|必填，待查询的区块高度，必须大于0
 
 > 响应数据
 
@@ -2367,7 +2371,7 @@ if (response.getErrorCode() == 0) {
 
 > 接口说明
 
-   获取指定区块中的账户最低资产限制和打包费用
+   获取指定区块中的账户最低资产限制和燃料单价
 
 > 调用方法
 
@@ -2377,7 +2381,7 @@ BlockGetFeesResponse getFees(BlockGetFeesRequest);
 
    参数      |     类型     |        描述       |
 ----------- | ------------ | ---------------- |
-blockNumber|Long|必填，待查询的区块高度
+blockNumber|Long|必填，待查询的区块高度，必须大于0
 
 > 响应数据
 
@@ -2390,7 +2394,7 @@ fees|[Fees](#fees)|费用
    成员变量  |     类型     |        描述       |
 ----------- | ------------ | ---------------- |
 baseReserve|Long|账户最低资产限制
-gasPrice|Long|打包费用，单位MO，1 BU = 10^8 MO
+gasPrice|Long|交易燃料单价，单位MO，1 BU = 10^8 MO
 
 > 错误码
 
@@ -2420,7 +2424,7 @@ if (response.getErrorCode() == 0) {
 
 > 接口说明
 
-   该接口用于获取最新区块中的账户最低资产限制和打包费用
+   该接口用于获取最新区块中的账户最低资产限制和燃料单价
 
 > 调用方法
 
@@ -2493,7 +2497,7 @@ INVALID_SPENDER_ERROR|11043|Invalid spender
 INVALID_LOG_TOPIC_ERROR|11045|The length of log topic must be between 1 and 128
 INVALID_LOG_DATA_ERROR|11046|The length of one of log data must be between 1 and 1024
 INVALID_NONCE_ERROR|11048|Nonce must be between 1 and max(Long)
-INVALID_GASPRICE_ERROR|11049|GasPrice must be between 1 and max(Long)
+INVALID_GASPRICE_ERROR|11049|GasPrice must be between 1000 and max(Long)
 INVALID_FEELIMIT_ERROR|11050|FeeLimit must be between 1 and max(Long)
 OPERATIONS_EMPTY_ERROR|11051|Operations cannot be empty
 INVALID_CEILLEDGERSEQ_ERROR|11052|CeilLedgerSeq must be equal or bigger than 0

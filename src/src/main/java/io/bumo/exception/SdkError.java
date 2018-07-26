@@ -48,7 +48,7 @@ public enum SdkError {
     INVALID_LOG_DATA_ERROR(11046, "The length of one of log data must be between 1 and 1024"),
     INVALID_CONTRACT_TYPE_ERROR(11047, "Type must be equal or bigger than 0"),
     INVALID_NONCE_ERROR(11048, "Nonce must be between 1 and max(Long)"),
-    INVALID_GASPRICE_ERROR(11049, "GasPrice must be between 1 and max(Long)"),
+    INVALID_GASPRICE_ERROR(11049, "GasPrice must be between 1000 and max(Long)"),
     INVALID_FEELIMIT_ERROR(11050, "FeeLimit must be between 1 and max(Long)"),
     OPERATIONS_EMPTY_ERROR(11051, "Operations cannot be empty"),
     INVALID_CEILLEDGERSEQ_ERROR(11052, "CeilLedgerSeq must be equal or bigger than 0"),

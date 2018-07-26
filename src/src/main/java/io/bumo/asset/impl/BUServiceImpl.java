@@ -31,7 +31,7 @@ public class BUServiceImpl {
             }
             Long amount = buSendOperation.getAmount();
             if (amount == null || (amount != null && amount <= 0)) {
-                throw new SDKException(SdkError.INVALID_ASSET_AMOUNT_ERROR);
+                throw new SDKException(SdkError.INVALID_BU_AMOUNT_ERROR);
             }
             String metadata = buSendOperation.getMetadata();
             // build Operation
