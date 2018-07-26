@@ -69,6 +69,7 @@ public class HttpKit {
         while ((valueString = read.readLine()) != null){
             bufferRes.append(valueString);
         }
+        read.close();
         in.close();
         if (http != null) {
             // 关闭连接
@@ -110,6 +111,7 @@ public class HttpKit {
             while ((valueString = read.readLine()) != null){
                 bufferRes.append(valueString);
             }
+            read.close();
             in.close();
             if (http != null) {
                 // 关闭连接
@@ -178,6 +180,7 @@ public class HttpKit {
         while ((valueString = read.readLine()) != null){
             bufferRes.append(valueString);
         }
+        read.close();
         in.close();
         if (http != null) {
             // 关闭连接
@@ -225,6 +228,7 @@ public class HttpKit {
 	        while ((valueString = read.readLine()) != null){
 	            bufferRes.append(valueString);
 	        }
+	        read.close();
 	        in.close();
 	        if (http != null) {
 	            // 关闭连接

@@ -3,7 +3,9 @@ package io.bumo.contract.impl;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.google.protobuf.ByteString;
+import io.bumo.common.Constant;
 import io.bumo.common.General;
+import io.bumo.common.Tools;
 import io.bumo.contract.ContractService;
 import io.bumo.crypto.http.HttpKit;
 import io.bumo.crypto.protobuf.Chain;
@@ -98,21 +100,19 @@ public class ContractServiceImpl implements ContractService {
         Chain.Operation.Builder operation;
         try {
             String sourceAddress = contractCreateOperation.getSourceAddress();
-            if (sourceAddress != null && !PublicKey.isAddressValid(sourceAddress)) {
+            if (!Tools.isEmpty(sourceAddress) && !PublicKey.isAddressValid(sourceAddress)) {
                 throw new SDKException(SdkError.INVALID_SOURCEADDRESS_ERROR);
             }
             Long initBalance = contractCreateOperation.getInitBalance();
-            if (initBalance <= 0) {
+            if (Tools.isEmpty(initBalance) || initBalance <= 0) {
                 throw new SDKException(SdkError.INVALID_INITBALANCE_ERROR);
             }
-
             Integer type = contractCreateOperation.getType();
-            if (type != null && type < 0) {
+            if (!Tools.isEmpty(type) && type < 0) {
                 throw new SDKException(SdkError.INVALID_CONTRACT_TYPE_ERROR);
             }
-
             String payload = contractCreateOperation.getPayload();
-            if (payload == null || (payload != null && payload.isEmpty())) {
+            if (Tools.isEmpty(payload)) {
                 throw new SDKException(SdkError.PAYLOAD_EMPTY_ERROR);
             }
             String metadata = contractCreateOperation.getMetadata();
@@ -120,21 +120,25 @@ public class ContractServiceImpl implements ContractService {
             // build operation
             operation = Chain.Operation.newBuilder();
             operation.setType(Chain.Operation.Type.CREATE_ACCOUNT);
-            if (sourceAddress != null) {
+            if (!Tools.isEmpty(sourceAddress)) {
                 operation.setSourceAddress(sourceAddress);
             }
-            if (metadata != null) {
+            if (!Tools.isEmpty(metadata)) {
                 operation.setMetadata(ByteString.copyFromUtf8(metadata));
             }
 
             Chain.OperationCreateAccount.Builder operationCreateContract = operation.getCreateAccountBuilder();
             operationCreateContract.setInitBalance(initBalance);
-            if (initInput != null && !initInput.isEmpty()) {
+            if (!Tools.isEmpty(initInput)) {
                 operationCreateContract.setInitInput(initInput);
             }
             Chain.Contract.Builder contract = operationCreateContract.getContractBuilder();
-            if (type != null) {
-                contract.setType(Chain.Contract.ContractType.forNumber(type));
+            if (!Tools.isEmpty(type)) {
+                Chain.Contract.ContractType contractType = Chain.Contract.ContractType.forNumber(type);
+                if (Tools.isEmpty(contractType)) {
+                    throw new SDKException(SdkError.INVALID_CONTRACT_TYPE_ERROR);
+                }
+                contract.setType(contractType);
             }
             contract.setPayload(payload);
             Chain.AccountPrivilege.Builder accountPrivilege = operationCreateContract.getPrivBuilder();
@@ -161,26 +165,26 @@ public class ContractServiceImpl implements ContractService {
         Chain.Operation.Builder operation;
         try {
             String sourceAddress = contractInvokeByAssetOperation.getSourceAddress();
-            if (sourceAddress != null && !PublicKey.isAddressValid(sourceAddress)) {
+            if (!Tools.isEmpty(sourceAddress) && !PublicKey.isAddressValid(sourceAddress)) {
                 throw new SDKException(SdkError.INVALID_SOURCEADDRESS_ERROR);
             }
             String contractAddress = contractInvokeByAssetOperation.getContractAddress();
             if (!PublicKey.isAddressValid(contractAddress)) {
                 throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
             }
-            if (sourceAddress != null && sourceAddress.equals(contractAddress)) {
+            if (!Tools.isEmpty(sourceAddress) && sourceAddress.equals(contractAddress)) {
                 throw new SDKException(SdkError.SOURCEADDRESS_EQUAL_CONTRACTADDRESS_ERROR);
             }
             String code = contractInvokeByAssetOperation.getCode();
-            if (code != null && (code.length() < 1 || code.length() > 1024)) {
+            if (!Tools.isNULL(code) && (code.length() < 1 || code.length() > 1024)) {
                 throw new SDKException(SdkError.INVALID_ASSET_CODE_ERROR);
             }
             String issuer = contractInvokeByAssetOperation.getIssuer();
-            if (issuer != null && !PublicKey.isAddressValid(issuer)) {
+            if (!Tools.isEmpty(issuer) && !PublicKey.isAddressValid(issuer)) {
                 throw new SDKException(SdkError.INVALID_ISSUER_ADDRESS_ERROR);
             }
             Long assetAmount = contractInvokeByAssetOperation.getAssetAmount();
-            if (assetAmount != null && assetAmount < 0) {
+            if (!Tools.isEmpty(assetAmount) && assetAmount < 0) {
                 throw new SDKException(SdkError.INVALID_ASSET_AMOUNT_ERROR);
             }
             String metadata = contractInvokeByAssetOperation.getMetadata();
@@ -192,16 +196,16 @@ public class ContractServiceImpl implements ContractService {
             // build operation
             operation = Chain.Operation.newBuilder();
             operation.setType(Chain.Operation.Type.PAY_ASSET);
-            if (sourceAddress != null) {
+            if (!Tools.isEmpty(sourceAddress)) {
                 operation.setSourceAddress(sourceAddress);
             }
-            if (metadata != null) {
+            if (!Tools.isEmpty(metadata)) {
                 operation.setMetadata(ByteString.copyFromUtf8(metadata));
             }
 
             Chain.OperationPayAsset.Builder operationPayAsset = operation.getPayAssetBuilder();
             operationPayAsset.setDestAddress(contractAddress);
-            if (input != null && !input.isEmpty()) {
+            if (!Tools.isEmpty(input)) {
                 operationPayAsset.setInput(input);
             }
             if (code != null && issuer != null && assetAmount != null && assetAmount != 0) {
@@ -230,18 +234,18 @@ public class ContractServiceImpl implements ContractService {
         Chain.Operation.Builder operation;
         try {
             String sourceAddress = contractInvokeByBUOperation.getSourceAddress();
-            if (sourceAddress != null && !PublicKey.isAddressValid(sourceAddress)) {
+            if (!Tools.isEmpty(sourceAddress) && !PublicKey.isAddressValid(sourceAddress)) {
                 throw new SDKException(SdkError.INVALID_SOURCEADDRESS_ERROR);
             }
             String contractAddress = contractInvokeByBUOperation.getContractAddress();
             if (!PublicKey.isAddressValid(contractAddress)) {
                 throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
             }
-            if (sourceAddress != null && sourceAddress.equals(contractAddress)) {
+            if (!Tools.isEmpty(sourceAddress) && sourceAddress.equals(contractAddress)) {
                 throw new SDKException(SdkError.SOURCEADDRESS_EQUAL_CONTRACTADDRESS_ERROR);
             }
             Long buAmount = contractInvokeByBUOperation.getBuAmount();
-            if (buAmount == null || (buAmount != null && buAmount < 0)) {
+            if (Tools.isEmpty(buAmount) || buAmount < 0) {
                 throw new SDKException(SdkError.INVALID_ASSET_AMOUNT_ERROR);
             }
             String metadata = contractInvokeByBUOperation.getMetadata();
@@ -253,17 +257,16 @@ public class ContractServiceImpl implements ContractService {
             // build operation
             operation = Chain.Operation.newBuilder();
             operation.setType(Chain.Operation.Type.PAY_COIN);
-            if (sourceAddress != null) {
+            if (!Tools.isEmpty(sourceAddress)) {
                 operation.setSourceAddress(sourceAddress);
             }
-            if (metadata != null) {
+            if (!Tools.isEmpty(metadata)) {
                 operation.setMetadata(ByteString.copyFromUtf8(metadata));
             }
-
             Chain.OperationPayCoin.Builder operationPayCoin = operation.getPayCoinBuilder();
             operationPayCoin.setDestAddress(contractAddress);
             operationPayCoin.setAmount(buAmount);
-            if (input != null && !input.isEmpty()) {
+            if (!Tools.isEmpty(input)) {
                 operationPayCoin.setInput(input);
             }
         } catch (SDKException sdkException) {
@@ -286,57 +289,31 @@ public class ContractServiceImpl implements ContractService {
     public ContractCallResponse call(ContractCallRequest contractCallRequest) {
         ContractCallResponse contractCallResponse = new ContractCallResponse();
         ContractCallResult contractCallResult = new ContractCallResult();
-
         try {
             String sourceAddress = contractCallRequest.getSourceAddress();
-            if (sourceAddress != null && !sourceAddress.isEmpty() && !PublicKey.isAddressValid(sourceAddress)) {
+            if (!Tools.isEmpty(sourceAddress) && !sourceAddress.isEmpty() && !PublicKey.isAddressValid(sourceAddress)) {
                 throw new SDKException(SdkError.INVALID_SOURCEADDRESS_ERROR);
             }
             String contractAddress = contractCallRequest.getContractAddress();
-            if (contractAddress != null && !contractAddress.isEmpty() && !PublicKey.isAddressValid(contractAddress)) {
+            if (!Tools.isNULL(contractAddress) && !contractAddress.isEmpty() && !PublicKey.isAddressValid(contractAddress)) {
                 throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
             }
             String code = contractCallRequest.getCode();
-            if ((null == contractAddress || contractAddress.isEmpty()) && (null == code || code.isEmpty())) {
+            if (Tools.isEmpty(contractAddress) && Tools.isEmpty(code)) {
                 throw new SDKException(SdkError.CONTRACTADDRESS_CODE_BOTH_NULL_ERROR);
             }
             Long feeLimit = contractCallRequest.getFeeLimit();
-            if (null == feeLimit || (feeLimit != null && feeLimit < 1)) {
+            if (Tools.isEmpty(feeLimit) || feeLimit < Constant.FEE_LIMIT_MIN) {
                 throw new SDKException(SdkError.INVALID_FEELIMIT_ERROR);
             }
             Integer optType = contractCallRequest.getOptType();
-            if (null == optType || (optType != null && (optType < 0 || optType > 2))) {
+            if (Tools.isEmpty(optType) || (optType < Constant.OPT_TYPE_MIN || optType > Constant.OPT_TYPE_MAX)) {
                 throw new SDKException(SdkError.INVALID_OPTTYPE_ERROR);
             }
             String input = contractCallRequest.getInput();
             Long contractBalance = contractCallRequest.getContractBalance();
             Long gasPrice = contractCallRequest.getGasPrice();
-
-            JSONObject params = new JSONObject();
-            params.put("opt_type", optType);
-            params.put("fee_limit", feeLimit);
-            if (sourceAddress != null) {
-                params.put("source_address", sourceAddress);
-            }
-            if (contractAddress != null) {
-                params.put("contract_address", contractAddress);
-            }
-            if (code != null) {
-                params.put("code", code);
-            }
-            if (input != null) {
-                params.put("input", input);
-            }
-            if (contractBalance != null) {
-                params.put("contract_balance", input);
-            }
-            if (gasPrice != null) {
-                params.put("gas_price", gasPrice);
-            }
-            // call contract
-            String contractCallUrl = General.contractCallUrl();
-            String result = HttpKit.post(contractCallUrl, params.toJSONString());
-            contractCallResponse = JSONObject.parseObject(result, ContractCallResponse.class);
+            contractCallResponse = callContract(sourceAddress, contractAddress, optType, code, input, contractBalance, gasPrice, feeLimit);
         } catch (SDKException sdkException) {
             Integer errorCode = sdkException.getErrorCode();
             String errorDesc = sdkException.getErrorDesc();
@@ -349,6 +326,36 @@ public class ContractServiceImpl implements ContractService {
         return contractCallResponse;
     }
 
+    public static ContractCallResponse callContract(String sourceAddress, String contractAddress, Integer optType, String code,
+            String input, Long contractBalance, Long gasPrice, Long feeLimit)
+            throws KeyManagementException, NoSuchAlgorithmException, NoSuchProviderException, IOException {
+        JSONObject params = new JSONObject();
+        params.put("opt_type", optType);
+        params.put("fee_limit", feeLimit);
+        if (!Tools.isEmpty(sourceAddress)) {
+            params.put("source_address", sourceAddress);
+        }
+        if (!Tools.isEmpty(contractAddress)) {
+            params.put("contract_address", contractAddress);
+        }
+        if (!Tools.isEmpty(code)) {
+            params.put("code", code);
+        }
+        if (!Tools.isEmpty(input)) {
+            params.put("input", input);
+        }
+        if (!Tools.isEmpty(contractBalance)) {
+            params.put("contract_balance", input);
+        }
+        if (!Tools.isEmpty(gasPrice)) {
+            params.put("gas_price", gasPrice);
+        }
+        // call contract
+        String contractCallUrl = General.contractCallUrl();
+        String result = HttpKit.post(contractCallUrl, params.toJSONString());
+        return JSONObject.parseObject(result, ContractCallResponse.class);
+    }
+
     private static ContractGetInfoResponse getContractInfo(String contractAddress) throws KeyManagementException, NoSuchAlgorithmException, NoSuchProviderException, IOException, SDKException {
         ContractGetInfoResponse contractGetInfoResponse;
         String contractGetInfoUrl = General.accountGetInfoUrl(contractAddress);
@@ -356,16 +363,16 @@ public class ContractServiceImpl implements ContractService {
         contractGetInfoResponse = JSON.parseObject(result, ContractGetInfoResponse.class);
         Integer errorCode = contractGetInfoResponse.getErrorCode();
         String errorDesc = contractGetInfoResponse.getErrorDesc();
-        if (errorCode != null && errorCode == 4) {
+        if (!Tools.isEmpty(errorCode) && errorCode == 4) {
             throw new SDKException(errorCode, (null == errorDesc ? "contract account (" + contractAddress + ") doest not exist" : errorDesc));
         }
         SdkError.checkErrorCode(contractGetInfoResponse);
         ContractInfo contractInfo = contractGetInfoResponse.getResult().getContract();
-        if (contractInfo == null) {
+        if (Tools.isEmpty(contractInfo)) {
             throw new SDKException(SdkError.CONTRACTADDRESS_NOT_CONTRACTACCOUNT_ERROR);
         }
         String payLoad = contractInfo.getPayload();
-        if (null == payLoad || (payLoad != null && payLoad.isEmpty())) {
+        if (Tools.isEmpty(payLoad)) {
             throw new SDKException(SdkError.CONTRACTADDRESS_NOT_CONTRACTACCOUNT_ERROR);
         }
         return contractGetInfoResponse;

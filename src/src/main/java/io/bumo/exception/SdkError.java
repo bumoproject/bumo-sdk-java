@@ -46,7 +46,7 @@ public enum SdkError {
     PAYLOAD_EMPTY_ERROR(11044, "Payload cannot be empty"),
     INVALID_LOG_TOPIC_ERROR(11045, "The length of log topic must be between 1 and 128"),
     INVALID_LOG_DATA_ERROR(11046, "The length of one of log data must be between 1 and 1024"),
-    INVALID_CONTRACT_TYPE_ERROR(11047, "Type must be equal or bigger than 0"),
+    INVALID_CONTRACT_TYPE_ERROR(11047, "Invalid contract type"),
     INVALID_NONCE_ERROR(11048, "Nonce must be between 1 and max(Long)"),
     INVALID_GASPRICE_ERROR(11049, "GasPrice must be between 1000 and max(Long)"),
     INVALID_FEELIMIT_ERROR(11050, "FeeLimit must be between 1 and max(Long)"),

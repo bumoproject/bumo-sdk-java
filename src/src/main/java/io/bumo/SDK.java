@@ -23,7 +23,7 @@ import io.bumo.exception.SdkError;
  * @Date 2018/7/4 12:23
  */
 public class SDK {
-    public static SDK sdk = null;
+    private static SDK sdk = null;
 
     /**
  * @Author riven

@@ -12,7 +12,9 @@ import io.bumo.asset.impl.BUServiceImpl;
 import io.bumo.asset.impl.TokenServiceImpl;
 import io.bumo.blockchain.BlockService;
 import io.bumo.blockchain.TransactionService;
+import io.bumo.common.Constant;
 import io.bumo.common.General;
+import io.bumo.common.Tools;
 import io.bumo.contract.impl.ContractServiceImpl;
 import io.bumo.crypto.http.HttpKit;
 import io.bumo.crypto.protobuf.Chain;
@@ -59,23 +61,23 @@ public class TransactionServiceImpl implements TransactionService {
             }
             // check nonce
             Long nonce = transactionBuildBlobRequest.getNonce();
-            if (nonce == null || (nonce != null && nonce < 1)) {
+            if (Tools.isEmpty(nonce) || nonce < 1) {
                 throw new SDKException(SdkError.INVALID_NONCE_ERROR);
             }
             // check gasPrice
             Long gasPrice = transactionBuildBlobRequest.getGasPrice();
-            if (null == gasPrice || (gasPrice != null && gasPrice < 1000)) {
+            if (Tools.isEmpty(gasPrice) || gasPrice < Constant.GAS_PRICE_MIN) {
                 throw new SDKException(SdkError.INVALID_GASPRICE_ERROR);
             }
 
             // check feeLimit
             Long feeLimit = transactionBuildBlobRequest.getFeeLimit();
-            if (null == feeLimit || (feeLimit != null && feeLimit < 1)) {
+            if (Tools.isEmpty(feeLimit) || feeLimit < Constant.FEE_LIMIT_MIN) {
                 throw new SDKException(SdkError.INVALID_FEELIMIT_ERROR);
             }
 
             Long ceilLedgerSeq = transactionBuildBlobRequest.getCelLedgerSeq();
-            if (ceilLedgerSeq != null && ceilLedgerSeq < 0) {
+            if (!Tools.isEmpty(ceilLedgerSeq) && ceilLedgerSeq < 0) {
                 throw new SDKException(SdkError.INVALID_CEILLEDGERSEQ_ERROR);
             }
             // check metadata
@@ -83,7 +85,7 @@ public class TransactionServiceImpl implements TransactionService {
             // check operation and build transaction
             Chain.Transaction.Builder transaction = Chain.Transaction.newBuilder();
             BaseOperation[] baseOperations = transactionBuildBlobRequest.getOperations();
-            if (null == baseOperations || (baseOperations != null && baseOperations.length == 0)) {
+            if (Tools.isEmpty(baseOperations)) {
                 throw new SDKException(SdkError.OPERATIONS_EMPTY_ERROR);
             }
             buildOperations(baseOperations, sourceAddress, transaction);
@@ -93,24 +95,25 @@ public class TransactionServiceImpl implements TransactionService {
             transaction.setFeeLimit(feeLimit);
             transaction.setGasPrice(gasPrice);
 
-            if (metadata != null && !metadata.isEmpty()) {
+            if (!Tools.isEmpty(metadata)) {
                 transaction.setMetadata(ByteString.copyFromUtf8(metadata));
             }
-            if (ceilLedgerSeq != null) {
+            if (!Tools.isEmpty(ceilLedgerSeq)) {
                 // get blockNumber
                 BlockService blockService = new BlockServiceImpl();
                 BlockGetNumberResponse blockGetNumberResponse = blockService.getNumber();
                 Integer errorCode = blockGetNumberResponse.getErrorCode();
-                if (blockGetNumberResponse.getErrorCode() != 0) {
+                if (!Tools.isEmpty(errorCode) && errorCode != 0) {
                     String errorDesc = blockGetNumberResponse.getErrorDesc();
                     throw new SDKException(errorCode, errorDesc);
+                } else if (Tools.isEmpty(errorCode)) {
+                    throw new SDKException(SdkError.SYSTEM_ERROR);
                 }
                 // check ceilLedgerSeq
                 Long blockNumber = blockGetNumberResponse.getResult().getHeader().getBlockNumber();
                 transaction.setCeilLedgerSeq(ceilLedgerSeq + blockNumber);
             }
             byte[] transactionBlobBytes = transaction.build().toByteArray();
-
             String transactionBlob = HexFormat.byteToHex(transactionBlobBytes);
             transactionBuildBlobResult.setTransactionBlob(transactionBlob);
             transactionBuildBlobResult.setHash(HashUtil.GenerateHashHex(transactionBlobBytes));
@@ -139,7 +142,7 @@ public class TransactionServiceImpl implements TransactionService {
         TransactionParseBlobResult transactionParseBlobResult = new TransactionParseBlobResult();
         try {
             String blob = transactionParseBlobRequest.getBlob();
-            if (blob == null || blob.isEmpty()) {
+            if (Tools.isEmpty(blob)) {
                 throw new SDKException(SdkError.INVALID_BLOB_ERROR);
             }
             Chain.Transaction transaction = Chain.Transaction.parseFrom(HexFormat.hexToByte(blob));
@@ -180,17 +183,17 @@ public class TransactionServiceImpl implements TransactionService {
             }
             // check nonce
             Long nonce = transactionEvaluateFeeRequest.getNonce();
-            if (nonce == null || (nonce != null && nonce < 1)) {
+            if (Tools.isEmpty(nonce) || nonce < 1) {
                 throw new SDKException(SdkError.INVALID_NONCE_ERROR);
             }
             // check signatureNum
             Integer signatureNum = transactionEvaluateFeeRequest.getSignatureNumber();
-            if (signatureNum == null || (signatureNum != null && signatureNum < 1)) {
+            if (Tools.isEmpty(signatureNum ) || signatureNum < 1) {
                 throw new SDKException(SdkError.INVALID_SIGNATURENUMBER_ERROR);
             }
             // check ceilLedgerSeq
             Long ceilLedgerSeq = transactionEvaluateFeeRequest.getCeilLedgerSeq();
-            if (ceilLedgerSeq != null && ceilLedgerSeq < 0) {
+            if (!Tools.isEmpty(ceilLedgerSeq) && ceilLedgerSeq < 0) {
                 throw new SDKException(SdkError.INVALID_CEILLEDGERSEQ_ERROR);
             }
             // check metadata
@@ -198,16 +201,16 @@ public class TransactionServiceImpl implements TransactionService {
             // build transaction
             Chain.Transaction.Builder transaction = Chain.Transaction.newBuilder();
             BaseOperation[] baseOperations = transactionEvaluateFeeRequest.getOperations();
-            if (null == baseOperations || (baseOperations != null && baseOperations.length == 0)) {
+            if (Tools.isEmpty(baseOperations)) {
                 throw new SDKException(SdkError.OPERATIONS_EMPTY_ERROR);
             }
             buildOperations(baseOperations, sourceAddress, transaction);
             transaction.setSourceAddress(sourceAddress);
             transaction.setNonce(nonce);
-            if (metadata != null && !metadata.isEmpty()) {
+            if (!Tools.isEmpty(metadata)) {
                 transaction.setMetadata(ByteString.copyFromUtf8(metadata));
             }
-            if (ceilLedgerSeq != null) {
+            if (!Tools.isEmpty(ceilLedgerSeq)) {
                 transaction.setCeilLedgerSeq(ceilLedgerSeq);
             }
             // protocol buffer to json
@@ -254,13 +257,13 @@ public class TransactionServiceImpl implements TransactionService {
         TransactionSignResult transactionSignResult = new TransactionSignResult();
         try {
             String blob = transactionSignRequest.getBlob();
-            if (null == blob) {
+            if (Tools.isEmpty(blob)) {
                 throw new SDKException(SdkError.INVALID_BLOB_ERROR);
             }
             byte[] blobBytes = HexFormat.hexToByte(blob);
             Chain.Transaction.parseFrom(blobBytes);
             String[] privateKeys = transactionSignRequest.getPrivateKeys();
-            if (null == privateKeys || (privateKeys != null && privateKeys.length == 0)) {
+            if (Tools.isEmpty(privateKeys)) {
                 throw new SDKException(SdkError.PRIVATEKEY_NULL_ERROR);
             }
             int i = 0;
@@ -304,7 +307,7 @@ public class TransactionServiceImpl implements TransactionService {
         TransactionSubmitResult transactionSubmitResult = new TransactionSubmitResult();
         try {
             String blob = transactionSubmitRequest.getTransactionBlob();
-            if (null == blob) {
+            if (Tools.isEmpty(blob)) {
                 throw new SDKException(SdkError.INVALID_BLOB_ERROR);
             }
             Chain.Transaction.parseFrom(HexFormat.hexToByte(blob));
@@ -315,7 +318,7 @@ public class TransactionServiceImpl implements TransactionService {
             transactionItem.put("transaction_blob", blob);
             JSONArray signatureItems = new JSONArray();
             Signature[] signatures = transactionSubmitRequest.getSignatures();
-            if (null == signatures || signatures.length == 0) {
+            if (Tools.isEmpty(signatures)) {
                 throw new SDKException(SdkError.SIGNATURE_EMPTY_ERROR);
             }
             int i = 0;
@@ -324,11 +327,11 @@ public class TransactionServiceImpl implements TransactionService {
                 JSONObject signatureItem = new JSONObject();
                 Signature signature = signatures[i];
                 String signData = signature.getSignData();
-                if (null == signData || signData.isEmpty()) {
+                if (Tools.isEmpty(signData)) {
                     throw new SDKException(SdkError.SIGNDATA_NULL_ERROR);
                 }
                 String publicKey = signature.getPublicKey();
-                if (null == publicKey || publicKey.isEmpty()) {
+                if (Tools.isEmpty(publicKey)) {
                     throw new SDKException(SdkError.PUBLICKEY_NULL_ERROR);
                 }
                 signatureItem.put("sign_data", signData);
@@ -344,9 +347,9 @@ public class TransactionServiceImpl implements TransactionService {
             TransactionSubmitHttpResponse transactionSubmitHttpResponse = JSONObject.parseObject(result, TransactionSubmitHttpResponse.class);
             Integer successCount = transactionSubmitHttpResponse.getSuccessCount();
             TransactionSubmitHttpResult[] httpResults = transactionSubmitHttpResponse.getResults();
-            if (httpResults != null && httpResults.length != 0) {
+            if (!Tools.isEmpty(httpResults)) {
                 transactionSubmitResult.setHash(httpResults[0].getHash());
-                if (0 == successCount) {
+                if (!Tools.isEmpty(successCount) && 0 == successCount) {
                     Integer errorCode = httpResults[0].getErrorCode();
                     String errorDesc = httpResults[0].getErrorDesc();
                     throw new SDKException(errorCode, errorDesc);
@@ -354,7 +357,6 @@ public class TransactionServiceImpl implements TransactionService {
             } else {
                 throw new SDKException(SdkError.SYSTEM_ERROR);
             }
-
             transactionSubmitResponse.buildResponse(SdkError.SUCCESS, transactionSubmitResult);
         } catch (SDKException apiException) {
             Integer errorCode = apiException.getErrorCode();
@@ -383,7 +385,7 @@ public class TransactionServiceImpl implements TransactionService {
         TransactionGetInfoResult transactionGetInfoResult = new TransactionGetInfoResult();
         try {
             String hash = transactionGetInfoRequest.getHash();
-            if (hash == null || (hash != null && hash.length() != 64)) {
+            if (Tools.isEmpty(hash) || hash.length() != Constant.HASH_HEX_LENGTH) {
                 throw new SDKException(SdkError.INVALID_HASH_ERROR);
             }
             String getInfoUrl = General.transactionGetInfoUrl(hash);
@@ -410,7 +412,7 @@ public class TransactionServiceImpl implements TransactionService {
      */
     private void buildOperations(BaseOperation[] operationBase, String transSourceAddress, Chain.Transaction.Builder transaction) throws SDKException {
         for (int i = 0; i < operationBase.length; i++) {
-            Chain.Operation operation = null;
+            Chain.Operation operation;
             switch (operationBase[i].getOperationType()) {
                 case ACCOUNT_ACTIVATE:
                     operation = AccountServiceImpl.activate((AccountActivateOperation)operationBase[i], transSourceAddress);
@@ -463,8 +465,10 @@ public class TransactionServiceImpl implements TransactionService {
                 default:
                     throw new SDKException(SdkError.OPERATIONS_ONE_ERROR);
             }
-            if (operation != null) {
+            if (!Tools.isEmpty(operation)) {
                 transaction.addOperations(operation);
+            } else {
+                throw new SDKException(SdkError.OPERATIONS_ONE_ERROR);
             }
         }
     }

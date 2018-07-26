@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import io.bumo.blockchain.BlockService;
 import io.bumo.common.General;
+import io.bumo.common.Tools;
 import io.bumo.crypto.http.HttpKit;
 import io.bumo.exception.SDKException;
 import io.bumo.exception.SdkError;
@@ -97,11 +98,11 @@ public class BlockServiceImpl implements BlockService {
         BlockGetTransactionsResponse blockGetTransactions = new BlockGetTransactionsResponse();
         BlockGetTransactionsResult transactionGetInfoResult = new BlockGetTransactionsResult();
         try {
-            if (null == blockGetTransactionsRequest) {
+            if (Tools.isEmpty(blockGetTransactionsRequest)) {
                 throw new SDKException(SdkError.REQUEST_NULL_ERROR);
             }
             Long blockNumber = blockGetTransactionsRequest.getBlockNumber();
-            if (blockNumber == null || (blockNumber != null && blockNumber < 1)) {
+            if (Tools.isEmpty(blockNumber) || blockNumber < 1) {
                 throw new SDKException(SdkError.INVALID_HASH_ERROR);
             }
             String getTransactionsUrl = General.blockGetTransactionsUrl(blockNumber);
@@ -131,11 +132,11 @@ public class BlockServiceImpl implements BlockService {
         BlockGetInfoResponse blockGetInfoResponse = new BlockGetInfoResponse();
         BlockGetInfoResult blockGetInfoResult = new BlockGetInfoResult();
         try {
-            if (null == blockGetInfoRequest) {
+            if (Tools.isEmpty(blockGetInfoRequest)) {
                 throw new SDKException(SdkError.REQUEST_NULL_ERROR);
             }
             Long blockNumber = blockGetInfoRequest.getBlockNumber();
-            if (blockNumber == null || (blockNumber != null && blockNumber < 1)) {
+            if (Tools.isEmpty(blockNumber) || blockNumber < 1) {
                 throw new SDKException(SdkError.INVALID_HASH_ERROR);
             }
             String getInfoUrl = General.blockGetInfoUrl(blockNumber);
@@ -143,8 +144,8 @@ public class BlockServiceImpl implements BlockService {
             blockGetInfoResponse = JSONObject.parseObject(result, BlockGetInfoResponse.class);
             Integer errorCode = blockGetInfoResponse.getErrorCode();
             String errorDesc = blockGetInfoResponse.getErrorDesc();
-            if (errorCode != null && errorCode == 4) {
-                throw new SDKException(4, (null == errorDesc? "Block (" + blockNumber + ") does not exist" : errorDesc));
+            if (!Tools.isEmpty(errorCode) && errorCode == 4) {
+                throw new SDKException(4, (Tools.isEmpty(errorDesc)? "Block (" + blockNumber + ") does not exist" : errorDesc));
             }
             SdkError.checkErrorCode(blockGetInfoResponse);
         } catch (SDKException apiException) {
@@ -199,11 +200,11 @@ public class BlockServiceImpl implements BlockService {
         BlockGetValidatorsResponse blockGetValidatorsResponse = new BlockGetValidatorsResponse();
         BlockGetValidatorsResult blockGetValidatorsResult = new BlockGetValidatorsResult();
         try {
-            if (null == blockGetValidatorsRequest) {
+            if (Tools.isEmpty(blockGetValidatorsRequest)) {
                 throw new SDKException(SdkError.REQUEST_NULL_ERROR);
             }
             Long blockNumber = blockGetValidatorsRequest.getBlockNumber();
-            if (blockNumber == null || (blockNumber != null && blockNumber < 1)) {
+            if (Tools.isEmpty(blockNumber) || blockNumber < 1) {
                 throw new SDKException(SdkError.INVALID_HASH_ERROR);
             }
             String getInfoUrl = General.blockGetValidatorsUrl(blockNumber);
@@ -211,8 +212,8 @@ public class BlockServiceImpl implements BlockService {
             blockGetValidatorsResponse = JSONObject.parseObject(result, BlockGetValidatorsResponse.class);
             Integer errorCode = blockGetValidatorsResponse.getErrorCode();
             String errorDesc = blockGetValidatorsResponse.getErrorDesc();
-            if (errorCode != null && errorCode == 4) {
-                throw new SDKException(4, (null == errorDesc? "Block (" + blockNumber + ") does not exist" : errorDesc));
+            if (!Tools.isEmpty(errorCode) && errorCode == 4) {
+                throw new SDKException(4, (Tools.isEmpty(errorDesc) ? "Block (" + blockNumber + ") does not exist" : errorDesc));
             }
             SdkError.checkErrorCode(blockGetValidatorsResponse);
         } catch (SDKException apiException) {
@@ -269,11 +270,11 @@ public class BlockServiceImpl implements BlockService {
         BlockGetRewardResponse blockGetRewardResponse = new BlockGetRewardResponse();
         BlockGetRewardResult blockGetRewardResult = new BlockGetRewardResult();
         try {
-            if (null == blockGetRewardRequest) {
+            if (Tools.isEmpty(blockGetRewardRequest)) {
                 throw new SDKException(SdkError.REQUEST_NULL_ERROR);
             }
             Long blockNumber = blockGetRewardRequest.getBlockNumber();
-            if (blockNumber == null || (blockNumber != null && blockNumber < 1)) {
+            if (Tools.isEmpty(blockNumber) || blockNumber < 1) {
                 throw new SDKException(SdkError.INVALID_HASH_ERROR);
             }
             String getInfoUrl = General.blockGetRewardUrl(blockNumber);
@@ -281,8 +282,8 @@ public class BlockServiceImpl implements BlockService {
             BlockRewardJsonResponse blockRewardJsonResponse = JSONObject.parseObject(result, BlockRewardJsonResponse.class);
             Integer errorCode = blockRewardJsonResponse.getErrorCode();
             String errorDesc = blockRewardJsonResponse.getErrorDesc();
-            if (errorCode != null && errorCode == 4) {
-                throw new SDKException(4, (null == errorDesc? "Block (" + blockNumber + ") does not exist" : errorDesc));
+            if (!Tools.isEmpty(errorCode) && errorCode == 4) {
+                throw new SDKException(4, (Tools.isEmpty(errorDesc) ? "Block (" + blockNumber + ") does not exist" : errorDesc));
             }
             SdkError.checkErrorCode(blockRewardJsonResponse);
             Long blockReward = blockRewardJsonResponse.getResult().getBlockReward();
@@ -357,11 +358,11 @@ public class BlockServiceImpl implements BlockService {
         BlockGetFeesResponse blockGetFeesResponse = new BlockGetFeesResponse();
         BlockGetFeesResult blockGetFeesResult = new BlockGetFeesResult();
         try {
-            if (null == blockGetFeesRequest) {
+            if (Tools.isEmpty(blockGetFeesRequest)) {
                 throw new SDKException(SdkError.REQUEST_NULL_ERROR);
             }
             Long blockNumber = blockGetFeesRequest.getBlockNumber();
-            if (null == blockNumber || blockNumber <= 0) {
+            if (Tools.isEmpty(blockNumber) || blockNumber < 1) {
                 throw new SDKException(SdkError.INVALID_BLOCKNUMBER_ERROR);
             }
             String blockGetFeesUrl = General.blockGetFeesUrl(blockNumber);
@@ -369,8 +370,8 @@ public class BlockServiceImpl implements BlockService {
             blockGetFeesResponse = JSON.parseObject(result, BlockGetFeesResponse.class);
             Integer errorCode = blockGetFeesResponse.getErrorCode();
             String errorDesc = blockGetFeesResponse.getErrorDesc();
-            if (errorCode != null && errorCode == 4) {
-                throw new SDKException(4, (null == errorDesc? "Block (" + blockNumber + ") does not exist" : errorDesc));
+            if (!Tools.isEmpty(errorCode) && errorCode == 4) {
+                throw new SDKException(4, (Tools.isEmpty(errorDesc) ? "Block (" + blockNumber + ") does not exist" : errorDesc));
             }
             SdkError.checkErrorCode(blockGetFeesResponse);
         } catch (SDKException apiException) {
@@ -402,7 +403,6 @@ public class BlockServiceImpl implements BlockService {
             String result = HttpKit.get(blockGetLatestFeeUrl);
             blockGetLatestFeesResponse = JSON.parseObject(result, BlockGetLatestFeesResponse.class);
             SdkError.checkErrorCode(blockGetLatestFeesResponse);
-
         } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
             blockGetLatestFeesResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, blockGetLatestFeesResult);
         } catch (Exception exception) {

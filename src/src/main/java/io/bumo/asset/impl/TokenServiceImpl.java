@@ -6,6 +6,7 @@ import com.google.protobuf.ByteString;
 import io.bumo.asset.TokenService;
 import io.bumo.common.Constant;
 import io.bumo.common.General;
+import io.bumo.common.Tools;
 import io.bumo.contract.ContractService;
 import io.bumo.contract.impl.ContractServiceImpl;
 import io.bumo.crypto.http.HttpKit;
@@ -27,6 +28,8 @@ import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.util.regex.Pattern;
 
+import static org.bouncycastle.asn1.x500.style.RFC4519Style.l;
+
 /**
  * @Author riven
  * @Date 2018/7/6 11:08
@@ -44,7 +47,7 @@ public class TokenServiceImpl implements TokenService {
         TokenCheckValidResponse tokenCheckValidResponse = new TokenCheckValidResponse();
         TokenCheckValidResult tokenCheckValidResult = new TokenCheckValidResult();
         try {
-            if (null == tokenCheckValidRequest) {
+            if (Tools.isEmpty(tokenCheckValidRequest)) {
                 throw new SDKException(SdkError.REQUEST_NULL_ERROR);
             }
             String address = tokenCheckValidRequest.getContractAddress();
@@ -77,7 +80,7 @@ public class TokenServiceImpl implements TokenService {
         TokenAllowanceResponse tokenAllowanceResponse = new TokenAllowanceResponse();
         TokenAllowanceResult tokenAllowanceResult = new TokenAllowanceResult();
         try {
-            if (null == tokenAllowanceRequest) {
+            if (Tools.isEmpty(tokenAllowanceRequest)) {
                 throw new SDKException(SdkError.REQUEST_NULL_ERROR);
             }
             String contractAddress = tokenAllowanceRequest.getContractAddress();
@@ -93,7 +96,7 @@ public class TokenServiceImpl implements TokenService {
                 throw new SDKException(SdkError.INVALID_SPENDER_ERROR);
             }
             boolean isContractValid = checkTokenValid(contractAddress);
-            if (false == isContractValid) {
+            if (!isContractValid) {
                 throw new SDKException(SdkError.NO_SUCH_TOKEN_ERROR);
             }
 
@@ -106,7 +109,7 @@ public class TokenServiceImpl implements TokenService {
             JSONObject queryResult = queryContract(contractAddress, input);
             TokenQueryResponse tokenQueryResponse = JSON.toJavaObject(queryResult, TokenQueryResponse.class);
             TokenQueryResult result = tokenQueryResponse.getResult();
-            if (null == result) {
+            if (Tools.isEmpty(result)) {
                 TokenErrorResult errorResult = tokenQueryResponse.getError();
                 String errorDesc = errorResult.getData().getException();
                 throw new SDKException(SdkError.GET_ALLOWANCE_ERRPR.getCode(), errorDesc);
@@ -138,7 +141,7 @@ public class TokenServiceImpl implements TokenService {
         TokenGetInfoResponse tokenGetInfoResponse = new TokenGetInfoResponse();
         TokenGetInfoResult tokenGetInfoResult = new TokenGetInfoResult();
         try {
-            if (null == tokenGetInfoRequest) {
+            if (Tools.isEmpty(tokenGetInfoRequest)) {
                 throw new SDKException(SdkError.REQUEST_NULL_ERROR);
             }
             String contractAddress = tokenGetInfoRequest.getContractAddress();
@@ -146,7 +149,7 @@ public class TokenServiceImpl implements TokenService {
                 throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
             }
             boolean isContractValid = checkTokenValid(contractAddress);
-            if (false == isContractValid) {
+            if (!isContractValid) {
                 throw new SDKException(SdkError.NO_SUCH_TOKEN_ERROR);
             }
 
@@ -155,7 +158,7 @@ public class TokenServiceImpl implements TokenService {
             JSONObject queryResult = queryContract(contractAddress, input);
             TokenQueryResponse tokenQueryResponse = JSON.toJavaObject(queryResult, TokenQueryResponse.class);
             TokenQueryResult result = tokenQueryResponse.getResult();
-            if (null == result) {
+            if (Tools.isEmpty(result)) {
                 TokenErrorResult errorResult = tokenQueryResponse.getError();
                 String errorDesc = errorResult.getData().getException();
                 throw new SDKException(SdkError.GET_TOKEN_INFO_ERRPR.getCode(), errorDesc);
@@ -186,7 +189,7 @@ public class TokenServiceImpl implements TokenService {
         TokenGetNameResponse tokenGetNameResponse = new TokenGetNameResponse();
         TokenGetNameResult tokenGetNameResult = new TokenGetNameResult();
         try {
-            if (null == tokenGetNameRequest) {
+            if (Tools.isEmpty(tokenGetNameRequest)) {
                 throw new SDKException(SdkError.REQUEST_NULL_ERROR);
             }
             String contractAddress = tokenGetNameRequest.getContractAddress();
@@ -194,7 +197,7 @@ public class TokenServiceImpl implements TokenService {
                 throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
             }
             boolean isContractValid = checkTokenValid(contractAddress);
-            if (false == isContractValid) {
+            if (!isContractValid) {
                 throw new SDKException(SdkError.NO_SUCH_TOKEN_ERROR);
             }
 
@@ -203,7 +206,7 @@ public class TokenServiceImpl implements TokenService {
             JSONObject queryResult = queryContract(contractAddress, input);
             TokenQueryResponse tokenQueryResponse = JSON.toJavaObject(queryResult, TokenQueryResponse.class);
             TokenQueryResult result = tokenQueryResponse.getResult();
-            if (null == result) {
+            if (Tools.isEmpty(result)) {
                 TokenErrorResult errorResult = tokenQueryResponse.getError();
                 String errorDesc = errorResult.getData().getException();
                 throw new SDKException(SdkError.GET_TOKEN_INFO_ERRPR.getCode(), errorDesc);
@@ -234,7 +237,7 @@ public class TokenServiceImpl implements TokenService {
         TokenGetSymbolResponse tokenGetSymbolResponse = new TokenGetSymbolResponse();
         TokenGetSymbolResult tokenGetSymbolResult = new TokenGetSymbolResult();
         try {
-            if (null == tokenGetSymbolRequest) {
+            if (Tools.isEmpty(tokenGetSymbolRequest)) {
                 throw new SDKException(SdkError.REQUEST_NULL_ERROR);
             }
             String contractAddress = tokenGetSymbolRequest.getContractAddress();
@@ -242,7 +245,7 @@ public class TokenServiceImpl implements TokenService {
                 throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
             }
             boolean isContractValid = checkTokenValid(contractAddress);
-            if (false == isContractValid) {
+            if (!isContractValid) {
                 throw new SDKException(SdkError.NO_SUCH_TOKEN_ERROR);
             }
 
@@ -251,7 +254,7 @@ public class TokenServiceImpl implements TokenService {
             JSONObject queryResult = queryContract(contractAddress, input);
             TokenQueryResponse tokenQueryResponse = JSON.toJavaObject(queryResult, TokenQueryResponse.class);
             TokenQueryResult result = tokenQueryResponse.getResult();
-            if (null == result) {
+            if (Tools.isEmpty(result)) {
                 TokenErrorResult errorResult = tokenQueryResponse.getError();
                 String errorDesc = errorResult.getData().getException();
                 throw new SDKException(SdkError.GET_TOKEN_INFO_ERRPR.getCode(), errorDesc);
@@ -275,7 +278,7 @@ public class TokenServiceImpl implements TokenService {
         TokenGetDecimalsResponse tokenGetDecimalsResponse = new TokenGetDecimalsResponse();
         TokenGetDecimalsResult tokenGetDecimalsResult = new TokenGetDecimalsResult();
         try {
-            if (null == tokenGetDecimalsRequest) {
+            if (Tools.isEmpty(tokenGetDecimalsRequest)) {
                 throw new SDKException(SdkError.REQUEST_NULL_ERROR);
             }
             String contractAddress = tokenGetDecimalsRequest.getContractAddress();
@@ -283,7 +286,7 @@ public class TokenServiceImpl implements TokenService {
                 throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
             }
             boolean isContractValid = checkTokenValid(contractAddress);
-            if (false == isContractValid) {
+            if (!isContractValid) {
                 throw new SDKException(SdkError.NO_SUCH_TOKEN_ERROR);
             }
 
@@ -292,7 +295,7 @@ public class TokenServiceImpl implements TokenService {
             JSONObject queryResult = queryContract(contractAddress, input);
             TokenQueryResponse tokenQueryResponse = JSON.toJavaObject(queryResult, TokenQueryResponse.class);
             TokenQueryResult result = tokenQueryResponse.getResult();
-            if (null == result) {
+            if (Tools.isEmpty(result)) {
                 TokenErrorResult errorResult = tokenQueryResponse.getError();
                 String errorDesc = errorResult.getData().getException();
                 throw new SDKException(SdkError.GET_TOKEN_INFO_ERRPR.getCode(), errorDesc);
@@ -323,7 +326,7 @@ public class TokenServiceImpl implements TokenService {
         TokenGetTotalSupplyResponse tokenGetTotalSupplyResponse = new TokenGetTotalSupplyResponse();
         TokenGetTotalSupplyResult tokenGetTotalSupplyResult = new TokenGetTotalSupplyResult();
         try {
-            if (null == tokenGetTotalSupplyRequest) {
+            if (Tools.isEmpty(tokenGetTotalSupplyRequest)) {
                 throw new SDKException(SdkError.REQUEST_NULL_ERROR);
             }
             String contractAddress = tokenGetTotalSupplyRequest.getContractAddress();
@@ -331,7 +334,7 @@ public class TokenServiceImpl implements TokenService {
                 throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
             }
             boolean isContractValid = checkTokenValid(contractAddress);
-            if (false == isContractValid) {
+            if (!isContractValid) {
                 throw new SDKException(SdkError.NO_SUCH_TOKEN_ERROR);
             }
             JSONObject input = new JSONObject();
@@ -339,7 +342,7 @@ public class TokenServiceImpl implements TokenService {
             JSONObject queryResult = queryContract(contractAddress, input);
             TokenQueryResponse tokenQueryResponse = JSON.toJavaObject(queryResult, TokenQueryResponse.class);
             TokenQueryResult result = tokenQueryResponse.getResult();
-            if (null == result) {
+            if (Tools.isEmpty(result)) {
                 TokenErrorResult errorResult = tokenQueryResponse.getError();
                 String errorDesc = errorResult.getData().getException();
                 throw new SDKException(SdkError.GET_TOKEN_INFO_ERRPR.getCode(), errorDesc);
@@ -370,7 +373,7 @@ public class TokenServiceImpl implements TokenService {
         TokenGetBalanceResponse tokenGetBalanceResponse = new TokenGetBalanceResponse();
         TokenGetBalanceResult tokenGetBalanceResult = new TokenGetBalanceResult();
         try {
-            if (null == tokenGetBalanceRequest) {
+            if (Tools.isEmpty(tokenGetBalanceRequest)) {
                 throw new SDKException(SdkError.REQUEST_NULL_ERROR);
             }
             String contractAddress = tokenGetBalanceRequest.getContractAddress();
@@ -382,7 +385,7 @@ public class TokenServiceImpl implements TokenService {
                 throw new SDKException(SdkError.INVALID_TOKENOWNER_ERROR);
             }
             boolean isContractValid = checkTokenValid(contractAddress);
-            if (false == isContractValid) {
+            if (!isContractValid) {
                 throw new SDKException(SdkError.NO_SUCH_TOKEN_ERROR);
             }
             JSONObject input = new JSONObject();
@@ -393,7 +396,7 @@ public class TokenServiceImpl implements TokenService {
             JSONObject queryResult = queryContract(contractAddress, input);
             TokenQueryResponse tokenQueryResponse = JSON.toJavaObject(queryResult, TokenQueryResponse.class);
             TokenQueryResult result = tokenQueryResponse.getResult();
-            if (null == result) {
+            if (Tools.isEmpty(result)) {
                 TokenErrorResult errorResult = tokenQueryResponse.getError();
                 String errorDesc = errorResult.getData().getException();
                 throw new SDKException(SdkError.GET_TOKEN_INFO_ERRPR.getCode(), errorDesc);
@@ -424,33 +427,32 @@ public class TokenServiceImpl implements TokenService {
         Chain.Operation.Builder operation;
         try {
             String sourceAddress = tokenIssueOperation.getSourceAddress();
-            if (sourceAddress != null && !PublicKey.isAddressValid(sourceAddress)) {
+            if (!Tools.isEmpty(sourceAddress) && !PublicKey.isAddressValid(sourceAddress)) {
                 throw new SDKException(SdkError.INVALID_SOURCEADDRESS_ERROR);
             }
             Long initBalance = tokenIssueOperation.getInitBalance();
-            if (null == initBalance || initBalance <= 0) {
+            if (Tools.isEmpty(initBalance) || initBalance <= 0) {
                 throw new SDKException(SdkError.INVALID_INITBALANCE_ERROR);
             }
             String name = tokenIssueOperation.getName();
-            if (name == null || (name != null && (name.length() < 1 || name.length() > 1024))) {
+            if (Tools.isEmpty(name) || name.length() > Constant.TOKEN_NAME_MAX) {
                 throw new SDKException(SdkError.INVALID_TOKEN_NAME_ERROR);
             }
             String symbol = tokenIssueOperation.getSymbol();
-            if (symbol == null || (symbol != null && (symbol.length() < 1 || symbol.length() > 1024))) {
+            if (Tools.isEmpty(symbol) || symbol.length() > Constant.TOKEN_SYMBOL_MAX) {
                 throw new SDKException(SdkError.INVALID_TOKEN_SYMBOL_ERROR);
             }
             Integer decimals = tokenIssueOperation.getDecimals();
-            if (decimals == null || (decimals != null && (decimals < 0 || decimals > 8))) {
+            if (Tools.isEmpty(decimals) || decimals < Constant.TOKEN_DECIMALS_MIN || decimals > Constant.TOKEN_DECIMALS_MAX) {
                 throw new SDKException(SdkError.INVALID_TOKEN_DECIMALS_ERROR);
             }
             String supply = tokenIssueOperation.getSupply();
-            if (null == supply) {
+            if (Tools.isEmpty(supply)) {
                 throw new SDKException(SdkError.INVALID_TOKEN_TOTALSUPPLY_ERROR);
             }
             Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
             boolean isNumber = pattern.matcher(supply).matches();
-            Long maxInt = 1L;
-            if (!isNumber || (isNumber && Long.valueOf(supply) < 1  || Long.valueOf(supply) > (maxInt << (64 - 1)) - 1)) {
+            if (!isNumber || (isNumber && Long.valueOf(supply) < 1  || Long.valueOf(supply) > Long.MAX_VALUE)) {
                 throw new SDKException(SdkError.INVALID_TOKEN_TOTALSUPPLY_ERROR);
             }
             String metadata = tokenIssueOperation.getMetadata();
@@ -467,16 +469,16 @@ public class TokenServiceImpl implements TokenService {
             // build operation
             operation = Chain.Operation.newBuilder();
             operation.setType(Chain.Operation.Type.CREATE_ACCOUNT);
-            if (sourceAddress != null) {
+            if (!Tools.isEmpty(sourceAddress)) {
                 operation.setSourceAddress(sourceAddress);
             }
-            if (metadata != null && !metadata.isEmpty()) {
+            if (!Tools.isEmpty(metadata)) {
                 operation.setMetadata(ByteString.copyFromUtf8(metadata));
             }
 
             Chain.OperationCreateAccount.Builder operationCreateContract = operation.getCreateAccountBuilder();
             operationCreateContract.setInitBalance(initBalance);
-            if (initInput != null && !initInput.isEmpty()) {
+            if (!Tools.isEmpty(initInput)) {
                 operationCreateContract.setInitInput(initInput.toJSONString());
             }
             Chain.Contract.Builder contract = operationCreateContract.getContractBuilder();
@@ -506,36 +508,35 @@ public class TokenServiceImpl implements TokenService {
         Chain.Operation operation;
         try {
             String sourceAddress = tokenTransferOperation.getSourceAddress();
-            if (sourceAddress != null && !PublicKey.isAddressValid(sourceAddress)) {
+            if (!Tools.isEmpty(sourceAddress) && !PublicKey.isAddressValid(sourceAddress)) {
                 throw new SDKException(SdkError.INVALID_SOURCEADDRESS_ERROR);
             }
             String contractAddress = tokenTransferOperation.getContractAddress();
             if (!PublicKey.isAddressValid(contractAddress)) {
                 throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
             }
-            if ((sourceAddress != null && sourceAddress.equals(contractAddress)) || transSourceAddress.equals(contractAddress)) {
+            if ((!Tools.isEmpty(sourceAddress) && sourceAddress.equals(contractAddress)) || transSourceAddress.equals(contractAddress)) {
                 throw new SDKException(SdkError.SOURCEADDRESS_EQUAL_CONTRACTADDRESS_ERROR);
             }
             String destAddress = tokenTransferOperation.getDestAddress();
             if (!PublicKey.isAddressValid(destAddress)) {
                 throw new SDKException(SdkError.INVALID_DESTADDRESS_ERROR);
             }
-            if ((sourceAddress != null && sourceAddress.equals(destAddress) || transSourceAddress.equals(destAddress))) {
+            if ((!Tools.isEmpty(sourceAddress) && sourceAddress.equals(destAddress) || transSourceAddress.equals(destAddress))) {
                 throw new SDKException(SdkError.SOURCEADDRESS_EQUAL_DESTADDRESS_ERROR);
             }
             String tokenAmount = tokenTransferOperation.getTokenAmount();
-            if (null == tokenAmount) {
+            if (Tools.isEmpty(tokenAmount)) {
                 throw new SDKException(SdkError.INVALID_TOKEN_AMOUNT_ERROR);
             }
             Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
             boolean isNumber = pattern.matcher(tokenAmount).matches();
-            Long maxInt = 1L;
-            if (!isNumber || (isNumber && (Long.valueOf(tokenAmount) < 1 || Long.valueOf(tokenAmount) > (maxInt << (64 - 1)) - 1))) {
+            if (!isNumber || (isNumber && (Long.valueOf(tokenAmount) < 1 || Long.valueOf(tokenAmount) > Long.MAX_VALUE))) {
                 throw new SDKException(SdkError.INVALID_TOKEN_AMOUNT_ERROR);
             }
             String metadata = tokenTransferOperation.getMetadata();
             boolean isContractValid = checkTokenValid(contractAddress);
-            if (false == isContractValid) {
+            if (!isContractValid) {
                 throw new SDKException(SdkError.NO_SUCH_TOKEN_ERROR);
             }
 
@@ -571,7 +572,7 @@ public class TokenServiceImpl implements TokenService {
         Chain.Operation operation;
         try {
             String sourceAddress = tokenTransferFromOperation.getSourceAddress();
-            if (sourceAddress != null && !PublicKey.isAddressValid(sourceAddress)) {
+            if (!Tools.isEmpty(sourceAddress) && !PublicKey.isAddressValid(sourceAddress)) {
                 throw new SDKException(SdkError.INVALID_SOURCEADDRESS_ERROR);
             }
             String contractAddress = tokenTransferFromOperation.getContractAddress();
@@ -582,7 +583,7 @@ public class TokenServiceImpl implements TokenService {
             if (!PublicKey.isAddressValid(fromAddress)) {
                 throw new SDKException(SdkError.INVALID_FROMADDRESS_ERROR);
             }
-            if ((sourceAddress != null && sourceAddress.equals(contractAddress)) || transSourceAddress.equals(contractAddress)) {
+            if ((!Tools.isEmpty(sourceAddress) && sourceAddress.equals(contractAddress)) || transSourceAddress.equals(contractAddress)) {
                 throw new SDKException(SdkError.SOURCEADDRESS_EQUAL_DESTADDRESS_ERROR);
             }
             String destAddress = tokenTransferFromOperation.getDestAddress();
@@ -593,18 +594,17 @@ public class TokenServiceImpl implements TokenService {
                 throw new SDKException(SdkError.FROMADDRESS_EQUAL_DESTADDRESS_ERROR);
             }
             String tokenAmount = tokenTransferFromOperation.getTokenAmount();
-            if (null == tokenAmount) {
+            if (Tools.isEmpty(tokenAmount)) {
                 throw new SDKException(SdkError.INVALID_TOKEN_AMOUNT_ERROR);
             }
             Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
             boolean isNumber = pattern.matcher(tokenAmount).matches();
-            Long maxInt = 1L;
-            if (!isNumber || (isNumber && (Long.valueOf(tokenAmount) < 1 || Long.valueOf(tokenAmount) > (maxInt << (64 - 1)) - 1))) {
+            if (!isNumber || (isNumber && (Long.valueOf(tokenAmount) < 1 || Long.valueOf(tokenAmount) > Long.MAX_VALUE))) {
                 throw new SDKException(SdkError.INVALID_TOKEN_AMOUNT_ERROR);
             }
             String metadata = tokenTransferFromOperation.getMetadata();
             boolean isContractValid = checkTokenValid(contractAddress);
-            if (false == isContractValid) {
+            if (!isContractValid) {
                 throw new SDKException(SdkError.NO_SUCH_TOKEN_ERROR);
             }
             // build input
@@ -639,14 +639,14 @@ public class TokenServiceImpl implements TokenService {
         Chain.Operation operation;
         try {
             String sourceAddress = tokenApproveOperation.getSourceAddress();
-            if (sourceAddress != null && !PublicKey.isAddressValid(sourceAddress)) {
+            if (!Tools.isEmpty(sourceAddress) && !PublicKey.isAddressValid(sourceAddress)) {
                 throw new SDKException(SdkError.INVALID_SOURCEADDRESS_ERROR);
             }
             String contractAddress = tokenApproveOperation.getContractAddress();
             if (!PublicKey.isAddressValid(contractAddress)) {
                 throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
             }
-            if (sourceAddress != null && sourceAddress.equals(contractAddress)) {
+            if (!Tools.isEmpty(sourceAddress) && sourceAddress.equals(contractAddress)) {
                 throw new SDKException(SdkError.SOURCEADDRESS_EQUAL_CONTRACTADDRESS_ERROR);
             }
             String spender = tokenApproveOperation.getSpender();
@@ -654,18 +654,17 @@ public class TokenServiceImpl implements TokenService {
                 throw new SDKException(SdkError.INVALID_SPENDER_ERROR);
             }
             String tokenAmount = tokenApproveOperation.getTokenAmount();
-            if (null == tokenAmount) {
+            if (Tools.isEmpty(tokenAmount)) {
                 throw new SDKException(SdkError.INVALID_TOKEN_AMOUNT_ERROR);
             }
             Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
             boolean isNumber = pattern.matcher(tokenAmount).matches();
-            Long maxInt = 1L;
-            if (!isNumber || (isNumber && (Long.valueOf(tokenAmount) < 1) || Long.valueOf(tokenAmount) > (maxInt << (64 - 1)) - 1)) {
+            if (!isNumber || (isNumber && (Long.valueOf(tokenAmount) < 1) || Long.valueOf(tokenAmount) > Long.MAX_VALUE)) {
                 throw new SDKException(SdkError.INVALID_TOKEN_AMOUNT_ERROR);
             }
             String metadata = tokenApproveOperation.getMetadata();
             boolean isContractValid = checkTokenValid(contractAddress);
-            if (false == isContractValid) {
+            if (!isContractValid) {
                 throw new SDKException(SdkError.NO_SUCH_TOKEN_ERROR);
             }
             // build input
@@ -698,14 +697,14 @@ public class TokenServiceImpl implements TokenService {
         Chain.Operation operation;
         try {
             String sourceAddress = tokenAssignResponse.getSourceAddress();
-            if (sourceAddress != null && !PublicKey.isAddressValid(sourceAddress)) {
+            if (!Tools.isEmpty(sourceAddress) && !PublicKey.isAddressValid(sourceAddress)) {
                 throw new SDKException(SdkError.INVALID_SOURCEADDRESS_ERROR);
             }
             String contractAddress = tokenAssignResponse.getContractAddress();
             if (!PublicKey.isAddressValid(contractAddress)) {
                 throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
             }
-            if (sourceAddress != null && sourceAddress.equals(contractAddress)) {
+            if (!Tools.isEmpty(sourceAddress) && sourceAddress.equals(contractAddress)) {
                 throw new SDKException(SdkError.SOURCEADDRESS_EQUAL_CONTRACTADDRESS_ERROR);
             }
             String destAddress = tokenAssignResponse.getDestAddress();
@@ -713,18 +712,17 @@ public class TokenServiceImpl implements TokenService {
                 throw new SDKException(SdkError.INVALID_DESTADDRESS_ERROR);
             }
             String tokenAmount = tokenAssignResponse.getTokenAmount();
-            if (null == tokenAmount) {
+            if (Tools.isEmpty(tokenAmount)) {
                 throw new SDKException(SdkError.INVALID_TOKEN_AMOUNT_ERROR);
             }
             Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
             boolean isNumber = pattern.matcher(tokenAmount).matches();
-            Long maxInt = 1L;
-            if (!isNumber || (isNumber && (Long.valueOf(tokenAmount) < 1 || Long.valueOf(tokenAmount) > (maxInt << (64 - 1)) - 1))) {
+            if (!isNumber || (isNumber && (Long.valueOf(tokenAmount) < 1 || Long.valueOf(tokenAmount) > Long.MAX_VALUE))) {
                 throw new SDKException(SdkError.INVALID_TOKEN_AMOUNT_ERROR);
             }
             String metadata = tokenAssignResponse.getMetadata();
             boolean isContractValid = checkTokenValid(contractAddress);
-            if (false == isContractValid) {
+            if (!isContractValid) {
                 throw new SDKException(SdkError.NO_SUCH_TOKEN_ERROR);
             }
             // build input
@@ -757,14 +755,14 @@ public class TokenServiceImpl implements TokenService {
         Chain.Operation operation;
         try {
             String sourceAddress = tokenChangeOwnerOperation.getSourceAddress();
-            if (sourceAddress != null && !PublicKey.isAddressValid(sourceAddress)) {
+            if (!Tools.isEmpty(sourceAddress) && !PublicKey.isAddressValid(sourceAddress)) {
                 throw new SDKException(SdkError.INVALID_SOURCEADDRESS_ERROR);
             }
             String contractAddress = tokenChangeOwnerOperation.getContractAddress();
             if (!PublicKey.isAddressValid(contractAddress)) {
                 throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
             }
-            if (sourceAddress != null && sourceAddress.equals(contractAddress)) {
+            if (!Tools.isEmpty(sourceAddress) && sourceAddress.equals(contractAddress)) {
                 throw new SDKException(SdkError.SOURCEADDRESS_EQUAL_CONTRACTADDRESS_ERROR);
             }
             String tokenOwner = tokenChangeOwnerOperation.getTokenOwner();
@@ -773,7 +771,7 @@ public class TokenServiceImpl implements TokenService {
             }
             String metadata = tokenChangeOwnerOperation.getMetadata();
             boolean isContractValid = checkTokenValid(contractAddress);
-            if (false == isContractValid) {
+            if (!isContractValid) {
                 throw new SDKException(SdkError.NO_SUCH_TOKEN_ERROR);
             }
             // build input
@@ -812,8 +810,8 @@ public class TokenServiceImpl implements TokenService {
         tokenMessageResponse = JSON.parseObject(result, TokenMessageResponse.class);
         Integer errorCode = tokenMessageResponse.getErrorCode();
         String errorDesc = tokenMessageResponse.getErrorDesc();
-        if (errorCode != null && errorCode.intValue() == 4) {
-            throw new SDKException(errorCode, (null == errorDesc ? "Account (" + contractAddress +") not exist" : errorDesc));
+        if (!Tools.isEmpty(errorCode) && errorCode == 4) {
+            throw new SDKException(errorCode, (Tools.isEmpty(errorDesc) ? "Account (" + contractAddress +") not exist" : errorDesc));
         }
         SdkError.checkErrorCode(tokenMessageResponse);
         boolean isValid = false;
@@ -821,18 +819,16 @@ public class TokenServiceImpl implements TokenService {
             tokenMessageResult = tokenMessageResponse.getResult();
             ContractInfo contractInfo = tokenMessageResult.getContract();
             MetadataInfo[] metadataInfos = tokenMessageResult.getMetadatas();
-            if (null == contractInfo || (contractInfo != null && (contractInfo.getPayload() == null)
-                    || contractInfo.getPayload().isEmpty()) || null == metadataInfos
-                    || (metadataInfos != null && metadataInfos.length == 0)) {
+            if (Tools.isEmpty(contractInfo) || Tools.isEmpty(contractInfo.getPayload()) || Tools.isEmpty(metadataInfos)) {
                 break;
             }
             String tokenInfoJson = metadataInfos[0].getValue();
-            if (tokenInfoJson == null || (tokenInfoJson != null && tokenInfoJson.isEmpty())) {
+            if (Tools.isEmpty(tokenInfoJson)) {
                 break;
             }
             TokenInfo tokenInfo =  JSONObject.parseObject(tokenInfoJson, TokenInfo.class);
             String ctp = tokenInfo.getCtp();
-            if (null == ctp) {
+            if (Tools.isEmpty(ctp)) {
                 break;
             }
             Pattern ctpPattern = Pattern.compile("^([1-9]*)+(.[0-9]{1,2})?$");
@@ -841,19 +837,19 @@ public class TokenServiceImpl implements TokenService {
                 break;
             }
             String name = tokenInfo.getName();
-            if (null == name || (name != null && (name.length() < 1 || name.length() > 1024))) {
+            if (Tools.isEmpty(name) || name.length() > Constant.TOKEN_NAME_MAX) {
                 break;
             }
             String symbol = tokenInfo.getSymbol();
-            if (null == symbol || (symbol != null && (symbol.length() < 1 || symbol.length() > 2014))) {
+            if (Tools.isEmpty(symbol) || symbol.length() > Constant.TOKEN_SYMBOL_MAX) {
                 break;
             }
             Integer decimals = tokenInfo.getDecimals();
-            if (null == decimals || (decimals != null && (decimals < 0 || decimals > 8))) {
+            if (Tools.isEmpty(decimals) || decimals < Constant.TOKEN_DECIMALS_MIN || decimals > Constant.TOKEN_DECIMALS_MAX) {
                 break;
             }
             String totalSupply = tokenInfo.getTotalSupply();
-            if (null == totalSupply) {
+            if (Tools.isEmpty(totalSupply)) {
                 break;
             }
             Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
@@ -879,16 +875,15 @@ public class TokenServiceImpl implements TokenService {
      */
     private static Chain.Operation invokeContract(String sourceAddress, String contractAddress, String input, String metadata) throws SDKException {
         ContractInvokeByBUOperation contractInvokeByBUOperation = new ContractInvokeByBUOperation();
-        if (sourceAddress != null) {
+        if (!Tools.isEmpty(sourceAddress)) {
             contractInvokeByBUOperation.setSourceAddress(sourceAddress);
         }
         contractInvokeByBUOperation.setContractAddress(contractAddress);
         contractInvokeByBUOperation.setBuAmount(0L);
         contractInvokeByBUOperation.setInput(input);
-        if (metadata != null && !metadata.isEmpty()) {
+        if (!Tools.isEmpty(metadata)) {
             contractInvokeByBUOperation.setMetadata(metadata);
         }
-        ContractService contract = new ContractServiceImpl();
         Chain.Operation operation= ContractServiceImpl.invokeByBU(contractInvokeByBUOperation);
         return operation;
     }
@@ -900,20 +895,11 @@ public class TokenServiceImpl implements TokenService {
      * @Return java.lang.String
      * @Date 2018/7/10 12:34
      */
-    private JSONObject queryContract(String contractAddress, JSONObject input) throws SDKException {
+    private JSONObject queryContract(String contractAddress, JSONObject input)
+            throws SDKException, IOException, NoSuchAlgorithmException, NoSuchProviderException, KeyManagementException {
         // call contract
-        ContractCallRequest contractCallRequest = new ContractCallRequest();
-        contractCallRequest.setContractAddress(contractAddress);
-        contractCallRequest.setInput(input.toJSONString());
-        contractCallRequest.setFeeLimit(1000000000L);
-        contractCallRequest.setOptType(2);
-        ContractService contractService = new ContractServiceImpl();
-        ContractCallResponse contractCallResponse = contractService.call(contractCallRequest);
-        Integer errorCode = contractCallResponse.getErrorCode();
-        if (errorCode != 0) {
-            String errorDesc = contractCallResponse.getErrorDesc();
-            throw new SDKException(errorCode, errorDesc);
-        }
+        ContractCallResponse contractCallResponse = ContractServiceImpl.callContract(null, contractAddress,
+                2,  null, input.toJSONString(), null, null, 1000000000L);
         ContractCallResult contractCallResult = contractCallResponse.getResult();
         return contractCallResult.getQueryRets().getJSONObject(0);
     }

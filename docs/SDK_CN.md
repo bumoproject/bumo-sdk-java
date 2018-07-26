@@ -337,7 +337,7 @@ if(0 == response.getErrorCode()) {
 
 > 接口说明
 
-   该接口用于获取账户信息
+   该接口用于获取指定的账户信息
 
 > 调用方法
 
@@ -354,7 +354,7 @@ address     |   String     |  必填，待查询的区块链账户地址
    参数    |     类型      |        描述       
 --------- | ------------- | ---------------- 
 address	  |    String     |    账户地址       
-balance	  |    Long       |    账户余额，必须大于0
+balance	  |    Long       |    账户余额，单位MO，1 BU = 10^8 MO, 必须大于0
 nonce	  |    Long       |    账户交易序列号，必须大于0
 priv	  | [Priv](#priv) |    账户权限
 
@@ -413,7 +413,7 @@ if (response.getErrorCode() == 0) {
 
 > 接口说明
 
-   该接口用于获取账户的nonce值
+   该接口用于获取指定账户的nonce值
 
 > 调用方法
 
@@ -460,7 +460,7 @@ if(0 == response.getErrorCode()){
 
 > 接口说明
 
-   该接口用于账户BU的余额
+   该接口用于获取指定账户的BU的余额
 
 > 调用方法
 
@@ -470,13 +470,13 @@ AccountGetBalanceResponse getBalance(AccountGetBalanceRequest);
 
    参数      |     类型     |        描述       
 ----------- | ------------ | ---------------- 
-address     |   String     |  必填，待检测的区块链账户地址   
+address     |   String     |  必填，待查询的区块链账户地址   
 
 > 响应数据
 
    参数      |     类型     |        描述       
 ----------- | ------------ | ---------------- 
-balance     |   Long       |  BU的余额
+balance     |   Long       |  BU的余额, 单位MO，1 BU = 10^8 MO, 
 
 > 错误码
 
@@ -508,7 +508,7 @@ if(0 == response.getErrorCode()){
 
 > 接口说明
 
-   该接口用于获取账户所有资产信息
+   该接口用于获取指定账户的所有资产信息
 
 > 调用方法
 
@@ -518,7 +518,7 @@ AccountGetAssets getAssets(AccountGetAssetsRequest);
 
    参数      |     类型     |        描述       
 ----------- | ------------ | ---------------- 
-address     |   String     |  必填，待检测的账户地址   
+address     |   String     |  必填，待查询的账户地址   
 
 > 响应数据
 
@@ -570,7 +570,7 @@ if (response.getErrorCode() == 0) {
 
 > 接口说明
 
-   该接口用于获取账户的metadata信息
+   该接口用于获取指定账户的metadata信息
 
 > 调用方法
 
@@ -580,7 +580,7 @@ AccountGetMetadataResponse getMetadata(AccountGetMetadataRequest);
 
    参数   |   类型   |        描述       
 -------- | -------- | ---------------- 
-address  |  String  |  必填，待检测的账户地址  
+address  |  String  |  必填，待查询的账户地址  
 key      |  String  |  选填，metadata关键字，长度限制[1, 1024]
 
 > 响应数据
@@ -635,7 +635,7 @@ if (response.getErrorCode() == 0) {
 
 > 接口说明
 
-   该接口用于获取账户指定资产信息
+   该接口用于获取指定账户的指定资产信息
 
 > 调用方法
 
@@ -702,7 +702,7 @@ TokenCheckValidResponse checkValid(TokenCheckValidRequest);
 
    参数      |     类型     |        描述       
 ----------- | ------------ | ---------------- 
-contractAddress |   String  |  必填，待检查的Token合约账户地址   
+contractAddress |   String  |  必填，待验证的Token合约账户地址   
 
 > 响应数据
 
@@ -749,7 +749,7 @@ TokenAllowanceResponse allowance(TokenAllowanceRequest);
    参数      |     类型     |        描述       |
 ----------- | ------------ | ---------------- |
 contractAddress|String| 必填，合约账户地址
-tokenOwner|String|必填，待分配的目标账户地址
+tokenOwner|String|必填，合约Token的拥有者账户地址
 spender|String|必填，授权账户地址
 
 > 响应数据
@@ -802,7 +802,7 @@ TokenGetInfoResponse getInfo(TokenGetInfoRequest);
 
    参数      |     类型     |        描述       |
 ----------- | ------------ | ---------------- |
-contractAddress     |   String     |  待查询的合约账户地址   |
+contractAddress     |   String     |  待查询的合约Token的账户地址   |
 
 > 响应数据
 
@@ -1204,7 +1204,7 @@ sourceAddress|String|选填，合约触发账户地址
 contractAddress|String|选填，合约账户地址，与code不能同时为空
 code|String|选填，合约代码，与contractAddress不能同时为空，长度限制[1, 64]
 input|String|选填，合约入参
-contractBalance|String|选填，赋予合约的初始 BU 余额, 大小限制[1, max(Long)]
+contractBalance|String|选填，赋予合约的初始 BU 余额, 单位MO，1 BU = 10^8 MO, 大小限制[1, max(Long)]
 optType|Integer|必填，0: 调用合约的读写接口 init, 1: 调用合约的读写接口 main, 2 :调用只读接口 query
 feeLimit|Long|交易要求的最低手续费， 大小限制[1, max(Long)]
 gasPrice|Long|交易燃料单价，大小限制[1000, max(Long)]
@@ -1286,7 +1286,7 @@ destAddress|String|目标账户地址
 contract|[Contract](#contract)|合约信息
 priv|[Priv](#priv)|账户权限
 metadata|[MetadataInfo](#metadatainfo)[]|账户
-initBalance|Long|账户资产
+initBalance|Long|账户资产, 单位MO，1 BU = 10^8 MO, 
 initInput|String|合约init函数的入参
 
 #### Contract
@@ -1405,7 +1405,7 @@ metadata      |   String |  选填，备注
 ------------- | -------- | ---------------------------------- 
 sourceAddress |   String |  选填，操作源账户地址 
 destAddress   |   String |  必填，目标账户地址                     
-initBalance   |   Long   |  必填，初始化资产，大小(0, max(Long)] 
+initBalance   |   Long   |  必填，初始化资产，单位MO，1 BU = 10^8 MO, 大小(0, max(Long)] 
 metadata|String|选填，备注
 
 > AccountSetMetadataOperation
@@ -1476,7 +1476,7 @@ metadata|String|选填，备注
    成员变量    |     类型   |        描述          
 ------------- | --------- | ---------------------
 sourceAddress|String|选填，操作源账户地址
-initBalance|Long|必填，给合约账户的初始化资产，大小限制[1, max(64)]
+initBalance|Long|必填，给合约账户的初始化资产，单位MO，1 BU = 10^8 MO, 大小限制[1, max(64)]
 name|String|必填，token名称，长度限制[1, 1024]
 symbol|String|必填，token符号，长度限制[1, 1024]
 decimals|Integer|必填，token数量的精度，大小限制[0, 8]
@@ -1550,7 +1550,7 @@ metadata|String|选填，备注
    成员变量    |     类型   |        描述          
 ------------- | --------- | ---------------------
 sourceAddress|String|选填，操作源账户地址
-initBalance|Long|必填，给合约账户的初始化资产，大小限制[1, max(Long)]
+initBalance|Long|必填，给合约账户的初始化资产，单位MO，1 BU = 10^8 MO, 大小限制[1, max(Long)]
 type|Integer|选填，合约的语种，默认是0
 payload|String|必填，对应语种的合约代码
 initInput|String|选填，合约代码中init方法的入参

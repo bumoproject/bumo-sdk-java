@@ -1,6 +1,8 @@
 package io.bumo.log;
 
 import com.google.protobuf.ByteString;
+import io.bumo.common.Constant;
+import io.bumo.common.Tools;
 import io.bumo.crypto.protobuf.Chain;
 import io.bumo.encryption.key.PublicKey;
 import io.bumo.exception.SDKException;
@@ -25,20 +27,20 @@ public class LogServiceImpl {
         Chain.Operation.Builder operation;
         try {
             String sourceAddress = logCreateOperation.getSourceAddress();
-            if (sourceAddress != null && !PublicKey.isAddressValid(sourceAddress)) {
+            if (!Tools.isEmpty(sourceAddress) && !PublicKey.isAddressValid(sourceAddress)) {
                 throw new SDKException(SdkError.INVALID_SOURCEADDRESS_ERROR);
             }
             String topic = logCreateOperation.getTopic();
-            if (null == topic || (topic != null && (topic.length() < 1 || topic.length() > 128))) {
+            if (Tools.isEmpty(topic) || (topic.length() < Constant.LOG_TOPIC_MIN || topic.length() > Constant.LOG_TOPIC_MAX)) {
                 throw new SDKException(SdkError.INVALID_LOG_TOPIC_ERROR);
             }
             List<String> datas = logCreateOperation.getDatas();
-            if (null == datas || (datas != null && datas.size() == 0)) {
+            if (Tools.isEmpty(datas)) {
                 throw new SDKException(SdkError.INVALID_LOG_DATA_ERROR);
             }
             for (int i = 0;i < datas.size(); i++) {
                 String data = datas.get(i);
-                if (data.length() < 1 || data.length() > 1024) {
+                if (data.length() < Constant.LOG_EACH_DATA_MIN || data.length() > Constant.LOG_EACH_DATA_MAX) {
                     throw new SDKException(SdkError.INVALID_LOG_DATA_ERROR);
                 }
             }
@@ -46,19 +48,19 @@ public class LogServiceImpl {
             // build Operation
             operation = Chain.Operation.newBuilder();
             operation.setType(Chain.Operation.Type.LOG);
-            if (sourceAddress != null) {
+            if (!Tools.isEmpty(sourceAddress)) {
                 operation.setSourceAddress(sourceAddress);
             }
-            if (metadata != null) {
+            if (!Tools.isEmpty(metadata)) {
                 operation.setMetadata(ByteString.copyFromUtf8(metadata));
             }
             Chain.OperationLog.Builder operationLog = operation.getLogBuilder();
-            if (sourceAddress != null) {
+            if (!Tools.isEmpty(sourceAddress)) {
                 operation.setSourceAddress(sourceAddress);
             }
             operationLog.setTopic(topic);
             operationLog.addAllDatas(datas);
-            if (metadata != null) {
+            if (!Tools.isEmpty(metadata)) {
                 logCreateOperation.setMetadata(metadata);
             }
         } catch (SDKException sdkException) {

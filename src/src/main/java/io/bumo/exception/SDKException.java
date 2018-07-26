@@ -18,23 +18,18 @@ public class SDKException extends RuntimeException{
         this.errorDesc = SdkError.SYSTEM_ERROR.getDescription();
     }
 
-    public SDKException(Integer errCode, String message) {
-        this(errCode, message, message);
-    }
-
     public SDKException(SdkError errEnum) {
         this(errEnum.getCode(), errEnum.getDescription());
     }
 
     public SDKException(SdkError errEnum, String message) {
-        this(errEnum.getCode(), message, message);
+        this(errEnum.getCode(), message);
     }
 
-    public SDKException(Integer errCode, String message, String chineseMsg) {
+    public SDKException(Integer errCode, String message) {
         super(message);
         this.errorCode = errCode;
         this.errorDesc = message;
-        this.errorDesc = chineseMsg;
     }
 
     public Integer getErrorCode() {

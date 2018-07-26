@@ -1,6 +1,7 @@
 package io.bumo.asset.impl;
 
 import com.google.protobuf.ByteString;
+import io.bumo.common.Tools;
 import io.bumo.crypto.protobuf.Chain;
 import io.bumo.encryption.exception.EncException;
 import io.bumo.encryption.key.PublicKey;
@@ -19,28 +20,28 @@ public class BUServiceImpl {
         Chain.Operation.Builder operation;
         try {
             String sourceAddress = buSendOperation.getSourceAddress();
-            if (sourceAddress != null && !PublicKey.isAddressValid(sourceAddress)) {
+            if (!Tools.isEmpty(sourceAddress) && !PublicKey.isAddressValid(sourceAddress)) {
                 throw new SDKException(SdkError.INVALID_SOURCEADDRESS_ERROR);
             }
             String destAddress = buSendOperation.getDestAddress();
             if (!PublicKey.isAddressValid(destAddress)) {
                 throw new SDKException(SdkError.INVALID_DESTADDRESS_ERROR);
             }
-            if ((sourceAddress != null && sourceAddress.equals(destAddress)) || transSourceAddress.equals(destAddress)) {
+            if ((!Tools.isEmpty(sourceAddress) && sourceAddress.equals(destAddress)) || transSourceAddress.equals(destAddress)) {
                 throw new SDKException(SdkError.SOURCEADDRESS_EQUAL_DESTADDRESS_ERROR);
             }
             Long amount = buSendOperation.getAmount();
-            if (amount == null || (amount != null && amount <= 0)) {
+            if (Tools.isEmpty(amount) || amount <= 0) {
                 throw new SDKException(SdkError.INVALID_BU_AMOUNT_ERROR);
             }
             String metadata = buSendOperation.getMetadata();
             // build Operation
             operation = Chain.Operation.newBuilder();
             operation.setType(Chain.Operation.Type.PAY_COIN);
-            if (sourceAddress != null) {
+            if (!Tools.isEmpty(sourceAddress)) {
                 operation.setSourceAddress(sourceAddress);
             }
-            if (metadata != null && !metadata.isEmpty()) {
+            if (!Tools.isEmpty(metadata)) {
                 operation.setMetadata(ByteString.copyFromUtf8(metadata));
             }
             Chain.OperationPayCoin.Builder operationPayCoin = operation.getPayCoinBuilder();

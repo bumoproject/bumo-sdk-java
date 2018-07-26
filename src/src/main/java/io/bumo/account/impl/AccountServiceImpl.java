@@ -3,7 +3,9 @@ package io.bumo.account.impl;
 import com.alibaba.fastjson.JSON;
 import com.google.protobuf.ByteString;
 import io.bumo.account.AccountService;
+import io.bumo.common.Constant;
 import io.bumo.common.General;
+import io.bumo.common.Tools;
 import io.bumo.crypto.http.HttpKit;
 import io.bumo.encryption.exception.EncException;
 import io.bumo.exception.SDKException;
@@ -20,7 +22,6 @@ import io.bumo.model.response.result.*;
 import io.bumo.crypto.protobuf.Chain;
 import io.bumo.encryption.key.PrivateKey;
 import io.bumo.encryption.key.PublicKey;
-import io.bumo.encryption.utils.hex.HexFormat;
 import io.bumo.exception.SdkError;
 
 import java.io.IOException;
@@ -65,7 +66,6 @@ public class AccountServiceImpl implements AccountService {
             Method method = cls.getDeclaredMethod("setValid",  new Class[]{boolean.class});
             method.setAccessible(true);
             method.invoke(accountCheckValidResult, isValid);
-            //accountCheckValidResult.setValid(isValid);
             accountCheckValidResponse.buildResponse(SdkError.SUCCESS, accountCheckValidResult);
         } catch (SDKException apiException) {
             Integer errorCode = apiException.getErrorCode();
@@ -114,7 +114,7 @@ public class AccountServiceImpl implements AccountService {
 
         AccountGetInfoResult accountGetInfoResult = new AccountGetInfoResult();
         try {
-            if (null == accountGetInfoRequest) {
+            if (Tools.isEmpty(accountGetInfoRequest)) {
                 throw new SDKException(SdkError.REQUEST_NULL_ERROR);
             }
             String address = accountGetInfoRequest.getAddress();
@@ -126,7 +126,7 @@ public class AccountServiceImpl implements AccountService {
             accountGetInfoResponse = JSON.parseObject(result, AccountGetInfoResponse.class);
             Integer errorCode = accountGetInfoResponse.getErrorCode();
             String errorDesc = accountGetInfoResponse.getErrorDesc();
-            if (errorCode != null && errorCode == 4) {
+            if (!Tools.isEmpty(errorCode) && errorCode == 4) {
                 throw new SDKException(errorCode, (null == errorDesc? "Account (" + address +") not exist" : errorDesc));
             }
             SdkError.checkErrorCode(accountGetInfoResponse);
@@ -156,7 +156,7 @@ public class AccountServiceImpl implements AccountService {
 
         AccountGetNonceResult accountGetNonceResult = new AccountGetNonceResult();
         try {
-            if (null == accountGetNonceRequest) {
+            if (Tools.isEmpty(accountGetNonceRequest)) {
                 throw new SDKException(SdkError.REQUEST_NULL_ERROR);
             }
             String address = accountGetNonceRequest.getAddress();
@@ -168,7 +168,7 @@ public class AccountServiceImpl implements AccountService {
             accountGetNonceResponse = JSON.parseObject(result, AccountGetNonceResponse.class);
             Integer errorCode = accountGetNonceResponse.getErrorCode();
             String errorDesc = accountGetNonceResponse.getErrorDesc();
-            if (errorCode != null && errorCode == 4) {
+            if (!Tools.isEmpty(errorCode) && errorCode == 4) {
                 throw new SDKException(errorCode, (null == errorDesc? "Account (" + address +") not exist" : errorDesc));
             }
             SdkError.checkErrorCode(accountGetNonceResponse);
@@ -200,7 +200,7 @@ public class AccountServiceImpl implements AccountService {
         AccountGetBalanceResponse accountGetBalanceResponse = new AccountGetBalanceResponse();
         AccountGetBalanceResult accountGetBalanceResult = new AccountGetBalanceResult();
         try {
-            if (null == accountGetBalanceRequest) {
+            if (Tools.isEmpty(accountGetBalanceRequest)) {
                 throw new SDKException(SdkError.REQUEST_NULL_ERROR);
             }
             String address = accountGetBalanceRequest.getAddress();
@@ -212,7 +212,7 @@ public class AccountServiceImpl implements AccountService {
             accountGetBalanceResponse = JSON.parseObject(result, AccountGetBalanceResponse.class);
             Integer errorCode = accountGetBalanceResponse.getErrorCode();
             String errorDesc = accountGetBalanceResponse.getErrorDesc();
-            if (errorCode != null && errorCode == 4) {
+            if (!Tools.isEmpty(errorCode) && errorCode == 4) {
                 throw new SDKException(errorCode, (null == errorDesc? "Account (" + address +") not exist" : errorDesc));
             }
             SdkError.checkErrorCode(accountGetBalanceResponse);
@@ -240,7 +240,7 @@ public class AccountServiceImpl implements AccountService {
         AccountGetAssetsResponse accountGetAssetsResponse = new AccountGetAssetsResponse();
         AccountGetAssetsResult accountGetAssetsResult = new AccountGetAssetsResult();
         try {
-            if (null == accountGetAssetsRequest) {
+            if (Tools.isEmpty(accountGetAssetsRequest)) {
                 throw new SDKException(SdkError.REQUEST_NULL_ERROR);
             }
             String address = accountGetAssetsRequest.getAddress();
@@ -252,12 +252,12 @@ public class AccountServiceImpl implements AccountService {
             accountGetAssetsResponse = JSON.parseObject(result, AccountGetAssetsResponse.class);
             Integer errorCode = accountGetAssetsResponse.getErrorCode();
             String errorDesc = accountGetAssetsResponse.getErrorDesc();
-            if (errorCode != null && errorCode == 4) {
+            if (!Tools.isEmpty(errorCode) && errorCode == 4) {
                 throw new SDKException(errorCode, (null == errorDesc? "Account (" + address +") not exist" : errorDesc));
             }
             SdkError.checkErrorCode(accountGetAssetsResponse);
             AssetInfo[] assetInfos = accountGetAssetsResponse.getResult().getAssets();
-            if (null == assetInfos || (assetInfos != null && assetInfos.length == 0)) {
+            if (Tools.isEmpty(assetInfos)) {
                 throw new SDKException(SdkError.NO_ASSET_ERROR);
             }
         } catch (SDKException apiException) {
@@ -285,7 +285,7 @@ public class AccountServiceImpl implements AccountService {
         AccountGetMetadataResponse accountGetMetadataResponse = new AccountGetMetadataResponse();
         AccountGetMetadataResult accountGetMetadataResult = new AccountGetMetadataResult();
         try {
-            if (null == accountGetMetadataRequest) {
+            if (Tools.isEmpty(accountGetMetadataRequest)) {
                 throw new SDKException(SdkError.REQUEST_NULL_ERROR);
             }
             String address = accountGetMetadataRequest.getAddress();
@@ -293,7 +293,7 @@ public class AccountServiceImpl implements AccountService {
                 throw new SDKException(SdkError.INVALID_ADDRESS_ERROR);
             }
             String key = accountGetMetadataRequest.getKey();
-            if (key != null && (key.length() > 1024 || key.length() < 1)) {
+            if (!Tools.isNULL(key) && (key.length() > Constant.METADATA_KEY_MAX || key.length() < 1)) {
                 throw new SDKException(SdkError.INVALID_DATAKEY_ERROR);
             }
             String accountGetInfoUrl = General.accountGetMetadataUrl(address, key);
@@ -301,12 +301,12 @@ public class AccountServiceImpl implements AccountService {
             accountGetMetadataResponse = JSON.parseObject(result, AccountGetMetadataResponse.class);
             Integer errorCode = accountGetMetadataResponse.getErrorCode();
             String errorDesc = accountGetMetadataResponse.getErrorDesc();
-            if (errorCode != null && errorCode == 4) {
+            if (!Tools.isEmpty(errorCode) && errorCode == 4) {
                 throw new SDKException(errorCode, (null == errorDesc? "Account (" + address +") not exist" : errorDesc));
             }
             SdkError.checkErrorCode(accountGetMetadataResponse);
             MetadataInfo[] metadataInfos = accountGetMetadataResponse.getResult().getMetadatas();
-            if (null == metadataInfos || (metadataInfos != null && metadataInfos.length == 0)) {
+            if (Tools.isEmpty(metadataInfos)) {
                 throw new SDKException(SdkError.NO_METADATA_ERROR);
             }
         } catch (SDKException apiException) {
@@ -332,32 +332,32 @@ public class AccountServiceImpl implements AccountService {
     public static Chain.Operation activate(AccountActivateOperation accountActivateOperation, String transSourceAddress) throws SDKException {
         Chain.Operation.Builder operation;
         try {
-            if (null == accountActivateOperation) {
+            if (Tools.isEmpty(accountActivateOperation)) {
                 throw new SDKException(SdkError.REQUEST_NULL_ERROR);
             }
             String sourceAddress= accountActivateOperation.getSourceAddress();
-            if (sourceAddress != null && !PublicKey.isAddressValid(sourceAddress)) {
+            if (!Tools.isEmpty(sourceAddress) && !PublicKey.isAddressValid(sourceAddress)) {
                 throw new SDKException(SdkError.INVALID_SOURCEADDRESS_ERROR);
             }
             String destAddress = accountActivateOperation.getDestAddress();
             if (!PublicKey.isAddressValid(destAddress)) {
                 throw new SDKException(SdkError.INVALID_DESTADDRESS_ERROR);
             }
-            if ((sourceAddress != null && sourceAddress.equals(destAddress)) || transSourceAddress.equals(destAddress)) {
+            if ((!Tools.isEmpty(sourceAddress) && sourceAddress.equals(destAddress)) || transSourceAddress.equals(destAddress)) {
                 throw new SDKException(SdkError.SOURCEADDRESS_EQUAL_DESTADDRESS_ERROR);
             }
             Long initBalance = accountActivateOperation.getInitBalance();
-            if (null == initBalance || (initBalance != null && initBalance <= 0)) {
+            if (Tools.isEmpty(initBalance) || initBalance <= 0) {
                 throw new SDKException(SdkError.INVALID_INITBALANCE_ERROR);
             }
             String metadata = accountActivateOperation.getMetadata();
             // build Operation
             operation = Chain.Operation.newBuilder();
             operation.setType(Chain.Operation.Type.CREATE_ACCOUNT);
-            if (sourceAddress != null) {
+            if (!Tools.isEmpty(sourceAddress)) {
                 operation.setSourceAddress(sourceAddress);
             }
-            if (metadata != null && !metadata.isEmpty()) {
+            if (!Tools.isEmpty(metadata)) {
                 operation.setMetadata(ByteString.copyFromUtf8(metadata));
             }
             Chain.OperationCreateAccount.Builder operationCreateAccount = operation.getCreateAccountBuilder();
@@ -386,23 +386,23 @@ public class AccountServiceImpl implements AccountService {
     public static Chain.Operation setMetadata(AccountSetMetadataOperation accountSetMetadataOperation) throws SDKException {
         Chain.Operation.Builder operation;
         try {
-            if (null == accountSetMetadataOperation) {
+            if (Tools.isEmpty(accountSetMetadataOperation)) {
                 throw new SDKException(SdkError.REQUEST_NULL_ERROR);
             }
             String sourceAddress = accountSetMetadataOperation.getSourceAddress();
-            if (sourceAddress != null && !PublicKey.isAddressValid(sourceAddress)) {
+            if (!Tools.isEmpty(sourceAddress) && !PublicKey.isAddressValid(sourceAddress)) {
                 throw new SDKException(SdkError.INVALID_SOURCEADDRESS_ERROR);
             }
             String key = accountSetMetadataOperation.getKey();
-            if (key == null || (key != null && key.length() < 1 || key.length() > 1024)) {
+            if (Tools.isEmpty(key) || key.length() > Constant.METADATA_KEY_MAX) {
                 throw new SDKException(SdkError.INVALID_DATAKEY_ERROR);
             }
             String value = accountSetMetadataOperation.getValue();
-            if (value == null || (value != null && value.length() < 0 || value.length() > 256000)) {
+            if (Tools.isEmpty(value) || value.length() > Constant.METADATA_VALUE_MAX) {
                 throw new SDKException(SdkError.INVALID_DATAVALUE_ERROR);
             }
             Long version = accountSetMetadataOperation.getVersion();
-            if (version != null && version < 0) {
+            if (!Tools.isNULL(version) && version < 0) {
                 throw new SDKException(SdkError.INVALID_DATAVERSION_ERROR);
             }
             Boolean deleteFlag = accountSetMetadataOperation.getDeleteFlag();
@@ -410,19 +410,19 @@ public class AccountServiceImpl implements AccountService {
             // build Operation
             operation = Chain.Operation.newBuilder();
             operation.setType(Chain.Operation.Type.SET_METADATA);
-            if (sourceAddress != null) {
+            if (!Tools.isEmpty(sourceAddress)) {
                 operation.setSourceAddress(sourceAddress);
             }
-            if (metadata != null && !metadata.isEmpty()) {
+            if (!Tools.isEmpty(metadata)) {
                 operation.setMetadata(ByteString.copyFromUtf8(metadata));
             }
             Chain.OperationSetMetadata.Builder operationSetMetadata = operation.getSetMetadataBuilder();
             operationSetMetadata.setKey(key);
             operationSetMetadata.setValue(value);
-            if (version != null && version > 0) {
+            if (!Tools.isEmpty(version) && version > 0) {
                 operationSetMetadata.setVersion(version);
             }
-            if (deleteFlag != null) {
+            if (!Tools.isEmpty(deleteFlag)) {
                 operationSetMetadata.setDeleteFlag(deleteFlag);
             }
         } catch (SDKException sdkException) {
@@ -444,27 +444,26 @@ public class AccountServiceImpl implements AccountService {
     public static Chain.Operation setPrivilege(AccountSetPrivilegeOperation accountSetPrivilegeOperation) throws SDKException {
         Chain.Operation.Builder operation;
         try {
-            if (null == accountSetPrivilegeOperation) {
+            if (Tools.isEmpty(accountSetPrivilegeOperation)) {
                 throw new SDKException(SdkError.REQUEST_NULL_ERROR);
             }
             String sourceAddress = accountSetPrivilegeOperation.getSourceAddress();
-            if (sourceAddress != null && !PublicKey.isAddressValid(sourceAddress)) {
+            if (!Tools.isEmpty(sourceAddress) && !PublicKey.isAddressValid(sourceAddress)) {
                 throw new SDKException(SdkError.INVALID_SOURCEADDRESS_ERROR);
             }
             String masterWeight = accountSetPrivilegeOperation.getMasterWeight();
-            long maxInt = 1;
-            if (masterWeight != null) {
+            if (!Tools.isEmpty(masterWeight)) {
                 Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
                 boolean isNumber = pattern.matcher(masterWeight).matches();
-                if(!isNumber || (isNumber && (Long.valueOf(masterWeight) < 0 || Long.valueOf(masterWeight) > ((maxInt << 32) - 1)))) {
+                if(!isNumber || (isNumber && (Long.valueOf(masterWeight) < 0 || Long.valueOf(masterWeight) > Constant.UINT_MAX))) {
                     throw new SDKException(SdkError.INVALID_MASTERWEIGHT_ERROR);
                 }
             }
             String txThreshold = accountSetPrivilegeOperation.getTxThreshold();
-            if (txThreshold != null) {
+            if (!Tools.isEmpty(txThreshold)) {
                 Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
                 boolean isNumber = pattern.matcher(masterWeight).matches();
-                if (!isNumber || (isNumber && Long.valueOf(txThreshold) < 0 || Long.valueOf(txThreshold) > ((maxInt << (64 - 1)) - 1))) {
+                if (!isNumber || (isNumber && Long.valueOf(txThreshold) < 0 || Long.valueOf(txThreshold) > Long.MAX_VALUE)) {
                     throw new SDKException(SdkError.INVALID_TX_THRESHOLD_ERROR);
                 }
             }
@@ -472,23 +471,23 @@ public class AccountServiceImpl implements AccountService {
             // build Operation
             operation = Chain.Operation.newBuilder();
             operation.setType(Chain.Operation.Type.SET_PRIVILEGE);
-            if (sourceAddress != null) {
+            if (!Tools.isEmpty(sourceAddress)) {
                 operation.setSourceAddress(sourceAddress);
             }
-            if (metadata != null && !metadata.isEmpty()) {
+            if (!Tools.isEmpty(metadata)) {
                 operation.setMetadata(ByteString.copyFromUtf8(metadata));
             }
             Chain.OperationSetPrivilege.Builder operationSetPrivilege = operation.getSetPrivilegeBuilder();
-            if (masterWeight != null && !masterWeight.isEmpty()) {
+            if (!Tools.isEmpty(masterWeight)) {
                 operationSetPrivilege.setMasterWeight(masterWeight);
             }
-            if (txThreshold != null) {
+            if (!Tools.isEmpty(txThreshold)) {
                 operationSetPrivilege.setTxThreshold(txThreshold);
             }
 
             // add signers
             Signer[] signers = accountSetPrivilegeOperation.getSigners();
-            if (signers != null && signers.length > 0) {
+            if (!Tools.isEmpty(signers)) {
                 int i = 0;
                 int signersLength = signers.length;
                 for (; i < signersLength; i++) {
@@ -498,7 +497,7 @@ public class AccountServiceImpl implements AccountService {
                         throw new SDKException(SdkError.INVALID_SIGNER_ADDRESS_ERROR);
                     }
                     Long signerWeight = signer.getWeight();
-                    if (signerWeight == null || (signerWeight != null && signerWeight < 0)) {
+                    if (Tools.isEmpty(signerWeight) || signerWeight < 0) {
                         throw new SDKException(SdkError.INVALID_SIGNER_WEIGHT_ERROR);
                     }
                     Chain.Signer.Builder signerBuilder = operationSetPrivilege.addSignersBuilder();
@@ -509,22 +508,22 @@ public class AccountServiceImpl implements AccountService {
 
             // add type_thresholds
             TypeThreshold[] typeThresholds = accountSetPrivilegeOperation.getTypeThresholds();
-            if (typeThresholds != null && typeThresholds.length > 0) {
+            if (!Tools.isEmpty(typeThresholds)) {
                 int i = 0;
                 int typeThresholdsLength = typeThresholds.length;
                 for (; i < typeThresholdsLength; i++) {
                     TypeThreshold typeThreshold = typeThresholds[i];
                     Integer type = typeThreshold.getType();
-                    if (type == null || type < 1) {
+                    if (Tools.isEmpty(type) || type < 1) {
                         throw new SDKException(SdkError.INVALID_TYPETHRESHOLD_TYPE_ERROR);
                     }
                     Long threshold = typeThreshold.getThreshold();
-                    if (threshold == null || (threshold != null && threshold < 0)) {
+                    if (Tools.isEmpty(threshold) || threshold < 0) {
                         throw new SDKException(SdkError.INVALID_TYPE_THRESHOLD_ERROR);
                     }
                     Chain.OperationTypeThreshold.Builder typeThresholdBuilder = operationSetPrivilege.addTypeThresholdsBuilder();
                     Chain.Operation.Type operationType = Chain.Operation.Type.forNumber(type);
-                    if (null == operationType) {
+                    if (Tools.isEmpty(operationType)) {
                         throw new SDKException(SdkError.INVALID_TYPETHRESHOLD_TYPE_ERROR);
                     }
                     typeThresholdBuilder.setType(operationType);
