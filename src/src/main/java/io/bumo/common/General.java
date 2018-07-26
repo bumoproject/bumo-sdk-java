@@ -23,7 +23,7 @@ public class General {
     }
 
     public static String assetGetUrl(String address, String code, String issuer) throws UnsupportedEncodingException {
-        return url + "/getAccountService?address=" + URLEncoder.encode(address, "utf8") + "&code=" +
+        return url + "/getAccount?address=" + URLEncoder.encode(address, "utf8") + "&code=" +
                 URLEncoder.encode(code, "utf8")  + "&issuer=" + URLEncoder.encode(issuer, "utf8");
     }
 

@@ -315,6 +315,9 @@ public class TransactionServiceImpl implements TransactionService {
             transactionItem.put("transaction_blob", blob);
             JSONArray signatureItems = new JSONArray();
             Signature[] signatures = transactionSubmitRequest.getSignatures();
+            if (null == signatures || signatures.length == 0) {
+                throw new SDKException(SdkError.SIGNATURE_EMPTY_ERROR);
+            }
             int i = 0;
             int length = signatures.length;
             for (; i < length; i++) {

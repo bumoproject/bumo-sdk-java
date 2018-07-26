@@ -46,12 +46,12 @@
 	- [evaluateFee](#evaluatefee)
 	- [sign](#sign)
 	- [submit](#submit)
-	- [getInfo-交易](#getinfo-交易)
+	- [getInfo](#getinfo-交易)
 - [区块服务](#区块服务)
     - [getNumber](#getnumber)
 	- [checkStatus](#checkstatus)
 	- [getTransactions](#gettransactions)
-	- [getInfo-区块](#getinfo-区块)
+	- [getInfo](#getinfo-区块)
 	- [getLatestInfo](#getlatestinfo)
 	- [getValidators](#getvalidators)
 	- [getLatestValidators](#getlatestvalidators)
@@ -136,6 +136,9 @@ SDK sdk = SDK.getInstance(url);
 此接口生成BU区块链账户的公钥、私钥和地址，直接调用Keypair.generator接口即可，调用如下：
 ```
 Keypair keypair = Keypair.generator();
+System.out.println(keypair.getPrivateKey());
+System.out.println(keypair.getPublicKey());
+System.out.println(keypair.getAddress());
 ```
 
 ### 有效性校验
@@ -166,7 +169,13 @@ request.setAddress(accountAddress);
 
 // 调用getInfo接口
 AccountGetInfoResponse response =  sdk.getAccountService().getInfo(request);
-System.out.println(JSON.toJSONString(response,true));
+if (response.getErrorCode() == 0) {
+	AccountGetInfoResult result = response.getResult();
+	System.out.println(JSON.toJSONString(result,true));
+}
+else {
+	System.out.println("error: " + response.getErrorDesc());
+}
 ```
 
 ### 提交交易
@@ -178,98 +187,101 @@ System.out.println(JSON.toJSONString(response,true));
 ```
 // 初始化请求参数
 String senderAddress = "buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp";
-AccountGetNonceRequest request = new AccountGetNonceRequest();
-request.setAddress(senderAddresss);
+AccountGetNonceRequest getNonceRequest = new AccountGetNonceRequest();
+getNonceRequest.setAddress(senderAddress);
 
 // 调用getNonce接口
-AccountGetNonceResponse response =  sdk.getAccountService().getNonce(request);
+AccountGetNonceResponse getNonceResponse =  sdk.getAccountService().getNonce(getNonceRequest);
 
 // 赋值nonce
-Long nonce = 0L;
-if (response.getErrorCode() == 0) {
-	AccountGetNonceResult result = response.getResult();
-	nonce = result.getNonce();
+if (getNonceResponse.getErrorCode() == 0) {
+   AccountGetNonceResult result = getNonceResponse.getResult();
+   System.out.println("nonce: " + result.getNonce());
 }
 else {
-	System.out.println(response.getErrorDesc());
+    System.out.println("error" + getNonceResponse.getErrorDesc());
 }
 ```
 
 #### 构建操作
 
-这里的操作是指在交易中做的一些动作。 例如：构建发送BU操作BUSendOperation，调用如下：
+这里的操作是指在交易中做的一些动作。 例如：构建发送BU操作BUSendOperation，接口调用如下：
 ```
 String senderAddress = "buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp";
-String destAddress = "buQswSaKDACkrFsnP1wcVsLAUzXQsemauE";
+String destAddress = "buQsurH1M4rjLkfjzkxR9KXJ6jSu2r9xBNEw";
 Long amount = ToBaseUnit.BU2MO("10.9");
 
 BUSendOperation operation = new BUSendOperation();
-operation.setSourceAddress(senderAddresss);
+operation.setSourceAddress(senderAddress);
 operation.setDestAddress(destAddress);
 operation.setAmount(amount);
 ```
 
 #### 构建交易Blob
 
-该接口用于生成交易Blob串，接口调用如下：
+该接口用于生成交易Blob串。其中nonce和operation是上面接口得到的，接口调用如下：
 ```
+// 初始化变量
+String senderAddress = "buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp";
+Long gasPrice = 1000L;
+Long feeLimit = ToBaseUnit.BU2MO("0.01");
+
 // 初始化请求参数
-TransactionBuildBlobRequest request = new TransactionBuildBlobRequest();
-request.setSourceAddress(senderAddresss);
-request.setNonce(senderNonce);
-request.setFeeLimit(feeLimit);
-request.setGasPrice(gasPrice);
-request.addOperation(operation);
+TransactionBuildBlobRequest buildBlobRequest = new TransactionBuildBlobRequest();
+buildBlobRequest.setSourceAddress(senderAddress);
+buildBlobRequest.setNonce(nonce + 1);
+buildBlobRequest.setFeeLimit(feeLimit);
+buildBlobRequest.setGasPrice(gasPrice);
+buildBlobRequest.addOperation(operation);
 
 // 调用buildBlob接口
-String transactionBlob = null;
-TransactionBuildBlobResponse response = sdk.getTransactionService().buildBlob(request);
-if (response.getErrorCode() == 0) {
-    TransactionBuildBlobResult result = response.getResult();
-    String txHash = result.getHash();
-    transactionBlob = result.getTransactionBlob();
+TransactionBuildBlobResponse buildBlobResponse = sdk.getTransactionService().buildBlob(buildBlobRequest);
+if (buildBlobResponse.getErrorCode() == 0) {
+    TransactionBuildBlobResult result = buildBlobResponse.getResult();
+    System.out.println("txHash: " + result.getHash() + ", blob: " + result.getTransactionBlob());
 } else {
-    System.out.println("error: " + response.getErrorDesc());
+    System.out.println("error: " + buildBlobResponse.getErrorDesc());
 }
 ```
 
 #### 签名交易
 
-该接口用于交易发起者使用私钥对交易进行签名。接口调用如下：
+该接口用于交易发起者使用私钥对交易进行签名。其中transactionBlob是上面接口得到的，接口调用如下：
 ```
 // 初始化请求参数
+String senderPrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq";
 String []signerPrivateKeyArr = {senderPrivateKey};
-TransactionSignRequest request = new TransactionSignRequest();
-request.setBlob(transactionBlob);
+TransactionSignRequest signRequest = new TransactionSignRequest();
+signRequest.setBlob(transactionBlob);
 for (int i = 0; i < signerPrivateKeyArr.length; i++) {
-	request.addPrivateKey(signerPrivateKeyArr[i]);
+    signRequest.addPrivateKey(signerPrivateKeyArr[i]);
 }
 
 // 调用sign接口
-TransactionSignResponse reponse = sdk.getTransactionService().sign(request);
-if (reponse.getErrorCode() == 0) {
-    TransactionSignResult result = reponse.getResult();
+TransactionSignResponse signResponse = sdk.getTransactionService().sign(signRequest);
+if (signResponse.getErrorCode() == 0) {
+    TransactionSignResult result = signResponse.getResult();
     System.out.println(JSON.toJSONString(result, true));
 } else {
-    System.out.println("error: " + reponse.getErrorDesc());
+    System.out.println("error: " + signResponse.getErrorDesc());
 }
 ```
 
 #### 广播交易
 
-该接口用于向BU区块链发送交易，触发交易的执行。接口调用如下：
+该接口用于向BU区块链发送交易，触发交易的执行。其中transactionBlob和signResult是上面接口得到的，接口调用如下：
 ```
 // 初始化请求参数
- TransactionSubmitRequest request = new TransactionSubmitRequest();
-request.setTransactionBlob(transactionBlob);
-request.setSignatures(transactionSignResponse.getResult().getSignatures());
+TransactionSubmitRequest submitRequest = new TransactionSubmitRequest();
+submitRequest.setTransactionBlob(transactionBlob);
+submitRequest.setSignatures(signResult.getSignatures());
 
 // 调用submit接口
-TransactionSubmitResponse response = sdk.getTransactionService().submit(request);
-if (0 == transactionSubmitResponse.getErrorCode()) { 
-	System.out.println("交易广播成功，hash=" + response.getResult().getHash());
+TransactionSubmitResponse response = sdk.getTransactionService().submit(submitRequest);
+if (0 == response.getErrorCode()) {
+    System.out.println("交易广播成功，hash=" + response.getResult().getHash());
 } else {
-	System.out.println("error: " + response.getErrorDesc());
+    System.out.println("error: " + response.getErrorDesc());
 }
 ```
 
@@ -280,7 +292,7 @@ if (0 == transactionSubmitResponse.getErrorCode()) {
 ### checkValid-账户
 > 接口说明
 
-   该接口用于检测账户地址的有效性
+   该接口用于检查区块链账户地址的有效性
 
 > 调用方法
 
@@ -369,21 +381,21 @@ typeThresholds|[TypeThreshold](#typethreshold)[]|不同类型交易的门限
    成员       |     类型     |        描述       
 -----------  | ------------ | ---------------- 
 type         |    Long	    |    操作类型
-threshold    |    Long      |    门限
+threshold    |    Long      |    门限值
 
 > 错误码
 
    异常       |     错误码   |   描述   
 -----------  | ----------- | -------- 
 INVALID_ADDRESS_ERROR| 11006 | Invalid address
-CONNECTNETWORK_ERROR| 11007| Connect network failed
+CONNECTNETWORK_ERROR| 11007| Fail to connect network
 SYSTEM_ERROR |   20000     |  System error 
 
 > 示例
 
 ```
 // 初始化请求参数
-String accountAddress = "buQemmMwmRQY1JkcU7w3nhruo%X5N3j6C29uo";
+String accountAddress = "buQemmMwmRQY1JkcU7w3nhruoX5N3j6C29uo";
 AccountGetInfoRequest request = new AccountGetInfoRequest();
 request.setAddress(accountAddress);
 
@@ -391,7 +403,7 @@ request.setAddress(accountAddress);
 AccountGetInfoResponse response =  sdk.getAccountService().getInfo(request);
 if (response.getErrorCode() == 0) {
     AccountGetInfoResult result = response.getResult();
-    System.out.println(JSON.toJSONString(result, true));
+    System.out.println("账户信息: \n" + JSON.toJSONString(result, true));
 } else {
     System.out.println("error: " + response.getErrorDesc());
 }
@@ -401,7 +413,7 @@ if (response.getErrorCode() == 0) {
 
 > 接口说明
 
-   该接口用于获取账户的nonce
+   该接口用于获取账户的nonce值
 
 > 调用方法
 
@@ -411,20 +423,20 @@ AccountGetNonceResponse getNonce(AccountGetNonceRequest);
 
    参数      |     类型     |        描述       
 ----------- | ------------ | ---------------- 
-address     |   String     |  必填，待查询的账户地址   
+address     |   String     |  必填，待查询的区块链账户地址   
 
 > 响应数据
 
    参数      |     类型     |        描述       
 ----------- | ------------ | ---------------- 
-nonce       |   Long     |  该账户的交易序列号   
+nonce       |   Long       |  账户交易序列号   
 
 > 错误码
 
    异常       |     错误码   |   描述   
 -----------  | ----------- | -------- 
 INVALID_ADDRESS_ERROR| 11006 | Invalid address
-CONNECTNETWORK_ERROR| 11007| Connect network failed
+CONNECTNETWORK_ERROR| 11007| Fail to connect network
 SYSTEM_ERROR |   20000     |  System error 
 
 > 示例
@@ -438,7 +450,7 @@ request.setAddress(accountAddress);
 // 调用getNonce接口
 AccountGetNonceResponse response = sdk.getAccountService().getNonce(request);
 if(0 == response.getErrorCode()){
-    System.out.println("账户Nonce:" + response.getResult().getNonce());
+    System.out.println("账户nonce:" + response.getResult().getNonce());
 } else {
     System.out.println("error: " + response.getErrorDesc());
 }
@@ -458,20 +470,20 @@ AccountGetBalanceResponse getBalance(AccountGetBalanceRequest);
 
    参数      |     类型     |        描述       
 ----------- | ------------ | ---------------- 
-address     |   String     |  必填，待检测的账户地址   
+address     |   String     |  必填，待检测的区块链账户地址   
 
 > 响应数据
 
    参数      |     类型     |        描述       
 ----------- | ------------ | ---------------- 
-balance     |   Long     |  BU的余额   
+balance     |   Long       |  BU的余额
 
 > 错误码
 
    异常       |     错误码   |   描述   
 -----------  | ----------- | -------- 
 INVALID_ADDRESS_ERROR| 11006 | Invalid address
-CONNECTNETWORK_ERROR| 11007| Connect network failed
+CONNECTNETWORK_ERROR| 11007| Fail to connect network
 SYSTEM_ERROR |   20000     |  System error 
 
 > 示例
@@ -485,7 +497,8 @@ request.setAddress(accountAddress);
 // 调用getBalance接口
 AccountGetBalanceResponse response = sdk.getAccountService().getBalance(request);
 if(0 == response.getErrorCode()){
-    System.out.println("BU余额：" + ToBaseUnit.MO2BU(response.getResult().getBalance().toString()) + " BU");
+    AccountGetBalanceResult result = response.getResult();
+    System.out.println("BU余额：" + ToBaseUnit.MO2BU(result.getBalance().toString()) + " BU");
 } else {
     System.out.println("error: " + response.getErrorDesc());
 }
@@ -518,7 +531,7 @@ asset	    | [AssetInfo](#AssetInfo)[] |账户资产
    成员      |     类型     |        描述       
 ----------- | ------------ | ---------------- 
   key       | [Key](#Key)  | 资产惟一标识
-  amount    | int64        | 资产数量
+  amount    | Long        | 资产数量
  
  #### Key
 
@@ -532,16 +545,16 @@ issuer   |   String    |   资产发行账户地址
    异常       |     错误码   |   描述   
 -----------  | ----------- | -------- 
 INVALID_ADDRESS_ERROR| 11006 | Invalid address
-CONNECTNETWORK_ERROR| 11007| Connect network failed
+CONNECTNETWORK_ERROR| 11007| Fail to connect network
 NO_ASSET_ERROR|11009|The account does not have the asset
-SYSTEM_ERROR |   20000     |  System error
+SYSTEM_ERROR|20000|System error
 
 > 示例
 
 ```
 // 初始化请求参数
 AccountGetAssetsRequest request = new AccountGetAssetsRequest();
-request.setAddress("buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp");
+request.setAddress("buQsurH1M4rjLkfjzkxR9KXJ6jSu2r9xBNEw");
 
 // 调用getAssets接口
 AccountGetAssetsResponse response = sdk.getAccountService().getAssets(request);
@@ -581,7 +594,7 @@ metadata    |[MetadataInfo](#MetadataInfo)   |  账户
 ----------- | ----------- | ---------------- 
 key         |  String     |  metadata的关键词
 value       |  String     |  metadata的内容
-version     |  int64      |  metadata的版本
+version     |  Long      |  metadata的版本
    
 
 > 错误码
@@ -589,9 +602,9 @@ version     |  int64      |  metadata的版本
    异常       |     错误码   |   描述   
 -----------  | ----------- | -------- 
 INVALID_ADDRESS_ERROR | 11006 | Invalid address
-CONNECTNETWORK_ERROR | 11007 | Connect network failed
+CONNECTNETWORK_ERROR | 11007 | Fail to connect network
 NO_METADATA_ERROR|11010|The account does not have the metadata
-INVALID_DATAKEY_ERROR | 11011 | The length of key must between 1 and 1024
+INVALID_DATAKEY_ERROR | 11011 | The length of key must be between 1 and 1024
 SYSTEM_ERROR | 20000| System error
 
 
@@ -599,10 +612,10 @@ SYSTEM_ERROR | 20000| System error
 
 ```
 // 初始化请求参数
-String accountAddress = "buQemmMwmRQY1JkcU7w3nhruo%X5N3j6C29uo";
+String accountAddress = "buQsurH1M4rjLkfjzkxR9KXJ6jSu2r9xBNEw";
 AccountGetMetadataRequest request = new AccountGetMetadataRequest();
 request.setAddress(accountAddress);
-request.setKey("hello");
+request.setKey("20180704");
 
 // 调用getMetadata接口
 AccountGetMetadataResponse response =  sdk.getAccountService().getMetadata(request);
@@ -647,8 +660,8 @@ asset	    | [AssetInfo](#AssetInfo)[] |账户资产
    异常       |     错误码   |   描述   |
 -----------  | ----------- | -------- |
 INVALID_ADDRESS_ERROR|11006|Invalid address
-CONNECTNETWORK_ERROR|11007|Connect network failed
-INVALID_ASSET_CODE_ERROR|11023|The length of asset code must between 1 and 64
+CONNECTNETWORK_ERROR|11007|Fail to connect network
+INVALID_ASSET_CODE_ERROR|11023|The length of asset code must be between 1 and 64
 INVALID_ISSUER_ADDRESS_ERROR|11027|Invalid issuer address
 SYSTEM_ERROR|20000|System error
 
@@ -657,9 +670,9 @@ SYSTEM_ERROR|20000|System error
 ```
 // 初始化请求参数
 AssetGetInfoRequest request = new AssetGetInfoRequest();
-request.setIssuer("buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp");
-request.setCode("TST");
-request.setAddress("buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp");
+request.setAddress("buQsurH1M4rjLkfjzkxR9KXJ6jSu2r9xBNEw");
+request.setIssuer("buQBjJD1BSJ7nzAbzdTenAhpFjmxRVEEtmxH");
+request.setCode("HNC");
 
 // 调用getInfo消息
 AssetGetInfoResponse response = sdk.getAssetService().getInfo(request);
@@ -679,7 +692,7 @@ if (response.getErrorCode() == 0) {
 
 > 接口说明
 
-   该接口用于检测Token是否有效
+   该接口用于验证合约Token的有效性
 
 > 调用方法
 
@@ -689,13 +702,13 @@ TokenCheckValidResponse checkValid(TokenCheckValidRequest);
 
    参数      |     类型     |        描述       
 ----------- | ------------ | ---------------- 
-contractAddress |   String  |  必填，待检测的Token合约账户地址   
+contractAddress |   String  |  必填，待检查的Token合约账户地址   
 
 > 响应数据
 
    参数      |     类型     |        描述       
 ----------- | ------------ | ---------------- 
-isValid     |   String     |  Token是否有效   
+isValid     |   String     |  是否有效   
 
 > 错误码
 
@@ -753,7 +766,7 @@ INVALID_CONTRACTADDRESS_ERROR|11037|Invalid contract address
 NO_SUCH_TOKEN_ERROR|11030|No such token
 INVALID_TOKENOWNER_ERRPR|11035|Invalid token owner
 INVALID_SPENDER_ERROR|11043|Invalid spender
-GET_ALLOWNANCE_ERROR|11036|Get allowance failed
+GET_ALLOWNANCE_ERROR|11036|Fail to get allowance
 SYSTEM_ERROR|20000|System error
 
 > 示例
@@ -761,9 +774,9 @@ SYSTEM_ERROR|20000|System error
 ```
 // 初始化请求参数
 TokenAllowanceRequest request = new TokenAllowanceRequest();
-request.setContractAddress("buQfnVYgXuMo3rvCEpKA6SfRrDpaz8D8A9Ea");
-request.setTokenOwner("buQVU86Jm4FeRW4JcQTD9Rx9NkUkHikYGp6z");
-request.setSpender("buQemmMwmRQY1JkcU7w3nhruoX5N3j6C29uo");
+request.setContractAddress("buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq");
+request.setTokenOwner("buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp");
+request.setSpender("buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp");
 
 // 调用allowance接口
 TokenAllowanceResponse response = sdk.getTokenService().allowance(request);
@@ -795,10 +808,12 @@ contractAddress     |   String     |  待查询的合约账户地址   |
 
    参数      |     类型     |        描述       |
 ----------- | ------------ | ---------------- |
+ctp|String|合约Token版本号
 symbol|String|合约Token符号
-decimals|int|合约数量的精度
+decimals|Integer|合约数量的精度
 totalSupply|String|合约的总供应量
 name|String|合约Token的名称
+contractOwner|String|合约Token的拥有者
 
 > 错误码
 
@@ -806,7 +821,7 @@ name|String|合约Token的名称
 -----------  | ----------- | -------- |
 INVALID_CONTRACTADDRESS_ERROR|11037|Invalid contract address
 NO_SUCH_TOKEN_ERROR|11030|No such token
-GET_TOKEN_INFO_ERROR|11066|Get token info failed
+GET_TOKEN_INFO_ERROR|11066|Fail to get token info
 SYSTEM_ERROR|20000|System error
 
 > 示例
@@ -814,7 +829,7 @@ SYSTEM_ERROR|20000|System error
 ```
 // 初始化请求参数
 TokenGetInfoRequest request = new TokenGetInfoRequest();
-request.setContractAddress("buQfnVYgXuMo3rvCEpKA6SfRrDpaz8D8A9Ea");
+request.setContractAddress("buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq");
 
 // 调用getInfo接口
 TokenGetInfoResponse response = sdk.getTokenService().getInfo(request);
@@ -854,7 +869,7 @@ name     |   String     |  合约Token的名称   |
 -----------  | ----------- | -------- |
 INVALID_CONTRACTADDRESS_ERROR|11037|Invalid contract address
 NO_SUCH_TOKEN_ERROR|11030|No such token
-GET_TOKEN_INFO_ERROR|11066|Get token info failed
+GET_TOKEN_INFO_ERROR|11066|Fail to get token info
 SYSTEM_ERROR|20000|System error
 
 > 示例
@@ -862,7 +877,7 @@ SYSTEM_ERROR|20000|System error
 ```
 // 初始化请求参数
 TokenGetNameRequest request = new TokenGetNameRequest();
-request.setContractAddress("buQfnVYgXuMo3rvCEpKA6SfRrDpaz8D8A9Ea");
+request.setContractAddress("buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq");
 
 // 调用getName接口
 TokenGetNameResponse response = sdk.getTokenService().getName(request);
@@ -902,7 +917,7 @@ symbol     |   String     |  合约Token的符号   |
 -----------  | ----------- | -------- |
 INVALID_CONTRACTADDRESS_ERROR|11037|Invalid contract address
 NO_SUCH_TOKEN_ERROR|11030|No such token
-GET_TOKEN_INFO_ERROR|11066|底层错误描述
+GET_TOKEN_INFO_ERROR|11066|Fail to get token info
 SYSTEM_ERROR|20000|System error
 
 > 示例
@@ -910,7 +925,7 @@ SYSTEM_ERROR|20000|System error
 ```
 // 初始化请求参数
 TokenGetSymbolRequest request = new TokenGetSymbolRequest();
-request.setContractAddress("buQfnVYgXuMo3rvCEpKA6SfRrDpaz8D8A9Ea");
+request.setContractAddress("buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq");
 
 // 调用getSymbol接口
 TokenGetSymbolResponse response = sdk.getTokenService().getSymbol(request);
@@ -948,20 +963,20 @@ decimals     |   Integer     |  合约token精度   |
 
    异常       |     错误码   |   描述   |
 -----------  | ----------- | -------- |
-SYSTEM_ERROR |   20000     |  系统错误 |
+SYSTEM_ERROR |   20000     |  System error |
 
 > 示例
 
 ```
 // 初始化请求参数
 TokenGetDecimalsRequest request = new TokenGetDecimalsRequest();
-request.setContractAddress("buQfnVYgXuMo3rvCEpKA6SfRrDpaz8D8A9Ea");
+request.setContractAddress("buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq");
 
 // 调用getDecimals接口
 TokenGetDecimalsResponse response = sdk.getTokenService().getDecimals(request);
 if (response.getErrorCode() == 0) {
-    TokenGetSymbolResult result = response.getResult();
-    System.out.println(result.getSymbol());
+    TokenGetDecimalsResult result = response.getResult();
+    System.out.println(result.getDecimals());
 } else {
     System.out.println("error: " + response.getErrorDesc());
 }
@@ -995,7 +1010,7 @@ totalSupply     |   String     |   合约Token的总供应量  |
 -----------  | ----------- | -------- |
 INVALID_CONTRACTADDRESS_ERROR|11037|Invalid contract address
 NO_SUCH_TOKEN_ERROR|11030|No such token
-GET_TOKEN_INFO_ERROR|11066|Get token info failed
+GET_TOKEN_INFO_ERROR|11066|Fail to get token info
 SYSTEM_ERROR|20000|System error
 
 > 示例
@@ -1003,7 +1018,7 @@ SYSTEM_ERROR|20000|System error
 ```
 // 初始化请求参数
 TokenGetTotalSupplyRequest request = new TokenGetTotalSupplyRequest();
-request.setContractAddress("buQfnVYgXuMo3rvCEpKA6SfRrDpaz8D8A9Ea");
+request.setContractAddress("buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq");
 
 // 调用getTotalSupply接口
 TokenGetTotalSupplyResponse response = sdk.getTokenService().getTotalSupply(request);
@@ -1023,7 +1038,7 @@ if (response.getErrorCode() == 0) {
 
 > 调用方法
 
-AccounCheckValidResponse getBalance(AccountCheckValidRequest)
+TokenGetBalanceResponse getBalance(TokenGetBalanceRequest)
 
 > 请求参数
 
@@ -1045,7 +1060,7 @@ balance     |   Long     |  token的余额   |
 INVALID_CONTRACTADDRESS_ERROR|11037|Invalid contract address
 INVALID_TOKENOWNER_ERRPR|11035|Invalid token owner
 NO_SUCH_TOKEN_ERROR|11030|No such token
-GET_TOKEN_INFO_ERROR|11066|Get token info failed
+GET_TOKEN_INFO_ERROR|11066|Fail to get token info
 SYSTEM_ERROR|20000|System error
 
 
@@ -1054,8 +1069,8 @@ SYSTEM_ERROR|20000|System error
 ```
 // 初始化请求参数
 TokenGetBalanceRequest request = new TokenGetBalanceRequest();
-request.setContractAddress("buQfnVYgXuMo3rvCEpKA6SfRrDpaz8D8A9Ea");
-request.setTokenOwner("buQYsbybSh7BNckshKU22Pbx8tgk3FDTda4k");
+request.setContractAddress("buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq");
+request.setTokenOwner("buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp");
 
 // 调用getBalance接口
 TokenGetBalanceResponse response = sdk.getTokenService().getBalance(request);
@@ -1071,7 +1086,7 @@ if (response.getErrorCode() == 0) {
 
 账户服务主要是合约相关的接口，目前有3个接口：checkValid, getInfo, call
 
-### checkvalid-合约
+### checkValid-合约
 
 > 接口说明
 
@@ -1091,7 +1106,7 @@ contractAddress     |   String     |  待检测的合约账户地址
 
    参数      |     类型     |        描述       
 ----------- | ------------ | ---------------- 
-isValid     |   boolean     |  是否有效   
+isValid     |   Boolean     |  是否有效   
 
 > 错误码
 
@@ -1107,6 +1122,7 @@ SYSTEM_ERROR |   20000     |  System error
 ContractCheckValidRequest request = new ContractCheckValidRequest();
 request.setContractAddress("buQfnVYgXuMo3rvCEpKA6SfRrDpaz8D8A9Ea");
 
+// 调用checkValid接口
 ContractCheckValidResponse response = sdk.getContractService().checkValid(request);
 if (response.getErrorCode() == 0) {
     ContractCheckValidResult result = response.getResult();
@@ -1142,7 +1158,7 @@ contract|[ContractInfo](#contractinfo)|合约信息
 
    成员      |     类型     |        描述       |
 ----------- | ------------ | ---------------- |
-type|int|合约类型，默认0
+type|Integer|合约类型，默认0
 payload|String|合约代码
 
 > 错误码
@@ -1151,7 +1167,7 @@ payload|String|合约代码
 -----------  | ----------- | -------- |
 INVALID_CONTRACTADDRESS_ERROR|11037|Invalid contract address
 CONTRACTADDRESS_NOT_CONTRACTACCOUNT_ERROR|11038|contractAddress is not a contract account
-CONNECTNETWORK_ERROR|11007|Connect network failed
+CONNECTNETWORK_ERROR|11007|Fail to connect network
 SYSTEM_ERROR|20000|System error
 
 > 示例
@@ -1190,8 +1206,8 @@ code|String|选填，合约代码，与contractAddress不能同时为空
 input|String|选填，合约入参
 contractBalance|String|选填，赋予合约的初始 BU 余额
 optType|Integer|必填，0: 调用合约的读写接口 init, 1: 调用合约的读写接口 main, 2 :调用只读接口 query
-feeLimit|Long|手续费
-gasPrice|Long|打包费用
+feeLimit|Long|交易要求的最低手续费
+gasPrice|Long|交易燃料费用
 
 
 > 响应数据
@@ -1231,9 +1247,9 @@ trigger|[ContractTrigger](#contracttrigger)|合约触发者
    成员      |     类型     |        描述       |
 ----------- | ------------ | ---------------- |
 sourceAddress|String|交易发起的源账户地址
-feeLimit|int64|交易费用
-gasPrice|int64|交易打包费用
-nonce|int64|交易序列号
+feeLimit|Long|交易要求的最低费用
+gasPrice|Long|交易燃料费用
+nonce|Long|交易序列号
 operations|[Operation](#operation)[]|操作列表
 
 #### ContractTrigger
@@ -1245,7 +1261,7 @@ transaction|[TriggerTransaction](#triggertransaction)|触发交易
 
    成员      |     类型     |        描述       |
 ----------- | ------------ | ---------------- |
-type|int|操作类型
+type|Integer|操作类型
 sourceAddress|String|操作发起源账户地址
 metadata|String|备注
 createAccount|[OperationCreateAccount](#operationcreateaccount)|创建账户操作
@@ -1270,8 +1286,8 @@ destAddress|String|目标账户地址
 contract|[Contract](#contract)|合约信息
 priv|[Priv](#priv)|账户权限
 metadata|[MetadataInfo](#metadatainfo)[]|账户
-initBalance	int64	账户资产
-initInput	String	合约init函数的入参
+initBalance|Long|账户资产
+initInput|String|合约init函数的入参
 
 #### Contract
 
@@ -1286,14 +1302,14 @@ payload|String|对应语种的合约代码
 ----------- | ------------ | ---------------- |
 key|String|metadata的关键词
 value|String|metadata的内容
-version|int64|metadata的版本
+version|Long|metadata的版本
 
 #### OperationIssueAsset
 
    成员      |     类型     |        描述       |
 ----------- | ------------ | ---------------- |
 code|String|资产编码
-amount|int64|资产数量
+amount|Long|资产数量
 
 #### OperationPayAsset
 
@@ -1308,7 +1324,7 @@ input|String|合约main函数入参
    成员      |     类型     |        描述       |
 ----------- | ------------ | ---------------- |
 destAddress|String|待转移的目标账户地址
-amount|int64|待转移的BU数量
+amount|Long|待转移的BU数量
 input|String|合约main函数入参
 
 #### OperationSetMetadata
@@ -1317,16 +1333,16 @@ input|String|合约main函数入参
 ----------- | ------------ | ---------------- |
 key|String|metadata的关键词
 value|String|metadata的内容
-version|int64|metadata的版本
+version|Long|metadata的版本
 deleteFlag|boolean|是否删除metadata
 
 #### OperationSetPrivilege
 
    成员      |     类型     |        描述       |
 ----------- | ------------ | ---------------- |
-masterWeight|String|账户自身权重，大小[0, max(uint32)]
+masterWeight|String|账户自身权重，大小[0, max(Integer) * 2]
 signers|[Signer](#signer)[]|签名者权重列表
-txThreshold|String|交易门限，大小[0, max(int64)]
+txThreshold|String|交易门限，大小[0, max(Long)]
 typeThreshold|[TypeThreshold](#typethreshold)|指定类型交易门限
 
 #### OperationLog
@@ -1343,8 +1359,8 @@ data|String[]|日志内容
 INVALID_SOURCEADDRESS_ERROR|11002|Invalid sourceAddress
 INVALID_CONTRACTADDRESS_ERROR|11037|Invalid contract address
 CONTRACTADDRESS_CODE_BOTH_NULL_ERROR|11063|ContractAddress and code cannot be empty at the same time
-INVALID_OPTTYPE_ERROR|11064|OptType must between 0 and 2
-CONNECTNETWORK_ERROR|11007|Connect network failed
+INVALID_OPTTYPE_ERROR|11064|OptType must be between 0 and 2
+CONNECTNETWORK_ERROR|11007|Fail to connect network
 SYSTEM_ERROR|20000|System error
 
 > 示例
@@ -1378,27 +1394,27 @@ if (response.getErrorCode() == 0) {
 
    成员变量    |     类型  |        描述                           
 ------------- | -------- | ----------------------------------   
-sourceAddress |   String |  选填，操作源账户      
-metadata      |   String |  选填，备注，必须是16进制字符串 
+sourceAddress |   String |  选填，操作源账户地址
+metadata      |   String |  选填，备注
 
 >  AccountActivateOperation
 
-继承于BaseOperation，feeLimit固定是0.01 BU
+继承于BaseOperation，feeLimit目前(2018.07.26)固定是0.01 BU
 
    成员变量    |     类型  |        描述                           
 ------------- | -------- | ---------------------------------- 
-sourceAddress |   String |  选填，操作源账户  
+sourceAddress |   String |  选填，操作源账户地址 
 destAddress   |   String |  必填，目标账户地址                     
-initBalance   |   Long   |  必填，初始化资产，大小[0.1, max(int64)] 
+initBalance   |   Long   |  必填，初始化资产，大小(0, max(Long)] 
 metadata|String|选填，备注
 
 > AccountSetMetadataOperation
 
-继承于BaseOperation，feeLimit固定是0.01 BU
+继承于BaseOperation，feeLimit目前(2018.07.26)固定是0.01 BU
 
    成员变量    |     类型   |        描述                         
 ------------- | --------- | ------------------------------- 
-sourceAddress |   String |  选填，操作源账户
+sourceAddress |   String |  选填，操作源账户地址
 key           |   String  |  必填，metadata的关键词，长度[1, 1024]
 value         |   String  |  必填，metadata的内容，长度[0, 256000]
 version       |   Long    |  选填，metadata的版本
@@ -1407,134 +1423,134 @@ metadata|String|选填，备注
 
 > AccountSetPrivilegeOperation
 
-继承于BaseOperation，feeLimit固定是0.01 BU
+继承于BaseOperation，feeLimit目前(2018.07.26)固定是0.01 BU
 
    成员变量    |     类型   |        描述               
 ------------- | --------- | --------------------------
-sourceAddress |   String |  选填，操作源账户
-masterWeight|String|选填，账户自身权重，大小[0, max(uint32)]
+sourceAddress |   String |  选填，操作源账户地址
+masterWeight|String|选填，账户自身权重，大小[0, max(Integer) * 2]
 signers|[Signer](#signer)[]|选填，签名者权重列表
-txThreshold|String|选填，交易门限，大小[0, max(int64)]
+txThreshold|String|选填，交易门限，大小[0, max(Long)]
 typeThreshold|[TypeThreshold](#typethreshold)[]|选填，指定类型交易门限
 metadata|String|选填，备注
 
 > AssetIssueOperation
 
-继承于BaseOperation，feeLimit固定是50.01 BU
+继承于BaseOperation，feeLimit目前(2018.07.26)固定是50.01 BU
 
    成员变量    |     类型   |        描述             
 ------------- | --------- | ------------------------
-sourceAddress|String|选填，发起该操作的源账户地址
+sourceAddress|String|选填，操作源账户地址
 code|String|必填，资产编码，长度[1, 64]
-assetAmount|int64|必填，资产发行数量，大小[0, max(int64)]
+assetAmount|Long|必填，资产发行数量，大小[0, max(Long)]
 metadata|String|选填，备注
 
 > AssetSendOperation
 
-继承于BaseOperation，feeLimit固定是0.01 BU
+继承于BaseOperation，feeLimit目前(2018.07.26)固定是0.01 BU
 
    成员变量    |     类型   |        描述            
 ------------- | --------- | ----------------------
-sourceAddress|String|选填，发起该操作的源账户地址
+sourceAddress|String|选填，操作源账户地址
 destAddress|String|必填，目标账户地址
 code|String|必填，资产编码，长度[1, 64]
 issuer|String|必填，资产发行账户地址
-assetAmount|int64|必填，资产数量，大小[ 0, max(int64)]
+assetAmount|Long|必填，资产数量，大小[ 0, max(Long)]
 metadata|String|选填，备注
 
 > BUSendOperation
 
-继承于BaseOperation，feeLimit固定是0.01 BU
+继承于BaseOperation，feeLimit目前(2018.07.26)固定是0.01 BU
 
    成员变量    |     类型   |        描述          
 ------------- | --------- | ---------------------
-sourceAddress|String|选填，发起该操作的源账户地址
+sourceAddress|String|选填，操作源账户地址
 destAddress|String|必填，目标账户地址
-buAmount|int64|必填，资产发行数量，大小[0, max(int64)]
+buAmount|Long|必填，资产发行数量，大小[0, max(Long)]
 metadata|String|选填，备注
 
 > TokenIssueOperation
 
-继承于BaseOperation，feeLimit固定是10.08 BU
+继承于BaseOperation，feeLimit目前(2018.07.26)固定是10.08 BU
 
    成员变量    |     类型   |        描述          
 ------------- | --------- | ---------------------
-sourceAddress|String|选填，发起该操作的源账户地址
-initBalance|int64|必填，给合约账户的初始化资产，大小[1, max(64)]
+sourceAddress|String|选填，操作源账户地址
+initBalance|Long|必填，给合约账户的初始化资产，大小[1, max(64)]
 name|String|必填，token名称，长度[1, 1024]
 symbol|String|必填，token符号，长度[1, 1024]
-decimals|int|必填，token数量的精度，大小[0, 8]
-supply|String|必填，token发行的总供应量(不带精度)，大小[1, max(int64)]
+decimals|Integer|必填，token数量的精度，大小[0, 8]
+supply|String|必填，token发行的总供应量(不带精度)，大小[1, max(Long)]
 metadata|String|选填，备注
 
 > TokenTransferOperation
 
-继承于BaseOperation，feeLimit固定是0.02 BU
+继承于BaseOperation，feeLimit目前(2018.07.26)固定是0.02 BU
 
    成员变量    |     类型   |        描述          
 ------------- | --------- | ---------------------
-sourceAddress|String|选填，发起该操作的源账户地址
+sourceAddress|String|选填，操作源账户地址
 contractAddress|String|必填，合约账户地址
 destAddress|String|必填，待转移的目标账户地址
-tokenAmount|String|必填，待转移的token数量，大小[1, int(64)]
+tokenAmount|String|必填，待转移的token数量，大小[1, max(Long)]
 metadata|String|选填，备注
 
 > TokenTransferFromOperation
 
-继承于BaseOperation，feeLimit固定是0.02 BU
+继承于BaseOperation，feeLimit目前(2018.07.26)固定是0.02 BU
 
    成员变量    |     类型   |        描述          
 ------------- | --------- | ---------------------
-sourceAddress|String|选填，发起该操作的源账户地址
+sourceAddress|String|选填，操作源账户地址
 contractAddress|String|必填，合约账户地址
 fromAddress|String|必填，待转移的源账户地址
 destAddress|String|必填，待转移的目标账户地址
-tokenAmount|String|必填，待转移的token数量，大小[1, int(64)]
+tokenAmount|String|必填，待转移的token数量，大小[1, max(Long)]
 metadata|String|选填，备注
 
 > TokenApproveOperation
 
-继承于BaseOperation，feeLimit固定是0.02 BU
+继承于BaseOperation，feeLimit目前(2018.07.26)固定是0.02 BU
 
    成员变量    |     类型   |        描述          
 ------------- | --------- | ---------------------
-sourceAddress|String|选填，发起该操作的源账户地址
+sourceAddress|String|选填，操作源账户地址
 contractAddress|String|必填，合约账户地址
 spender|String|必填，授权的账户地址
-tokenAmount|String|必填，被授权的待转移的token数量，大小[1, int(64)]
+tokenAmount|String|必填，被授权的待转移的token数量，大小[1, max(Long)]
 metadata|String|选填，备注
 
 > TokenAssignOperation
 
-继承于BaseOperation，feeLimit固定是0.02 BU
+继承于BaseOperation，feeLimit目前(2018.07.26)固定是0.02 BU
 
    成员变量    |     类型   |        描述          
 ------------- | --------- | ---------------------
-sourceAddress|String|选填，发起该操作的源账户地址
+sourceAddress|String|选填，操作源账户地址
 contractAddress|String|必填，合约账户地址
 destAddress|String|必填，待分配的目标账户地址
-tokenAmount|String|必填，待分配的token数量，大小[1, int(64)]
+tokenAmount|String|必填，待分配的token数量，大小[1, max(Long)]
 metadata|String|选填，备注
 
 > TokenChangeOwnerOperation
 
-继承于BaseOperation，feeLimit固定是0.02 BU
+继承于BaseOperation，feeLimit目前(2018.07.26)固定是0.02 BU
 
    成员变量    |     类型   |        描述          
 ------------- | --------- | ---------------------
-sourceAddress|String|选填，发起该操作的源账户地址
+sourceAddress|String|选填，操作源账户地址
 contractAddress|String|必填，合约账户地址
 tokenOwner|String|必填，待分配的目标账户地址
 metadata|String|选填，备注
 
 > ContractCreateOperation
 
-继承于BaseOperation，feeLimit固定是0.02 BU
+继承于BaseOperation，feeLimit目前(2018.07.26)固定是0.02 BU
 
    成员变量    |     类型   |        描述          
 ------------- | --------- | ---------------------
-sourceAddress|String|选填，发起该操作的源账户地址
-initBalance|int64|必填，给合约账户的初始化资产，大小[1, max(64)]
+sourceAddress|String|选填，操作源账户地址
+initBalance|Long|必填，给合约账户的初始化资产，大小[1, max(Long)]
 type|Integer|选填，合约的语种，默认是0
 payload|String|必填，对应语种的合约代码
 initInput|String|选填，合约代码中init方法的入参
@@ -1542,37 +1558,37 @@ metadata|String|选填，备注
 
 > ContractInvokeByAssetOperation
 
-继承于BaseOperation，feeLimit要根据合约中执行交易来做添加手续费，首先发起交易手续费是0.01BU，然后合约中的交易也需要交易发起者添加相应交易的手续费
+继承于BaseOperation，feeLimit要根据合约中执行交易来做添加手续费，首先发起交易手续费目前(2018.07.26)是0.01BU，然后合约中的交易也需要交易发起者添加相应交易的手续费
 
    成员变量    |     类型   |        描述          
 ------------- | --------- | ---------------------
-sourceAddress|String|选填，发起该操作的源账户地址
+sourceAddress|String|选填，操作源账户地址
 contractAddress|String|必填，合约账户地址
-code|String|选填，资产编码，长度[0, 1024]，当为null时，仅触发合约
-issuer|String|选填，资产发行账户地址，当为null时，仅触发合约
-amount|int64|选填资产数量，大小[0, max(int64)]，当是0时，仅触发合约
+code|String|选填，资产编码，长度[0, 1024]，当null时，仅触发合约
+issuer|String|选填，资产发行账户地址，当null时，仅触发合约
+amount|Long|选填资产数量，大小[0, max(Long)]，当是0时，仅触发合约
 input|String|选填，待触发的合约的main()入参
 metadata|String|选填，备注
 
 > ContractInvokeByBUOperation
 
-继承于BaseOperation，feeLimit要根据合约中执行交易来做添加手续费，首先发起交易手续费是0.01BU，然后合约中的交易也需要交易发起者添加相应交易的手续费
+继承于BaseOperation，feeLimit要根据合约中执行交易来做添加手续费，首先发起交易手续费目前(2018.07.26)是0.01BU，然后合约中的交易也需要交易发起者添加相应交易的手续费
 
    成员变量    |     类型   |        描述          
 ------------- | --------- | ---------------------
-sourceAddress|String|选填，发起该操作的源账户地址
+sourceAddress|String|选填，操作源账户地址
 contractAddress|String|必填，合约账户地址
-amount|int64|选填，资产发行数量，大小[0, max(int64)]，当0时仅触发合约
+amount|Long|选填，资产发行数量，大小[0, max(Long)]，当0时仅触发合约
 input|String|选填，待触发的合约的main()入参
 metadata|String|选填，备注
 
 > LogCreateOperation
 
-继承于BaseOperation，feeLimit固定是0.01 BU
+继承于BaseOperation，feeLimit目前(2018.07.26)固定是0.01 BU
 
    成员变量    |     类型   |        描述          
 ------------- | --------- | ---------------------
-sourceAddress|String|选填，发起该操作的源账户地址
+sourceAddress|String|选填，操作源账户地址
 topic|String|必填，日志主题，长度[1, 128]
 datas|List<String>|必填，日志内容，每个字符串长度[1, 1024]
 metadata|String|选填，备注
@@ -1592,13 +1608,12 @@ TransactionBuildBlobResponse buildBlob(TransactionBuildBlobRequest);
    参数      |     类型     |        描述       
 ----------- | ------------ | ---------------- 
 sourceAddress|String|必填，发起该操作的源账户地址
-nonce|int64|必填，待发起的交易序列号，函数里+1，大小[1, max(int64)]
-gasPrice|int64|必填，交易打包费用，单位MO，1 BU = 10^8 MO，大小[1000, max(int64)]
-feeLimit|int64|必填，交易手续费，单位MO，1 BU = 10^8 MO，大小[1000000, max(int64)]
+nonce|Long|必填，待发起的交易序列号，函数里+1，大小[1, max(Long)]
+gasPrice|Long|必填，交易燃料费用，单位MO，1 BU = 10^8 MO，大小[1, max(Long)]
+feeLimit|Long|必填，交易要求的最低的手续费，单位MO，1 BU = 10^8 MO，大小[1, max(Long)]
 operation|BaseOperation[]|必填，待提交的操作列表，不能为空
-ceilLedgerSeq|long|选填，区块高度限制，大于等于0，是0时不限制
+ceilLedgerSeq|long|选填，距离当前区块高度指定差值的区块内执行的限制，当区块超出当时区块高度与所设差值的和后，交易执行失败。必须大于等于0，是0时不限制
 metadata|String|选填，备注
-
 
 > 响应数据
 
@@ -1612,44 +1627,44 @@ hash|String|交易hash
    异常       |     错误码   |   描述   |
 -----------  | ----------- | -------- |
 INVALID_SOURCEADDRESS_ERROR|11002|Invalid sourceAddress
-INVALID_NONCE_ERROR|11048|Nonce must between 1 and max(int64)
+INVALID_NONCE_ERROR|11048|Nonce must be between 1 and max(Long)
 INVALID_DESTADDRESS_ERROR|11003|Invalid destAddress
-INVALID_INITBALANCE_ERROR|11004|InitBalance must between 1 and max(int64) 
+INVALID_INITBALANCE_ERROR|11004|InitBalance must be between 1 and max(Long) 
 SOURCEADDRESS_EQUAL_DESTADDRESS_ERROR|11005|SourceAddress cannot be equal to destAddress
-INVALID_ISSUE_AMMOUNT_ERROR|11008|AssetAmount this will be issued must between 1 and max(int64)
-INVALID_DATAKEY_ERROR|11011|The length of key must between 1 and 1024
-INVALID_DATAVALUE_ERROR|11012|The length of value must between 0 and 256000
+INVALID_ISSUE_AMMOUNT_ERROR|11008|AssetAmount this will be issued must be between 1 and max(Long)
+INVALID_DATAKEY_ERROR|11011|The length of key must be between 1 and 1024
+INVALID_DATAVALUE_ERROR|11012|The length of value must be between 0 and 256000
 INVALID_DATAVERSION_ERROR|11013|The version must be equal or bigger than 0
-INVALID_MASTERWEIGHT _ERROR|11015|MasterWeight must between 0 and max(uint32)
+INVALID_MASTERWEIGHT _ERROR|11015|MasterWeight must be between 0 and max(Integer) * 2
 INVALID_SIGNER_ADDRESS_ERROR|11016|Invalid signer address
-INVALID_SIGNER_WEIGHT _ERROR|11017|Signer weight must between 0 and max(uint32)
-INVALID_TX_THRESHOLD_ERROR|11018|TxThreshold must between 0 and max(int64)
-INVALID_OPERATION_TYPE_ERROR|11019|Operation type must between 1 and 100
-INVALID_TYPE_THRESHOLD_ERROR|11020|TypeThreshold must between 0 and max(int64)
-INVALID_ASSET_CODE _ERROR|11023|The length of key must between 1 and 64
-INVALID_ASSET_AMOUNT_ERROR|11024|AssetAmount must between 0 and max(int64)
-INVALID_BU_AMOUNT_ERROR|11026|BuAmount must between 0 and max(int64)
+INVALID_SIGNER_WEIGHT _ERROR|11017|Signer weight must be between 0 and max(Integer) * 2
+INVALID_TX_THRESHOLD_ERROR|11018|TxThreshold must be between 0 and max(Long)
+INVALID_OPERATION_TYPE_ERROR|11019|Operation type must be between 1 and 100
+INVALID_TYPE_THRESHOLD_ERROR|11020|TypeThreshold must be between 0 and max(Long)
+INVALID_ASSET_CODE _ERROR|11023|The length of key must be between 1 and 64
+INVALID_ASSET_AMOUNT_ERROR|11024|AssetAmount must be between 0 and max(Long)
+INVALID_BU_AMOUNT_ERROR|11026|BuAmount must be between 0 and max(Long)
 INVALID_ISSUER_ADDRESS_ERROR|11027|Invalid issuer address
 NO_SUCH_TOKEN_ERROR|11030|No such token
-INVALID_TOKEN_NAME_ERROR|11031|The length of token name must between 1 and 1024
-INVALID_TOKEN_SYMBOL_ERROR|11032|The length of symbol must between 1 and 1024
+INVALID_TOKEN_NAME_ERROR|11031|The length of token name must be between 1 and 1024
+INVALID_TOKEN_SYMBOL_ERROR|11032|The length of symbol must be between 1 and 1024
 INVALID_TOKEN_DECIMALS_ERROR|11033|Decimals must less than 8
-INVALID_TOKEN_TOTALSUPPLY_ERROR|11034|TotalSupply must between 1 and max(int64)
+INVALID_TOKEN_TOTALSUPPLY_ERROR|11034|TotalSupply must be between 1 and max(Long)
 INVALID_TOKENOWNER_ERRPR|11035|Invalid token owner
 INVALID_CONTRACTADDRESS_ERROR|11037|Invalid contract address
 CONTRACTADDRESS_NOT_CONTRACTACCOUNT_ERROR|11038|contractAddress is not a contract account
-INVALID_TOKEN_AMOUNT_ERROR|11039|Token amount must between 1 and max(int64)
+INVALID_TOKEN_AMOUNT_ERROR|11039|Token amount must be between 1 and max(Long)
 SOURCEADDRESS_EQUAL_CONTRACTADDRESS_ERROR|11040|SourceAddress cannot be equal to contractAddress
 INVALID_FROMADDRESS_ERROR|11041|Invalid fromAddress
 FROMADDRESS_EQUAL_DESTADDRESS_ERROR|11042|FromAddress cannot be equal to destAddress
 INVALID_SPENDER_ERROR|11043|Invalid spender
 PAYLOAD_EMPTY_ERROR|11044|Payload cannot be empty
-INVALID_LOG_TOPIC _ERROR|11045|The length of key must between 1 and 128
-INVALID_LOG_DATA _ERROR|11046|The length of value must between 1 and 1024
+INVALID_LOG_TOPIC _ERROR|11045|The length of key must be between 1 and 128
+INVALID_LOG_DATA _ERROR|11046|The length of value must be between 1 and 1024
 INVALID_CONTRACT_TYPE_ERROR|11047|Type must be equal or bigger than 0 
-INVALID_NONCE_ERROR|11048|Nonce must between 1 and max(int64)
-INVALID_ GASPRICE_ERROR|11049|Amount must between gasPrice in block and max(int64)
-INVALID_FEELIMIT_ERROR|11050|FeeLimit must between 1000000 and max(int64)
+INVALID_NONCE_ERROR|11048|Nonce must be between 1 and max(Long)
+INVALID_ GASPRICE_ERROR|11049|Amount must be between gasPrice in block and max(Long)
+INVALID_FEELIMIT_ERROR|11050|FeeLimit must be between 1000000 and max(Long)
 OPERATIONS_EMPTY_ERROR|11051|Operations cannot be empty
 INVALID_CEILLEDGERSEQ_ERROR|11052|CeilLedgerSeq must be equal or bigger than 0
 OPERATIONS_ONE_ERROR|11053|One of operations cannot be resolved
@@ -1660,7 +1675,7 @@ SYSTEM_ERROR|20000|System error
 ```
 // 初始化变量
 String senderAddresss = "buQfnVYgXuMo3rvCEpKA6SfRrDpaz8D8A9Ea";
-String destAddress = "buQswSaKDACkrFsnP1wcVsLAUzXQsemauE";
+String destAddress = "buQsurH1M4rjLkfjzkxR9KXJ6jSu2r9xBNEw";
 Long amount = ToBaseUnit.BU2MO("10.9");
 Long gasPrice = 1000L;
 Long feeLimit = ToBaseUnit.BU2MO("0.01");
@@ -1675,7 +1690,7 @@ operation.setAmount(amount);
 // 初始化请求参数
 TransactionBuildBlobRequest request = new TransactionBuildBlobRequest();
 request.setSourceAddress(senderAddresss);
-request.setNonce(senderNonce);
+request.setNonce(nonce);
 request.setFeeLimit(feeLimit);
 request.setGasPrice(gasPrice);
 request.addOperation(operation);
@@ -1683,7 +1698,7 @@ request.addOperation(operation);
 // 调用buildBlob接口
 String transactionBlob = null;
 TransactionBuildBlobResponse response = sdk.getTransactionService().buildBlob(request);
-if (response.getErrorCode == 0) {
+if (response.getErrorCode() == 0) {
     TransactionBuildBlobResult result = response.getResult();
     System.out.println(JSON.toJSONString(result, true));
 } else {
@@ -1706,10 +1721,10 @@ TransactionEvaluateFeeResponse evaluateFee (TransactionEvaluateFeeRequest);
    参数      |     类型     |        描述       |
 ----------- | ------------ | ---------------- |
 sourceAddress|String|必填，发起该操作的源账户地址
-nonce|int64|必填，待发起的交易序列号，大小[1, max(int64)]
+nonce|Long|必填，待发起的交易序列号，大小[1, max(Long)]
 operation|OperationBase[]|必填，待提交的操作列表，不能为空
 signtureNumber|Integer|选填，待签名者的数量，默认是1，大小[1, max(int32)]
-ceilLedgerSeq|Long|选填，区块高度限制，大于等于0，是0时不限制
+ceilLedgerSeq|Long|选填，距离当前区块高度指定差值的区块内执行的限制，当区块超出当时区块高度与所设差值的和后，交易执行失败。必须大于等于0，是0时不限制
 metadata|String|选填，备注
 
 > 响应数据
@@ -1726,37 +1741,37 @@ transactionEnv| [TestTransactionFees](#testtransactionfees)| 评估交易费用
 
 #### TestTransactionFees
 
-   成员变量      |     类型     |        描述       |
+   成员变量      |     类型     |      描述      |
 ----------- | ------------ | ---------------- |
 transactionFees|[TransactionFees](#transactionfees)|交易费用
 
 #### TransactionFees
-   成员变量      |     类型     |        描述       |
+   成员变量      |     类型     |        描述    |
 ----------- | ------------ | ---------------- |
-feeLimit|Long|交易费用
-gasPrice|Long|打包费用
+feeLimit|Long|交易要求的最低费用
+gasPrice|Long|燃料费用
 
 > 错误码
 
    异常       |     错误码   |   描述   |
 -----------  | ----------- | -------- |
 INVALID_SOURCEADDRESS_ERROR|11002|Invalid sourceAddress
-INVALID_NONCE_ERROR|11045|Nonce must between 1 and max(int64)
+INVALID_NONCE_ERROR|11045|Nonce must be between 1 and max(Long)
 OPERATIONS_EMPTY_ERROR|11051|Operations cannot be empty
 OPERATIONS_ONE_ERROR|11053|One of operations cannot be resolved
-INVALID_SIGNATURENUMBER_ERROR|11054|SignagureNumber must between 1 and max(int32)
+INVALID_SIGNATURENUMBER_ERROR|11054|SignagureNumber must be between 1 and max(int32)
 SYSTEM_ERROR|20000|System error
 
 > 示例
 
 ```
 // 初始化变量
-String senderAddresss = "buQfnVYgXuMo3rvCEpKA6SfRrDpaz8D8A9Ea";
-String destAddress = "buQswSaKDACkrFsnP1wcVsLAUzXQsemauE";
+String senderAddresss = "buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp";
+String destAddress = "buQfnVYgXuMo3rvCEpKA6SfRrDpaz8D8A9Ea";
 Long amount = ToBaseUnit.BU2MO("10.9");
 Long gasPrice = 1000L;
 Long feeLimit = ToBaseUnit.BU2MO("0.01");
-Long nonce = 1L;
+Long nonce = 51L;
 
 // 构建sendBU操作
 BUSendOperation buSendOperation = new BUSendOperation();
@@ -1765,7 +1780,7 @@ buSendOperation.setDestAddress(destAddress);
 buSendOperation.setAmount(amount);
 
 // 初始化评估交易请求参数
-TransactionEvaluationFeeRequest request = new TransactionEvaluationFeeRequest();
+TransactionEvaluateFeeRequest request = new TransactionEvaluateFeeRequest();
 request.addOperation(buSendOperation);
 request.setSourceAddress(senderAddresss);
 request.setNonce(nonce);
@@ -1773,7 +1788,7 @@ request.setSignatureNumber(1);
 request.setMetadata(HexFormat.byteToHex("evaluation fees".getBytes()));
 
 // 调用evaluationFee接口
-TransactionEvaluationFeeResponse response = sdk.getTransactionService().evaluateFee(request);
+TransactionEvaluateFeeResponse response = sdk.getTransactionService().evaluateFee(request);
 if (response.getErrorCode() == 0) {
     TransactionEvaluationFeeResult result = response.getResult();
     System.out.println(JSON.toJSONString(result, true));
@@ -1810,8 +1825,8 @@ signatures|[Signature](#signature)	签名后的数据列表
 
    成员变量      |     类型     |        描述       |
 ----------- | ------------ | ---------------- |
-  signData|int64|签名后数据
-  publicKey|int64|公钥
+  signData|Long|签名后数据
+  publicKey|Long|公钥
 
 > 错误码
 
@@ -1911,7 +1926,7 @@ hash|String|交易hash
 
    参数      |     类型     |        描述       |
 ----------- | ------------ | ---------------- |
-totalCount|int64|返回的总交易数
+totalCount|Long|返回的总交易数
 transactions|[TransactionHistory](#transactionhistory)[]|交易内容
 
 #### TransactionHistory
@@ -1919,21 +1934,21 @@ transactions|[TransactionHistory](#transactionhistory)[]|交易内容
    成员变量  |     类型     |        描述       |
 ----------- | ------------ | ---------------- |
 actualFee|String|交易实际费用
-closeTime|int64|交易关闭时间
-errorCode|int64|交易错误码
+closeTime|Long|交易关闭时间
+errorCode|Long|交易错误码
 errorDesc|String|交易描述
 hash|String|交易hash
-ledgerSeq|int64|区块序列号
+ledgerSeq|Long|区块序列号
 transaction|[TransactionInfo](#transactioninfo)|交易内容列表
 signatures|[Signature](#signature)[]|签名列表
-txSize|int64|交易大小
+txSize|Long|交易大小
 
 > 错误码
 
    异常       |     错误码   |   描述   |
 -----------  | ----------- | -------- |
 INVALID_HASH_ERROR|11055|Invalid transaction hash
-CONNECTNETWORK_ERROR|11007|Connect network failed
+CONNECTNETWORK_ERROR|11007|Fail to connect network
 SYSTEM_ERROR|20000|System error
 
 > 示例
@@ -1971,13 +1986,13 @@ BlockGetNumberResponse getNumber();
    参数      |     类型     |        描述       |
 ----------- | ------------ | ---------------- |
 header|BlockHeader|区块头
-blockNumber|int64|最新的区块高度，对应底层字段seq
+blockNumber|Long|最新的区块高度，对应底层字段seq
 
 > 错误码
 
    异常       |     错误码   |   描述   |
 -----------  | ----------- | -------- |
-CONNECTNETWORK_ERROR|11007|Connect network failed
+CONNECTNETWORK_ERROR|11007|Fail to connect network
 SYSTEM_ERROR|20000|System error
 
 > 示例
@@ -2012,7 +2027,7 @@ isSynchronous    |   boolean     |  区块是否同步   |
 
    异常       |     错误码   |   描述   |
 -----------  | ----------- | -------- |
-CONNECTNETWORK_ERROR|11007|Connect network failed
+CONNECTNETWORK_ERROR|11007|Fail to connect network
 SYSTEM_ERROR|20000|System error
 
 > 示例
@@ -2041,13 +2056,13 @@ if(0 == response.getErrorCode()){
 
    参数      |     类型     |        描述       |
 ----------- | ------------ | ---------------- |
-blockNumber|int64|必填，待查询的区块高度
+blockNumber|Long|必填，待查询的区块高度
 
 > 响应数据
 
    参数      |     类型     |        描述       |
 ----------- | ------------ | ---------------- |
-totalCount|int64|返回的总交易数
+totalCount|Long|返回的总交易数
 transactions|[TransactionHistory](#transactionhistory)[]|交易内容
 
 > 错误码
@@ -2055,7 +2070,7 @@ transactions|[TransactionHistory](#transactionhistory)[]|交易内容
    异常       |     错误码   |   描述   |
 -----------  | ----------- | -------- |
 INVALID_BLOCKNUMBER_ERROR|11060|BlockNumber must bigger than 0
-CONNECTNETWORK_ERROR|11007|Connect network failed
+CONNECTNETWORK_ERROR|11007|Fail to connect network
 SYSTEM_ERROR|20000|System error
 
 > 示例
@@ -2089,15 +2104,15 @@ BlockGetInfoResponse getInfo(BlockGetInfoRequest);
 
    参数      |     类型     |        描述       |
 ----------- | ------------ | ---------------- |
-blockNumber|int64|必填，待查询的区块高度
+blockNumber|Long|必填，待查询的区块高度
 
 > 响应数据
 
    参数      |     类型     |        描述       |
 ----------- | ------------ | ---------------- |
-closeTime|int64|区块关闭时间
-number|int64|区块高度
-txCount|int64|交易总量
+closeTime|Long|区块关闭时间
+number|Long|区块高度
+txCount|Long|交易总量
 version|String|区块版本
 
 > 错误码
@@ -2105,7 +2120,7 @@ version|String|区块版本
    异常       |     错误码   |   描述   |
 -----------  | ----------- | -------- |
 INVALID_BLOCKNUMBER_ERROR|11060|BlockNumber must bigger than 0
-CONNECTNETWORK_ERROR|11007|Connect network failed
+CONNECTNETWORK_ERROR|11007|Fail to connect network
 SYSTEM_ERROR|20000|System error
 
 > 示例
@@ -2139,9 +2154,9 @@ BlockGetLatestInfoResponse getLatestInfo();
 
    参数      |     类型     |        描述       |
 ----------- | ------------ | ---------------- |
-closeTime|int64|区块关闭时间
-number|int64|区块高度，对应底层字段seq
-txCount|int64|交易总量
+closeTime|Long|区块关闭时间
+number|Long|区块高度，对应底层字段seq
+txCount|Long|交易总量
 version|String|区块版本
 
 
@@ -2149,7 +2164,7 @@ version|String|区块版本
 
    异常       |     错误码   |   描述   |
 -----------  | ----------- | -------- |
-CONNECTNETWORK_ERROR|11007|Connect network failed
+CONNECTNETWORK_ERROR|11007|Fail to connect network
 SYSTEM_ERROR|20000|System error
 
 > 示例
@@ -2179,7 +2194,7 @@ BlockGetValidatorsResponse getValidators(BlockGetValidatorsRequest);
 
    参数      |     类型     |        描述       |
 ----------- | ------------ | ---------------- |
-blockNumber|int64|必填，待查询的区块高度
+blockNumber|Long|必填，待查询的区块高度
 
 > 响应数据
 
@@ -2192,14 +2207,14 @@ validators|[ValidatorInfo](#validatorinfo)[]|验证节点列表
    成员变量  |     类型     |        描述       |
 ----------- | ------------ | ---------------- |
 address|String|共识节点地址
-plegeCoinAmount|int64|验证节点押金
+plegeCoinAmount|Long|验证节点押金
 
 > 错误码
 
    异常       |     错误码   |   描述   |
 -----------  | ----------- | -------- |
 INVALID_BLOCKNUMBER_ERROR|11060|BlockNumber must bigger than 0
-CONNECTNETWORK_ERROR|11007|Connect network failed
+CONNECTNETWORK_ERROR|11007|Fail to connect network
 SYSTEM_ERROR|20000|System error
 
 > 示例
@@ -2239,7 +2254,7 @@ validators|[ValidatorInfo](#validatorinfo)[]|验证节点列表
 
    异常       |     错误码   |   描述   |
 -----------  | ----------- | -------- |
-CONNECTNETWORK_ERROR|11007|Connect network failed
+CONNECTNETWORK_ERROR|11007|Fail to connect network
 SYSTEM_ERROR|20000|System error
 
 > 示例
@@ -2269,13 +2284,13 @@ BlockGetRewardResponse getReward(BlockGetRewardRequest);
 
    参数      |     类型     |        描述       |
 ----------- | ------------ | ---------------- |
-blockNumber|int64|必填，待查询的区块高度
+blockNumber|Long|必填，待查询的区块高度
 
 > 响应数据
 
    参数      |     类型     |        描述       |
 ----------- | ------------ | ---------------- |
-blockReward|int64|区块奖励数
+blockReward|Long|区块奖励数
 validatorsReward|[ValidatorReward](#validatorreward)[]|验证节点奖励情况
 
 #### ValidatorReward
@@ -2283,7 +2298,7 @@ validatorsReward|[ValidatorReward](#validatorreward)[]|验证节点奖励情况
    成员变量  |     类型     |        描述       |
 ----------- | ------------ | ---------------- |
   validator|String|验证节点地址
-  reward|int64|验证节点奖励
+  reward|Long|验证节点奖励
 
 
 > 错误码
@@ -2291,7 +2306,7 @@ validatorsReward|[ValidatorReward](#validatorreward)[]|验证节点奖励情况
    异常       |     错误码   |   描述   |
 -----------  | ----------- | -------- |
 INVALID_BLOCKNUMBER_ERROR|11060|BlockNumber must bigger than 0
-CONNECTNETWORK_ERROR|11007|Connect network failed
+CONNECTNETWORK_ERROR|11007|Fail to connect network
 SYSTEM_ERROR|20000|System error
 
 > 示例
@@ -2325,14 +2340,14 @@ BlockGetLatestRewardResponse getLatestReward();
 
    参数      |     类型     |        描述       |
 ----------- | ------------ | ---------------- |
-blockReward|int64|区块奖励数
+blockReward|Long|区块奖励数
 validatorsReward|[ValidatorReward](#validatorreward)[]|验证节点奖励情况
 
 > 错误码
 
    异常       |     错误码   |   描述   |
 -----------  | ----------- | -------- |
-CONNECTNETWORK_ERROR|11007|Connect network failed
+CONNECTNETWORK_ERROR|11007|Fail to connect network
 SYSTEM_ERROR|20000|System error
 
 > 示例
@@ -2362,7 +2377,7 @@ BlockGetFeesResponse getFees(BlockGetFeesRequest);
 
    参数      |     类型     |        描述       |
 ----------- | ------------ | ---------------- |
-blockNumber|int64|必填，待查询的区块高度
+blockNumber|Long|必填，待查询的区块高度
 
 > 响应数据
 
@@ -2374,15 +2389,15 @@ fees|[Fees](#fees)|费用
 
    成员变量  |     类型     |        描述       |
 ----------- | ------------ | ---------------- |
-baseReserve|int64|账户最低资产限制
-gasPrice|int64|打包费用，单位MO，1 BU = 10^8 MO
+baseReserve|Long|账户最低资产限制
+gasPrice|Long|打包费用，单位MO，1 BU = 10^8 MO
 
 > 错误码
 
    异常       |     错误码   |   描述   |
 -----------  | ----------- | -------- |
 INVALID_BLOCKNUMBER_ERROR|11060|BlockNumber must bigger than 0
-CONNECTNETWORK_ERROR|11007|Connect network failed
+CONNECTNETWORK_ERROR|11007|Fail to connect network
 SYSTEM_ERROR|20000|System error
 
 > 示例
@@ -2421,7 +2436,7 @@ fees|[Fees](#fees)|费用
 
    异常       |     错误码   |   描述   |
 -----------  | ----------- | -------- |
-CONNECTNETWORK_ERROR|11007|Connect network failed
+CONNECTNETWORK_ERROR|11007|Fail to connect network
 SYSTEM_ERROR|20000|System error
 
 > 示例
@@ -2443,56 +2458,57 @@ if (response.getErrorCode() == 0) {
 ACCOUNT_CREATE_ERROR|11001|Create account failed
 INVALID_SOURCEADDRESS_ERROR|11002|Invalid sourceAddress
 INVALID_DESTADDRESS_ERROR|11003|Invalid destAddress
-INVALID_INITBALANCE_ERROR|11004|InitBalance must between 1 and max(int64) 
+INVALID_INITBALANCE_ERROR|11004|InitBalance must be between 1 and max(Long) 
 SOURCEADDRESS_EQUAL_DESTADDRESS_ERROR|11005|SourceAddress cannot be equal to destAddress
 INVALID_ADDRESS_ERROR|11006|Invalid address
-CONNECTNETWORK_ERROR|11007|Connect network failed
+CONNECTNETWORK_ERROR|11007|Fail to connect network
 NO_ASSET_ERROR|11009|The account does not have the asset
 NO_METADATA_ERROR|11010|The account does not have the metadata
-INVALID_DATAKEY_ERROR|11011|The length of key must between 1 and 1024
-INVALID_DATAVALUE_ERROR|11012|The length of value must between 0 and 256000
+INVALID_DATAKEY_ERROR|11011|The length of key must be between 1 and 1024
+INVALID_DATAVALUE_ERROR|11012|The length of value must be between 0 and 256000
 INVALID_DATAVERSION_ERROR|11013|The version must be equal or bigger than 0
-INVALID_MASTERWEIGHT_ERROR|11015|MasterWeight must between 0 and max(uint32)
+INVALID_MASTERWEIGHT_ERROR|11015|MasterWeight must be between 0 and max(Integer) * 2
 INVALID_SIGNER_ADDRESS_ERROR|11016|Invalid signer address
-INVALID_SIGNER_WEIGHT_ERROR|11017|Signer weight must between 0 and max(uint32)
-INVALID_TX_THRESHOLD_ERROR|11018|TxThreshold must between 0 and max(int64)
-INVALID_OPERATION_TYPE_ERROR|11019|Operation type must between 1 and 100
-INVALID_TYPE_THRESHOLD_ERROR|11020|TypeThreshold must between 0 and max(int64)
-INVALID_ASSET_CODE_ERROR|11023|The length of key must between 1 and 64
-INVALID_ASSET_AMOUNT_ERROR|11024|AssetAMount must between 0 and max(int64)
-INVALID_BU_AMOUNT_ERROR|11026|BuAmount must between 0 and max(int64)
+INVALID_SIGNER_WEIGHT_ERROR|11017|Signer weight must be between 0 and max(Integer) * 2
+INVALID_TX_THRESHOLD_ERROR|11018|TxThreshold must be between 0 and max(Long)
+INVALID_OPERATION_TYPE_ERROR|11019|Operation type must be between 1 and 100
+INVALID_TYPE_THRESHOLD_ERROR|11020|TypeThreshold must be between 0 and max(Long)
+INVALID_ASSET_CODE_ERROR|11023|The length of key must be between 1 and 64
+INVALID_ASSET_AMOUNT_ERROR|11024|AssetAMount must be between 0 and max(Long)
+INVALID_BU_AMOUNT_ERROR|11026|BuAmount must be between 0 and max(Long)
 INVALID_ISSUER_ADDRESS_ERROR|11027|Invalid issuer address
 NO_SUCH_TOKEN_ERROR|11030|No such token
-INVALID_TOKEN_NAME_ERROR|11031|The length of token name must between 1 and 1024
-INVALID_TOKEN_SIMBOL_ERROR|11032|The length of symbol must between 1 and 1024
-INVALID_TOKEN_DECIMALS_ERROR|11033|Decimals must between 0 and 8
-INVALID_TOKEN_TOTALSUPPLY_ERROR|11034|TotalSupply must between 1 and max(int64)
+INVALID_TOKEN_NAME_ERROR|11031|The length of token name must be between 1 and 1024
+INVALID_TOKEN_SIMBOL_ERROR|11032|The length of symbol must be between 1 and 1024
+INVALID_TOKEN_DECIMALS_ERROR|11033|Decimals must be between 0 and 8
+INVALID_TOKEN_TOTALSUPPLY_ERROR|11034|TotalSupply must be between 1 and max(Long)
 INVALID_TOKENOWNER_ERRPR|11035|Invalid token owner
 INVALID_CONTRACTADDRESS_ERROR|11037|Invalid contract address
 CONTRACTADDRESS_NOT_CONTRACTACCOUNT_ERROR|11038|contractAddress is not a contract account
-INVALID_TOKEN_AMOUNT_ERROR|11039|TokenAmount must between 1 and max(int64)
+INVALID_TOKEN_AMOUNT_ERROR|11039|TokenAmount must be between 1 and max(Long)
 SOURCEADDRESS_EQUAL_CONTRACTADDRESS_ERROR|11040|SourceAddress cannot be equal to contractAddress
 INVALID_FROMADDRESS_ERROR|11041|Invalid fromAddress
 FROMADDRESS_EQUAL_DESTADDRESS_ERROR|11042|FromAddress cannot be equal to destAddress
 INVALID_SPENDER_ERROR|11043|Invalid spender
-INVALID_LOG_TOPIC_ERROR|11045|The length of log topic must between 1 and 128
-INVALID_LOG_DATA_ERROR|11046|The length of one of log data must between 1 and 1024
-INVALID_NONCE_ERROR|11048|Nonce must between 1 and max(int64)
-INVALID_GASPRICE_ERROR|11049|GasPrice must between 1 and max(int64)
-INVALID_FEELIMIT_ERROR|11050|FeeLimit must between 1 and max(int64)
+INVALID_LOG_TOPIC_ERROR|11045|The length of log topic must be between 1 and 128
+INVALID_LOG_DATA_ERROR|11046|The length of one of log data must be between 1 and 1024
+INVALID_NONCE_ERROR|11048|Nonce must be between 1 and max(Long)
+INVALID_GASPRICE_ERROR|11049|GasPrice must be between 1 and max(Long)
+INVALID_FEELIMIT_ERROR|11050|FeeLimit must be between 1 and max(Long)
 OPERATIONS_EMPTY_ERROR|11051|Operations cannot be empty
 INVALID_CEILLEDGERSEQ_ERROR|11052|CeilLedgerSeq must be equal or bigger than 0
 OPERATIONS_ONE_ERROR|11053|One of operations cannot be resolved
-INVALID_SIGNATURENUMBER_ERROR|11054|SignagureNumber must between 1 and max(int32)
+INVALID_SIGNATURENUMBER_ERROR|11054|SignagureNumber must be between 1 and max(int32)
 INVALID_HASH_ERROR|11055|Invalid transaction hash
 INVALID_BLOB_ERROR|11056|Invalid blob
 PRIVATEKEY_NULL_ERROR|11057|PrivateKeys cannot be empty
 PRIVATEKEY_ONE_ERROR|11058|One of privateKeys is invalid
 URL_EMPTY_ERROR|11062|Url cannot be empty
 CONTRACTADDRESS_CODE_BOTH_NULL_ERROR|11063|ContractAddress and code cannot be empty at the same time
-INVALID_OPTTYPE_ERROR|11064|OptType must between 0 and 2
+INVALID_OPTTYPE_ERROR|11064|OptType must be between 0 and 2
 GET_ALLOWANCE_ERROR|11065|Get allowance failed
-GET_TOKEN_INFO_ERROR|11066|Get token info failed
+GET_TOKEN_INFO_ERROR|11066|Fail to get token info
+SIGNATURE_EMPTY_ERROR|11067|The signatures cannot be empty
 REQUEST_NULL_ERROR|13001|Request parameter cannot be null
 CONNECTN_BLOCKCHAIN_ERROR|19999|Connect blockchain failed
 SYSTEM_ERROR|20000|System error

@@ -18,6 +18,7 @@ import org.junit.Test;
  * @Author riven
  * @Date 2018/7/15 14:32
  */
+
 public class DigitalAssetsDemo {
     SDK sdk = SDK.getInstance("http://seed1.bumotest.io:26002");
 
@@ -44,15 +45,17 @@ public class DigitalAssetsDemo {
      */
     @Test
     public void checkAccountAddress(){
-        //String address = "buQemmMwmRQY1JkcU7w3nhruoX5N3j6C29uo";
+        // 初始化请求参数
         String address = "buQemmMwmRQY1JkcU7w3nhruoX5N3j6C29uo";
-        AccountCheckValidRequest accountCheckValidRequest = new AccountCheckValidRequest();
-        accountCheckValidRequest.setAddress(address);
-        AccountCheckValidResponse accountCheckValidResponse = sdk.getAccountService().checkValid(accountCheckValidRequest);
-        if(0 == accountCheckValidResponse.getErrorCode()){
-            System.out.println(accountCheckValidResponse.getResult().isValid());
-        }else{
-            System.out.println(JSON.toJSONString(accountCheckValidResponse,true));
+        AccountCheckValidRequest request = new AccountCheckValidRequest();
+        request.setAddress(address);
+
+        // 调用checkValid
+        AccountCheckValidResponse response = sdk.getAccountService().checkValid(request);
+        if(0 == response.getErrorCode()) {
+            System.out.println(response.getResult().isValid());
+        } else {
+            System.out.println("error: " + response.getErrorDesc());
         }
     }
 
@@ -61,33 +64,35 @@ public class DigitalAssetsDemo {
      */
     @Test
     public void getAccountInfo(){
+        // 初始化请求参数
         String accountAddress = "buQemmMwmRQY1JkcU7w3nhruoX5N3j6C29uo";
         AccountGetInfoRequest request = new AccountGetInfoRequest();
         request.setAddress(accountAddress);
 
+        // 调用getInfo接口
         AccountGetInfoResponse response =  sdk.getAccountService().getInfo(request);
         if (response.getErrorCode() == 0) {
-            AccountGetInfoResult accountGetInfoResult = response.getResult();
-            System.out.println(JSON.toJSONString(accountGetInfoResult,true));
+            AccountGetInfoResult result = response.getResult();
+            System.out.println("账户信息: \n" + JSON.toJSONString(result, true));
         } else {
             System.out.println("error: " + response.getErrorDesc());
         }
     }
 
     /**
-     * 查询账户Metadata
+     * 获取账户Nonce
      */
     @Test
-    public void getAccountMetadata(){
-        String accountAddress = "buQemmMwmRQY1JkcU7w3nhruoX5N3j6C29uo";
-        AccountGetMetadataRequest request = new AccountGetMetadataRequest();
+    public void getAccountNonce(){
+        // 初始化请求参数
+        String accountAddress = "buQswSaKDACkrFsnP1wcVsLAUzXQsemauEjf";
+        AccountGetNonceRequest request = new AccountGetNonceRequest();
         request.setAddress(accountAddress);
-        request.setKey("  ");
 
-        AccountGetMetadataResponse response =  sdk.getAccountService().getMetadata(request);
-        if (response.getErrorCode() == 0) {
-            AccountGetMetadataResult accountGetMetadataResult = response.getResult();
-            System.out.println(JSON.toJSONString(accountGetMetadataResult,true));
+        // 调用getNonce接口
+        AccountGetNonceResponse response = sdk.getAccountService().getNonce(request);
+        if(0 == response.getErrorCode()){
+            System.out.println("账户nonce:" + response.getResult().getNonce());
         } else {
             System.out.println("error: " + response.getErrorDesc());
         }
@@ -98,31 +103,342 @@ public class DigitalAssetsDemo {
      */
     @Test
     public void getAccountBalance(){
+        // 初始化请求参数
         String accountAddress = "buQswSaKDACkrFsnP1wcVsLAUzXQsemauEjf";
         AccountGetBalanceRequest request = new AccountGetBalanceRequest();
         request.setAddress(accountAddress);
 
+        // 调用getBalance接口
         AccountGetBalanceResponse response = sdk.getAccountService().getBalance(request);
-
-        System.out.println(JSON.toJSONString(response,true));
         if(0 == response.getErrorCode()){
-            System.out.println("BU余额：" + ToBaseUnit.MO2BU(response.getResult().getBalance().toString()) + "BU");
+            AccountGetBalanceResult result = response.getResult();
+            System.out.println("BU余额：" + ToBaseUnit.MO2BU(result.getBalance().toString()) + " BU");
+        } else {
+            System.out.println("error: " + response.getErrorDesc());
         }
     }
 
     /**
-     * 获取账户Nonce
+     * 查询指定账户下的所有资产
      */
     @Test
-    public void getAccountNonce(){
-        String accountAddress = "buQswSaKDACkrFsnP1wcVsLAUzXQsemauEjf";
-        AccountGetNonceRequest request = new AccountGetNonceRequest();
-        request.setAddress(accountAddress);
+    public void getAccountAssets() {
+        // 初始化请求参数
+        AccountGetAssetsRequest request = new AccountGetAssetsRequest();
+        request.setAddress("buQsurH1M4rjLkfjzkxR9KXJ6jSu2r9xBNEw");
 
-        AccountGetNonceResponse response = sdk.getAccountService().getNonce(request);
-        if(0 == response.getErrorCode()){
-            System.out.println("账户Nonce:" + response.getResult().getNonce());
+        // 调用getAssets接口
+        AccountGetAssetsResponse response = sdk.getAccountService().getAssets(request);
+        if (response.getErrorCode() == 0) {
+            AccountGetAssetsResult result = response.getResult();
+            System.out.println(JSON.toJSONString(result, true));
+        } else {
+            System.out.println("error: " + response.getErrorDesc());
         }
+    }
+
+    /**
+     * 查询账户Metadata
+     */
+    @Test
+    public void getAccountMetadata(){
+        // 初始化请求参数
+        String accountAddress = "buQsurH1M4rjLkfjzkxR9KXJ6jSu2r9xBNEw";
+        AccountGetMetadataRequest request = new AccountGetMetadataRequest();
+        request.setAddress(accountAddress);
+        request.setKey("20180704");
+
+        // 调用getMetadata接口
+        AccountGetMetadataResponse response =  sdk.getAccountService().getMetadata(request);
+        if (response.getErrorCode() == 0) {
+            AccountGetMetadataResult result = response.getResult();
+            System.out.println(JSON.toJSONString(result, true));
+        } else {
+            System.out.println("error: " + response.getErrorDesc());
+        }
+    }
+
+    /**
+     * 查询指定账户的指定资产
+     */
+    @Test
+    public void getAssetInfo() {
+        // 初始化请求参数
+        AssetGetInfoRequest request = new AssetGetInfoRequest();
+        request.setAddress("buQsurH1M4rjLkfjzkxR9KXJ6jSu2r9xBNEw");
+        request.setIssuer("buQBjJD1BSJ7nzAbzdTenAhpFjmxRVEEtmxH");
+        request.setCode("HNC");
+
+        // 调用getInfo消息
+        AssetGetInfoResponse response = sdk.getAssetService().getInfo(request);
+        if (response.getErrorCode() == 0) {
+            AssetGetInfoResult result = response.getResult();
+            System.out.println(JSON.toJSONString(result, true));
+        } else {
+            System.out.println("error: " + response.getErrorDesc());
+        }
+    }
+
+    /**
+     * 验证合约Token的有效性
+     */
+    @Test
+    public void checkTokenValid() {
+        // 初始化请求参数
+        TokenCheckValidRequest request = new TokenCheckValidRequest();
+        request.setContractAddress("buQfnVYgXuMo3rvCEpKA6SfRrDpaz8D8A9Ea");
+
+        // 调用checkValid接口
+        TokenCheckValidResponse response = sdk.getTokenService().checkValid(request);
+        if (response.getErrorCode() == 0) {
+            TokenCheckValidResult result = response.getResult();
+            System.out.println(result.getValid());
+        } else {
+            System.out.println("error: " + response.getErrorDesc());
+        }
+    }
+
+    /**
+     * 查询授权用户的可用的合约Token数量
+     */
+    @Test
+    public void getTokenAllowance() {
+        // 初始化请求参数
+        TokenAllowanceRequest request = new TokenAllowanceRequest();
+        request.setContractAddress("buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq");
+        request.setTokenOwner("buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp");
+        request.setSpender("buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp");
+
+        // 调用allowance接口
+        TokenAllowanceResponse response = sdk.getTokenService().allowance(request);
+        if (response.getErrorCode() == 0) {
+            TokenAllowanceResult result = response.getResult();
+            System.out.println(JSON.toJSONString(result, true));
+        } else {
+            System.out.println("error: " + response.getErrorDesc());
+        }
+    }
+
+    /**
+     * 查询合约Token的信息
+     */
+    @Test
+    public void getTokenInfo() {
+        // 初始化请求参数
+        TokenGetInfoRequest request = new TokenGetInfoRequest();
+        request.setContractAddress("buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq");
+
+        // 调用getInfo接口
+        TokenGetInfoResponse response = sdk.getTokenService().getInfo(request);
+        if (response.getErrorCode() == 0) {
+            TokenGetInfoResult result = response.getResult();
+            System.out.println(JSON.toJSONString(result, true));
+        } else {
+            System.out.println("error: " + response.getErrorDesc());
+        }
+    }
+
+    /**
+     * 查询合约Token的名称
+     */
+    @Test
+    public void getTokenName() {
+        // 初始化请求参数
+        TokenGetNameRequest request = new TokenGetNameRequest();
+        request.setContractAddress("buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq");
+
+        // 调用getName接口
+        TokenGetNameResponse response = sdk.getTokenService().getName(request);
+        if (response.getErrorCode() == 0) {
+            TokenGetNameResult result = response.getResult();
+            System.out.println(result.getName());
+        } else {
+            System.out.println("error: " + response.getErrorDesc());
+        }
+    }
+
+    /**
+     * 查询合约Token的符号名
+     */
+    @Test
+    public void getTokenSymbol() {
+        // 初始化请求参数
+        TokenGetSymbolRequest request = new TokenGetSymbolRequest();
+        request.setContractAddress("buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq");
+
+        // 调用getSymbol接口
+        TokenGetSymbolResponse response = sdk.getTokenService().getSymbol(request);
+        if (response.getErrorCode() == 0) {
+            TokenGetSymbolResult result = response.getResult();
+            System.out.println(result.getSymbol());
+        } else {
+            System.out.println("error: " + response.getErrorDesc());
+        }
+    }
+
+    /**
+     * 获取合约Token的精度
+     */
+    @Test
+    public void getTokenDecimals() {
+        // 初始化请求参数
+        TokenGetDecimalsRequest request = new TokenGetDecimalsRequest();
+        request.setContractAddress("buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq");
+
+        // 调用getDecimals接口
+        TokenGetDecimalsResponse response = sdk.getTokenService().getDecimals(request);
+        if (response.getErrorCode() == 0) {
+            TokenGetDecimalsResult result = response.getResult();
+            System.out.println(result.getDecimals());
+        } else {
+            System.out.println("error: " + response.getErrorDesc());
+        }
+    }
+
+    /**
+     * 获取合约Token总供应量
+     */
+    @Test
+    public void getTokenTotalSupply() {
+        // 初始化请求参数
+        TokenGetTotalSupplyRequest request = new TokenGetTotalSupplyRequest();
+        request.setContractAddress("buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq");
+
+        // 调用getTotalSupply接口
+        TokenGetTotalSupplyResponse response = sdk.getTokenService().getTotalSupply(request);
+        if (response.getErrorCode() == 0) {
+            TokenGetTotalSupplyResult result = response.getResult();
+            System.out.println(result.getTotalSupply());
+        } else {
+            System.out.println("error: " + response.getErrorDesc());
+        }
+    }
+
+    /**
+     * 查询账户下合约Token的余额
+     */
+    @Test
+    public void getTokenBalance() {
+        // 初始化请求参数
+        TokenGetBalanceRequest request = new TokenGetBalanceRequest();
+        request.setContractAddress("buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq");
+        request.setTokenOwner("buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp");
+
+        // 调用getBalance接口
+        TokenGetBalanceResponse response = sdk.getTokenService().getBalance(request);
+        if (response.getErrorCode() == 0) {
+            TokenGetBalanceResult result = response.getResult();
+            System.out.println(result.getBalance());
+        } else {
+            System.out.println("error: " + response.getErrorDesc());
+        }
+    }
+
+    /**
+     * 验证合约账户的有效性
+     */
+    @Test
+    public void checkContractValid() {
+        // 初始化请求参数
+        ContractCheckValidRequest request = new ContractCheckValidRequest();
+        request.setContractAddress("buQfnVYgXuMo3rvCEpKA6SfRrDpaz8D8A9Ea");
+
+        // 调用checkValid接口
+        ContractCheckValidResponse response = sdk.getContractService().checkValid(request);
+        if (response.getErrorCode() == 0) {
+            ContractCheckValidResult result = response.getResult();
+            System.out.println(result.getValid());
+        } else {
+            System.out.println("error: " + response.getErrorDesc());
+        }
+    }
+
+    /**
+     * 查询合约信息
+     */
+    @Test
+    public void getContractInfo() {
+        // 初始化请求参数
+        ContractGetInfoRequest request = new ContractGetInfoRequest();
+        request.setContractAddress("buQfnVYgXuMo3rvCEpKA6SfRrDpaz8D8A9Ea");
+
+        // 调用getInfo接口
+        ContractGetInfoResponse response = sdk.getContractService().getInfo(request);
+        if (response.getErrorCode() == 0) {
+            System.out.println(JSON.toJSONString(response.getResult(), true));
+        } else {
+            System.out.println("error: " + response.getErrorDesc());
+        }
+    }
+
+    /**
+     * 调用合约
+     */
+    @Test
+    public void callContract() {
+        // 初始化请求参数
+        ContractCallRequest request = new ContractCallRequest();
+        request.setCode("\"use strict\";log(undefined);function query() { getBalance(thisAddress); }");
+        request.setFeeLimit(1000000000L);
+        request.setOptType(2);
+
+        // 调用call接口
+        ContractCallResponse response = sdk.getContractService().call(request);
+        if (response.getErrorCode() == 0) {
+            ContractCallResult result = response.getResult();
+            System.out.println(JSON.toJSONString(result, true));
+        } else {
+            System.out.println("error: " + response.getErrorDesc());
+        }
+    }
+
+    @Test
+    public void buildTransactionBlob() {
+        // 初始化变量
+        String senderAddresss = "buQfnVYgXuMo3rvCEpKA6SfRrDpaz8D8A9Ea";
+        String destAddress = "buQsurH1M4rjLkfjzkxR9KXJ6jSu2r9xBNEw";
+        Long amount = ToBaseUnit.BU2MO("10.9");
+        Long gasPrice = 1000L;
+        Long feeLimit = ToBaseUnit.BU2MO("0.01");
+        Long nonce = 1L;
+
+        // 构建sendBU操作
+        BUSendOperation operation = new BUSendOperation();
+        operation.setSourceAddress(senderAddresss);
+        operation.setDestAddress(destAddress);
+        operation.setAmount(amount);
+
+        // 初始化请求参数
+        TransactionBuildBlobRequest request = new TransactionBuildBlobRequest();
+        request.setSourceAddress(senderAddresss);
+        request.setNonce(nonce);
+        request.setFeeLimit(feeLimit);
+        request.setGasPrice(gasPrice);
+        request.addOperation(operation);
+
+        // 调用buildBlob接口
+        TransactionBuildBlobResponse response = sdk.getTransactionService().buildBlob(request);
+        if (response.getErrorCode() == 0) {
+            TransactionBuildBlobResult result = response.getResult();
+            System.out.println(JSON.toJSONString(result, true));
+        } else {
+            System.out.println("error: " + response.getErrorDesc());
+        }
+    }
+
+    @Test
+    public void evaluationTxFees() throws Exception {
+        // 初始化变量
+        String senderPrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq"; // 发送方私钥
+        String destAddress = "buQsurH1M4rjLkfjzkxR9KXJ6jSu2r9xBNEw";// 接收方账户地址
+        Long amount = ToBaseUnit.BU2MO("10.9"); // 发送转出10.9BU给接收方（目标账户）
+        Long gasPrice = 1000L; // 固定写 1000L ，单位是MO
+        Long feeLimit = ToBaseUnit.BU2MO("0.01");//设置最多费用 0.01BU ，固定填写
+        Long nonce = 42L; // 参考getAccountNonce()获取账户Nonce + 1;
+
+        // 评估费用
+        TransactionFees transactionFees = evaluationFees(senderPrivateKey,destAddress,amount,nonce,gasPrice,feeLimit);
+        System.out.println(JSON.toJSONString(transactionFees, true));
     }
 
     /**
@@ -361,7 +677,7 @@ public class DigitalAssetsDemo {
         String contractAddress = "buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq"; // 合约token代码所在的合约账户地址
         String spender = "buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp"; // 待分配token的账户
         String amount = "1000000";
-        Long nonce = 38L; // 37 + 1
+        Long nonce = 50L; // 49 + 1
         Long gasPrice = 1000L; // 固定写 1000L ，单位是MO
         Long feeLimit = ToBaseUnit.BU2MO("0.02"); // 设置最多费用10.08BU，固定填写
 
@@ -379,8 +695,6 @@ public class DigitalAssetsDemo {
         // 推荐5个区块后再次通过txhash再次调用`根据交易Hash获取交易信息`(参考示例：getTxByHash()）来确认交易终态结果
         String txHash = submitTransaction(invokePrivateKey, invokeAddress, operation, nonce, gasPrice, feeLimit);
     }
-
-
 
     /**
      * 转移资产
@@ -411,53 +725,6 @@ public class DigitalAssetsDemo {
         // 记录txhash ，以便后续再次确认交易真实结果
         // 推荐5个区块后再次通过txhash再次调用`根据交易Hash获取交易信息`(参考示例：getTxByHash()）来确认交易终态结果
         String txHash = submitTransaction(senderPrivateKey, senderAddresss, assetSendOperation, nonce, gasPrice, feeLimit);
-    }
-
-    /**
-     * 查询所有资产
-     */
-    @Test
-    public void getAssets() {
-        AccountGetAssetsRequest accountGetAssetsRequest = new AccountGetAssetsRequest();
-        accountGetAssetsRequest.setAddress("buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp");
-
-        AccountGetAssetsResponse accountGetAssetsResponse = sdk.getAccountService().getAssets(accountGetAssetsRequest);
-        if (accountGetAssetsResponse.getErrorCode() == 0) {
-            AccountGetAssetsResult accountGetAssetsResult = accountGetAssetsResponse.getResult();
-            System.out.println(JSON.toJSONString(accountGetAssetsResult, true));
-        } else {
-            System.out.println(accountGetAssetsResponse.getErrorDesc());
-        }
-    }
-
-    /**
-     * 查询账户资产
-     */
-    @Test
-    public void getAssetInfo() {
-        AssetGetInfoRequest assetGetInfoRequest = new AssetGetInfoRequest();
-        assetGetInfoRequest.setIssuer("buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp");
-        assetGetInfoRequest.setCode("TST");
-        assetGetInfoRequest.setAddress("buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp");
-        AssetGetInfoResponse assetGetInfoResponse = sdk.getAssetService().getInfo(assetGetInfoRequest);
-        if (assetGetInfoResponse.getErrorCode() == 0) {
-            AssetGetInfoResult assetGetInfoResult = assetGetInfoResponse.getResult();
-            System.out.println(JSON.toJSONString(assetGetInfoResult, true));
-        } else {
-            System.out.println(assetGetInfoResponse.getErrorDesc());
-        }
-    }
-
-    @Test
-    public void evaluationTxFees() throws Exception {
-        String senderPrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq"; // 发送方私钥
-        String destAddress = "buQsurH1M4rjLkfjzkxR9KXJ6jSu2r9xBNEw";// 接收方账户地址
-        Long amount = ToBaseUnit.BU2MO("10.9"); // 发送转出10.9BU给接收方（目标账户）
-        Long gasPrice = 1000L; // 固定写 1000L ，单位是MO
-        Long feeLimit = ToBaseUnit.BU2MO("0.01");//设置最多费用 0.01BU ，固定填写
-        Long nonce = 42L; // 参考getAccountNonce()获取账户Nonce + 1;
-
-        TransactionFees transactionFees = evaluationFees(senderPrivateKey,destAddress,amount,nonce,gasPrice,feeLimit);
     }
 
     @Test
@@ -590,186 +857,17 @@ public class DigitalAssetsDemo {
         System.out.println(response.getResult().getHeader());
     }
 
-    /**
-     * 调用合约
-     */
     @Test
-    public void callContract() {
-        ContractCallRequest contractCallRequest = new ContractCallRequest();
-        contractCallRequest.setCode("\"use strict\";log(undefined);function query() { getBalance(thisAddress); }");
-        contractCallRequest.setFeeLimit(1000000000L);
-        contractCallRequest.setOptType(2);
-        ContractCallResponse contractCallResponse = sdk.getContractService().call(contractCallRequest);
-        if (contractCallResponse.getErrorCode() == 0) {
-            ContractCallResult contractCallResult = contractCallResponse.getResult();
-            JSONObject resultJson = (JSONObject)JSON.toJSON(contractCallResult);
-            System.out.println(resultJson);
-        } else {
-            System.out.println(contractCallResponse.getErrorDesc());
-        }
+    public void submitCheck() {
+        TransactionSubmitRequest request = new TransactionSubmitRequest();
+        request.setTransactionBlob("0A246275516E6E5545425245773268423670574847507A77616E5837643238786B364B566370102118C0843D20E8073A56080712246275516E6E5545425245773268423670574847507A77616E5837643238786B364B566370522C0A24627551426A4A443142534A376E7A41627A6454656E416870466A6D7852564545746D78481080A9E08704");
+        TransactionSubmitResponse response = sdk.getTransactionService().submit(request);
+        System.out.println(JSON.toJSONString(response, true));
     }
 
-    /**
-     * 验证合约Token的有效性
-     */
     @Test
-    public void checkTokenValid() {
-        TokenCheckValidRequest tokenCheckValidRequest = new TokenCheckValidRequest();
-        tokenCheckValidRequest.setContractAddress("buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp");
-        TokenCheckValidResponse tokenCheckValidResponse = sdk.getTokenService().checkValid(tokenCheckValidRequest);
-        if (tokenCheckValidResponse.getErrorCode() == 0) {
-            TokenCheckValidResult tokenCheckValidResult = tokenCheckValidResponse.getResult();
-            System.out.println(tokenCheckValidResult.getValid());
-        } else {
-            System.out.println("error: " + tokenCheckValidResponse.getErrorDesc());
-        }
-    }
+    public void test() {
 
-    /**
-     * 验证合约账户的有效性
-     */
-    @Test
-    public void checkContractValid() {
-        ContractCheckValidRequest request = new ContractCheckValidRequest();
-        request.setContractAddress("buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp");
-
-        ContractCheckValidResponse response = sdk.getContractService().checkValid(request);
-        if (response.getErrorCode() == 0) {
-            ContractCheckValidResult result = response.getResult();
-            System.out.println(result.getValid());
-        } else {
-            System.out.println("error: " + response.getErrorDesc());
-        }
-    }
-
-    /**
-     * 查询合约信息
-     */
-    @Test
-    public void getContractInfo() {
-        ContractGetInfoRequest contractGetInfoRequest = new ContractGetInfoRequest();
-        contractGetInfoRequest.setContractAddress("buQfnVYgXuMo3rvCEpKA6SfRrDpaz8D8A9Ea");
-        ContractGetInfoResponse contractGetInfoResponse = sdk.getContractService().getInfo(contractGetInfoRequest);
-        if (contractGetInfoResponse.getErrorCode() == 0) {
-            System.out.println(JSON.toJSONString(contractGetInfoResponse, true));
-        } else {
-            System.out.println("error: " + contractGetInfoResponse.getErrorDesc());
-        }
-    }
-
-    /**
-     * 查询账户下合约Token的余额
-     */
-    @Test
-    public void getTokenBalance() {
-        TokenGetBalanceRequest tokenGetBalanceRequest = new TokenGetBalanceRequest();
-        tokenGetBalanceRequest.setContractAddress("buQfnVYgXuMo3rvCEpKA6SfRrDpaz8D8A9Ea");
-        tokenGetBalanceRequest.setTokenOwner("buQYsbybSh7BNckshKU22Pbx8tgk3FDTda4k");
-        TokenGetBalanceResponse tokenGetBalanceResponse = sdk.getTokenService().getBalance(tokenGetBalanceRequest);
-        if (tokenGetBalanceResponse.getErrorCode() == 0) {
-            TokenGetBalanceResult tokenGetBalanceResult = tokenGetBalanceResponse.getResult();
-            System.out.println(tokenGetBalanceResult.getBalance());
-        } else {
-            System.out.println("error: " + tokenGetBalanceResponse.getErrorDesc());
-        }
-    }
-
-    /**
-     * 获取合约Token的精度
-     */
-    @Test
-    public void getTokenDecimals() {
-        TokenGetDecimalsRequest tokenGetDecimalsRequest = new TokenGetDecimalsRequest();
-        tokenGetDecimalsRequest.setContractAddress("buQsurH1M4rjLkfjzkxR9KXJ6jSu2r9xBNEw");
-        TokenGetDecimalsResponse tokenGetDecimalsResponse = sdk.getTokenService().getDecimals(tokenGetDecimalsRequest);
-        if (tokenGetDecimalsResponse.getErrorCode() == 0) {
-            TokenGetDecimalsResult tokenGetDecimalsResult = tokenGetDecimalsResponse.getResult();
-            System.out.println(tokenGetDecimalsResult.getDecimals());
-        } else {
-            System.out.println("error: " + tokenGetDecimalsResponse.getErrorDesc());
-        }
-    }
-
-    /**
-     * 获取合约Token总供应量
-     */
-    @Test
-    public void getTokenTotalSupply() {
-        TokenGetTotalSupplyRequest tokenGetTotalSupplyRequest = new TokenGetTotalSupplyRequest();
-        tokenGetTotalSupplyRequest.setContractAddress("buQfnVYgXuMo3rvCEpKA6SfRrDpaz8D8A9Ea");
-        TokenGetTotalSupplyResponse tokenGetTotalSupplyResponse = sdk.getTokenService().getTotalSupply(tokenGetTotalSupplyRequest);
-        if (tokenGetTotalSupplyResponse.getErrorCode() == 0) {
-            TokenGetTotalSupplyResult tokenGetTotalSupplyResult = tokenGetTotalSupplyResponse.getResult();
-            System.out.println(tokenGetTotalSupplyResult.getTotalSupply());
-        } else {
-            System.out.println("error: " + tokenGetTotalSupplyResponse.getErrorDesc());
-        }
-    }
-
-    /**
-     * 查询合约Token的符号名
-     */
-    @Test
-    public void getTokenSymbol() {
-        TokenGetSymbolRequest tokenGetSymbolRequest = new TokenGetSymbolRequest();
-        tokenGetSymbolRequest.setContractAddress("buQfnVYgXuMo3rvCEpKA6SfRrDpaz8D8A9Ea");
-        TokenGetSymbolResponse tokenGetSymbolResponse = sdk.getTokenService().getSymbol(tokenGetSymbolRequest);
-        if (tokenGetSymbolResponse.getErrorCode() == 0) {
-            TokenGetSymbolResult tokenGetSymbolResult = tokenGetSymbolResponse.getResult();
-            System.out.println(tokenGetSymbolResult.getSymbol());
-        } else {
-            System.out.println("error: " + tokenGetSymbolResponse.getErrorDesc());
-        }
-    }
-
-    /**
-     * 查询合约Token的名称
-     */
-    @Test
-    public void getTokenName() {
-        TokenGetNameRequest tokenGetNameRequest = new TokenGetNameRequest();
-        tokenGetNameRequest.setContractAddress("buQfnVYgXuMo3rvCEpKA6SfRrDpaz8D8A9Ea");
-        TokenGetNameResponse tokenGetNameResponse = sdk.getTokenService().getName(tokenGetNameRequest);
-        if (tokenGetNameResponse.getErrorCode() == 0) {
-            TokenGetNameResult tokenGetNameResult = tokenGetNameResponse.getResult();
-            System.out.println(tokenGetNameResult.getName());
-        } else {
-            System.out.println("error: " + tokenGetNameResponse.getErrorDesc());
-        }
-    }
-
-    /**
-     * 查询合约Token的信息
-     */
-    @Test
-    public void getTokenInfo() {
-        TokenGetInfoRequest tokenGetInfoRequest = new TokenGetInfoRequest();
-        tokenGetInfoRequest.setContractAddress("buQfnVYgXuMo3rvCEpKA6SfRrDpaz8D8A9Ea");
-        TokenGetInfoResponse tokenGetInfoResponse = sdk.getTokenService().getInfo(tokenGetInfoRequest);
-        if (tokenGetInfoResponse.getErrorCode() == 0) {
-            TokenGetInfoResult tokenGetInfoResult = tokenGetInfoResponse.getResult();
-            System.out.println(JSON.toJSONString(tokenGetInfoResult, true));
-        } else {
-            System.out.println("error: " + tokenGetInfoResponse.getErrorDesc());
-        }
-    }
-
-    /**
-     * 查询授权用户的可用的合约Token数量
-     */
-    @Test
-    public void getTokenAllowance() {
-        TokenAllowanceRequest tokenAllowanceRequest = new TokenAllowanceRequest();
-        tokenAllowanceRequest.setContractAddress("buQfnVYgXuMo3rvCEpKA6SfRrDpaz8D8A9Ea");
-        tokenAllowanceRequest.setTokenOwner("buQVU86Jm4FeRW4JcQTD9Rx9NkUkHikYGp6z");
-        tokenAllowanceRequest.setSpender("buQemmMwmRQY1JkcU7w3nhruoX5N3j6C29uo");
-        TokenAllowanceResponse tokenAllowanceResponse = sdk.getTokenService().allowance(tokenAllowanceRequest);
-        if (tokenAllowanceResponse.getErrorCode() == 0) {
-            TokenAllowanceResult tokenAllowanceResult = tokenAllowanceResponse.getResult();
-            System.out.println(JSON.toJSONString(tokenAllowanceResult, true));
-        } else {
-            System.out.println("error: " + tokenAllowanceResponse.getErrorDesc());
-        }
     }
 
     /**

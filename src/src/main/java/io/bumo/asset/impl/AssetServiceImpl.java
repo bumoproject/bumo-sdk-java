@@ -76,6 +76,7 @@ public class AssetServiceImpl implements AssetService {
         } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
             assetGetResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, assetGetResult);
         } catch (Exception e) {
+            e.printStackTrace();
             assetGetResponse.buildResponse(SdkError.SYSTEM_ERROR, assetGetResult);
         }
 
