@@ -7,7 +7,7 @@ import io.bumo.model.response.result.data.TestTx;
  * @Author riven
  * @Date 2018/7/5 15:55
  */
-public class TransactionEvaluationFeeResult {
+public class TransactionEvaluateFeeResult {
     @JSONField(name = "txs")
     private TestTx[] txs;
 

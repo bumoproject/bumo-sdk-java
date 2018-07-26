@@ -1785,12 +1785,12 @@ request.addOperation(buSendOperation);
 request.setSourceAddress(senderAddresss);
 request.setNonce(nonce);
 request.setSignatureNumber(1);
-request.setMetadata(HexFormat.byteToHex("evaluation fees".getBytes()));
+request.setMetadata(HexFormat.byteToHex("evaluate fees".getBytes()));
 
-// 调用evaluationFee接口
+// 调用evaluateFee接口
 TransactionEvaluateFeeResponse response = sdk.getTransactionService().evaluateFee(request);
 if (response.getErrorCode() == 0) {
-    TransactionEvaluationFeeResult result = response.getResult();
+    TransactionEvaluateFeeResult result = response.getResult();
     System.out.println(JSON.toJSONString(result, true));
 } else {
     System.out.println("error: " + response.getErrorDesc());

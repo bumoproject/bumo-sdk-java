@@ -2,7 +2,7 @@ package io.bumo.model.response;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import io.bumo.exception.SdkError;
-import io.bumo.model.response.result.TransactionEvaluationFeeResult;
+import io.bumo.model.response.result.TransactionEvaluateFeeResult;
 
 /**
  * @Author riven
@@ -10,7 +10,7 @@ import io.bumo.model.response.result.TransactionEvaluationFeeResult;
  */
 public class TransactionEvaluateFeeResponse extends BaseResponse {
     @JSONField(name = "result")
-    private TransactionEvaluationFeeResult result;
+    private TransactionEvaluateFeeResult result;
 
     /**
      * @Author riven
@@ -19,7 +19,7 @@ public class TransactionEvaluateFeeResponse extends BaseResponse {
      * @Return
      * @Date 2018/7/5 15:57
      */
-    public TransactionEvaluationFeeResult getResult() {
+    public TransactionEvaluateFeeResult getResult() {
         return result;
     }
 
@@ -30,17 +30,17 @@ public class TransactionEvaluateFeeResponse extends BaseResponse {
      * @Return void
      * @Date 2018/7/5 15:57
      */
-    public void setResult(TransactionEvaluationFeeResult result) {
+    public void setResult(TransactionEvaluateFeeResult result) {
         this.result = result;
     }
 
-    public void buildResponse(SdkError sdkError, TransactionEvaluationFeeResult result) {
+    public void buildResponse(SdkError sdkError, TransactionEvaluateFeeResult result) {
         this.errorCode = sdkError.getCode();
         this.errorDesc = sdkError.getDescription();
         this.result = result;
     }
 
-    public void buildResponse(int errorCode, String errorDesc, TransactionEvaluationFeeResult result) {
+    public void buildResponse(int errorCode, String errorDesc, TransactionEvaluateFeeResult result) {
         this.errorCode = errorCode;
         this.errorDesc = errorDesc;
         this.result = result;

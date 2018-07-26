@@ -171,7 +171,7 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public TransactionEvaluateFeeResponse evaluateFee(TransactionEvaluateFeeRequest transactionEvaluateFeeRequest) {
         TransactionEvaluateFeeResponse transactionEvaluateFeeResponse = new TransactionEvaluateFeeResponse();
-        TransactionEvaluationFeeResult transactionEvaluationFeeResult = new TransactionEvaluationFeeResult();
+        TransactionEvaluateFeeResult transactionEvaluateFeeResult = new TransactionEvaluateFeeResult();
         try {
             // check sourceAddress
             String sourceAddress = transactionEvaluateFeeRequest.getSourceAddress();
@@ -230,11 +230,11 @@ public class TransactionServiceImpl implements TransactionService {
         } catch (SDKException apiException) {
             Integer errorCode = apiException.getErrorCode();
             String errorDesc = apiException.getErrorDesc();
-            transactionEvaluateFeeResponse.buildResponse(errorCode, errorDesc, transactionEvaluationFeeResult);
+            transactionEvaluateFeeResponse.buildResponse(errorCode, errorDesc, transactionEvaluateFeeResult);
         } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
-            transactionEvaluateFeeResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, transactionEvaluationFeeResult);
+            transactionEvaluateFeeResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, transactionEvaluateFeeResult);
         } catch (Exception exception) {
-            transactionEvaluateFeeResponse.buildResponse(SdkError.SYSTEM_ERROR, transactionEvaluationFeeResult);
+            transactionEvaluateFeeResponse.buildResponse(SdkError.SYSTEM_ERROR, transactionEvaluateFeeResult);
         }
         return transactionEvaluateFeeResponse;
     }

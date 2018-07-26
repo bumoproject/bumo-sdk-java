@@ -1,7 +1,6 @@
 package io.bumo.sdk.example;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import io.bumo.SDK;
 import io.bumo.common.ToBaseUnit;
 import io.bumo.crypto.Keypair;
@@ -433,7 +432,7 @@ public class DigitalAssetsDemo {
      * 评估交易费用
      */
     @Test
-    public void evaluationTxFees() throws Exception {
+    public void evaluateTxFees() throws Exception {
         // 初始化变量
         String senderPrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq"; // 发送方私钥
         String destAddress = "buQsurH1M4rjLkfjzkxR9KXJ6jSu2r9xBNEw";// 接收方账户地址
@@ -443,7 +442,7 @@ public class DigitalAssetsDemo {
         Long nonce = 42L; // 参考getAccountNonce()获取账户Nonce + 1;
 
         // 评估费用
-        TransactionFees transactionFees = evaluationFees(senderPrivateKey,destAddress,amount,nonce,gasPrice,feeLimit);
+        TransactionFees transactionFees = evaluateFees(senderPrivateKey,destAddress,amount,nonce,gasPrice,feeLimit);
         System.out.println(JSON.toJSONString(transactionFees, true));
     }
 
@@ -1269,7 +1268,7 @@ public class DigitalAssetsDemo {
      * @param feeLimit         交易最低手续费
      * @return io.bumo.model.response.result.data.TransactionFees 交易费用
      */
-    private TransactionFees evaluationFees(String senderPrivateKey, String destAddress, Long amount, Long nonce, Long gasPrice, Long feeLimit) throws Exception {
+    private TransactionFees evaluateFees(String senderPrivateKey, String destAddress, Long amount, Long nonce, Long gasPrice, Long feeLimit) throws Exception {
         // 1. 获取交易发送账户地址
         String senderAddresss = getAddressByPrivateKey(senderPrivateKey); // BU发送者账户地址
 
