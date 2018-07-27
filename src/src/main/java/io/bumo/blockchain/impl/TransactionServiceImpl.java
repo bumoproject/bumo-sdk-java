@@ -257,7 +257,7 @@ public class TransactionServiceImpl implements TransactionService {
         TransactionSignResult transactionSignResult = new TransactionSignResult();
         try {
             String blob = transactionSignRequest.getBlob();
-            if (Tools.isEmpty(blob)) {
+            if (Tools.isEmpty(blob) || HexFormat.isHexString(blob)) {
                 throw new SDKException(SdkError.INVALID_BLOB_ERROR);
             }
             byte[] blobBytes = HexFormat.hexToByte(blob);
@@ -289,6 +289,7 @@ public class TransactionServiceImpl implements TransactionService {
         } catch (InvalidProtocolBufferException e) {
             transactionSignResponse.buildResponse(SdkError.INVALID_BLOB_ERROR, transactionSignResult);
         } catch (Exception e) {
+            e.printStackTrace();
             transactionSignResponse.buildResponse(SdkError.SYSTEM_ERROR, transactionSignResult);
         }
         return transactionSignResponse;
@@ -307,7 +308,7 @@ public class TransactionServiceImpl implements TransactionService {
         TransactionSubmitResult transactionSubmitResult = new TransactionSubmitResult();
         try {
             String blob = transactionSubmitRequest.getTransactionBlob();
-            if (Tools.isEmpty(blob)) {
+            if (Tools.isEmpty(blob) || HexFormat.isHexString(blob)) {
                 throw new SDKException(SdkError.INVALID_BLOB_ERROR);
             }
             Chain.Transaction.parseFrom(HexFormat.hexToByte(blob));

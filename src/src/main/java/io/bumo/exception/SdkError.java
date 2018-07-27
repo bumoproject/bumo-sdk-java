@@ -3,8 +3,6 @@ package io.bumo.exception;
 import io.bumo.model.response.BaseResponse;
 
 public enum SdkError {
-
-
     SUCCESS(0, "Success"),
 
     ACCOUNT_CREATE_ERROR(11001, "Create account failed"),

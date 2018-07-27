@@ -454,12 +454,12 @@ public class DigitalAssetsDemo {
         // 初始化请求参数
         String issuePrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq";
         String []signerPrivateKeyArr = {issuePrivateKey};
-        String transactionBlob = "0A246275516E6E5545425245773268423670574847507A77616E5837643238786B364B566370102118C0843D20E8073A56080712246275516E6E5545425245773268423670574847507A77616E5837643238786B364B566370522C0A24627551426A4A443142534A376E7A41627A6454656E416870466A6D7852564545746D78481080A9E08704";
+        String transactionBlob = "123";
         TransactionSignRequest request = new TransactionSignRequest();
         request.setBlob(transactionBlob);
-        for (int i = 0; i < signerPrivateKeyArr.length; i++) {
-            request.addPrivateKey(signerPrivateKeyArr[i]);
-        }
+//        for (int i = 0; i < signerPrivateKeyArr.length; i++) {
+//            request.addPrivateKey(signerPrivateKeyArr[i]);
+//        }
         TransactionSignResponse response = sdk.getTransactionService().sign(request);
         if(0 == response.getErrorCode()){
             System.out.println(JSON.toJSONString(response.getResult(), true));

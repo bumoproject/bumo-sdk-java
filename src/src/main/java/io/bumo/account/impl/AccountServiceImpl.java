@@ -32,6 +32,8 @@ import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.util.regex.Pattern;
 
+import static java.util.regex.Pattern.*;
+
 /**
  * @Author riven
  * @Date 2018/7/3 12:34
@@ -236,6 +238,7 @@ public class AccountServiceImpl implements AccountService {
      * @Return io.bumo.model.response.AccountGetAssetsResponse
      * @Date 2018/7/5 12:00
      */
+    @Override
     public AccountGetAssetsResponse getAssets(AccountGetAssetsRequest accountGetAssetsRequest) {
         AccountGetAssetsResponse accountGetAssetsResponse = new AccountGetAssetsResponse();
         AccountGetAssetsResult accountGetAssetsResult = new AccountGetAssetsResult();
@@ -453,17 +456,17 @@ public class AccountServiceImpl implements AccountService {
             }
             String masterWeight = accountSetPrivilegeOperation.getMasterWeight();
             if (!Tools.isEmpty(masterWeight)) {
-                Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
+                Pattern pattern = compile("^[-\\+]?[\\d]*$");
                 boolean isNumber = pattern.matcher(masterWeight).matches();
-                if(!isNumber || (isNumber && (Long.valueOf(masterWeight) < 0 || Long.valueOf(masterWeight) > Constant.UINT_MAX))) {
+                if(!isNumber || Long.valueOf(masterWeight) < 0 || Long.valueOf(masterWeight) > Constant.UINT_MAX) {
                     throw new SDKException(SdkError.INVALID_MASTERWEIGHT_ERROR);
                 }
             }
             String txThreshold = accountSetPrivilegeOperation.getTxThreshold();
             if (!Tools.isEmpty(txThreshold)) {
-                Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
+                Pattern pattern = compile("^[-\\+]?[\\d]*$");
                 boolean isNumber = pattern.matcher(masterWeight).matches();
-                if (!isNumber || (isNumber && Long.valueOf(txThreshold) < 0 || Long.valueOf(txThreshold) > Long.MAX_VALUE)) {
+                if (!isNumber || Long.valueOf(txThreshold) < 0 || Long.valueOf(txThreshold) > Long.MAX_VALUE) {
                     throw new SDKException(SdkError.INVALID_TX_THRESHOLD_ERROR);
                 }
             }

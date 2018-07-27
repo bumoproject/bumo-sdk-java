@@ -1648,7 +1648,7 @@ INVALID_ISSUER_ADDRESS_ERROR|11027|Invalid issuer address
 NO_SUCH_TOKEN_ERROR|11030|No such token
 INVALID_TOKEN_NAME_ERROR|11031|The length of token name must be between 1 and 1024
 INVALID_TOKEN_SYMBOL_ERROR|11032|The length of symbol must be between 1 and 1024
-INVALID_TOKEN_DECIMALS_ERROR|11033|Decimals must less than 8
+INVALID_TOKEN_DECIMALS_ERROR|11033|Decimals must be between 0 and 8
 INVALID_TOKEN_TOTALSUPPLY_ERROR|11034|TotalSupply must be between 1 and max(Long)
 INVALID_TOKENOWNER_ERRPR|11035|Invalid token owner
 INVALID_CONTRACTADDRESS_ERROR|11037|Invalid contract address
@@ -1663,8 +1663,8 @@ INVALID_LOG_TOPIC _ERROR|11045|The length of key must be between 1 and 128
 INVALID_LOG_DATA _ERROR|11046|The length of value must be between 1 and 1024
 INVALID_CONTRACT_TYPE_ERROR|11047|Type must be equal or bigger than 0 
 INVALID_NONCE_ERROR|11048|Nonce must be between 1 and max(Long)
-INVALID_ GASPRICE_ERROR|11049|Amount must be between gasPrice in block and max(Long)
-INVALID_FEELIMIT_ERROR|11050|FeeLimit must be between 1000000 and max(Long)
+INVALID_ GASPRICE_ERROR|11049|GasPrice must be between 1000 and max(Long)
+INVALID_FEELIMIT_ERROR|11050|FeeLimit must be between 1 and max(Long)
 OPERATIONS_EMPTY_ERROR|11051|Operations cannot be empty
 INVALID_CEILLEDGERSEQ_ERROR|11052|CeilLedgerSeq must be equal or bigger than 0
 OPERATIONS_ONE_ERROR|11053|One of operations cannot be resolved
