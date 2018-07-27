@@ -176,7 +176,7 @@ public class ContractServiceImpl implements ContractService {
                 throw new SDKException(SdkError.SOURCEADDRESS_EQUAL_CONTRACTADDRESS_ERROR);
             }
             String code = contractInvokeByAssetOperation.getCode();
-            if (!Tools.isNULL(code) && (code.length() < 1 || code.length() > 1024)) {
+            if (!Tools.isNULL(code) && (code.length() < 1 || code.length() > Constant.ASSET_CODE_MAX)) {
                 throw new SDKException(SdkError.INVALID_ASSET_CODE_ERROR);
             }
             String issuer = contractInvokeByAssetOperation.getIssuer();

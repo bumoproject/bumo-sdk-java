@@ -434,12 +434,18 @@ public class DigitalAssetsDemo {
     @Test
     public void evaluateTxFees() throws Exception {
         // 初始化变量
-        String senderPrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq"; // 发送方私钥
-        String destAddress = "buQsurH1M4rjLkfjzkxR9KXJ6jSu2r9xBNEw";// 接收方账户地址
-        Long amount = ToBaseUnit.BU2MO("10.9"); // 发送转出10.9BU给接收方（目标账户）
-        Long gasPrice = 1000L; // 固定写 1000L ，单位是MO
-        Long feeLimit = ToBaseUnit.BU2MO("0.01");//设置最多费用 0.01BU ，固定填写
-        Long nonce = 42L; // 参考getAccountNonce()获取账户Nonce + 1;
+        // 发送方私钥
+        String senderPrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq";
+        // 接收方账户地址
+        String destAddress = "buQsurH1M4rjLkfjzkxR9KXJ6jSu2r9xBNEw";
+        // 发送转出10.9BU给接收方（目标账户）
+        Long amount = ToBaseUnit.BU2MO("10.9");
+        // 固定写 1000L ，单位是MO
+        Long gasPrice = 1000L;
+        //设置最多费用 0.01BU ，固定填写
+        Long feeLimit = ToBaseUnit.BU2MO("0.01");
+        // 交易发起账户Nonce + 1;
+        Long nonce = 42L;
 
         // 评估费用
         TransactionFees transactionFees = evaluateFees(senderPrivateKey,destAddress,amount,nonce,gasPrice,feeLimit);
@@ -457,9 +463,9 @@ public class DigitalAssetsDemo {
         String transactionBlob = "123";
         TransactionSignRequest request = new TransactionSignRequest();
         request.setBlob(transactionBlob);
-//        for (int i = 0; i < signerPrivateKeyArr.length; i++) {
-//            request.addPrivateKey(signerPrivateKeyArr[i]);
-//        }
+        for (int i = 0; i < signerPrivateKeyArr.length; i++) {
+            request.addPrivateKey(signerPrivateKeyArr[i]);
+        }
         TransactionSignResponse response = sdk.getTransactionService().sign(request);
         if(0 == response.getErrorCode()){
             System.out.println(JSON.toJSONString(response.getResult(), true));
@@ -484,7 +490,7 @@ public class DigitalAssetsDemo {
 
         // 调用submit接口
         TransactionSubmitResponse response = sdk.getTransactionService().submit(request);
-        if (0 == response.getErrorCode()) { // 交易提交成功
+        if (0 == response.getErrorCode()) {
             System.out.println(JSON.toJSONString(response.getResult(), true));
         } else{
             System.out.println("error: " + response.getErrorDesc());
@@ -519,7 +525,7 @@ public class DigitalAssetsDemo {
     @Test
     public void getTransactionOfBolck(){
         // 初始化请求参数
-        Long blockNumber = 617247L;// 第617247区块
+        Long blockNumber = 617247L;
         BlockGetTransactionsRequest request = new BlockGetTransactionsRequest();
         request.setBlockNumber(blockNumber);
 
@@ -684,14 +690,19 @@ public class DigitalAssetsDemo {
      */
     @Test
     public void activateAccount() {
+        // 发起激活操作的账户
         String activatePrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq";
         Long initBalance = ToBaseUnit.BU2MO("0.1");
-        Long gasPrice = 1000L; // 固定写 1000L ，单位是MO
-        Long feeLimit = ToBaseUnit.BU2MO("0.01"); // 设置最多费用 0.01BU ，固定填写
-        Long nonce = 1L; // 交易发起账户Nonce，必须Nonce + 1
+        // 固定写 1000L ，单位是MO
+        Long gasPrice = 1000L;
+        // 设置最多费用 0.01BU ，固定填写
+        Long feeLimit = ToBaseUnit.BU2MO("0.01");
+        // 交易发起账户Nonce + 1
+        Long nonce = 1L;
 
         Keypair keypair = Keypair.generator();
-        String destAccount = keypair.getAddress();  // 待激活账户地址
+        // 待激活账户地址
+        String destAccount = keypair.getAddress();
 
         // 1. 获取交易发送账户地址
         String activateAddresss = getAddressByPrivateKey(activatePrivateKey);
@@ -718,12 +729,17 @@ public class DigitalAssetsDemo {
     @Test
     public void setAccountMetadata() {
         // 初始化变量
-        String accountPrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq"; // 账户私钥
-        String key = "test  "; // 发送转出10.9BU给接收方（目标账户）
+        // 账户私钥
+        String accountPrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq";
+        // 发送转出10.9BU给接收方（目标账户）
+        String key = "test  ";
         String value = "asdfasdfa";
-        Long gasPrice = 1000L; // 固定写 1000L ，单位是MO
-        Long feeLimit = ToBaseUnit.BU2MO("0.01");//设置最多费用 0.01BU ，固定填写
-        Long nonce = 45L; // 交易发起账户Nonce + 1;
+        // 固定写 1000L ，单位是MO
+        Long gasPrice = 1000L;
+        //设置最多费用 0.01BU ，固定填写
+        Long feeLimit = ToBaseUnit.BU2MO("0.01");
+        // 交易发起账户Nonce + 1
+        Long nonce = 45L;
 
         // 1. 获取交易发送账户地址
         String accountAddresss = getAddressByPrivateKey(accountPrivateKey);
@@ -749,10 +765,14 @@ public class DigitalAssetsDemo {
     @Test
     public void setAccountPrivilege() {
         // 初始化变量
-        String accountPrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq"; // 账户私钥
-        Long gasPrice = 1000L; // 固定写 1000L ，单位是MO
-        Long feeLimit = ToBaseUnit.BU2MO("0.01");//设置最多费用 0.01BU ，固定填写
-        Long nonce = 49L; // 参考getAccountNonce()获取账户Nonce + 1;
+        // 设置权限的账户私钥
+        String accountPrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq";
+        // 固定写 1000L ，单位是MO
+        Long gasPrice = 1000L;
+        //设置最多费用 0.01BU ，固定填写
+        Long feeLimit = ToBaseUnit.BU2MO("0.01");
+        // 交易发起账户Nonce + 1
+        Long nonce = 61L;
 
         // 1. 获取交易发送账户地址
         String accountAddresss = getAddressByPrivateKey(accountPrivateKey);
@@ -762,7 +782,7 @@ public class DigitalAssetsDemo {
         operation.setSourceAddress(accountAddresss);
         Signer signer = new Signer();
         signer.setAddress("buQsurH1M4rjLkfjzkxR9KXJ6jSu2r9xBNEw");
-        signer.setWeight(1L);
+        signer.setWeight(0L);
         operation.addSigner(signer);
 
         // 记录txhash ，以便后续再次确认交易真实结果
@@ -779,13 +799,20 @@ public class DigitalAssetsDemo {
     @Test
     public void issueAsset() {
         // 初始化变量
-        String issuePrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq";   // 资产发行方私钥
-        String assetCode = "TST"; // 待发行的资产编号
-        Long assetAmount = 10000000000000L; // 待发行的资产数量
-        String metadata = HexFormat.byteToHex("issue TST".getBytes()); // 备注，必须是16进制字符串
-        Long gasPrice = 1000L; // 固定写 1000L ，单位是MO
-        Long feeLimit = ToBaseUnit.BU2MO("50.01"); // 设置最多费用 50.01BU ，固定填写
-        Long nonce = 1L; // 资产发行方账户Nonce，必须Nonce + 1
+        // 资产发行方私钥
+        String issuePrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq";
+        // 待发行的资产编号
+        String assetCode = "TST";
+        // 待发行的资产数量
+        Long assetAmount = 10000000000000L;
+        // 备注，必须是16进制字符串
+        String metadata = HexFormat.byteToHex("issue TST".getBytes());
+        // 固定写 1000L ，单位是MO
+        Long gasPrice = 1000L;
+        // 设置最多费用 50.01BU ，固定填写
+        Long feeLimit = ToBaseUnit.BU2MO("50.01");
+        // 交易发起账户Nonce + 1
+        Long nonce = 1L;
 
         // 1. 获取交易发送账户地址
         String issueAddresss = getAddressByPrivateKey(issuePrivateKey);
@@ -811,14 +838,22 @@ public class DigitalAssetsDemo {
     @Test
     public void sendAsset() {
         // 初始化变量
-        String senderPrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq"; // 发送方私钥
-        String destAddress = "buQswSaKDACkrFsnP1wcVsLAUzXQsemauE";// 接收方账户地址
-        String assetCode = "TST";  // 待发送和资产编号
-        String assetIssuer = "buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp"; // 资产发行方地址
-        Long amount = ToBaseUnit.BU2MO("10.9"); // 发送转出10.9BU给接收方（目标账户）
-        Long gasPrice = 1000L; // 固定写 1000L ，单位是MO
-        Long feeLimit = ToBaseUnit.BU2MO("0.01"); // 设置最多费用 0.01BU ，固定填写
-        Long nonce = 1L; // 发送方账户Nonce，必须Nonce + 1
+        // 发送方私钥
+        String senderPrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq";
+        // 接收方账户地址
+        String destAddress = "buQswSaKDACkrFsnP1wcVsLAUzXQsemauE";
+        // 待发送和资产编号
+        String assetCode = "TST";
+        // 资产发行方地址
+        String assetIssuer = "buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp";
+        // 发送转出10.9BU给接收方（目标账户）
+        Long amount = ToBaseUnit.BU2MO("10.9");
+        // 固定写 1000L ，单位是MO
+        Long gasPrice = 1000L;
+        // 设置最多费用 0.01BU ，固定填写
+        Long feeLimit = ToBaseUnit.BU2MO("0.01");
+        // 交易发起账户Nonce + 1
+        Long nonce = 1L;
 
         // 1. 获取交易发送账户地址
         String senderAddresss = getAddressByPrivateKey(senderPrivateKey);
@@ -846,15 +881,20 @@ public class DigitalAssetsDemo {
     @Test
     public void sendBu() {
         // 初始化变量
-        String senderPrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq"; // 发送方私钥
-        String destAddress = "buQswSaKDACkrFsnP1wcVsLAUzXQsemauE";// 接收方账户地址
-        Long amount = ToBaseUnit.BU2MO("0.01"); // 发送转出10.9BU给接收方（目标账户）
+        // 发送方私钥
+        String senderPrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq";
+        // 接收方账户地址
+        String destAddress = "buQswSaKDACkrFsnP1wcVsLAUzXQsemauE";
+        // 发送转出10.9BU给接收方（目标账户）
+        Long amount = ToBaseUnit.BU2MO("0.01");
         Long gasPrice = 1000L; // 固定写 1000L ，单位是MO
-        Long feeLimit = ToBaseUnit.BU2MO("0.01");//设置最多费用 0.01BU ，固定填写
-        Long nonce = 1L; // 参考getAccountNonce()获取账户Nonce + 1;
+        //设置最多费用 0.01BU ，固定填写
+        Long feeLimit = ToBaseUnit.BU2MO("0.01");
+        // 交易发起账户Nonce + 1
+        Long nonce = 1L;
 
         // 1. 获取交易发送账户地址
-        String senderAddresss = getAddressByPrivateKey(senderPrivateKey); // BU发送者账户地址
+        String senderAddresss = getAddressByPrivateKey(senderPrivateKey);
 
         // 2. 构建sendBU操作
         BUSendOperation buSendOperation = new BUSendOperation();
@@ -877,15 +917,24 @@ public class DigitalAssetsDemo {
     @Test
     public void issueToken() {
         // 初始化变量
-        String sourcePrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq"; // 创建合约Token方私钥
-        Long initBalance = 100000000L; // 待创建合约Token的初始化资产
-        Integer decimals = 8; // token数值的精度
-        String name = "TST"; // token名称
-        String supply = "10000000000"; // token的供应量，不带精度，实际是1000000000 * (10 ^ decimals)
-        String symbol = "TST"; // token的符号
-        Long nonce = 36L; // 35 + 1
-        Long gasPrice = 1000L; // 固定写 1000L ，单位是MO
-        Long feeLimit = ToBaseUnit.BU2MO("10.08"); // 设置最多费用10.08BU，固定填写
+        // 创建合约Token方私钥
+        String sourcePrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq";
+        // 待创建合约Token的初始化资产
+        Long initBalance = 100000000L;
+        // token数值的精度
+        Integer decimals = 8;
+        // token名称
+        String name = "TST";
+        // token的供应量，不带精度，实际是1000000000 * (10 ^ decimals)
+        String supply = "10000000000";
+        // token的符号
+        String symbol = "TST";
+        // 交易发起账户Nonce + 1
+        Long nonce = 36L;
+        // 固定写 1000L ，单位是MO
+        Long gasPrice = 1000L;
+        // 设置最多费用10.08BU，固定填写
+        Long feeLimit = ToBaseUnit.BU2MO("10.08");
 
         // 1. 获取创建合约Token方地址
         String sourceAddress = getAddressByPrivateKey(sourcePrivateKey);
@@ -913,13 +962,20 @@ public class DigitalAssetsDemo {
     @Test
     public void assignToken() {
         // 初始化变量
-        String invokePrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq"; // 触发合约方私钥
-        String contractAddress = "buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq"; // 合约token代码所在的合约账户地址
-        String destAddress = "buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp"; // 待分配token的账户
+        // 触发合约方私钥
+        String invokePrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq";
+        // 合约token代码所在的合约账户地址
+        String contractAddress = "buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq";
+        // 待分配token的账户
+        String destAddress = "buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp";
+        // 待分配token的数量
         String amount = "1000000";
-        Long nonce = 38L; // 37 + 1
-        Long gasPrice = 1000L; // 固定写 1000L ，单位是MO
-        Long feeLimit = ToBaseUnit.BU2MO("0.02"); // 设置最多费用0.02BU，固定填写
+        // 交易发起账户Nonce + 1
+        Long nonce = 38L;
+        // 固定写 1000L ，单位是MO
+        Long gasPrice = 1000L;
+        // 设置最多费用0.02BU，固定填写
+        Long feeLimit = ToBaseUnit.BU2MO("0.02");
 
         // 1. 触发合约方地址
         String invokeAddress = getAddressByPrivateKey(invokePrivateKey);
@@ -945,13 +1001,20 @@ public class DigitalAssetsDemo {
     @Test
     public void transferToken() {
         // 初始化变量
-        String invokePrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq"; // 触发合约方私钥
-        String contractAddress = "buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq"; // 合约token代码所在的合约账户地址
-        String destAddress = "buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq"; // 待分配token的账户
+        // 触发合约方私钥
+        String invokePrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq";
+        // 合约token代码所在的合约账户地址
+        String contractAddress = "buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq";
+        // 待转移token的账户
+        String destAddress = "buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq";
+        // 待转移token的数量
         String amount = "1000000";
-        Long nonce = 38L; // 37 + 1
-        Long gasPrice = 1000L; // 固定写 1000L ，单位是MO
-        Long feeLimit = ToBaseUnit.BU2MO("0.02"); // 设置最多费用0.02BU，固定填写
+        // 交易发起账户Nonce + 1
+        Long nonce = 38L;
+        // 固定写 1000L ，单位是MO
+        Long gasPrice = 1000L;
+        // 设置最多费用0.02BU，固定填写
+        Long feeLimit = ToBaseUnit.BU2MO("0.02");
 
         // 1. 触发合约方地址
         String invokeAddress = getAddressByPrivateKey(invokePrivateKey);
@@ -977,14 +1040,22 @@ public class DigitalAssetsDemo {
     @Test
     public void transferTokenFrom() {
         // 初始化变量
-        String invokePrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq"; // 触发合约方私钥
-        String contractAddress = "buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq"; // 合约token代码所在的合约账户地址
-        String fromAddress = "buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp"; // 待发送token的账户
-        String destAddress = "buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq"; // 待分配token的账户
+        // 触发合约方私钥
+        String invokePrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq";
+        // 合约token代码所在的合约账户地址
+        String contractAddress = "buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq";
+        // 待发送token的账户
+        String fromAddress = "buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp";
+        // 待接收token的账户
+        String destAddress = "buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq";
+        // 待发送token的数量
         String amount = "100000";
-        Long nonce = 54L; // 53 + 1
-        Long gasPrice = 1000L; // 固定写 1000L ，单位是MO
-        Long feeLimit = ToBaseUnit.BU2MO("0.02"); // 设置最多费用0.02BU，固定填写
+        // 交易发起账户Nonce + 1
+        Long nonce = 54L;
+        // 固定写 1000L ，单位是MO
+        Long gasPrice = 1000L;
+        // 设置最多费用0.02BU，固定填写
+        Long feeLimit = ToBaseUnit.BU2MO("0.02");
 
         // 1. 触发合约方地址
         String invokeAddress = getAddressByPrivateKey(invokePrivateKey);
@@ -1011,13 +1082,20 @@ public class DigitalAssetsDemo {
     @Test
     public void approveToken() {
         // 初始化变量
-        String invokePrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq"; // 触发合约方私钥
-        String contractAddress = "buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq"; // 合约token代码所在的合约账户地址
-        String spender = "buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp"; // 待分配token的账户
+        // 触发合约方私钥
+        String invokePrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq";
+        // 合约token代码所在的合约账户地址
+        String contractAddress = "buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq";
+        // 待分配token的账户
+        String spender = "buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp";
+        // 授权的数量
         String amount = "1000000";
-        Long nonce = 50L; // 49 + 1
-        Long gasPrice = 1000L; // 固定写 1000L ，单位是MO
-        Long feeLimit = ToBaseUnit.BU2MO("0.02"); // 设置最多费用0.02BU，固定填写
+        // 交易发起账户Nonce + 1
+        Long nonce = 50L;
+        // 固定写 1000L ，单位是MO
+        Long gasPrice = 1000L;
+        // 设置最多费用0.02BU，固定填写
+        Long feeLimit = ToBaseUnit.BU2MO("0.02");
 
         // 1. 触发合约方地址
         String invokeAddress = getAddressByPrivateKey(invokePrivateKey);
@@ -1043,13 +1121,18 @@ public class DigitalAssetsDemo {
     @Test
     public void changeTokenOwner() {
         // 初始化变量
-        String invokePrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq"; // 触发合约方私钥
-        String contractAddress = "buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq"; // 合约token代码所在的合约账户地址
-        String tokenOwner = "buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp"; // 待分配token的账户
-        String amount = "1000000";
-        Long nonce = 55L; // 54 + 1
-        Long gasPrice = 1000L; // 固定写 1000L ，单位是MO
-        Long feeLimit = ToBaseUnit.BU2MO("0.02"); // 设置最多费用0.02BU，固定填写
+        // 触发合约方私钥
+        String invokePrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq";
+        // 合约token代码所在的合约账户地址
+        String contractAddress = "buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq";
+        // token的拥有者账户
+        String tokenOwner = "buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp";
+        // 交易发起账户Nonce + 1
+        Long nonce = 55L;
+        // 固定写 1000L ，单位是MO
+        Long gasPrice = 1000L;
+        // 设置最多费用0.02BU，固定填写
+        Long feeLimit = ToBaseUnit.BU2MO("0.02");
 
         // 1. 触发合约方地址
         String invokeAddress = getAddressByPrivateKey(invokePrivateKey);
@@ -1074,20 +1157,27 @@ public class DigitalAssetsDemo {
      */
     @Test
     public void createContract() {
-        String activatePrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq";
+        // 待创建合约的账户私钥
+        String createPrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq";
+        // 合约账户初始化资产，单位MO，1 BU = 10^8 MO
         Long initBalance = ToBaseUnit.BU2MO("0.1");
+        // 合约代码
         String payload = "\"use strict\";function init(initInput){return;} function main(input){getBalance(thisAddress);} function query(input) {return;}";
-        Long gasPrice = 1000L; // 固定写 1000L ，单位是MO
-        Long feeLimit = ToBaseUnit.BU2MO("10.01"); // 设置最多费用 10.01BU ，固定填写
-        Long nonce = 56L; // 交易发起账户Nonce，必须Nonce + 1
+        // 固定写 1000L ，单位是MO
+        Long gasPrice = 1000L;
+        // 设置最多费用 10.01BU ，固定填写
+        Long feeLimit = ToBaseUnit.BU2MO("10.01");
+        // 交易发起账户Nonce + 1
+        Long nonce = 56L;
+        // 合约init函数入参
         String initInput = "";
 
         // 1. 获取交易发送账户地址
-        String activateAddresss = getAddressByPrivateKey(activatePrivateKey);
+        String createAddresss = getAddressByPrivateKey(createPrivateKey);
 
         // 2. 构建activateAccount操作
         ContractCreateOperation operation = new ContractCreateOperation();
-        operation.setSourceAddress(activateAddresss);
+        operation.setSourceAddress(createAddresss);
         operation.setInitBalance(initBalance);
         operation.setPayload(payload);
         operation.setInitInput(initInput);
@@ -1095,7 +1185,7 @@ public class DigitalAssetsDemo {
 
         // 记录txhash ，以便后续再次确认交易真实结果
         // 推荐5个区块后再次通过txhash再次调用`根据交易Hash获取交易信息`(参考示例：getTxByHash()）来确认交易终态结果
-        String txHash = submitTransaction(activatePrivateKey, activateAddresss, operation, nonce, gasPrice, feeLimit);
+        String txHash = submitTransaction(createPrivateKey, createAddresss, operation, nonce, gasPrice, feeLimit);
         if (txHash != null) {
             System.out.println("hash: " + txHash);
         }
@@ -1107,22 +1197,31 @@ public class DigitalAssetsDemo {
     @Test
     public void invokeContractByAsset() {
         // 初始化变量
-        String senderPrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq"; // 发送方私钥
-        String destAddress = "buQd7e8E5XMa7Yg6FJe4BeLWfqpGmurxzZ5F";// 接收方账户地址
-        String assetCode = "TST";  // 待发送和资产编号
-        String assetIssuer = "buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp"; // 资产发行方地址
-        Long amount = 0L; // 0表示仅触发合约
-        Long gasPrice = 1000L; // 固定写 1000L ，单位是MO
-        Long feeLimit = ToBaseUnit.BU2MO("0.01"); // 设置最多费用 0.01BU ，固定填写
-        Long nonce = 57L; // 发送方账户Nonce，必须Nonce + 1
+        // 触发合约账户私钥
+        String invokePrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq";
+        // 接收方账户地址
+        String destAddress = "buQd7e8E5XMa7Yg6FJe4BeLWfqpGmurxzZ5F";
+        // 待发送和资产编号
+        String assetCode = "TST";
+        // 资产发行方地址
+        String assetIssuer = "buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp";
+        // 0表示仅触发合约
+        Long amount = 0L;
+        // 固定写 1000L ，单位是MO
+        Long gasPrice = 1000L;
+        // 设置最多费用 0.01BU ，固定填写
+        Long feeLimit = ToBaseUnit.BU2MO("0.01");
+        // 交易发起账户Nonce + 1
+        Long nonce = 57L;
+        // 合约main函数入参
         String input = "";
 
         // 1. 获取交易发送账户地址
-        String senderAddresss = getAddressByPrivateKey(senderPrivateKey);
+        String invokeAddresss = getAddressByPrivateKey(invokePrivateKey);
 
         // 2. 构建sendAsset操作
         ContractInvokeByAssetOperation operation = new ContractInvokeByAssetOperation();
-        operation.setSourceAddress(senderAddresss);
+        operation.setSourceAddress(invokeAddresss);
         operation.setContractAddress(destAddress);
         operation.setCode(assetCode);
         operation.setIssuer(assetIssuer);
@@ -1132,7 +1231,7 @@ public class DigitalAssetsDemo {
 
         // 记录txhash ，以便后续再次确认交易真实结果
         // 推荐5个区块后再次通过txhash再次调用`根据交易Hash获取交易信息`(参考示例：getTxByHash()）来确认交易终态结果
-        String txHash = submitTransaction(senderPrivateKey, senderAddresss, operation, nonce, gasPrice, feeLimit);
+        String txHash = submitTransaction(invokePrivateKey, invokeAddresss, operation, nonce, gasPrice, feeLimit);
         if (txHash != null) {
             System.out.println("hash: " + txHash);
         }
@@ -1144,27 +1243,33 @@ public class DigitalAssetsDemo {
     @Test
     public void invokeContractByBU() {
         // 初始化变量
-        String senderPrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq"; // 发送方私钥
-        String destAddress = "buQd7e8E5XMa7Yg6FJe4BeLWfqpGmurxzZ5F";// 接收方账户地址
-        Long amount = 0L;// 0表示仅触发合约
-        Long gasPrice = 1000L; // 固定写 1000L ，单位是MO
-        Long feeLimit = ToBaseUnit.BU2MO("0.01");//设置最多费用 0.01BU ，固定填写
-        Long nonce = 58L; // 参考getAccountNonce()获取账户Nonce + 1;
+        // 发送方私钥
+        String invokePrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq";
+        // 接收方账户地址
+        String destAddress = "buQd7e8E5XMa7Yg6FJe4BeLWfqpGmurxzZ5F";
+        // 0表示仅触发合约
+        Long amount = 0L;
+        // 固定写 1000L ，单位是MO
+        Long gasPrice = 1000L;
+        //设置最多费用 0.01BU ，固定填写
+        Long feeLimit = ToBaseUnit.BU2MO("0.01");
+        // 交易发起账户Nonce + 1
+        Long nonce = 58L;
         String input = "";
 
         // 1. 获取交易发送账户地址
-        String senderAddresss = getAddressByPrivateKey(senderPrivateKey);
+        String invokeAddresss = getAddressByPrivateKey(invokePrivateKey);
 
         // 2. 发送BU，并触发交易
         ContractInvokeByBUOperation operation = new ContractInvokeByBUOperation();
-        operation.setSourceAddress(senderAddresss);
+        operation.setSourceAddress(invokeAddresss);
         operation.setContractAddress(destAddress);
         operation.setBuAmount(amount);
         operation.setInput(input);
 
         // 记录txhash ，以便后续再次确认交易真实结果
         // 推荐5个区块后再次通过txhash再次调用`根据交易Hash获取交易信息`(参考示例：getTxByHash()）来确认交易终态结果
-        String txHash = submitTransaction(senderPrivateKey,senderAddresss,operation,nonce,gasPrice,feeLimit);
+        String txHash = submitTransaction(invokePrivateKey,invokeAddresss,operation,nonce,gasPrice,feeLimit);
         if (txHash != null) {
             System.out.println("hash: " + txHash);
         }
@@ -1176,16 +1281,23 @@ public class DigitalAssetsDemo {
     @Test
     public void createLog() {
         // 初始化变量
-        String createPrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq"; // 创建日志方私钥
-        String topic = "test"; // 日志标题
-        String data = "this is not a error"; // 日志内容
-        String metadata = HexFormat.byteToHex("create log".getBytes()); // 必须是16进制字符串
-        Long gasPrice = 1000L; // 固定写 1000L ，单位是MO
-        Long feeLimit = ToBaseUnit.BU2MO("0.01"); // 设置最多费用 0.01BU ，固定填写
-        Long nonce = 59L; // 发送方账户Nonce，必须Nonce + 1
+        // 创建日志方私钥
+        String createPrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq";
+        // 日志标题
+        String topic = "test";
+        // 日志内容
+        String data = "this is not a error";
+        // 必须是16进制字符串
+        String metadata = HexFormat.byteToHex("create log".getBytes());
+        // 固定写 1000L ，单位是MO
+        Long gasPrice = 1000L;
+        // 设置最多费用 0.01BU ，固定填写
+        Long feeLimit = ToBaseUnit.BU2MO("0.01");
+        // 交易发起账户Nonce + 1
+        Long nonce = 59L;
 
         // 1. 获取交易发送账户地址
-        String createAddresss = getAddressByPrivateKey(createPrivateKey); // BU发送者账户地址
+        String createAddresss = getAddressByPrivateKey(createPrivateKey);
 
         // 构建createLog操作
         LogCreateOperation operation = new LogCreateOperation();
@@ -1223,7 +1335,7 @@ public class DigitalAssetsDemo {
         transactionBuildBlobRequest.setMetadata("abc");
 
         // 4. 获取交易BLob串
-        String transactionBlob = null;
+        String transactionBlob;
         TransactionBuildBlobResponse transactionBuildBlobResponse = sdk.getTransactionService().buildBlob(transactionBuildBlobRequest);
         if (transactionBuildBlobResponse.getErrorCode() != 0) {
             System.out.println("error: " + transactionBuildBlobResponse.getErrorDesc());
@@ -1251,7 +1363,7 @@ public class DigitalAssetsDemo {
         transactionSubmitRequest.setTransactionBlob(transactionBlob);
         transactionSubmitRequest.setSignatures(transactionSignResponse.getResult().getSignatures());
         TransactionSubmitResponse transactionSubmitResponse = sdk.getTransactionService().submit(transactionSubmitRequest);
-        if (0 == transactionSubmitResponse.getErrorCode()) { // 交易广播成功
+        if (0 == transactionSubmitResponse.getErrorCode()) {
             System.out.println("交易广播成功，hash=" + transactionSubmitResponse.getResult().getHash());
         }else{
             System.out.println("交易广播失败，hash=" + transactionSubmitResponse.getResult().getHash() + "");
@@ -1272,7 +1384,7 @@ public class DigitalAssetsDemo {
      */
     private TransactionFees evaluateFees(String senderPrivateKey, String destAddress, Long amount, Long nonce, Long gasPrice, Long feeLimit) throws Exception {
         // 1. 获取交易发送账户地址
-        String senderAddresss = getAddressByPrivateKey(senderPrivateKey); // BU发送者账户地址
+        String senderAddresss = getAddressByPrivateKey(senderPrivateKey);
 
         // 2. 构建sendBU操作
         BUSendOperation buSendOperation = new BUSendOperation();
@@ -1294,25 +1406,6 @@ public class DigitalAssetsDemo {
             return response.getResult().getTxs()[0].getTransactionEnv().getTransactionFees();
         } else {
             System.out.println("error: " + response.getErrorDesc());
-            return null;
-        }
-    }
-
-    /**
-     * @author riven
-     * @param  senderAddresss 交易发送方地址
-     * @return java.lang.Long 交易发送方账户nonce值
-     */
-    private Long getNonceOfAccount(String senderAddresss){
-        AccountGetNonceRequest accountGetNonceRequest = new AccountGetNonceRequest();
-        accountGetNonceRequest.setAddress(senderAddresss);
-
-        AccountGetNonceResponse accountGetNonceResponse =  sdk.getAccountService().getNonce(accountGetNonceRequest);
-        if (accountGetNonceResponse.getErrorCode() == 0) {
-            AccountGetNonceResult accountGetNonceResult = accountGetNonceResponse.getResult();
-            return accountGetNonceResult.getNonce();
-        }
-        else {
             return null;
         }
     }

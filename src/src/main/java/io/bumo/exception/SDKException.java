@@ -1,10 +1,12 @@
 package io.bumo.exception;
 
+/**
+ * @author riven
+ */
 public class SDKException extends RuntimeException{
 	private static final long serialVersionUID = 429654902433634386L;
     private Integer errorCode;
     private String errorDesc;
-    private SdkError sdkError;
     
     public SDKException(String message, Throwable cause) {
         super(message, cause);

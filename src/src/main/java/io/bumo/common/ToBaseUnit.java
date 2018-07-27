@@ -8,10 +8,10 @@ public class ToBaseUnit {
 		}
 		String beforeStr = "";
 		String afterStr = "";
-		String tempArr[] = buAmount.split("\\.");
-		if(tempArr.length > 1) {
-			beforeStr = tempArr[0];
-			afterStr = tempArr[1];
+		String tempArray[] = buAmount.split("\\.");
+		if(tempArray.length > 1) {
+			beforeStr = tempArray[0];
+			afterStr = tempArray[1];
 		} else {
 			return Long.parseLong(buAmount + "00000000");
 		}
