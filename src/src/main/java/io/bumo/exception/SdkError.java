@@ -67,24 +67,15 @@ public enum SdkError {
     SIGNATURE_EMPTY_ERROR(11067, "The signatures cannot be empty"),
     CONNECTN_BLOCKCHAIN_ERROR(19999, "Fail to connect blockchain"),
     SYSTEM_ERROR(20000, "System error"),
-    REQUEST_NULL_ERROR(13001, "Request parameter cannot be null"),
-    ;
-	
-	
+    REQUEST_NULL_ERROR(13001, "Request parameter cannot be null"),;
+
+
     private final Integer code;
     private final String description;
 
     private SdkError(Integer code, String description) {
         this.code = code;
         this.description = description;
-    }
-
-    public Integer getCode() {
-        return code;
-    }
-
-    public String getDescription() {
-        return description;
     }
 
     public static void checkErrorCode(BaseResponse baseResponse) throws SDKException {
@@ -98,5 +89,13 @@ public enum SdkError {
                 throw new SDKException(errorCode, (null == errorDesc ? "error" : errorDesc));
             }
         } while (false);
+    }
+
+    public Integer getCode() {
+        return code;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }

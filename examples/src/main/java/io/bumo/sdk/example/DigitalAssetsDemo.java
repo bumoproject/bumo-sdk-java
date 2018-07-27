@@ -27,7 +27,7 @@ public class DigitalAssetsDemo {
      * 检测连接的节点是否区块同步正常
      */
     @Test
-    public void checkBlockStatus(){
+    public void checkBlockStatus() {
         BlockCheckStatusResponse response = sdk.getBlockService().checkStatus();
         System.out.println(response.getResult().getSynchronous());
     }
@@ -36,16 +36,16 @@ public class DigitalAssetsDemo {
      * 生成账户私钥，公钥及地址
      */
     @Test
-    public void createAccount(){
+    public void createAccount() {
         Keypair keypair = Keypair.generator();
-        System.out.println(JSON.toJSONString(keypair,true));
+        System.out.println(JSON.toJSONString(keypair, true));
     }
 
     /**
      * 校验账户地址
      */
     @Test
-    public void checkAccountAddress(){
+    public void checkAccountAddress() {
         // 初始化请求参数
         String address = "buQemmMwmRQY1JkcU7w3nhruoX5N3j6C29uo";
         AccountCheckValidRequest request = new AccountCheckValidRequest();
@@ -53,7 +53,7 @@ public class DigitalAssetsDemo {
 
         // 调用checkValid
         AccountCheckValidResponse response = sdk.getAccountService().checkValid(request);
-        if(0 == response.getErrorCode()) {
+        if (0 == response.getErrorCode()) {
             System.out.println(response.getResult().isValid());
         } else {
             System.out.println("error: " + response.getErrorDesc());
@@ -64,14 +64,14 @@ public class DigitalAssetsDemo {
      * 查询账户信息
      */
     @Test
-    public void getAccountInfo(){
+    public void getAccountInfo() {
         // 初始化请求参数
         String accountAddress = "buQemmMwmRQY1JkcU7w3nhruoX5N3j6C29uo";
         AccountGetInfoRequest request = new AccountGetInfoRequest();
         request.setAddress(accountAddress);
 
         // 调用getInfo接口
-        AccountGetInfoResponse response =  sdk.getAccountService().getInfo(request);
+        AccountGetInfoResponse response = sdk.getAccountService().getInfo(request);
         if (response.getErrorCode() == 0) {
             AccountGetInfoResult result = response.getResult();
             System.out.println("账户信息: \n" + JSON.toJSONString(result, true));
@@ -84,7 +84,7 @@ public class DigitalAssetsDemo {
      * 获取账户Nonce
      */
     @Test
-    public void getAccountNonce(){
+    public void getAccountNonce() {
         // 初始化请求参数
         String accountAddress = "buQswSaKDACkrFsnP1wcVsLAUzXQsemauEjf";
         AccountGetNonceRequest request = new AccountGetNonceRequest();
@@ -92,7 +92,7 @@ public class DigitalAssetsDemo {
 
         // 调用getNonce接口
         AccountGetNonceResponse response = sdk.getAccountService().getNonce(request);
-        if(0 == response.getErrorCode()){
+        if (0 == response.getErrorCode()) {
             System.out.println("账户nonce:" + response.getResult().getNonce());
         } else {
             System.out.println("error: " + response.getErrorDesc());
@@ -103,7 +103,7 @@ public class DigitalAssetsDemo {
      * 获取账户BU余额
      */
     @Test
-    public void getAccountBalance(){
+    public void getAccountBalance() {
         // 初始化请求参数
         String accountAddress = "buQswSaKDACkrFsnP1wcVsLAUzXQsemauEjf";
         AccountGetBalanceRequest request = new AccountGetBalanceRequest();
@@ -111,7 +111,7 @@ public class DigitalAssetsDemo {
 
         // 调用getBalance接口
         AccountGetBalanceResponse response = sdk.getAccountService().getBalance(request);
-        if(0 == response.getErrorCode()){
+        if (0 == response.getErrorCode()) {
             AccountGetBalanceResult result = response.getResult();
             System.out.println("BU余额：" + ToBaseUnit.MO2BU(result.getBalance().toString()) + " BU");
         } else {
@@ -142,7 +142,7 @@ public class DigitalAssetsDemo {
      * 查询账户Metadata
      */
     @Test
-    public void getAccountMetadata(){
+    public void getAccountMetadata() {
         // 初始化请求参数
         String accountAddress = "buQsurH1M4rjLkfjzkxR9KXJ6jSu2r9xBNEw";
         AccountGetMetadataRequest request = new AccountGetMetadataRequest();
@@ -150,7 +150,7 @@ public class DigitalAssetsDemo {
         request.setKey("20180704");
 
         // 调用getMetadata接口
-        AccountGetMetadataResponse response =  sdk.getAccountService().getMetadata(request);
+        AccountGetMetadataResponse response = sdk.getAccountService().getMetadata(request);
         if (response.getErrorCode() == 0) {
             AccountGetMetadataResult result = response.getResult();
             System.out.println(JSON.toJSONString(result, true));
@@ -450,7 +450,7 @@ public class DigitalAssetsDemo {
         Long nonce = 42L;
 
         // 评估费用
-        TransactionFees transactionFees = evaluateFees(senderPrivateKey,destAddress,amount,nonce,gasPrice,feeLimit);
+        TransactionFees transactionFees = evaluateFees(senderPrivateKey, destAddress, amount, nonce, gasPrice, feeLimit);
         System.out.println(JSON.toJSONString(transactionFees, true));
     }
 
@@ -461,7 +461,7 @@ public class DigitalAssetsDemo {
     public void signTransaction() {
         // 初始化请求参数
         String issuePrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq";
-        String []signerPrivateKeyArr = {issuePrivateKey};
+        String[] signerPrivateKeyArr = {issuePrivateKey};
         String transactionBlob = "123";
         TransactionSignRequest request = new TransactionSignRequest();
         request.setBlob(transactionBlob);
@@ -469,9 +469,9 @@ public class DigitalAssetsDemo {
             request.addPrivateKey(signerPrivateKeyArr[i]);
         }
         TransactionSignResponse response = sdk.getTransactionService().sign(request);
-        if(0 == response.getErrorCode()){
+        if (0 == response.getErrorCode()) {
             System.out.println(JSON.toJSONString(response.getResult(), true));
-        }else{
+        } else {
             System.out.println("error: " + response.getErrorDesc());
         }
     }
@@ -494,7 +494,7 @@ public class DigitalAssetsDemo {
         TransactionSubmitResponse response = sdk.getTransactionService().submit(request);
         if (0 == response.getErrorCode()) {
             System.out.println(JSON.toJSONString(response.getResult(), true));
-        } else{
+        } else {
             System.out.println("error: " + response.getErrorDesc());
         }
     }
@@ -503,7 +503,7 @@ public class DigitalAssetsDemo {
      * 根据交易Hash获取交易信息
      */
     @Test
-    public void getTxByHash(){
+    public void getTxByHash() {
         String txHash = "1653f54fbba1134f7e35acee49592a7c29384da10f2f629c9a214f6e54747705";
         // 初始化请求参数
         TransactionGetInfoRequest request = new TransactionGetInfoRequest();
@@ -520,12 +520,11 @@ public class DigitalAssetsDemo {
 
     /**
      * 探测用户充值
-     *
+     * <p>
      * 通过解析区块下的交易，来探测用户的充值动作
-     *
      */
     @Test
-    public void getTransactionOfBolck(){
+    public void getTransactionOfBolck() {
         // 初始化请求参数
         Long blockNumber = 617247L;
         BlockGetTransactionsRequest request = new BlockGetTransactionsRequest();
@@ -533,9 +532,9 @@ public class DigitalAssetsDemo {
 
         // 调用getTransactions接口
         BlockGetTransactionsResponse response = sdk.getBlockService().getTransactions(request);
-        if(0 == response.getErrorCode()){
+        if (0 == response.getErrorCode()) {
             System.out.println(JSON.toJSONString(response.getResult(), true));
-        }else{
+        } else {
             System.out.println("error: " + response.getErrorDesc());
         }
     }
@@ -544,12 +543,12 @@ public class DigitalAssetsDemo {
      * 查询最新的区块高度
      */
     @Test
-    public void getLastBlockNumber(){
+    public void getLastBlockNumber() {
         // 调用getNumber接口
         BlockGetNumberResponse response = sdk.getBlockService().getNumber();
-        if(0 == response.getErrorCode()){
+        if (0 == response.getErrorCode()) {
             System.out.println(JSON.toJSONString(response.getResult(), true));
-        }else{
+        } else {
             System.out.println("error: " + response.getErrorDesc());
         }
     }
@@ -588,7 +587,8 @@ public class DigitalAssetsDemo {
         }
     }
 
-    /**R
+    /**
+     * R
      * 查询指定区块高度的验证节点信息
      */
     @Test
@@ -746,10 +746,10 @@ public class DigitalAssetsDemo {
         // 1. 获取交易发送账户地址
         String accountAddresss = getAddressByPrivateKey(accountPrivateKey);
 
-        // 2. 构建sendMetadata操作
+        // 2. 构建setMetadata操作
         AccountSetMetadataOperation operation = new AccountSetMetadataOperation();
         operation.setSourceAddress(accountAddresss);
-        operation.setKey(key);
+        //operation.setKey(key);
         operation.setValue(value);
         operation.setValue("你是外国人吧？");
 
@@ -906,7 +906,7 @@ public class DigitalAssetsDemo {
 
         // 记录txhash ，以便后续再次确认交易真实结果
         // 推荐5个区块后再次通过txhash再次调用`根据交易Hash获取交易信息`(参考示例：getTxByHash()）来确认交易终态结果
-        String txHash = submitTransaction(senderPrivateKey,senderAddresss,buSendOperation,nonce,gasPrice,feeLimit);
+        String txHash = submitTransaction(senderPrivateKey, senderAddresss, buSendOperation, nonce, gasPrice, feeLimit);
         if (txHash != null) {
             System.out.println("hash: " + txHash);
         }
@@ -1271,7 +1271,7 @@ public class DigitalAssetsDemo {
 
         // 记录txhash ，以便后续再次确认交易真实结果
         // 推荐5个区块后再次通过txhash再次调用`根据交易Hash获取交易信息`(参考示例：getTxByHash()）来确认交易终态结果
-        String txHash = submitTransaction(invokePrivateKey,invokeAddresss,operation,nonce,gasPrice,feeLimit);
+        String txHash = submitTransaction(invokePrivateKey, invokeAddresss, operation, nonce, gasPrice, feeLimit);
         if (txHash != null) {
             System.out.println("hash: " + txHash);
         }
@@ -1310,14 +1310,13 @@ public class DigitalAssetsDemo {
 
         // 记录txhash ，以便后续再次确认交易真实结果
         // 推荐5个区块后再次通过txhash再次调用`根据交易Hash获取交易信息`(参考示例：getTxByHash()）来确认交易终态结果
-        String txHash = submitTransaction(createPrivateKey,createAddresss,operation,nonce,gasPrice,feeLimit);
+        String txHash = submitTransaction(createPrivateKey, createAddresss, operation, nonce, gasPrice, feeLimit);
         if (txHash != null) {
             System.out.println("hash: " + txHash);
         }
     }
 
     /**
-     * @author riven
      * @param senderPrivateKey 交易发送方私钥
      * @param senderAddresss   交易发送方地址
      * @param operation        操作
@@ -1325,6 +1324,7 @@ public class DigitalAssetsDemo {
      * @param gasPrice         交易燃料单价
      * @param feeLimit         交易最低手续费
      * @return java.lang.String 交易hash
+     * @author riven
      */
     private String submitTransaction(String senderPrivateKey, String senderAddresss, BaseOperation operation, Long senderNonce, Long gasPrice, Long feeLimit) {
         // 3. 构建交易
@@ -1348,7 +1348,7 @@ public class DigitalAssetsDemo {
         transactionBlob = transactionBuildBlobResult.getTransactionBlob();
 
         // 5. 签名交易BLob(交易发送账户签名交易Blob串)
-        String []signerPrivateKeyArr = {senderPrivateKey};
+        String[] signerPrivateKeyArr = {senderPrivateKey};
         TransactionSignRequest transactionSignRequest = new TransactionSignRequest();
         transactionSignRequest.setBlob(transactionBlob);
         for (int i = 0; i < signerPrivateKeyArr.length; i++) {
@@ -1367,7 +1367,7 @@ public class DigitalAssetsDemo {
         TransactionSubmitResponse transactionSubmitResponse = sdk.getTransactionService().submit(transactionSubmitRequest);
         if (0 == transactionSubmitResponse.getErrorCode()) {
             System.out.println("交易广播成功，hash=" + transactionSubmitResponse.getResult().getHash());
-        }else{
+        } else {
             System.out.println("交易广播失败，hash=" + transactionSubmitResponse.getResult().getHash() + "");
             System.out.println(JSON.toJSONString(transactionSubmitResponse, true));
         }
@@ -1375,7 +1375,6 @@ public class DigitalAssetsDemo {
     }
 
     /**
-     * @author riven
      * @param senderPrivateKey 交易发送方私钥
      * @param destAddress      接收方地址
      * @param amount           BU数量
@@ -1383,6 +1382,7 @@ public class DigitalAssetsDemo {
      * @param gasPrice         交易燃料单价
      * @param feeLimit         交易最低手续费
      * @return io.bumo.model.response.result.data.TransactionFees 交易费用
+     * @author riven
      */
     private TransactionFees evaluateFees(String senderPrivateKey, String destAddress, Long amount, Long nonce, Long gasPrice, Long feeLimit) throws Exception {
         // 1. 获取交易发送账户地址
@@ -1413,9 +1413,9 @@ public class DigitalAssetsDemo {
     }
 
     /**
-     * @author riven
      * @param privatekey 私钥
      * @return java.lang.String 账户地址
+     * @author riven
      */
     private String getAddressByPrivateKey(String privatekey) {
         String publicKey = PrivateKey.getEncPublicKey(privatekey);

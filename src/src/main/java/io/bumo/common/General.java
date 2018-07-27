@@ -11,20 +11,20 @@ public class General {
     public static String url;
 
     public static String accountGetInfoUrl(String address) throws UnsupportedEncodingException {
-        return  url + "/getAccountBase?address=" + URLEncoder.encode(address, "utf8");
+        return url + "/getAccountBase?address=" + URLEncoder.encode(address, "utf8");
     }
 
     public static String accountGetAssetsUrl(String address) {
-        return  url + "/getAccount?address=" + address;
+        return url + "/getAccount?address=" + address;
     }
 
     public static String accountGetMetadataUrl(String address, String key) throws UnsupportedEncodingException {
-        return url + "/getAccount?address=" + URLEncoder.encode(address, "utf8") + "&key=" + URLEncoder.encode(key, "utf8");
+        return url + "/getAccount?address=" + URLEncoder.encode(address, "utf8") + (Tools.isEmpty(key) ? "" : "&key=" + URLEncoder.encode(key, "utf8"));
     }
 
     public static String assetGetUrl(String address, String code, String issuer) throws UnsupportedEncodingException {
         return url + "/getAccount?address=" + URLEncoder.encode(address, "utf8") + "&code=" +
-                URLEncoder.encode(code, "utf8")  + "&issuer=" + URLEncoder.encode(issuer, "utf8");
+                URLEncoder.encode(code, "utf8") + "&issuer=" + URLEncoder.encode(issuer, "utf8");
     }
 
     public static String contractCallUrl() {

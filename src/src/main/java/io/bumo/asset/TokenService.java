@@ -17,6 +17,7 @@ public interface TokenService {
      * @Date 2018/7/15 15:36
      */
     public TokenCheckValidResponse checkValid(TokenCheckValidRequest tokenCheckValidRequest);
+
     /**
      * @Author riven
      * @Method allowance
@@ -25,7 +26,7 @@ public interface TokenService {
      * @Date 2018/7/6 16:29
      */
     public TokenAllowanceResponse allowance(TokenAllowanceRequest tokenAllowanceRequest);
-    
+
     /**
      * @Author riven
      * @Method getInfo
@@ -34,7 +35,7 @@ public interface TokenService {
      * @Date 2018/7/6 16:30
      */
     public TokenGetInfoResponse getInfo(TokenGetInfoRequest tokenGetInfoRequest);
-    
+
     /**
      * @Author riven
      * @Method getName

@@ -20,7 +20,7 @@ public class TransactionParseBlobResponse extends BaseResponse {
      * @Date 2018/7/10 17:00
      */
     public TransactionParseBlobResult getResult() {
-        
+
         return result;
     }
 

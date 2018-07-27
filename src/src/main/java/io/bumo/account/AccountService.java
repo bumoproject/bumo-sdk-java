@@ -17,7 +17,7 @@ public interface AccountService {
      * @Date 2018/7/3 12:56
      */
     public AccountCheckValidResponse checkValid(AccountCheckValidRequest accountCheckValidRequest);
-    
+
     /**
      * @Author riven
      * @Method create

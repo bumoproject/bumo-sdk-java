@@ -9,19 +9,19 @@ import com.alibaba.fastjson.annotation.JSONField;
 public class AccountActiviateInfo {
     @JSONField(name = "dest_address")
     private String destAddress;
-    
+
     @JSONField(name = "contract")
     private ContractInfo contract;
-    
+
     @JSONField(name = "priv")
     private Priv priv;
-    
+
     @JSONField(name = "metadatas")
     private MetadataInfo[] metadatas;
-    
+
     @JSONField(name = "init_balance")
     private Long initBalance;
-    
+
     @JSONField(name = "init_input")
     private String initInput;
 

@@ -35,14 +35,13 @@ public class submitTransactionDemo {
         getNonceRequest.setAddress(senderAddress);
 
         // 调用getNonce接口
-        AccountGetNonceResponse getNonceResponse =  sdk.getAccountService().getNonce(getNonceRequest);
+        AccountGetNonceResponse getNonceResponse = sdk.getAccountService().getNonce(getNonceRequest);
 
         // 赋值nonce
         if (getNonceResponse.getErrorCode() == 0) {
             AccountGetNonceResult result = getNonceResponse.getResult();
             System.out.println("nonce: " + result.getNonce());
-        }
-        else {
+        } else {
             System.out.println("error" + getNonceResponse.getErrorDesc());
         }
     }
@@ -73,13 +72,12 @@ public class submitTransactionDemo {
         String senderAddress = "buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp";
         AccountGetNonceRequest getNonceRequest = new AccountGetNonceRequest();
         getNonceRequest.setAddress(senderAddress);
-        AccountGetNonceResponse getNonceResponse =  sdk.getAccountService().getNonce(getNonceRequest);
+        AccountGetNonceResponse getNonceResponse = sdk.getAccountService().getNonce(getNonceRequest);
         Long nonce;
         if (getNonceResponse.getErrorCode() == 0) {
             AccountGetNonceResult result = getNonceResponse.getResult();
             nonce = result.getNonce();
-        }
-        else {
+        } else {
             System.out.println("error" + getNonceResponse.getErrorDesc());
             return;
         }
@@ -121,13 +119,12 @@ public class submitTransactionDemo {
         String senderAddress = "buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp";
         AccountGetNonceRequest getNonceRequest = new AccountGetNonceRequest();
         getNonceRequest.setAddress(senderAddress);
-        AccountGetNonceResponse getNonceResponse =  sdk.getAccountService().getNonce(getNonceRequest);
+        AccountGetNonceResponse getNonceResponse = sdk.getAccountService().getNonce(getNonceRequest);
         Long nonce;
         if (getNonceResponse.getErrorCode() == 0) {
             AccountGetNonceResult result = getNonceResponse.getResult();
             nonce = result.getNonce();
-        }
-        else {
+        } else {
             System.out.println("error" + getNonceResponse.getErrorDesc());
             return;
         }
@@ -161,7 +158,7 @@ public class submitTransactionDemo {
 
         // 初始化请求参数
         String senderPrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq";
-        String []signerPrivateKeyArr = {senderPrivateKey};
+        String[] signerPrivateKeyArr = {senderPrivateKey};
         TransactionSignRequest signRequest = new TransactionSignRequest();
         signRequest.setBlob(transactionBlob);
         for (int i = 0; i < signerPrivateKeyArr.length; i++) {
@@ -186,13 +183,12 @@ public class submitTransactionDemo {
         String senderAddress = "buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp";
         AccountGetNonceRequest getNonceRequest = new AccountGetNonceRequest();
         getNonceRequest.setAddress(senderAddress);
-        AccountGetNonceResponse getNonceResponse =  sdk.getAccountService().getNonce(getNonceRequest);
+        AccountGetNonceResponse getNonceResponse = sdk.getAccountService().getNonce(getNonceRequest);
         Long nonce;
         if (getNonceResponse.getErrorCode() == 0) {
             AccountGetNonceResult result = getNonceResponse.getResult();
             nonce = result.getNonce();
-        }
-        else {
+        } else {
             System.out.println("error" + getNonceResponse.getErrorDesc());
             return;
         }
@@ -226,7 +222,7 @@ public class submitTransactionDemo {
 
         // 上面的签名接口得到的signResult
         String senderPrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq";
-        String []signerPrivateKeyArr = {senderPrivateKey};
+        String[] signerPrivateKeyArr = {senderPrivateKey};
         TransactionSignRequest signRequest = new TransactionSignRequest();
         signRequest.setBlob(transactionBlob);
         for (int i = 0; i < signerPrivateKeyArr.length; i++) {

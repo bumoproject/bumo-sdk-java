@@ -102,7 +102,7 @@ public class TransactionEvaluateFeeRequest {
         }
         operations[operations.length - 1] = operation;
     }
-    
+
     /**
      * @Author riven
      * @Method getSignatureNumber

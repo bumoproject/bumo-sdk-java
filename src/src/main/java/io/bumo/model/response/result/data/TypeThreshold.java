@@ -12,7 +12,7 @@ public class TypeThreshold {
     @JSONField(name = "threshold")
     private Long threshold;
 
-    public TypeThreshold () {
+    public TypeThreshold() {
 
     }
 

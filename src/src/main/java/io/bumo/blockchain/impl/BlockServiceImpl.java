@@ -69,8 +69,7 @@ public class BlockServiceImpl implements BlockService {
             LedgerSeq ledgerSeq = blockCheckStatusLedgerSeqResponse.getLedgerSeq();
             if (ledgerSeq.getLedgerSequence() < ledgerSeq.getChainMaxLedgerSeq()) {
                 blockCheckStatusResult.setSynchronous(false);
-            }
-            else {
+            } else {
                 blockCheckStatusResult.setSynchronous(true);
             }
             blockCheckStatusResponse.buildResponse(SdkError.SUCCESS, blockCheckStatusResult);
@@ -145,7 +144,7 @@ public class BlockServiceImpl implements BlockService {
             Integer errorCode = blockGetInfoResponse.getErrorCode();
             String errorDesc = blockGetInfoResponse.getErrorDesc();
             if (!Tools.isEmpty(errorCode) && errorCode == 4) {
-                throw new SDKException(4, (Tools.isEmpty(errorDesc)? "Block (" + blockNumber + ") does not exist" : errorDesc));
+                throw new SDKException(4, (Tools.isEmpty(errorDesc) ? "Block (" + blockNumber + ") does not exist" : errorDesc));
             }
             SdkError.checkErrorCode(blockGetInfoResponse);
         } catch (SDKException apiException) {

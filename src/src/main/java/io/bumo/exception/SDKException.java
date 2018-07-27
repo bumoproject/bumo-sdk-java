@@ -3,11 +3,11 @@ package io.bumo.exception;
 /**
  * @author riven
  */
-public class SDKException extends RuntimeException{
-	private static final long serialVersionUID = 429654902433634386L;
+public class SDKException extends RuntimeException {
+    private static final long serialVersionUID = 429654902433634386L;
     private Integer errorCode;
     private String errorDesc;
-    
+
     public SDKException(String message, Throwable cause) {
         super(message, cause);
         this.errorCode = SdkError.SYSTEM_ERROR.getCode();
@@ -37,7 +37,7 @@ public class SDKException extends RuntimeException{
     public Integer getErrorCode() {
         return errorCode;
     }
-    
+
     public String getErrorDesc() {
         return errorDesc;
     }

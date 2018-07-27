@@ -34,387 +34,6 @@ import java.util.regex.Pattern;
 public class TokenServiceImpl implements TokenService {
     /**
      * @Author riven
-     * @Method checkValid
-     * @Params [tokenCheckValidRequest]
-     * @Return io.bumo.model.response.TokenCheckValidResponse
-     * @Date 2018/7/15 15:36
-     */
-    @Override
-    public TokenCheckValidResponse checkValid(TokenCheckValidRequest tokenCheckValidRequest) {
-        TokenCheckValidResponse tokenCheckValidResponse = new TokenCheckValidResponse();
-        TokenCheckValidResult tokenCheckValidResult = new TokenCheckValidResult();
-        try {
-            if (Tools.isEmpty(tokenCheckValidRequest)) {
-                throw new SDKException(SdkError.REQUEST_NULL_ERROR);
-            }
-            String address = tokenCheckValidRequest.getContractAddress();
-            if (!PublicKey.isAddressValid(address)) {
-                throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
-            }
-            boolean isValid = checkTokenValid(address);
-            tokenCheckValidResult.setValid(isValid);
-            tokenCheckValidResponse.buildResponse(SdkError.SUCCESS, tokenCheckValidResult);
-        } catch (SDKException apiException) {
-            Integer errorCode = apiException.getErrorCode();
-            String errorDesc = apiException.getErrorDesc();
-            tokenCheckValidResponse.buildResponse(errorCode, errorDesc, tokenCheckValidResult);
-        } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
-            tokenCheckValidResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, tokenCheckValidResult);
-        } catch (Exception e) {
-            tokenCheckValidResponse.buildResponse(SdkError.SYSTEM_ERROR, tokenCheckValidResult);
-        }
-        return tokenCheckValidResponse;
-    }
-    /**
-     * @Author riven
-     * @Method allowance
-     * @Params [tokenAllowanceRequest]
-     * @Return io.bumo.model.response.TokenAllowanceResponse
-     * @Date 2018/7/9 19:13
-     */
-    @Override
-    public TokenAllowanceResponse allowance(TokenAllowanceRequest tokenAllowanceRequest) {
-        TokenAllowanceResponse tokenAllowanceResponse = new TokenAllowanceResponse();
-        TokenAllowanceResult tokenAllowanceResult = new TokenAllowanceResult();
-        try {
-            if (Tools.isEmpty(tokenAllowanceRequest)) {
-                throw new SDKException(SdkError.REQUEST_NULL_ERROR);
-            }
-            String contractAddress = tokenAllowanceRequest.getContractAddress();
-            if (!PublicKey.isAddressValid(contractAddress)) {
-                throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
-            }
-            String tokenOwner = tokenAllowanceRequest.getTokenOwner();
-            if (!PublicKey.isAddressValid(tokenOwner)) {
-                throw new SDKException(SdkError.INVALID_TOKENOWNER_ERROR);
-            }
-            String spender = tokenAllowanceRequest.getSpender();
-            if (!PublicKey.isAddressValid(spender)) {
-                throw new SDKException(SdkError.INVALID_SPENDER_ERROR);
-            }
-            boolean isContractValid = checkTokenValid(contractAddress);
-            if (!isContractValid) {
-                throw new SDKException(SdkError.NO_SUCH_TOKEN_ERROR);
-            }
-
-            JSONObject input = new JSONObject();
-            input.put("method", "allowance");
-            JSONObject params = new JSONObject();
-            params.put("owner", tokenOwner);
-            params.put("spender", spender);
-            input.put("params", params);
-            JSONObject queryResult = queryContract(contractAddress, input);
-            TokenQueryResponse tokenQueryResponse = JSON.toJavaObject(queryResult, TokenQueryResponse.class);
-            TokenQueryResult result = tokenQueryResponse.getResult();
-            if (Tools.isEmpty(result)) {
-                TokenErrorResult errorResult = tokenQueryResponse.getError();
-                String errorDesc = errorResult.getData().getException();
-                throw new SDKException(SdkError.GET_ALLOWANCE_ERRPR.getCode(), errorDesc);
-            }
-            tokenAllowanceResult = JSONObject.parseObject(result.getValue(), TokenAllowanceResult.class);
-            tokenAllowanceResponse.buildResponse(SdkError.SUCCESS, tokenAllowanceResult);
-        } catch (SDKException sdkException) {
-            Integer errorCode = sdkException.getErrorCode();
-            String errorDesc = sdkException.getErrorDesc();
-            tokenAllowanceResponse.buildResponse(errorCode, errorDesc, tokenAllowanceResult);
-        } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
-            tokenAllowanceResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, tokenAllowanceResult);
-        } catch (Exception e) {
-            tokenAllowanceResponse.buildResponse(SdkError.SYSTEM_ERROR, tokenAllowanceResult);
-        }
-
-        return tokenAllowanceResponse;
-    }
-
-    /**
-     * @Author riven
-     * @Method getInfo
-     * @Params [tokenGetInfoRequest]
-     * @Return io.bumo.model.response.TokenGetInfoResponse
-     * @Date 2018/7/9 19:13
-     */
-    @Override
-    public TokenGetInfoResponse getInfo(TokenGetInfoRequest tokenGetInfoRequest) {
-        TokenGetInfoResponse tokenGetInfoResponse = new TokenGetInfoResponse();
-        TokenGetInfoResult tokenGetInfoResult = new TokenGetInfoResult();
-        try {
-            if (Tools.isEmpty(tokenGetInfoRequest)) {
-                throw new SDKException(SdkError.REQUEST_NULL_ERROR);
-            }
-            String contractAddress = tokenGetInfoRequest.getContractAddress();
-            if (!PublicKey.isAddressValid(contractAddress)) {
-                throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
-            }
-            boolean isContractValid = checkTokenValid(contractAddress);
-            if (!isContractValid) {
-                throw new SDKException(SdkError.NO_SUCH_TOKEN_ERROR);
-            }
-
-            JSONObject input = new JSONObject();
-            input.put("method", "contractInfo");
-            JSONObject queryResult = queryContract(contractAddress, input);
-            TokenQueryResponse tokenQueryResponse = JSON.toJavaObject(queryResult, TokenQueryResponse.class);
-            TokenQueryResult result = tokenQueryResponse.getResult();
-            if (Tools.isEmpty(result)) {
-                TokenErrorResult errorResult = tokenQueryResponse.getError();
-                String errorDesc = errorResult.getData().getException();
-                throw new SDKException(SdkError.GET_TOKEN_INFO_ERRPR.getCode(), errorDesc);
-            }
-            tokenGetInfoResult =  JSONObject.parseObject(result.getValue(), TokenGetInfoResult.class);
-            tokenGetInfoResponse.buildResponse(SdkError.SUCCESS, tokenGetInfoResult);
-        } catch (SDKException sdkException) {
-            Integer errorCode = sdkException.getErrorCode();
-            String errorDesc = sdkException.getErrorDesc();
-            tokenGetInfoResponse.buildResponse(errorCode, errorDesc, tokenGetInfoResult);
-        } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
-            tokenGetInfoResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, tokenGetInfoResult);
-        } catch (Exception e) {
-            tokenGetInfoResponse.buildResponse(SdkError.SYSTEM_ERROR, tokenGetInfoResult);
-        }
-        return tokenGetInfoResponse;
-    }
-
-    /**
-     * @Author riven
-     * @Method getName
-     * @Params [tokenGetNameRequest]
-     * @Return io.bumo.model.response.TokenGetNameResponse
-     * @Date 2018/7/9 19:13
-     */
-    @Override
-    public TokenGetNameResponse getName(TokenGetNameRequest tokenGetNameRequest) {
-        TokenGetNameResponse tokenGetNameResponse = new TokenGetNameResponse();
-        TokenGetNameResult tokenGetNameResult = new TokenGetNameResult();
-        try {
-            if (Tools.isEmpty(tokenGetNameRequest)) {
-                throw new SDKException(SdkError.REQUEST_NULL_ERROR);
-            }
-            String contractAddress = tokenGetNameRequest.getContractAddress();
-            if (!PublicKey.isAddressValid(contractAddress)) {
-                throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
-            }
-            boolean isContractValid = checkTokenValid(contractAddress);
-            if (!isContractValid) {
-                throw new SDKException(SdkError.NO_SUCH_TOKEN_ERROR);
-            }
-
-            JSONObject input = new JSONObject();
-            input.put("method", "name");
-            JSONObject queryResult = queryContract(contractAddress, input);
-            TokenQueryResponse tokenQueryResponse = JSON.toJavaObject(queryResult, TokenQueryResponse.class);
-            TokenQueryResult result = tokenQueryResponse.getResult();
-            if (Tools.isEmpty(result)) {
-                TokenErrorResult errorResult = tokenQueryResponse.getError();
-                String errorDesc = errorResult.getData().getException();
-                throw new SDKException(SdkError.GET_TOKEN_INFO_ERRPR.getCode(), errorDesc);
-            }
-            tokenGetNameResult =  JSONObject.parseObject(result.getValue(), TokenGetNameResult.class);
-            tokenGetNameResponse.buildResponse(SdkError.SUCCESS, tokenGetNameResult);
-        } catch (SDKException sdkException) {
-            Integer errorCode = sdkException.getErrorCode();
-            String errorDesc = sdkException.getErrorDesc();
-            tokenGetNameResponse.buildResponse(errorCode, errorDesc, tokenGetNameResult);
-        } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
-            tokenGetNameResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, tokenGetNameResult);
-        } catch (Exception e) {
-            tokenGetNameResponse.buildResponse(SdkError.SYSTEM_ERROR, tokenGetNameResult);
-        }
-        return tokenGetNameResponse;
-    }
-
-    /**
-     * @Author riven
-     * @Method getSymbol
-     * @Params [tokenGetSymbolRequest]
-     * @Return io.bumo.model.response.TokenGetSymbolResponse
-     * @Date 2018/7/9 19:13
-     */
-    @Override
-    public TokenGetSymbolResponse getSymbol(TokenGetSymbolRequest tokenGetSymbolRequest) {
-        TokenGetSymbolResponse tokenGetSymbolResponse = new TokenGetSymbolResponse();
-        TokenGetSymbolResult tokenGetSymbolResult = new TokenGetSymbolResult();
-        try {
-            if (Tools.isEmpty(tokenGetSymbolRequest)) {
-                throw new SDKException(SdkError.REQUEST_NULL_ERROR);
-            }
-            String contractAddress = tokenGetSymbolRequest.getContractAddress();
-            if (!PublicKey.isAddressValid(contractAddress)) {
-                throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
-            }
-            boolean isContractValid = checkTokenValid(contractAddress);
-            if (!isContractValid) {
-                throw new SDKException(SdkError.NO_SUCH_TOKEN_ERROR);
-            }
-
-            JSONObject input = new JSONObject();
-            input.put("method", "symbol");
-            JSONObject queryResult = queryContract(contractAddress, input);
-            TokenQueryResponse tokenQueryResponse = JSON.toJavaObject(queryResult, TokenQueryResponse.class);
-            TokenQueryResult result = tokenQueryResponse.getResult();
-            if (Tools.isEmpty(result)) {
-                TokenErrorResult errorResult = tokenQueryResponse.getError();
-                String errorDesc = errorResult.getData().getException();
-                throw new SDKException(SdkError.GET_TOKEN_INFO_ERRPR.getCode(), errorDesc);
-            }
-            tokenGetSymbolResult =  JSONObject.parseObject(result.getValue(), TokenGetSymbolResult.class);
-            tokenGetSymbolResponse.buildResponse(SdkError.SUCCESS, tokenGetSymbolResult);
-        } catch (SDKException sdkException) {
-            Integer errorCode = sdkException.getErrorCode();
-            String errorDesc = sdkException.getErrorDesc();
-            tokenGetSymbolResponse.buildResponse(errorCode, errorDesc, tokenGetSymbolResult);
-        } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
-            tokenGetSymbolResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, tokenGetSymbolResult);
-        } catch (Exception e) {
-            tokenGetSymbolResponse.buildResponse(SdkError.SYSTEM_ERROR, tokenGetSymbolResult);
-        }
-        return tokenGetSymbolResponse;
-    }
-
-    @Override
-    public TokenGetDecimalsResponse getDecimals(TokenGetDecimalsRequest tokenGetDecimalsRequest) {
-        TokenGetDecimalsResponse tokenGetDecimalsResponse = new TokenGetDecimalsResponse();
-        TokenGetDecimalsResult tokenGetDecimalsResult = new TokenGetDecimalsResult();
-        try {
-            if (Tools.isEmpty(tokenGetDecimalsRequest)) {
-                throw new SDKException(SdkError.REQUEST_NULL_ERROR);
-            }
-            String contractAddress = tokenGetDecimalsRequest.getContractAddress();
-            if (!PublicKey.isAddressValid(contractAddress)) {
-                throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
-            }
-            boolean isContractValid = checkTokenValid(contractAddress);
-            if (!isContractValid) {
-                throw new SDKException(SdkError.NO_SUCH_TOKEN_ERROR);
-            }
-
-            JSONObject input = new JSONObject();
-            input.put("method", "decimals");
-            JSONObject queryResult = queryContract(contractAddress, input);
-            TokenQueryResponse tokenQueryResponse = JSON.toJavaObject(queryResult, TokenQueryResponse.class);
-            TokenQueryResult result = tokenQueryResponse.getResult();
-            if (Tools.isEmpty(result)) {
-                TokenErrorResult errorResult = tokenQueryResponse.getError();
-                String errorDesc = errorResult.getData().getException();
-                throw new SDKException(SdkError.GET_TOKEN_INFO_ERRPR.getCode(), errorDesc);
-            }
-            tokenGetDecimalsResult =  JSONObject.parseObject(result.getValue(), TokenGetDecimalsResult.class);
-            tokenGetDecimalsResponse.buildResponse(SdkError.SUCCESS, tokenGetDecimalsResult);
-        } catch (SDKException sdkException) {
-            Integer errorCode = sdkException.getErrorCode();
-            String errorDesc = sdkException.getErrorDesc();
-            tokenGetDecimalsResponse.buildResponse(errorCode, errorDesc, tokenGetDecimalsResult);
-        } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
-            tokenGetDecimalsResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, tokenGetDecimalsResult);
-        } catch (Exception e) {
-            tokenGetDecimalsResponse.buildResponse(SdkError.SYSTEM_ERROR, tokenGetDecimalsResult);
-        }
-        return tokenGetDecimalsResponse;
-    }
-
-    /**
-     * @Author riven
-     * @Method getTotalSupply
-     * @Params [tokenGetTotalSupplyRequest]
-     * @Return io.bumo.model.response.TokenGetTotalSupplyResponse
-     * @Date 2018/7/9 19:13
-     */
-    @Override
-    public TokenGetTotalSupplyResponse getTotalSupply(TokenGetTotalSupplyRequest tokenGetTotalSupplyRequest) {
-        TokenGetTotalSupplyResponse tokenGetTotalSupplyResponse = new TokenGetTotalSupplyResponse();
-        TokenGetTotalSupplyResult tokenGetTotalSupplyResult = new TokenGetTotalSupplyResult();
-        try {
-            if (Tools.isEmpty(tokenGetTotalSupplyRequest)) {
-                throw new SDKException(SdkError.REQUEST_NULL_ERROR);
-            }
-            String contractAddress = tokenGetTotalSupplyRequest.getContractAddress();
-            if (!PublicKey.isAddressValid(contractAddress)) {
-                throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
-            }
-            boolean isContractValid = checkTokenValid(contractAddress);
-            if (!isContractValid) {
-                throw new SDKException(SdkError.NO_SUCH_TOKEN_ERROR);
-            }
-            JSONObject input = new JSONObject();
-            input.put("method", "totalSupply");
-            JSONObject queryResult = queryContract(contractAddress, input);
-            TokenQueryResponse tokenQueryResponse = JSON.toJavaObject(queryResult, TokenQueryResponse.class);
-            TokenQueryResult result = tokenQueryResponse.getResult();
-            if (Tools.isEmpty(result)) {
-                TokenErrorResult errorResult = tokenQueryResponse.getError();
-                String errorDesc = errorResult.getData().getException();
-                throw new SDKException(SdkError.GET_TOKEN_INFO_ERRPR.getCode(), errorDesc);
-            }
-            tokenGetTotalSupplyResult =  JSONObject.parseObject(result.getValue(), TokenGetTotalSupplyResult.class);
-            tokenGetTotalSupplyResponse.buildResponse(SdkError.SUCCESS, tokenGetTotalSupplyResult);
-        } catch (SDKException sdkException) {
-            Integer errorCode = sdkException.getErrorCode();
-            String errorDesc = sdkException.getErrorDesc();
-            tokenGetTotalSupplyResponse.buildResponse(errorCode, errorDesc, tokenGetTotalSupplyResult);
-        } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
-            tokenGetTotalSupplyResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, tokenGetTotalSupplyResult);
-        } catch (Exception e) {
-            tokenGetTotalSupplyResponse.buildResponse(SdkError.SYSTEM_ERROR, tokenGetTotalSupplyResult);
-        }
-        return tokenGetTotalSupplyResponse;
-    }
-
-    /**
-     * @Author riven
-     * @Method getBalance
-     * @Params [tokenGetBalanceRequest]
-     * @Return io.bumo.model.response.TokenGetBalanceResponse
-     * @Date 2018/7/9 19:13
-     */
-    @Override
-    public TokenGetBalanceResponse getBalance(TokenGetBalanceRequest tokenGetBalanceRequest) {
-        TokenGetBalanceResponse tokenGetBalanceResponse = new TokenGetBalanceResponse();
-        TokenGetBalanceResult tokenGetBalanceResult = new TokenGetBalanceResult();
-        try {
-            if (Tools.isEmpty(tokenGetBalanceRequest)) {
-                throw new SDKException(SdkError.REQUEST_NULL_ERROR);
-            }
-            String contractAddress = tokenGetBalanceRequest.getContractAddress();
-            if (!PublicKey.isAddressValid(contractAddress)) {
-                throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
-            }
-            String tokenOwner = tokenGetBalanceRequest.getTokenOwner();
-            if (!PublicKey.isAddressValid(tokenOwner)) {
-                throw new SDKException(SdkError.INVALID_TOKENOWNER_ERROR);
-            }
-            boolean isContractValid = checkTokenValid(contractAddress);
-            if (!isContractValid) {
-                throw new SDKException(SdkError.NO_SUCH_TOKEN_ERROR);
-            }
-            JSONObject input = new JSONObject();
-            input.put("method", "balanceOf");
-            JSONObject params = new JSONObject();
-            params.put("address", tokenOwner);
-            input.put("params", params);
-            JSONObject queryResult = queryContract(contractAddress, input);
-            TokenQueryResponse tokenQueryResponse = JSON.toJavaObject(queryResult, TokenQueryResponse.class);
-            TokenQueryResult result = tokenQueryResponse.getResult();
-            if (Tools.isEmpty(result)) {
-                TokenErrorResult errorResult = tokenQueryResponse.getError();
-                String errorDesc = errorResult.getData().getException();
-                throw new SDKException(SdkError.GET_TOKEN_INFO_ERRPR.getCode(), errorDesc);
-            }
-            tokenGetBalanceResult = JSONObject.parseObject(result.getValue(), TokenGetBalanceResult.class);
-            tokenGetBalanceResponse.buildResponse(SdkError.SUCCESS, tokenGetBalanceResult);
-        } catch (SDKException sdkException) {
-            Integer errorCode = sdkException.getErrorCode();
-            String errorDesc = sdkException.getErrorDesc();
-            tokenGetBalanceResponse.buildResponse(errorCode, errorDesc, tokenGetBalanceResult);
-        } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
-            tokenGetBalanceResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, tokenGetBalanceResult);
-        } catch (Exception e) {
-            tokenGetBalanceResponse.buildResponse(SdkError.SYSTEM_ERROR, tokenGetBalanceResult);
-        }
-
-        return tokenGetBalanceResponse;
-    }
-
-    /**
-     * @Author riven
      * @Method issue
      * @Params [tokenIssueResult]
      * @Return io.bumo.crypto.protobuf.Chain.Operation
@@ -449,7 +68,7 @@ public class TokenServiceImpl implements TokenService {
             }
             Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
             boolean isNumber = pattern.matcher(supply).matches();
-            if (!isNumber || (isNumber && Long.valueOf(supply) < 1  || Long.valueOf(supply) > Long.MAX_VALUE)) {
+            if (!isNumber || (isNumber && Long.valueOf(supply) < 1 || Long.valueOf(supply) > Long.MAX_VALUE)) {
                 throw new SDKException(SdkError.INVALID_TOKEN_TOTALSUPPLY_ERROR);
             }
             String metadata = tokenIssueOperation.getMetadata();
@@ -808,7 +427,7 @@ public class TokenServiceImpl implements TokenService {
         Integer errorCode = tokenMessageResponse.getErrorCode();
         String errorDesc = tokenMessageResponse.getErrorDesc();
         if (!Tools.isEmpty(errorCode) && errorCode == 4) {
-            throw new SDKException(errorCode, (Tools.isEmpty(errorDesc) ? "Account (" + contractAddress +") not exist" : errorDesc));
+            throw new SDKException(errorCode, (Tools.isEmpty(errorDesc) ? "Account (" + contractAddress + ") not exist" : errorDesc));
         }
         SdkError.checkErrorCode(tokenMessageResponse);
         boolean isValid = false;
@@ -823,7 +442,7 @@ public class TokenServiceImpl implements TokenService {
             if (Tools.isEmpty(tokenInfoJson)) {
                 break;
             }
-            TokenInfo tokenInfo =  JSONObject.parseObject(tokenInfoJson, TokenInfo.class);
+            TokenInfo tokenInfo = JSONObject.parseObject(tokenInfoJson, TokenInfo.class);
             String ctp = tokenInfo.getCtp();
             if (Tools.isEmpty(ctp)) {
                 break;
@@ -881,8 +500,390 @@ public class TokenServiceImpl implements TokenService {
         if (!Tools.isEmpty(metadata)) {
             contractInvokeByBUOperation.setMetadata(metadata);
         }
-        Chain.Operation operation= ContractServiceImpl.invokeByBU(contractInvokeByBUOperation);
+        Chain.Operation operation = ContractServiceImpl.invokeByBU(contractInvokeByBUOperation);
         return operation;
+    }
+
+    /**
+     * @Author riven
+     * @Method checkValid
+     * @Params [tokenCheckValidRequest]
+     * @Return io.bumo.model.response.TokenCheckValidResponse
+     * @Date 2018/7/15 15:36
+     */
+    @Override
+    public TokenCheckValidResponse checkValid(TokenCheckValidRequest tokenCheckValidRequest) {
+        TokenCheckValidResponse tokenCheckValidResponse = new TokenCheckValidResponse();
+        TokenCheckValidResult tokenCheckValidResult = new TokenCheckValidResult();
+        try {
+            if (Tools.isEmpty(tokenCheckValidRequest)) {
+                throw new SDKException(SdkError.REQUEST_NULL_ERROR);
+            }
+            String address = tokenCheckValidRequest.getContractAddress();
+            if (!PublicKey.isAddressValid(address)) {
+                throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
+            }
+            boolean isValid = checkTokenValid(address);
+            tokenCheckValidResult.setValid(isValid);
+            tokenCheckValidResponse.buildResponse(SdkError.SUCCESS, tokenCheckValidResult);
+        } catch (SDKException apiException) {
+            Integer errorCode = apiException.getErrorCode();
+            String errorDesc = apiException.getErrorDesc();
+            tokenCheckValidResponse.buildResponse(errorCode, errorDesc, tokenCheckValidResult);
+        } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
+            tokenCheckValidResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, tokenCheckValidResult);
+        } catch (Exception e) {
+            tokenCheckValidResponse.buildResponse(SdkError.SYSTEM_ERROR, tokenCheckValidResult);
+        }
+        return tokenCheckValidResponse;
+    }
+
+    /**
+     * @Author riven
+     * @Method allowance
+     * @Params [tokenAllowanceRequest]
+     * @Return io.bumo.model.response.TokenAllowanceResponse
+     * @Date 2018/7/9 19:13
+     */
+    @Override
+    public TokenAllowanceResponse allowance(TokenAllowanceRequest tokenAllowanceRequest) {
+        TokenAllowanceResponse tokenAllowanceResponse = new TokenAllowanceResponse();
+        TokenAllowanceResult tokenAllowanceResult = new TokenAllowanceResult();
+        try {
+            if (Tools.isEmpty(tokenAllowanceRequest)) {
+                throw new SDKException(SdkError.REQUEST_NULL_ERROR);
+            }
+            String contractAddress = tokenAllowanceRequest.getContractAddress();
+            if (!PublicKey.isAddressValid(contractAddress)) {
+                throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
+            }
+            String tokenOwner = tokenAllowanceRequest.getTokenOwner();
+            if (!PublicKey.isAddressValid(tokenOwner)) {
+                throw new SDKException(SdkError.INVALID_TOKENOWNER_ERROR);
+            }
+            String spender = tokenAllowanceRequest.getSpender();
+            if (!PublicKey.isAddressValid(spender)) {
+                throw new SDKException(SdkError.INVALID_SPENDER_ERROR);
+            }
+            boolean isContractValid = checkTokenValid(contractAddress);
+            if (!isContractValid) {
+                throw new SDKException(SdkError.NO_SUCH_TOKEN_ERROR);
+            }
+
+            JSONObject input = new JSONObject();
+            input.put("method", "allowance");
+            JSONObject params = new JSONObject();
+            params.put("owner", tokenOwner);
+            params.put("spender", spender);
+            input.put("params", params);
+            JSONObject queryResult = queryContract(contractAddress, input);
+            TokenQueryResponse tokenQueryResponse = JSON.toJavaObject(queryResult, TokenQueryResponse.class);
+            TokenQueryResult result = tokenQueryResponse.getResult();
+            if (Tools.isEmpty(result)) {
+                TokenErrorResult errorResult = tokenQueryResponse.getError();
+                String errorDesc = errorResult.getData().getException();
+                throw new SDKException(SdkError.GET_ALLOWANCE_ERRPR.getCode(), errorDesc);
+            }
+            tokenAllowanceResult = JSONObject.parseObject(result.getValue(), TokenAllowanceResult.class);
+            tokenAllowanceResponse.buildResponse(SdkError.SUCCESS, tokenAllowanceResult);
+        } catch (SDKException sdkException) {
+            Integer errorCode = sdkException.getErrorCode();
+            String errorDesc = sdkException.getErrorDesc();
+            tokenAllowanceResponse.buildResponse(errorCode, errorDesc, tokenAllowanceResult);
+        } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
+            tokenAllowanceResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, tokenAllowanceResult);
+        } catch (Exception e) {
+            tokenAllowanceResponse.buildResponse(SdkError.SYSTEM_ERROR, tokenAllowanceResult);
+        }
+
+        return tokenAllowanceResponse;
+    }
+
+    /**
+     * @Author riven
+     * @Method getInfo
+     * @Params [tokenGetInfoRequest]
+     * @Return io.bumo.model.response.TokenGetInfoResponse
+     * @Date 2018/7/9 19:13
+     */
+    @Override
+    public TokenGetInfoResponse getInfo(TokenGetInfoRequest tokenGetInfoRequest) {
+        TokenGetInfoResponse tokenGetInfoResponse = new TokenGetInfoResponse();
+        TokenGetInfoResult tokenGetInfoResult = new TokenGetInfoResult();
+        try {
+            if (Tools.isEmpty(tokenGetInfoRequest)) {
+                throw new SDKException(SdkError.REQUEST_NULL_ERROR);
+            }
+            String contractAddress = tokenGetInfoRequest.getContractAddress();
+            if (!PublicKey.isAddressValid(contractAddress)) {
+                throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
+            }
+            boolean isContractValid = checkTokenValid(contractAddress);
+            if (!isContractValid) {
+                throw new SDKException(SdkError.NO_SUCH_TOKEN_ERROR);
+            }
+
+            JSONObject input = new JSONObject();
+            input.put("method", "contractInfo");
+            JSONObject queryResult = queryContract(contractAddress, input);
+            TokenQueryResponse tokenQueryResponse = JSON.toJavaObject(queryResult, TokenQueryResponse.class);
+            TokenQueryResult result = tokenQueryResponse.getResult();
+            if (Tools.isEmpty(result)) {
+                TokenErrorResult errorResult = tokenQueryResponse.getError();
+                String errorDesc = errorResult.getData().getException();
+                throw new SDKException(SdkError.GET_TOKEN_INFO_ERRPR.getCode(), errorDesc);
+            }
+            tokenGetInfoResult = JSONObject.parseObject(result.getValue(), TokenGetInfoResult.class);
+            tokenGetInfoResponse.buildResponse(SdkError.SUCCESS, tokenGetInfoResult);
+        } catch (SDKException sdkException) {
+            Integer errorCode = sdkException.getErrorCode();
+            String errorDesc = sdkException.getErrorDesc();
+            tokenGetInfoResponse.buildResponse(errorCode, errorDesc, tokenGetInfoResult);
+        } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
+            tokenGetInfoResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, tokenGetInfoResult);
+        } catch (Exception e) {
+            tokenGetInfoResponse.buildResponse(SdkError.SYSTEM_ERROR, tokenGetInfoResult);
+        }
+        return tokenGetInfoResponse;
+    }
+
+    /**
+     * @Author riven
+     * @Method getName
+     * @Params [tokenGetNameRequest]
+     * @Return io.bumo.model.response.TokenGetNameResponse
+     * @Date 2018/7/9 19:13
+     */
+    @Override
+    public TokenGetNameResponse getName(TokenGetNameRequest tokenGetNameRequest) {
+        TokenGetNameResponse tokenGetNameResponse = new TokenGetNameResponse();
+        TokenGetNameResult tokenGetNameResult = new TokenGetNameResult();
+        try {
+            if (Tools.isEmpty(tokenGetNameRequest)) {
+                throw new SDKException(SdkError.REQUEST_NULL_ERROR);
+            }
+            String contractAddress = tokenGetNameRequest.getContractAddress();
+            if (!PublicKey.isAddressValid(contractAddress)) {
+                throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
+            }
+            boolean isContractValid = checkTokenValid(contractAddress);
+            if (!isContractValid) {
+                throw new SDKException(SdkError.NO_SUCH_TOKEN_ERROR);
+            }
+
+            JSONObject input = new JSONObject();
+            input.put("method", "name");
+            JSONObject queryResult = queryContract(contractAddress, input);
+            TokenQueryResponse tokenQueryResponse = JSON.toJavaObject(queryResult, TokenQueryResponse.class);
+            TokenQueryResult result = tokenQueryResponse.getResult();
+            if (Tools.isEmpty(result)) {
+                TokenErrorResult errorResult = tokenQueryResponse.getError();
+                String errorDesc = errorResult.getData().getException();
+                throw new SDKException(SdkError.GET_TOKEN_INFO_ERRPR.getCode(), errorDesc);
+            }
+            tokenGetNameResult = JSONObject.parseObject(result.getValue(), TokenGetNameResult.class);
+            tokenGetNameResponse.buildResponse(SdkError.SUCCESS, tokenGetNameResult);
+        } catch (SDKException sdkException) {
+            Integer errorCode = sdkException.getErrorCode();
+            String errorDesc = sdkException.getErrorDesc();
+            tokenGetNameResponse.buildResponse(errorCode, errorDesc, tokenGetNameResult);
+        } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
+            tokenGetNameResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, tokenGetNameResult);
+        } catch (Exception e) {
+            tokenGetNameResponse.buildResponse(SdkError.SYSTEM_ERROR, tokenGetNameResult);
+        }
+        return tokenGetNameResponse;
+    }
+
+    /**
+     * @Author riven
+     * @Method getSymbol
+     * @Params [tokenGetSymbolRequest]
+     * @Return io.bumo.model.response.TokenGetSymbolResponse
+     * @Date 2018/7/9 19:13
+     */
+    @Override
+    public TokenGetSymbolResponse getSymbol(TokenGetSymbolRequest tokenGetSymbolRequest) {
+        TokenGetSymbolResponse tokenGetSymbolResponse = new TokenGetSymbolResponse();
+        TokenGetSymbolResult tokenGetSymbolResult = new TokenGetSymbolResult();
+        try {
+            if (Tools.isEmpty(tokenGetSymbolRequest)) {
+                throw new SDKException(SdkError.REQUEST_NULL_ERROR);
+            }
+            String contractAddress = tokenGetSymbolRequest.getContractAddress();
+            if (!PublicKey.isAddressValid(contractAddress)) {
+                throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
+            }
+            boolean isContractValid = checkTokenValid(contractAddress);
+            if (!isContractValid) {
+                throw new SDKException(SdkError.NO_SUCH_TOKEN_ERROR);
+            }
+
+            JSONObject input = new JSONObject();
+            input.put("method", "symbol");
+            JSONObject queryResult = queryContract(contractAddress, input);
+            TokenQueryResponse tokenQueryResponse = JSON.toJavaObject(queryResult, TokenQueryResponse.class);
+            TokenQueryResult result = tokenQueryResponse.getResult();
+            if (Tools.isEmpty(result)) {
+                TokenErrorResult errorResult = tokenQueryResponse.getError();
+                String errorDesc = errorResult.getData().getException();
+                throw new SDKException(SdkError.GET_TOKEN_INFO_ERRPR.getCode(), errorDesc);
+            }
+            tokenGetSymbolResult = JSONObject.parseObject(result.getValue(), TokenGetSymbolResult.class);
+            tokenGetSymbolResponse.buildResponse(SdkError.SUCCESS, tokenGetSymbolResult);
+        } catch (SDKException sdkException) {
+            Integer errorCode = sdkException.getErrorCode();
+            String errorDesc = sdkException.getErrorDesc();
+            tokenGetSymbolResponse.buildResponse(errorCode, errorDesc, tokenGetSymbolResult);
+        } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
+            tokenGetSymbolResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, tokenGetSymbolResult);
+        } catch (Exception e) {
+            tokenGetSymbolResponse.buildResponse(SdkError.SYSTEM_ERROR, tokenGetSymbolResult);
+        }
+        return tokenGetSymbolResponse;
+    }
+
+    @Override
+    public TokenGetDecimalsResponse getDecimals(TokenGetDecimalsRequest tokenGetDecimalsRequest) {
+        TokenGetDecimalsResponse tokenGetDecimalsResponse = new TokenGetDecimalsResponse();
+        TokenGetDecimalsResult tokenGetDecimalsResult = new TokenGetDecimalsResult();
+        try {
+            if (Tools.isEmpty(tokenGetDecimalsRequest)) {
+                throw new SDKException(SdkError.REQUEST_NULL_ERROR);
+            }
+            String contractAddress = tokenGetDecimalsRequest.getContractAddress();
+            if (!PublicKey.isAddressValid(contractAddress)) {
+                throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
+            }
+            boolean isContractValid = checkTokenValid(contractAddress);
+            if (!isContractValid) {
+                throw new SDKException(SdkError.NO_SUCH_TOKEN_ERROR);
+            }
+
+            JSONObject input = new JSONObject();
+            input.put("method", "decimals");
+            JSONObject queryResult = queryContract(contractAddress, input);
+            TokenQueryResponse tokenQueryResponse = JSON.toJavaObject(queryResult, TokenQueryResponse.class);
+            TokenQueryResult result = tokenQueryResponse.getResult();
+            if (Tools.isEmpty(result)) {
+                TokenErrorResult errorResult = tokenQueryResponse.getError();
+                String errorDesc = errorResult.getData().getException();
+                throw new SDKException(SdkError.GET_TOKEN_INFO_ERRPR.getCode(), errorDesc);
+            }
+            tokenGetDecimalsResult = JSONObject.parseObject(result.getValue(), TokenGetDecimalsResult.class);
+            tokenGetDecimalsResponse.buildResponse(SdkError.SUCCESS, tokenGetDecimalsResult);
+        } catch (SDKException sdkException) {
+            Integer errorCode = sdkException.getErrorCode();
+            String errorDesc = sdkException.getErrorDesc();
+            tokenGetDecimalsResponse.buildResponse(errorCode, errorDesc, tokenGetDecimalsResult);
+        } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
+            tokenGetDecimalsResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, tokenGetDecimalsResult);
+        } catch (Exception e) {
+            tokenGetDecimalsResponse.buildResponse(SdkError.SYSTEM_ERROR, tokenGetDecimalsResult);
+        }
+        return tokenGetDecimalsResponse;
+    }
+
+    /**
+     * @Author riven
+     * @Method getTotalSupply
+     * @Params [tokenGetTotalSupplyRequest]
+     * @Return io.bumo.model.response.TokenGetTotalSupplyResponse
+     * @Date 2018/7/9 19:13
+     */
+    @Override
+    public TokenGetTotalSupplyResponse getTotalSupply(TokenGetTotalSupplyRequest tokenGetTotalSupplyRequest) {
+        TokenGetTotalSupplyResponse tokenGetTotalSupplyResponse = new TokenGetTotalSupplyResponse();
+        TokenGetTotalSupplyResult tokenGetTotalSupplyResult = new TokenGetTotalSupplyResult();
+        try {
+            if (Tools.isEmpty(tokenGetTotalSupplyRequest)) {
+                throw new SDKException(SdkError.REQUEST_NULL_ERROR);
+            }
+            String contractAddress = tokenGetTotalSupplyRequest.getContractAddress();
+            if (!PublicKey.isAddressValid(contractAddress)) {
+                throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
+            }
+            boolean isContractValid = checkTokenValid(contractAddress);
+            if (!isContractValid) {
+                throw new SDKException(SdkError.NO_SUCH_TOKEN_ERROR);
+            }
+            JSONObject input = new JSONObject();
+            input.put("method", "totalSupply");
+            JSONObject queryResult = queryContract(contractAddress, input);
+            TokenQueryResponse tokenQueryResponse = JSON.toJavaObject(queryResult, TokenQueryResponse.class);
+            TokenQueryResult result = tokenQueryResponse.getResult();
+            if (Tools.isEmpty(result)) {
+                TokenErrorResult errorResult = tokenQueryResponse.getError();
+                String errorDesc = errorResult.getData().getException();
+                throw new SDKException(SdkError.GET_TOKEN_INFO_ERRPR.getCode(), errorDesc);
+            }
+            tokenGetTotalSupplyResult = JSONObject.parseObject(result.getValue(), TokenGetTotalSupplyResult.class);
+            tokenGetTotalSupplyResponse.buildResponse(SdkError.SUCCESS, tokenGetTotalSupplyResult);
+        } catch (SDKException sdkException) {
+            Integer errorCode = sdkException.getErrorCode();
+            String errorDesc = sdkException.getErrorDesc();
+            tokenGetTotalSupplyResponse.buildResponse(errorCode, errorDesc, tokenGetTotalSupplyResult);
+        } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
+            tokenGetTotalSupplyResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, tokenGetTotalSupplyResult);
+        } catch (Exception e) {
+            tokenGetTotalSupplyResponse.buildResponse(SdkError.SYSTEM_ERROR, tokenGetTotalSupplyResult);
+        }
+        return tokenGetTotalSupplyResponse;
+    }
+
+    /**
+     * @Author riven
+     * @Method getBalance
+     * @Params [tokenGetBalanceRequest]
+     * @Return io.bumo.model.response.TokenGetBalanceResponse
+     * @Date 2018/7/9 19:13
+     */
+    @Override
+    public TokenGetBalanceResponse getBalance(TokenGetBalanceRequest tokenGetBalanceRequest) {
+        TokenGetBalanceResponse tokenGetBalanceResponse = new TokenGetBalanceResponse();
+        TokenGetBalanceResult tokenGetBalanceResult = new TokenGetBalanceResult();
+        try {
+            if (Tools.isEmpty(tokenGetBalanceRequest)) {
+                throw new SDKException(SdkError.REQUEST_NULL_ERROR);
+            }
+            String contractAddress = tokenGetBalanceRequest.getContractAddress();
+            if (!PublicKey.isAddressValid(contractAddress)) {
+                throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
+            }
+            String tokenOwner = tokenGetBalanceRequest.getTokenOwner();
+            if (!PublicKey.isAddressValid(tokenOwner)) {
+                throw new SDKException(SdkError.INVALID_TOKENOWNER_ERROR);
+            }
+            boolean isContractValid = checkTokenValid(contractAddress);
+            if (!isContractValid) {
+                throw new SDKException(SdkError.NO_SUCH_TOKEN_ERROR);
+            }
+            JSONObject input = new JSONObject();
+            input.put("method", "balanceOf");
+            JSONObject params = new JSONObject();
+            params.put("address", tokenOwner);
+            input.put("params", params);
+            JSONObject queryResult = queryContract(contractAddress, input);
+            TokenQueryResponse tokenQueryResponse = JSON.toJavaObject(queryResult, TokenQueryResponse.class);
+            TokenQueryResult result = tokenQueryResponse.getResult();
+            if (Tools.isEmpty(result)) {
+                TokenErrorResult errorResult = tokenQueryResponse.getError();
+                String errorDesc = errorResult.getData().getException();
+                throw new SDKException(SdkError.GET_TOKEN_INFO_ERRPR.getCode(), errorDesc);
+            }
+            tokenGetBalanceResult = JSONObject.parseObject(result.getValue(), TokenGetBalanceResult.class);
+            tokenGetBalanceResponse.buildResponse(SdkError.SUCCESS, tokenGetBalanceResult);
+        } catch (SDKException sdkException) {
+            Integer errorCode = sdkException.getErrorCode();
+            String errorDesc = sdkException.getErrorDesc();
+            tokenGetBalanceResponse.buildResponse(errorCode, errorDesc, tokenGetBalanceResult);
+        } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
+            tokenGetBalanceResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, tokenGetBalanceResult);
+        } catch (Exception e) {
+            tokenGetBalanceResponse.buildResponse(SdkError.SYSTEM_ERROR, tokenGetBalanceResult);
+        }
+
+        return tokenGetBalanceResponse;
     }
 
     /**
@@ -896,7 +897,7 @@ public class TokenServiceImpl implements TokenService {
             throws SDKException, IOException, NoSuchAlgorithmException, NoSuchProviderException, KeyManagementException {
         // call contract
         ContractCallResponse contractCallResponse = ContractServiceImpl.callContract(null, contractAddress,
-                2,  null, input.toJSONString(), null, null, 1000000000L);
+                2, null, input.toJSONString(), null, null, 1000000000L);
         ContractCallResult contractCallResult = contractCallResponse.getResult();
         return contractCallResult.getQueryRets().getJSONObject(0);
     }

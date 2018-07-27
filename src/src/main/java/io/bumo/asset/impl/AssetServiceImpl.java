@@ -30,61 +30,6 @@ import java.security.NoSuchProviderException;
 public class AssetServiceImpl implements AssetService {
     /**
      * @Author riven
-     * @Method getInfo
-     * @Params [assetGetRequest]
-     * @Return io.bumo.model.response.AssetGetInfoResponse
-     * @Date 2018/7/5 12:05
-     */
-    @Override
-    public AssetGetInfoResponse getInfo(AssetGetInfoRequest assetGetRequest) {
-        AssetGetInfoResponse assetGetResponse = new AssetGetInfoResponse();
-        AssetGetInfoResult assetGetResult = new AssetGetInfoResult();
-
-        try {
-            if (Tools.isEmpty(assetGetRequest)) {
-                throw new SDKException(SdkError.REQUEST_NULL_ERROR);
-            }
-            String address = assetGetRequest.getAddress();
-            if (!PublicKey.isAddressValid(address)) {
-                throw new SDKException(SdkError.INVALID_ADDRESS_ERROR);
-            }
-            String code = assetGetRequest.getCode();
-            if (Tools.isEmpty(code) || code.length() > Constant.ASSET_CODE_MAX) {
-                throw new SDKException(SdkError.INVALID_ASSET_CODE_ERROR);
-            }
-            String issuer = assetGetRequest.getIssuer();
-            if (!PublicKey.isAddressValid(issuer)) {
-                throw new SDKException(SdkError.INVALID_ISSUER_ADDRESS_ERROR);
-            }
-            String accountGetInfoUrl = General.assetGetUrl(address, code, issuer);
-            String result = HttpKit.get(accountGetInfoUrl);
-            assetGetResponse = JSON.parseObject(result, AssetGetInfoResponse.class);
-            Integer errorCode = assetGetResponse.getErrorCode();
-            String errorDesc = assetGetResponse.getErrorDesc();
-            if (!Tools.isEmpty(errorCode) && errorCode.intValue() == 4) {
-                throw new SDKException(errorCode, (Tools.isEmpty(errorDesc) ? "Code (" + code +") not exist" : errorDesc));
-            }
-            SdkError.checkErrorCode(assetGetResponse);
-            AssetInfo[] assetInfos = assetGetResponse.getResult().getAssets();
-            if (Tools.isEmpty(assetInfos)) {
-                throw new SDKException(SdkError.NO_ASSET_ERROR);
-            }
-        } catch (SDKException sdkException) {
-            Integer errorCode = sdkException.getErrorCode();
-            String errorDesc = sdkException.getErrorDesc();
-            assetGetResponse.buildResponse(errorCode, errorDesc, assetGetResult);
-        } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
-            assetGetResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, assetGetResult);
-        } catch (Exception e) {
-            e.printStackTrace();
-            assetGetResponse.buildResponse(SdkError.SYSTEM_ERROR, assetGetResult);
-        }
-
-        return assetGetResponse;
-    }
-
-    /**
-     * @Author riven
      * @Method issue
      * @Params [assetIssueRequest]
      * @Return io.bumo.model.response.AssetIssueResponse
@@ -123,7 +68,7 @@ public class AssetServiceImpl implements AssetService {
             operationIssueAsset.setAmount(amount);
         } catch (SDKException sdkException) {
             throw sdkException;
-        }  catch (Exception e) {
+        } catch (Exception e) {
             throw new SDKException(SdkError.SYSTEM_ERROR);
         }
 
@@ -159,7 +104,7 @@ public class AssetServiceImpl implements AssetService {
             if (Tools.isEmpty(code) || code.length() > Constant.ASSET_CODE_MAX) {
                 throw new SDKException(SdkError.INVALID_ASSET_CODE_ERROR);
             }
-            String issuer= assetSendOperation.getIssuer();
+            String issuer = assetSendOperation.getIssuer();
             if (!PublicKey.isAddressValid(issuer)) {
                 throw new SDKException(SdkError.INVALID_ISSUER_ADDRESS_ERROR);
             }
@@ -191,5 +136,60 @@ public class AssetServiceImpl implements AssetService {
         }
 
         return operation.build();
+    }
+
+    /**
+     * @Author riven
+     * @Method getInfo
+     * @Params [assetGetRequest]
+     * @Return io.bumo.model.response.AssetGetInfoResponse
+     * @Date 2018/7/5 12:05
+     */
+    @Override
+    public AssetGetInfoResponse getInfo(AssetGetInfoRequest assetGetRequest) {
+        AssetGetInfoResponse assetGetResponse = new AssetGetInfoResponse();
+        AssetGetInfoResult assetGetResult = new AssetGetInfoResult();
+
+        try {
+            if (Tools.isEmpty(assetGetRequest)) {
+                throw new SDKException(SdkError.REQUEST_NULL_ERROR);
+            }
+            String address = assetGetRequest.getAddress();
+            if (!PublicKey.isAddressValid(address)) {
+                throw new SDKException(SdkError.INVALID_ADDRESS_ERROR);
+            }
+            String code = assetGetRequest.getCode();
+            if (Tools.isEmpty(code) || code.length() > Constant.ASSET_CODE_MAX) {
+                throw new SDKException(SdkError.INVALID_ASSET_CODE_ERROR);
+            }
+            String issuer = assetGetRequest.getIssuer();
+            if (!PublicKey.isAddressValid(issuer)) {
+                throw new SDKException(SdkError.INVALID_ISSUER_ADDRESS_ERROR);
+            }
+            String accountGetInfoUrl = General.assetGetUrl(address, code, issuer);
+            String result = HttpKit.get(accountGetInfoUrl);
+            assetGetResponse = JSON.parseObject(result, AssetGetInfoResponse.class);
+            Integer errorCode = assetGetResponse.getErrorCode();
+            String errorDesc = assetGetResponse.getErrorDesc();
+            if (!Tools.isEmpty(errorCode) && errorCode.intValue() == 4) {
+                throw new SDKException(errorCode, (Tools.isEmpty(errorDesc) ? "Code (" + code + ") not exist" : errorDesc));
+            }
+            SdkError.checkErrorCode(assetGetResponse);
+            AssetInfo[] assetInfos = assetGetResponse.getResult().getAssets();
+            if (Tools.isEmpty(assetInfos)) {
+                throw new SDKException(SdkError.NO_ASSET_ERROR);
+            }
+        } catch (SDKException sdkException) {
+            Integer errorCode = sdkException.getErrorCode();
+            String errorDesc = sdkException.getErrorDesc();
+            assetGetResponse.buildResponse(errorCode, errorDesc, assetGetResult);
+        } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
+            assetGetResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, assetGetResult);
+        } catch (Exception e) {
+            e.printStackTrace();
+            assetGetResponse.buildResponse(SdkError.SYSTEM_ERROR, assetGetResult);
+        }
+
+        return assetGetResponse;
     }
 }

@@ -13,7 +13,7 @@ public class Signer {
     @JSONField(name = "weight")
     private Long weight;
 
-    public Signer () {
+    public Signer() {
 
     }
 

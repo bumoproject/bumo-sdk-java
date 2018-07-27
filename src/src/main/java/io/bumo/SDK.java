@@ -32,7 +32,7 @@ public class SDK {
     private SDK(String url) {
         General.url = url;
     }
-    
+
     /**
      * @Author riven
      * @Method getInstance
@@ -47,7 +47,7 @@ public class SDK {
         sdk.init(url);
         return sdk;
     }
-    
+
     /**
      * @Author riven
      * @Method getAccountService
@@ -58,7 +58,7 @@ public class SDK {
     public AccountService getAccountService() {
         return new AccountServiceImpl();
     }
-    
+
     /**
      * @Author riven
      * @Method getAssetService
@@ -69,7 +69,7 @@ public class SDK {
     public AssetService getAssetService() {
         return new AssetServiceImpl();
     }
-    
+
     /**
      * @Author riven
      * @Method getTransactionService
@@ -80,7 +80,7 @@ public class SDK {
     public TransactionService getTransactionService() {
         return new TransactionServiceImpl();
     }
-    
+
     /**
      * @Author riven
      * @Method getBlockService
@@ -91,7 +91,7 @@ public class SDK {
     public BlockService getBlockService() {
         return new BlockServiceImpl();
     }
-    
+
     /**
      * @Author riven
      * @Method getContractService
@@ -102,7 +102,7 @@ public class SDK {
     public ContractService getContractService() {
         return new ContractServiceImpl();
     }
-    
+
     /**
      * @Author riven
      * @Method getTokenService

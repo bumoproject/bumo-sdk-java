@@ -38,7 +38,7 @@ public class LogServiceImpl {
             if (Tools.isEmpty(datas)) {
                 throw new SDKException(SdkError.INVALID_LOG_DATA_ERROR);
             }
-            for (int i = 0;i < datas.size(); i++) {
+            for (int i = 0; i < datas.size(); i++) {
                 String data = datas.get(i);
                 if (data.length() < Constant.LOG_EACH_DATA_MIN || data.length() > Constant.LOG_EACH_DATA_MAX) {
                     throw new SDKException(SdkError.INVALID_LOG_DATA_ERROR);

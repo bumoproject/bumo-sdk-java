@@ -13,7 +13,7 @@ public class Constant {
     public static final Long TOKEN_NAME_MAX = 1024L;
     public static final Long TOKEN_SYMBOL_MAX = 1024L;
     public static final Integer TOKEN_DECIMALS_MAX = 8;
-    public static final Integer TOKEN_DECIMALS_MIN= 0;
+    public static final Integer TOKEN_DECIMALS_MIN = 0;
     public static final Long GAS_PRICE_MIN = 1000L;
     public static final Long FEE_LIMIT_MIN = 1L;
     public static final Integer HASH_HEX_LENGTH = 64;

@@ -54,16 +54,15 @@ public enum OperationType {
     CONTRACT_INVOKE_BY_BU(15),
 
     // Create log
-    LOG_CREATE(16),
-    ;
-
-    public final int getNumber() {
-        return value;
-    }
+    LOG_CREATE(16),;
 
     private final int value;
 
     private OperationType(int value) {
         this.value = value;
+    }
+
+    public final int getNumber() {
+        return value;
     }
 }

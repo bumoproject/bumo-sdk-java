@@ -28,6 +28,7 @@ import org.junit.Test;
  */
 public class OfflineSignatureDemo {
     SDK sdk = SDK.getInstance("http://seed1.bumotest.io:26002");
+
     /**
      * @Description 1. 有网环境下，生成交易Blob
      * @Author riven
@@ -49,7 +50,7 @@ public class OfflineSignatureDemo {
         String transactionBlobResult = buildTransactionBlob(senderAddresss, nonce, destAddress, amount, feeLimit, gasPrice);
         System.out.println(transactionBlobResult);
     }
-    
+
     /**
      * @Description 2. 无网环境下，解析交易Blob
      * @Author riven
@@ -123,11 +124,11 @@ public class OfflineSignatureDemo {
      * @Author riven
      * @Method buildTransactionBlob
      * @Params senderAddresss: 发送方账户地址
-     *         nonce: 发送方账户Nonce
-     *         destAddress: 接收方账户地址
-     *         amount: 待发送给接收方的BU数量，单位是MO，1 BU = 10^8 MO
-     *         feeLimit: 交易费用，默认 0.01 BU
-     *         gasPrice: 交易打包费用, 默认 1000 MO
+     * nonce: 发送方账户Nonce
+     * destAddress: 接收方账户地址
+     * amount: 待发送给接收方的BU数量，单位是MO，1 BU = 10^8 MO
+     * feeLimit: 交易费用，默认 0.01 BU
+     * gasPrice: 交易打包费用, 默认 1000 MO
      * @Return java.lang.String 交易Blob信息，包含交易Hash和交易Blob
      * @Date 2018/7/12 16:10
      */
@@ -162,14 +163,14 @@ public class OfflineSignatureDemo {
         TransactionBuildBlobResponse transactionBuildBlobResponse = sdk.getTransactionService().buildBlob(transactionBuildBlobRequest);
         if (transactionBuildBlobResponse.getErrorCode() == 0) {
             TransactionBuildBlobResult transactionBuildBlobResult = transactionBuildBlobResponse.getResult();
-            JSONObject BlobResultJson = (JSONObject)JSONObject.toJSON(transactionBuildBlobResult);
+            JSONObject BlobResultJson = (JSONObject) JSONObject.toJSON(transactionBuildBlobResult);
             return BlobResultJson.toJSONString();
         } else {
             System.out.println("error: " + transactionBuildBlobResponse.getErrorDesc());
             return null;
         }
     }
-    
+
     /**
      * @Description 解析交易Blob
      * @Author riven
@@ -210,7 +211,7 @@ public class OfflineSignatureDemo {
      * @Author riven
      * @Method signTransaction
      * @Params transactionBlob: 交易Blob
-     *         senderPrivateKey: 发送方账户私钥
+     * senderPrivateKey: 发送方账户私钥
      * @Return java.lang.String 签名结果，包括签名信息和公钥
      * @Date 2018/7/12 16:20
      */
@@ -243,7 +244,7 @@ public class OfflineSignatureDemo {
      * @Author riven
      * @Method submitTransaction
      * @Params transactionBlob: 交易Blob
-     *         signature: 签名结果，包括签名信息和公钥
+     * signature: 签名结果，包括签名信息和公钥
      * @Return java.lang.String
      * @Date 2018/7/12 16:21
      */

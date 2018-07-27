@@ -188,7 +188,7 @@ public class TransactionServiceImpl implements TransactionService {
             }
             // check signatureNum
             Integer signatureNum = transactionEvaluateFeeRequest.getSignatureNumber();
-            if (Tools.isEmpty(signatureNum ) || signatureNum < 1) {
+            if (Tools.isEmpty(signatureNum) || signatureNum < 1) {
                 throw new SDKException(SdkError.INVALID_SIGNATURENUMBER_ERROR);
             }
             // check ceilLedgerSeq
@@ -228,7 +228,7 @@ public class TransactionServiceImpl implements TransactionService {
 
             String evaluationFeeUrl = General.transactionEvaluationFee();
             String result = HttpKit.post(evaluationFeeUrl, testTransactionRequest.toJSONString());
-            transactionEvaluateFeeResponse = JSON.parseObject(result,TransactionEvaluateFeeResponse.class);
+            transactionEvaluateFeeResponse = JSON.parseObject(result, TransactionEvaluateFeeResponse.class);
 
         } catch (SDKException apiException) {
             Integer errorCode = apiException.getErrorCode();
@@ -241,7 +241,6 @@ public class TransactionServiceImpl implements TransactionService {
         }
         return transactionEvaluateFeeResponse;
     }
-
 
 
     /**
@@ -370,7 +369,7 @@ public class TransactionServiceImpl implements TransactionService {
         } catch (Exception exception) {
             transactionSubmitResponse.buildResponse(SdkError.SYSTEM_ERROR, transactionSubmitResult);
         }
-        return  transactionSubmitResponse;
+        return transactionSubmitResponse;
     }
 
     /**
@@ -416,7 +415,7 @@ public class TransactionServiceImpl implements TransactionService {
             Chain.Operation operation;
             switch (operationBase[i].getOperationType()) {
                 case ACCOUNT_ACTIVATE:
-                    operation = AccountServiceImpl.activate((AccountActivateOperation)operationBase[i], transSourceAddress);
+                    operation = AccountServiceImpl.activate((AccountActivateOperation) operationBase[i], transSourceAddress);
                     break;
                 case ACCOUNT_SET_METADATA:
                     operation = AccountServiceImpl.setMetadata((AccountSetMetadataOperation) operationBase[i]);

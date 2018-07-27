@@ -7,16 +7,17 @@ public class Keypair {
     private String address;
     private String publicKey;
     private String privateKey;
-    public Keypair(String address,String publicKey,String privateKey){
+
+    public Keypair(String address, String publicKey, String privateKey) {
         this.address = address;
         this.publicKey = publicKey;
         this.privateKey = privateKey;
     }
 
-    public static Keypair generator(){
+    public static Keypair generator() {
         try {
             PrivateKey keyPair = new PrivateKey();
-            return new Keypair(keyPair.getEncAddress(),keyPair.getEncPublicKey(),keyPair.getEncPrivateKey());
+            return new Keypair(keyPair.getEncAddress(), keyPair.getEncPublicKey(), keyPair.getEncPrivateKey());
         } catch (Exception e) {
             e.printStackTrace();
         }

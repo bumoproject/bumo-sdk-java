@@ -17,27 +17,28 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 public class HttpKit {
-    
+
     private static final String DEFAULT_CHARSET = "UTF-8";
     public static boolean enableSSL = false;
 
     /**
      * 发送Get请求
+     *
      * @param url
      * @return
-     * @throws NoSuchProviderException 
-     * @throws NoSuchAlgorithmException 
-     * @throws IOException 
-     * @throws KeyManagementException 
+     * @throws NoSuchProviderException
+     * @throws NoSuchAlgorithmException
+     * @throws IOException
+     * @throws KeyManagementException
      */
-    public static String get(String url,Boolean https) throws NoSuchAlgorithmException, NoSuchProviderException, IOException, KeyManagementException {
+    public static String get(String url, Boolean https) throws NoSuchAlgorithmException, NoSuchProviderException, IOException, KeyManagementException {
         StringBuffer bufferRes = null;
-        TrustManager[] tm = { new MyX509TrustManager() };  
-        SSLContext sslContext = SSLContext.getInstance("SSL", "SunJSSE");  
-        sslContext.init(null, tm, new java.security.SecureRandom());  
+        TrustManager[] tm = {new MyX509TrustManager()};
+        SSLContext sslContext = SSLContext.getInstance("SSL", "SunJSSE");
+        sslContext.init(null, tm, new java.security.SecureRandom());
         // 从上述SSLContext对象中得到SSLSocketFactory对象  
         SSLSocketFactory ssf = sslContext.getSocketFactory();
-        
+
         URL urlGet = new URL(url);
         HttpsURLConnection http = (HttpsURLConnection) urlGet.openConnection();
         // 连接超时
@@ -45,18 +46,18 @@ public class HttpKit {
         // 读取超时 --服务器响应比较慢，增大时间
         http.setReadTimeout(25000);
         http.setRequestMethod("GET");
-        http.setRequestProperty("Content-Type","application/x-www-form-urlencoded");
+        http.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
         http.setSSLSocketFactory(ssf);
         http.setHostnameVerifier(new Verifier());
         http.setDoOutput(true);
         http.setDoInput(true);
         http.connect();
-        
+
         InputStream in = http.getInputStream();
         BufferedReader read = new BufferedReader(new InputStreamReader(in, DEFAULT_CHARSET));
         String valueString = null;
         bufferRes = new StringBuffer();
-        while ((valueString = read.readLine()) != null){
+        while ((valueString = read.readLine()) != null) {
             bufferRes.append(valueString);
         }
         read.close();
@@ -67,21 +68,22 @@ public class HttpKit {
         }
         return bufferRes.toString();
     }
-    
+
     /**
      * 发送Get请求
+     *
      * @param url
      * @return
-     * @throws NoSuchProviderException 
-     * @throws NoSuchAlgorithmException 
-     * @throws IOException 
-     * @throws KeyManagementException 
+     * @throws NoSuchProviderException
+     * @throws NoSuchAlgorithmException
+     * @throws IOException
+     * @throws KeyManagementException
      */
     public static String get(String url) throws NoSuchAlgorithmException, NoSuchProviderException, IOException, KeyManagementException {
-    	if(enableSSL){
-    		return get(url,true);
-    	}else{
-    		StringBuffer bufferRes = null;
+        if (enableSSL) {
+            return get(url, true);
+        } else {
+            StringBuffer bufferRes = null;
             URL urlGet = new URL(url);
             HttpURLConnection http = (HttpURLConnection) urlGet.openConnection();
             // 连接超时
@@ -89,16 +91,16 @@ public class HttpKit {
             // 读取超时 --服务器响应比较慢，增大时间
             http.setReadTimeout(25000);
             http.setRequestMethod("GET");
-            http.setRequestProperty("Content-Type","application/x-www-form-urlencoded");
+            http.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             http.setDoOutput(true);
             http.setDoInput(true);
             http.connect();
-            
+
             InputStream in = http.getInputStream();
             BufferedReader read = new BufferedReader(new InputStreamReader(in, DEFAULT_CHARSET));
             String valueString = null;
             bufferRes = new StringBuffer();
-            while ((valueString = read.readLine()) != null){
+            while ((valueString = read.readLine()) != null) {
                 bufferRes.append(valueString);
             }
             read.close();
@@ -108,37 +110,39 @@ public class HttpKit {
                 http.disconnect();
             }
             return bufferRes.toString();
-    	}
+        }
     }
 
     /**
-     *  发送Get请求
+     * 发送Get请求
+     *
      * @param url
      * @param params
      * @return
-     * @throws IOException 
-     * @throws NoSuchProviderException 
-     * @throws NoSuchAlgorithmException 
-     * @throws KeyManagementException 
+     * @throws IOException
+     * @throws NoSuchProviderException
+     * @throws NoSuchAlgorithmException
+     * @throws KeyManagementException
      */
     public static String get(String url, Map<String, String> params) throws KeyManagementException, NoSuchAlgorithmException, NoSuchProviderException, IOException {
         return get(initParams(url, params));
     }
 
     /**
-     *  发送Post请求
+     * 发送Post请求
+     *
      * @param url
      * @param params
      * @param https
      * @return
-     * @throws IOException 
-     * @throws NoSuchProviderException 
-     * @throws NoSuchAlgorithmException 
-     * @throws KeyManagementException 
+     * @throws IOException
+     * @throws NoSuchProviderException
+     * @throws NoSuchAlgorithmException
+     * @throws KeyManagementException
      */
-    public static String post(String url, String params,Boolean https) throws IOException, NoSuchAlgorithmException, NoSuchProviderException, KeyManagementException {
-    	StringBuffer bufferRes = null;
-        TrustManager[] tm = { new MyX509TrustManager() };
+    public static String post(String url, String params, Boolean https) throws IOException, NoSuchAlgorithmException, NoSuchProviderException, KeyManagementException {
+        StringBuffer bufferRes = null;
+        TrustManager[] tm = {new MyX509TrustManager()};
         SSLContext sslContext = SSLContext.getInstance("SSL", "SunJSSE");
         sslContext.init(null, tm, new java.security.SecureRandom());
         // 从上述SSLContext对象中得到SSLSocketFactory对象  
@@ -151,7 +155,7 @@ public class HttpKit {
         // 读取超时 --服务器响应比较慢，增大时间
         http.setReadTimeout(50000);
         http.setRequestMethod("POST");
-        http.setRequestProperty("Content-Type","application/x-www-form-urlencoded");
+        http.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
         http.setSSLSocketFactory(ssf);
         http.setHostnameVerifier(new Verifier());
         http.setDoOutput(true);
@@ -167,7 +171,7 @@ public class HttpKit {
         BufferedReader read = new BufferedReader(new InputStreamReader(in, DEFAULT_CHARSET));
         String valueString = null;
         bufferRes = new StringBuffer();
-        while ((valueString = read.readLine()) != null){
+        while ((valueString = read.readLine()) != null) {
             bufferRes.append(valueString);
         }
         read.close();
@@ -178,63 +182,65 @@ public class HttpKit {
         }
         return bufferRes.toString();
     }
-    
+
     /**
-     *  发送Post请求
-     * @param url 请求地址
+     * 发送Post请求
+     *
+     * @param url    请求地址
      * @param params 请求参数
      * @return
-     * @throws IOException 
-     * @throws NoSuchProviderException 
-     * @throws NoSuchAlgorithmException 
-     * @throws KeyManagementException 
+     * @throws IOException
+     * @throws NoSuchProviderException
+     * @throws NoSuchAlgorithmException
+     * @throws KeyManagementException
      */
     public static String post(String url, String params) throws IOException, NoSuchAlgorithmException, NoSuchProviderException, KeyManagementException {
-    	if(enableSSL){
-    		return post(url,params,true);
-    	}else{
-    		StringBuffer bufferRes = null;
-	        URL urlGet = new URL(url);
-	        HttpURLConnection http = (HttpURLConnection) urlGet.openConnection();
-	        // 连接超时
-	        http.setConnectTimeout(50000);
-	        // 读取超时 --服务器响应比较慢，增大时间
-	        http.setReadTimeout(50000);
-	        http.setRequestMethod("POST");
-	        http.setRequestProperty("Content-Type","application/json");
-	        http.setDoOutput(true);
-	        http.setDoInput(true);
-	        http.connect();
-	
-	        OutputStream out = http.getOutputStream();
-	        out.write(params.getBytes("UTF-8"));
-	        out.flush();
-	        out.close();
-	
-	        InputStream in = http.getInputStream();
-	        BufferedReader read = new BufferedReader(new InputStreamReader(in, DEFAULT_CHARSET));
-	        String valueString = null;
-	        bufferRes = new StringBuffer();
-	        while ((valueString = read.readLine()) != null){
-	            bufferRes.append(valueString);
-	        }
-	        read.close();
-	        in.close();
-	        if (http != null) {
-	            // 关闭连接
-	            http.disconnect();
-	        }
-	        return bufferRes.toString();
-    	}
+        if (enableSSL) {
+            return post(url, params, true);
+        } else {
+            StringBuffer bufferRes = null;
+            URL urlGet = new URL(url);
+            HttpURLConnection http = (HttpURLConnection) urlGet.openConnection();
+            // 连接超时
+            http.setConnectTimeout(50000);
+            // 读取超时 --服务器响应比较慢，增大时间
+            http.setReadTimeout(50000);
+            http.setRequestMethod("POST");
+            http.setRequestProperty("Content-Type", "application/json");
+            http.setDoOutput(true);
+            http.setDoInput(true);
+            http.connect();
+
+            OutputStream out = http.getOutputStream();
+            out.write(params.getBytes("UTF-8"));
+            out.flush();
+            out.close();
+
+            InputStream in = http.getInputStream();
+            BufferedReader read = new BufferedReader(new InputStreamReader(in, DEFAULT_CHARSET));
+            String valueString = null;
+            bufferRes = new StringBuffer();
+            while ((valueString = read.readLine()) != null) {
+                bufferRes.append(valueString);
+            }
+            read.close();
+            in.close();
+            if (http != null) {
+                // 关闭连接
+                http.disconnect();
+            }
+            return bufferRes.toString();
+        }
     }
 
     /**
      * 构造url
+     *
      * @param url
      * @param params
      * @return
      */
-    private static String initParams(String url, Map<String, String> params){
+    private static String initParams(String url, Map<String, String> params) {
         if (null == params || params.isEmpty()) {
             return url;
         }
@@ -264,14 +270,14 @@ public class HttpKit {
         }
         return sb.toString();
     }
-    
-    
+
+
     public static void main(String[] args) throws Exception {
 //    	String fname = "dsasdas.mp4";
 //    	String s = fname.substring(0, fname.lastIndexOf("."));
 //    	String f = fname.substring(s.length()+1);
 //		System.out.println(f);
-	}
+    }
 }
 
 /**
@@ -280,8 +286,8 @@ public class HttpKit {
 class MyX509TrustManager implements X509TrustManager {
 
     @Override
-	public X509Certificate[] getAcceptedIssuers() {
-        return null;  
+    public X509Certificate[] getAcceptedIssuers() {
+        return null;
     }
 
     @Override

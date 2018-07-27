@@ -38,65 +38,6 @@ import java.security.NoSuchProviderException;
 public class ContractServiceImpl implements ContractService {
     /**
      * @Author riven
-     * @Method getInfo
-     * @Params [contractGetInfoRequest]
-     * @Return io.bumo.model.response.ContractGetInfoResponse
-     * @Date 2018/7/5 14:22
-     */
-    @Override
-    public ContractGetInfoResponse getInfo(ContractGetInfoRequest contractGetInfoRequest) {
-        ContractGetInfoResponse contractGetInfoResponse = new ContractGetInfoResponse();
-        ContractGetInfoResult contractGetInfoResult = new ContractGetInfoResult();
-        try {
-            String contractAddress = contractGetInfoRequest.getContractAddress();
-            if (!PublicKey.isAddressValid(contractAddress)) {
-                throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
-            }
-            contractGetInfoResponse = getContractInfo(contractAddress);
-        } catch (SDKException apiException) {
-            Integer errorCode = apiException.getErrorCode();
-            String errorDesc = apiException.getErrorDesc();
-            contractGetInfoResponse.buildResponse(errorCode, errorDesc, contractGetInfoResult);
-        } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
-            contractGetInfoResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, contractGetInfoResult);
-        } catch (Exception exception) {
-            contractGetInfoResponse.buildResponse(SdkError.SYSTEM_ERROR, contractGetInfoResult);
-        }
-
-        return contractGetInfoResponse;
-    }
-
-    /**
-     * @Author riven
-     * @Method checkValid
-     * @Params [contractCheckValidRequest]
-     * @Return io.bumo.model.response.ContractCheckValidResponse
-     * @Date 2018/7/5 15:36
-     */
-    @Override
-    public ContractCheckValidResponse checkValid(ContractCheckValidRequest contractCheckValidRequest) {
-        ContractCheckValidResponse contractCheckValidResponse = new ContractCheckValidResponse();
-        ContractCheckValidResult contractCheckValidResult = new ContractCheckValidResult();
-        try {
-            String contractAddress = contractCheckValidRequest.getContractAddress();
-            if (!PublicKey.isAddressValid(contractAddress)) {
-                throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
-            }
-            boolean isValid = checkContractValid(contractAddress);
-            contractCheckValidResult.setValid(isValid);
-            contractCheckValidResponse.buildResponse(SdkError.SUCCESS, contractCheckValidResult);
-        } catch (SDKException apiException) {
-            Integer errorCode = apiException.getErrorCode();
-            String errorDesc = apiException.getErrorDesc();
-            contractCheckValidResponse.buildResponse(errorCode, errorDesc, contractCheckValidResult);
-        } catch (Exception exception) {
-            contractCheckValidResponse.buildResponse(SdkError.SYSTEM_ERROR, contractCheckValidResult);
-        }
-        return contractCheckValidResponse;
-    }
-
-    /**
-     * @Author riven
      * @Method create
      * @Params [contractCreateOperation]
      * @Return io.bumo.model.response.ContractCreateResponse
@@ -284,56 +225,8 @@ public class ContractServiceImpl implements ContractService {
         return operation.build();
     }
 
-    /**
-     * @Author riven
-     * @Method call
-     * @Params [contractCallRequest]
-     * @Return io.bumo.model.response.ContractCallResponse
-     * @Date 2018/7/11 18:50
-     */
-    @Override
-    public ContractCallResponse call(ContractCallRequest contractCallRequest) {
-        ContractCallResponse contractCallResponse = new ContractCallResponse();
-        ContractCallResult contractCallResult = new ContractCallResult();
-        try {
-            String sourceAddress = contractCallRequest.getSourceAddress();
-            if (!Tools.isEmpty(sourceAddress) && !sourceAddress.isEmpty() && !PublicKey.isAddressValid(sourceAddress)) {
-                throw new SDKException(SdkError.INVALID_SOURCEADDRESS_ERROR);
-            }
-            String contractAddress = contractCallRequest.getContractAddress();
-            if (!Tools.isNULL(contractAddress) && !contractAddress.isEmpty() && !PublicKey.isAddressValid(contractAddress)) {
-                throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
-            }
-            String code = contractCallRequest.getCode();
-            if (Tools.isEmpty(contractAddress) && Tools.isEmpty(code)) {
-                throw new SDKException(SdkError.CONTRACTADDRESS_CODE_BOTH_NULL_ERROR);
-            }
-            Long feeLimit = contractCallRequest.getFeeLimit();
-            if (Tools.isEmpty(feeLimit) || feeLimit < Constant.FEE_LIMIT_MIN) {
-                throw new SDKException(SdkError.INVALID_FEELIMIT_ERROR);
-            }
-            Integer optType = contractCallRequest.getOptType();
-            if (Tools.isEmpty(optType) || (optType < Constant.OPT_TYPE_MIN || optType > Constant.OPT_TYPE_MAX)) {
-                throw new SDKException(SdkError.INVALID_OPTTYPE_ERROR);
-            }
-            String input = contractCallRequest.getInput();
-            Long contractBalance = contractCallRequest.getContractBalance();
-            Long gasPrice = contractCallRequest.getGasPrice();
-            contractCallResponse = callContract(sourceAddress, contractAddress, optType, code, input, contractBalance, gasPrice, feeLimit);
-        } catch (SDKException sdkException) {
-            Integer errorCode = sdkException.getErrorCode();
-            String errorDesc = sdkException.getErrorDesc();
-            contractCallResponse.buildResponse(errorCode, errorDesc, contractCallResult);
-        } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
-            contractCallResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, contractCallResult);
-        } catch (Exception exception) {
-            contractCallResponse.buildResponse(SdkError.SYSTEM_ERROR, contractCallResult);
-        }
-        return contractCallResponse;
-    }
-
     public static ContractCallResponse callContract(String sourceAddress, String contractAddress, Integer optType, String code,
-            String input, Long contractBalance, Long gasPrice, Long feeLimit)
+                                                    String input, Long contractBalance, Long gasPrice, Long feeLimit)
             throws KeyManagementException, NoSuchAlgorithmException, NoSuchProviderException, IOException {
         JSONObject params = new JSONObject();
         params.put("opt_type", optType);
@@ -392,5 +285,112 @@ public class ContractServiceImpl implements ContractService {
         } catch (SDKException sdkException) {
         }
         return isValid;
+    }
+
+    /**
+     * @Author riven
+     * @Method getInfo
+     * @Params [contractGetInfoRequest]
+     * @Return io.bumo.model.response.ContractGetInfoResponse
+     * @Date 2018/7/5 14:22
+     */
+    @Override
+    public ContractGetInfoResponse getInfo(ContractGetInfoRequest contractGetInfoRequest) {
+        ContractGetInfoResponse contractGetInfoResponse = new ContractGetInfoResponse();
+        ContractGetInfoResult contractGetInfoResult = new ContractGetInfoResult();
+        try {
+            String contractAddress = contractGetInfoRequest.getContractAddress();
+            if (!PublicKey.isAddressValid(contractAddress)) {
+                throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
+            }
+            contractGetInfoResponse = getContractInfo(contractAddress);
+        } catch (SDKException apiException) {
+            Integer errorCode = apiException.getErrorCode();
+            String errorDesc = apiException.getErrorDesc();
+            contractGetInfoResponse.buildResponse(errorCode, errorDesc, contractGetInfoResult);
+        } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
+            contractGetInfoResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, contractGetInfoResult);
+        } catch (Exception exception) {
+            contractGetInfoResponse.buildResponse(SdkError.SYSTEM_ERROR, contractGetInfoResult);
+        }
+
+        return contractGetInfoResponse;
+    }
+
+    /**
+     * @Author riven
+     * @Method checkValid
+     * @Params [contractCheckValidRequest]
+     * @Return io.bumo.model.response.ContractCheckValidResponse
+     * @Date 2018/7/5 15:36
+     */
+    @Override
+    public ContractCheckValidResponse checkValid(ContractCheckValidRequest contractCheckValidRequest) {
+        ContractCheckValidResponse contractCheckValidResponse = new ContractCheckValidResponse();
+        ContractCheckValidResult contractCheckValidResult = new ContractCheckValidResult();
+        try {
+            String contractAddress = contractCheckValidRequest.getContractAddress();
+            if (!PublicKey.isAddressValid(contractAddress)) {
+                throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
+            }
+            boolean isValid = checkContractValid(contractAddress);
+            contractCheckValidResult.setValid(isValid);
+            contractCheckValidResponse.buildResponse(SdkError.SUCCESS, contractCheckValidResult);
+        } catch (SDKException apiException) {
+            Integer errorCode = apiException.getErrorCode();
+            String errorDesc = apiException.getErrorDesc();
+            contractCheckValidResponse.buildResponse(errorCode, errorDesc, contractCheckValidResult);
+        } catch (Exception exception) {
+            contractCheckValidResponse.buildResponse(SdkError.SYSTEM_ERROR, contractCheckValidResult);
+        }
+        return contractCheckValidResponse;
+    }
+
+    /**
+     * @Author riven
+     * @Method call
+     * @Params [contractCallRequest]
+     * @Return io.bumo.model.response.ContractCallResponse
+     * @Date 2018/7/11 18:50
+     */
+    @Override
+    public ContractCallResponse call(ContractCallRequest contractCallRequest) {
+        ContractCallResponse contractCallResponse = new ContractCallResponse();
+        ContractCallResult contractCallResult = new ContractCallResult();
+        try {
+            String sourceAddress = contractCallRequest.getSourceAddress();
+            if (!Tools.isEmpty(sourceAddress) && !sourceAddress.isEmpty() && !PublicKey.isAddressValid(sourceAddress)) {
+                throw new SDKException(SdkError.INVALID_SOURCEADDRESS_ERROR);
+            }
+            String contractAddress = contractCallRequest.getContractAddress();
+            if (!Tools.isNULL(contractAddress) && !contractAddress.isEmpty() && !PublicKey.isAddressValid(contractAddress)) {
+                throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
+            }
+            String code = contractCallRequest.getCode();
+            if (Tools.isEmpty(contractAddress) && Tools.isEmpty(code)) {
+                throw new SDKException(SdkError.CONTRACTADDRESS_CODE_BOTH_NULL_ERROR);
+            }
+            Long feeLimit = contractCallRequest.getFeeLimit();
+            if (Tools.isEmpty(feeLimit) || feeLimit < Constant.FEE_LIMIT_MIN) {
+                throw new SDKException(SdkError.INVALID_FEELIMIT_ERROR);
+            }
+            Integer optType = contractCallRequest.getOptType();
+            if (Tools.isEmpty(optType) || (optType < Constant.OPT_TYPE_MIN || optType > Constant.OPT_TYPE_MAX)) {
+                throw new SDKException(SdkError.INVALID_OPTTYPE_ERROR);
+            }
+            String input = contractCallRequest.getInput();
+            Long contractBalance = contractCallRequest.getContractBalance();
+            Long gasPrice = contractCallRequest.getGasPrice();
+            contractCallResponse = callContract(sourceAddress, contractAddress, optType, code, input, contractBalance, gasPrice, feeLimit);
+        } catch (SDKException sdkException) {
+            Integer errorCode = sdkException.getErrorCode();
+            String errorDesc = sdkException.getErrorDesc();
+            contractCallResponse.buildResponse(errorCode, errorDesc, contractCallResult);
+        } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
+            contractCallResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, contractCallResult);
+        } catch (Exception exception) {
+            contractCallResponse.buildResponse(SdkError.SYSTEM_ERROR, contractCallResult);
+        }
+        return contractCallResponse;
     }
 }
