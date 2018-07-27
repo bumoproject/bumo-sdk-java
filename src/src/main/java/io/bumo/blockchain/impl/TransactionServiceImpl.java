@@ -257,7 +257,7 @@ public class TransactionServiceImpl implements TransactionService {
         TransactionSignResult transactionSignResult = new TransactionSignResult();
         try {
             String blob = transactionSignRequest.getBlob();
-            if (Tools.isEmpty(blob) || HexFormat.isHexString(blob)) {
+            if (Tools.isEmpty(blob)) {
                 throw new SDKException(SdkError.INVALID_BLOB_ERROR);
             }
             byte[] blobBytes = HexFormat.hexToByte(blob);
@@ -286,7 +286,7 @@ public class TransactionServiceImpl implements TransactionService {
             Integer errorCode = apiException.getErrorCode();
             String errorDesc = apiException.getErrorDesc();
             transactionSignResponse.buildResponse(errorCode, errorDesc, transactionSignResult);
-        } catch (InvalidProtocolBufferException e) {
+        } catch (InvalidProtocolBufferException | IllegalArgumentException e) {
             transactionSignResponse.buildResponse(SdkError.INVALID_BLOB_ERROR, transactionSignResult);
         } catch (Exception e) {
             e.printStackTrace();
@@ -308,7 +308,7 @@ public class TransactionServiceImpl implements TransactionService {
         TransactionSubmitResult transactionSubmitResult = new TransactionSubmitResult();
         try {
             String blob = transactionSubmitRequest.getTransactionBlob();
-            if (Tools.isEmpty(blob) || HexFormat.isHexString(blob)) {
+            if (Tools.isEmpty(blob)) {
                 throw new SDKException(SdkError.INVALID_BLOB_ERROR);
             }
             Chain.Transaction.parseFrom(HexFormat.hexToByte(blob));
@@ -363,7 +363,7 @@ public class TransactionServiceImpl implements TransactionService {
             Integer errorCode = apiException.getErrorCode();
             String errorDesc = apiException.getErrorDesc();
             transactionSubmitResponse.buildResponse(errorCode, errorDesc, transactionSubmitResult);
-        } catch (InvalidProtocolBufferException e) {
+        } catch (InvalidProtocolBufferException | IllegalArgumentException e) {
             transactionSubmitResponse.buildResponse(SdkError.INVALID_BLOB_ERROR, transactionSubmitResult);
         } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
             transactionSubmitResponse.buildResponse(SdkError.CONNECTN_BLOCKCHAIN_ERROR, transactionSubmitResult);

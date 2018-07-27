@@ -580,7 +580,7 @@ public class DigitalAssetsDemo {
         }
     }
 
-    /**
+    /**R
      * 查询指定区块高度的验证节点信息
      */
     @Test
@@ -760,6 +760,10 @@ public class DigitalAssetsDemo {
         // 2. 构建setPrivilege操作
         AccountSetPrivilegeOperation operation = new AccountSetPrivilegeOperation();
         operation.setSourceAddress(accountAddresss);
+        Signer signer = new Signer();
+        signer.setAddress("buQsurH1M4rjLkfjzkxR9KXJ6jSu2r9xBNEw");
+        signer.setWeight(1L);
+        operation.addSigner(signer);
 
         // 记录txhash ，以便后续再次确认交易真实结果
         // 推荐5个区块后再次通过txhash再次调用`根据交易Hash获取交易信息`(参考示例：getTxByHash()）来确认交易终态结果
