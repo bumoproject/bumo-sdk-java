@@ -7,22 +7,22 @@ import io.bumo.common.Constant;
 import io.bumo.common.General;
 import io.bumo.common.Tools;
 import io.bumo.crypto.http.HttpKit;
+import io.bumo.crypto.protobuf.Chain;
 import io.bumo.encryption.exception.EncException;
+import io.bumo.encryption.key.PrivateKey;
+import io.bumo.encryption.key.PublicKey;
 import io.bumo.exception.SDKException;
+import io.bumo.exception.SdkError;
+import io.bumo.model.request.*;
 import io.bumo.model.request.Operation.AccountActivateOperation;
 import io.bumo.model.request.Operation.AccountSetMetadataOperation;
 import io.bumo.model.request.Operation.AccountSetPrivilegeOperation;
+import io.bumo.model.response.*;
+import io.bumo.model.response.result.*;
 import io.bumo.model.response.result.data.AssetInfo;
 import io.bumo.model.response.result.data.MetadataInfo;
 import io.bumo.model.response.result.data.Signer;
 import io.bumo.model.response.result.data.TypeThreshold;
-import io.bumo.model.request.*;
-import io.bumo.model.response.*;
-import io.bumo.model.response.result.*;
-import io.bumo.crypto.protobuf.Chain;
-import io.bumo.encryption.key.PrivateKey;
-import io.bumo.encryption.key.PublicKey;
-import io.bumo.exception.SdkError;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -32,7 +32,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.util.regex.Pattern;
 
-import static java.util.regex.Pattern.*;
+import static java.util.regex.Pattern.compile;
 
 /**
  * @Author riven

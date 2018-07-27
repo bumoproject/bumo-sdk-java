@@ -10,7 +10,9 @@ import io.bumo.model.request.*;
 import io.bumo.model.request.Operation.*;
 import io.bumo.model.response.*;
 import io.bumo.model.response.result.*;
-import io.bumo.model.response.result.data.*;
+import io.bumo.model.response.result.data.Signature;
+import io.bumo.model.response.result.data.Signer;
+import io.bumo.model.response.result.data.TransactionFees;
 import org.junit.Test;
 
 /**

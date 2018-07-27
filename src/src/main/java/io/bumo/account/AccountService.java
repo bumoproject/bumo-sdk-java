@@ -2,7 +2,6 @@ package io.bumo.account;
 
 import io.bumo.model.request.*;
 import io.bumo.model.response.*;
-import io.bumo.model.response.result.AccountGetMetadataResult;
 
 /**
  * @Author riven

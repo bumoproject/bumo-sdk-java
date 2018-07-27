@@ -8,8 +8,10 @@ import io.bumo.encryption.key.PrivateKey;
 import io.bumo.model.request.*;
 import io.bumo.model.request.Operation.BUSendOperation;
 import io.bumo.model.response.*;
-import io.bumo.model.response.result.*;
-import io.bumo.model.response.result.data.ValidatorRewardInfo;
+import io.bumo.model.response.result.AccountGetNonceResult;
+import io.bumo.model.response.result.BlockGetInfoResult;
+import io.bumo.model.response.result.BlockGetLatestInfoResult;
+import io.bumo.model.response.result.TransactionBuildBlobResult;
 import org.junit.Test;
 
 public class ExchangeDemo {

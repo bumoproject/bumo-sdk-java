@@ -1,6 +1,5 @@
 package io.bumo.model.response.result;
 
-import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONField;
 import io.bumo.model.response.result.data.ValidatorRewardInfo;
 

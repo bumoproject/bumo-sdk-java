@@ -1,7 +1,11 @@
 package io.bumo.contract;
 
-import io.bumo.model.request.*;
-import io.bumo.model.response.*;
+import io.bumo.model.request.ContractCallRequest;
+import io.bumo.model.request.ContractCheckValidRequest;
+import io.bumo.model.request.ContractGetInfoRequest;
+import io.bumo.model.response.ContractCallResponse;
+import io.bumo.model.response.ContractCheckValidResponse;
+import io.bumo.model.response.ContractGetInfoResponse;
 
 /**
  * @Author riven

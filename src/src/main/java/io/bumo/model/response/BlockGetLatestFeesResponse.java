@@ -1,8 +1,8 @@
 package io.bumo.model.response;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import io.bumo.model.response.result.BlockGetLatestFeesResult;
 import io.bumo.exception.SdkError;
+import io.bumo.model.response.result.BlockGetLatestFeesResult;
 
 /**
  * @Author riven

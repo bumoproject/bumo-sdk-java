@@ -1,6 +1,5 @@
 package io.bumo;
 
-import com.alibaba.fastjson.JSONObject;
 import io.bumo.account.AccountService;
 import io.bumo.account.impl.AccountServiceImpl;
 import io.bumo.asset.AssetService;
@@ -14,7 +13,6 @@ import io.bumo.blockchain.impl.TransactionServiceImpl;
 import io.bumo.common.General;
 import io.bumo.contract.ContractService;
 import io.bumo.contract.impl.ContractServiceImpl;
-import io.bumo.crypto.http.HttpKit;
 import io.bumo.exception.SDKException;
 import io.bumo.exception.SdkError;
 

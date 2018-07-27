@@ -2,7 +2,6 @@ package io.bumo.asset;
 
 import io.bumo.model.request.*;
 import io.bumo.model.response.*;
-import io.bumo.model.response.result.TokenCheckValidResult;
 
 /**
  * @Author riven

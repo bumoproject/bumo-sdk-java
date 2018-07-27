@@ -1,8 +1,8 @@
 package io.bumo.model.response;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import io.bumo.model.response.result.AccountCheckValidResult;
 import io.bumo.exception.SdkError;
+import io.bumo.model.response.result.AccountCheckValidResult;
 
 /**
  * @Author riven
