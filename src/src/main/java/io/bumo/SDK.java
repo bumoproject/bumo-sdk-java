@@ -26,11 +26,11 @@ public class SDK {
     private static SDK sdk = null;
 
     /**
- * @Author riven
- * @Method Structure
- * @Params [url]
- * @Date 2018/7/15 14:50
- */
+     * @Author riven
+     * @Method Structure
+     * @Params [url]
+     * @Date 2018/7/15 14:50
+     */
     private SDK(String url) {
         General.url = url;
     }
@@ -46,7 +46,7 @@ public class SDK {
         if (sdk == null) {
             sdk = new SDK(url);
         }
-        //sdk.init(url);
+        sdk.init(url);
         return sdk;
     }
     
@@ -126,30 +126,6 @@ public class SDK {
     private void init(String url) throws SDKException {
         if (url == null || url.isEmpty()) {
             throw new SDKException(SdkError.URL_EMPTY_ERROR);
-        }
-        hello(url);
-    }
-
-    /**
-     * @Author riven
-     * @Method hello
-     * @Params [url]
-     * @Return void
-     * @Date 2018/7/15 14:51
-     */
-    private void hello(String url) throws SDKException {
-        try {
-            String helloUrl = url + "/hello";
-            String result = HttpKit.get(helloUrl);
-            if (result == null || result.isEmpty()) {
-                throw new SDKException(SdkError.CONNECTN_BLOCKCHAIN_ERROR);
-            }
-            JSONObject resultJson = JSONObject.parseObject(result);
-            if (resultJson == null || resultJson.isEmpty()) {
-                throw new SDKException(SdkError.CONNECTN_BLOCKCHAIN_ERROR);
-            }
-        } catch (Exception e) {
-            throw new SDKException(SdkError.CONNECTN_BLOCKCHAIN_ERROR);
         }
     }
 }
