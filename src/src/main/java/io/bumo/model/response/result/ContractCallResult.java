@@ -17,9 +17,6 @@ public class ContractCallResult<T> {
     @JSONField(name = "query_rets")
     private JSONArray queryRets;
 
-    @JSONField(name = "actual_fee")
-    private Long actualFee;
-
     @JSONField(name = "stat")
     private ContractStat stat;
 
@@ -68,28 +65,6 @@ public class ContractCallResult<T> {
      */
     public void setQueryRets(JSONArray queryRets) {
         this.queryRets = queryRets;
-    }
-
-    /**
-     * @Author riven
-     * @Method getActualFee
-     * @Params []
-     * @Return java.lang.Long
-     * @Date 2018/7/11 18:47
-     */
-    public Long getActualFee() {
-        return actualFee;
-    }
-
-    /**
-     * @Author riven
-     * @Method setActualFee
-     * @Params [actualFee]
-     * @Return void
-     * @Date 2018/7/11 18:47
-     */
-    public void setActualFee(Long actualFee) {
-        this.actualFee = actualFee;
     }
 
     /**

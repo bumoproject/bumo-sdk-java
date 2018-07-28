@@ -1216,7 +1216,6 @@ gasPrice|Long|交易燃料单价，大小限制[1000, max(Long)]
 ----------- | ------------ | ---------------- |
 logs|JSONObject|日志信息
 queryRets|JSONArray|查询结果集
-actualFee|Long|实际费用
 stat|[ContractStat](#ContractStat)|合约资源占用信息
 txs|[TransactionEnvs](#TransactionEnvs)[]	交易集
 

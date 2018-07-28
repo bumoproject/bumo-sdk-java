@@ -1,6 +1,7 @@
 package io.bumo.sdk.example;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import io.bumo.SDK;
 import io.bumo.common.ToBaseUnit;
 import io.bumo.crypto.Keypair;
@@ -377,11 +378,28 @@ public class DigitalAssetsDemo {
      */
     @Test
     public void callContract() {
+        // 初始化变量
+        // 合约账户
+        String contractAddress = "buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq";
+        // 待分配token的账户
+        String spender = "buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp";
+        // 授权的数量
+        String amount = "1000000";
+
+        // 初始化input
+        JSONObject input = new JSONObject();
+        input.put("method", "approve");
+        JSONObject params = new JSONObject();
+        params.put("spender", spender);
+        params.put("value", amount);
+        input.put("params", params);
+
         // 初始化请求参数
         ContractCallRequest request = new ContractCallRequest();
-        request.setCode("\"use strict\";log(undefined);function query() { getBalance(thisAddress); }");
+        request.setContractAddress(contractAddress);
         request.setFeeLimit(1000000000L);
-        request.setOptType(2);
+        request.setOptType(1);
+        request.setInput(input.toJSONString());
 
         // 调用call接口
         ContractCallResponse response = sdk.getContractService().call(request);
