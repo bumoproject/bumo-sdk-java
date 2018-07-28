@@ -57,7 +57,7 @@ public enum SdkError {
     PRIVATEKEY_NULL_ERROR(11057, "PrivateKeys cannot be empty"),
     PRIVATEKEY_ONE_ERROR(11058, "One of privateKeys is invalid"),
     SIGNDATA_NULL_ERROR(11059, "SignData cannot be empty"),
-    INVALID_BLOCKNUMBER_ERROR(11060, "BlockNumber must bigger than 0"),
+    INVALID_BLOCKNUMBER_ERROR(11060, "BlockNumber must be bigger than 0"),
     PUBLICKEY_NULL_ERROR(11061, "PublicKey cannot be empty"),
     URL_EMPTY_ERROR(11062, "Url cannot be empty"),
     CONTRACTADDRESS_CODE_BOTH_NULL_ERROR(11063, "ContractAddress and code cannot be empty at the same time"),

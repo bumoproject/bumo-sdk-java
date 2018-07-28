@@ -102,7 +102,7 @@ public class BlockServiceImpl implements BlockService {
             }
             Long blockNumber = blockGetTransactionsRequest.getBlockNumber();
             if (Tools.isEmpty(blockNumber) || blockNumber < 1) {
-                throw new SDKException(SdkError.INVALID_HASH_ERROR);
+                throw new SDKException(SdkError.INVALID_BLOCKNUMBER_ERROR);
             }
             String getTransactionsUrl = General.blockGetTransactionsUrl(blockNumber);
             String result = HttpKit.get(getTransactionsUrl);
@@ -136,7 +136,7 @@ public class BlockServiceImpl implements BlockService {
             }
             Long blockNumber = blockGetInfoRequest.getBlockNumber();
             if (Tools.isEmpty(blockNumber) || blockNumber < 1) {
-                throw new SDKException(SdkError.INVALID_HASH_ERROR);
+                throw new SDKException(SdkError.INVALID_BLOCKNUMBER_ERROR);
             }
             String getInfoUrl = General.blockGetInfoUrl(blockNumber);
             String result = HttpKit.get(getInfoUrl);
@@ -204,7 +204,7 @@ public class BlockServiceImpl implements BlockService {
             }
             Long blockNumber = blockGetValidatorsRequest.getBlockNumber();
             if (Tools.isEmpty(blockNumber) || blockNumber < 1) {
-                throw new SDKException(SdkError.INVALID_HASH_ERROR);
+                throw new SDKException(SdkError.INVALID_BLOCKNUMBER_ERROR);
             }
             String getInfoUrl = General.blockGetValidatorsUrl(blockNumber);
             String result = HttpKit.get(getInfoUrl);
@@ -274,7 +274,7 @@ public class BlockServiceImpl implements BlockService {
             }
             Long blockNumber = blockGetRewardRequest.getBlockNumber();
             if (Tools.isEmpty(blockNumber) || blockNumber < 1) {
-                throw new SDKException(SdkError.INVALID_HASH_ERROR);
+                throw new SDKException(SdkError.INVALID_BLOCKNUMBER_ERROR);
             }
             String getInfoUrl = General.blockGetRewardUrl(blockNumber);
             String result = HttpKit.get(getInfoUrl);

@@ -22,6 +22,7 @@ import io.bumo.model.response.result.data.MetadataInfo;
 import io.bumo.model.response.result.data.TokenInfo;
 
 import java.io.IOException;
+import java.math.BigInteger;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
@@ -68,7 +69,8 @@ public class TokenServiceImpl implements TokenService {
             }
             Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
             boolean isNumber = pattern.matcher(supply).matches();
-            if (!isNumber || (isNumber && Long.valueOf(supply) < 1 || Long.valueOf(supply) > Long.MAX_VALUE)) {
+            BigInteger bigInteger = new BigInteger(supply);
+            if (!isNumber || bigInteger.compareTo(BigInteger.valueOf(1L)) < 0 || bigInteger.compareTo(BigInteger.valueOf(Long.MAX_VALUE)) > 0) {
                 throw new SDKException(SdkError.INVALID_TOKEN_TOTALSUPPLY_ERROR);
             }
             String metadata = tokenIssueOperation.getMetadata();
@@ -147,7 +149,8 @@ public class TokenServiceImpl implements TokenService {
             }
             Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
             boolean isNumber = pattern.matcher(tokenAmount).matches();
-            if (!isNumber || (isNumber && (Long.valueOf(tokenAmount) < 1 || Long.valueOf(tokenAmount) > Long.MAX_VALUE))) {
+            BigInteger bigInteger = new BigInteger(tokenAmount);
+            if (!isNumber || bigInteger.compareTo(BigInteger.valueOf(1L)) < 0 || bigInteger.compareTo(BigInteger.valueOf(Long.MAX_VALUE)) > 0) {
                 throw new SDKException(SdkError.INVALID_TOKEN_AMOUNT_ERROR);
             }
             String metadata = tokenTransferOperation.getMetadata();
@@ -215,7 +218,8 @@ public class TokenServiceImpl implements TokenService {
             }
             Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
             boolean isNumber = pattern.matcher(tokenAmount).matches();
-            if (!isNumber || (isNumber && (Long.valueOf(tokenAmount) < 1 || Long.valueOf(tokenAmount) > Long.MAX_VALUE))) {
+            BigInteger bigInteger = new BigInteger(tokenAmount);
+            if (!isNumber || bigInteger.compareTo(BigInteger.valueOf(1L)) < 0 || bigInteger.compareTo(BigInteger.valueOf(Long.MAX_VALUE)) > 0) {
                 throw new SDKException(SdkError.INVALID_TOKEN_AMOUNT_ERROR);
             }
             String metadata = tokenTransferFromOperation.getMetadata();
@@ -275,7 +279,8 @@ public class TokenServiceImpl implements TokenService {
             }
             Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
             boolean isNumber = pattern.matcher(tokenAmount).matches();
-            if (!isNumber || (isNumber && (Long.valueOf(tokenAmount) < 1) || Long.valueOf(tokenAmount) > Long.MAX_VALUE)) {
+            BigInteger bigInteger = new BigInteger(tokenAmount);
+            if (!isNumber || bigInteger.compareTo(BigInteger.valueOf(1L)) < 0 || bigInteger.compareTo(BigInteger.valueOf(Long.MAX_VALUE)) > 0) {
                 throw new SDKException(SdkError.INVALID_TOKEN_AMOUNT_ERROR);
             }
             String metadata = tokenApproveOperation.getMetadata();
@@ -333,7 +338,8 @@ public class TokenServiceImpl implements TokenService {
             }
             Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
             boolean isNumber = pattern.matcher(tokenAmount).matches();
-            if (!isNumber || (isNumber && (Long.valueOf(tokenAmount) < 1 || Long.valueOf(tokenAmount) > Long.MAX_VALUE))) {
+            BigInteger bigInteger = new BigInteger(tokenAmount);
+            if (!isNumber || bigInteger.compareTo(BigInteger.valueOf(1L)) < 0 || bigInteger.compareTo(BigInteger.valueOf(Long.MAX_VALUE)) > 0) {
                 throw new SDKException(SdkError.INVALID_TOKEN_AMOUNT_ERROR);
             }
             String metadata = tokenAssignResponse.getMetadata();

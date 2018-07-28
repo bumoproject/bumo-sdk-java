@@ -172,7 +172,7 @@ public class AssetServiceImpl implements AssetService {
             Integer errorCode = assetGetResponse.getErrorCode();
             String errorDesc = assetGetResponse.getErrorDesc();
             if (!Tools.isEmpty(errorCode) && errorCode.intValue() == 4) {
-                throw new SDKException(errorCode, (Tools.isEmpty(errorDesc) ? "Code (" + code + ") not exist" : errorDesc));
+                throw new SDKException(errorCode, (Tools.isEmpty(errorDesc) ? "Account (" + address + ") not exist" : errorDesc));
             }
             SdkError.checkErrorCode(assetGetResponse);
             AssetInfo[] assetInfos = assetGetResponse.getResult().getAssets();

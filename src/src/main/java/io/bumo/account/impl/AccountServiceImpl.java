@@ -27,6 +27,7 @@ import io.bumo.model.response.result.data.TypeThreshold;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.math.BigInteger;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
@@ -181,8 +182,9 @@ public class AccountServiceImpl implements AccountService {
             String txThreshold = accountSetPrivilegeOperation.getTxThreshold();
             if (!Tools.isEmpty(txThreshold)) {
                 Pattern pattern = compile("^[-\\+]?[\\d]*$");
-                boolean isNumber = pattern.matcher(masterWeight).matches();
-                if (!isNumber || Long.valueOf(txThreshold) < 0 || Long.valueOf(txThreshold) > Long.MAX_VALUE) {
+                boolean isNumber = pattern.matcher(txThreshold).matches();
+                BigInteger bigInteger = new BigInteger(txThreshold);
+                if (!isNumber || bigInteger.compareTo(BigInteger.valueOf(0L)) < 0 || bigInteger.compareTo(BigInteger.valueOf(Long.MAX_VALUE)) > 0) {
                     throw new SDKException(SdkError.INVALID_TX_THRESHOLD_ERROR);
                 }
             }
@@ -216,7 +218,7 @@ public class AccountServiceImpl implements AccountService {
                         throw new SDKException(SdkError.INVALID_SIGNER_ADDRESS_ERROR);
                     }
                     Long signerWeight = signer.getWeight();
-                    if (Tools.isEmpty(signerWeight) || signerWeight < 0) {
+                    if (Tools.isEmpty(signerWeight) || signerWeight < 0 || signerWeight > Constant.UINT_MAX) {
                         throw new SDKException(SdkError.INVALID_SIGNER_WEIGHT_ERROR);
                     }
                     Chain.Signer.Builder signerBuilder = operationSetPrivilege.addSignersBuilder();

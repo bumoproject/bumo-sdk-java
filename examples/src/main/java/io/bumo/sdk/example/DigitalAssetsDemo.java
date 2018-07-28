@@ -166,7 +166,7 @@ public class DigitalAssetsDemo {
     public void getAssetInfo() {
         // 初始化请求参数
         AssetGetInfoRequest request = new AssetGetInfoRequest();
-        request.setAddress("buQsurH1M4rjLkfjzkxR9KXJ6jSu2r9xBNEw");
+        request.setAddress("buQhBoJh7zLoVCsArUYJN1EDPD7B7SRXzPS9");
         request.setIssuer("buQBjJD1BSJ7nzAbzdTenAhpFjmxRVEEtmxH");
         request.setCode("HNC");
 
@@ -595,7 +595,7 @@ public class DigitalAssetsDemo {
     public void getBlockValidators() {
         // 初始化请求参数
         BlockGetValidatorsRequest request = new BlockGetValidatorsRequest();
-        request.setBlockNumber(629743L);
+        //request.setBlockNumber(629743L);
 
         // 调用getValidators接口
         BlockGetValidatorsResponse response = sdk.getBlockService().getValidators(request);
@@ -774,7 +774,7 @@ public class DigitalAssetsDemo {
         //设置最多费用 0.01BU ，固定填写
         Long feeLimit = ToBaseUnit.BU2MO("0.01");
         // 交易发起账户Nonce + 1
-        Long nonce = 61L;
+        Long nonce = 63L;
 
         // 1. 获取交易发送账户地址
         String accountAddresss = getAddressByPrivateKey(accountPrivateKey);
@@ -785,7 +785,12 @@ public class DigitalAssetsDemo {
         Signer signer = new Signer();
         signer.setAddress("buQsurH1M4rjLkfjzkxR9KXJ6jSu2r9xBNEw");
         signer.setWeight(0L);
+        Signer signer2 = new Signer();
+        signer2.setAddress("buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq");
+        signer2.setWeight(2L);
         operation.addSigner(signer);
+        operation.addSigner(signer2);
+        operation.setTxThreshold("1");
 
         // 记录txhash ，以便后续再次确认交易真实结果
         // 推荐5个区块后再次通过txhash再次调用`根据交易Hash获取交易信息`(参考示例：getTxByHash()）来确认交易终态结果
@@ -928,7 +933,8 @@ public class DigitalAssetsDemo {
         // token名称
         String name = "TST";
         // token的供应量，不带精度，实际是1000000000 * (10 ^ decimals)
-        String supply = "10000000000";
+        System.out.println(Long.MAX_VALUE);
+        String supply = "9223372036854775808";
         // token的符号
         String symbol = "TST";
         // 交易发起账户Nonce + 1
