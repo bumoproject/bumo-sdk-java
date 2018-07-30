@@ -58,7 +58,7 @@ public class General {
     }
 
     public static String blockGetInfoUrl(Long blockNumber) {
-        return url + "/getLedger?ledger_seq=" + blockNumber;
+        return url + "/getLedger?seq=" + blockNumber;
     }
 
     public static String blockGetLatestInfoUrl() {
@@ -66,7 +66,7 @@ public class General {
     }
 
     public static String blockGetValidatorsUrl(Long blockNumber) {
-        return url + "/getLedger?ledger_seq=" + blockNumber + "&with_validator=true";
+        return url + "/getLedger?seq=" + blockNumber + "&with_validator=true";
     }
 
     public static String blockGetLatestValidatorsUrl() {
@@ -74,7 +74,7 @@ public class General {
     }
 
     public static String blockGetRewardUrl(Long blockNumber) {
-        return url + "/getLedger?ledger_seq=" + blockNumber + "&with_block_reward=true";
+        return url + "/getLedger?seq=" + blockNumber + "&with_block_reward=true";
     }
 
     public static String blockGetLatestRewardUrl() {
