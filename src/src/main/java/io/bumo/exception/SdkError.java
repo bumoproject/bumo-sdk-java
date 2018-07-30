@@ -25,7 +25,7 @@ public enum SdkError {
     INVALID_TYPETHRESHOLD_TYPE_ERROR(11019, "Type of TypeThreshold is invalid"),
     INVALID_TYPE_THRESHOLD_ERROR(11020, "TypeThreshold must be between 0 and max(Long)"),
     INVALID_ASSET_CODE_ERROR(11023, "The length of key must be between 1 and 64"),
-    INVALID_ASSET_AMOUNT_ERROR(11024, "AssetMount must be between 0 and max(Long)"),
+    INVALID_ASSET_AMOUNT_ERROR(11024, "AssetAmount must be between 0 and max(Long)"),
     INVALID_BU_AMOUNT_ERROR(11026, "BuAmount must be between 0 and max(Long)"),
     INVALID_ISSUER_ADDRESS_ERROR(11027, "Invalid issuer address"),
     NO_SUCH_TOKEN_ERROR(11030, "No such token"),
