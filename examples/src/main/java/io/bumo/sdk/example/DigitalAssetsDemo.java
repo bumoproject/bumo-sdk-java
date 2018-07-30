@@ -24,6 +24,11 @@ import org.junit.Test;
 public class DigitalAssetsDemo {
     SDK sdk = SDK.getInstance("http://seed1.bumotest.io:26002");
 
+    @Test
+    public void checkSDKGetinstance() {
+        SDK sdk2 = SDK.getInstance(null);
+    }
+
     /**
      * 检测连接的节点是否区块同步正常
      */
