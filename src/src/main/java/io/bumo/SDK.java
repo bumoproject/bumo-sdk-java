@@ -11,6 +11,7 @@ import io.bumo.blockchain.TransactionService;
 import io.bumo.blockchain.impl.BlockServiceImpl;
 import io.bumo.blockchain.impl.TransactionServiceImpl;
 import io.bumo.common.General;
+import io.bumo.common.Tools;
 import io.bumo.contract.ContractService;
 import io.bumo.contract.impl.ContractServiceImpl;
 import io.bumo.exception.SDKException;
@@ -122,7 +123,7 @@ public class SDK {
      * @Date 2018/7/15 14:50
      */
     private void init(String url) throws SDKException {
-        if (url == null || url.isEmpty()) {
+        if (Tools.isEmpty(url)) {
             throw new SDKException(SdkError.URL_EMPTY_ERROR);
         }
     }
