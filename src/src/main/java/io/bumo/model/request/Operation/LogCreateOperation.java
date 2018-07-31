@@ -21,6 +21,7 @@ public class LogCreateOperation extends BaseOperation {
      * @Return io.bumo.common.OperationType
      * @Date 2018/7/9 17:30
      */
+    @Override
     public OperationType getOperationType() {
         return operationType;
     }

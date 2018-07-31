@@ -18,6 +18,7 @@ public class BUSendOperation extends BaseOperation {
      * @Return io.bumo.common.OperationType
      * @Date 2018/7/9 17:15
      */
+    @Override
     public OperationType getOperationType() {
         return operationType;
     }
