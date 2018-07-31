@@ -29,7 +29,7 @@ public class BUServiceImpl {
                 throw new SDKException(SdkError.SOURCEADDRESS_EQUAL_DESTADDRESS_ERROR);
             }
             Long amount = buSendOperation.getAmount();
-            if (Tools.isEmpty(amount) || amount <= 0) {
+            if (Tools.isEmpty(amount) || amount < 0) {
                 throw new SDKException(SdkError.INVALID_BU_AMOUNT_ERROR);
             }
             String metadata = buSendOperation.getMetadata();
