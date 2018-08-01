@@ -1800,7 +1800,7 @@ TransactionEvaluateFeeResponse evaluateFee (TransactionEvaluateFeeRequest);
 sourceAddress|String|必填，发起该操作的源账户地址
 nonce|Long|必填，待发起的交易序列号，大小限制[1, Long.MAX_VALUE]
 operation|BaseOperation[]|必填，待提交的操作列表，不能为空
-signtureNumber|Integer|选填，待签名者的数量，默认是1，大小限制[1, max(int32)]
+signtureNumber|Integer|选填，待签名者的数量，默认是1，大小限制[1, Integer.MAX_VALUE]
 ceilLedgerSeq|Long|选填，距离当前区块高度指定差值的区块内执行的限制，当区块超出当时区块高度与所设差值的和后，交易执行失败。必须大于等于0，是0时不限制
 metadata|String|选填，备注
 
@@ -1836,7 +1836,7 @@ INVALID_SOURCEADDRESS_ERROR|11002|Invalid sourceAddress
 INVALID_NONCE_ERROR|11045|Nonce must be between 1 and Long.MAX_VALUE
 OPERATIONS_EMPTY_ERROR|11051|Operations cannot be empty
 OPERATIONS_ONE_ERROR|11053|One of operations cannot be resolved
-INVALID_SIGNATURENUMBER_ERROR|11054|SignagureNumber must be between 1 and max(int32)
+INVALID_SIGNATURENUMBER_ERROR|11054|SignagureNumber must be between 1 and Integer.MAX_VALUE
 REQUEST_NULL_ERROR|12001|Request parameter cannot be null
 SYSTEM_ERROR|20000|System error
 
@@ -2588,7 +2588,7 @@ INVALID_FEELIMIT_ERROR|11050|FeeLimit must be between 1 and Long.MAX_VALUE
 OPERATIONS_EMPTY_ERROR|11051|Operations cannot be empty
 INVALID_CEILLEDGERSEQ_ERROR|11052|CeilLedgerSeq must be equal or bigger than 0
 OPERATIONS_ONE_ERROR|11053|One of operations cannot be resolved
-INVALID_SIGNATURENUMBER_ERROR|11054|SignagureNumber must be between 1 and max(int32)
+INVALID_SIGNATURENUMBER_ERROR|11054|SignagureNumber must be between 1 and Integer.MAX_VALUE
 INVALID_HASH_ERROR|11055|Invalid transaction hash
 INVALID_BLOB_ERROR|11056|Invalid blob
 PRIVATEKEY_NULL_ERROR|11057|PrivateKeys cannot be empty
