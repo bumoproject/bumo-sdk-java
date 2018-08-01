@@ -8,7 +8,7 @@ import io.bumo.model.response.result.TokenGetDecimalsResult;
  * @Author riven
  * @Date 2018/7/11 23:06
  */
-public class TokenGetDecimalsResponse extends BaseResponse {
+public class Ctp10TokenGetDecimalsResponse extends BaseResponse {
     @JSONField(name = "result")
     private TokenGetDecimalsResult result;
 

@@ -78,7 +78,7 @@ public class ExchangeDemo {
 
         System.out.println(JSON.toJSONString(response, true));
         if (0 == response.getErrorCode()) {
-            System.out.println("BU余额：" + ToBaseUnit.MO2BU(response.getResult().getBalance().toString()) + "BU");
+            System.out.println("BU balance：" + ToBaseUnit.MO2BU(response.getResult().getBalance().toString()) + "BU");
         }
     }
 
@@ -93,7 +93,7 @@ public class ExchangeDemo {
 
         AccountGetNonceResponse response = sdk.getAccountService().getNonce(request);
         if (0 == response.getErrorCode()) {
-            System.out.println("账户Nonce:" + response.getResult().getNonce());
+            System.out.println("Account nonce:" + response.getResult().getNonce());
         }
     }
 

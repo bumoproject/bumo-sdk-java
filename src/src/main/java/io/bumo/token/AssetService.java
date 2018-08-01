@@ -1,4 +1,4 @@
-package io.bumo.asset;
+package io.bumo.token;
 
 import io.bumo.model.request.AssetGetInfoRequest;
 import io.bumo.model.response.AssetGetInfoResponse;

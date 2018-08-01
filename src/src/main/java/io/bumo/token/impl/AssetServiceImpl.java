@@ -1,8 +1,8 @@
-package io.bumo.asset.impl;
+package io.bumo.token.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.google.protobuf.ByteString;
-import io.bumo.asset.AssetService;
+import io.bumo.token.AssetService;
 import io.bumo.common.Constant;
 import io.bumo.common.General;
 import io.bumo.common.Tools;

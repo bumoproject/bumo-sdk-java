@@ -1,5 +1,6 @@
 package io.bumo.exception;
 
+import io.bumo.common.Tools;
 import io.bumo.model.response.BaseResponse;
 
 public enum SdkError {
@@ -12,8 +13,8 @@ public enum SdkError {
     SOURCEADDRESS_EQUAL_DESTADDRESS_ERROR(11005, "SourceAddress cannot be equal to destAddress"),
     INVALID_ADDRESS_ERROR(11006, "Invalid address"),
     CONNECTNETWORK_ERROR(11007, "Fail to connect network"),
-    INVALID_ISSUE_AMOUNT_ERROR(11008, "Amount of the asset to be issued must be between 1 and Long.MAX_VALUE"),
-    NO_ASSET_ERROR(11009, "The account does not have this asset"),
+    INVALID_ISSUE_AMOUNT_ERROR(11008, "Amount of the token to be issued must be between 1 and Long.MAX_VALUE"),
+    NO_ASSET_ERROR(11009, "The account does not have this token"),
     NO_METADATA_ERROR(11010, "The account does not have this metadata"),
     INVALID_DATAKEY_ERROR(11011, "The length of key must be between 1 and 1024"),
     INVALID_DATAVALUE_ERROR(11012, "The length of value must be between 0 and 256000"),
@@ -67,7 +68,7 @@ public enum SdkError {
     SIGNATURE_EMPTY_ERROR(11067, "The signatures cannot be empty"),
     CONNECTN_BLOCKCHAIN_ERROR(19999, "Fail to connect blockchain"),
     SYSTEM_ERROR(20000, "System error"),
-    REQUEST_NULL_ERROR(13001, "Request parameter cannot be null"),;
+    REQUEST_NULL_ERROR(12001, "Request parameter cannot be null"),;
 
 
     private final Integer code;
@@ -79,16 +80,23 @@ public enum SdkError {
     }
 
     public static void checkErrorCode(BaseResponse baseResponse) throws SDKException {
-        do {
-            Integer errorCode = baseResponse.getErrorCode();
-            if (null == errorCode) {
-                throw new SDKException(SdkError.CONNECTNETWORK_ERROR);
-            }
-            if (errorCode != null && errorCode.intValue() != 0) {
-                String errorDesc = baseResponse.getErrorDesc();
-                throw new SDKException(errorCode, (null == errorDesc ? "error" : errorDesc));
-            }
-        } while (false);
+        Integer errorCode = baseResponse.getErrorCode();
+        if (Tools.isEmpty(errorCode)) {
+            throw new SDKException(SdkError.CONNECTNETWORK_ERROR);
+        }
+        if (errorCode != 0) {
+            String errorDesc = baseResponse.getErrorDesc();
+            throw new SDKException(errorCode, (null == errorDesc ? "error" : errorDesc));
+        }
+    }
+
+    public static void checkErrorCode(Integer errorCode, String errorDesc) throws SDKException {
+        if (Tools.isEmpty(errorCode)) {
+            throw new SDKException(SdkError.CONNECTNETWORK_ERROR);
+        }
+        if (errorCode != 0) {
+            throw new SDKException(errorCode, (null == errorDesc ? "error" : errorDesc));
+        }
     }
 
     public Integer getCode() {

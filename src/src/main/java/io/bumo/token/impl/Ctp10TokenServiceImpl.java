@@ -1,9 +1,9 @@
-package io.bumo.asset.impl;
+package io.bumo.token.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.google.protobuf.ByteString;
-import io.bumo.asset.TokenService;
+import io.bumo.token.Ctp10TokenService;
 import io.bumo.common.Constant;
 import io.bumo.common.General;
 import io.bumo.common.Tools;
@@ -32,7 +32,7 @@ import java.util.regex.Pattern;
  * @Author riven
  * @Date 2018/7/6 11:08
  */
-public class TokenServiceImpl implements TokenService {
+public class Ctp10TokenServiceImpl implements Ctp10TokenService {
     /**
      * @Author riven
      * @Method issue
@@ -40,30 +40,30 @@ public class TokenServiceImpl implements TokenService {
      * @Return io.bumo.crypto.protobuf.Chain.Operation
      * @Date 2018/7/10 11:41
      */
-    public static Chain.Operation issue(TokenIssueOperation tokenIssueOperation) throws SDKException {
+    public static Chain.Operation issue(Ctp10TokenIssueOperation ctp10TokenIssueOperation) throws SDKException {
         Chain.Operation.Builder operation;
         try {
-            String sourceAddress = tokenIssueOperation.getSourceAddress();
+            String sourceAddress = ctp10TokenIssueOperation.getSourceAddress();
             if (!Tools.isEmpty(sourceAddress) && !PublicKey.isAddressValid(sourceAddress)) {
                 throw new SDKException(SdkError.INVALID_SOURCEADDRESS_ERROR);
             }
-            Long initBalance = tokenIssueOperation.getInitBalance();
+            Long initBalance = ctp10TokenIssueOperation.getInitBalance();
             if (Tools.isEmpty(initBalance) || initBalance <= 0) {
                 throw new SDKException(SdkError.INVALID_INITBALANCE_ERROR);
             }
-            String name = tokenIssueOperation.getName();
+            String name = ctp10TokenIssueOperation.getName();
             if (Tools.isEmpty(name) || name.length() > Constant.TOKEN_NAME_MAX) {
                 throw new SDKException(SdkError.INVALID_TOKEN_NAME_ERROR);
             }
-            String symbol = tokenIssueOperation.getSymbol();
+            String symbol = ctp10TokenIssueOperation.getSymbol();
             if (Tools.isEmpty(symbol) || symbol.length() > Constant.TOKEN_SYMBOL_MAX) {
                 throw new SDKException(SdkError.INVALID_TOKEN_SYMBOL_ERROR);
             }
-            Integer decimals = tokenIssueOperation.getDecimals();
+            Integer decimals = ctp10TokenIssueOperation.getDecimals();
             if (Tools.isEmpty(decimals) || decimals < Constant.TOKEN_DECIMALS_MIN || decimals > Constant.TOKEN_DECIMALS_MAX) {
                 throw new SDKException(SdkError.INVALID_TOKEN_DECIMALS_ERROR);
             }
-            String supply = tokenIssueOperation.getSupply();
+            String supply = ctp10TokenIssueOperation.getSupply();
             if (Tools.isEmpty(supply)) {
                 throw new SDKException(SdkError.INVALID_TOKEN_TOTALSUPPLY_ERROR);
             }
@@ -73,7 +73,7 @@ public class TokenServiceImpl implements TokenService {
             if (!isNumber || bigInteger.compareTo(BigInteger.valueOf(1L)) < 0 || bigInteger.compareTo(BigInteger.valueOf(Long.MAX_VALUE)) > 0) {
                 throw new SDKException(SdkError.INVALID_TOKEN_TOTALSUPPLY_ERROR);
             }
-            String metadata = tokenIssueOperation.getMetadata();
+            String metadata = ctp10TokenIssueOperation.getMetadata();
             String payload = Constant.TOKEN_PAYLOAD;
             // build initInput
             JSONObject initInput = new JSONObject();
@@ -122,28 +122,28 @@ public class TokenServiceImpl implements TokenService {
      * @Return io.bumo.crypto.protobuf.Chain.Operation
      * @Date 2018/7/10 11:41
      */
-    public static Chain.Operation transfer(TokenTransferOperation tokenTransferOperation, String transSourceAddress) throws SDKException {
+    public static Chain.Operation transfer(Ctp10TokenTransferOperation ctp10TokenTransferOperation, String transSourceAddress) throws SDKException {
         Chain.Operation operation;
         try {
-            String sourceAddress = tokenTransferOperation.getSourceAddress();
+            String sourceAddress = ctp10TokenTransferOperation.getSourceAddress();
             if (!Tools.isEmpty(sourceAddress) && !PublicKey.isAddressValid(sourceAddress)) {
                 throw new SDKException(SdkError.INVALID_SOURCEADDRESS_ERROR);
             }
-            String contractAddress = tokenTransferOperation.getContractAddress();
+            String contractAddress = ctp10TokenTransferOperation.getContractAddress();
             if (!PublicKey.isAddressValid(contractAddress)) {
                 throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
             }
             if ((!Tools.isEmpty(sourceAddress) && sourceAddress.equals(contractAddress)) || transSourceAddress.equals(contractAddress)) {
                 throw new SDKException(SdkError.SOURCEADDRESS_EQUAL_CONTRACTADDRESS_ERROR);
             }
-            String destAddress = tokenTransferOperation.getDestAddress();
+            String destAddress = ctp10TokenTransferOperation.getDestAddress();
             if (!PublicKey.isAddressValid(destAddress)) {
                 throw new SDKException(SdkError.INVALID_DESTADDRESS_ERROR);
             }
             if ((!Tools.isEmpty(sourceAddress) && sourceAddress.equals(destAddress) || transSourceAddress.equals(destAddress))) {
                 throw new SDKException(SdkError.SOURCEADDRESS_EQUAL_DESTADDRESS_ERROR);
             }
-            String tokenAmount = tokenTransferOperation.getTokenAmount();
+            String tokenAmount = ctp10TokenTransferOperation.getTokenAmount();
             if (Tools.isEmpty(tokenAmount)) {
                 throw new SDKException(SdkError.INVALID_TOKEN_AMOUNT_ERROR);
             }
@@ -153,7 +153,7 @@ public class TokenServiceImpl implements TokenService {
             if (!isNumber || bigInteger.compareTo(BigInteger.valueOf(1L)) < 0 || bigInteger.compareTo(BigInteger.valueOf(Long.MAX_VALUE)) > 0) {
                 throw new SDKException(SdkError.INVALID_TOKEN_AMOUNT_ERROR);
             }
-            String metadata = tokenTransferOperation.getMetadata();
+            String metadata = ctp10TokenTransferOperation.getMetadata();
             boolean isContractValid = checkTokenValid(contractAddress);
             if (!isContractValid) {
                 throw new SDKException(SdkError.NO_SUCH_TOKEN_ERROR);
@@ -187,32 +187,32 @@ public class TokenServiceImpl implements TokenService {
      * @Return io.bumo.crypto.protobuf.Chain.Operation
      * @Date 2018/7/10 11:41
      */
-    public static Chain.Operation transferFrom(TokenTransferFromOperation tokenTransferFromOperation, String transSourceAddress) throws SDKException {
+    public static Chain.Operation transferFrom(Ctp10TokenTransferFromOperation ctp10TokenTransferFromOperation, String transSourceAddress) throws SDKException {
         Chain.Operation operation;
         try {
-            String sourceAddress = tokenTransferFromOperation.getSourceAddress();
+            String sourceAddress = ctp10TokenTransferFromOperation.getSourceAddress();
             if (!Tools.isEmpty(sourceAddress) && !PublicKey.isAddressValid(sourceAddress)) {
                 throw new SDKException(SdkError.INVALID_SOURCEADDRESS_ERROR);
             }
-            String contractAddress = tokenTransferFromOperation.getContractAddress();
+            String contractAddress = ctp10TokenTransferFromOperation.getContractAddress();
             if (!PublicKey.isAddressValid(contractAddress)) {
                 throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
             }
-            String fromAddress = tokenTransferFromOperation.getFromAddress();
+            String fromAddress = ctp10TokenTransferFromOperation.getFromAddress();
             if (!PublicKey.isAddressValid(fromAddress)) {
                 throw new SDKException(SdkError.INVALID_FROMADDRESS_ERROR);
             }
             if ((!Tools.isEmpty(sourceAddress) && sourceAddress.equals(contractAddress)) || transSourceAddress.equals(contractAddress)) {
                 throw new SDKException(SdkError.SOURCEADDRESS_EQUAL_DESTADDRESS_ERROR);
             }
-            String destAddress = tokenTransferFromOperation.getDestAddress();
+            String destAddress = ctp10TokenTransferFromOperation.getDestAddress();
             if (!PublicKey.isAddressValid(destAddress)) {
                 throw new SDKException(SdkError.INVALID_DESTADDRESS_ERROR);
             }
             if (fromAddress.equals(destAddress)) {
                 throw new SDKException(SdkError.FROMADDRESS_EQUAL_DESTADDRESS_ERROR);
             }
-            String tokenAmount = tokenTransferFromOperation.getTokenAmount();
+            String tokenAmount = ctp10TokenTransferFromOperation.getTokenAmount();
             if (Tools.isEmpty(tokenAmount)) {
                 throw new SDKException(SdkError.INVALID_TOKEN_AMOUNT_ERROR);
             }
@@ -222,7 +222,7 @@ public class TokenServiceImpl implements TokenService {
             if (!isNumber || bigInteger.compareTo(BigInteger.valueOf(1L)) < 0 || bigInteger.compareTo(BigInteger.valueOf(Long.MAX_VALUE)) > 0) {
                 throw new SDKException(SdkError.INVALID_TOKEN_AMOUNT_ERROR);
             }
-            String metadata = tokenTransferFromOperation.getMetadata();
+            String metadata = ctp10TokenTransferFromOperation.getMetadata();
             boolean isContractValid = checkTokenValid(contractAddress);
             if (!isContractValid) {
                 throw new SDKException(SdkError.NO_SUCH_TOKEN_ERROR);
@@ -255,25 +255,25 @@ public class TokenServiceImpl implements TokenService {
      * @Return io.bumo.crypto.protobuf.Chain.Operation
      * @Date 2018/7/10 11:41
      */
-    public static Chain.Operation approve(TokenApproveOperation tokenApproveOperation) throws SDKException {
+    public static Chain.Operation approve(Ctp10TokenApproveOperation ctp10TokenApproveOperation) throws SDKException {
         Chain.Operation operation;
         try {
-            String sourceAddress = tokenApproveOperation.getSourceAddress();
+            String sourceAddress = ctp10TokenApproveOperation.getSourceAddress();
             if (!Tools.isEmpty(sourceAddress) && !PublicKey.isAddressValid(sourceAddress)) {
                 throw new SDKException(SdkError.INVALID_SOURCEADDRESS_ERROR);
             }
-            String contractAddress = tokenApproveOperation.getContractAddress();
+            String contractAddress = ctp10TokenApproveOperation.getContractAddress();
             if (!PublicKey.isAddressValid(contractAddress)) {
                 throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
             }
             if (!Tools.isEmpty(sourceAddress) && sourceAddress.equals(contractAddress)) {
                 throw new SDKException(SdkError.SOURCEADDRESS_EQUAL_CONTRACTADDRESS_ERROR);
             }
-            String spender = tokenApproveOperation.getSpender();
+            String spender = ctp10TokenApproveOperation.getSpender();
             if (!PublicKey.isAddressValid(spender)) {
                 throw new SDKException(SdkError.INVALID_SPENDER_ERROR);
             }
-            String tokenAmount = tokenApproveOperation.getTokenAmount();
+            String tokenAmount = ctp10TokenApproveOperation.getTokenAmount();
             if (Tools.isEmpty(tokenAmount)) {
                 throw new SDKException(SdkError.INVALID_TOKEN_AMOUNT_ERROR);
             }
@@ -283,7 +283,7 @@ public class TokenServiceImpl implements TokenService {
             if (!isNumber || bigInteger.compareTo(BigInteger.valueOf(1L)) < 0 || bigInteger.compareTo(BigInteger.valueOf(Long.MAX_VALUE)) > 0) {
                 throw new SDKException(SdkError.INVALID_TOKEN_AMOUNT_ERROR);
             }
-            String metadata = tokenApproveOperation.getMetadata();
+            String metadata = ctp10TokenApproveOperation.getMetadata();
             boolean isContractValid = checkTokenValid(contractAddress);
             if (!isContractValid) {
                 throw new SDKException(SdkError.NO_SUCH_TOKEN_ERROR);
@@ -310,29 +310,29 @@ public class TokenServiceImpl implements TokenService {
     /**
      * @Author riven
      * @Method assign
-     * @Params [tokenAssignResponse]
+     * @Params [ctp10TokenAssignResponse]
      * @Return io.bumo.crypto.protobuf.Chain.Operation
      * @Date 2018/7/10 11:41
      */
-    public static Chain.Operation assign(TokenAssignOperation tokenAssignResponse) throws SDKException {
+    public static Chain.Operation assign(Ctp10TokenAssignOperation ctp10TokenAssignResponse) throws SDKException {
         Chain.Operation operation;
         try {
-            String sourceAddress = tokenAssignResponse.getSourceAddress();
+            String sourceAddress = ctp10TokenAssignResponse.getSourceAddress();
             if (!Tools.isEmpty(sourceAddress) && !PublicKey.isAddressValid(sourceAddress)) {
                 throw new SDKException(SdkError.INVALID_SOURCEADDRESS_ERROR);
             }
-            String contractAddress = tokenAssignResponse.getContractAddress();
+            String contractAddress = ctp10TokenAssignResponse.getContractAddress();
             if (!PublicKey.isAddressValid(contractAddress)) {
                 throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
             }
             if (!Tools.isEmpty(sourceAddress) && sourceAddress.equals(contractAddress)) {
                 throw new SDKException(SdkError.SOURCEADDRESS_EQUAL_CONTRACTADDRESS_ERROR);
             }
-            String destAddress = tokenAssignResponse.getDestAddress();
+            String destAddress = ctp10TokenAssignResponse.getDestAddress();
             if (!PublicKey.isAddressValid(destAddress)) {
                 throw new SDKException(SdkError.INVALID_DESTADDRESS_ERROR);
             }
-            String tokenAmount = tokenAssignResponse.getTokenAmount();
+            String tokenAmount = ctp10TokenAssignResponse.getTokenAmount();
             if (Tools.isEmpty(tokenAmount)) {
                 throw new SDKException(SdkError.INVALID_TOKEN_AMOUNT_ERROR);
             }
@@ -342,7 +342,7 @@ public class TokenServiceImpl implements TokenService {
             if (!isNumber || bigInteger.compareTo(BigInteger.valueOf(1L)) < 0 || bigInteger.compareTo(BigInteger.valueOf(Long.MAX_VALUE)) > 0) {
                 throw new SDKException(SdkError.INVALID_TOKEN_AMOUNT_ERROR);
             }
-            String metadata = tokenAssignResponse.getMetadata();
+            String metadata = ctp10TokenAssignResponse.getMetadata();
             boolean isContractValid = checkTokenValid(contractAddress);
             if (!isContractValid) {
                 throw new SDKException(SdkError.NO_SUCH_TOKEN_ERROR);
@@ -373,25 +373,25 @@ public class TokenServiceImpl implements TokenService {
      * @Return io.bumo.crypto.protobuf.Chain.Operation
      * @Date 2018/7/10 11:41
      */
-    public static Chain.Operation changeOwner(TokenChangeOwnerOperation tokenChangeOwnerOperation) {
+    public static Chain.Operation changeOwner(Ctp10TokenChangeOwnerOperation ctp10TokenChangeOwnerOperation) {
         Chain.Operation operation;
         try {
-            String sourceAddress = tokenChangeOwnerOperation.getSourceAddress();
+            String sourceAddress = ctp10TokenChangeOwnerOperation.getSourceAddress();
             if (!Tools.isEmpty(sourceAddress) && !PublicKey.isAddressValid(sourceAddress)) {
                 throw new SDKException(SdkError.INVALID_SOURCEADDRESS_ERROR);
             }
-            String contractAddress = tokenChangeOwnerOperation.getContractAddress();
+            String contractAddress = ctp10TokenChangeOwnerOperation.getContractAddress();
             if (!PublicKey.isAddressValid(contractAddress)) {
                 throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
             }
             if (!Tools.isEmpty(sourceAddress) && sourceAddress.equals(contractAddress)) {
                 throw new SDKException(SdkError.SOURCEADDRESS_EQUAL_CONTRACTADDRESS_ERROR);
             }
-            String tokenOwner = tokenChangeOwnerOperation.getTokenOwner();
+            String tokenOwner = ctp10TokenChangeOwnerOperation.getTokenOwner();
             if (!PublicKey.isAddressValid(tokenOwner)) {
                 throw new SDKException(SdkError.INVALID_TOKENOWNER_ERROR);
             }
-            String metadata = tokenChangeOwnerOperation.getMetadata();
+            String metadata = ctp10TokenChangeOwnerOperation.getMetadata();
             boolean isContractValid = checkTokenValid(contractAddress);
             if (!isContractValid) {
                 throw new SDKException(SdkError.NO_SUCH_TOKEN_ERROR);
@@ -518,30 +518,30 @@ public class TokenServiceImpl implements TokenService {
      * @Date 2018/7/15 15:36
      */
     @Override
-    public TokenCheckValidResponse checkValid(TokenCheckValidRequest tokenCheckValidRequest) {
-        TokenCheckValidResponse tokenCheckValidResponse = new TokenCheckValidResponse();
+    public Ctp10TokenCheckValidResponse checkValid(Ctp10TokenCheckValidRequest ctp10TokenCheckValidRequest) {
+        Ctp10TokenCheckValidResponse ctp10TokenCheckValidResponse = new Ctp10TokenCheckValidResponse();
         TokenCheckValidResult tokenCheckValidResult = new TokenCheckValidResult();
         try {
-            if (Tools.isEmpty(tokenCheckValidRequest)) {
+            if (Tools.isEmpty(ctp10TokenCheckValidRequest)) {
                 throw new SDKException(SdkError.REQUEST_NULL_ERROR);
             }
-            String address = tokenCheckValidRequest.getContractAddress();
+            String address = ctp10TokenCheckValidRequest.getContractAddress();
             if (!PublicKey.isAddressValid(address)) {
                 throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
             }
             boolean isValid = checkTokenValid(address);
             tokenCheckValidResult.setValid(isValid);
-            tokenCheckValidResponse.buildResponse(SdkError.SUCCESS, tokenCheckValidResult);
+            ctp10TokenCheckValidResponse.buildResponse(SdkError.SUCCESS, tokenCheckValidResult);
         } catch (SDKException apiException) {
             Integer errorCode = apiException.getErrorCode();
             String errorDesc = apiException.getErrorDesc();
-            tokenCheckValidResponse.buildResponse(errorCode, errorDesc, tokenCheckValidResult);
+            ctp10TokenCheckValidResponse.buildResponse(errorCode, errorDesc, tokenCheckValidResult);
         } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
-            tokenCheckValidResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, tokenCheckValidResult);
+            ctp10TokenCheckValidResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, tokenCheckValidResult);
         } catch (Exception e) {
-            tokenCheckValidResponse.buildResponse(SdkError.SYSTEM_ERROR, tokenCheckValidResult);
+            ctp10TokenCheckValidResponse.buildResponse(SdkError.SYSTEM_ERROR, tokenCheckValidResult);
         }
-        return tokenCheckValidResponse;
+        return ctp10TokenCheckValidResponse;
     }
 
     /**
@@ -552,22 +552,22 @@ public class TokenServiceImpl implements TokenService {
      * @Date 2018/7/9 19:13
      */
     @Override
-    public TokenAllowanceResponse allowance(TokenAllowanceRequest tokenAllowanceRequest) {
-        TokenAllowanceResponse tokenAllowanceResponse = new TokenAllowanceResponse();
+    public Ctp10TokenAllowanceResponse allowance(Ctp10TokenAllowanceRequest ctp10TokenAllowanceRequest) {
+        Ctp10TokenAllowanceResponse ctp10TokenAllowanceResponse = new Ctp10TokenAllowanceResponse();
         TokenAllowanceResult tokenAllowanceResult = new TokenAllowanceResult();
         try {
-            if (Tools.isEmpty(tokenAllowanceRequest)) {
+            if (Tools.isEmpty(ctp10TokenAllowanceRequest)) {
                 throw new SDKException(SdkError.REQUEST_NULL_ERROR);
             }
-            String contractAddress = tokenAllowanceRequest.getContractAddress();
+            String contractAddress = ctp10TokenAllowanceRequest.getContractAddress();
             if (!PublicKey.isAddressValid(contractAddress)) {
                 throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
             }
-            String tokenOwner = tokenAllowanceRequest.getTokenOwner();
+            String tokenOwner = ctp10TokenAllowanceRequest.getTokenOwner();
             if (!PublicKey.isAddressValid(tokenOwner)) {
                 throw new SDKException(SdkError.INVALID_TOKENOWNER_ERROR);
             }
-            String spender = tokenAllowanceRequest.getSpender();
+            String spender = ctp10TokenAllowanceRequest.getSpender();
             if (!PublicKey.isAddressValid(spender)) {
                 throw new SDKException(SdkError.INVALID_SPENDER_ERROR);
             }
@@ -591,18 +591,18 @@ public class TokenServiceImpl implements TokenService {
                 throw new SDKException(SdkError.GET_ALLOWANCE_ERRPR.getCode(), errorDesc);
             }
             tokenAllowanceResult = JSONObject.parseObject(result.getValue(), TokenAllowanceResult.class);
-            tokenAllowanceResponse.buildResponse(SdkError.SUCCESS, tokenAllowanceResult);
+            ctp10TokenAllowanceResponse.buildResponse(SdkError.SUCCESS, tokenAllowanceResult);
         } catch (SDKException sdkException) {
             Integer errorCode = sdkException.getErrorCode();
             String errorDesc = sdkException.getErrorDesc();
-            tokenAllowanceResponse.buildResponse(errorCode, errorDesc, tokenAllowanceResult);
+            ctp10TokenAllowanceResponse.buildResponse(errorCode, errorDesc, tokenAllowanceResult);
         } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
-            tokenAllowanceResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, tokenAllowanceResult);
+            ctp10TokenAllowanceResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, tokenAllowanceResult);
         } catch (Exception e) {
-            tokenAllowanceResponse.buildResponse(SdkError.SYSTEM_ERROR, tokenAllowanceResult);
+            ctp10TokenAllowanceResponse.buildResponse(SdkError.SYSTEM_ERROR, tokenAllowanceResult);
         }
 
-        return tokenAllowanceResponse;
+        return ctp10TokenAllowanceResponse;
     }
 
     /**
@@ -613,14 +613,14 @@ public class TokenServiceImpl implements TokenService {
      * @Date 2018/7/9 19:13
      */
     @Override
-    public TokenGetInfoResponse getInfo(TokenGetInfoRequest tokenGetInfoRequest) {
-        TokenGetInfoResponse tokenGetInfoResponse = new TokenGetInfoResponse();
+    public Ctp10TokenGetInfoResponse getInfo(Ctp10TokenGetInfoRequest ctp10TokenGetInfoRequest) {
+        Ctp10TokenGetInfoResponse ctp10TokenGetInfoResponse = new Ctp10TokenGetInfoResponse();
         TokenGetInfoResult tokenGetInfoResult = new TokenGetInfoResult();
         try {
-            if (Tools.isEmpty(tokenGetInfoRequest)) {
+            if (Tools.isEmpty(ctp10TokenGetInfoRequest)) {
                 throw new SDKException(SdkError.REQUEST_NULL_ERROR);
             }
-            String contractAddress = tokenGetInfoRequest.getContractAddress();
+            String contractAddress = ctp10TokenGetInfoRequest.getContractAddress();
             if (!PublicKey.isAddressValid(contractAddress)) {
                 throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
             }
@@ -640,17 +640,17 @@ public class TokenServiceImpl implements TokenService {
                 throw new SDKException(SdkError.GET_TOKEN_INFO_ERRPR.getCode(), errorDesc);
             }
             tokenGetInfoResult = JSONObject.parseObject(result.getValue(), TokenGetInfoResult.class);
-            tokenGetInfoResponse.buildResponse(SdkError.SUCCESS, tokenGetInfoResult);
+            ctp10TokenGetInfoResponse.buildResponse(SdkError.SUCCESS, tokenGetInfoResult);
         } catch (SDKException sdkException) {
             Integer errorCode = sdkException.getErrorCode();
             String errorDesc = sdkException.getErrorDesc();
-            tokenGetInfoResponse.buildResponse(errorCode, errorDesc, tokenGetInfoResult);
+            ctp10TokenGetInfoResponse.buildResponse(errorCode, errorDesc, tokenGetInfoResult);
         } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
-            tokenGetInfoResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, tokenGetInfoResult);
+            ctp10TokenGetInfoResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, tokenGetInfoResult);
         } catch (Exception e) {
-            tokenGetInfoResponse.buildResponse(SdkError.SYSTEM_ERROR, tokenGetInfoResult);
+            ctp10TokenGetInfoResponse.buildResponse(SdkError.SYSTEM_ERROR, tokenGetInfoResult);
         }
-        return tokenGetInfoResponse;
+        return ctp10TokenGetInfoResponse;
     }
 
     /**
@@ -661,14 +661,14 @@ public class TokenServiceImpl implements TokenService {
      * @Date 2018/7/9 19:13
      */
     @Override
-    public TokenGetNameResponse getName(TokenGetNameRequest tokenGetNameRequest) {
-        TokenGetNameResponse tokenGetNameResponse = new TokenGetNameResponse();
+    public Ctp10TokenGetNameResponse getName(Ctp10TokenGetNameRequest ctp10TokenGetNameRequest) {
+        Ctp10TokenGetNameResponse ctp10TokenGetNameResponse = new Ctp10TokenGetNameResponse();
         TokenGetNameResult tokenGetNameResult = new TokenGetNameResult();
         try {
-            if (Tools.isEmpty(tokenGetNameRequest)) {
+            if (Tools.isEmpty(ctp10TokenGetNameRequest)) {
                 throw new SDKException(SdkError.REQUEST_NULL_ERROR);
             }
-            String contractAddress = tokenGetNameRequest.getContractAddress();
+            String contractAddress = ctp10TokenGetNameRequest.getContractAddress();
             if (!PublicKey.isAddressValid(contractAddress)) {
                 throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
             }
@@ -688,17 +688,17 @@ public class TokenServiceImpl implements TokenService {
                 throw new SDKException(SdkError.GET_TOKEN_INFO_ERRPR.getCode(), errorDesc);
             }
             tokenGetNameResult = JSONObject.parseObject(result.getValue(), TokenGetNameResult.class);
-            tokenGetNameResponse.buildResponse(SdkError.SUCCESS, tokenGetNameResult);
+            ctp10TokenGetNameResponse.buildResponse(SdkError.SUCCESS, tokenGetNameResult);
         } catch (SDKException sdkException) {
             Integer errorCode = sdkException.getErrorCode();
             String errorDesc = sdkException.getErrorDesc();
-            tokenGetNameResponse.buildResponse(errorCode, errorDesc, tokenGetNameResult);
+            ctp10TokenGetNameResponse.buildResponse(errorCode, errorDesc, tokenGetNameResult);
         } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
-            tokenGetNameResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, tokenGetNameResult);
+            ctp10TokenGetNameResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, tokenGetNameResult);
         } catch (Exception e) {
-            tokenGetNameResponse.buildResponse(SdkError.SYSTEM_ERROR, tokenGetNameResult);
+            ctp10TokenGetNameResponse.buildResponse(SdkError.SYSTEM_ERROR, tokenGetNameResult);
         }
-        return tokenGetNameResponse;
+        return ctp10TokenGetNameResponse;
     }
 
     /**
@@ -709,14 +709,14 @@ public class TokenServiceImpl implements TokenService {
      * @Date 2018/7/9 19:13
      */
     @Override
-    public TokenGetSymbolResponse getSymbol(TokenGetSymbolRequest tokenGetSymbolRequest) {
-        TokenGetSymbolResponse tokenGetSymbolResponse = new TokenGetSymbolResponse();
+    public Ctp10TokenGetSymbolResponse getSymbol(Ctp10TokenGetSymbolRequest ctp10TokenGetSymbolRequest) {
+        Ctp10TokenGetSymbolResponse ctp10TokenGetSymbolResponse = new Ctp10TokenGetSymbolResponse();
         TokenGetSymbolResult tokenGetSymbolResult = new TokenGetSymbolResult();
         try {
-            if (Tools.isEmpty(tokenGetSymbolRequest)) {
+            if (Tools.isEmpty(ctp10TokenGetSymbolRequest)) {
                 throw new SDKException(SdkError.REQUEST_NULL_ERROR);
             }
-            String contractAddress = tokenGetSymbolRequest.getContractAddress();
+            String contractAddress = ctp10TokenGetSymbolRequest.getContractAddress();
             if (!PublicKey.isAddressValid(contractAddress)) {
                 throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
             }
@@ -736,28 +736,28 @@ public class TokenServiceImpl implements TokenService {
                 throw new SDKException(SdkError.GET_TOKEN_INFO_ERRPR.getCode(), errorDesc);
             }
             tokenGetSymbolResult = JSONObject.parseObject(result.getValue(), TokenGetSymbolResult.class);
-            tokenGetSymbolResponse.buildResponse(SdkError.SUCCESS, tokenGetSymbolResult);
+            ctp10TokenGetSymbolResponse.buildResponse(SdkError.SUCCESS, tokenGetSymbolResult);
         } catch (SDKException sdkException) {
             Integer errorCode = sdkException.getErrorCode();
             String errorDesc = sdkException.getErrorDesc();
-            tokenGetSymbolResponse.buildResponse(errorCode, errorDesc, tokenGetSymbolResult);
+            ctp10TokenGetSymbolResponse.buildResponse(errorCode, errorDesc, tokenGetSymbolResult);
         } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
-            tokenGetSymbolResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, tokenGetSymbolResult);
+            ctp10TokenGetSymbolResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, tokenGetSymbolResult);
         } catch (Exception e) {
-            tokenGetSymbolResponse.buildResponse(SdkError.SYSTEM_ERROR, tokenGetSymbolResult);
+            ctp10TokenGetSymbolResponse.buildResponse(SdkError.SYSTEM_ERROR, tokenGetSymbolResult);
         }
-        return tokenGetSymbolResponse;
+        return ctp10TokenGetSymbolResponse;
     }
 
     @Override
-    public TokenGetDecimalsResponse getDecimals(TokenGetDecimalsRequest tokenGetDecimalsRequest) {
-        TokenGetDecimalsResponse tokenGetDecimalsResponse = new TokenGetDecimalsResponse();
+    public Ctp10TokenGetDecimalsResponse getDecimals(Ctp10TokenGetDecimalsRequest ctp10TokenGetDecimalsRequest) {
+        Ctp10TokenGetDecimalsResponse ctp10TokenGetDecimalsResponse = new Ctp10TokenGetDecimalsResponse();
         TokenGetDecimalsResult tokenGetDecimalsResult = new TokenGetDecimalsResult();
         try {
-            if (Tools.isEmpty(tokenGetDecimalsRequest)) {
+            if (Tools.isEmpty(ctp10TokenGetDecimalsRequest)) {
                 throw new SDKException(SdkError.REQUEST_NULL_ERROR);
             }
-            String contractAddress = tokenGetDecimalsRequest.getContractAddress();
+            String contractAddress = ctp10TokenGetDecimalsRequest.getContractAddress();
             if (!PublicKey.isAddressValid(contractAddress)) {
                 throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
             }
@@ -777,17 +777,17 @@ public class TokenServiceImpl implements TokenService {
                 throw new SDKException(SdkError.GET_TOKEN_INFO_ERRPR.getCode(), errorDesc);
             }
             tokenGetDecimalsResult = JSONObject.parseObject(result.getValue(), TokenGetDecimalsResult.class);
-            tokenGetDecimalsResponse.buildResponse(SdkError.SUCCESS, tokenGetDecimalsResult);
+            ctp10TokenGetDecimalsResponse.buildResponse(SdkError.SUCCESS, tokenGetDecimalsResult);
         } catch (SDKException sdkException) {
             Integer errorCode = sdkException.getErrorCode();
             String errorDesc = sdkException.getErrorDesc();
-            tokenGetDecimalsResponse.buildResponse(errorCode, errorDesc, tokenGetDecimalsResult);
+            ctp10TokenGetDecimalsResponse.buildResponse(errorCode, errorDesc, tokenGetDecimalsResult);
         } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
-            tokenGetDecimalsResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, tokenGetDecimalsResult);
+            ctp10TokenGetDecimalsResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, tokenGetDecimalsResult);
         } catch (Exception e) {
-            tokenGetDecimalsResponse.buildResponse(SdkError.SYSTEM_ERROR, tokenGetDecimalsResult);
+            ctp10TokenGetDecimalsResponse.buildResponse(SdkError.SYSTEM_ERROR, tokenGetDecimalsResult);
         }
-        return tokenGetDecimalsResponse;
+        return ctp10TokenGetDecimalsResponse;
     }
 
     /**
@@ -798,14 +798,14 @@ public class TokenServiceImpl implements TokenService {
      * @Date 2018/7/9 19:13
      */
     @Override
-    public TokenGetTotalSupplyResponse getTotalSupply(TokenGetTotalSupplyRequest tokenGetTotalSupplyRequest) {
-        TokenGetTotalSupplyResponse tokenGetTotalSupplyResponse = new TokenGetTotalSupplyResponse();
+    public Ctp10TokenGetTotalSupplyResponse getTotalSupply(Ctp10TokenGetTotalSupplyRequest ctp10TokenGetTotalSupplyRequest) {
+        Ctp10TokenGetTotalSupplyResponse ctp10TokenGetTotalSupplyResponse = new Ctp10TokenGetTotalSupplyResponse();
         TokenGetTotalSupplyResult tokenGetTotalSupplyResult = new TokenGetTotalSupplyResult();
         try {
-            if (Tools.isEmpty(tokenGetTotalSupplyRequest)) {
+            if (Tools.isEmpty(ctp10TokenGetTotalSupplyRequest)) {
                 throw new SDKException(SdkError.REQUEST_NULL_ERROR);
             }
-            String contractAddress = tokenGetTotalSupplyRequest.getContractAddress();
+            String contractAddress = ctp10TokenGetTotalSupplyRequest.getContractAddress();
             if (!PublicKey.isAddressValid(contractAddress)) {
                 throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
             }
@@ -824,17 +824,17 @@ public class TokenServiceImpl implements TokenService {
                 throw new SDKException(SdkError.GET_TOKEN_INFO_ERRPR.getCode(), errorDesc);
             }
             tokenGetTotalSupplyResult = JSONObject.parseObject(result.getValue(), TokenGetTotalSupplyResult.class);
-            tokenGetTotalSupplyResponse.buildResponse(SdkError.SUCCESS, tokenGetTotalSupplyResult);
+            ctp10TokenGetTotalSupplyResponse.buildResponse(SdkError.SUCCESS, tokenGetTotalSupplyResult);
         } catch (SDKException sdkException) {
             Integer errorCode = sdkException.getErrorCode();
             String errorDesc = sdkException.getErrorDesc();
-            tokenGetTotalSupplyResponse.buildResponse(errorCode, errorDesc, tokenGetTotalSupplyResult);
+            ctp10TokenGetTotalSupplyResponse.buildResponse(errorCode, errorDesc, tokenGetTotalSupplyResult);
         } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
-            tokenGetTotalSupplyResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, tokenGetTotalSupplyResult);
+            ctp10TokenGetTotalSupplyResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, tokenGetTotalSupplyResult);
         } catch (Exception e) {
-            tokenGetTotalSupplyResponse.buildResponse(SdkError.SYSTEM_ERROR, tokenGetTotalSupplyResult);
+            ctp10TokenGetTotalSupplyResponse.buildResponse(SdkError.SYSTEM_ERROR, tokenGetTotalSupplyResult);
         }
-        return tokenGetTotalSupplyResponse;
+        return ctp10TokenGetTotalSupplyResponse;
     }
 
     /**
@@ -845,18 +845,18 @@ public class TokenServiceImpl implements TokenService {
      * @Date 2018/7/9 19:13
      */
     @Override
-    public TokenGetBalanceResponse getBalance(TokenGetBalanceRequest tokenGetBalanceRequest) {
-        TokenGetBalanceResponse tokenGetBalanceResponse = new TokenGetBalanceResponse();
+    public Ctp10TokenGetBalanceResponse getBalance(Ctp10TokenGetBalanceRequest ctp10TokenGetBalanceRequest) {
+        Ctp10TokenGetBalanceResponse ctp10TokenGetBalanceResponse = new Ctp10TokenGetBalanceResponse();
         TokenGetBalanceResult tokenGetBalanceResult = new TokenGetBalanceResult();
         try {
-            if (Tools.isEmpty(tokenGetBalanceRequest)) {
+            if (Tools.isEmpty(ctp10TokenGetBalanceRequest)) {
                 throw new SDKException(SdkError.REQUEST_NULL_ERROR);
             }
-            String contractAddress = tokenGetBalanceRequest.getContractAddress();
+            String contractAddress = ctp10TokenGetBalanceRequest.getContractAddress();
             if (!PublicKey.isAddressValid(contractAddress)) {
                 throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
             }
-            String tokenOwner = tokenGetBalanceRequest.getTokenOwner();
+            String tokenOwner = ctp10TokenGetBalanceRequest.getTokenOwner();
             if (!PublicKey.isAddressValid(tokenOwner)) {
                 throw new SDKException(SdkError.INVALID_TOKENOWNER_ERROR);
             }
@@ -878,18 +878,18 @@ public class TokenServiceImpl implements TokenService {
                 throw new SDKException(SdkError.GET_TOKEN_INFO_ERRPR.getCode(), errorDesc);
             }
             tokenGetBalanceResult = JSONObject.parseObject(result.getValue(), TokenGetBalanceResult.class);
-            tokenGetBalanceResponse.buildResponse(SdkError.SUCCESS, tokenGetBalanceResult);
+            ctp10TokenGetBalanceResponse.buildResponse(SdkError.SUCCESS, tokenGetBalanceResult);
         } catch (SDKException sdkException) {
             Integer errorCode = sdkException.getErrorCode();
             String errorDesc = sdkException.getErrorDesc();
-            tokenGetBalanceResponse.buildResponse(errorCode, errorDesc, tokenGetBalanceResult);
+            ctp10TokenGetBalanceResponse.buildResponse(errorCode, errorDesc, tokenGetBalanceResult);
         } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
-            tokenGetBalanceResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, tokenGetBalanceResult);
+            ctp10TokenGetBalanceResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, tokenGetBalanceResult);
         } catch (Exception e) {
-            tokenGetBalanceResponse.buildResponse(SdkError.SYSTEM_ERROR, tokenGetBalanceResult);
+            ctp10TokenGetBalanceResponse.buildResponse(SdkError.SYSTEM_ERROR, tokenGetBalanceResult);
         }
 
-        return tokenGetBalanceResponse;
+        return ctp10TokenGetBalanceResponse;
     }
 
     /**

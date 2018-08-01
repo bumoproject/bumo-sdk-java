@@ -1,4 +1,4 @@
-package io.bumo.asset;
+package io.bumo.token;
 
 import io.bumo.model.request.*;
 import io.bumo.model.response.*;
@@ -8,7 +8,7 @@ import io.bumo.model.response.*;
  * @Date 2018/7/6 11:08
  */
 
-public interface TokenService {
+public interface Ctp10TokenService {
     /**
      * @Author riven
      * @Method checkValid
@@ -16,7 +16,7 @@ public interface TokenService {
      * @Return io.bumo.model.response.TokenCheckValidResponse
      * @Date 2018/7/15 15:36
      */
-    public TokenCheckValidResponse checkValid(TokenCheckValidRequest tokenCheckValidRequest);
+    public Ctp10TokenCheckValidResponse checkValid(Ctp10TokenCheckValidRequest ctp10TokenCheckValidRequest);
 
     /**
      * @Author riven
@@ -25,7 +25,7 @@ public interface TokenService {
      * @Return io.bumo.model.response.TokenAllowanceResponse
      * @Date 2018/7/6 16:29
      */
-    public TokenAllowanceResponse allowance(TokenAllowanceRequest tokenAllowanceRequest);
+    public Ctp10TokenAllowanceResponse allowance(Ctp10TokenAllowanceRequest ctp10TokenAllowanceRequest);
 
     /**
      * @Author riven
@@ -34,7 +34,7 @@ public interface TokenService {
      * @Return io.bumo.model.response.TokenGetInfoResponse
      * @Date 2018/7/6 16:30
      */
-    public TokenGetInfoResponse getInfo(TokenGetInfoRequest tokenGetInfoRequest);
+    public Ctp10TokenGetInfoResponse getInfo(Ctp10TokenGetInfoRequest ctp10TokenGetInfoRequest);
 
     /**
      * @Author riven
@@ -43,7 +43,7 @@ public interface TokenService {
      * @Return io.bumo.model.response.TokenGetNameResponse
      * @Date 2018/7/6 16:30
      */
-    public TokenGetNameResponse getName(TokenGetNameRequest tokenGetNameRequest);
+    public Ctp10TokenGetNameResponse getName(Ctp10TokenGetNameRequest ctp10TokenGetNameRequest);
 
     /**
      * @Author riven
@@ -52,7 +52,7 @@ public interface TokenService {
      * @Return io.bumo.model.response.TokenGetSymbolResponse
      * @Date 2018/7/6 16:34
      */
-    public TokenGetSymbolResponse getSymbol(TokenGetSymbolRequest tokenGetSymbolRequest);
+    public Ctp10TokenGetSymbolResponse getSymbol(Ctp10TokenGetSymbolRequest ctp10TokenGetSymbolRequest);
 
     /**
      * @Author riven
@@ -61,7 +61,7 @@ public interface TokenService {
      * @Return io.bumo.model.response.TokenGetDecimalsResponse
      * @Date 2018/7/11 23:07
      */
-    public TokenGetDecimalsResponse getDecimals(TokenGetDecimalsRequest tokenGetDecimalsRequest);
+    public Ctp10TokenGetDecimalsResponse getDecimals(Ctp10TokenGetDecimalsRequest ctp10TokenGetDecimalsRequest);
 
     /**
      * @Author riven
@@ -70,7 +70,7 @@ public interface TokenService {
      * @Return io.bumo.model.response.TokenGetTotalSupplyResponse
      * @Date 2018/7/6 16:46
      */
-    public TokenGetTotalSupplyResponse getTotalSupply(TokenGetTotalSupplyRequest tokenGetTotalSupplyRequest);
+    public Ctp10TokenGetTotalSupplyResponse getTotalSupply(Ctp10TokenGetTotalSupplyRequest ctp10TokenGetTotalSupplyRequest);
 
     /**
      * @Author riven
@@ -79,5 +79,5 @@ public interface TokenService {
      * @Return io.bumo.model.response.TokenGetBalanceResponse
      * @Date 2018/7/6 16:46
      */
-    public TokenGetBalanceResponse getBalance(TokenGetBalanceRequest tokenGetBalanceRequest);
+    public Ctp10TokenGetBalanceResponse getBalance(Ctp10TokenGetBalanceRequest ctp10TokenGetBalanceRequest);
 }

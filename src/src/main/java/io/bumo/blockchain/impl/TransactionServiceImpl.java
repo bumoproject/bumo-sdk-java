@@ -7,9 +7,9 @@ import com.google.protobuf.ByteString;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.googlecode.protobuf.format.JsonFormat;
 import io.bumo.account.impl.AccountServiceImpl;
-import io.bumo.asset.impl.AssetServiceImpl;
-import io.bumo.asset.impl.BUServiceImpl;
-import io.bumo.asset.impl.TokenServiceImpl;
+import io.bumo.token.impl.AssetServiceImpl;
+import io.bumo.token.impl.BUServiceImpl;
+import io.bumo.token.impl.Ctp10TokenServiceImpl;
 import io.bumo.blockchain.BlockService;
 import io.bumo.blockchain.TransactionService;
 import io.bumo.common.Constant;
@@ -32,6 +32,7 @@ import io.bumo.model.response.result.*;
 import io.bumo.model.response.result.data.Signature;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
@@ -54,6 +55,9 @@ public class TransactionServiceImpl implements TransactionService {
         TransactionBuildBlobResponse transactionBuildBlobResponse = new TransactionBuildBlobResponse();
         TransactionBuildBlobResult transactionBuildBlobResult = new TransactionBuildBlobResult();
         try {
+            if (Tools.isEmpty(transactionBuildBlobRequest)) {
+                throw new SDKException(SdkError.REQUEST_NULL_ERROR);
+            }
             // check sourceAddress
             String sourceAddress = transactionBuildBlobRequest.getSourceAddress();
             if (!PublicKey.isAddressValid(sourceAddress)) {
@@ -141,6 +145,9 @@ public class TransactionServiceImpl implements TransactionService {
         TransactionParseBlobResponse transactionParseBlobResponse = new TransactionParseBlobResponse();
         TransactionParseBlobResult transactionParseBlobResult = new TransactionParseBlobResult();
         try {
+            if (Tools.isEmpty(transactionParseBlobRequest)) {
+                throw new SDKException(SdkError.REQUEST_NULL_ERROR);
+            }
             String blob = transactionParseBlobRequest.getBlob();
             if (Tools.isEmpty(blob)) {
                 throw new SDKException(SdkError.INVALID_BLOB_ERROR);
@@ -176,6 +183,9 @@ public class TransactionServiceImpl implements TransactionService {
         TransactionEvaluateFeeResponse transactionEvaluateFeeResponse = new TransactionEvaluateFeeResponse();
         TransactionEvaluateFeeResult transactionEvaluateFeeResult = new TransactionEvaluateFeeResult();
         try {
+            if (Tools.isEmpty(transactionEvaluateFeeRequest)) {
+                throw new SDKException(SdkError.REQUEST_NULL_ERROR);
+            }
             // check sourceAddress
             String sourceAddress = transactionEvaluateFeeRequest.getSourceAddress();
             if (!PublicKey.isAddressValid(sourceAddress)) {
@@ -255,6 +265,9 @@ public class TransactionServiceImpl implements TransactionService {
         TransactionSignResponse transactionSignResponse = new TransactionSignResponse();
         TransactionSignResult transactionSignResult = new TransactionSignResult();
         try {
+            if (Tools.isEmpty(transactionSignRequest)) {
+                throw new SDKException(SdkError.REQUEST_NULL_ERROR);
+            }
             String blob = transactionSignRequest.getBlob();
             if (Tools.isEmpty(blob)) {
                 throw new SDKException(SdkError.INVALID_BLOB_ERROR);
@@ -306,6 +319,9 @@ public class TransactionServiceImpl implements TransactionService {
         TransactionSubmitResponse transactionSubmitResponse = new TransactionSubmitResponse();
         TransactionSubmitResult transactionSubmitResult = new TransactionSubmitResult();
         try {
+            if (Tools.isEmpty(transactionSubmitRequest)) {
+                throw new SDKException(SdkError.REQUEST_NULL_ERROR);
+            }
             String blob = transactionSubmitRequest.getTransactionBlob();
             if (Tools.isEmpty(blob)) {
                 throw new SDKException(SdkError.INVALID_BLOB_ERROR);
@@ -384,13 +400,14 @@ public class TransactionServiceImpl implements TransactionService {
         TransactionGetInfoResponse transactionGetInfoResponse = new TransactionGetInfoResponse();
         TransactionGetInfoResult transactionGetInfoResult = new TransactionGetInfoResult();
         try {
+            if (Tools.isEmpty(transactionGetInfoRequest)) {
+                throw new SDKException(SdkError.REQUEST_NULL_ERROR);
+            }
             String hash = transactionGetInfoRequest.getHash();
             if (Tools.isEmpty(hash) || hash.length() != Constant.HASH_HEX_LENGTH) {
                 throw new SDKException(SdkError.INVALID_HASH_ERROR);
             }
-            String getInfoUrl = General.transactionGetInfoUrl(hash);
-            String result = HttpKit.get(getInfoUrl);
-            transactionGetInfoResponse = JSONObject.parseObject(result, TransactionGetInfoResponse.class);
+            transactionGetInfoResponse = getTransactionInfo(hash);
         } catch (SDKException apiException) {
             Integer errorCode = apiException.getErrorCode();
             String errorDesc = apiException.getErrorDesc();
@@ -433,22 +450,22 @@ public class TransactionServiceImpl implements TransactionService {
                     operation = BUServiceImpl.send((BUSendOperation) operationBase[i], transSourceAddress);
                     break;
                 case TOKEN_ISSUE:
-                    operation = TokenServiceImpl.issue((TokenIssueOperation) operationBase[i]);
+                    operation = Ctp10TokenServiceImpl.issue((Ctp10TokenIssueOperation) operationBase[i]);
                     break;
                 case TOKEN_TRANSFER:
-                    operation = TokenServiceImpl.transfer((TokenTransferOperation) operationBase[i], transSourceAddress);
+                    operation = Ctp10TokenServiceImpl.transfer((Ctp10TokenTransferOperation) operationBase[i], transSourceAddress);
                     break;
                 case TOKEN_TRANSFER_FROM:
-                    operation = TokenServiceImpl.transferFrom((TokenTransferFromOperation) operationBase[i], transSourceAddress);
+                    operation = Ctp10TokenServiceImpl.transferFrom((Ctp10TokenTransferFromOperation) operationBase[i], transSourceAddress);
                     break;
                 case TOKEN_APPROVE:
-                    operation = TokenServiceImpl.approve((TokenApproveOperation) operationBase[i]);
+                    operation = Ctp10TokenServiceImpl.approve((Ctp10TokenApproveOperation) operationBase[i]);
                     break;
                 case TOKEN_ASSIGN:
-                    operation = TokenServiceImpl.assign((TokenAssignOperation) operationBase[i]);
+                    operation = Ctp10TokenServiceImpl.assign((Ctp10TokenAssignOperation) operationBase[i]);
                     break;
                 case TOKEN_CHANGE_OWNER:
-                    operation = TokenServiceImpl.changeOwner((TokenChangeOwnerOperation) operationBase[i]);
+                    operation = Ctp10TokenServiceImpl.changeOwner((Ctp10TokenChangeOwnerOperation) operationBase[i]);
                     break;
                 case CONTRACT_CREATE:
                     operation = ContractServiceImpl.create((ContractCreateOperation) operationBase[i]);
@@ -471,6 +488,12 @@ public class TransactionServiceImpl implements TransactionService {
                 throw new SDKException(SdkError.OPERATIONS_ONE_ERROR);
             }
         }
+    }
+
+    public static TransactionGetInfoResponse getTransactionInfo(String hash) throws IOException, KeyManagementException, NoSuchAlgorithmException, NoSuchProviderException {
+        String getInfoUrl = General.transactionGetInfoUrl(hash);
+        String result = HttpKit.get(getInfoUrl);
+        return JSONObject.parseObject(result, TransactionGetInfoResponse.class);
     }
 }
 

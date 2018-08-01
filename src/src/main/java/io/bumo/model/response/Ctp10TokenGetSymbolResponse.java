@@ -2,24 +2,24 @@ package io.bumo.model.response;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import io.bumo.exception.SdkError;
-import io.bumo.model.response.result.TokenCheckValidResult;
+import io.bumo.model.response.result.TokenGetSymbolResult;
 
 /**
  * @Author riven
- * @Date 2018/7/15 15:33
+ * @Date 2018/7/6 15:35
  */
-public class TokenCheckValidResponse extends BaseResponse {
+public class Ctp10TokenGetSymbolResponse extends BaseResponse {
     @JSONField(name = "result")
-    private TokenCheckValidResult result;
+    private TokenGetSymbolResult result;
 
     /**
      * @Author riven
      * @Method getResult
      * @Params []
-     * @Return io.bumo.model.response.result.TokenCheckValidResult
-     * @Date 2018/7/6 12:44
+     * @Return io.bumo.model.response.result.TokenGetNameResult
+     * @Date 2018/7/6 15:36
      */
-    public TokenCheckValidResult getResult() {
+    public TokenGetSymbolResult getResult() {
         return result;
     }
 
@@ -28,9 +28,9 @@ public class TokenCheckValidResponse extends BaseResponse {
      * @Method setResult
      * @Params [result]
      * @Return void
-     * @Date 2018/7/6 12:44
+     * @Date 2018/7/6 15:36
      */
-    public void setResult(TokenCheckValidResult result) {
+    public void setResult(TokenGetSymbolResult result) {
         this.result = result;
     }
 
@@ -41,7 +41,7 @@ public class TokenCheckValidResponse extends BaseResponse {
      * @Return void
      * @Date 2018/7/4 15:07
      */
-    public void buildResponse(SdkError sdkError, TokenCheckValidResult result) {
+    public void buildResponse(SdkError sdkError, TokenGetSymbolResult result) {
         this.errorCode = sdkError.getCode();
         this.errorDesc = sdkError.getDescription();
         this.result = result;
@@ -54,7 +54,7 @@ public class TokenCheckValidResponse extends BaseResponse {
      * @Return void
      * @Date 2018/7/4 15:07
      */
-    public void buildResponse(int errorCode, String errorDesc, TokenCheckValidResult result) {
+    public void buildResponse(int errorCode, String errorDesc, TokenGetSymbolResult result) {
         this.errorCode = errorCode;
         this.errorDesc = errorDesc;
         this.result = result;

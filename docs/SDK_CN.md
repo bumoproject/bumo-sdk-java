@@ -13,9 +13,9 @@
     - [有效性校验](#有效性校验)
     - [查询](#查询)
 	- [提交交易](#提交交易)
-		- [获取账户nonce值](#获取账户nonce值)
+		- [获取交易发起的账户nonce值](#获取交易发起的账户nonce值)
 		- [构建操作](#构建操作)
-		- [构建交易Blob](#构建交易blob)
+		- [序列化交易](#序列化交易)
 		- [签名交易](#签名交易)
 		- [广播交易](#广播交易)
 - [账户服务](#账户服务)
@@ -27,18 +27,19 @@
 	- [getMetadata](#getmetadata)
 - [资产服务](#资产服务)
     - [getInfo](#getinfo-资产)
-- [Token服务](#token服务)
-    - [checkValid](#checkvalid-token)
+- [Ctp10Token服务](#ctp10token服务)
+    - [checkValid](#checkvalid-ctp10token)
 	- [allowance](#allowance)
-	- [getInfo](#getinfo-token)
+	- [getInfo](#getinfo-ctp10token)
 	- [getName](#getname)
 	- [getSymbol](#getsymbol)
 	- [getDecimals](#getdecimals)
 	- [getTotalSupply](#gettotalsupply)
-	- [getBalance](#getbalance-token)
+	- [getBalance](#getbalance-ctp10token)
 - [合约服务](#合约服务)
     - [checkValid](#checkvalid-合约)
 	- [getInfo](#getinfo-合约)
+    - [getAddress](#getaddress)
 	- [call](#call)
 - [交易服务](#交易服务)
     - [操作说明](#操作说明)
@@ -314,6 +315,7 @@ isValid     |   String     |  是否有效
 
    异常       |     错误码   |   描述   
 -----------  | ----------- | -------- 
+REQUEST_NULL_ERROR|12001|Request parameter cannot be null
 SYSTEM_ERROR |   20000     |  System error 
 
 > 示例
@@ -388,6 +390,7 @@ threshold    |    Long      |    门限值，大小限制[0, Long.MAX_VALUE]
    异常       |     错误码   |   描述   
 -----------  | ----------- | -------- 
 INVALID_ADDRESS_ERROR| 11006 | Invalid address
+REQUEST_NULL_ERROR|12001|Request parameter cannot be null
 CONNECTNETWORK_ERROR| 11007| Fail to connect network
 SYSTEM_ERROR |   20000     |  System error 
 
@@ -436,6 +439,7 @@ nonce       |   Long       |  账户交易序列号
    异常       |     错误码   |   描述   
 -----------  | ----------- | -------- 
 INVALID_ADDRESS_ERROR| 11006 | Invalid address
+REQUEST_NULL_ERROR|12001|Request parameter cannot be null
 CONNECTNETWORK_ERROR| 11007| Fail to connect network
 SYSTEM_ERROR |   20000     |  System error 
 
@@ -483,6 +487,7 @@ balance     |   Long       |  BU的余额, 单位MO，1 BU = 10^8 MO,
    异常       |     错误码   |   描述   
 -----------  | ----------- | -------- 
 INVALID_ADDRESS_ERROR| 11006 | Invalid address
+REQUEST_NULL_ERROR|12001|Request parameter cannot be null
 CONNECTNETWORK_ERROR| 11007| Fail to connect network
 SYSTEM_ERROR |   20000     |  System error 
 
@@ -545,6 +550,7 @@ issuer   |   String    |   资产发行账户地址
    异常       |     错误码   |   描述   
 -----------  | ----------- | -------- 
 INVALID_ADDRESS_ERROR| 11006 | Invalid address
+REQUEST_NULL_ERROR|12001|Request parameter cannot be null
 CONNECTNETWORK_ERROR| 11007| Fail to connect network
 NO_ASSET_ERROR|11009|The account does not have the asset
 SYSTEM_ERROR|20000|System error
@@ -602,6 +608,7 @@ version     |  Long      |  metadata的版本
    异常       |     错误码   |   描述   
 -----------  | ----------- | -------- 
 INVALID_ADDRESS_ERROR | 11006 | Invalid address
+REQUEST_NULL_ERROR|12001|Request parameter cannot be null
 CONNECTNETWORK_ERROR | 11007 | Fail to connect network
 NO_METADATA_ERROR|11010|The account does not have the metadata
 INVALID_DATAKEY_ERROR | 11011 | The length of key must be between 1 and 1024
@@ -660,6 +667,7 @@ asset	    | [AssetInfo](#AssetInfo)[] |账户资产
    异常       |     错误码   |   描述   |
 -----------  | ----------- | -------- |
 INVALID_ADDRESS_ERROR|11006|Invalid address
+REQUEST_NULL_ERROR|12001|Request parameter cannot be null
 CONNECTNETWORK_ERROR|11007|Fail to connect network
 INVALID_ASSET_CODE_ERROR|11023|The length of asset code must be between 1 and 64
 INVALID_ISSUER_ADDRESS_ERROR|11027|Invalid issuer address
@@ -684,11 +692,11 @@ if (response.getErrorCode() == 0) {
 }
 ```
 
-## Token服务
+## Ctp10Token服务
 
- 账户服务主要是Token相关的接口，目前有8个接口：checkValid, allowance, getInfo, getName, getSymbol, getDecimals, getTotalSupply, getBalance
+ 遵循CTP1.0协议，主要是合约Token相关的接口，目前有8个接口：checkValid, allowance, getInfo, getName, getSymbol, getDecimals, getTotalSupply, getBalance
 
- ### checkValid-Token
+ ### checkValid-Ctp10Token
 
 > 接口说明
 
@@ -696,13 +704,13 @@ if (response.getErrorCode() == 0) {
 
 > 调用方法
 
-TokenCheckValidResponse checkValid(TokenCheckValidRequest);
+Ctp10TokenCheckValidResponse checkValid(Ctp10TokenCheckValidRequest);
 
 > 请求参数
 
    参数      |     类型     |        描述       
 ----------- | ------------ | ---------------- 
-contractAddress |   String  |  必填，待验证的Token合约账户地址   
+contractAddress |   String  |  必填，待验证的Token合约地址   
 
 > 响应数据
 
@@ -715,19 +723,20 @@ isValid     |   String     |  是否有效
    异常       |     错误码   |   描述   
 -----------  | ----------- | -------- 
 INVALID_CONTRACTADDRESS_ERROR|11037|Invalid contract address
+REQUEST_NULL_ERROR|12001|Request parameter cannot be null
 SYSTEM_ERROR|20000|System error
 
 > 示例
 
 ```
 // 初始化请求参数
-TokenCheckValidRequest request = new TokenCheckValidRequest();
+Ctp10TokenCheckValidRequest request = new Ctp10TokenCheckValidRequest();
 request.setContractAddress("buQfnVYgXuMo3rvCEpKA6SfRrDpaz8D8A9Ea");
 
 // 调用checkValid接口
-TokenCheckValidResponse response = sdk.getTokenService().checkValid(request);
+Ctp10TokenCheckValidResponse response = sdk.getTokenService().checkValid(request);
 if (response.getErrorCode() == 0) {
-    TokenCheckValidResult result = response.getResult();
+    Ctp10TokenCheckValidResult result = response.getResult();
     System.out.println(result.getValid());
 } else {
     System.out.println("error: " + response.getErrorDesc());
@@ -742,15 +751,15 @@ if (response.getErrorCode() == 0) {
 
 > 调用方法
 
-TokenAllowanceResponse allowance(TokenAllowanceRequest);
+Ctp10TokenAllowanceResponse allowance(Ctp10TokenAllowanceRequest);
 
 > 请求参数
 
    参数      |     类型     |        描述       |
 ----------- | ------------ | ---------------- |
 contractAddress|String| 必填，合约账户地址
-tokenOwner|String|必填，合约Token的拥有者账户地址
-spender|String|必填，授权账户地址
+tokenOwner|String|必填，合约Token的持有者账户地址
+spender|String|必填，被授权账户地址
 
 > 响应数据
 
@@ -767,28 +776,29 @@ NO_SUCH_TOKEN_ERROR|11030|No such token
 INVALID_TOKENOWNER_ERRPR|11035|Invalid token owner
 INVALID_SPENDER_ERROR|11043|Invalid spender
 GET_ALLOWNANCE_ERROR|11036|Fail to get allowance
+REQUEST_NULL_ERROR|12001|Request parameter cannot be null
 SYSTEM_ERROR|20000|System error
 
 > 示例
 
 ```
 // 初始化请求参数
-TokenAllowanceRequest request = new TokenAllowanceRequest();
+Ctp10TokenAllowanceRequest request = new Ctp10TokenAllowanceRequest();
 request.setContractAddress("buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq");
 request.setTokenOwner("buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp");
 request.setSpender("buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp");
 
 // 调用allowance接口
-TokenAllowanceResponse response = sdk.getTokenService().allowance(request);
+Ctp10TokenAllowanceResponse response = sdk.getTokenService().allowance(request);
 if (response.getErrorCode() == 0) {
-    TokenAllowanceResult result = response.getResult();
+    Ctp10TokenAllowanceResult result = response.getResult();
     System.out.println(JSON.toJSONString(result, true));
 } else {
     System.out.println("error: " + response.getErrorDesc());
 }
 ```
 
-### getInfo-Token
+### getInfo-Ctp10Token
 
 > 接口说明
 
@@ -796,13 +806,13 @@ if (response.getErrorCode() == 0) {
 
 > 调用方法
 
-TokenGetInfoResponse getInfo(TokenGetInfoRequest);
+Ctp10TokenGetInfoResponse getInfo(Ctp10TokenGetInfoRequest);
 
 > 请求参数
 
    参数      |     类型     |        描述       |
 ----------- | ------------ | ---------------- |
-contractAddress     |   String     |  待查询的合约Token的账户地址   |
+contractAddress     |   String     |  待查询的合约Token地址   |
 
 > 响应数据
 
@@ -822,19 +832,20 @@ contractOwner|String|合约Token的拥有者
 INVALID_CONTRACTADDRESS_ERROR|11037|Invalid contract address
 NO_SUCH_TOKEN_ERROR|11030|No such token
 GET_TOKEN_INFO_ERROR|11066|Fail to get token info
+REQUEST_NULL_ERROR|12001|Request parameter cannot be null
 SYSTEM_ERROR|20000|System error
 
 > 示例
 
 ```
 // 初始化请求参数
-TokenGetInfoRequest request = new TokenGetInfoRequest();
+Ctp10TokenGetInfoRequest request = new Ctp10TokenGetInfoRequest();
 request.setContractAddress("buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq");
 
 // 调用getInfo接口
-TokenGetInfoResponse response = sdk.getTokenService().getInfo(request);
+Ctp10TokenGetInfoResponse response = sdk.getTokenService().getInfo(request);
 if (response.getErrorCode() == 0) {
-    TokenGetInfoResult result = response.getResult();
+    Ctp10TokenGetInfoResult result = response.getResult();
     System.out.println(JSON.toJSONString(result, true));
 } else {
     System.out.println("error: " + response.getErrorDesc());
@@ -849,7 +860,7 @@ if (response.getErrorCode() == 0) {
 
 > 调用方法
 
-TokenGetNameResponse getName(TokenGetNameRequest);
+Ctp10TokenGetNameResponse getName(Ctp10TokenGetNameRequest);
 
 > 请求参数
 
@@ -870,19 +881,20 @@ name     |   String     |  合约Token的名称   |
 INVALID_CONTRACTADDRESS_ERROR|11037|Invalid contract address
 NO_SUCH_TOKEN_ERROR|11030|No such token
 GET_TOKEN_INFO_ERROR|11066|Fail to get token info
+REQUEST_NULL_ERROR|12001|Request parameter cannot be null
 SYSTEM_ERROR|20000|System error
 
 > 示例
 
 ```
 // 初始化请求参数
-TokenGetNameRequest request = new TokenGetNameRequest();
+Ctp10TokenGetNameRequest request = new Ctp10TokenGetNameRequest();
 request.setContractAddress("buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq");
 
 // 调用getName接口
-TokenGetNameResponse response = sdk.getTokenService().getName(request);
+Ctp10TokenGetNameResponse response = sdk.getTokenService().getName(request);
 if (response.getErrorCode() == 0) {
-    TokenGetNameResult result = response.getResult();
+    Ctp10TokenGetNameResult result = response.getResult();
     System.out.println(result.getName());
 } else {
     System.out.println("error: " + response.getErrorDesc());
@@ -897,7 +909,7 @@ if (response.getErrorCode() == 0) {
 
 > 调用方法
 
-TokenGetSymbolResponse getSymbol (TokenGetSymbolRequest);
+Ctp10TokenGetSymbolResponse getSymbol (Ctp10TokenGetSymbolRequest);
 
 > 请求参数
 
@@ -918,19 +930,20 @@ symbol     |   String     |  合约Token的符号   |
 INVALID_CONTRACTADDRESS_ERROR|11037|Invalid contract address
 NO_SUCH_TOKEN_ERROR|11030|No such token
 GET_TOKEN_INFO_ERROR|11066|Fail to get token info
+REQUEST_NULL_ERROR|12001|Request parameter cannot be null
 SYSTEM_ERROR|20000|System error
 
 > 示例
 
 ```
 // 初始化请求参数
-TokenGetSymbolRequest request = new TokenGetSymbolRequest();
+Ctp10TokenGetSymbolRequest request = new Ctp10TokenGetSymbolRequest();
 request.setContractAddress("buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq");
 
 // 调用getSymbol接口
-TokenGetSymbolResponse response = sdk.getTokenService().getSymbol(request);
+Ctp10TokenGetSymbolResponse response = sdk.getTokenService().getSymbol(request);
 if (response.getErrorCode() == 0) {
-    TokenGetSymbolResult result = response.getResult();
+    Ctp10TokenGetSymbolResult result = response.getResult();
     System.out.println(result.getSymbol());
 } else {
     System.out.println("error: " + response.getErrorDesc());
@@ -945,7 +958,7 @@ if (response.getErrorCode() == 0) {
 
 > 调用方法
 
-TokenGetDecimalsResponse getDecimals (TokenGetDecimalsRequest);
+Ctp10TokenGetDecimalsResponse getDecimals (Ctp10TokenGetDecimalsRequest);
 
 > 请求参数
 
@@ -963,19 +976,23 @@ decimals     |   Integer     |  合约token精度   |
 
    异常       |     错误码   |   描述   |
 -----------  | ----------- | -------- |
+INVALID_CONTRACTADDRESS_ERROR|11037|Invalid contract address
+NO_SUCH_TOKEN_ERROR|11030|No such token
+GET_TOKEN_INFO_ERROR|11066|Fail to get token info
+REQUEST_NULL_ERROR|12001|Request parameter cannot be null
 SYSTEM_ERROR |   20000     |  System error |
 
 > 示例
 
 ```
 // 初始化请求参数
-TokenGetDecimalsRequest request = new TokenGetDecimalsRequest();
+Ctp10TokenGetDecimalsRequest request = new Ctp10TokenGetDecimalsRequest();
 request.setContractAddress("buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq");
 
 // 调用getDecimals接口
-TokenGetDecimalsResponse response = sdk.getTokenService().getDecimals(request);
+Ctp10TokenGetDecimalsResponse response = sdk.getTokenService().getDecimals(request);
 if (response.getErrorCode() == 0) {
-    TokenGetDecimalsResult result = response.getResult();
+    Ctp10TokenGetDecimalsResult result = response.getResult();
     System.out.println(result.getDecimals());
 } else {
     System.out.println("error: " + response.getErrorDesc());
@@ -990,7 +1007,7 @@ if (response.getErrorCode() == 0) {
 
 > 调用方法
 
-TokenGetTotalSupplyResponse getTotalSupply(TokenGetTotalSupplyRequest);
+Ctp10TokenGetTotalSupplyResponse getTotalSupply(Ctp10TokenGetTotalSupplyRequest);
 
 > 请求参数
 
@@ -1011,26 +1028,27 @@ totalSupply     |   String     |   合约Token的总供应量  |
 INVALID_CONTRACTADDRESS_ERROR|11037|Invalid contract address
 NO_SUCH_TOKEN_ERROR|11030|No such token
 GET_TOKEN_INFO_ERROR|11066|Fail to get token info
+REQUEST_NULL_ERROR|12001|Request parameter cannot be null
 SYSTEM_ERROR|20000|System error
 
 > 示例
 
 ```
 // 初始化请求参数
-TokenGetTotalSupplyRequest request = new TokenGetTotalSupplyRequest();
+Ctp10TokenGetTotalSupplyRequest request = new Ctp10TokenGetTotalSupplyRequest();
 request.setContractAddress("buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq");
 
 // 调用getTotalSupply接口
-TokenGetTotalSupplyResponse response = sdk.getTokenService().getTotalSupply(request);
+Ctp10TokenGetTotalSupplyResponse response = sdk.getTokenService().getTotalSupply(request);
 if (response.getErrorCode() == 0) {
-    TokenGetTotalSupplyResult result = response.getResult();
+    Ctp10TokenGetTotalSupplyResult result = response.getResult();
     System.out.println(result.getTotalSupply());
 } else {
     System.out.println("error: " + response.getErrorDesc());
 }
 ```
 
-### getBalance-Token
+### getBalance-Ctp10Token
 
 > 接口说明
 
@@ -1038,14 +1056,14 @@ if (response.getErrorCode() == 0) {
 
 > 调用方法
 
-TokenGetBalanceResponse getBalance(TokenGetBalanceRequest)
+Ctp10TokenGetBalanceResponse getBalance(Ctp10TokenGetBalanceRequest)
 
 > 请求参数
 
    参数      |     类型     |        描述       |
 ----------- | ------------ | ---------------- |
 contractAddress     |   String     |  待查询的合约账户地址   |
-tokenOwner|String|必填，合约Token拥有者的账户地址
+tokenOwner|String|必填，合约Token持有者的账户地址
 
 > 响应数据
 
@@ -1057,10 +1075,11 @@ balance     |   Long     |  token的余额   |
 
    异常       |     错误码   |   描述   |
 -----------  | ----------- | -------- |
-INVALID_CONTRACTADDRESS_ERROR|11037|Invalid contract address
 INVALID_TOKENOWNER_ERRPR|11035|Invalid token owner
+INVALID_CONTRACTADDRESS_ERROR|11037|Invalid contract address
 NO_SUCH_TOKEN_ERROR|11030|No such token
 GET_TOKEN_INFO_ERROR|11066|Fail to get token info
+REQUEST_NULL_ERROR|12001|Request parameter cannot be null
 SYSTEM_ERROR|20000|System error
 
 
@@ -1068,14 +1087,14 @@ SYSTEM_ERROR|20000|System error
 
 ```
 // 初始化请求参数
-TokenGetBalanceRequest request = new TokenGetBalanceRequest();
+Ctp10TokenGetBalanceRequest request = new Ctp10TokenGetBalanceRequest();
 request.setContractAddress("buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq");
 request.setTokenOwner("buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp");
 
 // 调用getBalance接口
-TokenGetBalanceResponse response = sdk.getTokenService().getBalance(request);
+Ctp10TokenGetBalanceResponse response = sdk.getTokenService().getBalance(request);
 if (response.getErrorCode() == 0) {
-    TokenGetBalanceResult result = response.getResult();
+    Ctp10TokenGetBalanceResult result = response.getResult();
     System.out.println(result.getBalance());
 } else {
     System.out.println("error: " + response.getErrorDesc());
@@ -1084,7 +1103,7 @@ if (response.getErrorCode() == 0) {
 
 ## 合约服务
 
-账户服务主要是合约相关的接口，目前有3个接口：checkValid, getInfo, call
+账户服务主要是合约相关的接口，目前有4个接口：checkValid, getInfo, getAddress, call
 
 ### checkValid-合约
 
@@ -1113,6 +1132,7 @@ isValid     |   Boolean     |  是否有效
    异常       |     错误码   |   描述   
 -----------  | ----------- | -------- 
 INVALID_CONTRACTADDRESS_ERROR|11037|Invalid contract address
+REQUEST_NULL_ERROR|12001|Request parameter cannot be null
 SYSTEM_ERROR |   20000     |  System error 
 
 > 示例
@@ -1167,7 +1187,9 @@ payload|String|合约代码
 -----------  | ----------- | -------- |
 INVALID_CONTRACTADDRESS_ERROR|11037|Invalid contract address
 CONTRACTADDRESS_NOT_CONTRACTACCOUNT_ERROR|11038|contractAddress is not a contract account
-CONNECTNETWORK_ERROR|11007|Fail to connect network
+NO_SUCH_TOKEN_ERROR|11030|No such token
+GET_TOKEN_INFO_ERROR|11066|Fail to get token info
+REQUEST_NULL_ERROR|12001|Request parameter cannot be null
 SYSTEM_ERROR|20000|System error
 
 > 示例
@@ -1183,6 +1205,60 @@ if (response.getErrorCode() == 0) {
     System.out.println(JSON.toJSONString(response.getResult(), true));
 } else {
     System.out.println("error: " + response.getErrorDesc());
+}
+```
+
+### getAddress
+
+> 接口说明
+
+该接口用于查询合约地址
+
+> 调用方法
+
+ContractGetAddressResponse getInfo (ContractGetAddressRequest);
+
+> 请求参数
+
+参数      |     类型     |        描述       |
+----------- | ------------ | ---------------- |
+hash     |   String     |  创建合约交易的hash   |
+
+> 响应数据
+
+参数      |     类型     |        描述       |
+----------- | ------------ | ---------------- |
+contractAddressList|List<[ContractAddressInfo](#contractaddressinfo)>|合约地址列表
+
+#### ContractAddressInfo
+
+成员      |     类型     |        描述       |
+----------- | ------------ | ---------------- |
+contractAddress|String|合约地址
+operationIndex|Integer|所在操作的下标
+
+> 错误码
+
+异常       |     错误码   |   描述   |
+-----------  | ----------- | -------- |
+INVALID_HASH_ERROR|11055|Invalid transaction hash
+CONNECTNETWORK_ERROR|11007|Fail to connect network
+REQUEST_NULL_ERROR|12001|Request parameter cannot be null
+SYSTEM_ERROR|20000|System error
+
+> 示例
+
+```
+// 初始化请求参数
+ContractGetAddressRequest request = new ContractGetAddressRequest();
+request.setHash("44246c5ba1b8b835a5cbc29bdc9454cdb9a9d049870e41227f2dcfbcf7a07689");
+
+// 调用getAddress接口
+ContractGetAddressResponse response = sdk.getContractService().getAddress(request);
+if (response.getErrorCode() == 0) {
+System.out.println(JSON.toJSONString(response.getResult(), true));
+} else {
+System.out.println("error: " + response.getErrorDesc());
 }
 ```
 
@@ -1359,6 +1435,7 @@ INVALID_SOURCEADDRESS_ERROR|11002|Invalid sourceAddress
 INVALID_CONTRACTADDRESS_ERROR|11037|Invalid contract address
 CONTRACTADDRESS_CODE_BOTH_NULL_ERROR|11063|ContractAddress and code cannot be empty at the same time
 INVALID_OPTTYPE_ERROR|11064|OptType must be between 0 and 2
+REQUEST_NULL_ERROR|12001|Request parameter cannot be null
 CONNECTNETWORK_ERROR|11007|Fail to connect network
 SYSTEM_ERROR|20000|System error
 
@@ -1468,7 +1545,7 @@ destAddress|String|必填，目标账户地址
 buAmount|Long|必填，资产发行数量，大小限制[0, Long.MAX_VALUE]
 metadata|String|选填，备注
 
-> TokenIssueOperation
+> Ctp10TokenIssueOperation
 
 继承于BaseOperation，feeLimit目前(2018.07.26)固定是10.08 BU
 
@@ -1476,19 +1553,19 @@ metadata|String|选填，备注
 ------------- | --------- | ---------------------
 sourceAddress|String|选填，操作源账户地址
 initBalance|Long|必填，给合约账户的初始化资产，单位MO，1 BU = 10^8 MO, 大小限制[1, max(64)]
-name|String|必填，token名称，长度限制[1, 1024]
-symbol|String|必填，token符号，长度限制[1, 1024]
-decimals|Integer|必填，token数量的精度，大小限制[0, 8]
-supply|String|必填，token发行的总供应量(不带精度)，大小限制[1, Long.MAX_VALUE]
+name|String|必填，ctp10Token名称，长度限制[1, 1024]
+symbol|String|必填，ctp10Token符号，长度限制[1, 1024]
+decimals|Integer|必填，ctp10Token数量的精度，大小限制[0, 8]
+supply|String|必填，ctp10Token发行的总供应量(不带精度)，大小限制[1, Long.MAX_VALUE]
 metadata|String|选填，备注
 
-> TokenTransferOperation
+> Ctp10TokenTransferOperation
 
 继承于BaseOperation，feeLimit目前(2018.07.26)固定是0.02 BU
 
    成员变量    |     类型   |        描述          
 ------------- | --------- | ---------------------
-sourceAddress|String|选填，操作源账户地址
+sourceAddress|String|选填，合约token的持有者账户地址
 contractAddress|String|必填，合约账户地址
 destAddress|String|必填，待转移的目标账户地址
 tokenAmount|String|必填，待转移的token数量，大小限制[1, Long.MAX_VALUE]
@@ -1504,42 +1581,42 @@ sourceAddress|String|选填，操作源账户地址
 contractAddress|String|必填，合约账户地址
 fromAddress|String|必填，待转移的源账户地址
 destAddress|String|必填，待转移的目标账户地址
-tokenAmount|String|必填，待转移的token数量，大小限制[1, Long.MAX_VALUE]
+tokenAmount|String|必填，待转移的ctp10Token数量，大小限制[1, Long.MAX_VALUE]
 metadata|String|选填，备注
 
-> TokenApproveOperation
+> Ctp10TokenApproveOperation
 
 继承于BaseOperation，feeLimit目前(2018.07.26)固定是0.02 BU
 
    成员变量    |     类型   |        描述          
 ------------- | --------- | ---------------------
-sourceAddress|String|选填，操作源账户地址
+sourceAddress|String|选填，合约token的持有者账户地址
 contractAddress|String|必填，合约账户地址
 spender|String|必填，授权的账户地址
-tokenAmount|String|必填，被授权的待转移的token数量，大小限制[1, Long.MAX_VALUE]
+tokenAmount|String|必填，被授权的待转移的ctp10Token数量，大小限制[1, Long.MAX_VALUE]
 metadata|String|选填，备注
 
-> TokenAssignOperation
+> Ctp10TokenAssignOperation
 
 继承于BaseOperation，feeLimit目前(2018.07.26)固定是0.02 BU
 
    成员变量    |     类型   |        描述          
 ------------- | --------- | ---------------------
-sourceAddress|String|选填，操作源账户地址
+sourceAddress|String|选填，合约token的拥有者账户地址
 contractAddress|String|必填，合约账户地址
 destAddress|String|必填，待分配的目标账户地址
-tokenAmount|String|必填，待分配的token数量，大小限制[1, Long.MAX_VALUE]
+tokenAmount|String|必填，待分配的ctp10Token数量，大小限制[1, Long.MAX_VALUE]
 metadata|String|选填，备注
 
-> TokenChangeOwnerOperation
+> Ctp10TokenChangeOwnerOperation
 
 继承于BaseOperation，feeLimit目前(2018.07.26)固定是0.02 BU
 
    成员变量    |     类型   |        描述          
 ------------- | --------- | ---------------------
-sourceAddress|String|选填，操作源账户地址
+sourceAddress|String|选填，合约token的拥有者账户地址
 contractAddress|String|必填，合约账户地址
-tokenOwner|String|必填，待分配的目标账户地址
+tokenOwner|String|必填，待转移的目标账户地址
 metadata|String|选填，备注
 
 > ContractCreateOperation
@@ -1667,6 +1744,7 @@ INVALID_FEELIMIT_ERROR|11050|FeeLimit must be between 1 and Long.MAX_VALUE
 OPERATIONS_EMPTY_ERROR|11051|Operations cannot be empty
 INVALID_CEILLEDGERSEQ_ERROR|11052|CeilLedgerSeq must be equal or bigger than 0
 OPERATIONS_ONE_ERROR|11053|One of operations cannot be resolved
+REQUEST_NULL_ERROR|12001|Request parameter cannot be null
 SYSTEM_ERROR|20000|System error
 
 > 示例
@@ -1759,6 +1837,7 @@ INVALID_NONCE_ERROR|11045|Nonce must be between 1 and Long.MAX_VALUE
 OPERATIONS_EMPTY_ERROR|11051|Operations cannot be empty
 OPERATIONS_ONE_ERROR|11053|One of operations cannot be resolved
 INVALID_SIGNATURENUMBER_ERROR|11054|SignagureNumber must be between 1 and max(int32)
+REQUEST_NULL_ERROR|12001|Request parameter cannot be null
 SYSTEM_ERROR|20000|System error
 
 > 示例
@@ -1834,6 +1913,7 @@ signatures|[Signature](#signature)	签名后的数据列表
 INVALID_BLOB_ERROR|11056|Invalid blob
 PRIVATEKEY_NULL_ERROR|11057|PrivateKeys cannot be empty
 PRIVATEKEY_ONE_ERROR|11058|One of privateKeys is invalid
+REQUEST_NULL_ERROR|12001|Request parameter cannot be null
 SYSTEM_ERROR|20000|System error
 
 > 示例
@@ -1885,6 +1965,7 @@ hash|String|交易hash
 -----------  | ----------- | -------- |
 INVALID_BLOB_ERROR|11056|Invalid blob
 SIGNATURE_EMPTY_ERROR|11067|The signatures cannot be empty
+REQUEST_NULL_ERROR|12001|Request parameter cannot be null
 SYSTEM_ERROR|20000|System error
 
 > 示例
@@ -1950,6 +2031,7 @@ txSize|Long|交易大小
    异常       |     错误码   |   描述   |
 -----------  | ----------- | -------- |
 INVALID_HASH_ERROR|11055|Invalid transaction hash
+REQUEST_NULL_ERROR|12001|Request parameter cannot be null
 CONNECTNETWORK_ERROR|11007|Fail to connect network
 SYSTEM_ERROR|20000|System error
 
@@ -2073,6 +2155,7 @@ transactions|[TransactionHistory](#transactionhistory)[]|交易内容
    异常       |     错误码   |   描述   |
 -----------  | ----------- | -------- |
 INVALID_BLOCKNUMBER_ERROR|11060|BlockNumber must bigger than 0
+REQUEST_NULL_ERROR|12001|Request parameter cannot be null
 CONNECTNETWORK_ERROR|11007|Fail to connect network
 SYSTEM_ERROR|20000|System error
 
@@ -2123,6 +2206,7 @@ version|String|区块版本
    异常       |     错误码   |   描述   |
 -----------  | ----------- | -------- |
 INVALID_BLOCKNUMBER_ERROR|11060|BlockNumber must bigger than 0
+REQUEST_NULL_ERROR|12001|Request parameter cannot be null
 CONNECTNETWORK_ERROR|11007|Fail to connect network
 SYSTEM_ERROR|20000|System error
 
@@ -2217,6 +2301,7 @@ plegeCoinAmount|Long|验证节点押金
    异常       |     错误码   |   描述   |
 -----------  | ----------- | -------- |
 INVALID_BLOCKNUMBER_ERROR|11060|BlockNumber must bigger than 0
+REQUEST_NULL_ERROR|12001|Request parameter cannot be null
 CONNECTNETWORK_ERROR|11007|Fail to connect network
 SYSTEM_ERROR|20000|System error
 
@@ -2309,6 +2394,7 @@ validatorsReward|[ValidatorReward](#validatorreward)[]|验证节点奖励情况
    异常       |     错误码   |   描述   |
 -----------  | ----------- | -------- |
 INVALID_BLOCKNUMBER_ERROR|11060|BlockNumber must bigger than 0
+REQUEST_NULL_ERROR|12001|Request parameter cannot be null
 CONNECTNETWORK_ERROR|11007|Fail to connect network
 SYSTEM_ERROR|20000|System error
 
@@ -2400,6 +2486,7 @@ gasPrice|Long|交易燃料单价，单位MO，1 BU = 10^8 MO
    异常       |     错误码   |   描述   |
 -----------  | ----------- | -------- |
 INVALID_BLOCKNUMBER_ERROR|11060|BlockNumber must bigger than 0
+REQUEST_NULL_ERROR|12001|Request parameter cannot be null
 CONNECTNETWORK_ERROR|11007|Fail to connect network
 SYSTEM_ERROR|20000|System error
 
@@ -2512,6 +2599,6 @@ INVALID_OPTTYPE_ERROR|11064|OptType must be between 0 and 2
 GET_ALLOWANCE_ERROR|11065|Get allowance failed
 GET_TOKEN_INFO_ERROR|11066|Fail to get token info
 SIGNATURE_EMPTY_ERROR|11067|The signatures cannot be empty
-REQUEST_NULL_ERROR|13001|Request parameter cannot be null
+REQUEST_NULL_ERROR|12001|Request parameter cannot be null
 CONNECTN_BLOCKCHAIN_ERROR|19999|Connect blockchain failed
 SYSTEM_ERROR|20000|System error

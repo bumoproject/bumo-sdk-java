@@ -2,10 +2,10 @@ package io.bumo;
 
 import io.bumo.account.AccountService;
 import io.bumo.account.impl.AccountServiceImpl;
-import io.bumo.asset.AssetService;
-import io.bumo.asset.TokenService;
-import io.bumo.asset.impl.AssetServiceImpl;
-import io.bumo.asset.impl.TokenServiceImpl;
+import io.bumo.token.AssetService;
+import io.bumo.token.Ctp10TokenService;
+import io.bumo.token.impl.AssetServiceImpl;
+import io.bumo.token.impl.Ctp10TokenServiceImpl;
 import io.bumo.blockchain.BlockService;
 import io.bumo.blockchain.TransactionService;
 import io.bumo.blockchain.impl.BlockServiceImpl;
@@ -64,7 +64,7 @@ public class SDK {
      * @Author riven
      * @Method getAssetService
      * @Params []
-     * @Return io.bumo.asset.AssetService
+     * @Return io.bumo.token.AssetService
      * @Date 2018/7/15 14:50
      */
     public AssetService getAssetService() {
@@ -106,13 +106,13 @@ public class SDK {
 
     /**
      * @Author riven
-     * @Method getTokenService
+     * @Method getCtp10TokenService
      * @Params []
-     * @Return io.bumo.asset.TokenService
+     * @Return io.bumo.token.TokenService
      * @Date 2018/7/15 14:50
      */
-    public TokenService getTokenService() {
-        return new TokenServiceImpl();
+    public Ctp10TokenService getCtp10TokenService() {
+        return new Ctp10TokenServiceImpl();
     }
 
     /**

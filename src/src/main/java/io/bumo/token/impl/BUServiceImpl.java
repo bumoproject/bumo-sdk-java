@@ -1,4 +1,4 @@
-package io.bumo.asset.impl;
+package io.bumo.token.impl;
 
 import com.google.protobuf.ByteString;
 import io.bumo.common.Tools;

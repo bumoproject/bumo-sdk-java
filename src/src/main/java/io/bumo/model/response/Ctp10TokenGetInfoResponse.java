@@ -2,15 +2,15 @@ package io.bumo.model.response;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import io.bumo.exception.SdkError;
-import io.bumo.model.response.result.TokenAllowanceResult;
+import io.bumo.model.response.result.TokenGetInfoResult;
 
 /**
  * @Author riven
- * @Date 2018/7/6 12:43
+ * @Date 2018/7/6 13:34
  */
-public class TokenAllowanceResponse extends BaseResponse {
+public class Ctp10TokenGetInfoResponse extends BaseResponse {
     @JSONField(name = "result")
-    private TokenAllowanceResult result;
+    private TokenGetInfoResult result;
 
     /**
      * @Author riven
@@ -19,7 +19,7 @@ public class TokenAllowanceResponse extends BaseResponse {
      * @Return io.bumo.model.response.result.TokenAllowanceResult
      * @Date 2018/7/6 12:44
      */
-    public TokenAllowanceResult getResult() {
+    public TokenGetInfoResult getResult() {
         return result;
     }
 
@@ -30,7 +30,7 @@ public class TokenAllowanceResponse extends BaseResponse {
      * @Return void
      * @Date 2018/7/6 12:44
      */
-    public void setResult(TokenAllowanceResult result) {
+    public void setResult(TokenGetInfoResult result) {
         this.result = result;
     }
 
@@ -41,7 +41,7 @@ public class TokenAllowanceResponse extends BaseResponse {
      * @Return void
      * @Date 2018/7/4 15:07
      */
-    public void buildResponse(SdkError sdkError, TokenAllowanceResult result) {
+    public void buildResponse(SdkError sdkError, TokenGetInfoResult result) {
         this.errorCode = sdkError.getCode();
         this.errorDesc = sdkError.getDescription();
         this.result = result;
@@ -54,7 +54,7 @@ public class TokenAllowanceResponse extends BaseResponse {
      * @Return void
      * @Date 2018/7/4 15:07
      */
-    public void buildResponse(int errorCode, String errorDesc, TokenAllowanceResult result) {
+    public void buildResponse(int errorCode, String errorDesc, TokenGetInfoResult result) {
         this.errorCode = errorCode;
         this.errorDesc = errorDesc;
         this.result = result;

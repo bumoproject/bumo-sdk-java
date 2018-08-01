@@ -1,10 +1,14 @@
 package io.bumo.sdk.example;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import io.bumo.SDK;
+import io.bumo.common.General;
 import io.bumo.common.ToBaseUnit;
 import io.bumo.crypto.Keypair;
+import io.bumo.crypto.http.HttpKit;
+import io.bumo.crypto.protobuf.Chain;
 import io.bumo.encryption.key.PrivateKey;
 import io.bumo.encryption.utils.hex.HexFormat;
 import io.bumo.model.request.*;
@@ -15,6 +19,11 @@ import io.bumo.model.response.result.data.Signature;
 import io.bumo.model.response.result.data.Signer;
 import io.bumo.model.response.result.data.TransactionFees;
 import org.junit.Test;
+
+import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 
 /**
  * @author riven
@@ -192,11 +201,11 @@ public class DigitalAssetsDemo {
     @Test
     public void checkTokenValid() {
         // 初始化请求参数
-        TokenCheckValidRequest request = new TokenCheckValidRequest();
+        Ctp10TokenCheckValidRequest request = new Ctp10TokenCheckValidRequest();
         request.setContractAddress("buQfnVYgXuMo3rvCEpKA6SfRrDpaz8D8A9Ea");
 
         // 调用checkValid接口
-        TokenCheckValidResponse response = sdk.getTokenService().checkValid(request);
+        Ctp10TokenCheckValidResponse response = sdk.getCtp10TokenService().checkValid(request);
         if (response.getErrorCode() == 0) {
             TokenCheckValidResult result = response.getResult();
             System.out.println(result.getValid());
@@ -209,15 +218,15 @@ public class DigitalAssetsDemo {
      * 查询授权用户的可用的合约Token数量
      */
     @Test
-    public void getTokenAllowance() {
+    public void getCtp10TokenAllowance() {
         // 初始化请求参数
-        TokenAllowanceRequest request = new TokenAllowanceRequest();
+        Ctp10TokenAllowanceRequest request = new Ctp10TokenAllowanceRequest();
         request.setContractAddress("buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq");
         request.setTokenOwner("buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp");
         request.setSpender("buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp");
 
         // 调用allowance接口
-        TokenAllowanceResponse response = sdk.getTokenService().allowance(request);
+        Ctp10TokenAllowanceResponse response = sdk.getCtp10TokenService().allowance(request);
         if (response.getErrorCode() == 0) {
             TokenAllowanceResult result = response.getResult();
             System.out.println(JSON.toJSONString(result, true));
@@ -230,13 +239,13 @@ public class DigitalAssetsDemo {
      * 查询合约Token的信息
      */
     @Test
-    public void getTokenInfo() {
+    public void getCtp10TokenInfo() {
         // 初始化请求参数
-        TokenGetInfoRequest request = new TokenGetInfoRequest();
+        Ctp10TokenGetInfoRequest request = new Ctp10TokenGetInfoRequest();
         request.setContractAddress("buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq");
 
         // 调用getInfo接口
-        TokenGetInfoResponse response = sdk.getTokenService().getInfo(request);
+        Ctp10TokenGetInfoResponse response = sdk.getCtp10TokenService().getInfo(request);
         if (response.getErrorCode() == 0) {
             TokenGetInfoResult result = response.getResult();
             System.out.println(JSON.toJSONString(result, true));
@@ -249,13 +258,13 @@ public class DigitalAssetsDemo {
      * 查询合约Token的名称
      */
     @Test
-    public void getTokenName() {
+    public void getCtp10TokenName() {
         // 初始化请求参数
-        TokenGetNameRequest request = new TokenGetNameRequest();
+        Ctp10TokenGetNameRequest request = new Ctp10TokenGetNameRequest();
         request.setContractAddress("buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq");
 
         // 调用getName接口
-        TokenGetNameResponse response = sdk.getTokenService().getName(request);
+        Ctp10TokenGetNameResponse response = sdk.getCtp10TokenService().getName(request);
         if (response.getErrorCode() == 0) {
             TokenGetNameResult result = response.getResult();
             System.out.println(result.getName());
@@ -268,13 +277,13 @@ public class DigitalAssetsDemo {
      * 查询合约Token的符号名
      */
     @Test
-    public void getTokenSymbol() {
+    public void getCtp10TokenSymbol() {
         // 初始化请求参数
-        TokenGetSymbolRequest request = new TokenGetSymbolRequest();
+        Ctp10TokenGetSymbolRequest request = new Ctp10TokenGetSymbolRequest();
         request.setContractAddress("buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq");
 
         // 调用getSymbol接口
-        TokenGetSymbolResponse response = sdk.getTokenService().getSymbol(request);
+        Ctp10TokenGetSymbolResponse response = sdk.getCtp10TokenService().getSymbol(request);
         if (response.getErrorCode() == 0) {
             TokenGetSymbolResult result = response.getResult();
             System.out.println(result.getSymbol());
@@ -287,13 +296,13 @@ public class DigitalAssetsDemo {
      * 获取合约Token的精度
      */
     @Test
-    public void getTokenDecimals() {
+    public void getCtp10TokenDecimals() {
         // 初始化请求参数
-        TokenGetDecimalsRequest request = new TokenGetDecimalsRequest();
+        Ctp10TokenGetDecimalsRequest request = new Ctp10TokenGetDecimalsRequest();
         request.setContractAddress("buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq");
 
         // 调用getDecimals接口
-        TokenGetDecimalsResponse response = sdk.getTokenService().getDecimals(request);
+        Ctp10TokenGetDecimalsResponse response = sdk.getCtp10TokenService().getDecimals(request);
         if (response.getErrorCode() == 0) {
             TokenGetDecimalsResult result = response.getResult();
             System.out.println(result.getDecimals());
@@ -306,13 +315,13 @@ public class DigitalAssetsDemo {
      * 获取合约Token总供应量
      */
     @Test
-    public void getTokenTotalSupply() {
+    public void getCtp10TokenTotalSupply() {
         // 初始化请求参数
-        TokenGetTotalSupplyRequest request = new TokenGetTotalSupplyRequest();
+        Ctp10TokenGetTotalSupplyRequest request = new Ctp10TokenGetTotalSupplyRequest();
         request.setContractAddress("buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq");
 
         // 调用getTotalSupply接口
-        TokenGetTotalSupplyResponse response = sdk.getTokenService().getTotalSupply(request);
+        Ctp10TokenGetTotalSupplyResponse response = sdk.getCtp10TokenService().getTotalSupply(request);
         if (response.getErrorCode() == 0) {
             TokenGetTotalSupplyResult result = response.getResult();
             System.out.println(result.getTotalSupply());
@@ -325,14 +334,14 @@ public class DigitalAssetsDemo {
      * 查询账户下合约Token的余额
      */
     @Test
-    public void getTokenBalance() {
+    public void getCtp10TokenBalance() {
         // 初始化请求参数
-        TokenGetBalanceRequest request = new TokenGetBalanceRequest();
+        Ctp10TokenGetBalanceRequest request = new Ctp10TokenGetBalanceRequest();
         request.setContractAddress("buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq");
         request.setTokenOwner("buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp");
 
         // 调用getBalance接口
-        TokenGetBalanceResponse response = sdk.getTokenService().getBalance(request);
+        Ctp10TokenGetBalanceResponse response = sdk.getCtp10TokenService().getBalance(request);
         if (response.getErrorCode() == 0) {
             TokenGetBalanceResult result = response.getResult();
             System.out.println(result.getBalance());
@@ -371,6 +380,22 @@ public class DigitalAssetsDemo {
 
         // 调用getInfo接口
         ContractGetInfoResponse response = sdk.getContractService().getInfo(request);
+        if (response.getErrorCode() == 0) {
+            System.out.println(JSON.toJSONString(response.getResult(), true));
+        } else {
+            System.out.println("error: " + response.getErrorDesc());
+        }
+    }
+
+    @Test
+    public void getContractAddress() {
+        // 初始化请求参数
+        String hash = "44246c5ba1b8b835a5cbc29bdc9454cdb9a9d049870e41227f2dcfbcf7a07689";
+        ContractGetAddressRequest request = new ContractGetAddressRequest();
+        request.setHash(hash);
+
+        // 调用getAddress接口
+        ContractGetAddressResponse response = sdk.getContractService().getAddress(request);
         if (response.getErrorCode() == 0) {
             System.out.println(JSON.toJSONString(response.getResult(), true));
         } else {
@@ -527,7 +552,7 @@ public class DigitalAssetsDemo {
      */
     @Test
     public void getTxByHash() {
-        String txHash = "1653f54fbba1134f7e35acee49592a7c29384da10f2f629c9a214f6e54747705";
+        String txHash = "44246c5ba1b8b835a5cbc29bdc9454cdb9a9d049870e41227f2dcfbcf7a07689";
         // 初始化请求参数
         TransactionGetInfoRequest request = new TransactionGetInfoRequest();
         request.setHash(txHash);
@@ -797,7 +822,7 @@ public class DigitalAssetsDemo {
         //设置最多费用 0.01BU ，固定填写
         Long feeLimit = ToBaseUnit.BU2MO("0.01");
         // 交易发起账户Nonce + 1
-        Long nonce = 63L;
+        Long nonce = 64L;
 
         // 1. 获取交易发送账户地址
         String accountAddresss = getAddressByPrivateKey(accountPrivateKey);
@@ -805,6 +830,8 @@ public class DigitalAssetsDemo {
         // 2. 构建setPrivilege操作
         AccountSetPrivilegeOperation operation = new AccountSetPrivilegeOperation();
         operation.setSourceAddress(accountAddresss);
+        System.out.println(Integer.MAX_VALUE * 2L);
+        operation.setMasterWeight("4294967295");
         Signer signer = new Signer();
         signer.setAddress("buQsurH1M4rjLkfjzkxR9KXJ6jSu2r9xBNEw");
         signer.setWeight(0L);
@@ -895,7 +922,7 @@ public class DigitalAssetsDemo {
         assetSendOperation.setCode(assetCode);
         assetSendOperation.setIssuer(assetIssuer);
         assetSendOperation.setAmount(amount);
-        assetSendOperation.setMetadata("send asset");
+        assetSendOperation.setMetadata("send token");
 
         // 记录txhash ，以便后续再次确认交易真实结果
         // 推荐5个区块后再次通过txhash再次调用`根据交易Hash获取交易信息`(参考示例：getTxByHash()）来确认交易终态结果
@@ -971,7 +998,7 @@ public class DigitalAssetsDemo {
         String sourceAddress = getAddressByPrivateKey(sourcePrivateKey);
 
         // 2. 构建issueToken操作
-        TokenIssueOperation operation = new TokenIssueOperation();
+        Ctp10TokenIssueOperation operation = new Ctp10TokenIssueOperation();
         operation.setSourceAddress(sourceAddress);
         operation.setDecimals(decimals);
         operation.setInitBalance(initBalance);
@@ -1012,7 +1039,7 @@ public class DigitalAssetsDemo {
         String invokeAddress = getAddressByPrivateKey(invokePrivateKey);
 
         // 2. 构建assignToken操作
-        TokenAssignOperation operation = new TokenAssignOperation();
+        Ctp10TokenAssignOperation operation = new Ctp10TokenAssignOperation();
         operation.setSourceAddress(invokeAddress);
         operation.setContractAddress(contractAddress);
         operation.setDestAddress(destAddress);
@@ -1051,7 +1078,7 @@ public class DigitalAssetsDemo {
         String invokeAddress = getAddressByPrivateKey(invokePrivateKey);
 
         // 2. 构建transferToken操作
-        TokenTransferOperation operation = new TokenTransferOperation();
+        Ctp10TokenTransferOperation operation = new Ctp10TokenTransferOperation();
         operation.setSourceAddress(invokeAddress);
         operation.setContractAddress(contractAddress);
         operation.setDestAddress(destAddress);
@@ -1092,7 +1119,7 @@ public class DigitalAssetsDemo {
         String invokeAddress = getAddressByPrivateKey(invokePrivateKey);
 
         // 2. 构建transferToken操作
-        TokenTransferFromOperation operation = new TokenTransferFromOperation();
+        Ctp10TokenTransferFromOperation operation = new Ctp10TokenTransferFromOperation();
         operation.setSourceAddress(invokeAddress);
         operation.setContractAddress(contractAddress);
         operation.setFromAddress(fromAddress);
@@ -1132,7 +1159,7 @@ public class DigitalAssetsDemo {
         String invokeAddress = getAddressByPrivateKey(invokePrivateKey);
 
         // 2. 构建transferToken操作
-        TokenApproveOperation operation = new TokenApproveOperation();
+        Ctp10TokenApproveOperation operation = new Ctp10TokenApproveOperation();
         operation.setSourceAddress(invokeAddress);
         operation.setContractAddress(contractAddress);
         operation.setSpender(spender);
@@ -1169,7 +1196,7 @@ public class DigitalAssetsDemo {
         String invokeAddress = getAddressByPrivateKey(invokePrivateKey);
 
         // 2. 构建changeOwner操作
-        TokenChangeOwnerOperation operation = new TokenChangeOwnerOperation();
+        Ctp10TokenChangeOwnerOperation operation = new Ctp10TokenChangeOwnerOperation();
         operation.setSourceAddress(invokeAddress);
         operation.setContractAddress(contractAddress);
         operation.setTokenOwner(tokenOwner);
@@ -1189,17 +1216,17 @@ public class DigitalAssetsDemo {
     @Test
     public void createContract() {
         // 待创建合约的账户私钥
-        String createPrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq";
+        String createPrivateKey = "privbUdwf6xV1d5Jvkcakuz8T8nfFn4U7d5s55VUbwmi79DPxqNWSD1n";
         // 合约账户初始化资产，单位MO，1 BU = 10^8 MO
-        Long initBalance = ToBaseUnit.BU2MO("0.1");
+        Long initBalance = 100000000L;//ToBaseUnit.BU2MO("0.1");
         // 合约代码
-        String payload = "\"use strict\";function init(initInput){return;} function main(input){getBalance(thisAddress);} function query(input) {return;}";
+        String payload = "\n          \"use strict\";\n          function init(bar)\n          {\n            /*init whatever you want*/\n            return;\n          }\n          \n          function main(input)\n          {\n            let para = JSON.parse(input);\n            if (para.do_foo)\n            {\n              let x = {\n                \'hello\' : \'world\'\n              };\n            }\n          }\n          \n          function query(input)\n          { \n            return input;\n          }\n        ";
         // 固定写 1000L ，单位是MO
         Long gasPrice = 1000L;
         // 设置最多费用 10.01BU ，固定填写
-        Long feeLimit = ToBaseUnit.BU2MO("10.01");
+        Long feeLimit = 1015076000L;//ToBaseUnit.BU2MO("10.01");
         // 交易发起账户Nonce + 1
-        Long nonce = 56L;
+        Long nonce = 18L;
         // 合约init函数入参
         String initInput = "";
 
@@ -1212,7 +1239,7 @@ public class DigitalAssetsDemo {
         operation.setInitBalance(initBalance);
         operation.setPayload(payload);
         operation.setInitInput(initInput);
-        operation.setMetadata("create contract");
+        //operation.setMetadata("create contract");
 
         // 记录txhash ，以便后续再次确认交易真实结果
         // 推荐5个区块后再次通过txhash再次调用`根据交易Hash获取交易信息`(参考示例：getTxByHash()）来确认交易终态结果
@@ -1258,7 +1285,7 @@ public class DigitalAssetsDemo {
         operation.setIssuer(assetIssuer);
         operation.setAssetAmount(amount);
         operation.setInput(input);
-        operation.setMetadata("send asset");
+        operation.setMetadata("send token");
 
         // 记录txhash ，以便后续再次确认交易真实结果
         // 推荐5个区块后再次通过txhash再次调用`根据交易Hash获取交易信息`(参考示例：getTxByHash()）来确认交易终态结果
@@ -1363,7 +1390,7 @@ public class DigitalAssetsDemo {
         transactionBuildBlobRequest.setFeeLimit(feeLimit);
         transactionBuildBlobRequest.setGasPrice(gasPrice);
         transactionBuildBlobRequest.addOperation(operation);
-        transactionBuildBlobRequest.setMetadata("abc");
+        //transactionBuildBlobRequest.setMetadata("abc");
 
         // 4. 获取交易BLob串
         String transactionBlob;
@@ -1388,6 +1415,15 @@ public class DigitalAssetsDemo {
             System.out.println("error: " + transactionSignResponse.getErrorDesc());
             return null;
         }
+//        System.out.println(transactionBlob);
+//
+//        Chain.Transaction tran = null;
+//        try {
+//            tran = Chain.Transaction.parseFrom(HexFormat.hexToByte(transactionBlob));
+//        } catch (InvalidProtocolBufferException e) {
+//            e.printStackTrace();
+//        }
+//        System.out.println(tran);
 
         // 6. 广播交易
         TransactionSubmitRequest transactionSubmitRequest = new TransactionSubmitRequest();

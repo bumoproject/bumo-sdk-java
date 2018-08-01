@@ -2,24 +2,24 @@ package io.bumo.model.response;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import io.bumo.exception.SdkError;
-import io.bumo.model.response.result.TokenGetTotalSupplyResult;
+import io.bumo.model.response.result.TokenAllowanceResult;
 
 /**
  * @Author riven
- * @Date 2018/7/6 16:13
+ * @Date 2018/7/6 12:43
  */
-public class TokenGetTotalSupplyResponse extends BaseResponse {
+public class Ctp10TokenAllowanceResponse extends BaseResponse {
     @JSONField(name = "result")
-    private TokenGetTotalSupplyResult result;
+    private TokenAllowanceResult result;
 
     /**
      * @Author riven
      * @Method getResult
      * @Params []
-     * @Return io.bumo.model.response.result.TokenGetNameResult
-     * @Date 2018/7/6 15:36
+     * @Return io.bumo.model.response.result.TokenAllowanceResult
+     * @Date 2018/7/6 12:44
      */
-    public TokenGetTotalSupplyResult getResult() {
+    public TokenAllowanceResult getResult() {
         return result;
     }
 
@@ -28,9 +28,9 @@ public class TokenGetTotalSupplyResponse extends BaseResponse {
      * @Method setResult
      * @Params [result]
      * @Return void
-     * @Date 2018/7/6 15:36
+     * @Date 2018/7/6 12:44
      */
-    public void setResult(TokenGetTotalSupplyResult result) {
+    public void setResult(TokenAllowanceResult result) {
         this.result = result;
     }
 
@@ -41,7 +41,7 @@ public class TokenGetTotalSupplyResponse extends BaseResponse {
      * @Return void
      * @Date 2018/7/4 15:07
      */
-    public void buildResponse(SdkError sdkError, TokenGetTotalSupplyResult result) {
+    public void buildResponse(SdkError sdkError, TokenAllowanceResult result) {
         this.errorCode = sdkError.getCode();
         this.errorDesc = sdkError.getDescription();
         this.result = result;
@@ -54,7 +54,7 @@ public class TokenGetTotalSupplyResponse extends BaseResponse {
      * @Return void
      * @Date 2018/7/4 15:07
      */
-    public void buildResponse(int errorCode, String errorDesc, TokenGetTotalSupplyResult result) {
+    public void buildResponse(int errorCode, String errorDesc, TokenAllowanceResult result) {
         this.errorCode = errorCode;
         this.errorDesc = errorDesc;
         this.result = result;

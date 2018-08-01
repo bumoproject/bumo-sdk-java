@@ -934,17 +934,17 @@ public final class Chain {
         getDestAddressBytes();
 
         /**
-         * <code>.protocol.Asset asset = 2;</code>
+         * <code>.protocol.Asset token = 2;</code>
          */
         boolean hasAsset();
 
         /**
-         * <code>.protocol.Asset asset = 2;</code>
+         * <code>.protocol.Asset token = 2;</code>
          */
         io.bumo.crypto.protobuf.Chain.Asset getAsset();
 
         /**
-         * <code>.protocol.Asset asset = 2;</code>
+         * <code>.protocol.Asset token = 2;</code>
          */
         io.bumo.crypto.protobuf.Chain.AssetOrBuilder getAssetOrBuilder();
 
@@ -8866,21 +8866,21 @@ public final class Chain {
         }
 
         /**
-         * <code>.protocol.Asset asset = 2;</code>
+         * <code>.protocol.Asset token = 2;</code>
          */
         public boolean hasAsset() {
             return asset_ != null;
         }
 
         /**
-         * <code>.protocol.Asset asset = 2;</code>
+         * <code>.protocol.Asset token = 2;</code>
          */
         public io.bumo.crypto.protobuf.Chain.Asset getAsset() {
             return asset_ == null ? io.bumo.crypto.protobuf.Chain.Asset.getDefaultInstance() : asset_;
         }
 
         /**
-         * <code>.protocol.Asset asset = 2;</code>
+         * <code>.protocol.Asset token = 2;</code>
          */
         public io.bumo.crypto.protobuf.Chain.AssetOrBuilder getAssetOrBuilder() {
             return getAsset();
@@ -9272,14 +9272,14 @@ public final class Chain {
             }
 
             /**
-             * <code>.protocol.Asset asset = 2;</code>
+             * <code>.protocol.Asset token = 2;</code>
              */
             public boolean hasAsset() {
                 return assetBuilder_ != null || asset_ != null;
             }
 
             /**
-             * <code>.protocol.Asset asset = 2;</code>
+             * <code>.protocol.Asset token = 2;</code>
              */
             public io.bumo.crypto.protobuf.Chain.Asset getAsset() {
                 if (assetBuilder_ == null) {
@@ -9290,7 +9290,7 @@ public final class Chain {
             }
 
             /**
-             * <code>.protocol.Asset asset = 2;</code>
+             * <code>.protocol.Asset token = 2;</code>
              */
             public Builder setAsset(
                     io.bumo.crypto.protobuf.Chain.Asset.Builder builderForValue) {
@@ -9305,7 +9305,7 @@ public final class Chain {
             }
 
             /**
-             * <code>.protocol.Asset asset = 2;</code>
+             * <code>.protocol.Asset token = 2;</code>
              */
             public Builder setAsset(io.bumo.crypto.protobuf.Chain.Asset value) {
                 if (assetBuilder_ == null) {
@@ -9322,7 +9322,7 @@ public final class Chain {
             }
 
             /**
-             * <code>.protocol.Asset asset = 2;</code>
+             * <code>.protocol.Asset token = 2;</code>
              */
             public Builder mergeAsset(io.bumo.crypto.protobuf.Chain.Asset value) {
                 if (assetBuilder_ == null) {
@@ -9341,7 +9341,7 @@ public final class Chain {
             }
 
             /**
-             * <code>.protocol.Asset asset = 2;</code>
+             * <code>.protocol.Asset token = 2;</code>
              */
             public Builder clearAsset() {
                 if (assetBuilder_ == null) {
@@ -9356,7 +9356,7 @@ public final class Chain {
             }
 
             /**
-             * <code>.protocol.Asset asset = 2;</code>
+             * <code>.protocol.Asset token = 2;</code>
              */
             public io.bumo.crypto.protobuf.Chain.Asset.Builder getAssetBuilder() {
 
@@ -9365,7 +9365,7 @@ public final class Chain {
             }
 
             /**
-             * <code>.protocol.Asset asset = 2;</code>
+             * <code>.protocol.Asset token = 2;</code>
              */
             public io.bumo.crypto.protobuf.Chain.AssetOrBuilder getAssetOrBuilder() {
                 if (assetBuilder_ != null) {
@@ -9377,7 +9377,7 @@ public final class Chain {
             }
 
             /**
-             * <code>.protocol.Asset asset = 2;</code>
+             * <code>.protocol.Asset token = 2;</code>
              */
             private com.google.protobuf.SingleFieldBuilderV3<
                     io.bumo.crypto.protobuf.Chain.Asset, io.bumo.crypto.protobuf.Chain.Asset.Builder, io.bumo.crypto.protobuf.Chain.AssetOrBuilder>

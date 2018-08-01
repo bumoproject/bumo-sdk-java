@@ -10,7 +10,7 @@ public class AssetSendInfo {
     @JSONField(name = "dest_address")
     private String destAddress;
 
-    @JSONField(name = "asset")
+    @JSONField(name = "token")
     private AssetInfo asset;
 
     @JSONField(name = "input")
@@ -52,7 +52,7 @@ public class AssetSendInfo {
     /**
      * @Author riven
      * @Method setAsset
-     * @Params [asset]
+     * @Params [token]
      * @Return void
      * @Date 2018/7/5 16:42
      */

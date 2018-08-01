@@ -25,7 +25,7 @@ public class AssetGetInfoResult {
     /**
      * @Author riven
      * @Method setAsset
-     * @Params [asset]
+     * @Params [token]
      * @Return void
      * @Date 2018/7/5 11:46
      */

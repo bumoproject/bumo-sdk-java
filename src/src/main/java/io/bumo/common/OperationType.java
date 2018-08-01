@@ -17,10 +17,10 @@ public enum OperationType {
     // Set privilege
     ACCOUNT_SET_PRIVILEGE(3),
 
-    // Issue asset
+    // Issue token
     ASSET_ISSUE(4),
 
-    // Send asset
+    // Send token
     ASSET_SEND(5),
 
     // Send bu
@@ -47,7 +47,7 @@ public enum OperationType {
     // Create contract
     CONTRACT_CREATE(13),
 
-    // Invoke contract by sending asset
+    // Invoke contract by sending token
     CONTRACT_INVOKE_BY_ASSET(14),
 
     // Invoke contract by sending bu

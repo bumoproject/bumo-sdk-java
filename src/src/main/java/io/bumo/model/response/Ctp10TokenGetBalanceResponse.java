@@ -8,7 +8,7 @@ import io.bumo.model.response.result.TokenGetBalanceResult;
  * @Author riven
  * @Date 2018/7/6 15:35
  */
-public class TokenGetBalanceResponse extends BaseResponse {
+public class Ctp10TokenGetBalanceResponse extends BaseResponse {
     @JSONField(name = "result")
     private TokenGetBalanceResult result;
 

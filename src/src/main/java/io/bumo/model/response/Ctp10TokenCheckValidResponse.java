@@ -2,24 +2,24 @@ package io.bumo.model.response;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import io.bumo.exception.SdkError;
-import io.bumo.model.response.result.TokenGetNameResult;
+import io.bumo.model.response.result.TokenCheckValidResult;
 
 /**
  * @Author riven
- * @Date 2018/7/6 15:35
+ * @Date 2018/7/15 15:33
  */
-public class TokenGetNameResponse extends BaseResponse {
+public class Ctp10TokenCheckValidResponse extends BaseResponse {
     @JSONField(name = "result")
-    private TokenGetNameResult result;
+    private TokenCheckValidResult result;
 
     /**
      * @Author riven
      * @Method getResult
      * @Params []
-     * @Return io.bumo.model.response.result.TokenGetNameResult
-     * @Date 2018/7/6 15:36
+     * @Return io.bumo.model.response.result.TokenCheckValidResult
+     * @Date 2018/7/6 12:44
      */
-    public TokenGetNameResult getResult() {
+    public TokenCheckValidResult getResult() {
         return result;
     }
 
@@ -28,9 +28,9 @@ public class TokenGetNameResponse extends BaseResponse {
      * @Method setResult
      * @Params [result]
      * @Return void
-     * @Date 2018/7/6 15:36
+     * @Date 2018/7/6 12:44
      */
-    public void setResult(TokenGetNameResult result) {
+    public void setResult(TokenCheckValidResult result) {
         this.result = result;
     }
 
@@ -41,7 +41,7 @@ public class TokenGetNameResponse extends BaseResponse {
      * @Return void
      * @Date 2018/7/4 15:07
      */
-    public void buildResponse(SdkError sdkError, TokenGetNameResult result) {
+    public void buildResponse(SdkError sdkError, TokenCheckValidResult result) {
         this.errorCode = sdkError.getCode();
         this.errorDesc = sdkError.getDescription();
         this.result = result;
@@ -54,7 +54,7 @@ public class TokenGetNameResponse extends BaseResponse {
      * @Return void
      * @Date 2018/7/4 15:07
      */
-    public void buildResponse(int errorCode, String errorDesc, TokenGetNameResult result) {
+    public void buildResponse(int errorCode, String errorDesc, TokenCheckValidResult result) {
         this.errorCode = errorCode;
         this.errorDesc = errorDesc;
         this.result = result;
