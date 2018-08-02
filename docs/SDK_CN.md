@@ -2552,6 +2552,7 @@ INVALID_INITBALANCE_ERROR|11004|InitBalance must be between 1 and Long.MAX_VALUE
 SOURCEADDRESS_EQUAL_DESTADDRESS_ERROR|11005|SourceAddress cannot be equal to destAddress
 INVALID_ADDRESS_ERROR|11006|Invalid address
 CONNECTNETWORK_ERROR|11007|Fail to connect network
+INVALID_ISSUE_AMOUNT_ERROR|11008|Amount of the token to be issued must be between 1 and Long.MAX_VALUE
 NO_ASSET_ERROR|11009|The account does not have the asset
 NO_METADATA_ERROR|11010|The account does not have the metadata
 INVALID_DATAKEY_ERROR|11011|The length of key must be between 1 and 1024
@@ -2580,8 +2581,10 @@ SOURCEADDRESS_EQUAL_CONTRACTADDRESS_ERROR|11040|SourceAddress cannot be equal to
 INVALID_FROMADDRESS_ERROR|11041|Invalid fromAddress
 FROMADDRESS_EQUAL_DESTADDRESS_ERROR|11042|FromAddress cannot be equal to destAddress
 INVALID_SPENDER_ERROR|11043|Invalid spender
+PAYLOAD_EMPTY_ERROR|11044|Payload cannot be empty
 INVALID_LOG_TOPIC_ERROR|11045|The length of log topic must be between 1 and 128
 INVALID_LOG_DATA_ERROR|11046|The length of one of log data must be between 1 and 1024
+INVALID_CONTRACT_TYPE_ERROR|11047|Invalid contract type
 INVALID_NONCE_ERROR|11048|Nonce must be between 1 and Long.MAX_VALUE
 INVALID_GASPRICE_ERROR|11049|GasPrice must be between 1000 and Long.MAX_VALUE
 INVALID_FEELIMIT_ERROR|11050|FeeLimit must be between 1 and Long.MAX_VALUE
@@ -2593,6 +2596,7 @@ INVALID_HASH_ERROR|11055|Invalid transaction hash
 INVALID_BLOB_ERROR|11056|Invalid blob
 PRIVATEKEY_NULL_ERROR|11057|PrivateKeys cannot be empty
 PRIVATEKEY_ONE_ERROR|11058|One of privateKeys is invalid
+PUBLICKEY_NULL_ERROR|11061|PublicKey cannot be empty
 URL_EMPTY_ERROR|11062|Url cannot be empty
 CONTRACTADDRESS_CODE_BOTH_NULL_ERROR|11063|ContractAddress and code cannot be empty at the same time
 INVALID_OPTTYPE_ERROR|11064|OptType must be between 0 and 2
