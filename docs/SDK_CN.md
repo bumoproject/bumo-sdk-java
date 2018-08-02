@@ -288,7 +288,7 @@ if (0 == response.getErrorCode()) {
 
 ## 账户服务
 
-账户服务主要是账户相关的接口，包括5个接口：checkValid, getInfo, getNonce, getBalance, getAssets, getMetadata。
+账户服务主要是账户相关的接口，包括6个接口：checkValid, getInfo, getNonce, getBalance, getAssets, getMetadata。
 
 ### checkValid-账户
 > 接口说明
