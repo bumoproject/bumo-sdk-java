@@ -3,7 +3,6 @@ package io.bumo.token.impl;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.google.protobuf.ByteString;
-import io.bumo.token.Ctp10TokenService;
 import io.bumo.common.Constant;
 import io.bumo.common.General;
 import io.bumo.common.Tools;
@@ -13,16 +12,16 @@ import io.bumo.crypto.protobuf.Chain;
 import io.bumo.encryption.key.PublicKey;
 import io.bumo.exception.SDKException;
 import io.bumo.exception.SdkError;
-import io.bumo.model.request.Operation.*;
 import io.bumo.model.request.*;
+import io.bumo.model.request.Operation.*;
 import io.bumo.model.response.*;
 import io.bumo.model.response.result.*;
 import io.bumo.model.response.result.data.ContractInfo;
 import io.bumo.model.response.result.data.MetadataInfo;
 import io.bumo.model.response.result.data.TokenInfo;
+import io.bumo.token.Ctp10TokenService;
 
 import java.io.IOException;
-import java.math.BigInteger;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
@@ -65,13 +64,12 @@ public class Ctp10TokenServiceImpl implements Ctp10TokenService {
             }
             String supply = ctp10TokenIssueOperation.getSupply();
             if (Tools.isEmpty(supply)) {
-                throw new SDKException(SdkError.INVALID_TOKEN_TOTALSUPPLY_ERROR);
+                throw new SDKException(SdkError.INVALID_TOKEN_SUPPLY_ERROR);
             }
             Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
             boolean isNumber = pattern.matcher(supply).matches();
-            BigInteger bigInteger = new BigInteger(supply);
-            if (!isNumber || bigInteger.compareTo(BigInteger.valueOf(1L)) < 0 || bigInteger.compareTo(BigInteger.valueOf(Long.MAX_VALUE)) > 0) {
-                throw new SDKException(SdkError.INVALID_TOKEN_TOTALSUPPLY_ERROR);
+            if (!isNumber || Long.valueOf(supply) < 1 || Long.valueOf(supply) * decimals < 1) {
+                throw new SDKException(SdkError.INVALID_TOKEN_SUPPLY_ERROR);
             }
             String metadata = ctp10TokenIssueOperation.getMetadata();
             String payload = Constant.TOKEN_PAYLOAD;
@@ -107,6 +105,8 @@ public class Ctp10TokenServiceImpl implements Ctp10TokenService {
             accountThreshold.setTxThreshold(1);
         } catch (SDKException sdkException) {
             throw sdkException;
+        } catch (NumberFormatException exception) {
+            throw new SDKException(SdkError.INVALID_TOKEN_SUPPLY_ERROR);
         } catch (Exception exception) {
             throw new SDKException(SdkError.SYSTEM_ERROR);
         }
@@ -149,8 +149,7 @@ public class Ctp10TokenServiceImpl implements Ctp10TokenService {
             }
             Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
             boolean isNumber = pattern.matcher(tokenAmount).matches();
-            BigInteger bigInteger = new BigInteger(tokenAmount);
-            if (!isNumber || bigInteger.compareTo(BigInteger.valueOf(1L)) < 0 || bigInteger.compareTo(BigInteger.valueOf(Long.MAX_VALUE)) > 0) {
+            if (!isNumber || Long.valueOf(tokenAmount) < 1) {
                 throw new SDKException(SdkError.INVALID_TOKEN_AMOUNT_ERROR);
             }
             String metadata = ctp10TokenTransferOperation.getMetadata();
@@ -171,6 +170,8 @@ public class Ctp10TokenServiceImpl implements Ctp10TokenService {
             operation = invokeContract(sourceAddress, contractAddress, input.toJSONString(), metadata);
         } catch (SDKException sdkException) {
             throw sdkException;
+        } catch (NumberFormatException exception) {
+            throw new SDKException(SdkError.INVALID_TOKEN_AMOUNT_ERROR);
         } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
             throw new SDKException(SdkError.CONNECTNETWORK_ERROR);
         } catch (Exception exception) {
@@ -218,8 +219,7 @@ public class Ctp10TokenServiceImpl implements Ctp10TokenService {
             }
             Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
             boolean isNumber = pattern.matcher(tokenAmount).matches();
-            BigInteger bigInteger = new BigInteger(tokenAmount);
-            if (!isNumber || bigInteger.compareTo(BigInteger.valueOf(1L)) < 0 || bigInteger.compareTo(BigInteger.valueOf(Long.MAX_VALUE)) > 0) {
+            if (!isNumber || Long.valueOf(tokenAmount) < 1) {
                 throw new SDKException(SdkError.INVALID_TOKEN_AMOUNT_ERROR);
             }
             String metadata = ctp10TokenTransferFromOperation.getMetadata();
@@ -240,6 +240,8 @@ public class Ctp10TokenServiceImpl implements Ctp10TokenService {
             operation = invokeContract(sourceAddress, contractAddress, input.toJSONString(), metadata);
         } catch (SDKException sdkException) {
             throw sdkException;
+        } catch (NumberFormatException exception) {
+            throw new SDKException(SdkError.INVALID_TOKEN_AMOUNT_ERROR);
         } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
             throw new SDKException(SdkError.CONNECTNETWORK_ERROR);
         } catch (Exception exception) {
@@ -255,7 +257,7 @@ public class Ctp10TokenServiceImpl implements Ctp10TokenService {
      * @Return io.bumo.crypto.protobuf.Chain.Operation
      * @Date 2018/7/10 11:41
      */
-    public static Chain.Operation approve(Ctp10TokenApproveOperation ctp10TokenApproveOperation) throws SDKException {
+    public static Chain.Operation approve(Ctp10TokenApproveOperation ctp10TokenApproveOperation, String transSourceAddress) throws SDKException {
         Chain.Operation operation;
         try {
             String sourceAddress = ctp10TokenApproveOperation.getSourceAddress();
@@ -266,7 +268,7 @@ public class Ctp10TokenServiceImpl implements Ctp10TokenService {
             if (!PublicKey.isAddressValid(contractAddress)) {
                 throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
             }
-            if (!Tools.isEmpty(sourceAddress) && sourceAddress.equals(contractAddress)) {
+            if ((!Tools.isEmpty(sourceAddress) && sourceAddress.equals(contractAddress)) || transSourceAddress.equals(contractAddress)) {
                 throw new SDKException(SdkError.SOURCEADDRESS_EQUAL_CONTRACTADDRESS_ERROR);
             }
             String spender = ctp10TokenApproveOperation.getSpender();
@@ -279,8 +281,7 @@ public class Ctp10TokenServiceImpl implements Ctp10TokenService {
             }
             Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
             boolean isNumber = pattern.matcher(tokenAmount).matches();
-            BigInteger bigInteger = new BigInteger(tokenAmount);
-            if (!isNumber || bigInteger.compareTo(BigInteger.valueOf(1L)) < 0 || bigInteger.compareTo(BigInteger.valueOf(Long.MAX_VALUE)) > 0) {
+            if (!isNumber || Long.valueOf(tokenAmount) < 1) {
                 throw new SDKException(SdkError.INVALID_TOKEN_AMOUNT_ERROR);
             }
             String metadata = ctp10TokenApproveOperation.getMetadata();
@@ -299,6 +300,8 @@ public class Ctp10TokenServiceImpl implements Ctp10TokenService {
             operation = invokeContract(sourceAddress, contractAddress, input.toJSONString(), metadata);
         } catch (SDKException sdkException) {
             throw sdkException;
+        } catch (NumberFormatException exception) {
+            throw new SDKException(SdkError.INVALID_TOKEN_AMOUNT_ERROR);
         } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
             throw new SDKException(SdkError.CONNECTNETWORK_ERROR);
         } catch (Exception exception) {
@@ -314,7 +317,7 @@ public class Ctp10TokenServiceImpl implements Ctp10TokenService {
      * @Return io.bumo.crypto.protobuf.Chain.Operation
      * @Date 2018/7/10 11:41
      */
-    public static Chain.Operation assign(Ctp10TokenAssignOperation ctp10TokenAssignResponse) throws SDKException {
+    public static Chain.Operation assign(Ctp10TokenAssignOperation ctp10TokenAssignResponse, String transSourceAddress) throws SDKException {
         Chain.Operation operation;
         try {
             String sourceAddress = ctp10TokenAssignResponse.getSourceAddress();
@@ -325,7 +328,7 @@ public class Ctp10TokenServiceImpl implements Ctp10TokenService {
             if (!PublicKey.isAddressValid(contractAddress)) {
                 throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
             }
-            if (!Tools.isEmpty(sourceAddress) && sourceAddress.equals(contractAddress)) {
+            if ((!Tools.isEmpty(sourceAddress) && sourceAddress.equals(contractAddress)) || (transSourceAddress.equals(contractAddress))) {
                 throw new SDKException(SdkError.SOURCEADDRESS_EQUAL_CONTRACTADDRESS_ERROR);
             }
             String destAddress = ctp10TokenAssignResponse.getDestAddress();
@@ -338,8 +341,7 @@ public class Ctp10TokenServiceImpl implements Ctp10TokenService {
             }
             Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
             boolean isNumber = pattern.matcher(tokenAmount).matches();
-            BigInteger bigInteger = new BigInteger(tokenAmount);
-            if (!isNumber || bigInteger.compareTo(BigInteger.valueOf(1L)) < 0 || bigInteger.compareTo(BigInteger.valueOf(Long.MAX_VALUE)) > 0) {
+            if (!isNumber || Long.valueOf(tokenAmount) < 1) {
                 throw new SDKException(SdkError.INVALID_TOKEN_AMOUNT_ERROR);
             }
             String metadata = ctp10TokenAssignResponse.getMetadata();
@@ -358,6 +360,8 @@ public class Ctp10TokenServiceImpl implements Ctp10TokenService {
             operation = invokeContract(sourceAddress, contractAddress, input.toJSONString(), metadata);
         } catch (SDKException sdkException) {
             throw sdkException;
+        } catch (NumberFormatException exception) {
+            throw new SDKException(SdkError.INVALID_TOKEN_AMOUNT_ERROR);
         } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
             throw new SDKException(SdkError.CONNECTNETWORK_ERROR);
         } catch (Exception exception) {
@@ -373,7 +377,7 @@ public class Ctp10TokenServiceImpl implements Ctp10TokenService {
      * @Return io.bumo.crypto.protobuf.Chain.Operation
      * @Date 2018/7/10 11:41
      */
-    public static Chain.Operation changeOwner(Ctp10TokenChangeOwnerOperation ctp10TokenChangeOwnerOperation) {
+    public static Chain.Operation changeOwner(Ctp10TokenChangeOwnerOperation ctp10TokenChangeOwnerOperation, String transSourceAddress) {
         Chain.Operation operation;
         try {
             String sourceAddress = ctp10TokenChangeOwnerOperation.getSourceAddress();
@@ -384,7 +388,7 @@ public class Ctp10TokenServiceImpl implements Ctp10TokenService {
             if (!PublicKey.isAddressValid(contractAddress)) {
                 throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
             }
-            if (!Tools.isEmpty(sourceAddress) && sourceAddress.equals(contractAddress)) {
+            if ((!Tools.isEmpty(sourceAddress) && sourceAddress.equals(contractAddress)) || transSourceAddress.equals(contractAddress)) {
                 throw new SDKException(SdkError.SOURCEADDRESS_EQUAL_CONTRACTADDRESS_ERROR);
             }
             String tokenOwner = ctp10TokenChangeOwnerOperation.getTokenOwner();
@@ -423,7 +427,9 @@ public class Ctp10TokenServiceImpl implements Ctp10TokenService {
      */
     private static boolean checkTokenValid(String contractAddress) throws SDKException, KeyManagementException, NoSuchAlgorithmException, NoSuchProviderException, IOException {
         String key = "global_attribute";
-
+        if (Tools.isEmpty(General.url)) {
+            throw new SDKException(SdkError.URL_EMPTY_ERROR);
+        }
         String accountGetInfoUrl = General.accountGetMetadataUrl(contractAddress, key);
         String result = HttpKit.get(accountGetInfoUrl);
 
@@ -476,9 +482,14 @@ public class Ctp10TokenServiceImpl implements Ctp10TokenService {
             }
             Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
             boolean isNumber = pattern.matcher(totalSupply).matches();
-            if (!isNumber || (isNumber && Long.valueOf(totalSupply) < 1)) {
-                break;
+            try {
+                if (!isNumber || Long.valueOf(totalSupply) < 1) {
+                    throw new SDKException(SdkError.INVALID_TOKEN_SUPPLY_ERROR);
+                }
+            } catch (NumberFormatException exception) {
+                throw new SDKException(SdkError.INVALID_TOKEN_SUPPLY_ERROR);
             }
+
             String tokenOwner = tokenInfo.getContractOwner();
             if (!PublicKey.isAddressValid(tokenOwner)) {
                 break;
@@ -506,7 +517,7 @@ public class Ctp10TokenServiceImpl implements Ctp10TokenService {
         if (!Tools.isEmpty(metadata)) {
             contractInvokeByBUOperation.setMetadata(metadata);
         }
-        Chain.Operation operation = ContractServiceImpl.invokeByBU(contractInvokeByBUOperation);
+        Chain.Operation operation = ContractServiceImpl.invokeByBU(contractInvokeByBUOperation, sourceAddress);
         return operation;
     }
 

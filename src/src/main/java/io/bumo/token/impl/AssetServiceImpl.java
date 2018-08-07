@@ -2,7 +2,6 @@ package io.bumo.token.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.google.protobuf.ByteString;
-import io.bumo.token.AssetService;
 import io.bumo.common.Constant;
 import io.bumo.common.General;
 import io.bumo.common.Tools;
@@ -17,6 +16,7 @@ import io.bumo.model.request.Operation.AssetSendOperation;
 import io.bumo.model.response.AssetGetInfoResponse;
 import io.bumo.model.response.result.AssetGetInfoResult;
 import io.bumo.model.response.result.data.AssetInfo;
+import io.bumo.token.AssetService;
 
 import java.io.IOException;
 import java.security.KeyManagementException;
@@ -36,7 +36,7 @@ public class AssetServiceImpl implements AssetService {
      * @Date 2018/7/5 11:36
      */
     public static Chain.Operation issue(AssetIssueOperation assetIssueOperation) throws SDKException {
-        Chain.Operation.Builder operation;
+        Chain.Operation operation;
         try {
             if (Tools.isEmpty(assetIssueOperation)) {
                 throw new SDKException(SdkError.REQUEST_NULL_ERROR);
@@ -54,18 +54,8 @@ public class AssetServiceImpl implements AssetService {
                 throw new SDKException(SdkError.INVALID_ISSUE_AMOUNT_ERROR);
             }
             String metadata = assetIssueOperation.getMetadata();
-            operation = Chain.Operation.newBuilder();
             // build Operation
-            operation.setType(Chain.Operation.Type.ISSUE_ASSET);
-            if (!Tools.isEmpty(sourceAddress)) {
-                operation.setSourceAddress(sourceAddress);
-            }
-            if (!Tools.isEmpty(metadata)) {
-                operation.setMetadata(ByteString.copyFromUtf8(metadata));
-            }
-            Chain.OperationIssueAsset.Builder operationIssueAsset = operation.getIssueAssetBuilder();
-            operationIssueAsset.setCode(code);
-            operationIssueAsset.setAmount(amount);
+            operation = buildIssueOperation(sourceAddress, code, amount, metadata);
         } catch (SDKException sdkException) {
             throw sdkException;
         } catch (Exception e) {
@@ -73,7 +63,7 @@ public class AssetServiceImpl implements AssetService {
         }
 
 
-        return operation.build();
+        return operation;
     }
 
     /**
@@ -84,7 +74,7 @@ public class AssetServiceImpl implements AssetService {
      * @Date 2018/7/5 11:45
      */
     public static Chain.Operation send(AssetSendOperation assetSendOperation, String transSourceAddress) throws SDKException {
-        Chain.Operation.Builder operation = null;
+        Chain.Operation operation;
         try {
             if (Tools.isEmpty(assetSendOperation)) {
                 throw new SDKException(SdkError.REQUEST_NULL_ERROR);
@@ -109,33 +99,20 @@ public class AssetServiceImpl implements AssetService {
                 throw new SDKException(SdkError.INVALID_ISSUER_ADDRESS_ERROR);
             }
             Long amount = assetSendOperation.getAmount();
-            if (Tools.isEmpty(amount) || amount < 0) {
+            if (Tools.isEmpty(amount) || amount < 1) {
                 throw new SDKException(SdkError.INVALID_ASSET_AMOUNT_ERROR);
             }
             String metadata = assetSendOperation.getMetadata();
             // build Operation
-            operation = Chain.Operation.newBuilder();
-            operation.setType(Chain.Operation.Type.PAY_ASSET);
-            if (!Tools.isEmpty(sourceAddress)) {
-                operation.setSourceAddress(sourceAddress);
-            }
-            if (!Tools.isEmpty(metadata)) {
-                operation.setMetadata(ByteString.copyFromUtf8(metadata));
-            }
-            Chain.OperationPayAsset.Builder operationPayAsset = operation.getPayAssetBuilder();
-            operationPayAsset.setDestAddress(destAddress);
-            Chain.Asset.Builder asset = operationPayAsset.getAssetBuilder();
-            Chain.AssetKey.Builder assetKey = asset.getKeyBuilder();
-            assetKey.setCode(code);
-            assetKey.setIssuer(issuer);
-            asset.setAmount(amount);
+            operation = buildSendOperation(sourceAddress, destAddress, code, issuer, amount, metadata);
+
         } catch (SDKException sdkException) {
             throw sdkException;
         } catch (Exception exception) {
             throw new SDKException(SdkError.SYSTEM_ERROR);
         }
 
-        return operation.build();
+        return operation;
     }
 
     /**
@@ -166,6 +143,9 @@ public class AssetServiceImpl implements AssetService {
             if (!PublicKey.isAddressValid(issuer)) {
                 throw new SDKException(SdkError.INVALID_ISSUER_ADDRESS_ERROR);
             }
+            if (Tools.isEmpty(General.url)) {
+                throw new SDKException(SdkError.URL_EMPTY_ERROR);
+            }
             String accountGetInfoUrl = General.assetGetUrl(address, code, issuer);
             String result = HttpKit.get(accountGetInfoUrl);
             assetGetResponse = JSON.parseObject(result, AssetGetInfoResponse.class);
@@ -191,5 +171,41 @@ public class AssetServiceImpl implements AssetService {
         }
 
         return assetGetResponse;
+    }
+
+    public static Chain.Operation buildIssueOperation(String sourceAddress, String code, long amount, String metadata) {
+        Chain.Operation.Builder operation = Chain.Operation.newBuilder();
+        // build Operation
+        operation.setType(Chain.Operation.Type.ISSUE_ASSET);
+        if (!Tools.isEmpty(sourceAddress)) {
+            operation.setSourceAddress(sourceAddress);
+        }
+        if (!Tools.isEmpty(metadata)) {
+            operation.setMetadata(ByteString.copyFromUtf8(metadata));
+        }
+        Chain.OperationIssueAsset.Builder operationIssueAsset = operation.getIssueAssetBuilder();
+        operationIssueAsset.setCode(code);
+        operationIssueAsset.setAmount(amount);
+        return operation.build();
+    }
+
+    public static Chain.Operation buildSendOperation(String sourceAddress, String destAddress, String code, String issuer, long amount, String metadata) {
+        Chain.Operation.Builder operation = Chain.Operation.newBuilder();
+        operation = Chain.Operation.newBuilder();
+        operation.setType(Chain.Operation.Type.PAY_ASSET);
+        if (!Tools.isEmpty(sourceAddress)) {
+            operation.setSourceAddress(sourceAddress);
+        }
+        if (!Tools.isEmpty(metadata)) {
+            operation.setMetadata(ByteString.copyFromUtf8(metadata));
+        }
+        Chain.OperationPayAsset.Builder operationPayAsset = operation.getPayAssetBuilder();
+        operationPayAsset.setDestAddress(destAddress);
+        Chain.Asset.Builder asset = operationPayAsset.getAssetBuilder();
+        Chain.AssetKey.Builder assetKey = asset.getKeyBuilder();
+        assetKey.setCode(code);
+        assetKey.setIssuer(issuer);
+        asset.setAmount(amount);
+        return operation.build();
     }
 }

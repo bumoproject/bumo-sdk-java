@@ -71,4 +71,13 @@ public interface AccountService {
      * @Date 2018/7/15 15:02
      */
     public AccountGetMetadataResponse getMetadata(AccountGetMetadataRequest accountGetMetadataRequest);
+
+    /**
+     * @Author riven
+     * @Method checkActivated
+     * @Params [accountCheckActivatedRequst]
+     * @Return io.bumo.model.response.AccountCheckActivatedResponse
+     * @Date 2018/8/6 17:44
+     */
+    public AccountCheckActivatedResponse checkActivated(AccountCheckActivatedRequst accountCheckActivatedRequst);
 }

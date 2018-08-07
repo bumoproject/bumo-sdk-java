@@ -14,7 +14,7 @@ public class TransactionBuildBlobRequest {
     private Long gasPrice;
     private Long feeLimit;
     private BaseOperation[] operations;
-    private Long celLedgerSeq;
+    private Long ceilLedgerSeq;
     private String metadata;
 
     /**
@@ -150,24 +150,24 @@ public class TransactionBuildBlobRequest {
 
     /**
      * @Author riven
-     * @Method getCelLedgerSeq
+     * @Method getCeilLedgerSeq
      * @Params []
      * @Return java.lang.String
      * @Date 2018/7/5 17:23
      */
-    public Long getCelLedgerSeq() {
-        return celLedgerSeq;
+    public Long getCeilLedgerSeq() {
+        return ceilLedgerSeq;
     }
 
     /**
      * @Author riven
-     * @Method setCelLedgerSeq
-     * @Params [celLedgerSeq]
+     * @Method setCeilLedgerSeq
+     * @Params [ceilLedgerSeq]
      * @Return void
      * @Date 2018/7/5 17:23
      */
-    public void setCelLedgerSeq(Long celLedgerSeq) {
-        this.celLedgerSeq = celLedgerSeq;
+    public void setCeilLedgerSeq(Long ceilLedgerSeq) {
+        this.ceilLedgerSeq = ceilLedgerSeq;
     }
 
     /**

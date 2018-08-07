@@ -22,7 +22,10 @@ import io.bumo.model.request.Operation.ContractCreateOperation;
 import io.bumo.model.request.Operation.ContractInvokeByAssetOperation;
 import io.bumo.model.request.Operation.ContractInvokeByBUOperation;
 import io.bumo.model.response.*;
-import io.bumo.model.response.result.*;
+import io.bumo.model.response.result.ContractCallResult;
+import io.bumo.model.response.result.ContractCheckValidResult;
+import io.bumo.model.response.result.ContractGetAddressResult;
+import io.bumo.model.response.result.ContractGetInfoResult;
 import io.bumo.model.response.result.data.ContractAddressInfo;
 import io.bumo.model.response.result.data.ContractInfo;
 import io.bumo.model.response.result.data.TransactionHistory;
@@ -110,7 +113,7 @@ public class ContractServiceImpl implements ContractService {
      * @Return io.bumo.model.response.ContractInvokeByAssetResponse
      * @Date 2018/7/5 14:30
      */
-    public static Chain.Operation invokeByAsset(ContractInvokeByAssetOperation contractInvokeByAssetOperation) throws SDKException {
+    public static Chain.Operation invokeByAsset(ContractInvokeByAssetOperation contractInvokeByAssetOperation, String transSourceAddress) throws SDKException {
         Chain.Operation.Builder operation;
         try {
             String sourceAddress = contractInvokeByAssetOperation.getSourceAddress();
@@ -121,7 +124,7 @@ public class ContractServiceImpl implements ContractService {
             if (!PublicKey.isAddressValid(contractAddress)) {
                 throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
             }
-            if (!Tools.isEmpty(sourceAddress) && sourceAddress.equals(contractAddress)) {
+            if ((!Tools.isEmpty(sourceAddress) && sourceAddress.equals(contractAddress)) || transSourceAddress.equals(contractAddress)) {
                 throw new SDKException(SdkError.SOURCEADDRESS_EQUAL_CONTRACTADDRESS_ERROR);
             }
             String code = contractInvokeByAssetOperation.getCode();
@@ -179,7 +182,7 @@ public class ContractServiceImpl implements ContractService {
      * @Return io.bumo.model.response.ContractInvokeByBUResponse
      * @Date 2018/7/5 15:28
      */
-    public static Chain.Operation invokeByBU(ContractInvokeByBUOperation contractInvokeByBUOperation) throws SDKException {
+    public static Chain.Operation invokeByBU(ContractInvokeByBUOperation contractInvokeByBUOperation, String transSourceAddress) throws SDKException {
         Chain.Operation.Builder operation;
         try {
             String sourceAddress = contractInvokeByBUOperation.getSourceAddress();
@@ -190,7 +193,7 @@ public class ContractServiceImpl implements ContractService {
             if (!PublicKey.isAddressValid(contractAddress)) {
                 throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
             }
-            if (!Tools.isEmpty(sourceAddress) && sourceAddress.equals(contractAddress)) {
+            if ((!Tools.isEmpty(sourceAddress) && sourceAddress.equals(contractAddress)) || transSourceAddress.equals(contractAddress)) {
                 throw new SDKException(SdkError.SOURCEADDRESS_EQUAL_CONTRACTADDRESS_ERROR);
             }
             Long buAmount = contractInvokeByBUOperation.getBuAmount();
@@ -230,6 +233,9 @@ public class ContractServiceImpl implements ContractService {
     public static ContractCallResponse callContract(String sourceAddress, String contractAddress, Integer optType, String code,
                                                     String input, Long contractBalance, Long gasPrice, Long feeLimit)
             throws KeyManagementException, NoSuchAlgorithmException, NoSuchProviderException, IOException {
+        if (Tools.isEmpty(General.url)) {
+            throw new SDKException(SdkError.URL_EMPTY_ERROR);
+        }
         JSONObject params = new JSONObject();
         params.put("opt_type", optType);
         params.put("fee_limit", feeLimit);
@@ -258,6 +264,9 @@ public class ContractServiceImpl implements ContractService {
     }
 
     private static ContractGetInfoResponse getContractInfo(String contractAddress) throws KeyManagementException, NoSuchAlgorithmException, NoSuchProviderException, IOException, SDKException {
+        if (Tools.isEmpty(General.url)) {
+            throw new SDKException(SdkError.URL_EMPTY_ERROR);
+        }
         ContractGetInfoResponse contractGetInfoResponse;
         String contractGetInfoUrl = General.accountGetInfoUrl(contractAddress);
         String result = HttpKit.get(contractGetInfoUrl);
@@ -377,6 +386,9 @@ public class ContractServiceImpl implements ContractService {
             if (!Tools.isNULL(contractAddress) && !contractAddress.isEmpty() && !PublicKey.isAddressValid(contractAddress)) {
                 throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
             }
+            if (!Tools.isEmpty(sourceAddress) && !Tools.isNULL(contractAddress) && sourceAddress.equals(contractAddress)) {
+                throw new SDKException(SdkError.SOURCEADDRESS_EQUAL_CONTRACTADDRESS_ERROR);
+            }
             String code = contractCallRequest.getCode();
             if (Tools.isEmpty(contractAddress) && Tools.isEmpty(code)) {
                 throw new SDKException(SdkError.CONTRACTADDRESS_CODE_BOTH_NULL_ERROR);
@@ -425,7 +437,13 @@ public class ContractServiceImpl implements ContractService {
             }
             SdkError.checkErrorCode(transactionHistory.getErrorCode(), transactionHistory.getErrorDesc());
             String contractAddress = transactionHistory.getErrorDesc();
+            if (Tools.isEmpty(contractAddress)) {
+                throw new SDKException(SdkError.INVALID_CONTRACT_HASH_ERROR);
+            }
             List<ContractAddressInfo> contractAddressInfos = JSONArray.parseArray(contractAddress, ContractAddressInfo.class);
+            if (Tools.isEmpty(contractAddressInfos)) {
+                throw new SDKException(SdkError.INVALID_CONTRACT_HASH_ERROR);
+            }
             contractGetAddressResult.setContractAddressInfos(contractAddressInfos);
             contractGetAddressResponse.buildResponse(SdkError.SUCCESS, contractGetAddressResult);
         } catch (SDKException apiException) {
