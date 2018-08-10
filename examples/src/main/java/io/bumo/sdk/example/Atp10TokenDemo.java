@@ -1,16 +1,19 @@
 package io.bumo.sdk.example;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import io.bumo.SDK;
 import io.bumo.common.ToBaseUnit;
 import io.bumo.encryption.key.PrivateKey;
 import io.bumo.model.request.TransactionBuildBlobRequest;
+import io.bumo.model.request.TransactionGetInfoRequest;
 import io.bumo.model.request.TransactionSignRequest;
 import io.bumo.model.request.TransactionSubmitRequest;
-import io.bumo.model.request.operation.Atp10TokenIssueOperation;
+import io.bumo.model.request.operation.AssetIssueOperation;
+import io.bumo.model.request.operation.AssetSendOperation;
 import io.bumo.model.request.operation.BaseOperation;
-import io.bumo.model.request.other.IssueType;
 import io.bumo.model.response.TransactionBuildBlobResponse;
+import io.bumo.model.response.TransactionGetInfoResponse;
 import io.bumo.model.response.TransactionSignResponse;
 import io.bumo.model.response.TransactionSubmitResponse;
 import io.bumo.model.response.result.TransactionBuildBlobResult;
@@ -27,21 +30,15 @@ public class Atp10TokenDemo {
      * Issue the unlimited apt1.0 token successfully
      */
     @Test
-    public void IssueUnlimitedAtp10Token_Success() {
+    public void IssueUnlimitedAtp10Token() {
         // The account private key to issue atp1.0 token
         String issuerPrivateKey = "privbsKxedzmq9g9Na1bBCbnC3UQvEYZUVAEXHErS4PFvhZd2162xEut";
-        // The account to receive atp1.0 token
-        String destAccount = "buQBjJD1BSJ7nzAbzdTenAhpFjmxRVEEtmxH";
-        // The type to issue
-        IssueType issueType = IssueType.UNLIMITED;
         // The token code
         String code = "TXT";
         // The token total supply number
-        Long supply = 1000000000L;
+        Long totalSupply = 0L;
         // The token now supply number
         Long nowSupply = 1000000000L;
-        // The token decimals
-        Integer decimals = 8;
         // The token description
         String description = "test unlimited issuance of apt1.0 token";
         // The operation notes
@@ -51,510 +48,152 @@ public class Atp10TokenDemo {
         // Set up the maximum cost 0.01BU
         Long feeLimit = ToBaseUnit.BU2MO("50.03");
         // Transaction initiation account's Nonce + 1
-        Long nonce = 3L;
+        Long nonce = 10L;
 
         // 1. Get the account address to send this transaction
         String issuerAddresss = getAddressByPrivateKey(issuerPrivateKey);
 
-        // 2. Build issueAtp10Token operation
-        Atp10TokenIssueOperation operation = new Atp10TokenIssueOperation();
+        // 2. Build asset operation
+        AssetIssueOperation operation = new AssetIssueOperation();
         operation.setSourceAddress(issuerAddresss);
-        operation.setDestAddress(destAccount);
-        operation.setType(issueType);
         operation.setCode(code);
-        operation.setSupply(supply);
-        operation.setNowSupply(nowSupply);
-        operation.setDecimals(decimals);
-        operation.setDescription(description);
+        operation.setAmount(nowSupply);
         operation.setMetadata(metadata);
 
+        // 3. If this is a atp 1.0 token, you must set transaction metadata like this
+        JSONObject atp10Json = new JSONObject();
+        atp10Json.put("atp", "1.0");
+        atp10Json.put("code", code);
+        atp10Json.put("issuer", issuerAddresss);
+        atp10Json.put("totalSupply", totalSupply);
+        atp10Json.put("description", description);
+        String tranMetadata = atp10Json.toJSONString();
 
         // Record txhash for subsequent confirmation of the real result of the transaction.
         // After recommending five blocks, call again through txhash `Get the transaction information
         // from the transaction Hash'(see example: getTxByHash ()) to confirm the final result of the transaction
-        String txHash = submitTransaction(issuerPrivateKey, issuerAddresss, operation, nonce, gasPrice, feeLimit);
+        String txHash = submitTransaction(issuerPrivateKey, issuerAddresss, operation, nonce, gasPrice, feeLimit, tranMetadata);
         if (txHash != null) {
             System.out.println("hash: " + txHash);
         }
     }
 
     /**
-     * Issue the unlimited apt1.0 token failed
-     * Error: The transaction source address is empty,
-     *         but that the operation source address is empty is no problem
+     * Issue the limited apt1.0 token successfully
      */
     @Test
-    public void IssueUnlimitedAtp10Token_Error_NoSourceAddress() {
+    public void IssuelimitedAtp10Token() {
         // The account private key to issue atp1.0 token
         String issuerPrivateKey = "privbsKxedzmq9g9Na1bBCbnC3UQvEYZUVAEXHErS4PFvhZd2162xEut";
-        // The account to receive atp1.0 token
-        String destAccount = "buQBjJD1BSJ7nzAbzdTenAhpFjmxRVEEtmxH";
-        // The type to issue
-        IssueType issueType = IssueType.UNLIMITED;
         // The token code
         String code = "TXT";
-        // The token total supply number
-        Long supply = 1000000000L;
+        // The token total supply number, and must cannot be smaller than nowSupply
+        Long totalSupply = 1000000000L;
         // The token now supply number
         Long nowSupply = 1000000000L;
-        // The token decimals
-        Integer decimals = 8;
         // The token description
         String description = "test unlimited issuance of apt1.0 token";
         // The operation notes
         String metadata = "test one off issue apt1.0 token";
         // The fixed write 1000L, the unit is MO
         Long gasPrice = 1000L;
-        // Set up the maximum cost 0.01BU
-        Long feeLimit = ToBaseUnit.BU2MO("50.03");
+        // Set up the maximum cost 50.01BU
+        Long feeLimit = ToBaseUnit.BU2MO("50.01");
         // Transaction initiation account's Nonce + 1
-        Long nonce = 4L;
+        Long nonce = 3L;
 
         // 1. Get the account address to send this transaction
         String issuerAddresss = getAddressByPrivateKey(issuerPrivateKey);
-        String opSourceAddress = issuerAddresss;
-        String transSourceAddress = issuerAddresss;
 
-        // error: TransSourceAddress is ""
-        transSourceAddress = "";
-        submitIssueTransaction(issuerPrivateKey, opSourceAddress, transSourceAddress, destAccount, issueType, code, supply, nowSupply, decimals,
-                description, metadata, nonce, gasPrice, feeLimit);
-
-        // success: opSourceAddress is ""
-        opSourceAddress = "";
-        submitIssueTransaction(issuerPrivateKey, opSourceAddress, transSourceAddress, destAccount, issueType, code, supply, nowSupply, decimals,
-                description, metadata, nonce, gasPrice, feeLimit);
-    }
-
-    /**
-     * Issue the unlimited apt1.0 token failed
-     * Error 1: The operation source address is invalid
-     * Error 2: The transaction source address is invalid
-     */
-    @Test
-    public void IssueUnlimitedAtp10Token_Error_SourceAddressInvalid() {
-        // The account private key to issue atp1.0 token
-        String issuerPrivateKey = "privbsKxedzmq9g9Na1bBCbnC3UQvEYZUVAEXHErS4PFvhZd2162xEut";
-        // The account to receive atp1.0 token
-        String destAccount = "buQBjJD1BSJ7nzAbzdTenAhpFjmxRVEEtmxH";
-        // The type to issue
-        IssueType issueType = IssueType.UNLIMITED;
-        // The token code
-        String code = "TXT";
-        // The token total supply number
-        Long supply = 1000000000L;
-        // The token now supply number
-        Long nowSupply = 1000000000L;
-        // The token decimals
-        Integer decimals = 8;
-        // The token description
-        String description = "test unlimited issuance of apt1.0 token";
-        // The operation notes
-        String metadata = "test one off issue apt1.0 token";
-        // The fixed write 1000L, the unit is MO
-        Long gasPrice = 1000L;
-        // Set up the maximum cost 0.01BU
-        Long feeLimit = ToBaseUnit.BU2MO("50.03");
-        // Transaction initiation account's Nonce + 1
-        Long nonce = 9L;
-
-        // 1. Get the account address to send this transaction
-        String issuerAddresss = getAddressByPrivateKey(issuerPrivateKey);
-        String transSourceAddress = issuerAddresss;
-
-        // error 1: OpSourceAddress is invalid
-        String opSourceAddress = "buQBjJD1BSJ7nzAbzdTenAhp%%FjmxRVEEtmxH";
-        submitIssueTransaction(issuerPrivateKey, opSourceAddress, transSourceAddress, destAccount, issueType, code, supply, nowSupply, decimals,
-                description, metadata, nonce, gasPrice, feeLimit);
-
-        // error 2: transSourceAddress is invalid
-        transSourceAddress = "buQBjJD1BSJ7nzAbzdTenAhp%%FjmxRVEEtmxH";
-        submitIssueTransaction(issuerPrivateKey, opSourceAddress, transSourceAddress, destAccount, issueType, code, supply, nowSupply, decimals,
-                description, metadata, nonce, gasPrice, feeLimit);
-    }
-
-    /**
-     * Issue the unlimited apt1.0 token failed
-     * Error 1: The operation source address is equal to destAddress
-     * Error 2: The transaction source address is equal to destAddress, when the operation source address is empty
-     */
-    @Test
-    public void IssueUnlimitedAtp10Token_Error_SourceAddressEqualDestAddress() {
-        // The account private key to issue atp1.0 token
-        String issuerPrivateKey = "privbsKxedzmq9g9Na1bBCbnC3UQvEYZUVAEXHErS4PFvhZd2162xEut";
-        // The account to receive atp1.0 token
-        String destAccount = "buQBjJD1BSJ7nzAbzdTenAhpFjmxRVEEtmxH";
-        // The type to issue
-        IssueType issueType = IssueType.UNLIMITED;
-        // The token code
-        String code = "TXT";
-        // The token total supply number
-        Long supply = 1000000000L;
-        // The token now supply number
-        Long nowSupply = 1000000000L;
-        // The token decimals
-        Integer decimals = 8;
-        // The token description
-        String description = "test unlimited issuance of apt1.0 token";
-        // The operation notes
-        String metadata = "test one off issue apt1.0 token";
-        // The fixed write 1000L, the unit is MO
-        Long gasPrice = 1000L;
-        // Set up the maximum cost 0.01BU
-        Long feeLimit = ToBaseUnit.BU2MO("50.03");
-        // Transaction initiation account's Nonce + 1
-        Long nonce = 4L;
-
-        // 1. Get the account address to send this transaction
-        String issuerAddresss = getAddressByPrivateKey(issuerPrivateKey);
-        String transSourceAddress = issuerAddresss;
-
-        // error 1: OpSourceAddress equal to destAddress
-        String opSourceAddress = "buQBjJD1BSJ7nzAbzdTenAhpFjmxRVEEtmxH";
-
-        submitIssueTransaction(issuerPrivateKey, opSourceAddress, transSourceAddress, destAccount, issueType, code, supply, nowSupply, decimals,
-                description, metadata, nonce, gasPrice, feeLimit);
-
-        // error 2: TransSourceAddress equal to destAddress
-        opSourceAddress = "";
-        transSourceAddress = "buQBjJD1BSJ7nzAbzdTenAhpFjmxRVEEtmxH";
-        submitIssueTransaction(issuerPrivateKey, opSourceAddress, transSourceAddress, destAccount, issueType, code, supply, nowSupply, decimals,
-                description, metadata, nonce, gasPrice, feeLimit);
-    }
-
-    /**
-     * Issue the unlimited apt1.0 token failed
-     * Error 1: The destination address is null
-     * Error 2: The destination address is empty
-     * Error 3: The destination address is invalid
-     */
-    @Test
-    public void IssueUnlimitedAtp10Token_Error_DestAddressInvalid() {
-        // The account private key to issue atp1.0 token
-        String issuerPrivateKey = "privbsKxedzmq9g9Na1bBCbnC3UQvEYZUVAEXHErS4PFvhZd2162xEut";
-        // The account to receive atp1.0 token
-        String destAccount = "buQBjJD1BSJ7nzAbzdTenAhpFjmxRVEEtmxH";
-        // The type to issue
-        IssueType issueType = IssueType.UNLIMITED;
-        // The token code
-        String code = "TXT";
-        // The token total supply number
-        Long supply = 1000000000L;
-        // The token now supply number
-        Long nowSupply = 1000000000L;
-        // The token decimals
-        Integer decimals = 8;
-        // The token description
-        String description = "test unlimited issuance of apt1.0 token";
-        // The operation notes
-        String metadata = "test one off issue apt1.0 token";
-        // The fixed write 1000L, the unit is MO
-        Long gasPrice = 1000L;
-        // Set up the maximum cost 0.01BU
-        Long feeLimit = ToBaseUnit.BU2MO("50.03");
-        // Transaction initiation account's Nonce + 1
-        Long nonce = 4L;
-
-        // 1. Get the account address to send this transaction
-        String issuerAddresss = getAddressByPrivateKey(issuerPrivateKey);
-        String opSourceAddress = issuerAddresss;
-        String transSourceAddress = issuerAddresss;
-
-        // error 1: destAddress is null
-        destAccount = null;
-        submitIssueTransaction(issuerPrivateKey, opSourceAddress, transSourceAddress, destAccount, issueType, code, supply, nowSupply, decimals,
-                description, metadata, nonce, gasPrice, feeLimit);
-
-        // error 2: destAddress is ""
-        destAccount = "";
-        submitIssueTransaction(issuerPrivateKey, opSourceAddress, transSourceAddress, destAccount, issueType, code, supply, nowSupply, decimals,
-                description, metadata, nonce, gasPrice, feeLimit);
-
-        // error 3: DestAddress is invalid
-        destAccount = "buQBjJD1BSJ7nzAbzdTenAhpFjm%%VEEtmxH";
-        submitIssueTransaction(issuerPrivateKey, opSourceAddress, transSourceAddress, destAccount, issueType, code, supply, nowSupply, decimals,
-                description, metadata, nonce, gasPrice, feeLimit);
-    }
-
-    /**
-     * Issue the unlimited apt1.0 token failed
-     * Error 1: The code address is null
-     * Error 2: The code address is empty
-     * Error 3: The code address is invalid
-     */
-    @Test
-    public void IssueUnlimitedAtp10Token_Error_CodeInvalid() {
-        // The account private key to issue atp1.0 token
-        String issuerPrivateKey = "privbsKxedzmq9g9Na1bBCbnC3UQvEYZUVAEXHErS4PFvhZd2162xEut";
-        // The account to receive atp1.0 token
-        String destAccount = "buQBjJD1BSJ7nzAbzdTenAhpFjmxRVEEtmxH";
-        // The type to issue
-        IssueType issueType = IssueType.UNLIMITED;
-        // The token code
-        String code = "TXT";
-        // The token total supply number
-        Long supply = 1000000000L;
-        // The token now supply number
-        Long nowSupply = 1000000000L;
-        // The token decimals
-        Integer decimals = 8;
-        // The token description
-        String description = "test unlimited issuance of apt1.0 token";
-        // The operation notes
-        String metadata = "test one off issue apt1.0 token";
-        // The fixed write 1000L, the unit is MO
-        Long gasPrice = 1000L;
-        // Set up the maximum cost 0.01BU
-        Long feeLimit = ToBaseUnit.BU2MO("50.03");
-        // Transaction initiation account's Nonce + 1
-        Long nonce = 4L;
-
-        // 1. Get the account address to send this transaction
-        String issuerAddresss = getAddressByPrivateKey(issuerPrivateKey);
-        String opSourceAddress = issuerAddresss;
-        String transSourceAddress = issuerAddresss;
-
-        // error 1: code is null
-        code = null;
-        submitIssueTransaction(issuerPrivateKey, opSourceAddress, transSourceAddress, destAccount, issueType, code, supply, nowSupply, decimals,
-                description, metadata, nonce, gasPrice, feeLimit);
-
-        // error 2: code is ""
-        code = "";
-        submitIssueTransaction(issuerPrivateKey, opSourceAddress, transSourceAddress, destAccount, issueType, code, supply, nowSupply, decimals,
-                description, metadata, nonce, gasPrice, feeLimit);
-
-        // error 3: code is larger than 64
-        code = "buQBjJD1BSJ7nzAbzdTenAhpFjm%%VEEtmxHbuQBjJD1BSJ7nzAbzdTenAhpFjm%%VEEtmxH";
-        submitIssueTransaction(issuerPrivateKey, opSourceAddress, transSourceAddress, destAccount, issueType, code, supply, nowSupply, decimals,
-                description, metadata, nonce, gasPrice, feeLimit);
-    }
-
-    /**
-     * Issue the unlimited apt1.0 token successfully
-     * Success 1: The code address is null
-     * Success 2: The code address is -100
-     */
-    @Test
-    public void IssueUnlimitedAtp10Token_Success_SupplyNotCheck() {
-        // The account private key to issue atp1.0 token
-        String issuerPrivateKey = "privbsKxedzmq9g9Na1bBCbnC3UQvEYZUVAEXHErS4PFvhZd2162xEut";
-        // The account to receive atp1.0 token
-        String destAccount = "buQBjJD1BSJ7nzAbzdTenAhpFjmxRVEEtmxH";
-        // The type to issue
-        IssueType issueType = IssueType.UNLIMITED;
-        // The token code
-        String code = "TXT";
-        // The token total supply number
-        Long supply = 1000000000L;
-        // The token now supply number
-        Long nowSupply = 1000000000L;
-        // The token decimals
-        Integer decimals = 8;
-        // The token description
-        String description = "test unlimited issuance of apt1.0 token";
-        // The operation notes
-        String metadata = "test one off issue apt1.0 token";
-        // The fixed write 1000L, the unit is MO
-        Long gasPrice = 1000L;
-        // Set up the maximum cost 0.01BU
-        Long feeLimit = ToBaseUnit.BU2MO("50.03");
-        // Transaction initiation account's Nonce + 1
-        Long nonce = 4L;
-
-        // 1. Get the account address to send this transaction
-        String issuerAddresss = getAddressByPrivateKey(issuerPrivateKey);
-        String opSourceAddress = issuerAddresss;
-        String transSourceAddress = issuerAddresss;
-
-        // error 1: supply is null
-        supply = null;
-        submitIssueTransaction(issuerPrivateKey, opSourceAddress, transSourceAddress, destAccount, issueType, code, supply, nowSupply, decimals,
-                description, metadata, nonce, gasPrice, feeLimit);
-
-        // error 2: supply is -100
-        supply = -100L;
-        submitIssueTransaction(issuerPrivateKey, opSourceAddress, transSourceAddress, destAccount, issueType, code, supply, nowSupply, decimals,
-                description, metadata, nonce, gasPrice, feeLimit);
-    }
-
-    /**
-     * Issue the unlimited apt1.0 token failed
-     * Error 1: The nowSupply is 0
-     * Error 2: The nowSupply is -100
-     * Error 3: nowSupply * (10 ^ decimals) is bigger than Long.MAX_VALUE
-     */
-    @Test
-    public void IssueUnlimitedAtp10Token_Error_NowSupplyInvalid() {
-        // The account private key to issue atp1.0 token
-        String issuerPrivateKey = "privbsKxedzmq9g9Na1bBCbnC3UQvEYZUVAEXHErS4PFvhZd2162xEut";
-        // The account to receive atp1.0 token
-        String destAccount = "buQBjJD1BSJ7nzAbzdTenAhpFjmxRVEEtmxH";
-        // The type to issue
-        IssueType issueType = IssueType.UNLIMITED;
-        // The token code
-        String code = "TXT";
-        // The token total supply number
-        Long supply = 1000000000L;
-        // The token now supply number
-        Long nowSupply = 1000000000L;
-        // The token decimals
-        Integer decimals = 8;
-        // The token description
-        String description = "test unlimited issuance of apt1.0 token";
-        // The operation notes
-        String metadata = "test one off issue apt1.0 token";
-        // The fixed write 1000L, the unit is MO
-        Long gasPrice = 1000L;
-        // Set up the maximum cost 0.01BU
-        Long feeLimit = ToBaseUnit.BU2MO("50.03");
-        // Transaction initiation account's Nonce + 1
-        Long nonce = 9L;
-
-        // 1. Get the account address to send this transaction
-        String issuerAddresss = getAddressByPrivateKey(issuerPrivateKey);
-        String opSourceAddress = issuerAddresss;
-        String transSourceAddress = issuerAddresss;
-
-        // error 1: nowSupply is 0
-        nowSupply = 0L;
-        submitIssueTransaction(issuerPrivateKey, opSourceAddress, transSourceAddress, destAccount, issueType, code, supply, nowSupply, decimals,
-                description, metadata, nonce, gasPrice, feeLimit);
-
-        // error 2: nowSupply is -100
-        nowSupply = -100L;
-        submitIssueTransaction(issuerPrivateKey, opSourceAddress, transSourceAddress, destAccount, issueType, code, supply, nowSupply, decimals,
-                description, metadata, nonce, gasPrice, feeLimit);
-
-        // error 3: nowSupply * (10 ^ decimals) is bigger than Long.MAX_VALUE
-        nowSupply = (long)Math.pow(10, 11);
-        submitIssueTransaction(issuerPrivateKey, opSourceAddress, transSourceAddress, destAccount, issueType, code, supply, nowSupply, decimals,
-                description, metadata, nonce, gasPrice, feeLimit);
-
-        // success 3: nowSupply is 1
-        nowSupply = 1L;
-        submitIssueTransaction(issuerPrivateKey, opSourceAddress, transSourceAddress, destAccount, issueType, code, supply, nowSupply, decimals,
-                description, metadata, nonce, gasPrice, feeLimit);
-    }
-
-    /**
-     * Issue the unlimited apt1.0 token failed
-     * Error 1: The decimals is -1
-     * Error 2: The decimals is 9
-     * Error 2: The decimals is null
-     */
-    @Test
-    public void IssueUnlimitedAtp10Token_Error_DecimalsInvalid() {
-        // The account private key to issue atp1.0 token
-        String issuerPrivateKey = "privbsKxedzmq9g9Na1bBCbnC3UQvEYZUVAEXHErS4PFvhZd2162xEut";
-        // The account to receive atp1.0 token
-        String destAccount = "buQBjJD1BSJ7nzAbzdTenAhpFjmxRVEEtmxH";
-        // The type to issue
-        IssueType issueType = IssueType.UNLIMITED;
-        // The token code
-        String code = "TXT";
-        // The token total supply number
-        Long supply = 1000000000L;
-        // The token now supply number
-        Long nowSupply = 1000000000L;
-        // The token decimals
-        Integer decimals = 8;
-        // The token description
-        String description = "test unlimited issuance of apt1.0 token";
-        // The operation notes
-        String metadata = "test one off issue apt1.0 token";
-        // The fixed write 1000L, the unit is MO
-        Long gasPrice = 1000L;
-        // Set up the maximum cost 0.01BU
-        Long feeLimit = ToBaseUnit.BU2MO("50.03");
-        // Transaction initiation account's Nonce + 1
-        Long nonce = 9L;
-
-        // 1. Get the account address to send this transaction
-        String issuerAddresss = getAddressByPrivateKey(issuerPrivateKey);
-        String opSourceAddress = issuerAddresss;
-        String transSourceAddress = issuerAddresss;
-
-        // error 1: decimals is -1
-        decimals = -1;
-        submitIssueTransaction(issuerPrivateKey, opSourceAddress, transSourceAddress, destAccount, issueType, code, supply, nowSupply, decimals,
-                description, metadata, nonce, gasPrice, feeLimit);
-
-        // error 2: decimals is 9
-        decimals = 9;
-        submitIssueTransaction(issuerPrivateKey, opSourceAddress, transSourceAddress, destAccount, issueType, code, supply, nowSupply, decimals,
-                description, metadata, nonce, gasPrice, feeLimit);
-
-        // error 3: decimals is null
-        decimals = null;
-        submitIssueTransaction(issuerPrivateKey, opSourceAddress, transSourceAddress, destAccount, issueType, code, supply, nowSupply, decimals,
-                description, metadata, nonce, gasPrice, feeLimit);
-    }
-
-    /**
-     * Issue the unlimited apt1.0 token failed
-     * Error : The length of the description is 1025
-     */
-    @Test
-    public void IssueUnlimitedAtp10Token_Error_DescriptionInvalid() {
-        // The account private key to issue atp1.0 token
-        String issuerPrivateKey = "privbsKxedzmq9g9Na1bBCbnC3UQvEYZUVAEXHErS4PFvhZd2162xEut";
-        // The account to receive atp1.0 token
-        String destAccount = "buQBjJD1BSJ7nzAbzdTenAhpFjmxRVEEtmxH";
-        // The type to issue
-        IssueType issueType = IssueType.UNLIMITED;
-        // The token code
-        String code = "TXT";
-        // The token total supply number
-        Long supply = 1000000000L;
-        // The token now supply number
-        Long nowSupply = 1000000000L;
-        // The token decimals
-        Integer decimals = 8;
-        // The token description
-        String description = "test unlimited issuance of apt1.0 token";
-        // The operation notes
-        String metadata = "test one off issue apt1.0 token";
-        // The fixed write 1000L, the unit is MO
-        Long gasPrice = 1000L;
-        // Set up the maximum cost 0.01BU
-        Long feeLimit = ToBaseUnit.BU2MO("50.03");
-        // Transaction initiation account's Nonce + 1
-        Long nonce = 9L;
-
-        // 1. Get the account address to send this transaction
-        String issuerAddresss = getAddressByPrivateKey(issuerPrivateKey);
-        String opSourceAddress = issuerAddresss;
-        String transSourceAddress = issuerAddresss;
-
-        // error: description's length is 1025
-        description = "rS4PFvhZd2162xEutprivbsKxedzmq9g9Na1bBCbnC3UQvEYZUVAEXHErS4PFvhZd2162xEutprivbsKxedzmq9g9Na1bBCbnC3UQvEYZUVAEXHErS4PFvhZd2162xEutprivbsKxedzmq9g9Na1bBCbnC3UQvEYZUVAEXHErS4PFvhZd2162xEutprivbsKxedzmq9g9Na1bBCbnC3UQvEYZUVAEXHErS4PFvhZd2162xEutprivbsKxedzmq9g9Na1bBCbnC3UQvEYZUVAEXHErS4PFvhZd2162xEutprivbsKxedzmq9g9Na1bBCbnC3UQvEYZUVAEXHErS4PFvhZd2162xEutprivbsKxedzmq9g9Na1bBCbnC3UQvEYZUVAEXHErS4PFvhZd2162xEutprivbsKxedzmq9g9Na1bBCbnC3UQvEYZUVAEXHErS4PFvhZd2162xEutprivbsKxedzmq9g9Na1bBCbnC3UQvEYZUVAEXHErS4PFvhZd2162xEutprivbsKxedzmq9g9Na1bBCbnC3UQvEYZUVAEXHErS4PFvhZd2162xEutprivbsKxedzmq9g9Na1bBCbnC3UQvEYZUVAEXHErS4PFvhZd2162xEutprivbsKxedzmq9g9Na1bBCbnC3UQvEYZUVAEXHErS4PFvhZd2162xEutprivbsKxedzmq9g9Na1bBCbnC3UQvEYZUVAEXHErS4PFvhZd2162xEutprivbsKxedzmq9g9Na1bBCbnC3UQvEYZUVAEXHErS4PFvhZd2162xEutprivbsKxedzmq9g9Na1bBCbnC3UQvEYZUVAEXHErS4PFvhZd2162xEutprivbsKxedzmq9g9Na1bBCbnC3UQvEYZUVAEXHErS4PFvhZd2162xEutprivbsKxedzmq9g9Na1bBCbnC3UQvEYZUVAEXHErS4PFvhZd2162xEutprivbsKxedzmq9g9Na1bBCbnC3UQvEYZUVAEXHErS4PFvhZd2162xEut";
-        submitIssueTransaction(issuerPrivateKey, opSourceAddress, transSourceAddress, destAccount, issueType, code, supply, nowSupply, decimals,
-                description, metadata, nonce, gasPrice, feeLimit);
-    }
-
-    private void submitIssueTransaction(String privateKey, String opSourceAddress, String transSourceAddress, String destAccount, IssueType issueType,
-                                     String code, Long supply, Long nowSupply, Integer decimals, String description, String metadata,
-                                     Long nonce, Long gasPrice, Long feeLimit) {
-        // 2. Build issueAtp10Token operation
-        Atp10TokenIssueOperation operation = new Atp10TokenIssueOperation();
-        operation.setSourceAddress(opSourceAddress);
-        operation.setDestAddress(destAccount);
-        operation.setType(issueType);
+        // 2. Build asset operation
+        AssetIssueOperation operation = new AssetIssueOperation();
+        operation.setSourceAddress(issuerAddresss);
         operation.setCode(code);
-        operation.setSupply(supply);
-        operation.setNowSupply(nowSupply);
-        operation.setDecimals(decimals);
-        operation.setDescription(description);
+        operation.setAmount(nowSupply);
         operation.setMetadata(metadata);
 
+        // 3. If this is a atp 1.0 token, you must set transaction metadata like this
+        JSONObject atp10Json = new JSONObject();
+        atp10Json.put("atp", "1.0");
+        atp10Json.put("code", code);
+        atp10Json.put("issuer", issuerAddresss);
+        atp10Json.put("totalSupply", totalSupply);
+        atp10Json.put("description", description);
+        String tranMetadata = atp10Json.toJSONString();
 
         // Record txhash for subsequent confirmation of the real result of the transaction.
         // After recommending five blocks, call again through txhash `Get the transaction information
         // from the transaction Hash'(see example: getTxByHash ()) to confirm the final result of the transaction
-        String txHash = submitTransaction(privateKey, transSourceAddress, operation, nonce, gasPrice, feeLimit);
+        String txHash = submitTransaction(issuerPrivateKey, issuerAddresss, operation, nonce, gasPrice, feeLimit, tranMetadata);
         if (txHash != null) {
             System.out.println("hash: " + txHash);
+        }
+    }
+
+    /**
+     * Send apt 1.0 token to other account
+     */
+    @Test
+    public void SendAtp10Token() {
+        // The account private key to send atp1.0 token
+        String senderPrivateKey = "privbsKxedzmq9g9Na1bBCbnC3UQvEYZUVAEXHErS4PFvhZd2162xEut";
+        // The account that issued the atp 1.0 token
+        String issuerAddress = "";
+        // The account to receive atp 1.0 token
+        String destAddress = "buQsurH1M4rjLkfjzkxR9KXJ6jSu2r9xBNEw";
+        // The token code
+        String code = "TXT";
+        // The token amount to be sent
+        Long amount = 1000000000L;
+        // The token description
+        String description = "test unlimited issuance of apt1.0 token";
+        // The operation notes
+        String metadata = "test one off issue apt1.0 token";
+        // The fixed write 1000L, the unit is MO
+        Long gasPrice = 1000L;
+        // Set up the maximum cost 0.01BU
+        Long feeLimit = ToBaseUnit.BU2MO("0.01");
+        // Transaction initiation account's Nonce + 1
+        Long nonce = 3L;
+
+        // 1. Get the account address to send this transaction
+        String senderAddresss = getAddressByPrivateKey(senderPrivateKey);
+
+        // 2. Build asset operation
+        AssetSendOperation operation = new AssetSendOperation();
+        operation.setSourceAddress(senderAddresss);
+        operation.setDestAddress(destAddress);
+        operation.setCode(code);
+        operation.setAmount(amount);
+        operation.setIssuer(senderAddresss);
+        operation.setMetadata(metadata);
+
+        // Record txhash for subsequent confirmation of the real result of the transaction.
+        // After recommending five blocks, call again through txhash `Get the transaction information
+        // from the transaction Hash'(see example: getTxByHash ()) to confirm the final result of the transaction
+        String txHash = submitTransaction(senderPrivateKey, senderAddresss, operation, nonce, gasPrice, feeLimit, "");
+        if (txHash != null) {
+            System.out.println("hash: " + txHash);
+        }
+    }
+
+    /**
+     * Get apt 1.0 token info
+     */
+    @Test
+    public void GetAtp10Info() {
+        // Init request
+        String IssueAtp10TokenHash = "8d0bf9585d19d059aefbe93ade4f4a108c7dc97fc65e98fcdb2175f7514e4fa1";
+        TransactionGetInfoRequest request = new TransactionGetInfoRequest();
+        request.setHash(IssueAtp10TokenHash);
+
+        // Call getInfo
+        TransactionGetInfoResponse response = sdk.getTransactionService().getInfo(request);
+        if (response.getErrorCode() == 0) {
+            String metadata = response.getResult().getTransactions()[0].getTransaction().getMetadata();
+            System.out.println(JSON.toJSONString(JSON.parse(metadata), true));
+        } else {
+            System.out.println("error: " + response.getErrorDesc());
         }
     }
 
@@ -568,17 +207,17 @@ public class Atp10TokenDemo {
      * @return java.lang.String transaction hash
      * @author riven
      */
-    private String submitTransaction(String senderPrivateKey, String senderAddresss, BaseOperation operation, Long senderNonce, Long gasPrice, Long feeLimit) {
-        // 3. Build transaction
+    private String submitTransaction(String senderPrivateKey, String senderAddresss, BaseOperation operation, Long senderNonce, Long gasPrice, Long feeLimit, String transMetadata) {
+        // 1. Build transaction
         TransactionBuildBlobRequest transactionBuildBlobRequest = new TransactionBuildBlobRequest();
         transactionBuildBlobRequest.setSourceAddress(senderAddresss);
         transactionBuildBlobRequest.setNonce(senderNonce);
         transactionBuildBlobRequest.setFeeLimit(feeLimit);
         transactionBuildBlobRequest.setGasPrice(gasPrice);
         transactionBuildBlobRequest.addOperation(operation);
-        // transactionBuildBlobRequest.setMetadata("abc");
+        transactionBuildBlobRequest.setMetadata(transMetadata);
 
-        // 4. Build transaction BLob
+        // 2. Build transaction BLob
         String transactionBlob;
         TransactionBuildBlobResponse transactionBuildBlobResponse = sdk.getTransactionService().buildBlob(transactionBuildBlobRequest);
         if (transactionBuildBlobResponse.getErrorCode() != 0) {
@@ -589,7 +228,7 @@ public class Atp10TokenDemo {
         String txHash = transactionBuildBlobResult.getHash();
         transactionBlob = transactionBuildBlobResult.getTransactionBlob();
 
-        // 5. Sign transaction BLob
+        // 3. Sign transaction BLob
         String[] signerPrivateKeyArr = {senderPrivateKey};
         TransactionSignRequest transactionSignRequest = new TransactionSignRequest();
         transactionSignRequest.setBlob(transactionBlob);
@@ -602,7 +241,7 @@ public class Atp10TokenDemo {
             return null;
         }
 
-        // 6. Broadcast
+        // 4. Broadcast transaction
         TransactionSubmitRequest transactionSubmitRequest = new TransactionSubmitRequest();
         transactionSubmitRequest.setTransactionBlob(transactionBlob);
         transactionSubmitRequest.setSignatures(transactionSignResponse.getResult().getSignatures());

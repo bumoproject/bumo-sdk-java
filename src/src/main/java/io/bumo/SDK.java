@@ -13,10 +13,8 @@ import io.bumo.contract.impl.ContractServiceImpl;
 import io.bumo.exception.SDKException;
 import io.bumo.exception.SdkError;
 import io.bumo.token.AssetService;
-import io.bumo.token.Atp10TokenService;
 import io.bumo.token.Ctp10TokenService;
 import io.bumo.token.impl.AssetServiceImpl;
-import io.bumo.token.impl.Atp10TokenServiceImpl;
 import io.bumo.token.impl.Ctp10TokenServiceImpl;
 
 /**
@@ -117,16 +115,6 @@ public class SDK {
         return new Ctp10TokenServiceImpl();
     }
 
-    /**
-     * @Author riven
-     * @Method getAtp10TokenService
-     * @Params []
-     * @Return io.bumo.token.Atp10TokenService
-     * @Date 2018/8/7 16:50
-     */
-    public Atp10TokenService getAtp10TokenService() {
-        return new Atp10TokenServiceImpl();
-    }
     /**
      * @Author riven
      * @Method init

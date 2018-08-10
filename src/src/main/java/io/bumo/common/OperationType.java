@@ -54,13 +54,7 @@ public enum OperationType {
     CONTRACT_INVOKE_BY_BU(15),
 
     // Create log
-    LOG_CREATE(16),
-
-    // Issue atp1.0 token
-    APT10TOKEN_ISSUE(17),
-
-    // Append to issue atp1.0 token
-    ATP10TOKEN_APPEND_TO_TOKEN(18),;
+    LOG_CREATE(16),;
 
     private final int value;
 

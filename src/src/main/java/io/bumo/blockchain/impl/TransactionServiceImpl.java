@@ -25,12 +25,10 @@ import io.bumo.exception.SdkError;
 import io.bumo.log.LogServiceImpl;
 import io.bumo.model.request.*;
 import io.bumo.model.request.operation.*;
-import io.bumo.model.request.other.IssueType;
 import io.bumo.model.response.*;
 import io.bumo.model.response.result.*;
 import io.bumo.model.response.result.data.Signature;
 import io.bumo.token.impl.AssetServiceImpl;
-import io.bumo.token.impl.Atp10TokenServiceImpl;
 import io.bumo.token.impl.BUServiceImpl;
 import io.bumo.token.impl.Ctp10TokenServiceImpl;
 
@@ -38,7 +36,6 @@ import java.io.IOException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
-import java.util.List;
 
 /**
  * @Author riven
@@ -443,9 +440,7 @@ public class TransactionServiceImpl implements TransactionService {
      */
     private void buildOperations(BaseOperation[] operationBase, String transSourceAddress, Chain.Transaction.Builder transaction) throws SDKException {
         for (int i = 0; i < operationBase.length; i++) {
-            Chain.Operation operation = null;
-            String metadata = null;
-            List<Chain.Operation> operationList = null;
+            Chain.Operation operation;
             OperationType operationType = operationBase[i].getOperationType();
             switch (operationType) {
                 case ACCOUNT_ACTIVATE:
@@ -496,32 +491,13 @@ public class TransactionServiceImpl implements TransactionService {
                 case LOG_CREATE:
                     operation = LogServiceImpl.create((LogCreateOperation) operationBase[i]);
                     break;
-                case APT10TOKEN_ISSUE:
-                    operationList = Atp10TokenServiceImpl.issue((Atp10TokenIssueOperation) operationBase[i], transSourceAddress);
-                    metadata = setAtpAttribute((Atp10TokenIssueOperation) operationBase[i], transSourceAddress);
-                    break;
-                case ATP10TOKEN_APPEND_TO_TOKEN:
-                    operationList = Atp10TokenServiceImpl.appendToIssue((Atp10TokenAppendToIssueOperation) operationBase[i], transSourceAddress);
-                    break;
                 default:
                     throw new SDKException(SdkError.OPERATIONS_ONE_ERROR);
             }
-            if (operationType != OperationType.APT10TOKEN_ISSUE && operationType != OperationType.ATP10TOKEN_APPEND_TO_TOKEN) {
-                if (Tools.isEmpty(operation)) {
-                    throw new SDKException(SdkError.OPERATIONS_ONE_ERROR);
-                }
-                transaction.addOperations(operation);
-
+            if (Tools.isEmpty(operation)) {
+                throw new SDKException(SdkError.OPERATIONS_ONE_ERROR);
             }
-            if (OperationType.APT10TOKEN_ISSUE == operationType || OperationType.ATP10TOKEN_APPEND_TO_TOKEN == operationType) {
-                if (Tools.isEmpty(operationList)) {
-                    throw new SDKException(SdkError.OPERATIONS_ONE_ERROR);
-                }
-                if (!Tools.isEmpty(metadata)) {
-                    transaction.setMetadata(ByteString.copyFromUtf8(metadata));
-                }
-                transaction.addAllOperations(operationList);
-            }
+            transaction.addOperations(operation);
         }
     }
 
@@ -532,22 +508,6 @@ public class TransactionServiceImpl implements TransactionService {
         String getInfoUrl = General.transactionGetInfoUrl(hash);
         String result = HttpKit.get(getInfoUrl);
         return JSONObject.parseObject(result, TransactionGetInfoResponse.class);
-    }
-
-    private String setAtpAttribute(Atp10TokenIssueOperation atp10TokenIssueOperation, String transSourceAddress) {
-        JSONObject atp10Json = new JSONObject();
-        atp10Json.put("atp", "1.0");
-        atp10Json.put("code", atp10TokenIssueOperation.getCode());
-        String sourceAddress = atp10TokenIssueOperation.getSourceAddress();
-        atp10Json.put("issuer", Tools.isEmpty(sourceAddress) ? transSourceAddress : sourceAddress);
-        Long supply = atp10TokenIssueOperation.getSupply();
-        Integer decimals = atp10TokenIssueOperation.getDecimals();
-        IssueType type = atp10TokenIssueOperation.getType();
-        atp10Json.put("totalSupply", type == IssueType.UNLIMITED ? -1 : (supply * (long)Math.pow(10, decimals)));
-        atp10Json.put("decimals", decimals);
-        atp10Json.put("type", type.ordinal());
-        atp10Json.put("description", atp10TokenIssueOperation.getDescription());
-        return atp10Json.toJSONString();
     }
 }
 
