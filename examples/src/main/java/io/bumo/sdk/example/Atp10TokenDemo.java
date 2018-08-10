@@ -28,6 +28,7 @@ public class Atp10TokenDemo {
 
     /**
      * Issue the unlimited apt1.0 token successfully
+     * Unlimited requirement: The totalSupply must be smaller than and equal to 0
      */
     @Test
     public void IssueUnlimitedAtp10Token() {
@@ -80,6 +81,7 @@ public class Atp10TokenDemo {
 
     /**
      * Issue the limited apt1.0 token successfully
+     * Limited requirement: The totalSupply must be bigger than 0
      */
     @Test
     public void IssuelimitedAtp10Token() {
