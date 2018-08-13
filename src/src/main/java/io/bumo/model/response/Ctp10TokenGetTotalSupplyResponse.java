@@ -2,7 +2,7 @@ package io.bumo.model.response;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import io.bumo.exception.SdkError;
-import io.bumo.model.response.result.TokenGetTotalSupplyResult;
+import io.bumo.model.response.result.Ctp10TokenGetTotalSupplyResult;
 
 /**
  * @Author riven
@@ -10,7 +10,7 @@ import io.bumo.model.response.result.TokenGetTotalSupplyResult;
  */
 public class Ctp10TokenGetTotalSupplyResponse extends BaseResponse {
     @JSONField(name = "result")
-    private TokenGetTotalSupplyResult result;
+    private Ctp10TokenGetTotalSupplyResult result;
 
     /**
      * @Author riven
@@ -19,7 +19,7 @@ public class Ctp10TokenGetTotalSupplyResponse extends BaseResponse {
      * @Return io.bumo.model.response.result.TokenGetNameResult
      * @Date 2018/7/6 15:36
      */
-    public TokenGetTotalSupplyResult getResult() {
+    public Ctp10TokenGetTotalSupplyResult getResult() {
         return result;
     }
 
@@ -30,7 +30,7 @@ public class Ctp10TokenGetTotalSupplyResponse extends BaseResponse {
      * @Return void
      * @Date 2018/7/6 15:36
      */
-    public void setResult(TokenGetTotalSupplyResult result) {
+    public void setResult(Ctp10TokenGetTotalSupplyResult result) {
         this.result = result;
     }
 
@@ -41,7 +41,7 @@ public class Ctp10TokenGetTotalSupplyResponse extends BaseResponse {
      * @Return void
      * @Date 2018/7/4 15:07
      */
-    public void buildResponse(SdkError sdkError, TokenGetTotalSupplyResult result) {
+    public void buildResponse(SdkError sdkError, Ctp10TokenGetTotalSupplyResult result) {
         this.errorCode = sdkError.getCode();
         this.errorDesc = sdkError.getDescription();
         this.result = result;
@@ -54,7 +54,7 @@ public class Ctp10TokenGetTotalSupplyResponse extends BaseResponse {
      * @Return void
      * @Date 2018/7/4 15:07
      */
-    public void buildResponse(int errorCode, String errorDesc, TokenGetTotalSupplyResult result) {
+    public void buildResponse(int errorCode, String errorDesc, Ctp10TokenGetTotalSupplyResult result) {
         this.errorCode = errorCode;
         this.errorDesc = errorDesc;
         this.result = result;

@@ -2,7 +2,7 @@ package io.bumo.model.response;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import io.bumo.exception.SdkError;
-import io.bumo.model.response.result.TokenGetInfoResult;
+import io.bumo.model.response.result.Ctp10TokenGetInfoResult;
 
 /**
  * @Author riven
@@ -10,7 +10,7 @@ import io.bumo.model.response.result.TokenGetInfoResult;
  */
 public class Ctp10TokenGetInfoResponse extends BaseResponse {
     @JSONField(name = "result")
-    private TokenGetInfoResult result;
+    private Ctp10TokenGetInfoResult result;
 
     /**
      * @Author riven
@@ -19,7 +19,7 @@ public class Ctp10TokenGetInfoResponse extends BaseResponse {
      * @Return io.bumo.model.response.result.TokenAllowanceResult
      * @Date 2018/7/6 12:44
      */
-    public TokenGetInfoResult getResult() {
+    public Ctp10TokenGetInfoResult getResult() {
         return result;
     }
 
@@ -30,7 +30,7 @@ public class Ctp10TokenGetInfoResponse extends BaseResponse {
      * @Return void
      * @Date 2018/7/6 12:44
      */
-    public void setResult(TokenGetInfoResult result) {
+    public void setResult(Ctp10TokenGetInfoResult result) {
         this.result = result;
     }
 
@@ -41,7 +41,7 @@ public class Ctp10TokenGetInfoResponse extends BaseResponse {
      * @Return void
      * @Date 2018/7/4 15:07
      */
-    public void buildResponse(SdkError sdkError, TokenGetInfoResult result) {
+    public void buildResponse(SdkError sdkError, Ctp10TokenGetInfoResult result) {
         this.errorCode = sdkError.getCode();
         this.errorDesc = sdkError.getDescription();
         this.result = result;
@@ -54,7 +54,7 @@ public class Ctp10TokenGetInfoResponse extends BaseResponse {
      * @Return void
      * @Date 2018/7/4 15:07
      */
-    public void buildResponse(int errorCode, String errorDesc, TokenGetInfoResult result) {
+    public void buildResponse(int errorCode, String errorDesc, Ctp10TokenGetInfoResult result) {
         this.errorCode = errorCode;
         this.errorDesc = errorDesc;
         this.result = result;

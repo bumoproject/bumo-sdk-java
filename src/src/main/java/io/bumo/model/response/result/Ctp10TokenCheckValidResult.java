@@ -6,7 +6,7 @@ import com.alibaba.fastjson.annotation.JSONField;
  * @Author riven
  * @Date 2018/7/15 15:30
  */
-public class TokenCheckValidResult {
+public class Ctp10TokenCheckValidResult {
     @JSONField(name = "is_valid")
     private Boolean isValid;
 

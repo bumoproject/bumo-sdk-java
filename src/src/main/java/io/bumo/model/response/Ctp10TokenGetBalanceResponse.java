@@ -2,7 +2,7 @@ package io.bumo.model.response;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import io.bumo.exception.SdkError;
-import io.bumo.model.response.result.TokenGetBalanceResult;
+import io.bumo.model.response.result.Ctp10TokenGetBalanceResult;
 
 /**
  * @Author riven
@@ -10,7 +10,7 @@ import io.bumo.model.response.result.TokenGetBalanceResult;
  */
 public class Ctp10TokenGetBalanceResponse extends BaseResponse {
     @JSONField(name = "result")
-    private TokenGetBalanceResult result;
+    private Ctp10TokenGetBalanceResult result;
 
     /**
      * @Author riven
@@ -19,7 +19,7 @@ public class Ctp10TokenGetBalanceResponse extends BaseResponse {
      * @Return io.bumo.model.response.result.TokenGetNameResult
      * @Date 2018/7/6 15:36
      */
-    public TokenGetBalanceResult getResult() {
+    public Ctp10TokenGetBalanceResult getResult() {
         return result;
     }
 
@@ -30,7 +30,7 @@ public class Ctp10TokenGetBalanceResponse extends BaseResponse {
      * @Return void
      * @Date 2018/7/6 15:36
      */
-    public void setResult(TokenGetBalanceResult result) {
+    public void setResult(Ctp10TokenGetBalanceResult result) {
         this.result = result;
     }
 
@@ -41,7 +41,7 @@ public class Ctp10TokenGetBalanceResponse extends BaseResponse {
      * @Return void
      * @Date 2018/7/4 15:07
      */
-    public void buildResponse(SdkError sdkError, TokenGetBalanceResult result) {
+    public void buildResponse(SdkError sdkError, Ctp10TokenGetBalanceResult result) {
         this.errorCode = sdkError.getCode();
         this.errorDesc = sdkError.getDescription();
         this.result = result;
@@ -54,7 +54,7 @@ public class Ctp10TokenGetBalanceResponse extends BaseResponse {
      * @Return void
      * @Date 2018/7/4 15:07
      */
-    public void buildResponse(int errorCode, String errorDesc, TokenGetBalanceResult result) {
+    public void buildResponse(int errorCode, String errorDesc, Ctp10TokenGetBalanceResult result) {
         this.errorCode = errorCode;
         this.errorDesc = errorDesc;
         this.result = result;

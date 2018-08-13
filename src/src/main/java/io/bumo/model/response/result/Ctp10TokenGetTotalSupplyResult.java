@@ -6,7 +6,7 @@ import com.alibaba.fastjson.annotation.JSONField;
  * @Author riven
  * @Date 2018/7/6 15:25
  */
-public class TokenGetTotalSupplyResult {
+public class Ctp10TokenGetTotalSupplyResult {
     @JSONField(name = "totalSupply")
     private String totalSupply;
 

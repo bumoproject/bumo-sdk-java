@@ -29,7 +29,7 @@ public class Ctp10TokenDemo {
         // Call checkValid
         Ctp10TokenCheckValidResponse response = sdk.getCtp10TokenService().checkValid(request);
         if (response.getErrorCode() == 0) {
-            TokenCheckValidResult result = response.getResult();
+            Ctp10TokenCheckValidResult result = response.getResult();
             System.out.println(result.getValid());
         } else {
             System.out.println("error: " + response.getErrorDesc());
@@ -50,7 +50,7 @@ public class Ctp10TokenDemo {
         // Call allowance
         Ctp10TokenAllowanceResponse response = sdk.getCtp10TokenService().allowance(request);
         if (response.getErrorCode() == 0) {
-            TokenAllowanceResult result = response.getResult();
+            Ctp10TokenAllowanceResult result = response.getResult();
             System.out.println(JSON.toJSONString(result, true));
         } else {
             System.out.println("error: " + response.getErrorDesc());
@@ -69,7 +69,7 @@ public class Ctp10TokenDemo {
         // Call getInfo
         Ctp10TokenGetInfoResponse response = sdk.getCtp10TokenService().getInfo(request);
         if (response.getErrorCode() == 0) {
-            TokenGetInfoResult result = response.getResult();
+            Ctp10TokenGetInfoResult result = response.getResult();
             System.out.println(JSON.toJSONString(result, true));
         } else {
             System.out.println("error: " + response.getErrorDesc());
@@ -88,7 +88,7 @@ public class Ctp10TokenDemo {
         // Call getName
         Ctp10TokenGetNameResponse response = sdk.getCtp10TokenService().getName(request);
         if (response.getErrorCode() == 0) {
-            TokenGetNameResult result = response.getResult();
+            Ctp10TokenGetNameResult result = response.getResult();
             System.out.println(result.getName());
         } else {
             System.out.println("error: " + response.getErrorDesc());
@@ -107,7 +107,7 @@ public class Ctp10TokenDemo {
         // Call getSymbol
         Ctp10TokenGetSymbolResponse response = sdk.getCtp10TokenService().getSymbol(request);
         if (response.getErrorCode() == 0) {
-            TokenGetSymbolResult result = response.getResult();
+            Ctp10TokenGetSymbolResult result = response.getResult();
             System.out.println(result.getSymbol());
         } else {
             System.out.println("error: " + response.getErrorDesc());
@@ -126,7 +126,7 @@ public class Ctp10TokenDemo {
         // Call getDecimals
         Ctp10TokenGetDecimalsResponse response = sdk.getCtp10TokenService().getDecimals(request);
         if (response.getErrorCode() == 0) {
-            TokenGetDecimalsResult result = response.getResult();
+            Ctp10TokenGetDecimalsResult result = response.getResult();
             System.out.println(result.getDecimals());
         } else {
             System.out.println("error: " + response.getErrorDesc());
@@ -145,7 +145,7 @@ public class Ctp10TokenDemo {
         // Call getTotalSupply
         Ctp10TokenGetTotalSupplyResponse response = sdk.getCtp10TokenService().getTotalSupply(request);
         if (response.getErrorCode() == 0) {
-            TokenGetTotalSupplyResult result = response.getResult();
+            Ctp10TokenGetTotalSupplyResult result = response.getResult();
             System.out.println(result.getTotalSupply());
         } else {
             System.out.println("error: " + response.getErrorDesc());
@@ -165,7 +165,7 @@ public class Ctp10TokenDemo {
         // Call getBalance
         Ctp10TokenGetBalanceResponse response = sdk.getCtp10TokenService().getBalance(request);
         if (response.getErrorCode() == 0) {
-            TokenGetBalanceResult result = response.getResult();
+            Ctp10TokenGetBalanceResult result = response.getResult();
             System.out.println(result.getBalance());
         } else {
             System.out.println("error: " + response.getErrorDesc());

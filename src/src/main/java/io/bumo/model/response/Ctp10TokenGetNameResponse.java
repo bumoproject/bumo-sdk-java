@@ -2,7 +2,7 @@ package io.bumo.model.response;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import io.bumo.exception.SdkError;
-import io.bumo.model.response.result.TokenGetNameResult;
+import io.bumo.model.response.result.Ctp10TokenGetNameResult;
 
 /**
  * @Author riven
@@ -10,7 +10,7 @@ import io.bumo.model.response.result.TokenGetNameResult;
  */
 public class Ctp10TokenGetNameResponse extends BaseResponse {
     @JSONField(name = "result")
-    private TokenGetNameResult result;
+    private Ctp10TokenGetNameResult result;
 
     /**
      * @Author riven
@@ -19,7 +19,7 @@ public class Ctp10TokenGetNameResponse extends BaseResponse {
      * @Return io.bumo.model.response.result.TokenGetNameResult
      * @Date 2018/7/6 15:36
      */
-    public TokenGetNameResult getResult() {
+    public Ctp10TokenGetNameResult getResult() {
         return result;
     }
 
@@ -30,7 +30,7 @@ public class Ctp10TokenGetNameResponse extends BaseResponse {
      * @Return void
      * @Date 2018/7/6 15:36
      */
-    public void setResult(TokenGetNameResult result) {
+    public void setResult(Ctp10TokenGetNameResult result) {
         this.result = result;
     }
 
@@ -41,7 +41,7 @@ public class Ctp10TokenGetNameResponse extends BaseResponse {
      * @Return void
      * @Date 2018/7/4 15:07
      */
-    public void buildResponse(SdkError sdkError, TokenGetNameResult result) {
+    public void buildResponse(SdkError sdkError, Ctp10TokenGetNameResult result) {
         this.errorCode = sdkError.getCode();
         this.errorDesc = sdkError.getDescription();
         this.result = result;
@@ -54,7 +54,7 @@ public class Ctp10TokenGetNameResponse extends BaseResponse {
      * @Return void
      * @Date 2018/7/4 15:07
      */
-    public void buildResponse(int errorCode, String errorDesc, TokenGetNameResult result) {
+    public void buildResponse(int errorCode, String errorDesc, Ctp10TokenGetNameResult result) {
         this.errorCode = errorCode;
         this.errorDesc = errorDesc;
         this.result = result;

@@ -7,7 +7,7 @@ import io.bumo.model.response.result.data.TokenInfo;
  * @Author riven
  * @Date 2018/7/6 13:34
  */
-public class TokenGetInfoResult {
+public class Ctp10TokenGetInfoResult {
     @JSONField(name = "contractInfo")
     private TokenInfo contractInfo;
 

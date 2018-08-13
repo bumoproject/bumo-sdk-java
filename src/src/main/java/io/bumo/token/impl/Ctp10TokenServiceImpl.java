@@ -207,7 +207,7 @@ public class Ctp10TokenServiceImpl implements Ctp10TokenService {
                 throw new SDKException(SdkError.INVALID_FROMADDRESS_ERROR);
             }
             if ((!Tools.isEmpty(sourceAddress) && sourceAddress.equals(contractAddress)) || transSourceAddress.equals(contractAddress)) {
-                throw new SDKException(SdkError.SOURCEADDRESS_EQUAL_DESTADDRESS_ERROR);
+                throw new SDKException(SdkError.SOURCEADDRESS_EQUAL_CONTRACTADDRESS_ERROR);
             }
             String destAddress = ctp10TokenTransferFromOperation.getDestAddress();
             if (!PublicKey.isAddressValid(destAddress)) {
@@ -534,7 +534,7 @@ public class Ctp10TokenServiceImpl implements Ctp10TokenService {
     @Override
     public Ctp10TokenCheckValidResponse checkValid(Ctp10TokenCheckValidRequest ctp10TokenCheckValidRequest) {
         Ctp10TokenCheckValidResponse ctp10TokenCheckValidResponse = new Ctp10TokenCheckValidResponse();
-        TokenCheckValidResult tokenCheckValidResult = new TokenCheckValidResult();
+        Ctp10TokenCheckValidResult ctp10TokenCheckValidResult = new Ctp10TokenCheckValidResult();
         try {
             if (Tools.isEmpty(ctp10TokenCheckValidRequest)) {
                 throw new SDKException(SdkError.REQUEST_NULL_ERROR);
@@ -544,16 +544,16 @@ public class Ctp10TokenServiceImpl implements Ctp10TokenService {
                 throw new SDKException(SdkError.INVALID_CONTRACTADDRESS_ERROR);
             }
             boolean isValid = checkTokenValid(address);
-            tokenCheckValidResult.setValid(isValid);
-            ctp10TokenCheckValidResponse.buildResponse(SdkError.SUCCESS, tokenCheckValidResult);
+            ctp10TokenCheckValidResult.setValid(isValid);
+            ctp10TokenCheckValidResponse.buildResponse(SdkError.SUCCESS, ctp10TokenCheckValidResult);
         } catch (SDKException apiException) {
             Integer errorCode = apiException.getErrorCode();
             String errorDesc = apiException.getErrorDesc();
-            ctp10TokenCheckValidResponse.buildResponse(errorCode, errorDesc, tokenCheckValidResult);
+            ctp10TokenCheckValidResponse.buildResponse(errorCode, errorDesc, ctp10TokenCheckValidResult);
         } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
-            ctp10TokenCheckValidResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, tokenCheckValidResult);
+            ctp10TokenCheckValidResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, ctp10TokenCheckValidResult);
         } catch (Exception e) {
-            ctp10TokenCheckValidResponse.buildResponse(SdkError.SYSTEM_ERROR, tokenCheckValidResult);
+            ctp10TokenCheckValidResponse.buildResponse(SdkError.SYSTEM_ERROR, ctp10TokenCheckValidResult);
         }
         return ctp10TokenCheckValidResponse;
     }
@@ -568,7 +568,7 @@ public class Ctp10TokenServiceImpl implements Ctp10TokenService {
     @Override
     public Ctp10TokenAllowanceResponse allowance(Ctp10TokenAllowanceRequest ctp10TokenAllowanceRequest) {
         Ctp10TokenAllowanceResponse ctp10TokenAllowanceResponse = new Ctp10TokenAllowanceResponse();
-        TokenAllowanceResult tokenAllowanceResult = new TokenAllowanceResult();
+        Ctp10TokenAllowanceResult ctp10TokenAllowanceResult = new Ctp10TokenAllowanceResult();
         try {
             if (Tools.isEmpty(ctp10TokenAllowanceRequest)) {
                 throw new SDKException(SdkError.REQUEST_NULL_ERROR);
@@ -604,16 +604,16 @@ public class Ctp10TokenServiceImpl implements Ctp10TokenService {
                 String errorDesc = errorResult.getData().getException();
                 throw new SDKException(SdkError.GET_ALLOWANCE_ERROR.getCode(), errorDesc);
             }
-            tokenAllowanceResult = JSONObject.parseObject(result.getValue(), TokenAllowanceResult.class);
-            ctp10TokenAllowanceResponse.buildResponse(SdkError.SUCCESS, tokenAllowanceResult);
+            ctp10TokenAllowanceResult = JSONObject.parseObject(result.getValue(), Ctp10TokenAllowanceResult.class);
+            ctp10TokenAllowanceResponse.buildResponse(SdkError.SUCCESS, ctp10TokenAllowanceResult);
         } catch (SDKException sdkException) {
             Integer errorCode = sdkException.getErrorCode();
             String errorDesc = sdkException.getErrorDesc();
-            ctp10TokenAllowanceResponse.buildResponse(errorCode, errorDesc, tokenAllowanceResult);
+            ctp10TokenAllowanceResponse.buildResponse(errorCode, errorDesc, ctp10TokenAllowanceResult);
         } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
-            ctp10TokenAllowanceResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, tokenAllowanceResult);
+            ctp10TokenAllowanceResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, ctp10TokenAllowanceResult);
         } catch (Exception e) {
-            ctp10TokenAllowanceResponse.buildResponse(SdkError.SYSTEM_ERROR, tokenAllowanceResult);
+            ctp10TokenAllowanceResponse.buildResponse(SdkError.SYSTEM_ERROR, ctp10TokenAllowanceResult);
         }
 
         return ctp10TokenAllowanceResponse;
@@ -629,7 +629,7 @@ public class Ctp10TokenServiceImpl implements Ctp10TokenService {
     @Override
     public Ctp10TokenGetInfoResponse getInfo(Ctp10TokenGetInfoRequest ctp10TokenGetInfoRequest) {
         Ctp10TokenGetInfoResponse ctp10TokenGetInfoResponse = new Ctp10TokenGetInfoResponse();
-        TokenGetInfoResult tokenGetInfoResult = new TokenGetInfoResult();
+        Ctp10TokenGetInfoResult ctp10TokenGetInfoResult = new Ctp10TokenGetInfoResult();
         try {
             if (Tools.isEmpty(ctp10TokenGetInfoRequest)) {
                 throw new SDKException(SdkError.REQUEST_NULL_ERROR);
@@ -653,16 +653,16 @@ public class Ctp10TokenServiceImpl implements Ctp10TokenService {
                 String errorDesc = errorResult.getData().getException();
                 throw new SDKException(SdkError.GET_TOKEN_INFO_ERROR.getCode(), errorDesc);
             }
-            tokenGetInfoResult = JSONObject.parseObject(result.getValue(), TokenGetInfoResult.class);
-            ctp10TokenGetInfoResponse.buildResponse(SdkError.SUCCESS, tokenGetInfoResult);
+            ctp10TokenGetInfoResult = JSONObject.parseObject(result.getValue(), Ctp10TokenGetInfoResult.class);
+            ctp10TokenGetInfoResponse.buildResponse(SdkError.SUCCESS, ctp10TokenGetInfoResult);
         } catch (SDKException sdkException) {
             Integer errorCode = sdkException.getErrorCode();
             String errorDesc = sdkException.getErrorDesc();
-            ctp10TokenGetInfoResponse.buildResponse(errorCode, errorDesc, tokenGetInfoResult);
+            ctp10TokenGetInfoResponse.buildResponse(errorCode, errorDesc, ctp10TokenGetInfoResult);
         } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
-            ctp10TokenGetInfoResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, tokenGetInfoResult);
+            ctp10TokenGetInfoResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, ctp10TokenGetInfoResult);
         } catch (Exception e) {
-            ctp10TokenGetInfoResponse.buildResponse(SdkError.SYSTEM_ERROR, tokenGetInfoResult);
+            ctp10TokenGetInfoResponse.buildResponse(SdkError.SYSTEM_ERROR, ctp10TokenGetInfoResult);
         }
         return ctp10TokenGetInfoResponse;
     }
@@ -677,7 +677,7 @@ public class Ctp10TokenServiceImpl implements Ctp10TokenService {
     @Override
     public Ctp10TokenGetNameResponse getName(Ctp10TokenGetNameRequest ctp10TokenGetNameRequest) {
         Ctp10TokenGetNameResponse ctp10TokenGetNameResponse = new Ctp10TokenGetNameResponse();
-        TokenGetNameResult tokenGetNameResult = new TokenGetNameResult();
+        Ctp10TokenGetNameResult ctp10TokenGetNameResult = new Ctp10TokenGetNameResult();
         try {
             if (Tools.isEmpty(ctp10TokenGetNameRequest)) {
                 throw new SDKException(SdkError.REQUEST_NULL_ERROR);
@@ -701,16 +701,16 @@ public class Ctp10TokenServiceImpl implements Ctp10TokenService {
                 String errorDesc = errorResult.getData().getException();
                 throw new SDKException(SdkError.GET_TOKEN_INFO_ERROR.getCode(), errorDesc);
             }
-            tokenGetNameResult = JSONObject.parseObject(result.getValue(), TokenGetNameResult.class);
-            ctp10TokenGetNameResponse.buildResponse(SdkError.SUCCESS, tokenGetNameResult);
+            ctp10TokenGetNameResult = JSONObject.parseObject(result.getValue(), Ctp10TokenGetNameResult.class);
+            ctp10TokenGetNameResponse.buildResponse(SdkError.SUCCESS, ctp10TokenGetNameResult);
         } catch (SDKException sdkException) {
             Integer errorCode = sdkException.getErrorCode();
             String errorDesc = sdkException.getErrorDesc();
-            ctp10TokenGetNameResponse.buildResponse(errorCode, errorDesc, tokenGetNameResult);
+            ctp10TokenGetNameResponse.buildResponse(errorCode, errorDesc, ctp10TokenGetNameResult);
         } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
-            ctp10TokenGetNameResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, tokenGetNameResult);
+            ctp10TokenGetNameResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, ctp10TokenGetNameResult);
         } catch (Exception e) {
-            ctp10TokenGetNameResponse.buildResponse(SdkError.SYSTEM_ERROR, tokenGetNameResult);
+            ctp10TokenGetNameResponse.buildResponse(SdkError.SYSTEM_ERROR, ctp10TokenGetNameResult);
         }
         return ctp10TokenGetNameResponse;
     }
@@ -725,7 +725,7 @@ public class Ctp10TokenServiceImpl implements Ctp10TokenService {
     @Override
     public Ctp10TokenGetSymbolResponse getSymbol(Ctp10TokenGetSymbolRequest ctp10TokenGetSymbolRequest) {
         Ctp10TokenGetSymbolResponse ctp10TokenGetSymbolResponse = new Ctp10TokenGetSymbolResponse();
-        TokenGetSymbolResult tokenGetSymbolResult = new TokenGetSymbolResult();
+        Ctp10TokenGetSymbolResult ctp10TokenGetSymbolResult = new Ctp10TokenGetSymbolResult();
         try {
             if (Tools.isEmpty(ctp10TokenGetSymbolRequest)) {
                 throw new SDKException(SdkError.REQUEST_NULL_ERROR);
@@ -749,16 +749,16 @@ public class Ctp10TokenServiceImpl implements Ctp10TokenService {
                 String errorDesc = errorResult.getData().getException();
                 throw new SDKException(SdkError.GET_TOKEN_INFO_ERROR.getCode(), errorDesc);
             }
-            tokenGetSymbolResult = JSONObject.parseObject(result.getValue(), TokenGetSymbolResult.class);
-            ctp10TokenGetSymbolResponse.buildResponse(SdkError.SUCCESS, tokenGetSymbolResult);
+            ctp10TokenGetSymbolResult = JSONObject.parseObject(result.getValue(), Ctp10TokenGetSymbolResult.class);
+            ctp10TokenGetSymbolResponse.buildResponse(SdkError.SUCCESS, ctp10TokenGetSymbolResult);
         } catch (SDKException sdkException) {
             Integer errorCode = sdkException.getErrorCode();
             String errorDesc = sdkException.getErrorDesc();
-            ctp10TokenGetSymbolResponse.buildResponse(errorCode, errorDesc, tokenGetSymbolResult);
+            ctp10TokenGetSymbolResponse.buildResponse(errorCode, errorDesc, ctp10TokenGetSymbolResult);
         } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
-            ctp10TokenGetSymbolResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, tokenGetSymbolResult);
+            ctp10TokenGetSymbolResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, ctp10TokenGetSymbolResult);
         } catch (Exception e) {
-            ctp10TokenGetSymbolResponse.buildResponse(SdkError.SYSTEM_ERROR, tokenGetSymbolResult);
+            ctp10TokenGetSymbolResponse.buildResponse(SdkError.SYSTEM_ERROR, ctp10TokenGetSymbolResult);
         }
         return ctp10TokenGetSymbolResponse;
     }
@@ -766,7 +766,7 @@ public class Ctp10TokenServiceImpl implements Ctp10TokenService {
     @Override
     public Ctp10TokenGetDecimalsResponse getDecimals(Ctp10TokenGetDecimalsRequest ctp10TokenGetDecimalsRequest) {
         Ctp10TokenGetDecimalsResponse ctp10TokenGetDecimalsResponse = new Ctp10TokenGetDecimalsResponse();
-        TokenGetDecimalsResult tokenGetDecimalsResult = new TokenGetDecimalsResult();
+        Ctp10TokenGetDecimalsResult ctp10TokenGetDecimalsResult = new Ctp10TokenGetDecimalsResult();
         try {
             if (Tools.isEmpty(ctp10TokenGetDecimalsRequest)) {
                 throw new SDKException(SdkError.REQUEST_NULL_ERROR);
@@ -790,16 +790,16 @@ public class Ctp10TokenServiceImpl implements Ctp10TokenService {
                 String errorDesc = errorResult.getData().getException();
                 throw new SDKException(SdkError.GET_TOKEN_INFO_ERROR.getCode(), errorDesc);
             }
-            tokenGetDecimalsResult = JSONObject.parseObject(result.getValue(), TokenGetDecimalsResult.class);
-            ctp10TokenGetDecimalsResponse.buildResponse(SdkError.SUCCESS, tokenGetDecimalsResult);
+            ctp10TokenGetDecimalsResult = JSONObject.parseObject(result.getValue(), Ctp10TokenGetDecimalsResult.class);
+            ctp10TokenGetDecimalsResponse.buildResponse(SdkError.SUCCESS, ctp10TokenGetDecimalsResult);
         } catch (SDKException sdkException) {
             Integer errorCode = sdkException.getErrorCode();
             String errorDesc = sdkException.getErrorDesc();
-            ctp10TokenGetDecimalsResponse.buildResponse(errorCode, errorDesc, tokenGetDecimalsResult);
+            ctp10TokenGetDecimalsResponse.buildResponse(errorCode, errorDesc, ctp10TokenGetDecimalsResult);
         } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
-            ctp10TokenGetDecimalsResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, tokenGetDecimalsResult);
+            ctp10TokenGetDecimalsResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, ctp10TokenGetDecimalsResult);
         } catch (Exception e) {
-            ctp10TokenGetDecimalsResponse.buildResponse(SdkError.SYSTEM_ERROR, tokenGetDecimalsResult);
+            ctp10TokenGetDecimalsResponse.buildResponse(SdkError.SYSTEM_ERROR, ctp10TokenGetDecimalsResult);
         }
         return ctp10TokenGetDecimalsResponse;
     }
@@ -814,7 +814,7 @@ public class Ctp10TokenServiceImpl implements Ctp10TokenService {
     @Override
     public Ctp10TokenGetTotalSupplyResponse getTotalSupply(Ctp10TokenGetTotalSupplyRequest ctp10TokenGetTotalSupplyRequest) {
         Ctp10TokenGetTotalSupplyResponse ctp10TokenGetTotalSupplyResponse = new Ctp10TokenGetTotalSupplyResponse();
-        TokenGetTotalSupplyResult tokenGetTotalSupplyResult = new TokenGetTotalSupplyResult();
+        Ctp10TokenGetTotalSupplyResult ctp10TokenGetTotalSupplyResult = new Ctp10TokenGetTotalSupplyResult();
         try {
             if (Tools.isEmpty(ctp10TokenGetTotalSupplyRequest)) {
                 throw new SDKException(SdkError.REQUEST_NULL_ERROR);
@@ -837,16 +837,16 @@ public class Ctp10TokenServiceImpl implements Ctp10TokenService {
                 String errorDesc = errorResult.getData().getException();
                 throw new SDKException(SdkError.GET_TOKEN_INFO_ERROR.getCode(), errorDesc);
             }
-            tokenGetTotalSupplyResult = JSONObject.parseObject(result.getValue(), TokenGetTotalSupplyResult.class);
-            ctp10TokenGetTotalSupplyResponse.buildResponse(SdkError.SUCCESS, tokenGetTotalSupplyResult);
+            ctp10TokenGetTotalSupplyResult = JSONObject.parseObject(result.getValue(), Ctp10TokenGetTotalSupplyResult.class);
+            ctp10TokenGetTotalSupplyResponse.buildResponse(SdkError.SUCCESS, ctp10TokenGetTotalSupplyResult);
         } catch (SDKException sdkException) {
             Integer errorCode = sdkException.getErrorCode();
             String errorDesc = sdkException.getErrorDesc();
-            ctp10TokenGetTotalSupplyResponse.buildResponse(errorCode, errorDesc, tokenGetTotalSupplyResult);
+            ctp10TokenGetTotalSupplyResponse.buildResponse(errorCode, errorDesc, ctp10TokenGetTotalSupplyResult);
         } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
-            ctp10TokenGetTotalSupplyResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, tokenGetTotalSupplyResult);
+            ctp10TokenGetTotalSupplyResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, ctp10TokenGetTotalSupplyResult);
         } catch (Exception e) {
-            ctp10TokenGetTotalSupplyResponse.buildResponse(SdkError.SYSTEM_ERROR, tokenGetTotalSupplyResult);
+            ctp10TokenGetTotalSupplyResponse.buildResponse(SdkError.SYSTEM_ERROR, ctp10TokenGetTotalSupplyResult);
         }
         return ctp10TokenGetTotalSupplyResponse;
     }
@@ -861,7 +861,7 @@ public class Ctp10TokenServiceImpl implements Ctp10TokenService {
     @Override
     public Ctp10TokenGetBalanceResponse getBalance(Ctp10TokenGetBalanceRequest ctp10TokenGetBalanceRequest) {
         Ctp10TokenGetBalanceResponse ctp10TokenGetBalanceResponse = new Ctp10TokenGetBalanceResponse();
-        TokenGetBalanceResult tokenGetBalanceResult = new TokenGetBalanceResult();
+        Ctp10TokenGetBalanceResult ctp10TokenGetBalanceResult = new Ctp10TokenGetBalanceResult();
         try {
             if (Tools.isEmpty(ctp10TokenGetBalanceRequest)) {
                 throw new SDKException(SdkError.REQUEST_NULL_ERROR);
@@ -891,16 +891,16 @@ public class Ctp10TokenServiceImpl implements Ctp10TokenService {
                 String errorDesc = errorResult.getData().getException();
                 throw new SDKException(SdkError.GET_TOKEN_INFO_ERROR.getCode(), errorDesc);
             }
-            tokenGetBalanceResult = JSONObject.parseObject(result.getValue(), TokenGetBalanceResult.class);
-            ctp10TokenGetBalanceResponse.buildResponse(SdkError.SUCCESS, tokenGetBalanceResult);
+            ctp10TokenGetBalanceResult = JSONObject.parseObject(result.getValue(), Ctp10TokenGetBalanceResult.class);
+            ctp10TokenGetBalanceResponse.buildResponse(SdkError.SUCCESS, ctp10TokenGetBalanceResult);
         } catch (SDKException sdkException) {
             Integer errorCode = sdkException.getErrorCode();
             String errorDesc = sdkException.getErrorDesc();
-            ctp10TokenGetBalanceResponse.buildResponse(errorCode, errorDesc, tokenGetBalanceResult);
+            ctp10TokenGetBalanceResponse.buildResponse(errorCode, errorDesc, ctp10TokenGetBalanceResult);
         } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
-            ctp10TokenGetBalanceResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, tokenGetBalanceResult);
+            ctp10TokenGetBalanceResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, ctp10TokenGetBalanceResult);
         } catch (Exception e) {
-            ctp10TokenGetBalanceResponse.buildResponse(SdkError.SYSTEM_ERROR, tokenGetBalanceResult);
+            ctp10TokenGetBalanceResponse.buildResponse(SdkError.SYSTEM_ERROR, ctp10TokenGetBalanceResult);
         }
 
         return ctp10TokenGetBalanceResponse;

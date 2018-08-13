@@ -6,7 +6,7 @@ import com.alibaba.fastjson.annotation.JSONField;
  * @Author riven
  * @Date 2018/7/6 15:25
  */
-public class TokenGetSymbolResult {
+public class Ctp10TokenGetSymbolResult {
     @JSONField(name = "symbol")
     private String symbol;
 

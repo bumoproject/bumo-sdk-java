@@ -1,10 +1,13 @@
 package io.bumo.sdk.example;
 
 import com.alibaba.fastjson.JSON;
+import com.google.protobuf.InvalidProtocolBufferException;
 import io.bumo.SDK;
 import io.bumo.common.ToBaseUnit;
 import io.bumo.crypto.Keypair;
+import io.bumo.crypto.protobuf.Chain;
 import io.bumo.encryption.key.PrivateKey;
+import io.bumo.encryption.utils.hex.HexFormat;
 import io.bumo.model.request.*;
 import io.bumo.model.request.operation.*;
 import io.bumo.model.response.*;
@@ -23,8 +26,11 @@ public class DigitalAssetsDemo {
     SDK sdk = SDK.getInstance("http://127.0.0.1:36002");
 
     @Test
-    public void checkSDKGetinstance() {
-        SDK sdk2 = SDK.getInstance(null);
+    public void checkSDKGetinstance() throws InvalidProtocolBufferException {
+        //SDK sdk2 = SDK.getInstance(null);
+        String blob = "0a246275516e6e5545425245773268423670574847507a77616e5837643238786b364b566370104b18c0843d20e8073a35080412246275516e6e5545425245773268423670574847507a77616e5837643238786b364b5663702a0b0a0252561080a094a58d1d";
+        Chain.Transaction transaction = Chain.Transaction.parseFrom(HexFormat.hexToByte(blob));
+        System.out.println(transaction);
     }
 
     /**
