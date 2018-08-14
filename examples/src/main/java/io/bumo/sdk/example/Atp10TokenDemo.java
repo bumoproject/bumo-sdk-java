@@ -27,7 +27,7 @@ public class Atp10TokenDemo {
      * Unlimited requirement: The totalSupply must be smaller than and equal to 0
      */
     @Test
-    public void IssueUnlimitedAtp10Token() {
+    public void issueUnlimitedAtp10Token() {
         // The account private key to issue atp1.0 token
         String issuerPrivateKey = "privbsKxedzmq9g9Na1bBCbnC3UQvEYZUVAEXHErS4PFvhZd2162xEut";
         // The token code
@@ -82,7 +82,7 @@ public class Atp10TokenDemo {
      * Limited requirement: The totalSupply must be bigger than 0
      */
     @Test
-    public void IssuelimitedAtp10Token() {
+    public void issuelimitedAtp10Token() {
         // The account private key to issue atp1.0 token
         String issuerPrivateKey = "privbsKxedzmq9g9Na1bBCbnC3UQvEYZUVAEXHErS4PFvhZd2162xEut";
         // The token code
@@ -136,7 +136,7 @@ public class Atp10TokenDemo {
      * Send apt 1.0 token to other account
      */
     @Test
-    public void SendAtp10Token() {
+    public void sendAtp10Token() {
         // The account private key to send atp1.0 token
         String senderPrivateKey = "privbvTuL1k8z27i9eyBrFDUvAVVCSxKeLtzjMMZEqimFwbNchnejS81";
         // The account that issued the atp 1.0 token

@@ -30,7 +30,6 @@ import io.bumo.model.response.result.*;
 import io.bumo.model.response.result.data.Signature;
 import io.bumo.token.impl.AssetServiceImpl;
 import io.bumo.token.impl.BUServiceImpl;
-import io.bumo.token.impl.Ctp10TokenServiceImpl;
 
 import java.io.IOException;
 import java.security.KeyManagementException;
@@ -460,24 +459,6 @@ public class TransactionServiceImpl implements TransactionService {
                     break;
                 case BU_SEND:
                     operation = BUServiceImpl.send((BUSendOperation) operationBase[i], transSourceAddress);
-                    break;
-                case TOKEN_ISSUE:
-                    operation = Ctp10TokenServiceImpl.issue((Ctp10TokenIssueOperation) operationBase[i]);
-                    break;
-                case TOKEN_TRANSFER:
-                    operation = Ctp10TokenServiceImpl.transfer((Ctp10TokenTransferOperation) operationBase[i], transSourceAddress);
-                    break;
-                case TOKEN_TRANSFER_FROM:
-                    operation = Ctp10TokenServiceImpl.transferFrom((Ctp10TokenTransferFromOperation) operationBase[i], transSourceAddress);
-                    break;
-                case TOKEN_APPROVE:
-                    operation = Ctp10TokenServiceImpl.approve((Ctp10TokenApproveOperation) operationBase[i], transSourceAddress);
-                    break;
-                case TOKEN_ASSIGN:
-                    operation = Ctp10TokenServiceImpl.assign((Ctp10TokenAssignOperation) operationBase[i], transSourceAddress);
-                    break;
-                case TOKEN_CHANGE_OWNER:
-                    operation = Ctp10TokenServiceImpl.changeOwner((Ctp10TokenChangeOwnerOperation) operationBase[i], transSourceAddress);
                     break;
                 case CONTRACT_CREATE:
                     operation = ContractServiceImpl.create((ContractCreateOperation) operationBase[i]);
