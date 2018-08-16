@@ -23,4 +23,5 @@ public class Constant {
     public static final Integer LOG_TOPIC_MAX = 128;
     public static final Integer LOG_EACH_DATA_MIN = 1;
     public static final Integer LOG_EACH_DATA_MAX = 1024;
+    public static final Integer DESCRIPTION_LENGTH_MAX = 1024;
 }

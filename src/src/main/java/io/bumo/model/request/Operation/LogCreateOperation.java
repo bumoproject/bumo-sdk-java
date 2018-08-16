@@ -1,4 +1,4 @@
-package io.bumo.model.request.Operation;
+package io.bumo.model.request.operation;
 
 import io.bumo.common.OperationType;
 
@@ -10,9 +10,12 @@ import java.util.List;
  * @Date 2018/7/9 17:29
  */
 public class LogCreateOperation extends BaseOperation {
-    private OperationType operationType = OperationType.LOG_CREATE;
     private String topic;
     private List<String> datas;
+
+    public LogCreateOperation() {
+        operationType = OperationType.LOG_CREATE;
+    }
 
     /**
      * @Author riven

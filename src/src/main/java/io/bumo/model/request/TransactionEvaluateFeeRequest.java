@@ -1,6 +1,6 @@
 package io.bumo.model.request;
 
-import io.bumo.model.request.Operation.BaseOperation;
+import io.bumo.model.request.operation.BaseOperation;
 
 import java.util.Arrays;
 

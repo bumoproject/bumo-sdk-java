@@ -1,4 +1,4 @@
-package io.bumo.model.request.Operation;
+package io.bumo.model.request.operation;
 
 import io.bumo.common.OperationType;
 
@@ -7,9 +7,12 @@ import io.bumo.common.OperationType;
  * @Date 2018/7/9 16:56
  */
 public class BUSendOperation extends BaseOperation {
-    private OperationType operationType = OperationType.BU_SEND;
     private String destAddress;
     private Long amount;
+
+    public BUSendOperation() {
+        operationType = OperationType.BU_SEND;
+    }
 
     /**
      * @Author riven

@@ -7,13 +7,11 @@ import com.google.protobuf.ByteString;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.googlecode.protobuf.format.JsonFormat;
 import io.bumo.account.impl.AccountServiceImpl;
-import io.bumo.token.impl.AssetServiceImpl;
-import io.bumo.token.impl.BUServiceImpl;
-import io.bumo.token.impl.Ctp10TokenServiceImpl;
 import io.bumo.blockchain.BlockService;
 import io.bumo.blockchain.TransactionService;
 import io.bumo.common.Constant;
 import io.bumo.common.General;
+import io.bumo.common.OperationType;
 import io.bumo.common.Tools;
 import io.bumo.contract.impl.ContractServiceImpl;
 import io.bumo.crypto.http.HttpKit;
@@ -25,14 +23,15 @@ import io.bumo.encryption.utils.hex.HexFormat;
 import io.bumo.exception.SDKException;
 import io.bumo.exception.SdkError;
 import io.bumo.log.LogServiceImpl;
-import io.bumo.model.request.Operation.*;
 import io.bumo.model.request.*;
+import io.bumo.model.request.operation.*;
 import io.bumo.model.response.*;
 import io.bumo.model.response.result.*;
 import io.bumo.model.response.result.data.Signature;
+import io.bumo.token.impl.AssetServiceImpl;
+import io.bumo.token.impl.BUServiceImpl;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
@@ -80,28 +79,30 @@ public class TransactionServiceImpl implements TransactionService {
                 throw new SDKException(SdkError.INVALID_FEELIMIT_ERROR);
             }
 
-            Long ceilLedgerSeq = transactionBuildBlobRequest.getCelLedgerSeq();
+            Long ceilLedgerSeq = transactionBuildBlobRequest.getCeilLedgerSeq();
             if (!Tools.isEmpty(ceilLedgerSeq) && ceilLedgerSeq < 0) {
                 throw new SDKException(SdkError.INVALID_CEILLEDGERSEQ_ERROR);
             }
             // check metadata
             String metadata = transactionBuildBlobRequest.getMetadata();
-            // check operation and build transaction
+            // build transaction
             Chain.Transaction.Builder transaction = Chain.Transaction.newBuilder();
+            // add note
+            if (!Tools.isEmpty(metadata)) {
+                transaction.setMetadata(ByteString.copyFromUtf8(metadata));
+            }
+            // check operation
             BaseOperation[] baseOperations = transactionBuildBlobRequest.getOperations();
             if (Tools.isEmpty(baseOperations)) {
                 throw new SDKException(SdkError.OPERATIONS_EMPTY_ERROR);
             }
             buildOperations(baseOperations, sourceAddress, transaction);
-
+            // add other information
             transaction.setSourceAddress(sourceAddress);
             transaction.setNonce(nonce);
             transaction.setFeeLimit(feeLimit);
             transaction.setGasPrice(gasPrice);
 
-            if (!Tools.isEmpty(metadata)) {
-                transaction.setMetadata(ByteString.copyFromUtf8(metadata));
-            }
             if (!Tools.isEmpty(ceilLedgerSeq)) {
                 // get blockNumber
                 BlockService blockService = new BlockServiceImpl();
@@ -183,6 +184,9 @@ public class TransactionServiceImpl implements TransactionService {
         TransactionEvaluateFeeResponse transactionEvaluateFeeResponse = new TransactionEvaluateFeeResponse();
         TransactionEvaluateFeeResult transactionEvaluateFeeResult = new TransactionEvaluateFeeResult();
         try {
+            if (Tools.isEmpty(General.url)) {
+                throw new SDKException(SdkError.URL_EMPTY_ERROR);
+            }
             if (Tools.isEmpty(transactionEvaluateFeeRequest)) {
                 throw new SDKException(SdkError.REQUEST_NULL_ERROR);
             }
@@ -319,6 +323,9 @@ public class TransactionServiceImpl implements TransactionService {
         TransactionSubmitResponse transactionSubmitResponse = new TransactionSubmitResponse();
         TransactionSubmitResult transactionSubmitResult = new TransactionSubmitResult();
         try {
+            if (Tools.isEmpty(General.url)) {
+                throw new SDKException(SdkError.URL_EMPTY_ERROR);
+            }
             if (Tools.isEmpty(transactionSubmitRequest)) {
                 throw new SDKException(SdkError.REQUEST_NULL_ERROR);
             }
@@ -400,6 +407,9 @@ public class TransactionServiceImpl implements TransactionService {
         TransactionGetInfoResponse transactionGetInfoResponse = new TransactionGetInfoResponse();
         TransactionGetInfoResult transactionGetInfoResult = new TransactionGetInfoResult();
         try {
+            if (Tools.isEmpty(General.url)) {
+                throw new SDKException(SdkError.URL_EMPTY_ERROR);
+            }
             if (Tools.isEmpty(transactionGetInfoRequest)) {
                 throw new SDKException(SdkError.REQUEST_NULL_ERROR);
             }
@@ -430,7 +440,8 @@ public class TransactionServiceImpl implements TransactionService {
     private void buildOperations(BaseOperation[] operationBase, String transSourceAddress, Chain.Transaction.Builder transaction) throws SDKException {
         for (int i = 0; i < operationBase.length; i++) {
             Chain.Operation operation;
-            switch (operationBase[i].getOperationType()) {
+            OperationType operationType = operationBase[i].getOperationType();
+            switch (operationType) {
                 case ACCOUNT_ACTIVATE:
                     operation = AccountServiceImpl.activate((AccountActivateOperation) operationBase[i], transSourceAddress);
                     break;
@@ -449,32 +460,14 @@ public class TransactionServiceImpl implements TransactionService {
                 case BU_SEND:
                     operation = BUServiceImpl.send((BUSendOperation) operationBase[i], transSourceAddress);
                     break;
-                case TOKEN_ISSUE:
-                    operation = Ctp10TokenServiceImpl.issue((Ctp10TokenIssueOperation) operationBase[i]);
-                    break;
-                case TOKEN_TRANSFER:
-                    operation = Ctp10TokenServiceImpl.transfer((Ctp10TokenTransferOperation) operationBase[i], transSourceAddress);
-                    break;
-                case TOKEN_TRANSFER_FROM:
-                    operation = Ctp10TokenServiceImpl.transferFrom((Ctp10TokenTransferFromOperation) operationBase[i], transSourceAddress);
-                    break;
-                case TOKEN_APPROVE:
-                    operation = Ctp10TokenServiceImpl.approve((Ctp10TokenApproveOperation) operationBase[i]);
-                    break;
-                case TOKEN_ASSIGN:
-                    operation = Ctp10TokenServiceImpl.assign((Ctp10TokenAssignOperation) operationBase[i]);
-                    break;
-                case TOKEN_CHANGE_OWNER:
-                    operation = Ctp10TokenServiceImpl.changeOwner((Ctp10TokenChangeOwnerOperation) operationBase[i]);
-                    break;
                 case CONTRACT_CREATE:
                     operation = ContractServiceImpl.create((ContractCreateOperation) operationBase[i]);
                     break;
                 case CONTRACT_INVOKE_BY_ASSET:
-                    operation = ContractServiceImpl.invokeByAsset((ContractInvokeByAssetOperation) operationBase[i]);
+                    operation = ContractServiceImpl.invokeByAsset((ContractInvokeByAssetOperation) operationBase[i], transSourceAddress);
                     break;
                 case CONTRACT_INVOKE_BY_BU:
-                    operation = ContractServiceImpl.invokeByBU((ContractInvokeByBUOperation) operationBase[i]);
+                    operation = ContractServiceImpl.invokeByBU((ContractInvokeByBUOperation) operationBase[i], transSourceAddress);
                     break;
                 case LOG_CREATE:
                     operation = LogServiceImpl.create((LogCreateOperation) operationBase[i]);
@@ -482,15 +475,17 @@ public class TransactionServiceImpl implements TransactionService {
                 default:
                     throw new SDKException(SdkError.OPERATIONS_ONE_ERROR);
             }
-            if (!Tools.isEmpty(operation)) {
-                transaction.addOperations(operation);
-            } else {
+            if (Tools.isEmpty(operation)) {
                 throw new SDKException(SdkError.OPERATIONS_ONE_ERROR);
             }
+            transaction.addOperations(operation);
         }
     }
 
     public static TransactionGetInfoResponse getTransactionInfo(String hash) throws IOException, KeyManagementException, NoSuchAlgorithmException, NoSuchProviderException {
+        if (Tools.isEmpty(General.url)) {
+            throw new SDKException(SdkError.URL_EMPTY_ERROR);
+        }
         String getInfoUrl = General.transactionGetInfoUrl(hash);
         String result = HttpKit.get(getInfoUrl);
         return JSONObject.parseObject(result, TransactionGetInfoResponse.class);

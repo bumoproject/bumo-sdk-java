@@ -6,7 +6,7 @@ import io.bumo.common.ToBaseUnit;
 import io.bumo.crypto.Keypair;
 import io.bumo.encryption.key.PrivateKey;
 import io.bumo.model.request.*;
-import io.bumo.model.request.Operation.BUSendOperation;
+import io.bumo.model.request.operation.BUSendOperation;
 import io.bumo.model.response.*;
 import io.bumo.model.response.result.AccountGetNonceResult;
 import io.bumo.model.response.result.BlockGetInfoResult;
@@ -18,7 +18,7 @@ public class ExchangeDemo {
     SDK sdk = SDK.getInstance("http://seed1.bumotest.io:26002");
 
     /**
-     * 检测连接的节点是否区块同步正常
+     * Check whether the nodes in the connection are block synchronously
      */
     @Test
     public void checkBlockStatus() {
@@ -27,7 +27,7 @@ public class ExchangeDemo {
     }
 
     /**
-     * 生成账户私钥，公钥及地址
+     * Generate an account private key, public key and address
      */
     @Test
     public void createAccount() {
@@ -36,7 +36,7 @@ public class ExchangeDemo {
     }
 
     /**
-     * 校验账户地址
+     * Check whether account address is valid
      */
     @Test
     public void checkAccountAddress() {
@@ -52,7 +52,7 @@ public class ExchangeDemo {
     }
 
     /**
-     * 查询账户信息
+     * Get account info
      */
     @Test
     public void getAccountInfo() {
@@ -66,7 +66,7 @@ public class ExchangeDemo {
     }
 
     /**
-     * 获取账户BU余额
+     * Get account BU balance
      */
     @Test
     public void getAccountBalance() {
@@ -83,7 +83,7 @@ public class ExchangeDemo {
     }
 
     /**
-     * 获取账户Nonce
+     * Get account nonce
      */
     @Test
     public void getAccountNonce() {
@@ -98,21 +98,29 @@ public class ExchangeDemo {
     }
 
     /**
-     * 发送一笔BU交易
+     * Send a transaction of sending bu
      *
      * @throws Exception
      */
     @Test
     public void sendBu() throws Exception {
-        String senderPrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq"; // 发送方私钥
-        String destAddress = "buQswSaKDACkrFsnP1wcVsLAUzXQsemauE";// 接收方账户地址
-        Long amount = ToBaseUnit.BU2MO("10.9"); // 发送转出10.9BU给接收方（目标账户）
-        Long gasPrice = 1000L; // 固定写 1000L ，单位是MO
-        Long feeLimit = ToBaseUnit.BU2MO("0.01"); // 设置最多费用 0.01BU ，固定填写
-        Long nonce = 1L; // 发送方账户Nonce，必须Nonce + 1
+        // Init variable
+        // The account private key to send bu
+        String senderPrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq";
+        // The account address to receive bu
+        String destAddress = "buQswSaKDACkrFsnP1wcVsLAUzXQsemauE";
+        // The amount to be sent
+        Long amount = ToBaseUnit.BU2MO("0.01");
+        // The fixed write 1000L, the unit is MO
+        Long gasPrice = 1000L;
+        // Set up the maximum cost 0.01BU
+        Long feeLimit = ToBaseUnit.BU2MO("0.01");
+        // Transaction initiation account's nonce + 1
+        Long nonce = 1L;
 
-        // 记录txhash ，以便后续再次确认交易真实结果
-        // 推荐5个区块后再次通过txhash再次调用`根据交易Hash获取交易信息`(参考示例：getTxByHash()）来确认交易终态结果
+        // Record txhash for subsequent confirmation of the real result of the transaction.
+        // After recommending five blocks, call again through txhash `Get the transaction information
+        // from the transaction Hash'(see example: getTxByHash ()) to confirm the final result of the transaction
         String txhash = sendBu(senderPrivateKey, destAddress, amount, nonce, gasPrice, feeLimit);
 
     }
@@ -209,17 +217,16 @@ public class ExchangeDemo {
 
     private String sendBu(String senderPrivateKey, String destAddress, Long amount, Long senderNonce, Long gasPrice, Long feeLimit) throws Exception {
 
-        // 1. 获取交易发送账户地址
-        String senderAddresss = getAddressByPrivateKey(senderPrivateKey); // BU发送者账户地址
+        // 1. Get the account address to send this transaction
+        String senderAddresss = getAddressByPrivateKey(senderPrivateKey);
 
-        // 2. 构建sendBU操作
+        // 2. Build sendBU
         BUSendOperation buSendOperation = new BUSendOperation();
         buSendOperation.setSourceAddress(senderAddresss);
         buSendOperation.setDestAddress(destAddress);
         buSendOperation.setAmount(amount);
 
-        // 3. 构建交易
-
+        // 3. Build transaction
         TransactionBuildBlobRequest transactionBuildBlobRequest = new TransactionBuildBlobRequest();
         transactionBuildBlobRequest.setSourceAddress(senderAddresss);
         transactionBuildBlobRequest.setNonce(senderNonce);
@@ -227,15 +234,14 @@ public class ExchangeDemo {
         transactionBuildBlobRequest.setGasPrice(gasPrice);
         transactionBuildBlobRequest.addOperation(buSendOperation);
 
-        // 4. 获取交易BLob串
+        // 4. Build transaction BLob
         String transactionBlob = null;
         TransactionBuildBlobResponse transactionBuildBlobResponse = sdk.getTransactionService().buildBlob(transactionBuildBlobRequest);
         TransactionBuildBlobResult transactionBuildBlobResult = transactionBuildBlobResponse.getResult();
         String txHash = transactionBuildBlobResult.getHash();
         transactionBlob = transactionBuildBlobResult.getTransactionBlob();
 
-        // 5. 签名交易BLob(交易发送账户签名交易Blob串)
-
+        // 5. Sign transaction BLob
         String[] signerPrivateKeyArr = {senderPrivateKey};
         TransactionSignRequest transactionSignRequest = new TransactionSignRequest();
         transactionSignRequest.setBlob(transactionBlob);
@@ -244,16 +250,15 @@ public class ExchangeDemo {
         }
         TransactionSignResponse transactionSignResponse = sdk.getTransactionService().sign(transactionSignRequest);
 
-        // 6. 广播交易
-
+        // 6. Broadcast transaction
         TransactionSubmitRequest transactionSubmitRequest = new TransactionSubmitRequest();
         transactionSubmitRequest.setTransactionBlob(transactionBlob);
         transactionSubmitRequest.setSignatures(transactionSignResponse.getResult().getSignatures());
         TransactionSubmitResponse transactionSubmitResponse = sdk.getTransactionService().submit(transactionSubmitRequest);
-        if (0 == transactionSubmitResponse.getErrorCode()) { // 交易广播成功
-            System.out.println("交易广播成功，hash=" + transactionSubmitResponse.getResult().getHash());
+        if (0 == transactionSubmitResponse.getErrorCode()) {
+            System.out.println("Success，hash=" + transactionSubmitResponse.getResult().getHash());
         } else {
-            System.out.println("交易广播失败，hash=" + transactionSubmitResponse.getResult().getHash() + "");
+            System.out.println("Failure，hash=" + transactionSubmitResponse.getResult().getHash() + "");
             System.out.println(JSON.toJSONString(transactionSubmitResponse, true));
         }
         return txHash;

@@ -4,10 +4,10 @@ import com.alibaba.fastjson.JSON;
 import io.bumo.SDK;
 import io.bumo.common.ToBaseUnit;
 import io.bumo.model.request.AccountGetNonceRequest;
-import io.bumo.model.request.Operation.BUSendOperation;
 import io.bumo.model.request.TransactionBuildBlobRequest;
 import io.bumo.model.request.TransactionSignRequest;
 import io.bumo.model.request.TransactionSubmitRequest;
+import io.bumo.model.request.operation.BUSendOperation;
 import io.bumo.model.response.AccountGetNonceResponse;
 import io.bumo.model.response.TransactionBuildBlobResponse;
 import io.bumo.model.response.TransactionSignResponse;
@@ -25,19 +25,19 @@ public class submitTransactionDemo {
     SDK sdk = SDK.getInstance("http://seed1.bumotest.io:26002");
 
     /*
-     * 获取账户nonce值
+     * Get account nonce to start transaction
      */
     @Test
     public void getAccountNonce() {
-        // 初始化请求参数
+        // Init request
         String senderAddress = "buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp";
         AccountGetNonceRequest getNonceRequest = new AccountGetNonceRequest();
         getNonceRequest.setAddress(senderAddress);
 
-        // 调用getNonce接口
+        // Call getNonce
         AccountGetNonceResponse getNonceResponse = sdk.getAccountService().getNonce(getNonceRequest);
 
-        // 赋值nonce
+        // Get nonce
         if (getNonceResponse.getErrorCode() == 0) {
             AccountGetNonceResult result = getNonceResponse.getResult();
             System.out.println("nonce: " + result.getNonce());
@@ -47,7 +47,7 @@ public class submitTransactionDemo {
     }
 
     /*
-     * 构建操作
+     * Build operation
      */
     @Test
     public void buildOperation() {
@@ -64,11 +64,11 @@ public class submitTransactionDemo {
     }
 
     /*
-     * 构建交易Blob
+     * Build transaction blob
      */
     @Test
     public void buildTransactionBlob() {
-        // 上面的获取账户nonce值接口得到的nonce
+        // Get the nonce above getAccountNonce interface
         String senderAddress = "buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp";
         AccountGetNonceRequest getNonceRequest = new AccountGetNonceRequest();
         getNonceRequest.setAddress(senderAddress);
@@ -82,7 +82,7 @@ public class submitTransactionDemo {
             return;
         }
 
-        // 上面的构建操作接口得到的Operation
+        // Get the operation above buildOperation interface
         String destAddress = "buQsurH1M4rjLkfjzkxR9KXJ6jSu2r9xBNEw";
         Long amount = ToBaseUnit.BU2MO("10.9");
         BUSendOperation operation = new BUSendOperation();
@@ -90,17 +90,17 @@ public class submitTransactionDemo {
         operation.setDestAddress(destAddress);
         operation.setAmount(amount);
 
-        // 初始化变量
+        // Init variable
         Long gasPrice = 1000L;
         Long feeLimit = ToBaseUnit.BU2MO("0.01");
-        // 初始化请求参数
+        // Init request
         TransactionBuildBlobRequest buildBlobRequest = new TransactionBuildBlobRequest();
         buildBlobRequest.setSourceAddress(senderAddress);
         buildBlobRequest.setNonce(nonce + 1);
         buildBlobRequest.setFeeLimit(feeLimit);
         buildBlobRequest.setGasPrice(gasPrice);
         buildBlobRequest.addOperation(operation);
-        // 调用buildBlob接口
+        // Build buildBlob
         TransactionBuildBlobResponse buildBlobResponse = sdk.getTransactionService().buildBlob(buildBlobRequest);
         if (buildBlobResponse.getErrorCode() == 0) {
             TransactionBuildBlobResult result = buildBlobResponse.getResult();
@@ -111,11 +111,11 @@ public class submitTransactionDemo {
     }
 
     /*
-     * 签名交易
+     * Sign transaction
      */
     @Test
     public void signTransaction() {
-        // 上面的获取账户nonce值接口得到的nonce
+        // Get the nonce above getAccountNonce interface
         String senderAddress = "buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp";
         AccountGetNonceRequest getNonceRequest = new AccountGetNonceRequest();
         getNonceRequest.setAddress(senderAddress);
@@ -129,7 +129,7 @@ public class submitTransactionDemo {
             return;
         }
 
-        // 上面的构建操作接口得到的Operation
+        // Get the operation above buildOperation interface
         String destAddress = "buQsurH1M4rjLkfjzkxR9KXJ6jSu2r9xBNEw";
         Long amount = ToBaseUnit.BU2MO("10.9");
         BUSendOperation operation = new BUSendOperation();
@@ -137,7 +137,7 @@ public class submitTransactionDemo {
         operation.setDestAddress(destAddress);
         operation.setAmount(amount);
 
-        // 上面的构建交易Blob接口得到的transactionBlob
+        // Get the transaction blob above buildTransactionBlob interface
         Long gasPrice = 1000L;
         Long feeLimit = ToBaseUnit.BU2MO("0.01");
         TransactionBuildBlobRequest buildBlobRequest = new TransactionBuildBlobRequest();
@@ -156,7 +156,7 @@ public class submitTransactionDemo {
             return;
         }
 
-        // 初始化请求参数
+        // Init request
         String senderPrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq";
         String[] signerPrivateKeyArr = {senderPrivateKey};
         TransactionSignRequest signRequest = new TransactionSignRequest();
@@ -164,7 +164,7 @@ public class submitTransactionDemo {
         for (int i = 0; i < signerPrivateKeyArr.length; i++) {
             signRequest.addPrivateKey(signerPrivateKeyArr[i]);
         }
-        // 调用sign接口
+        // Call sign
         TransactionSignResponse signResponse = sdk.getTransactionService().sign(signRequest);
         if (signResponse.getErrorCode() == 0) {
             TransactionSignResult result = signResponse.getResult();
@@ -175,11 +175,11 @@ public class submitTransactionDemo {
     }
 
     /*
-     * 广播交易
+     * Broadcast transaction
      */
     @Test
     public void broadcastTransaction() {
-        // 上面的获取账户nonce值接口得到的nonce
+        // Get the nonce above getAccountNonce interface
         String senderAddress = "buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp";
         AccountGetNonceRequest getNonceRequest = new AccountGetNonceRequest();
         getNonceRequest.setAddress(senderAddress);
@@ -193,7 +193,7 @@ public class submitTransactionDemo {
             return;
         }
 
-        // 上面的构建操作接口得到的Operation
+        // Get the operation above buildOperation interface
         String destAddress = "buQsurH1M4rjLkfjzkxR9KXJ6jSu2r9xBNEw";
         Long amount = ToBaseUnit.BU2MO("10.9");
         BUSendOperation operation = new BUSendOperation();
@@ -201,7 +201,7 @@ public class submitTransactionDemo {
         operation.setDestAddress(destAddress);
         operation.setAmount(amount);
 
-        // 上面的构建交易Blob接口得到的transactionBlob
+        // Get the transaction blob above buildTransactionBlob interface
         Long gasPrice = 1000L;
         Long feeLimit = ToBaseUnit.BU2MO("0.01");
         TransactionBuildBlobRequest buildBlobRequest = new TransactionBuildBlobRequest();
@@ -220,7 +220,7 @@ public class submitTransactionDemo {
             return;
         }
 
-        // 上面的签名接口得到的signResult
+        // Get sign result above signTransaction interface
         String senderPrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq";
         String[] signerPrivateKeyArr = {senderPrivateKey};
         TransactionSignRequest signRequest = new TransactionSignRequest();
@@ -237,14 +237,14 @@ public class submitTransactionDemo {
             return;
         }
 
-        // 初始化请求参数
+        // Init request
         TransactionSubmitRequest submitRequest = new TransactionSubmitRequest();
         submitRequest.setTransactionBlob(transactionBlob);
         submitRequest.setSignatures(signResult.getSignatures());
-        // 调用submit接口
+        // Call submit
         TransactionSubmitResponse response = sdk.getTransactionService().submit(submitRequest);
         if (0 == response.getErrorCode()) {
-            System.out.println("交易广播成功，hash=" + response.getResult().getHash());
+            System.out.println("Success，hash=" + response.getResult().getHash());
         } else {
             System.out.println("error: " + response.getErrorDesc());
         }

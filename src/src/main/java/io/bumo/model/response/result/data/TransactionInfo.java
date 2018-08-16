@@ -140,7 +140,7 @@ public class TransactionInfo {
      * @Author riven
      * @Method getOperations
      * @Params []
-     * @Return io.bumo.model.response.result.data.Operation[]
+     * @Return io.bumo.model.response.result.data.operation[]
      * @Date 2018/7/6 00:33
      */
     public Operation[] getOperations() {
