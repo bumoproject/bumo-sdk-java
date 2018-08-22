@@ -7,8 +7,8 @@ This document details the common interfaces of the Bumo Java SDK, making it easi
 
 - [Terminology](#terminology)
 - [Format of Request Parameters and Response Data](#format-of-request-parameters-and-response-data)
-	- [Request parameters](#Request parameters)
-	- [Response data](#Response data)
+	- [Request parameters](#request-parameters)
+	- [Response data](#response-data)
 - [Usage](#usage)
     - [Generating SDK Instances](#generating-sdk-instances)
     - [Generating Public-Private Keys and Addresses](#generating-public-private-keys-and-addresses)
