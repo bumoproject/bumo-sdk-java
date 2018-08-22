@@ -140,7 +140,7 @@ public class Atp10TokenDemo {
         // The account private key to send atp1.0 token
         String senderPrivateKey = "privbvTuL1k8z27i9eyBrFDUvAVVCSxKeLtzjMMZEqimFwbNchnejS81";
         // The account that issued the atp 1.0 token
-        String issuerAddress = "";
+        String issuerAddress = "buQsurH1M4rjLkfjzkxR9KXJ6jSu2r9xBNEw";
         // The account to receive atp 1.0 token
         String destAddress = "buQc77ZYKT2dYZ5pzdsfGdGjGMJGGR9ZVZ1p";
         // The token code
@@ -176,7 +176,7 @@ public class Atp10TokenDemo {
         operation.setDestAddress(destAddress);
         operation.setCode(code);
         operation.setAmount(amount);
-        operation.setIssuer(senderAddresss);
+        operation.setIssuer(issuerAddress);
         operation.setMetadata(metadata);
 
         // Record txhash for subsequent confirmation of the real result of the transaction.
