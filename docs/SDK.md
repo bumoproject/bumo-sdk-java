@@ -53,7 +53,7 @@ This document details the common interfaces of the Bumo Java SDK, making it easi
 	- [getLatestReward](#getlatestreward)
 	- [getFees](#getfees)
 	- [getLatestFees](#getlatestfees)
-- [Error Code](#Error Code)
+- [Error Code](#error-code)
 
 ## Terminology
 
