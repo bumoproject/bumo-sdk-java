@@ -14,7 +14,7 @@ JDK 8 or above.
 
 ## Installation
 
-> Note: V1.x has been prompted for maintenance, and V2.0 is recommended.
+> Note: V1.x has been prompted for maintenance, and V2.x is recommended.
 
 #### Mode 1：Adding Dependencies to Maven Projects (Recommended)
 To use the Bumo Java SDK in a Maven project, just add the remote repository provided by Bumo to the maven configuration and add the corresponding dependency to pom.xml.
