@@ -7,10 +7,7 @@ import io.bumo.common.ToBaseUnit;
 import io.bumo.crypto.Keypair;
 import io.bumo.encryption.key.PrivateKey;
 import io.bumo.model.request.*;
-import io.bumo.model.request.operation.AccountActivateOperation;
-import io.bumo.model.request.operation.AssetIssueOperation;
-import io.bumo.model.request.operation.AssetSendOperation;
-import io.bumo.model.request.operation.BaseOperation;
+import io.bumo.model.request.operation.*;
 import io.bumo.model.response.*;
 import io.bumo.model.response.result.TransactionBuildBlobResult;
 import org.junit.Test;
@@ -24,14 +21,20 @@ public class Atp10TokenDemo {
 
     /**
      * Issue the unlimited apt1.0 token successfully
-     * Unlimited requirement: The totalSupply must be smaller than and equal to 0
+     * Unlimited requirement: The totalSupply must be equal to 0
      */
     @Test
     public void issueUnlimitedAtp10Token() {
         // The account private key to issue atp1.0 token
-        String issuerPrivateKey = "privbsKxedzmq9g9Na1bBCbnC3UQvEYZUVAEXHErS4PFvhZd2162xEut";
+        String issuerPrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq";
+        // The token name
+        String name = "TXT";
         // The token code
         String code = "TXT";
+        // The apt token version
+        String version = "1.0";
+        // The apt token icon
+        String icon = "";
         // The token total supply number
         Long totalSupply = 0L;
         // The token now supply number
@@ -40,40 +43,23 @@ public class Atp10TokenDemo {
         // The token decimals
         Integer decimals = 0;
         String description = "test unlimited issuance of apt1.0 token";
-        // The operation notes
-        String metadata = "test the unlimited issuance of apt1.0 token";
-        // The fixed write 1000L, the unit is MO
-        Long gasPrice = 1000L;
-        // Set up the maximum cost 0.01BU
-        Long feeLimit = ToBaseUnit.BU2MO("50.03");
-        // Transaction initiation account's Nonce + 1
-        Long nonce = 10L;
+        // The operation note
+        String operationMetadata = "test the unlimited issuance of apt1.0 token";
+        // The transaction note
+        String transMetadata = "test the unlimited issuance of apt1.0 token";
 
-        // 1. Get the account address to send this transaction
-        String issuerAddresss = getAddressByPrivateKey(issuerPrivateKey);
+        // 1. Transaction initiation account's Nonce + 1
+        Long issueAssetNonce = 114L;
+        if (!issueAsset(issuerPrivateKey, code, nowSupply,  operationMetadata, issueAssetNonce, transMetadata)) {
+            System.out.println("Failed to issue " + code);
+            return;
+        }
 
-        // 2. Build asset operation
-        AssetIssueOperation operation = new AssetIssueOperation();
-        operation.setSourceAddress(issuerAddresss);
-        operation.setCode(code);
-        operation.setAmount(nowSupply);
-        operation.setMetadata(metadata);
-
-        // 3. If this is a atp 1.0 token, you must set transaction metadata like this
-        JSONObject atp10Json = new JSONObject();
-        atp10Json.put("version", "1.0");
-        atp10Json.put("name", code);
-        atp10Json.put("totalSupply", totalSupply);
-        atp10Json.put("decimals, ", decimals);
-        atp10Json.put("description", description);
-        String tranMetadata = atp10Json.toJSONString();
-
-        // Record txhash for subsequent confirmation of the real result of the transaction.
-        // After recommending five blocks, call again through txhash `Get the transaction information
-        // from the transaction Hash'(see example: getTxByHash ()) to confirm the final result of the transaction
-        String txHash = submitTransaction(issuerPrivateKey, issuerAddresss, operation, nonce, gasPrice, feeLimit, tranMetadata);
-        if (txHash != null) {
-            System.out.println("hash: " + txHash);
+        // 2. Transaction initiation account's Nonce + 1
+        Long setAccountMetadataNonce = 115L;
+        if (!setAccountMetadata(issuerPrivateKey, name, code, description, decimals, totalSupply, icon, version, operationMetadata, setAccountMetadataNonce, transMetadata)) {
+            System.out.println("Failed to set atp token  " + code + " metadata");
+            return;
         }
     }
 
@@ -85,50 +71,39 @@ public class Atp10TokenDemo {
     public void issuelimitedAtp10Token() {
         // The account private key to issue atp1.0 token
         String issuerPrivateKey = "privbsKxedzmq9g9Na1bBCbnC3UQvEYZUVAEXHErS4PFvhZd2162xEut";
+        // The token name
+        String name = "TXT";
         // The token code
         String code = "TXT";
-        // The token total supply number, and must cannot be smaller than nowSupply
-        Long totalSupply = 1000000000L;
+        // The apt token version
+        String version = "1.0";
+        // The apt token icon
+        String icon = "";
+        // The token total supply number
+        Long totalSupply = 100000000000L;
         // The token now supply number
         Long nowSupply = 1000000000L;
-        // The token decimals
-        Integer decimals = 8;
         // The token description
-        String description = "test limited issuance of apt1.0 token";
-        // The operation notes
-        String metadata = "test the limited issuance of apt1.0 token";
-        // The fixed write 1000L, the unit is MO
-        Long gasPrice = 1000L;
-        // Set up the maximum cost 50.01BU
-        Long feeLimit = ToBaseUnit.BU2MO("50.01");
-        // Transaction initiation account's Nonce + 1
-        Long nonce = 3L;
+        // The token decimals
+        Integer decimals = 0;
+        String description = "test unlimited issuance of apt1.0 token";
+        // The operation note
+        String operationMetadata = "test the unlimited issuance of apt1.0 token";
+        // The transaction note
+        String transMetadata = "test the unlimited issuance of apt1.0 token";
 
-        // 1. Get the account address to send this transaction
-        String issuerAddresss = getAddressByPrivateKey(issuerPrivateKey);
+        // 1. Transaction initiation account's Nonce + 1
+        Long issueAssetNonce = 10L;
+        if (!issueAsset(issuerPrivateKey, code, nowSupply,  operationMetadata, issueAssetNonce, transMetadata)) {
+            System.out.println("Failed to issue " + code);
+            return;
+        }
 
-        // 2. Build asset operation
-        AssetIssueOperation operation = new AssetIssueOperation();
-        operation.setSourceAddress(issuerAddresss);
-        operation.setCode(code);
-        operation.setAmount(nowSupply);
-        operation.setMetadata(metadata);
-
-        // 3. If this is a atp 1.0 token, you must set transaction metadata like this
-        JSONObject atp10Json = new JSONObject();
-        atp10Json.put("version", "1.0");
-        atp10Json.put("name", code);
-        atp10Json.put("totalSupply", totalSupply);
-        atp10Json.put("decimals, ", decimals);
-        atp10Json.put("description", description);
-        String tranMetadata = atp10Json.toJSONString();
-
-        // Record txhash for subsequent confirmation of the real result of the transaction.
-        // After recommending five blocks, call again through txhash `Get the transaction information
-        // from the transaction Hash'(see example: getTxByHash ()) to confirm the final result of the transaction
-        String txHash = submitTransaction(issuerPrivateKey, issuerAddresss, operation, nonce, gasPrice, feeLimit, tranMetadata);
-        if (txHash != null) {
-            System.out.println("hash: " + txHash);
+        // 2. Transaction initiation account's Nonce + 1
+        Long setAccountMetadataNonce = 11L;
+        if (!setAccountMetadata(issuerPrivateKey, name, code, description, decimals, totalSupply, icon, version, operationMetadata, setAccountMetadataNonce, transMetadata)) {
+            System.out.println("Failed to set atp token  " + code + " metadata");
+            return;
         }
     }
 
@@ -202,6 +177,76 @@ public class Atp10TokenDemo {
         return response.getResult().getIsActivated();
     }
 
+    private boolean issueAsset(String issuerPrivateKey, String code, Long amount, String operationMetadata,
+                               Long nonce, String transMetadata) {
+        // The fixed write 1000L, the unit is MO
+        Long gasPrice = 1000L;
+        // Set up the maximum cost 0.01BU
+        Long feeLimit = ToBaseUnit.BU2MO("50.03");
+
+        // 1. Get the account address to send this transaction
+        String issuerAddresss = getAddressByPrivateKey(issuerPrivateKey);
+
+        // 2. Build asset operation
+        AssetIssueOperation operation = new AssetIssueOperation();
+        operation.setSourceAddress(issuerAddresss);
+        operation.setCode(code);
+        operation.setAmount(amount);
+        operation.setMetadata(operationMetadata);
+
+        // Record txhash for subsequent confirmation of the real result of the transaction.
+        // After recommending five blocks, call again through txhash `Get the transaction information
+        // from the transaction Hash'(see example: getTxByHash ()) to confirm the final result of the transaction
+        String txHash = submitTransaction(issuerPrivateKey, issuerAddresss, operation, nonce, gasPrice, feeLimit, transMetadata);
+        if (txHash != null) {
+            System.out.println("hash: " + txHash);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean setAccountMetadata(String accountPrivateKey, String name, String code, String description, Integer decimals, Long totalSupply, String icon,
+                                       String version, String operationMetadata, Long nonce, String transMetadata) {
+        // The fixed write 1000L, the unit is MO
+        Long gasPrice = 1000L;
+        // Set up the maximum cost 0.01BU
+        Long feeLimit = ToBaseUnit.BU2MO("0.01");
+        // 1. Get the account address to send this transaction
+        String accountAddresss = getAddressByPrivateKey(accountPrivateKey);
+
+        // 2. If this is a atp 1.0 token, you must set metadata like this
+        JSONObject atp10Json = new JSONObject();
+        atp10Json.put("name", name);
+        atp10Json.put("code", code);
+        atp10Json.put("description", description);
+        atp10Json.put("decimals", decimals);
+        atp10Json.put("totalSupply", totalSupply);
+        atp10Json.put("icon", icon);
+        atp10Json.put("version", version);
+
+        String key = "asset_property_" + code;
+        String value = atp10Json.toJSONString();
+
+        // 3. Build setMetadata
+        AccountSetMetadataOperation operation = new AccountSetMetadataOperation();
+        operation.setSourceAddress(accountAddresss);
+        operation.setKey(key);
+        operation.setValue(value);
+        operation.setMetadata(operationMetadata);
+
+        // Record txhash for subsequent confirmation of the real result of the transaction.
+        // After recommending five blocks, call again through txhash `Get the transaction information
+        // from the transaction Hash'(see example: getTxByHash ()) to confirm the final result of the transaction
+        String txHash = submitTransaction(accountPrivateKey, accountAddresss, operation, nonce, gasPrice, feeLimit, transMetadata);
+        if (txHash != null) {
+            System.out.println("hash: " + txHash);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     /**
      * Activate a new account
      */
@@ -262,7 +307,6 @@ public class Atp10TokenDemo {
             return null;
         }
         TransactionBuildBlobResult transactionBuildBlobResult = transactionBuildBlobResponse.getResult();
-        String txHash = transactionBuildBlobResult.getHash();
         transactionBlob = transactionBuildBlobResult.getTransactionBlob();
 
         // 3. Sign transaction BLob
@@ -279,17 +323,17 @@ public class Atp10TokenDemo {
         }
 
         // 4. Broadcast transaction
+        String Hash = null;
         TransactionSubmitRequest transactionSubmitRequest = new TransactionSubmitRequest();
         transactionSubmitRequest.setTransactionBlob(transactionBlob);
         transactionSubmitRequest.setSignatures(transactionSignResponse.getResult().getSignatures());
         TransactionSubmitResponse transactionSubmitResponse = sdk.getTransactionService().submit(transactionSubmitRequest);
         if (0 == transactionSubmitResponse.getErrorCode()) {
-            System.out.println("Success，hash=" + transactionSubmitResponse.getResult().getHash());
+            Hash = transactionSubmitResponse.getResult().getHash();
         } else {
-            System.out.println("Failure，hash=" + transactionSubmitResponse.getResult().getHash() + "");
             System.out.println(JSON.toJSONString(transactionSubmitResponse, true));
         }
-        return txHash;
+        return Hash;
     }
 
     /**
