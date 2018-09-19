@@ -19,7 +19,7 @@ JDK 8 or above.
 #### Mode 1：Adding Dependencies to Maven Projects (Recommended)
 To use the Bumo Java SDK in a Maven project, just add the remote repository provided by Bumo to the maven configuration and add the corresponding dependency to pom.xml.
 
-This article uses version 2.0.0 as an example
+This article uses version 2.0.1 as an example
 
 Maven remote repository
 ``` xml
@@ -39,7 +39,7 @@ Add the following in the dependencies tag：
 <dependency>
   <groupId>io.bumo</groupId>
   <artifactId>bumo-sdk</artifactId>
-  <version>2.0.0</version>
+  <version>2.0.1</version>
 </dependency>
 ```
 #### Mode 2: Import the JAR Package in the Project
