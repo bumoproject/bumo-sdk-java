@@ -64,7 +64,7 @@ public class Atp10TokenDemo {
         assetIssueOperation.setAmount(nowSupply);
         assetIssueOperation.setMetadata(operationMetadata);
 
-        // 3. If this is a atp 1.0 token, you must set metadata like this
+        // 3. If this is an atp 1.0 token, you must set metadata like this
         JSONObject atp10Json = new JSONObject();
         atp10Json.put("name", name);
         atp10Json.put("code", code);
@@ -139,7 +139,7 @@ public class Atp10TokenDemo {
         assetIssueOperation.setAmount(nowSupply);
         assetIssueOperation.setMetadata(operationMetadata);
 
-        // 3. If this is a atp 1.0 token, you must set metadata like this
+        // 3. If this is an atp 1.0 token, you must set metadata like this
         JSONObject atp10Json = new JSONObject();
         atp10Json.put("name", name);
         atp10Json.put("code", code);
