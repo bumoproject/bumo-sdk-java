@@ -2,6 +2,7 @@ package io.bumo.sdk.example;
 
 import com.alibaba.fastjson.JSON;
 import com.google.protobuf.InvalidProtocolBufferException;
+import com.googlecode.protobuf.format.JsonFormat;
 import io.bumo.SDK;
 import io.bumo.common.ToBaseUnit;
 import io.bumo.crypto.Keypair;
@@ -23,7 +24,7 @@ import org.junit.Test;
  */
 
 public class DigitalAssetsDemo {
-    SDK sdk = SDK.getInstance("http://127.0.0.1:36002");
+    SDK sdk = SDK.getInstance("http://seed1.bumotest.io:26002");
 
     @Test
     public void checkSDKGetinstance() throws InvalidProtocolBufferException {
@@ -301,7 +302,7 @@ public class DigitalAssetsDemo {
      */
     @Test
     public void getTxByHash() {
-        String txHash = "389d53e55929c997d22f25d3757b088e2e869403ac0f2d13712ba877762b3d45";
+        String txHash = "eabaa7934c50d89c1debe8aeffa53733ed50e84d9e4d957b7596d9411c62ea3f";
         // Init request
         TransactionGetInfoRequest request = new TransactionGetInfoRequest();
         request.setHash(txHash);
@@ -323,7 +324,7 @@ public class DigitalAssetsDemo {
     @Test
     public void getTransactionOfBolck() {
         // Init request
-        Long blockNumber = 617247L;
+        Long blockNumber = 987032L;
         BlockGetTransactionsRequest request = new BlockGetTransactionsRequest();
         request.setBlockNumber(blockNumber);
 
@@ -693,17 +694,17 @@ public class DigitalAssetsDemo {
     public void sendBu() {
         // Init variable
         // The account private key to send bu
-        String senderPrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq";
+        String senderPrivateKey = "privbsJGTpKxC2ybGYJZB6XRARwq9VYvkzAny7grWcfMRP4MR8DNYUPn";
         // The account address to receive bu
-        String destAddress = "buQsurH1M4rjLkfjzkxR9KXJ6jSu2r9xBNEw";
+        String destAddress = "buQWudLdgqxzspxr86Vi29QbcyySL59rVYo6";
         // The amount to be sent
-        Long amount = ToBaseUnit.BU2MO("0.01");
+        Long amount = ToBaseUnit.BU2MO("100");
         // The fixed write 1000L, the unit is MO
         Long gasPrice = 1000L;
         // Set up the maximum cost 0.01BU
         Long feeLimit = ToBaseUnit.BU2MO("0.01");
         // Transaction initiation account's nonce + 1
-        Long nonce = 25L;
+        Long nonce = 28L;
 
         // 1. Get the account address to send this transaction
         String senderAddresss = getAddressByPrivateKey(senderPrivateKey);
@@ -796,6 +797,13 @@ public class DigitalAssetsDemo {
         TransactionBuildBlobResult transactionBuildBlobResult = transactionBuildBlobResponse.getResult();
         String txHash = transactionBuildBlobResult.getHash();
         transactionBlob = transactionBuildBlobResult.getTransactionBlob();
+        try {
+            Chain.Transaction tran = Chain.Transaction.parseFrom(HexFormat.hexToByte(transactionBlob));
+            JsonFormat jsonFormat = new JsonFormat();
+            System.out.println(jsonFormat.printToString(tran));
+        } catch (InvalidProtocolBufferException e) {
+            e.printStackTrace();
+        }
 
         // 5. Sign transaction BLob
         String[] signerPrivateKeyArr = senderPrivateKeys;
