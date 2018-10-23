@@ -45,8 +45,8 @@ public class BlockServiceImpl implements BlockService {
             blockGetNumberResponse = JSONObject.parseObject(result, BlockGetNumberResponse.class);
         } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
             blockGetNumberResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, blockGetNumberResult);
-        } catch (Exception exception) {
-            blockGetNumberResponse.buildResponse(SdkError.SYSTEM_ERROR, blockGetNumberResult);
+        } catch (Exception e) {
+            blockGetNumberResponse.buildResponse(SdkError.SYSTEM_ERROR.getCode(), e.getMessage(), blockGetNumberResult);
         }
         return blockGetNumberResponse;
     }
@@ -85,8 +85,8 @@ public class BlockServiceImpl implements BlockService {
             blockCheckStatusResponse.buildResponse(errorCode, errorDesc, blockCheckStatusResult);
         } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
             blockCheckStatusResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, blockCheckStatusResult);
-        } catch (Exception exception) {
-            blockCheckStatusResponse.buildResponse(SdkError.SYSTEM_ERROR, blockCheckStatusResult);
+        } catch (Exception e) {
+            blockCheckStatusResponse.buildResponse(SdkError.SYSTEM_ERROR.getCode(), e.getMessage(), blockCheckStatusResult);
         }
         return blockCheckStatusResponse;
     }
@@ -122,8 +122,8 @@ public class BlockServiceImpl implements BlockService {
             blockGetTransactions.buildResponse(errorCode, errorDesc, transactionGetInfoResult);
         } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
             blockGetTransactions.buildResponse(SdkError.CONNECTNETWORK_ERROR, transactionGetInfoResult);
-        } catch (Exception exception) {
-            blockGetTransactions.buildResponse(SdkError.SYSTEM_ERROR, transactionGetInfoResult);
+        } catch (Exception e) {
+            blockGetTransactions.buildResponse(SdkError.SYSTEM_ERROR.getCode(), e.getMessage(), transactionGetInfoResult);
         }
         return blockGetTransactions;
     }
@@ -165,8 +165,8 @@ public class BlockServiceImpl implements BlockService {
             blockGetInfoResponse.buildResponse(errorCode, errorDesc, blockGetInfoResult);
         } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
             blockGetInfoResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, blockGetInfoResult);
-        } catch (Exception exception) {
-            blockGetInfoResponse.buildResponse(SdkError.SYSTEM_ERROR, blockGetInfoResult);
+        } catch (Exception e) {
+            blockGetInfoResponse.buildResponse(SdkError.SYSTEM_ERROR.getCode(), e.getMessage(), blockGetInfoResult);
         }
 
         return blockGetInfoResponse;
@@ -196,8 +196,8 @@ public class BlockServiceImpl implements BlockService {
             blockGetLatestInfoResponse.buildResponse(errorCode, errorDesc, blockGetLatestInfoResult);
         } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
             blockGetLatestInfoResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, blockGetLatestInfoResult);
-        } catch (Exception exception) {
-            blockGetLatestInfoResponse.buildResponse(SdkError.SYSTEM_ERROR, blockGetLatestInfoResult);
+        } catch (Exception e) {
+            blockGetLatestInfoResponse.buildResponse(SdkError.SYSTEM_ERROR.getCode(), e.getMessage(), blockGetLatestInfoResult);
         }
         return blockGetLatestInfoResponse;
     }
@@ -239,8 +239,8 @@ public class BlockServiceImpl implements BlockService {
             blockGetValidatorsResponse.buildResponse(errorCode, errorDesc, blockGetValidatorsResult);
         } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
             blockGetValidatorsResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, blockGetValidatorsResult);
-        } catch (Exception exception) {
-            blockGetValidatorsResponse.buildResponse(SdkError.SYSTEM_ERROR, blockGetValidatorsResult);
+        } catch (Exception e) {
+            blockGetValidatorsResponse.buildResponse(SdkError.SYSTEM_ERROR.getCode(), e.getMessage(), blockGetValidatorsResult);
         }
 
         return blockGetValidatorsResponse;
@@ -271,8 +271,8 @@ public class BlockServiceImpl implements BlockService {
             blockGetLatestValidatorsResponse.buildResponse(errorCode, errorDesc, blockGetLatestValidatorsResult);
         } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
             blockGetLatestValidatorsResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, blockGetLatestValidatorsResult);
-        } catch (Exception exception) {
-            blockGetLatestValidatorsResponse.buildResponse(SdkError.SYSTEM_ERROR, blockGetLatestValidatorsResult);
+        } catch (Exception e) {
+            blockGetLatestValidatorsResponse.buildResponse(SdkError.SYSTEM_ERROR.getCode(), e.getMessage(), blockGetLatestValidatorsResult);
         }
 
         return blockGetLatestValidatorsResponse;
@@ -325,8 +325,8 @@ public class BlockServiceImpl implements BlockService {
             blockGetRewardResponse.buildResponse(errorCode, errorDesc, blockGetRewardResult);
         } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
             blockGetRewardResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, blockGetRewardResult);
-        } catch (Exception exception) {
-            blockGetRewardResponse.buildResponse(SdkError.SYSTEM_ERROR, blockGetRewardResult);
+        } catch (Exception e) {
+            blockGetRewardResponse.buildResponse(SdkError.SYSTEM_ERROR.getCode(), e.getMessage(), blockGetRewardResult);
         }
         return blockGetRewardResponse;
     }
@@ -366,8 +366,8 @@ public class BlockServiceImpl implements BlockService {
             blockGetLatestRewardResponse.buildResponse(errorCode, errorDesc, blockGetLatestRewardResult);
         } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
             blockGetLatestRewardResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, blockGetLatestRewardResult);
-        } catch (Exception exception) {
-            blockGetLatestRewardResponse.buildResponse(SdkError.SYSTEM_ERROR, blockGetLatestRewardResult);
+        } catch (Exception e) {
+            blockGetLatestRewardResponse.buildResponse(SdkError.SYSTEM_ERROR.getCode(), e.getMessage(), blockGetLatestRewardResult);
         }
         return blockGetLatestRewardResponse;
     }
@@ -409,8 +409,8 @@ public class BlockServiceImpl implements BlockService {
             blockGetFeesResponse.buildResponse(errorCode, errorDesc, blockGetFeesResult);
         } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
             blockGetFeesResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, blockGetFeesResult);
-        } catch (Exception exception) {
-            blockGetFeesResponse.buildResponse(SdkError.SYSTEM_ERROR, blockGetFeesResult);
+        } catch (Exception e) {
+            blockGetFeesResponse.buildResponse(SdkError.SYSTEM_ERROR.getCode(), e.getMessage(), blockGetFeesResult);
         }
 
         return blockGetFeesResponse;
@@ -437,8 +437,8 @@ public class BlockServiceImpl implements BlockService {
             SdkError.checkErrorCode(blockGetLatestFeesResponse);
         } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
             blockGetLatestFeesResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, blockGetLatestFeesResult);
-        } catch (Exception exception) {
-            blockGetLatestFeesResponse.buildResponse(SdkError.SYSTEM_ERROR, blockGetLatestFeesResult);
+        } catch (Exception e) {
+            blockGetLatestFeesResponse.buildResponse(SdkError.SYSTEM_ERROR.getCode(), e.getMessage(), blockGetLatestFeesResult);
         }
 
         return blockGetLatestFeesResponse;

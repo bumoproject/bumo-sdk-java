@@ -75,8 +75,8 @@ public class AccountServiceImpl implements AccountService {
             operation = buildActivateOperation(sourceAddress, destAddress, initBalance, metadata);
         } catch (SDKException sdkException) {
             throw sdkException;
-        } catch (Exception exception) {
-            throw new SDKException(SdkError.SYSTEM_ERROR);
+        } catch (Exception e) {
+            throw new SDKException(SdkError.SYSTEM_ERROR.getCode(), e.getMessage());
         }
 
         return operation;
@@ -130,8 +130,8 @@ public class AccountServiceImpl implements AccountService {
             }
         } catch (SDKException sdkException) {
             throw sdkException;
-        } catch (Exception exception) {
-            throw new SDKException(SdkError.SYSTEM_ERROR);
+        } catch (Exception e) {
+            throw new SDKException(SdkError.SYSTEM_ERROR.getCode(), e.getMessage());
         }
 
         return operation.build();
@@ -176,8 +176,8 @@ public class AccountServiceImpl implements AccountService {
             throw sdkException;
         } catch (NumberFormatException exception) {
             throw new SDKException(SdkError.INVALID_TX_THRESHOLD_ERROR);
-        } catch (Exception exception) {
-            throw new SDKException(SdkError.SYSTEM_ERROR);
+        } catch (Exception e) {
+            throw new SDKException(SdkError.SYSTEM_ERROR.getCode(), e.getMessage());
         }
         return operation;
     }
@@ -215,7 +215,7 @@ public class AccountServiceImpl implements AccountService {
             String errorDesc = apiException.getErrorDesc();
             accountCheckValidResponse.buildResponse(errorCode, errorDesc, accountCheckValidResult);
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-            accountCheckValidResponse.buildResponse(SdkError.SYSTEM_ERROR, accountCheckValidResult);
+            accountCheckValidResponse.buildResponse(SdkError.SYSTEM_ERROR.getCode(), e.getMessage(), accountCheckValidResult);
         }
         return accountCheckValidResponse;
     }
@@ -281,7 +281,7 @@ public class AccountServiceImpl implements AccountService {
         } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
             accountGetInfoResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, accountGetInfoResult);
         } catch (Exception e) {
-            accountGetInfoResponse.buildResponse(SdkError.SYSTEM_ERROR, accountGetInfoResult);
+            accountGetInfoResponse.buildResponse(SdkError.SYSTEM_ERROR.getCode(), e.getMessage(), accountGetInfoResult);
         }
 
         return accountGetInfoResponse;
@@ -329,7 +329,7 @@ public class AccountServiceImpl implements AccountService {
         } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
             accountGetNonceResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, accountGetNonceResult);
         } catch (Exception e) {
-            accountGetNonceResponse.buildResponse(SdkError.SYSTEM_ERROR, accountGetNonceResult);
+            accountGetNonceResponse.buildResponse(SdkError.SYSTEM_ERROR.getCode(), e.getMessage(), accountGetNonceResult);
         }
 
         return accountGetNonceResponse;
@@ -373,7 +373,7 @@ public class AccountServiceImpl implements AccountService {
         } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
             accountGetBalanceResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, accountGetBalanceResult);
         } catch (Exception e) {
-            accountGetBalanceResponse.buildResponse(SdkError.SYSTEM_ERROR, accountGetBalanceResult);
+            accountGetBalanceResponse.buildResponse(SdkError.SYSTEM_ERROR.getCode(), e.getMessage(), accountGetBalanceResult);
         }
 
         return accountGetBalanceResponse;
@@ -421,7 +421,7 @@ public class AccountServiceImpl implements AccountService {
         } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
             accountGetAssetsResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, accountGetAssetsResult);
         } catch (Exception e) {
-            accountGetAssetsResponse.buildResponse(SdkError.SYSTEM_ERROR, accountGetAssetsResult);
+            accountGetAssetsResponse.buildResponse(SdkError.SYSTEM_ERROR.getCode(), e.getMessage(), accountGetAssetsResult);
         }
 
         return accountGetAssetsResponse;
@@ -473,7 +473,7 @@ public class AccountServiceImpl implements AccountService {
         } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
             accountGetMetadataResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, accountGetMetadataResult);
         } catch (Exception e) {
-            accountGetMetadataResponse.buildResponse(SdkError.SYSTEM_ERROR, accountGetMetadataResult);
+            accountGetMetadataResponse.buildResponse(SdkError.SYSTEM_ERROR.getCode(), e.getMessage(), accountGetMetadataResult);
         }
 
         return accountGetMetadataResponse;
@@ -510,7 +510,7 @@ public class AccountServiceImpl implements AccountService {
         } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
             accountCheckActivatedResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, accountCheckActivatedResult);
         } catch (Exception e) {
-            accountCheckActivatedResponse.buildResponse(SdkError.SYSTEM_ERROR, accountCheckActivatedResult);
+            accountCheckActivatedResponse.buildResponse(SdkError.SYSTEM_ERROR.getCode(), e.getMessage(), accountCheckActivatedResult);
         }
         return accountCheckActivatedResponse;
     }

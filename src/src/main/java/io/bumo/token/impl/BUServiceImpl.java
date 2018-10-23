@@ -49,8 +49,8 @@ public class BUServiceImpl {
             operationPayCoin.setAmount(amount);
         } catch (SDKException sdkException) {
             throw sdkException;
-        } catch (Exception exception) {
-            throw new SDKException(SdkError.SYSTEM_ERROR);
+        } catch (Exception e) {
+            throw new SDKException(SdkError.SYSTEM_ERROR.getCode(), e.getMessage());
         }
 
         return operation.build();

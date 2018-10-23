@@ -100,7 +100,7 @@ public class ContractServiceImpl implements ContractService {
         } catch (SDKException sdkException) {
             throw sdkException;
         } catch (Exception e) {
-            throw new SDKException(SdkError.SYSTEM_ERROR);
+            throw new SDKException(SdkError.SYSTEM_ERROR.getCode(), e.getMessage());
         }
 
         return operation.build();
@@ -170,7 +170,7 @@ public class ContractServiceImpl implements ContractService {
         } catch (SDKException sdkException) {
             throw sdkException;
         } catch (Exception e) {
-            throw new SDKException(SdkError.SYSTEM_ERROR);
+            throw new SDKException(SdkError.SYSTEM_ERROR.getCode(), e.getMessage());
         }
         return operation.build();
     }
@@ -224,7 +224,7 @@ public class ContractServiceImpl implements ContractService {
         } catch (SDKException sdkException) {
             throw sdkException;
         } catch (Exception e) {
-            throw new SDKException(SdkError.SYSTEM_ERROR);
+            throw new SDKException(SdkError.SYSTEM_ERROR.getCode(), e.getMessage());
         }
 
         return operation.build();
@@ -324,8 +324,8 @@ public class ContractServiceImpl implements ContractService {
             contractGetInfoResponse.buildResponse(errorCode, errorDesc, contractGetInfoResult);
         } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
             contractGetInfoResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, contractGetInfoResult);
-        } catch (Exception exception) {
-            contractGetInfoResponse.buildResponse(SdkError.SYSTEM_ERROR, contractGetInfoResult);
+        } catch (Exception e) {
+            contractGetInfoResponse.buildResponse(SdkError.SYSTEM_ERROR.getCode(), e.getMessage(), contractGetInfoResult);
         }
 
         return contractGetInfoResponse;
@@ -357,8 +357,8 @@ public class ContractServiceImpl implements ContractService {
             Integer errorCode = apiException.getErrorCode();
             String errorDesc = apiException.getErrorDesc();
             contractCheckValidResponse.buildResponse(errorCode, errorDesc, contractCheckValidResult);
-        } catch (Exception exception) {
-            contractCheckValidResponse.buildResponse(SdkError.SYSTEM_ERROR, contractCheckValidResult);
+        } catch (Exception e) {
+            contractCheckValidResponse.buildResponse(SdkError.SYSTEM_ERROR.getCode(), e.getMessage(), contractCheckValidResult);
         }
         return contractCheckValidResponse;
     }
@@ -411,8 +411,8 @@ public class ContractServiceImpl implements ContractService {
             contractCallResponse.buildResponse(errorCode, errorDesc, contractCallResult);
         } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
             contractCallResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, contractCallResult);
-        } catch (Exception exception) {
-            contractCallResponse.buildResponse(SdkError.SYSTEM_ERROR, contractCallResult);
+        } catch (Exception e) {
+            contractCallResponse.buildResponse(SdkError.SYSTEM_ERROR.getCode(), e.getMessage(), contractCallResult);
         }
         return contractCallResponse;
     }
@@ -433,7 +433,7 @@ public class ContractServiceImpl implements ContractService {
             SdkError.checkErrorCode(transactionGetInfoResponse);
             TransactionHistory transactionHistory = transactionGetInfoResponse.getResult().getTransactions()[0];
             if (Tools.isEmpty(transactionHistory)) {
-                contractGetAddressResponse.buildResponse(SdkError.SYSTEM_ERROR, contractGetAddressResult);
+                throw new SDKException(SdkError.INVALID_CONTRACT_HASH_ERROR);
             }
             SdkError.checkErrorCode(transactionHistory.getErrorCode(), transactionHistory.getErrorDesc());
             String contractAddress = transactionHistory.getErrorDesc();
@@ -452,8 +452,8 @@ public class ContractServiceImpl implements ContractService {
             contractGetAddressResponse.buildResponse(errorCode, errorDesc, contractGetAddressResult);
         } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
             contractGetAddressResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, contractGetAddressResult);
-        } catch (Exception exception) {
-            contractGetAddressResponse.buildResponse(SdkError.SYSTEM_ERROR, contractGetAddressResult);
+        } catch (Exception e) {
+            contractGetAddressResponse.buildResponse(SdkError.SYSTEM_ERROR.getCode(), e.getMessage(), contractGetAddressResult);
         }
         return contractGetAddressResponse;
     }

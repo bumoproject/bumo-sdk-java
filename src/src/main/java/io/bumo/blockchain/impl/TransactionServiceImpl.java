@@ -112,7 +112,7 @@ public class TransactionServiceImpl implements TransactionService {
                     String errorDesc = blockGetNumberResponse.getErrorDesc();
                     throw new SDKException(errorCode, errorDesc);
                 } else if (Tools.isEmpty(errorCode)) {
-                    throw new SDKException(SdkError.SYSTEM_ERROR);
+                    throw new SDKException(SdkError.CONNECTNETWORK_ERROR);
                 }
                 // check ceilLedgerSeq
                 Long blockNumber = blockGetNumberResponse.getResult().getHeader().getBlockNumber();
@@ -127,8 +127,8 @@ public class TransactionServiceImpl implements TransactionService {
             Integer errorCode = apiException.getErrorCode();
             String errorDesc = apiException.getErrorDesc();
             transactionBuildBlobResponse.buildResponse(errorCode, errorDesc, transactionBuildBlobResult);
-        } catch (Exception exception) {
-            transactionBuildBlobResponse.buildResponse(SdkError.SYSTEM_ERROR, transactionBuildBlobResult);
+        } catch (Exception e) {
+            transactionBuildBlobResponse.buildResponse(SdkError.SYSTEM_ERROR.getCode(), e.getMessage(), transactionBuildBlobResult);
         }
 
         return transactionBuildBlobResponse;
@@ -164,9 +164,8 @@ public class TransactionServiceImpl implements TransactionService {
             transactionParseBlobResponse.buildResponse(errorCode, errorDesc, transactionParseBlobResult);
         } catch (InvalidProtocolBufferException e) {
             transactionParseBlobResponse.buildResponse(SdkError.INVALID_BLOB_ERROR, transactionParseBlobResult);
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            transactionParseBlobResponse.buildResponse(SdkError.SYSTEM_ERROR, transactionParseBlobResult);
+        } catch (Exception e) {
+            transactionParseBlobResponse.buildResponse(SdkError.SYSTEM_ERROR.getCode(), e.getMessage(), transactionParseBlobResult);
         }
 
         return transactionParseBlobResponse;
@@ -250,8 +249,8 @@ public class TransactionServiceImpl implements TransactionService {
             transactionEvaluateFeeResponse.buildResponse(errorCode, errorDesc, transactionEvaluateFeeResult);
         } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
             transactionEvaluateFeeResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, transactionEvaluateFeeResult);
-        } catch (Exception exception) {
-            transactionEvaluateFeeResponse.buildResponse(SdkError.SYSTEM_ERROR, transactionEvaluateFeeResult);
+        } catch (Exception e) {
+            transactionEvaluateFeeResponse.buildResponse(SdkError.SYSTEM_ERROR.getCode(), e.getMessage(), transactionEvaluateFeeResult);
         }
         return transactionEvaluateFeeResponse;
     }
@@ -306,7 +305,7 @@ public class TransactionServiceImpl implements TransactionService {
             transactionSignResponse.buildResponse(SdkError.INVALID_BLOB_ERROR, transactionSignResult);
         } catch (Exception e) {
             e.printStackTrace();
-            transactionSignResponse.buildResponse(SdkError.SYSTEM_ERROR, transactionSignResult);
+            transactionSignResponse.buildResponse(SdkError.SYSTEM_ERROR.getCode(), e.getMessage(), transactionSignResult);
         }
         return transactionSignResponse;
     }
@@ -366,7 +365,8 @@ public class TransactionServiceImpl implements TransactionService {
             transactionItemsRequest.put("items", transactionItems);
             // submit
             String submitUrl = General.transactionSubmitUrl();
-            String result = HttpKit.post(submitUrl, transactionItemsRequest.toJSONString());
+            String transactionRequest = transactionItemsRequest.toJSONString();
+            String result = HttpKit.post(submitUrl, transactionRequest);
             TransactionSubmitHttpResponse transactionSubmitHttpResponse = JSONObject.parseObject(result, TransactionSubmitHttpResponse.class);
             Integer successCount = transactionSubmitHttpResponse.getSuccessCount();
             TransactionSubmitHttpResult[] httpResults = transactionSubmitHttpResponse.getResults();
@@ -378,8 +378,10 @@ public class TransactionServiceImpl implements TransactionService {
                     throw new SDKException(errorCode, errorDesc);
                 }
             } else {
-                throw new SDKException(SdkError.SYSTEM_ERROR);
+                throw new SDKException(SdkError.INVALID_BLOB_ERROR);
             }
+            //System.out.println("[bumo] hash: " + transactionSubmitResult.getHash() + ", transaction: " + transactionRequest);
+
             transactionSubmitResponse.buildResponse(SdkError.SUCCESS, transactionSubmitResult);
         } catch (SDKException apiException) {
             Integer errorCode = apiException.getErrorCode();
@@ -389,8 +391,8 @@ public class TransactionServiceImpl implements TransactionService {
             transactionSubmitResponse.buildResponse(SdkError.INVALID_BLOB_ERROR, transactionSubmitResult);
         } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
             transactionSubmitResponse.buildResponse(SdkError.CONNECTN_BLOCKCHAIN_ERROR, transactionSubmitResult);
-        } catch (Exception exception) {
-            transactionSubmitResponse.buildResponse(SdkError.SYSTEM_ERROR, transactionSubmitResult);
+        } catch (Exception e) {
+            transactionSubmitResponse.buildResponse(SdkError.SYSTEM_ERROR.getCode(), e.getMessage(), transactionSubmitResult);
         }
         return transactionSubmitResponse;
     }
@@ -424,8 +426,8 @@ public class TransactionServiceImpl implements TransactionService {
             transactionGetInfoResponse.buildResponse(errorCode, errorDesc, transactionGetInfoResult);
         } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
             transactionGetInfoResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, transactionGetInfoResult);
-        } catch (Exception exception) {
-            transactionGetInfoResponse.buildResponse(SdkError.SYSTEM_ERROR, transactionGetInfoResult);
+        } catch (Exception e) {
+            transactionGetInfoResponse.buildResponse(SdkError.SYSTEM_ERROR.getCode(), e.getMessage(), transactionGetInfoResult);
         }
         return transactionGetInfoResponse;
     }

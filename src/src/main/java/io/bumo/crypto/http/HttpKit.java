@@ -20,6 +20,8 @@ public class HttpKit {
 
     private static final String DEFAULT_CHARSET = "UTF-8";
     public static boolean enableSSL = false;
+    public static int connectTimeOut = 15000;
+    public static int readTimeOut = 15000;
 
     /**
      * 发送Get请求
@@ -42,9 +44,9 @@ public class HttpKit {
         URL urlGet = new URL(url);
         HttpsURLConnection http = (HttpsURLConnection) urlGet.openConnection();
         // 连接超时
-        http.setConnectTimeout(25000);
+        http.setConnectTimeout(connectTimeOut);
         // 读取超时 --服务器响应比较慢，增大时间
-        http.setReadTimeout(25000);
+        http.setReadTimeout(readTimeOut);
         http.setRequestMethod("GET");
         http.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
         http.setSSLSocketFactory(ssf);
@@ -87,9 +89,9 @@ public class HttpKit {
             URL urlGet = new URL(url);
             HttpURLConnection http = (HttpURLConnection) urlGet.openConnection();
             // 连接超时
-            http.setConnectTimeout(25000);
+            http.setConnectTimeout(connectTimeOut);
             // 读取超时 --服务器响应比较慢，增大时间
-            http.setReadTimeout(25000);
+            http.setReadTimeout(readTimeOut);
             http.setRequestMethod("GET");
             http.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             http.setDoOutput(true);
@@ -151,9 +153,9 @@ public class HttpKit {
         URL urlGet = new URL(url);
         HttpsURLConnection http = (HttpsURLConnection) urlGet.openConnection();
         // 连接超时
-        http.setConnectTimeout(50000);
+        http.setConnectTimeout(connectTimeOut);
         // 读取超时 --服务器响应比较慢，增大时间
-        http.setReadTimeout(50000);
+        http.setReadTimeout(readTimeOut);
         http.setRequestMethod("POST");
         http.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
         http.setSSLSocketFactory(ssf);
@@ -202,9 +204,9 @@ public class HttpKit {
             URL urlGet = new URL(url);
             HttpURLConnection http = (HttpURLConnection) urlGet.openConnection();
             // 连接超时
-            http.setConnectTimeout(50000);
+            http.setConnectTimeout(connectTimeOut);
             // 读取超时 --服务器响应比较慢，增大时间
-            http.setReadTimeout(50000);
+            http.setReadTimeout(readTimeOut);
             http.setRequestMethod("POST");
             http.setRequestProperty("Content-Type", "application/json");
             http.setDoOutput(true);

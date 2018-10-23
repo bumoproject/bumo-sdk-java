@@ -10,8 +10,10 @@ import io.bumo.common.General;
 import io.bumo.common.Tools;
 import io.bumo.contract.ContractService;
 import io.bumo.contract.impl.ContractServiceImpl;
+import io.bumo.crypto.http.HttpKit;
 import io.bumo.exception.SDKException;
 import io.bumo.exception.SdkError;
+import io.bumo.model.request.SDKConfigure;
 import io.bumo.token.AssetService;
 import io.bumo.token.impl.AssetServiceImpl;
 
@@ -34,6 +36,18 @@ public class SDK {
 
     /**
      * @Author riven
+     * @Method Structure
+     * @Params [url]
+     * @Date 2018/7/15 14:50
+     */
+    private SDK(SDKConfigure sdkConfigure) {
+        General.url = sdkConfigure.getUrl();
+        HttpKit.connectTimeOut = sdkConfigure.getHttpConnectTimeOut();
+        HttpKit.readTimeOut = sdkConfigure.getHttpReadTimeOut();
+    }
+
+    /**
+     * @Author riven
      * @Method getInstance
      * @Params [url]
      * @Return io.bumo.SDK
@@ -44,6 +58,21 @@ public class SDK {
             sdk = new SDK(url);
         }
         sdk.init(url);
+        return sdk;
+    }
+
+    /**
+     * @Author riven
+     * @Method getInstance
+     * @Params [url]
+     * @Return io.bumo.SDK
+     * @Date 2018/7/15 14:51
+     */
+    public synchronized static SDK getInstance(SDKConfigure sdkConfigure) throws SDKException {
+        if (sdk == null) {
+            sdk = new SDK(sdkConfigure);
+        }
+        sdk.init(sdkConfigure);
         return sdk;
     }
 
@@ -109,9 +138,26 @@ public class SDK {
      * @Return void
      * @Date 2018/7/15 14:50
      */
+    private void init(SDKConfigure sdkConfigure) throws SDKException {
+        if (Tools.isEmpty(sdkConfigure.getUrl())) {
+            throw new SDKException(SdkError.URL_EMPTY_ERROR);
+        }
+        General.url = sdkConfigure.getUrl();
+        HttpKit.connectTimeOut = sdkConfigure.getHttpConnectTimeOut();
+        HttpKit.readTimeOut = sdkConfigure.getHttpReadTimeOut();
+    }
+
+    /**
+     * @Author riven
+     * @Method init
+     * @Params [url]
+     * @Return void
+     * @Date 2018/7/15 14:50
+     */
     private void init(String url) throws SDKException {
         if (Tools.isEmpty(url)) {
             throw new SDKException(SdkError.URL_EMPTY_ERROR);
         }
+        General.url = url;
     }
 }

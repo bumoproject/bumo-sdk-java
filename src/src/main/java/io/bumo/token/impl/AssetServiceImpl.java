@@ -59,7 +59,7 @@ public class AssetServiceImpl implements AssetService {
         } catch (SDKException sdkException) {
             throw sdkException;
         } catch (Exception e) {
-            throw new SDKException(SdkError.SYSTEM_ERROR);
+            throw new SDKException(SdkError.SYSTEM_ERROR.getCode(), e.getMessage());
         }
 
 
@@ -110,8 +110,8 @@ public class AssetServiceImpl implements AssetService {
 
         } catch (SDKException sdkException) {
             throw sdkException;
-        } catch (Exception exception) {
-            throw new SDKException(SdkError.SYSTEM_ERROR);
+        } catch (Exception e) {
+            throw new SDKException(SdkError.SYSTEM_ERROR.getCode(), e.getMessage());
         }
 
         return operation;
@@ -169,7 +169,7 @@ public class AssetServiceImpl implements AssetService {
             assetGetResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, assetGetResult);
         } catch (Exception e) {
             e.printStackTrace();
-            assetGetResponse.buildResponse(SdkError.SYSTEM_ERROR, assetGetResult);
+            assetGetResponse.buildResponse(SdkError.SYSTEM_ERROR.getCode(), e.getMessage(), assetGetResult);
         }
 
         return assetGetResponse;
