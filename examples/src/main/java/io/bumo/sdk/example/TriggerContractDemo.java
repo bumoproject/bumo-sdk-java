@@ -14,7 +14,7 @@ import io.bumo.model.response.result.data.Signature;
  * @Author riven
  * @Date 2018/10/23 01:24
  */
-public class AssignAndTransferContractToken {
+public class TriggerContractDemo {
     public static SDK sdk;
     public static void main(String argv[]) {
         String url = "http://seed1.bumotest.io:26002";
