@@ -1,5 +1,6 @@
 package io.bumo.sdk.example;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import io.bumo.SDK;
 import io.bumo.common.ToBaseUnit;
@@ -32,6 +33,9 @@ public class TriggerContractDemo {
         System.out.println("hash: " + hash);
         boolean status = checkTransactionStatus(hash);
         System.out.println("status: " + status);
+
+        String result = queryContract();
+        System.out.println(result);
     }
 
     public static long getAccountNonce() {
@@ -184,5 +188,37 @@ public class TriggerContractDemo {
             System.out.println("error: " + response.getErrorDesc());
         }
         return transactionStatus;
+    }
+
+    public static String queryContract() {
+        // Init variable
+        // Contract address
+        String contractAddress = "buQcEk2dpUv6uoXjAqisVRyP1bBSeWUHCtF2";
+        // TokenOwner address
+        String tokenOwner = "buQXPeTjT173kagZ7j8NWAPJAgJCpJHFdyc7";
+
+        // Init input
+        JSONObject input = new JSONObject();
+        input.put("method", "balanceOf");
+        JSONObject params = new JSONObject();
+        params.put("address", tokenOwner);
+        input.put("params", params);
+
+        // Init request
+        ContractCallRequest request = new ContractCallRequest();
+        request.setContractAddress(contractAddress);
+        request.setFeeLimit(10000000000L);
+        request.setOptType(2);
+        request.setInput(input.toJSONString());
+
+        // Call call
+        String result = null;
+        ContractCallResponse response = sdk.getContractService().call(request);
+        if (response.getErrorCode() == 0) {
+            result = JSON.toJSONString(response.getResult().getQueryRets().getJSONObject(0));
+        } else {
+            System.out.println("error: " + response.getErrorDesc());
+        }
+        return result;
     }
 }
