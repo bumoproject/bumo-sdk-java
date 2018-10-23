@@ -9,6 +9,7 @@ import io.bumo.crypto.Keypair;
 import io.bumo.crypto.protobuf.Chain;
 import io.bumo.encryption.key.PrivateKey;
 import io.bumo.encryption.utils.hex.HexFormat;
+import io.bumo.exception.SdkError;
 import io.bumo.model.request.*;
 import io.bumo.model.request.operation.*;
 import io.bumo.model.response.*;
@@ -27,11 +28,25 @@ public class DigitalAssetsDemo {
     SDK sdk = SDK.getInstance("http://seed1.bumotest.io:26002");
 
     @Test
-    public void checkSDKGetinstance() throws InvalidProtocolBufferException {
-        //SDK sdk2 = SDK.getInstance(null);
-        String blob = "0a246275516e6e5545425245773268423670574847507a77616e5837643238786b364b566370104b18c0843d20e8073a35080412246275516e6e5545425245773268423670574847507a77616e5837643238786b364b5663702a0b0a0252561080a094a58d1d";
-        Chain.Transaction transaction = Chain.Transaction.parseFrom(HexFormat.hexToByte(blob));
-        System.out.println(transaction);
+    public void SDKConfigure() throws InvalidProtocolBufferException {
+        SDKConfigure sdkConfigure = new SDKConfigure();
+        sdkConfigure.setHttpConnectTimeOut(5000);
+        sdkConfigure.setHttpReadTimeOut(5000);
+        sdkConfigure.setUrl("http://seed1.bumotest.io:26002");
+        sdk = SDK.getInstance(sdkConfigure);
+    }
+
+    @Test
+    public void checkAccountActivated() {
+        AccountCheckActivatedRequst request = new AccountCheckActivatedRequst();
+        request.setAddress("buQtL9dwfFj4BWGRsMri7GX9nGv4GdjpvAeN");
+
+        AccountCheckActivatedResponse response = sdk.getAccountService().checkActivated(request);
+        if (response.getErrorCode() == 0) {
+            System.out.println("account (buQtL9dwfFj4BWGRsMri7GX9nGv4GdjpvAeN) is activated");
+        } else {
+            System.out.println("error: " + response.getErrorDesc());
+        }
     }
 
     /**

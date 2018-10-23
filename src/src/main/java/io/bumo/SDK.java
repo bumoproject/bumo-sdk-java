@@ -42,8 +42,14 @@ public class SDK {
      */
     private SDK(SDKConfigure sdkConfigure) {
         General.url = sdkConfigure.getUrl();
-        HttpKit.connectTimeOut = sdkConfigure.getHttpConnectTimeOut();
-        HttpKit.readTimeOut = sdkConfigure.getHttpReadTimeOut();
+        int httpConnectTimeOut = sdkConfigure.getHttpConnectTimeOut();
+        if (httpConnectTimeOut > 0) {
+            HttpKit.connectTimeOut = httpConnectTimeOut;
+        }
+        int readTimeOut = sdkConfigure.getHttpReadTimeOut();
+        if (readTimeOut > 0) {
+            HttpKit.readTimeOut = readTimeOut;
+        }
     }
 
     /**
@@ -143,8 +149,14 @@ public class SDK {
             throw new SDKException(SdkError.URL_EMPTY_ERROR);
         }
         General.url = sdkConfigure.getUrl();
-        HttpKit.connectTimeOut = sdkConfigure.getHttpConnectTimeOut();
-        HttpKit.readTimeOut = sdkConfigure.getHttpReadTimeOut();
+        int httpConnectTimeOut = sdkConfigure.getHttpConnectTimeOut();
+        if (httpConnectTimeOut > 0) {
+            HttpKit.connectTimeOut = httpConnectTimeOut;
+        }
+        int readTimeOut = sdkConfigure.getHttpReadTimeOut();
+        if (readTimeOut > 0) {
+            HttpKit.readTimeOut = readTimeOut;
+        }
     }
 
     /**
