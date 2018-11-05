@@ -950,7 +950,7 @@ initInput|String|合约init函数的入参
 
    成员      |     类型     |        描述       |
 ----------- | ------------ | ---------------- |
-type|Integer|约的语种，默认不赋值
+type|Integer| 合约的语种，默认不赋值
 payload|String|对应语种的合约代码
 
 #### MetadataInfo
