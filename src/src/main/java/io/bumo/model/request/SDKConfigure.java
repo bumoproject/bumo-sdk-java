@@ -8,6 +8,7 @@ public class SDKConfigure {
     private String url;
     private int httpConnectTimeOut;
     private int httpReadTimeOut;
+    private long chainId = 0;
 
     public String getUrl() {
         return url;
@@ -15,6 +16,14 @@ public class SDKConfigure {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public long getChainId() {
+        return chainId;
+    }
+
+    public void setChainId(long chainId) {
+        this.chainId = chainId;
     }
 
     public int getHttpConnectTimeOut() {

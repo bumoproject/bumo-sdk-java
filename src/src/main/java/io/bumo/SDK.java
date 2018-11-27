@@ -23,6 +23,8 @@ import io.bumo.token.impl.AssetServiceImpl;
  */
 public class SDK {
     private static SDK sdk = null;
+    private String url;
+    private long chainId = 0;
 
     /**
      * @Author riven
@@ -30,26 +32,7 @@ public class SDK {
      * @Params [url]
      * @Date 2018/7/15 14:50
      */
-    private SDK(String url) {
-        General.url = url;
-    }
-
-    /**
-     * @Author riven
-     * @Method Structure
-     * @Params [url]
-     * @Date 2018/7/15 14:50
-     */
-    private SDK(SDKConfigure sdkConfigure) {
-        General.url = sdkConfigure.getUrl();
-        int httpConnectTimeOut = sdkConfigure.getHttpConnectTimeOut();
-        if (httpConnectTimeOut > 0) {
-            HttpKit.connectTimeOut = httpConnectTimeOut;
-        }
-        int readTimeOut = sdkConfigure.getHttpReadTimeOut();
-        if (readTimeOut > 0) {
-            HttpKit.readTimeOut = readTimeOut;
-        }
+    private SDK() {
     }
 
     /**
@@ -61,7 +44,7 @@ public class SDK {
      */
     public synchronized static SDK getInstance(String url) throws SDKException {
         if (sdk == null) {
-            sdk = new SDK(url);
+            sdk = new SDK();
         }
         sdk.init(url);
         return sdk;
@@ -76,7 +59,7 @@ public class SDK {
      */
     public synchronized static SDK getInstance(SDKConfigure sdkConfigure) throws SDKException {
         if (sdk == null) {
-            sdk = new SDK(sdkConfigure);
+            sdk = new SDK();
         }
         sdk.init(sdkConfigure);
         return sdk;
@@ -139,6 +122,38 @@ public class SDK {
 
     /**
      * @Author riven
+     * @Method getSdk
+     * @Return io.bumo.SDK
+     * @Date 2018/7/15 14:51
+     */
+    public static SDK getSdk() {
+        return sdk;
+    }
+
+    /**
+     * @Author riven
+     * @Method getUrl
+     * @Params []
+     * @Return java.lang.String
+     * @Date 2018/11/27 11:12
+     */
+    public String getUrl() {
+        return url;
+    }
+
+    /**
+     * @Author riven
+     * @Method getChainId
+     * @Params []
+     * @Return long
+     * @Date 2018/11/27 11:12
+     */
+    public long getChainId() {
+        return chainId;
+    }
+
+    /**
+     * @Author riven
      * @Method init
      * @Params [url]
      * @Return void
@@ -148,7 +163,7 @@ public class SDK {
         if (Tools.isEmpty(sdkConfigure.getUrl())) {
             throw new SDKException(SdkError.URL_EMPTY_ERROR);
         }
-        General.url = sdkConfigure.getUrl();
+        sdk.url = sdkConfigure.getUrl();
         int httpConnectTimeOut = sdkConfigure.getHttpConnectTimeOut();
         if (httpConnectTimeOut > 0) {
             HttpKit.connectTimeOut = httpConnectTimeOut;
@@ -156,6 +171,10 @@ public class SDK {
         int readTimeOut = sdkConfigure.getHttpReadTimeOut();
         if (readTimeOut > 0) {
             HttpKit.readTimeOut = readTimeOut;
+        }
+        long chainId = sdkConfigure.getChainId();
+        if (chainId > 0) {
+            sdk.chainId = chainId;
         }
     }
 
@@ -170,6 +189,6 @@ public class SDK {
         if (Tools.isEmpty(url)) {
             throw new SDKException(SdkError.URL_EMPTY_ERROR);
         }
-        General.url = url;
+        sdk.url = url;
     }
 }

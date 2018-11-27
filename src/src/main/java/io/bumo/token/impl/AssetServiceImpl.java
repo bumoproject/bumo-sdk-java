@@ -145,10 +145,10 @@ public class AssetServiceImpl implements AssetService {
             if (!PublicKey.isAddressValid(issuer)) {
                 throw new SDKException(SdkError.INVALID_ISSUER_ADDRESS_ERROR);
             }
-            if (Tools.isEmpty(General.url)) {
+            if (Tools.isEmpty(General.getInstance().getUrl())) {
                 throw new SDKException(SdkError.URL_EMPTY_ERROR);
             }
-            String accountGetInfoUrl = General.assetGetUrl(address, code, issuer);
+            String accountGetInfoUrl = General.getInstance().assetGetUrl(address, code, issuer);
             String result = HttpKit.get(accountGetInfoUrl);
             assetGetResponse = JSON.parseObject(result, AssetGetInfoResponse.class);
             Integer errorCode = assetGetResponse.getErrorCode();

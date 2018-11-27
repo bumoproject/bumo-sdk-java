@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.googlecode.protobuf.format.JsonFormat;
+import io.bumo.SDK;
 import io.bumo.account.impl.AccountServiceImpl;
 import io.bumo.blockchain.BlockService;
 import io.bumo.blockchain.TransactionService;
@@ -102,6 +103,9 @@ public class TransactionServiceImpl implements TransactionService {
             transaction.setNonce(nonce);
             transaction.setFeeLimit(feeLimit);
             transaction.setGasPrice(gasPrice);
+            if (!Tools.isEmpty(SDK.getSdk().getChainId())) {
+                transaction.setChainId(SDK.getSdk().getChainId());
+            }
 
             if (!Tools.isEmpty(ceilLedgerSeq)) {
                 // get blockNumber
@@ -183,7 +187,7 @@ public class TransactionServiceImpl implements TransactionService {
         TransactionEvaluateFeeResponse transactionEvaluateFeeResponse = new TransactionEvaluateFeeResponse();
         TransactionEvaluateFeeResult transactionEvaluateFeeResult = new TransactionEvaluateFeeResult();
         try {
-            if (Tools.isEmpty(General.url)) {
+            if (Tools.isEmpty(General.getInstance().getUrl())) {
                 throw new SDKException(SdkError.URL_EMPTY_ERROR);
             }
             if (Tools.isEmpty(transactionEvaluateFeeRequest)) {
@@ -239,7 +243,7 @@ public class TransactionServiceImpl implements TransactionService {
             transactionItems.add(transactionItem);
             testTransactionRequest.put("items", transactionItems);
 
-            String evaluationFeeUrl = General.transactionEvaluationFee();
+            String evaluationFeeUrl = General.getInstance().transactionEvaluationFee();
             String result = HttpKit.post(evaluationFeeUrl, testTransactionRequest.toJSONString());
             transactionEvaluateFeeResponse = JSON.parseObject(result, TransactionEvaluateFeeResponse.class);
 
@@ -322,7 +326,7 @@ public class TransactionServiceImpl implements TransactionService {
         TransactionSubmitResponse transactionSubmitResponse = new TransactionSubmitResponse();
         TransactionSubmitResult transactionSubmitResult = new TransactionSubmitResult();
         try {
-            if (Tools.isEmpty(General.url)) {
+            if (Tools.isEmpty(General.getInstance().getUrl())) {
                 throw new SDKException(SdkError.URL_EMPTY_ERROR);
             }
             if (Tools.isEmpty(transactionSubmitRequest)) {
@@ -364,7 +368,7 @@ public class TransactionServiceImpl implements TransactionService {
             transactionItems.add(transactionItem);
             transactionItemsRequest.put("items", transactionItems);
             // submit
-            String submitUrl = General.transactionSubmitUrl();
+            String submitUrl = General.getInstance().transactionSubmitUrl();
             String transactionRequest = transactionItemsRequest.toJSONString();
             String result = HttpKit.post(submitUrl, transactionRequest);
             TransactionSubmitHttpResponse transactionSubmitHttpResponse = JSONObject.parseObject(result, TransactionSubmitHttpResponse.class);
@@ -409,7 +413,7 @@ public class TransactionServiceImpl implements TransactionService {
         TransactionGetInfoResponse transactionGetInfoResponse = new TransactionGetInfoResponse();
         TransactionGetInfoResult transactionGetInfoResult = new TransactionGetInfoResult();
         try {
-            if (Tools.isEmpty(General.url)) {
+            if (Tools.isEmpty(General.getInstance().getUrl())) {
                 throw new SDKException(SdkError.URL_EMPTY_ERROR);
             }
             if (Tools.isEmpty(transactionGetInfoRequest)) {
@@ -485,10 +489,10 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     public static TransactionGetInfoResponse getTransactionInfo(String hash) throws IOException, KeyManagementException, NoSuchAlgorithmException, NoSuchProviderException {
-        if (Tools.isEmpty(General.url)) {
+        if (Tools.isEmpty(General.getInstance().getUrl())) {
             throw new SDKException(SdkError.URL_EMPTY_ERROR);
         }
-        String getInfoUrl = General.transactionGetInfoUrl(hash);
+        String getInfoUrl = General.getInstance().transactionGetInfoUrl(hash);
         String result = HttpKit.get(getInfoUrl);
         return JSONObject.parseObject(result, TransactionGetInfoResponse.class);
     }

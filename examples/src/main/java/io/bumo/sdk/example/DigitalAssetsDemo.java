@@ -9,7 +9,6 @@ import io.bumo.crypto.Keypair;
 import io.bumo.crypto.protobuf.Chain;
 import io.bumo.encryption.key.PrivateKey;
 import io.bumo.encryption.utils.hex.HexFormat;
-import io.bumo.exception.SdkError;
 import io.bumo.model.request.*;
 import io.bumo.model.request.operation.*;
 import io.bumo.model.response.*;
@@ -28,10 +27,11 @@ public class DigitalAssetsDemo {
     SDK sdk = SDK.getInstance("http://seed1.bumotest.io:26002");
 
     @Test
-    public void SDKConfigure() throws InvalidProtocolBufferException {
+    public void SDKConfigure() {
         SDKConfigure sdkConfigure = new SDKConfigure();
         sdkConfigure.setHttpConnectTimeOut(5000);
         sdkConfigure.setHttpReadTimeOut(5000);
+        sdkConfigure.setChainId(9);
         sdkConfigure.setUrl("http://seed1.bumotest.io:26002");
         sdk = SDK.getInstance(sdkConfigure);
     }
@@ -211,6 +211,8 @@ public class DigitalAssetsDemo {
      */
     @Test
     public void buildTransactionBlob() {
+        SDKConfigure();
+
         // Init variable
         String senderAddresss = "buQfnVYgXuMo3rvCEpKA6SfRrDpaz8D8A9Ea";
         String destAddress = "buQsurH1M4rjLkfjzkxR9KXJ6jSu2r9xBNEw";
@@ -237,7 +239,12 @@ public class DigitalAssetsDemo {
         TransactionBuildBlobResponse response = sdk.getTransactionService().buildBlob(request);
         if (response.getErrorCode() == 0) {
             TransactionBuildBlobResult result = response.getResult();
-            System.out.println(JSON.toJSONString(result, true));
+            try {
+                Chain.Transaction transaction = Chain.Transaction.parseFrom(HexFormat.hexToByte(result.getTransactionBlob()));
+                System.out.println(transaction);
+            } catch (InvalidProtocolBufferException e) {
+                e.printStackTrace();
+            }
         } else {
             System.out.println("error: " + response.getErrorDesc());
         }

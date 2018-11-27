@@ -37,10 +37,10 @@ public class BlockServiceImpl implements BlockService {
         BlockGetNumberResponse blockGetNumberResponse = new BlockGetNumberResponse();
         BlockGetNumberResult blockGetNumberResult = new BlockGetNumberResult();
         try {
-            if (Tools.isEmpty(General.url)) {
+            if (Tools.isEmpty(General.getInstance().getUrl())) {
                 throw new SDKException(SdkError.URL_EMPTY_ERROR);
             }
-            String getNumberUrl = General.blockGetNumberUrl();
+            String getNumberUrl = General.getInstance().blockGetNumberUrl();
             String result = HttpKit.get(getNumberUrl);
             blockGetNumberResponse = JSONObject.parseObject(result, BlockGetNumberResponse.class);
         } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
@@ -63,10 +63,10 @@ public class BlockServiceImpl implements BlockService {
         BlockCheckStatusResponse blockCheckStatusResponse = new BlockCheckStatusResponse();
         BlockCheckStatusResult blockCheckStatusResult = new BlockCheckStatusResult();
         try {
-            if (Tools.isEmpty(General.url)) {
+            if (Tools.isEmpty(General.getInstance().getUrl())) {
                 throw new SDKException(SdkError.URL_EMPTY_ERROR);
             }
-            String checkStatusUrl = General.blockCheckStatusUrl();
+            String checkStatusUrl = General.getInstance().blockCheckStatusUrl();
             String result = HttpKit.get(checkStatusUrl);
             BlockCheckStatusLedgerSeqResponse blockCheckStatusLedgerSeqResponse = JSONObject.parseObject(result, BlockCheckStatusLedgerSeqResponse.class);
             if (blockCheckStatusLedgerSeqResponse == null) {
@@ -103,7 +103,7 @@ public class BlockServiceImpl implements BlockService {
         BlockGetTransactionsResponse blockGetTransactions = new BlockGetTransactionsResponse();
         BlockGetTransactionsResult transactionGetInfoResult = new BlockGetTransactionsResult();
         try {
-            if (Tools.isEmpty(General.url)) {
+            if (Tools.isEmpty(General.getInstance().getUrl())) {
                 throw new SDKException(SdkError.URL_EMPTY_ERROR);
             }
             if (Tools.isEmpty(blockGetTransactionsRequest)) {
@@ -113,7 +113,7 @@ public class BlockServiceImpl implements BlockService {
             if (Tools.isEmpty(blockNumber) || blockNumber < 1) {
                 throw new SDKException(SdkError.INVALID_BLOCKNUMBER_ERROR);
             }
-            String getTransactionsUrl = General.blockGetTransactionsUrl(blockNumber);
+            String getTransactionsUrl = General.getInstance().blockGetTransactionsUrl(blockNumber);
             String result = HttpKit.get(getTransactionsUrl);
             blockGetTransactions = JSONObject.parseObject(result, BlockGetTransactionsResponse.class);
         } catch (SDKException apiException) {
@@ -140,7 +140,7 @@ public class BlockServiceImpl implements BlockService {
         BlockGetInfoResponse blockGetInfoResponse = new BlockGetInfoResponse();
         BlockGetInfoResult blockGetInfoResult = new BlockGetInfoResult();
         try {
-            if (Tools.isEmpty(General.url)) {
+            if (Tools.isEmpty(General.getInstance().getUrl())) {
                 throw new SDKException(SdkError.URL_EMPTY_ERROR);
             }
             if (Tools.isEmpty(blockGetInfoRequest)) {
@@ -150,7 +150,7 @@ public class BlockServiceImpl implements BlockService {
             if (Tools.isEmpty(blockNumber) || blockNumber < 1) {
                 throw new SDKException(SdkError.INVALID_BLOCKNUMBER_ERROR);
             }
-            String getInfoUrl = General.blockGetInfoUrl(blockNumber);
+            String getInfoUrl = General.getInstance().blockGetInfoUrl(blockNumber);
             String result = HttpKit.get(getInfoUrl);
             blockGetInfoResponse = JSONObject.parseObject(result, BlockGetInfoResponse.class);
             Integer errorCode = blockGetInfoResponse.getErrorCode();
@@ -184,10 +184,10 @@ public class BlockServiceImpl implements BlockService {
         BlockGetLatestInfoResponse blockGetLatestInfoResponse = new BlockGetLatestInfoResponse();
         BlockGetLatestInfoResult blockGetLatestInfoResult = new BlockGetLatestInfoResult();
         try {
-            if (Tools.isEmpty(General.url)) {
+            if (Tools.isEmpty(General.getInstance().getUrl())) {
                 throw new SDKException(SdkError.URL_EMPTY_ERROR);
             }
-            String getInfoUrl = General.blockGetLatestInfoUrl();
+            String getInfoUrl = General.getInstance().blockGetLatestInfoUrl();
             String result = HttpKit.get(getInfoUrl);
             blockGetLatestInfoResponse = JSONObject.parseObject(result, BlockGetLatestInfoResponse.class);
         } catch (SDKException apiException) {
@@ -214,7 +214,7 @@ public class BlockServiceImpl implements BlockService {
         BlockGetValidatorsResponse blockGetValidatorsResponse = new BlockGetValidatorsResponse();
         BlockGetValidatorsResult blockGetValidatorsResult = new BlockGetValidatorsResult();
         try {
-            if (Tools.isEmpty(General.url)) {
+            if (Tools.isEmpty(General.getInstance().getUrl())) {
                 throw new SDKException(SdkError.URL_EMPTY_ERROR);
             }
             if (Tools.isEmpty(blockGetValidatorsRequest)) {
@@ -224,7 +224,7 @@ public class BlockServiceImpl implements BlockService {
             if (Tools.isEmpty(blockNumber) || blockNumber < 1) {
                 throw new SDKException(SdkError.INVALID_BLOCKNUMBER_ERROR);
             }
-            String getInfoUrl = General.blockGetValidatorsUrl(blockNumber);
+            String getInfoUrl = General.getInstance().blockGetValidatorsUrl(blockNumber);
             String result = HttpKit.get(getInfoUrl);
             blockGetValidatorsResponse = JSONObject.parseObject(result, BlockGetValidatorsResponse.class);
             Integer errorCode = blockGetValidatorsResponse.getErrorCode();
@@ -258,10 +258,10 @@ public class BlockServiceImpl implements BlockService {
         BlockGetLatestValidatorsResponse blockGetLatestValidatorsResponse = new BlockGetLatestValidatorsResponse();
         BlockGetLatestValidatorsResult blockGetLatestValidatorsResult = new BlockGetLatestValidatorsResult();
         try {
-            if (Tools.isEmpty(General.url)) {
+            if (Tools.isEmpty(General.getInstance().getUrl())) {
                 throw new SDKException(SdkError.URL_EMPTY_ERROR);
             }
-            String getInfoUrl = General.blockGetLatestValidatorsUrl();
+            String getInfoUrl = General.getInstance().blockGetLatestValidatorsUrl();
             String result = HttpKit.get(getInfoUrl);
             blockGetLatestValidatorsResponse = JSONObject.parseObject(result, BlockGetLatestValidatorsResponse.class);
             SdkError.checkErrorCode(blockGetLatestValidatorsResponse);
@@ -290,7 +290,7 @@ public class BlockServiceImpl implements BlockService {
         BlockGetRewardResponse blockGetRewardResponse = new BlockGetRewardResponse();
         BlockGetRewardResult blockGetRewardResult = new BlockGetRewardResult();
         try {
-            if (Tools.isEmpty(General.url)) {
+            if (Tools.isEmpty(General.getInstance().getUrl())) {
                 throw new SDKException(SdkError.URL_EMPTY_ERROR);
             }
             if (Tools.isEmpty(blockGetRewardRequest)) {
@@ -300,7 +300,7 @@ public class BlockServiceImpl implements BlockService {
             if (Tools.isEmpty(blockNumber) || blockNumber < 1) {
                 throw new SDKException(SdkError.INVALID_BLOCKNUMBER_ERROR);
             }
-            String getInfoUrl = General.blockGetRewardUrl(blockNumber);
+            String getInfoUrl = General.getInstance().blockGetRewardUrl(blockNumber);
             String result = HttpKit.get(getInfoUrl);
             BlockRewardJsonResponse blockRewardJsonResponse = JSONObject.parseObject(result, BlockRewardJsonResponse.class);
             Integer errorCode = blockRewardJsonResponse.getErrorCode();
@@ -343,10 +343,10 @@ public class BlockServiceImpl implements BlockService {
         BlockGetLatestRewardResponse blockGetLatestRewardResponse = new BlockGetLatestRewardResponse();
         BlockGetLatestRewardResult blockGetLatestRewardResult = new BlockGetLatestRewardResult();
         try {
-            if (Tools.isEmpty(General.url)) {
+            if (Tools.isEmpty(General.getInstance().getUrl())) {
                 throw new SDKException(SdkError.URL_EMPTY_ERROR);
             }
-            String getInfoUrl = General.blockGetLatestRewardUrl();
+            String getInfoUrl = General.getInstance().blockGetLatestRewardUrl();
             String result = HttpKit.get(getInfoUrl);
             BlockRewardJsonResponse blockRewardJsonResponse = JSONObject.parseObject(result, BlockRewardJsonResponse.class);
             SdkError.checkErrorCode(blockRewardJsonResponse);
@@ -384,7 +384,7 @@ public class BlockServiceImpl implements BlockService {
         BlockGetFeesResponse blockGetFeesResponse = new BlockGetFeesResponse();
         BlockGetFeesResult blockGetFeesResult = new BlockGetFeesResult();
         try {
-            if (Tools.isEmpty(General.url)) {
+            if (Tools.isEmpty(General.getInstance().getUrl())) {
                 throw new SDKException(SdkError.URL_EMPTY_ERROR);
             }
             if (Tools.isEmpty(blockGetFeesRequest)) {
@@ -394,7 +394,7 @@ public class BlockServiceImpl implements BlockService {
             if (Tools.isEmpty(blockNumber) || blockNumber < 1) {
                 throw new SDKException(SdkError.INVALID_BLOCKNUMBER_ERROR);
             }
-            String blockGetFeesUrl = General.blockGetFeesUrl(blockNumber);
+            String blockGetFeesUrl = General.getInstance().blockGetFeesUrl(blockNumber);
             String result = HttpKit.get(blockGetFeesUrl);
             blockGetFeesResponse = JSON.parseObject(result, BlockGetFeesResponse.class);
             Integer errorCode = blockGetFeesResponse.getErrorCode();
@@ -428,10 +428,10 @@ public class BlockServiceImpl implements BlockService {
         BlockGetLatestFeesResponse blockGetLatestFeesResponse = new BlockGetLatestFeesResponse();
         BlockGetLatestFeesResult blockGetLatestFeesResult = new BlockGetLatestFeesResult();
         try {
-            if (Tools.isEmpty(General.url)) {
+            if (Tools.isEmpty(General.getInstance().getUrl())) {
                 throw new SDKException(SdkError.URL_EMPTY_ERROR);
             }
-            String blockGetLatestFeeUrl = General.blockGetLatestFeeUrl();
+            String blockGetLatestFeeUrl = General.getInstance().blockGetLatestFeeUrl();
             String result = HttpKit.get(blockGetLatestFeeUrl);
             blockGetLatestFeesResponse = JSON.parseObject(result, BlockGetLatestFeesResponse.class);
             SdkError.checkErrorCode(blockGetLatestFeesResponse);

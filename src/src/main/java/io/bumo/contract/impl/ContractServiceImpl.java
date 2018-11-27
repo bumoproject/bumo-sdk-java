@@ -233,7 +233,7 @@ public class ContractServiceImpl implements ContractService {
     public static ContractCallResponse callContract(String sourceAddress, String contractAddress, Integer optType, String code,
                                                     String input, Long contractBalance, Long gasPrice, Long feeLimit)
             throws KeyManagementException, NoSuchAlgorithmException, NoSuchProviderException, IOException {
-        if (Tools.isEmpty(General.url)) {
+        if (Tools.isEmpty(General.getInstance().getUrl())) {
             throw new SDKException(SdkError.URL_EMPTY_ERROR);
         }
         JSONObject params = new JSONObject();
@@ -258,17 +258,17 @@ public class ContractServiceImpl implements ContractService {
             params.put("gas_price", gasPrice);
         }
         // call contract
-        String contractCallUrl = General.contractCallUrl();
+        String contractCallUrl = General.getInstance().contractCallUrl();
         String result = HttpKit.post(contractCallUrl, params.toJSONString());
         return JSONObject.parseObject(result, ContractCallResponse.class);
     }
 
     private static ContractGetInfoResponse getContractInfo(String contractAddress) throws KeyManagementException, NoSuchAlgorithmException, NoSuchProviderException, IOException, SDKException {
-        if (Tools.isEmpty(General.url)) {
+        if (Tools.isEmpty(General.getInstance().getUrl())) {
             throw new SDKException(SdkError.URL_EMPTY_ERROR);
         }
         ContractGetInfoResponse contractGetInfoResponse;
-        String contractGetInfoUrl = General.accountGetInfoUrl(contractAddress);
+        String contractGetInfoUrl = General.getInstance().accountGetInfoUrl(contractAddress);
         String result = HttpKit.get(contractGetInfoUrl);
         contractGetInfoResponse = JSON.parseObject(result, ContractGetInfoResponse.class);
         Integer errorCode = contractGetInfoResponse.getErrorCode();

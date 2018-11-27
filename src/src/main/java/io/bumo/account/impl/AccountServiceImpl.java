@@ -264,7 +264,7 @@ public class AccountServiceImpl implements AccountService {
             if (!PublicKey.isAddressValid(address)) {
                 throw new SDKException(SdkError.INVALID_ADDRESS_ERROR);
             }
-            if (Tools.isEmpty(General.url)) {
+            if (Tools.isEmpty(General.getInstance().getUrl())) {
                 throw new SDKException(SdkError.URL_EMPTY_ERROR);
             }
             accountGetInfoResponse = getInfo(address);
@@ -307,10 +307,10 @@ public class AccountServiceImpl implements AccountService {
             if (!PublicKey.isAddressValid(address)) {
                 throw new SDKException(SdkError.INVALID_ADDRESS_ERROR);
             }
-            if (Tools.isEmpty(General.url)) {
+            if (Tools.isEmpty(General.getInstance().getUrl())) {
                 throw new SDKException(SdkError.URL_EMPTY_ERROR);
             }
-            String accountGetInfoUrl = General.accountGetInfoUrl(address);
+            String accountGetInfoUrl = General.getInstance().accountGetInfoUrl(address);
             String result = HttpKit.get(accountGetInfoUrl);
             accountGetNonceResponse = JSON.parseObject(result, AccountGetNonceResponse.class);
             Integer errorCode = accountGetNonceResponse.getErrorCode();
@@ -354,10 +354,10 @@ public class AccountServiceImpl implements AccountService {
             if (!PublicKey.isAddressValid(address)) {
                 throw new SDKException(SdkError.INVALID_ADDRESS_ERROR);
             }
-            if (Tools.isEmpty(General.url)) {
+            if (Tools.isEmpty(General.getInstance().getUrl())) {
                 throw new SDKException(SdkError.URL_EMPTY_ERROR);
             }
-            String accountGetInfoUrl = General.accountGetInfoUrl(address);
+            String accountGetInfoUrl = General.getInstance().accountGetInfoUrl(address);
             String result = HttpKit.get(accountGetInfoUrl);
             accountGetBalanceResponse = JSON.parseObject(result, AccountGetBalanceResponse.class);
             Integer errorCode = accountGetBalanceResponse.getErrorCode();
@@ -398,10 +398,10 @@ public class AccountServiceImpl implements AccountService {
             if (!PublicKey.isAddressValid(address)) {
                 throw new SDKException(SdkError.INVALID_ADDRESS_ERROR);
             }
-            if (Tools.isEmpty(General.url)) {
+            if (Tools.isEmpty(General.getInstance().getUrl())) {
                 throw new SDKException(SdkError.URL_EMPTY_ERROR);
             }
-            String accountGetInfoUrl = General.accountGetAssetsUrl(address);
+            String accountGetInfoUrl = General.getInstance().accountGetAssetsUrl(address);
             String result = HttpKit.get(accountGetInfoUrl);
             accountGetAssetsResponse = JSON.parseObject(result, AccountGetAssetsResponse.class);
             Integer errorCode = accountGetAssetsResponse.getErrorCode();
@@ -450,10 +450,10 @@ public class AccountServiceImpl implements AccountService {
             if (!Tools.isNULL(key) && (key.length() > Constant.METADATA_KEY_MAX || key.length() < 1)) {
                 throw new SDKException(SdkError.INVALID_DATAKEY_ERROR);
             }
-            if (Tools.isEmpty(General.url)) {
+            if (Tools.isEmpty(General.getInstance().getUrl())) {
                 throw new SDKException(SdkError.URL_EMPTY_ERROR);
             }
-            String accountGetInfoUrl = General.accountGetMetadataUrl(address, key);
+            String accountGetInfoUrl = General.getInstance().accountGetMetadataUrl(address, key);
             String result = HttpKit.get(accountGetInfoUrl);
             accountGetMetadataResponse = JSON.parseObject(result, AccountGetMetadataResponse.class);
             Integer errorCode = accountGetMetadataResponse.getErrorCode();
@@ -498,7 +498,7 @@ public class AccountServiceImpl implements AccountService {
             if (!PublicKey.isAddressValid(address)) {
                 throw new SDKException(SdkError.INVALID_ADDRESS_ERROR);
             }
-            if (Tools.isEmpty(General.url)) {
+            if (Tools.isEmpty(General.getInstance().getUrl())) {
                 throw new SDKException(SdkError.URL_EMPTY_ERROR);
             }
             accountCheckActivatedResult.setIsActivated(isActivated(address));
@@ -610,7 +610,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     private static AccountGetInfoResponse getInfo(String address) throws IOException, KeyManagementException, NoSuchAlgorithmException, NoSuchProviderException {
-        String accountGetInfoUrl = General.accountGetInfoUrl(address);
+        String accountGetInfoUrl = General.getInstance().accountGetInfoUrl(address);
         String result = HttpKit.get(accountGetInfoUrl);
         return JSON.parseObject(result, AccountGetInfoResponse.class);
     }
