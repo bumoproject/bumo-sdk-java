@@ -26,6 +26,9 @@ public class TransactionInfo {
     @JSONField(name = "operations")
     private Operation[] operations;
 
+    @JSONField(name = "chain_id")
+    private Long chainId;
+
     /**
      * @Author riven
      * @Method getMetadata
@@ -156,5 +159,27 @@ public class TransactionInfo {
      */
     public void setOperations(Operation[] operations) {
         this.operations = operations;
+    }
+
+    /**
+     * @Author riven
+     * @Method getChainId
+     * @Params []
+     * @Return java.lang.Long
+     * @Date 2018/11/27 15:25
+     */
+    public Long getChainId() {
+        return chainId;
+    }
+
+    /**
+     * @Author riven
+     * @Method setChainId
+     * @Params [chainId]
+     * @Return void
+     * @Date 2018/11/27 15:29
+     */
+    public void setChainId(Long chainId) {
+        this.chainId = chainId;
     }
 }

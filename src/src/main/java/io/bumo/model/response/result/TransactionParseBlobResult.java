@@ -23,6 +23,9 @@ public class TransactionParseBlobResult {
     @JSONField(name = "operations")
     private OperationFormat[] operations;
 
+    @JSONField(name = "chain_id")
+    private Long chainId;
+
     /**
      * @Author riven
      * @Method getAddress
@@ -131,5 +134,27 @@ public class TransactionParseBlobResult {
      */
     public void setOperations(OperationFormat[] operations) {
         this.operations = operations;
+    }
+
+    /**
+     * @Author riven
+     * @Method getChainId
+     * @Params []
+     * @Return java.lang.Long
+     * @Date 2018/11/27 15:27
+     */
+    public Long getChainId() {
+        return chainId;
+    }
+
+    /**
+     * @Author riven
+     * @Method setChainId
+     * @Params [chainId]
+     * @Return void
+     * @Date 2018/11/27 15:29
+     */
+    public void setChainId(Long chainId) {
+        this.chainId = chainId;
     }
 }
