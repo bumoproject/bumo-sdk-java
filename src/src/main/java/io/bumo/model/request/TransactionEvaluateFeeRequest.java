@@ -12,7 +12,7 @@ public class TransactionEvaluateFeeRequest {
     private String sourceAddress;
     private Long nonce;
     private BaseOperation[] operations;
-    private int signatureNumber;
+    private int signatureNumber = 1;
     private Long ceilLedgerSeq;
     private String metadata;
 
