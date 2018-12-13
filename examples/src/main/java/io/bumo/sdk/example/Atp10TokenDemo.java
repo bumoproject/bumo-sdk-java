@@ -12,6 +12,8 @@ import io.bumo.model.response.*;
 import io.bumo.model.response.result.TransactionBuildBlobResult;
 import org.junit.Test;
 
+import java.sql.SQLOutput;
+
 /**
  * @Author riven
  * @Date 2018/8/7 14:26
@@ -35,13 +37,14 @@ public class Atp10TokenDemo {
         String version = "1.0";
         // The apt token icon
         String icon = "";
-        // The token total supply number
-        Long totalSupply = 0L;
-        // The token now supply number
-        Long nowSupply = 1000000000L;
-        // The token description
         // The token decimals
-        Integer decimals = 0;
+        Integer decimals = 8;
+        // The token total supply number, which includes the decimals.
+        Long totalSupply = 0L;
+        // The token now supply number, which includes the dicimals.
+        // If decimals is 8 and you want to issue 10 tokens now, the nowSupply must be 10 * 10 ^ 8, like below.
+        Long nowSupply = ToBaseUnit.unitWithDecimals("10", 8);
+        // The token description
         String description = "test unlimited issuance of apt1.0 token";
         // The operation note
         String operationMetadata = "test the unlimited issuance of apt1.0 token";
@@ -110,13 +113,15 @@ public class Atp10TokenDemo {
         String version = "1.0";
         // The apt token icon
         String icon = "";
-        // The token total supply number
-        Long totalSupply = 100000000000L;
-        // The token now supply number
-        Long nowSupply = 1000000000L;
-        // The token description
         // The token decimals
-        Integer decimals = 0;
+        Integer decimals = 1;
+        // The token total supply number, which includes the decimals.
+        // If decimals is 1 and you plan to issue 1000 tokens, the totalSupply must be 1000 * 10 ^ 1, like below.
+        Long totalSupply = ToBaseUnit.unitWithDecimals("1000", 1);
+        // The token now supply number
+        // If decimals is 1 and you want to issue 10 tokens now, the nowSupply must be 10 * 10 ^ 1, like below.
+        Long nowSupply = ToBaseUnit.unitWithDecimals("10", 1);
+        // The token description
         String description = "test unlimited issuance of apt1.0 token";
         // The operation note
         String operationMetadata = "test the unlimited issuance of apt1.0 token";
