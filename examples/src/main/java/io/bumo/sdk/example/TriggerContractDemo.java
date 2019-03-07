@@ -10,6 +10,7 @@ import io.bumo.model.request.operation.BaseOperation;
 import io.bumo.model.request.operation.ContractInvokeByBUOperation;
 import io.bumo.model.response.*;
 import io.bumo.model.response.result.data.Signature;
+import io.bumo.model.response.result.data.TransactionHistory;
 
 /**
  * @Author riven
@@ -21,18 +22,18 @@ public class TriggerContractDemo {
         String url = "http://seed1.bumotest.io:26002";
         sdk = SDK.getInstance(url);
 
-        long nonce = getAccountNonce();
-        System.out.println("nonce:" + nonce);
-        BaseOperation[] operations = buildOperations();
-        String transactionBlob = seralizeTransaction(nonce, operations);
-        System.out.println("blob: " + transactionBlob);
-        Signature[] signatures = signTransaction(transactionBlob);
-        System.out.println("signData: " + signatures[0].getSignData());
-        System.out.println("publicKey: " + signatures[0].getPublicKey());
-        String hash = submitTransaction(transactionBlob, signatures);
-        System.out.println("hash: " + hash);
-        boolean status = checkTransactionStatus(hash);
-        System.out.println("status: " + status);
+//        long nonce = getAccountNonce();
+//        System.out.println("nonce:" + nonce);
+//        BaseOperation[] operations = buildOperations();
+//        String transactionBlob = seralizeTransaction(nonce, operations);
+//        System.out.println("blob: " + transactionBlob);
+//        Signature[] signatures = signTransaction(transactionBlob);
+//        System.out.println("signData: " + signatures[0].getSignData());
+//        System.out.println("publicKey: " + signatures[0].getPublicKey());
+//        String hash = submitTransaction(transactionBlob, signatures);
+//        System.out.println("hash: " + hash);
+//        int status = checkTransactionStatus(hash);
+//        System.out.println("status: " + status);
 
         String result = queryContract();
         System.out.println(result);
@@ -60,28 +61,11 @@ public class TriggerContractDemo {
         // The account address to issue apt1.0 token
         String invokeAddress = "buQYLtRq4j3eqbjVNGYkKYo3sLBqW3TQH2xH";
         // The contract address
-        String contractAddress = "buQcEk2dpUv6uoXjAqisVRyP1bBSeWUHCtF2";
+        String contractAddress = "buQZL8pfftNAebW8SbjR77mE5ytywWN52Hnu";
         // The destination address
         String destAddress = "buQXPeTjT173kagZ7j8NWAPJAgJCpJHFdyc7";
-        // The amount to be assigned
-        String assignAmount = "20000";
         // The amount to be transfered
         String transferAmount = "10000";
-
-        // build assign method input
-        JSONObject assignInput = new JSONObject();
-        assignInput.put("method", "assign");
-        JSONObject assignParams = new JSONObject();
-        assignParams.put("to", invokeAddress);
-        assignParams.put("value", assignAmount);
-        assignInput.put("params", assignParams);
-
-        // build send bu operation to assign CGO
-        ContractInvokeByBUOperation assignOperation = new ContractInvokeByBUOperation();
-        assignOperation.setSourceAddress(invokeAddress);
-        assignOperation.setContractAddress(contractAddress);
-        assignOperation.setBuAmount(0L);
-        assignOperation.setInput(assignInput.toJSONString());
 
         // build transfer method input
         JSONObject transferInput = new JSONObject();
@@ -98,7 +82,7 @@ public class TriggerContractDemo {
         transferOperation.setBuAmount(0L);
         transferOperation.setInput(transferInput.toJSONString());
 
-        BaseOperation[] operations = { assignOperation, transferOperation };
+        BaseOperation[] operations = { transferOperation };
         return operations;
     }
 
@@ -167,33 +151,26 @@ public class TriggerContractDemo {
     }
 
 
-    public static boolean checkTransactionStatus(String txHash) {
-        Boolean transactionStatus = false;
-        // 调用上面封装的“发送交易”接口
-        // 交易执行等待10秒
-        try {
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    public static int checkTransactionStatus(String txHash) {
         // Init request
         TransactionGetInfoRequest request = new TransactionGetInfoRequest();
         request.setHash(txHash);
 
         // Call getInfo
         TransactionGetInfoResponse response = sdk.getTransactionService().getInfo(request);
-        if (response.getErrorCode() == 0) {
-            transactionStatus = true;
-        } else {
-            System.out.println("error: " + response.getErrorDesc());
+        int errorCode = response.getErrorCode();
+        if (errorCode == 0){
+            TransactionHistory transactionHistory = response.getResult().getTransactions()[0];
+            errorCode = transactionHistory.getErrorCode();
         }
-        return transactionStatus;
+
+        return errorCode;
     }
 
     public static String queryContract() {
         // Init variable
         // Contract address
-        String contractAddress = "buQcEk2dpUv6uoXjAqisVRyP1bBSeWUHCtF2";
+        String contractAddress = "buQZL8pfftNAebW8SbjR77mE5ytywWN52Hnu";
         // TokenOwner address
         String tokenOwner = "buQXPeTjT173kagZ7j8NWAPJAgJCpJHFdyc7";
 

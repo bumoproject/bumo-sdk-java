@@ -252,7 +252,7 @@ public class ContractServiceImpl implements ContractService {
             params.put("input", input);
         }
         if (!Tools.isEmpty(contractBalance)) {
-            params.put("contract_balance", input);
+            params.put("contract_balance", contractBalance);
         }
         if (!Tools.isEmpty(gasPrice)) {
             params.put("gas_price", gasPrice);
