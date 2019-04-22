@@ -13,6 +13,9 @@ public class TransactionHistory {
     @JSONField(name = "close_time")
     private Long closeTime;
 
+    @JSONField(name = "contract_tx_hashes")
+    private String[] contractTxHashes;
+
     @JSONField(name = "error_code")
     private Integer errorCode;
 
@@ -76,6 +79,25 @@ public class TransactionHistory {
      */
     public void setCloseTime(Long closeTime) {
         this.closeTime = closeTime;
+    }
+
+    /**
+     * @Author riven
+     * @Method getContractTxHashes
+     * @Params []
+     * @return String[]
+     */
+    public String[] getContractTxHashes() {
+        return contractTxHashes;
+    }
+
+    /**
+     * @Author riven
+     * @Method setContractTxHashes
+     * @param contractTxHashes String[]
+     */
+    public void setContractTxHashes(String[] contractTxHashes) {
+        this.contractTxHashes = contractTxHashes;
     }
 
     /**

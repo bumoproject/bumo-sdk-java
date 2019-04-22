@@ -21,12 +21,6 @@ import java.sql.SQLOutput;
 public class Atp10TokenDemo {
     SDK sdk = SDK.getInstance("http://seed1.bumotest.io:26002");
 
-    @Test
-    public void test() {
-        Long nowSupply = ToBaseUnit.unitWithDecimals("8", 8);
-        System.out.println(nowSupply);
-    }
-
     /**
      * Issue the unlimited apt1.0 token successfully
      * Unlimited requirement: The totalSupply must be equal to 0

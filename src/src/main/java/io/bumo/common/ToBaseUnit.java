@@ -60,8 +60,8 @@ public class ToBaseUnit {
             return null;
         }
         // long or float string. if float, the number before point cannot be bigger than 10 and the number after point cannot be bigger then 8
-        if (!amountWithoutDecimals.matches("(^0(\\.[0-9]{0," + (decimals == 0 ? 0 : (decimals - 1)) + "}[1-9])?$)|" +
-                "(^[1-9][0-9]{0," + (18 - decimals) + "}(\\.[0-9]{0," + (decimals == 0 ? 0 : (decimals - 1)) + "}[1-9])?$)")) {
+        if (!amountWithoutDecimals.matches("(^0(\\.[0-9]{0," + (decimals - 1) + "}[1-9])?$)|" +
+                "(^[1-9][0-9]{0," + (18 - decimals) + "}(\\.[0-9]{0," + (decimals - 1) + "}[1-9])?$)")) {
             return null;
         }
         String longMaxValue = String.valueOf(Long.MAX_VALUE);
