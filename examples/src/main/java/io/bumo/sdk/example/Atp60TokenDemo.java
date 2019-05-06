@@ -1597,7 +1597,7 @@ public class Atp60TokenDemo {
 
         // Init input
         JSONObject input = new JSONObject();
-        input.put("method", "acceptanceInfo");
+        input.put("method", "cashInfo");
         JSONObject params = new JSONObject();
         params.put("cashId", cashId);
         params.put("applicant", applicant);
