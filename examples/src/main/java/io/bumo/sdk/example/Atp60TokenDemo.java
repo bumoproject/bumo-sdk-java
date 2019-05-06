@@ -224,7 +224,7 @@ public class Atp60TokenDemo {
 
 
     /**
-     * Sixteenth: The cash finished or happens dispute.
+     * Sixteenth: The cash finished or causes dispute.
      * Sixteenth1: The token holder (buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP) confirms cash right, then finishes the cash.
      */
     @Test
@@ -242,7 +242,7 @@ public class Atp60TokenDemo {
     }
 
     /**
-     * Sixteenth: The cash finished or happens dispute.
+     * Sixteenth: The cash finished or causes dispute.
      * Sixteenth2: The token holder (buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP) applies dispute.
      */
     @Test
