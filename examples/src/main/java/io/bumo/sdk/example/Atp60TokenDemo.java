@@ -356,7 +356,7 @@ public class Atp60TokenDemo {
      */
     private String getContractAddressQuery() {
         // Getting the register tx hash.
-        String registerTxHash = "814ad2ef87c0e7d01e2ae826550ad152109e1d049cb074a811c39b669ef35703"; //registerTx();
+        String registerTxHash = "d88be60e8ae95f3e10991072f05618e5235c5861e6a7a3c7565fc113be0c4f7c"; //registerTx();
 
         // Making sure the register tx success.
         if (!MakeSureTxSuccess(registerTxHash)) {
