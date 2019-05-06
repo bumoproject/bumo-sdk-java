@@ -1953,9 +1953,9 @@ public class Atp60TokenDemo {
         // 2. Getting the contract address.
         String contractAddress = getContractAddressQuery();
 
-        // 3. Building the input of 'setEvidence'.
+        // 3. Building the input of 'handleDispute'.
         JSONObject input = new JSONObject();
-        input.put("method", "setEvidence");
+        input.put("method", "handleDispute");
         JSONObject params = new JSONObject();
         params.put("cashId", cashId);
         params.put("applicant", applicant);
