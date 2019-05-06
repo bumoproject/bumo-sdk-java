@@ -198,7 +198,7 @@ public class ContractServiceImpl implements ContractService {
             }
             Long buAmount = contractInvokeByBUOperation.getBuAmount();
             if (Tools.isEmpty(buAmount) || buAmount < 0) {
-                throw new SDKException(SdkError.INVALID_ASSET_AMOUNT_ERROR);
+                throw new SDKException(SdkError.INVALID_BU_AMOUNT_ERROR);
             }
             String metadata = contractInvokeByBUOperation.getMetadata();
             if (!checkContractValid(contractAddress)) {
