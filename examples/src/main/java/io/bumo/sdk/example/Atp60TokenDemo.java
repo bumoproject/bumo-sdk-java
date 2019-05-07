@@ -63,7 +63,10 @@ public class Atp60TokenDemo {
 
     @Test
     public void documentInfo() {
-        documentInfoQuery();
+        // The document id.
+        String documentId = "1";
+
+        documentInfoQuery(documentId);
     }
 
 
@@ -95,7 +98,10 @@ public class Atp60TokenDemo {
 
     @Test
     public void SPUInfo() {
-        SPUInfoQuery();
+        // The spu id.
+        String spuId = "000000001";
+
+        SPUInfoQuery(spuId);
     }
 
 
@@ -123,7 +129,10 @@ public class Atp60TokenDemo {
 
     @Test
     public void trancheInfo() {
-        trancheInfoQuery();
+        // The tranche id.
+        String trancheId = "1";
+
+        trancheInfoQuery(trancheId);
     }
 
 
@@ -177,7 +186,10 @@ public class Atp60TokenDemo {
 
     @Test
     public void SKUTokenInfo() {
-        SKUTokenInfoQuery();
+        // The sku id.
+        String skuId = "1";
+
+        SKUTokenInfoQuery(skuId);
     }
 
 
@@ -249,7 +261,10 @@ public class Atp60TokenDemo {
 
     @Test
     public void controllerInfo() {
-        controllerInfoQuery();
+        // The controller address.
+        String controllerAddress = "buQVzjctnsuSyCiAVDMTFsGggDhb12GEuQcD";
+
+        controllerInfoQuery(controllerAddress);
     }
 
 
@@ -277,7 +292,10 @@ public class Atp60TokenDemo {
 
     @Test
     public void lockupInfo() {
-        lockupInfoQuery();
+        // The lockup id.
+        String lockupId = "1";
+
+        lockupInfoQuery(lockupId);
     }
 
 
@@ -309,12 +327,24 @@ public class Atp60TokenDemo {
 
     @Test
     public void balanceOf() {
-        balanceOfQuery();
+        // The sku id.
+        String skuId = "1";
+        // The address to be queried.
+        String address = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
+
+        balanceOfQuery(address, skuId);
     }
 
     @Test
     public void balanceOfByTranche() {
-        balanceOfByTrancheQuery();
+        // The sku id.
+        String skuId = "1";
+        // The tranche id.
+        String trancheId = "1";
+        // The address to be queried.
+        String address = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
+
+        balanceOfByTrancheQuery(address, skuId, trancheId);
     }
 
     /**
@@ -339,7 +369,14 @@ public class Atp60TokenDemo {
 
     @Test
     public void allowance() {
-        allowanceQuery();
+        // The token owner.
+        String owner = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
+        // The spender.
+        String spender = "buQXmv2C8hLAArdR2HtJZwz44x9eiJ1hERYK";
+        // The sku id.
+        String skuId = "1";
+
+        allowanceQuery(owner, spender, skuId);
     }
 
 
@@ -398,7 +435,10 @@ public class Atp60TokenDemo {
 
     @Test
     public void acceptanceInfo() {
-        acceptanceInfoQuery();
+        // The acceptance id.
+        String acceptanceId = "1";
+
+        acceptanceInfoQuery(acceptanceId);
     }
 
 
@@ -430,7 +470,12 @@ public class Atp60TokenDemo {
 
     @Test
     public void cashInfo() {
-        cashInfoQuery();
+        // The cash id.
+        String cashId = "1";
+        // The cash applicant.
+        String applicant = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
+
+        cashInfoQuery(cashId, applicant);
     }
 
 
@@ -522,7 +567,13 @@ public class Atp60TokenDemo {
 
     @Test
     public void disputeInfo() {
-        disputeInfoQuery();
+        // The cash id.
+        String cashId = "1";
+        // The cash applicant.
+        String applicant = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
+
+
+        disputeInfoQuery(cashId, applicant);
     }
 
 
@@ -548,7 +599,14 @@ public class Atp60TokenDemo {
 
     @Test
     public void evidenceInfo() {
-        evidenceInfoQuery();
+        // The cash id.
+        String cashId = "1";
+        // The cash applicant.
+        String applicant = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
+        // The evidence provider.
+        String provider = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
+
+        evidenceInfoQuery(cashId, applicant, provider);
     }
 
 
@@ -603,7 +661,16 @@ public class Atp60TokenDemo {
 
     @Test
     public void balanceOfByLockup() {
-        balanceOfByLockupQuery();
+        // The account address.
+        String address = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
+        // The sku id.
+        String skuId = "1";
+        // The tranche id. If the trancheId is ignored, SKU Tokens will be sent to default tranche in sku.
+        String trancheId = "1";
+        // The lockup id.
+        String lockupId = "1";
+
+        balanceOfByLockupQuery(address, skuId, trancheId, lockupId);
     }
 
 
@@ -792,12 +859,7 @@ public class Atp60TokenDemo {
      * Querying the document information.
      * @return The document information.
      */
-    private String documentInfoQuery() {
-        // The contract address.
-        String contractAddress = getContractAddressQuery();
-        // The document id.
-        String documentId = "1";
-
+    private String documentInfoQuery(String documentId) {
         // Init input
         JSONObject input = new JSONObject();
         input.put("method", "documentInfo");
@@ -805,25 +867,10 @@ public class Atp60TokenDemo {
         params.put("documentId", documentId);
         input.put("params", params);
 
-        // Init request
-        ContractCallRequest request = new ContractCallRequest();
-        request.setContractAddress(contractAddress);
-        request.setFeeLimit(1000000000L);
-        request.setOptType(2);
-        request.setInput(input.toJSONString());
+        // Querying
+        String result = queryInfo(input.toJSONString());
 
-        // Call call
-        String spuResult = null;
-        ContractCallResponse response = sdk.getContractService().call(request);
-        if (response.getErrorCode() == 0) {
-            ContractCallResult result = response.getResult();
-            spuResult = JSON.toJSONString(result.getQueryRets().getJSONObject(0).getJSONObject("result"), false);
-            System.out.println(spuResult);
-        } else {
-            System.out.println("error: " + response.getErrorDesc());
-        }
-
-        return spuResult;
+        return result;
     }
 
 
@@ -867,12 +914,7 @@ public class Atp60TokenDemo {
      * Querying the spu information.
      * @return The spu information.
      */
-    private String SPUInfoQuery() {
-        // The contract address.
-        String contractAddress = getContractAddressQuery();
-        // The spu id.
-        String spuId = "000000001";
-
+    private String SPUInfoQuery(String spuId) {
         // Init input
         JSONObject input = new JSONObject();
         input.put("method", "spuInfo");
@@ -880,25 +922,10 @@ public class Atp60TokenDemo {
         params.put("spuId", spuId);
         input.put("params", params);
 
-        // Init request
-        ContractCallRequest request = new ContractCallRequest();
-        request.setContractAddress(contractAddress);
-        request.setFeeLimit(1000000000L);
-        request.setOptType(2);
-        request.setInput(input.toJSONString());
+        // Querying
+        String result = queryInfo(input.toJSONString());
 
-        // Call call
-        String spuResult = null;
-        ContractCallResponse response = sdk.getContractService().call(request);
-        if (response.getErrorCode() == 0) {
-            ContractCallResult result = response.getResult();
-            spuResult = JSON.toJSONString(result.getQueryRets().getJSONObject(0).getJSONObject("result"), false);
-            System.out.println(spuResult);
-        } else {
-            System.out.println("error: " + response.getErrorDesc());
-        }
-
-        return spuResult;
+        return result;
     }
 
 
@@ -940,38 +967,18 @@ public class Atp60TokenDemo {
      * Querying the tranche information.
      * @return The tranche information.
      */
-    private String trancheInfoQuery() {
-        // The contract address.
-        String contractAddress = getContractAddressQuery();
-        // The tranche id.
-        String trancheId = "1";
-
-        // Init input
+    private String trancheInfoQuery(String trancheId) {
+         // Init input
         JSONObject input = new JSONObject();
         input.put("method", "trancheInfo");
         JSONObject params = new JSONObject();
         params.put("trancheId", trancheId);
         input.put("params", params);
 
-        // Init request
-        ContractCallRequest request = new ContractCallRequest();
-        request.setContractAddress(contractAddress);
-        request.setFeeLimit(1000000000L);
-        request.setOptType(2);
-        request.setInput(input.toJSONString());
+        // Querying
+        String result = queryInfo(input.toJSONString());
 
-        // Call call
-        String spuResult = null;
-        ContractCallResponse response = sdk.getContractService().call(request);
-        if (response.getErrorCode() == 0) {
-            ContractCallResult result = response.getResult();
-            spuResult = JSON.toJSONString(result.getQueryRets().getJSONObject(0).getJSONObject("result"), false);
-            System.out.println(spuResult);
-        } else {
-            System.out.println("error: " + response.getErrorDesc());
-        }
-
-        return spuResult;
+        return result;
     }
 
 
@@ -1080,12 +1087,7 @@ public class Atp60TokenDemo {
      * Querying the SKU Token information.
      * @return The SKU Token information
      */
-    private String SKUTokenInfoQuery() {
-        // The contract address.
-        String contractAddress = getContractAddressQuery();
-        // The sku id.
-        String skuId = "1";
-
+    private String SKUTokenInfoQuery(String skuId) {
         // Init input
         JSONObject input = new JSONObject();
         input.put("method", "tokenInfo");
@@ -1093,25 +1095,10 @@ public class Atp60TokenDemo {
         params.put("skuId", skuId);
         input.put("params", params);
 
-        // Init request
-        ContractCallRequest request = new ContractCallRequest();
-        request.setContractAddress(contractAddress);
-        request.setFeeLimit(1000000000L);
-        request.setOptType(2);
-        request.setInput(input.toJSONString());
+        // Querying
+        String result = queryInfo(input.toJSONString());
 
-        // Call call
-        String spuResult = null;
-        ContractCallResponse response = sdk.getContractService().call(request);
-        if (response.getErrorCode() == 0) {
-            ContractCallResult result = response.getResult();
-            spuResult = JSON.toJSONString(result.getQueryRets().getJSONObject(0).getJSONObject("result"), false);
-            System.out.println(spuResult);
-        } else {
-            System.out.println("error: " + response.getErrorDesc());
-        }
-
-        return spuResult;
+        return result;
     }
 
 
@@ -1148,12 +1135,7 @@ public class Atp60TokenDemo {
      * Querying the controller information.
      * @return The controller information.
      */
-    private String controllerInfoQuery() {
-        // The contract address.
-        String contractAddress = getContractAddressQuery();
-        // The controller address.
-        String controllerAddress = "buQVzjctnsuSyCiAVDMTFsGggDhb12GEuQcD";
-
+    private String controllerInfoQuery(String controllerAddress) {
         // Init input
         JSONObject input = new JSONObject();
         input.put("method", "controllerInfo");
@@ -1161,25 +1143,10 @@ public class Atp60TokenDemo {
         params.put("address", controllerAddress);
         input.put("params", params);
 
-        // Init request
-        ContractCallRequest request = new ContractCallRequest();
-        request.setContractAddress(contractAddress);
-        request.setFeeLimit(1000000000L);
-        request.setOptType(2);
-        request.setInput(input.toJSONString());
+        // Querying
+        String result = queryInfo(input.toJSONString());
 
-        // Call call
-        String spuResult = null;
-        ContractCallResponse response = sdk.getContractService().call(request);
-        if (response.getErrorCode() == 0) {
-            ContractCallResult result = response.getResult();
-            spuResult = JSON.toJSONString(result.getQueryRets().getJSONObject(0).getJSONObject("result"), false);
-            System.out.println(spuResult);
-        } else {
-            System.out.println("error: " + response.getErrorDesc());
-        }
-
-        return spuResult;
+        return result;
     }
 
 
@@ -1219,12 +1186,7 @@ public class Atp60TokenDemo {
      * Querying the lockup information.
      * @return The lockup information.
      */
-    private String lockupInfoQuery() {
-        // The contract address.
-        String contractAddress = getContractAddressQuery();
-        // The lockup id.
-        String lockupId = "1";
-
+    private String lockupInfoQuery(String lockupId) {
         // Init input
         JSONObject input = new JSONObject();
         input.put("method", "lockupInfo");
@@ -1232,25 +1194,10 @@ public class Atp60TokenDemo {
         params.put("lockupId", lockupId);
         input.put("params", params);
 
-        // Init request
-        ContractCallRequest request = new ContractCallRequest();
-        request.setContractAddress(contractAddress);
-        request.setFeeLimit(1000000000L);
-        request.setOptType(2);
-        request.setInput(input.toJSONString());
+        // Querying
+        String result = queryInfo(input.toJSONString());
 
-        // Call call
-        String spuResult = null;
-        ContractCallResponse response = sdk.getContractService().call(request);
-        if (response.getErrorCode() == 0) {
-            ContractCallResult result = response.getResult();
-            spuResult = JSON.toJSONString(result.getQueryRets().getJSONObject(0).getJSONObject("result"), false);
-            System.out.println(spuResult);
-        } else {
-            System.out.println("error: " + response.getErrorDesc());
-        }
-
-        return spuResult;
+        return result;
     }
 
 
@@ -1294,18 +1241,7 @@ public class Atp60TokenDemo {
      * Querying the balance of specified lockup.
      * @return The balance.
      */
-    private String balanceOfByLockupQuery() {
-        // The contract address.
-        String contractAddress = getContractAddressQuery();
-        // The account address.
-        String address = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
-        // The sku id.
-        String skuId = "1";
-        // The tranche id. If the trancheId is ignored, SKU Tokens will be sent to default tranche in sku.
-        String trancheId = "1";
-        // The lockup id.
-        String lockupId = "1";
-
+    private String balanceOfByLockupQuery(String address, String skuId, String trancheId, String lockupId) {
         // Init input
         JSONObject input = new JSONObject();
         input.put("method", "balanceOfByLockup");
@@ -1316,25 +1252,10 @@ public class Atp60TokenDemo {
         params.put("lockupId", lockupId);
         input.put("params", params);
 
-        // Init request
-        ContractCallRequest request = new ContractCallRequest();
-        request.setContractAddress(contractAddress);
-        request.setFeeLimit(1000000000L);
-        request.setOptType(2);
-        request.setInput(input.toJSONString());
+        // Querying
+        String result = queryInfo(input.toJSONString());
 
-        // Call call
-        String spuResult = null;
-        ContractCallResponse response = sdk.getContractService().call(request);
-        if (response.getErrorCode() == 0) {
-            ContractCallResult result = response.getResult();
-            spuResult = JSON.toJSONString(result.getQueryRets().getJSONObject(0).getJSONObject("result"), false);
-            System.out.println(spuResult);
-        } else {
-            System.out.println("error: " + response.getErrorDesc());
-        }
-
-        return spuResult;
+        return result;
     }
 
 
@@ -1405,14 +1326,7 @@ public class Atp60TokenDemo {
      * Querying the balance of an account.
      * @return The balance.
      */
-    private String balanceOfQuery() {
-        // The contract address.
-        String contractAddress = getContractAddressQuery();
-        // The sku id.
-        String skuId = "1";
-        // The address to be queried.
-        String address = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
-
+    private String balanceOfQuery(String address, String skuId) {
         // Init input
         JSONObject input = new JSONObject();
         input.put("method", "balanceOf");
@@ -1421,25 +1335,10 @@ public class Atp60TokenDemo {
         params.put("address", address);
         input.put("params", params);
 
-        // Init request
-        ContractCallRequest request = new ContractCallRequest();
-        request.setContractAddress(contractAddress);
-        request.setFeeLimit(1000000000L);
-        request.setOptType(2);
-        request.setInput(input.toJSONString());
+        // Querying
+        String result = queryInfo(input.toJSONString());
 
-        // Call call
-        String spuResult = null;
-        ContractCallResponse response = sdk.getContractService().call(request);
-        if (response.getErrorCode() == 0) {
-            ContractCallResult result = response.getResult();
-            spuResult = JSON.toJSONString(result.getQueryRets().getJSONObject(0).getJSONObject("result"), false);
-            System.out.println(spuResult);
-        } else {
-            System.out.println("error: " + response.getErrorDesc());
-        }
-
-        return spuResult;
+        return result;
     }
 
 
@@ -1447,16 +1346,7 @@ public class Atp60TokenDemo {
      * Querying the balance of specified tranche.
      * @return The tranche balance.
      */
-    private String balanceOfByTrancheQuery() {
-        // The contract address.
-        String contractAddress = getContractAddressQuery();
-        // The sku id.
-        String skuId = "1";
-        // The tranche id.
-        String trancheId = "1";
-        // The address to be queried.
-        String address = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
-
+    private String balanceOfByTrancheQuery(String address, String skuId, String trancheId) {
         // Init input
         JSONObject input = new JSONObject();
         input.put("method", "balanceOfByTranche");
@@ -1466,25 +1356,10 @@ public class Atp60TokenDemo {
         params.put("address", address);
         input.put("params", params);
 
-        // Init request
-        ContractCallRequest request = new ContractCallRequest();
-        request.setContractAddress(contractAddress);
-        request.setFeeLimit(1000000000L);
-        request.setOptType(2);
-        request.setInput(input.toJSONString());
+        // Querying
+        String result = queryInfo(input.toJSONString());
 
-        // Call call
-        String spuResult = null;
-        ContractCallResponse response = sdk.getContractService().call(request);
-        if (response.getErrorCode() == 0) {
-            ContractCallResult result = response.getResult();
-            spuResult = JSON.toJSONString(result.getQueryRets().getJSONObject(0).getJSONObject("result"), false);
-            System.out.println(spuResult);
-        } else {
-            System.out.println("error: " + response.getErrorDesc());
-        }
-
-        return spuResult;
+        return result;
     }
 
 
@@ -1521,16 +1396,7 @@ public class Atp60TokenDemo {
      * Querying the allowance.
      * @return The allowance.
      */
-    private String allowanceQuery() {
-        // The contract address.
-        String contractAddress = getContractAddressQuery();
-        // The token owner.
-        String owner = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
-        // The spender.
-        String spender = "buQXmv2C8hLAArdR2HtJZwz44x9eiJ1hERYK";
-        // The sku id.
-        String skuId = "1";
-
+    private String allowanceQuery(String owner, String spender, String skuId) {
         // Init input
         JSONObject input = new JSONObject();
         input.put("method", "allowance");
@@ -1540,25 +1406,10 @@ public class Atp60TokenDemo {
         params.put("skuId", skuId);
         input.put("params", params);
 
-        // Init request
-        ContractCallRequest request = new ContractCallRequest();
-        request.setContractAddress(contractAddress);
-        request.setFeeLimit(1000000000L);
-        request.setOptType(2);
-        request.setInput(input.toJSONString());
+        // Querying
+        String result = queryInfo(input.toJSONString());
 
-        // Call call
-        String spuResult = null;
-        ContractCallResponse response = sdk.getContractService().call(request);
-        if (response.getErrorCode() == 0) {
-            ContractCallResult result = response.getResult();
-            spuResult = JSON.toJSONString(result, false);
-            System.out.println(spuResult);
-        } else {
-            System.out.println("error: " + response.getErrorDesc());
-        }
-
-        return spuResult;
+        return result;
     }
 
 
@@ -1630,12 +1481,7 @@ public class Atp60TokenDemo {
      * Querying the acceptance information.
      * @return The acceptance information.
      */
-    private String acceptanceInfoQuery() {
-        // The contract address.
-        String contractAddress = getContractAddressQuery();
-        // The acceptance id.
-        String acceptanceId = "1";
-
+    private String acceptanceInfoQuery(String acceptanceId) {
         // Init input
         JSONObject input = new JSONObject();
         input.put("method", "acceptanceInfo");
@@ -1643,25 +1489,10 @@ public class Atp60TokenDemo {
         params.put("acceptanceId", acceptanceId);
         input.put("params", params);
 
-        // Init request
-        ContractCallRequest request = new ContractCallRequest();
-        request.setContractAddress(contractAddress);
-        request.setFeeLimit(1000000000L);
-        request.setOptType(2);
-        request.setInput(input.toJSONString());
+        // Querying
+        String result = queryInfo(input.toJSONString());
 
-        // Call call
-        String spuResult = null;
-        ContractCallResponse response = sdk.getContractService().call(request);
-        if (response.getErrorCode() == 0) {
-            ContractCallResult result = response.getResult();
-            spuResult = JSON.toJSONString(result, false);
-            System.out.println(spuResult);
-        } else {
-            System.out.println("error: " + response.getErrorDesc());
-        }
-
-        return spuResult;
+        return result;
     }
 
 
@@ -1701,14 +1532,7 @@ public class Atp60TokenDemo {
      * Querying the cash information.
      * @return The cash information.
      */
-    private String cashInfoQuery() {
-        // The contract address.
-        String contractAddress = getContractAddressQuery();
-        // The cash id.
-        String cashId = "1";
-        // The cash applicant.
-        String applicant = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
-
+    private String cashInfoQuery(String cashId, String applicant) {
         // Init input
         JSONObject input = new JSONObject();
         input.put("method", "cashInfo");
@@ -1717,25 +1541,10 @@ public class Atp60TokenDemo {
         params.put("applicant", applicant);
         input.put("params", params);
 
-        // Init request
-        ContractCallRequest request = new ContractCallRequest();
-        request.setContractAddress(contractAddress);
-        request.setFeeLimit(1000000000L);
-        request.setOptType(2);
-        request.setInput(input.toJSONString());
+        // Querying
+        String result = queryInfo(input.toJSONString());
 
-        // Call call
-        String spuResult = null;
-        ContractCallResponse response = sdk.getContractService().call(request);
-        if (response.getErrorCode() == 0) {
-            ContractCallResult result = response.getResult();
-            spuResult = JSON.toJSONString(result, false);
-            System.out.println(spuResult);
-        } else {
-            System.out.println("error: " + response.getErrorDesc());
-        }
-
-        return spuResult;
+        return result;
     }
 
 
@@ -1830,14 +1639,7 @@ public class Atp60TokenDemo {
      * Querying the dispute information.
      * @return The dispute information.
      */
-    private String disputeInfoQuery() {
-        // The contract address.
-        String contractAddress = getContractAddressQuery();
-        // The cash id.
-        String cashId = "1";
-        // The cash applicant.
-        String applicant = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
-
+    private String disputeInfoQuery(String cashId, String applicant) {
         // Init input
         JSONObject input = new JSONObject();
         input.put("method", "disputeInfo");
@@ -1846,25 +1648,10 @@ public class Atp60TokenDemo {
         params.put("applicant", applicant);
         input.put("params", params);
 
-        // Init request
-        ContractCallRequest request = new ContractCallRequest();
-        request.setContractAddress(contractAddress);
-        request.setFeeLimit(1000000000L);
-        request.setOptType(2);
-        request.setInput(input.toJSONString());
+        // Querying
+        String result = queryInfo(input.toJSONString());
 
-        // Call call
-        String spuResult = null;
-        ContractCallResponse response = sdk.getContractService().call(request);
-        if (response.getErrorCode() == 0) {
-            ContractCallResult result = response.getResult();
-            spuResult = JSON.toJSONString(result, false);
-            System.out.println(spuResult);
-        } else {
-            System.out.println("error: " + response.getErrorDesc());
-        }
-
-        return spuResult;
+        return result;
     }
 
 
@@ -1901,16 +1688,7 @@ public class Atp60TokenDemo {
      * Querying the evidence information.
      * @return The evidence information.
      */
-    private String evidenceInfoQuery() {
-        // The contract address.
-        String contractAddress = getContractAddressQuery();
-        // The cash id.
-        String cashId = "1";
-        // The cash applicant.
-        String applicant = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
-        // The evidence provider.
-        String provider = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
-
+    private String evidenceInfoQuery(String cashId, String applicant, String provider) {
         // Init input
         JSONObject input = new JSONObject();
         input.put("method", "evidenceInfo");
@@ -1920,25 +1698,10 @@ public class Atp60TokenDemo {
         params.put("provider", provider);
         input.put("params", params);
 
-        // Init request
-        ContractCallRequest request = new ContractCallRequest();
-        request.setContractAddress(contractAddress);
-        request.setFeeLimit(1000000000L);
-        request.setOptType(2);
-        request.setInput(input.toJSONString());
+        // Querying
+        String result = queryInfo(input.toJSONString());
 
-        // Call call
-        String spuResult = null;
-        ContractCallResponse response = sdk.getContractService().call(request);
-        if (response.getErrorCode() == 0) {
-            ContractCallResult result = response.getResult();
-            spuResult = JSON.toJSONString(result, false);
-            System.out.println(spuResult);
-        } else {
-            System.out.println("error: " + response.getErrorDesc());
-        }
-
-        return spuResult;
+        return result;
     }
 
 
@@ -2045,6 +1808,47 @@ public class Atp60TokenDemo {
 	}
 
 
+    /**
+     * Querying information on chain.
+     * @param input The query function parameter in contract.
+     * @return The information.
+     */
+	private String queryInfo(String input) {
+        // The contract address.
+        String contractAddress = getContractAddressQuery();
+
+        // Init request
+        ContractCallRequest request = new ContractCallRequest();
+        request.setContractAddress(contractAddress);
+        request.setFeeLimit(1000000000L);
+        request.setOptType(2);
+        request.setInput(input);
+
+        // Call call
+        String spuResult = null;
+        ContractCallResponse response = sdk.getContractService().call(request);
+        if (response.getErrorCode() == 0) {
+            ContractCallResult result = response.getResult();
+            spuResult = JSON.toJSONString(result.getQueryRets().getJSONObject(0).getJSONObject("result"), false);
+            System.out.println(spuResult);
+        } else {
+            System.out.println("error: " + response.getErrorDesc());
+        }
+
+        return spuResult;
+    }
+
+
+    /**
+     * Submitting transaction.
+     * @param privateKey The source private key to submit transaction.
+     * @param sourceAddress The source address to submit transaction.
+     * @param input The main function parameter in contract.
+     * @param transMetadata The transaction metadata.
+     * @param gasPrice The gas price.
+     * @param feeLimit The fee limit.
+     * @return The tx hash.
+     */
 	private String submitTrasaction(String privateKey, String sourceAddress, String input, String transMetadata, Long gasPrice, Long feeLimit) {
         // 1. Transaction initiation account's Nonce + 1
         Long nonce = getAccountNonce(sourceAddress) + 1;
@@ -2067,6 +1871,7 @@ public class Atp60TokenDemo {
         return txHash;
     }
 
+    
     /**
      * @param senderPrivateKey The account private key to start transaction
      * @param senderAddresss   The account address to start transaction
