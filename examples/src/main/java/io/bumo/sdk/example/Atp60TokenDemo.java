@@ -304,6 +304,14 @@ public class Atp60TokenDemo {
 
 
     /**
+     * Twenty-first: The controller (buQVzjctnsuSyCiAVDMTFsGggDhb12GEuQcD) redeems 1000 SKU Tokens of the seller (buQfTPaQBzFGBzGy87pSsc6MmNJKKKmzTSyC);
+     */
+    @Test
+    public void redeemByTranche() {
+        redeemByTrancheTx();
+    }
+
+    /**
      * Registering.
      * @return The register tx hash.
      */
@@ -1154,7 +1162,7 @@ public class Atp60TokenDemo {
         String address = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
         // The sku id.
         String skuId = "1";
-        // The tranche id.
+        // The tranche id. If the trancheId is ignored, SKU Tokens will be sent to default tranche in sku.
         String trancheId = "1";
         // The amount to be lockuped.
         String value = "100";
@@ -1210,7 +1218,7 @@ public class Atp60TokenDemo {
         String address = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
         // The sku id.
         String skuId = "1";
-        // The tranche id.
+        // The tranche id. If the trancheId is ignored, SKU Tokens will be sent to default tranche in sku.
         String trancheId = "1";
         // The lockup id.
         String lockupId = "1";
@@ -2161,6 +2169,63 @@ public class Atp60TokenDemo {
         params.put("applicant", applicant);
         params.put("status", status);
         params.put("description", description);
+        input.put("params", params);
+
+        // Building ContractInvokeByBUOperation
+        ContractInvokeByBUOperation operation = new ContractInvokeByBUOperation();
+        operation.setContractAddress(contractAddress);
+        operation.setInput(input.toJSONString());
+        operation.setBuAmount(0L);
+
+        BaseOperation[] operations = { operation };
+
+        // 4. Broadcasting the transaction
+        String txHash = broadcastTransaction(controllerPrivateKey, controllerAddress, operations, nonce, gasPrice, feeLimit, null);
+        if (txHash != null) {
+            System.out.println("Success, hash: " + txHash);
+        }
+
+        return txHash;
+    }
+
+
+    /**
+     * Redeeming the tokens.
+     * @return The tx hash.
+     */
+    private String redeemByTrancheTx() {
+        // The controller private key to redeem tokens.
+        String controllerPrivateKey = "privbtttvTCVHMCeUTZU6qEmRNxFGo5Hd3Bk2BPgZyy5WCCMaEghgecu";
+        // The controller address.
+        String controllerAddress = "buQVzjctnsuSyCiAVDMTFsGggDhb12GEuQcD";
+        // The fixed write 1000L, the unit is MO
+        Long gasPrice = 1000L;
+        // Setting up the maximum cost 0.01BU
+        Long feeLimit = ToBaseUnit.BU2MO("0.1");
+        // The account to be redeemed.
+        String address = "buQfTPaQBzFGBzGy87pSsc6MmNJKKKmzTSyC";
+        // The sku id.
+        String skuId = "1";
+        // The tranche id. If the trancheId is ignored, SKU Tokens of default tranche in sku will be redeemed.
+        String trancheId = "1";
+        // The amount to be redeemed.
+        String value = "1000";
+
+        // 1. Transaction initiation account's Nonce + 1
+        Long nonce = getAccountNonce(controllerAddress) + 1;
+
+
+        // 2. Getting the contract address.
+        String contractAddress = getContractAddressQuery();
+
+        // 3. Building the input of 'redeemByTranche'.
+        JSONObject input = new JSONObject();
+        input.put("method", "redeemByTranche");
+        JSONObject params = new JSONObject();
+        params.put("address", address);
+        params.put("skuId", skuId);
+        params.put("trancheId", trancheId);
+        params.put("value", value);
         input.put("params", params);
 
         // Building ContractInvokeByBUOperation
