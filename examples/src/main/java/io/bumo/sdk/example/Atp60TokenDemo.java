@@ -42,7 +42,23 @@ public class Atp60TokenDemo {
      */
     @Test
     public void setDocument() {
-        setDocumentTx();
+        // The seller private key to set document.
+        String sellerPrivateKey = "privC15YAp4M4oDLcJ6JqyPqYH55VXPeNckE2AVqWcHN8BB4PAVwGjJr";
+        // The seller address.
+        String sellerAddress = "buQfTPaQBzFGBzGy87pSsc6MmNJKKKmzTSyC";
+        // The document id.
+        String documentId = "1";
+        // The document name.
+        String documentName = "BUMO白皮书";
+        // The document url.
+        String documentUrl = "https://BUMO.io/BUMO-Technology-White-Paper-cn";
+        // The document hash type.
+        String documentHashType = "md5";
+        // The document hash.
+        String documentHash = "31be016368639ba1a7ae7b63247807a1";
+
+        // Setting the document.
+        setDocumentTx(sellerPrivateKey, sellerAddress, documentId, documentName, documentUrl, documentHashType, documentHash);
     }
 
     @Test
@@ -56,7 +72,25 @@ public class Atp60TokenDemo {
      */
     @Test
     public void createSPU() {
-        createSPUTx();
+        // The seller private key to create spu.
+        String sellerPrivateKey = "privC15YAp4M4oDLcJ6JqyPqYH55VXPeNckE2AVqWcHN8BB4PAVwGjJr";
+        // The seller address.
+        String sellerAddress = "buQfTPaQBzFGBzGy87pSsc6MmNJKKKmzTSyC";
+        // The spu id.
+        String spuId = "000000001";
+        // The spu name.
+        String spuName = "苹果 5s";
+        // The spu type.
+        String spuType = "手机";
+        // The spu reference price.
+        String spuPrice = "3000.00";
+        // The spu brand.
+        String spuBrand = "苹果";
+        // The spu model.
+        String spuModel = "5s";
+
+        // Creating SPU.
+        createSPUTx(sellerPrivateKey, sellerAddress, spuId, spuName, spuType, spuPrice, spuBrand, spuModel);
     }
 
     @Test
@@ -70,7 +104,21 @@ public class Atp60TokenDemo {
      */
     @Test
     public void createTranche() {
-        createTrancheTx();
+        // The seller private key to create tranche.
+        String sellerPrivateKey = "privC15YAp4M4oDLcJ6JqyPqYH55VXPeNckE2AVqWcHN8BB4PAVwGjJr";
+        // The seller address.
+        String sellerAddress = "buQfTPaQBzFGBzGy87pSsc6MmNJKKKmzTSyC";
+        // The tranche id.
+        String trancheId = "1";
+        // The tranche description.
+        String trancheDesc = "有效期";
+        // The start time, the unit is ms.
+        String startTime = "1517032155872949";
+        // The end time, the unit is ms.
+        String endTime = "1517470155872949";
+
+        // Creating tranche.
+        createTrancheTx(sellerPrivateKey, sellerAddress, trancheId, trancheDesc, startTime, endTime);
     }
 
     @Test
@@ -88,7 +136,43 @@ public class Atp60TokenDemo {
      */
     @Test
     public void issueSKUTokens() {
-        issueSKUTokensTx();
+        // The seller private key to issue SKU Tokens.
+        String sellerPrivateKey = "privC15YAp4M4oDLcJ6JqyPqYH55VXPeNckE2AVqWcHN8BB4PAVwGjJr";
+        // The seller address.
+        String sellerAddress = "buQfTPaQBzFGBzGy87pSsc6MmNJKKKmzTSyC";
+        // The sku id.
+        String skuId = "1";
+        // The default tranche.
+        // Notice: If this is not setting, the default tranche of id '0' will be used.
+        String defaultTrancheId = "1";
+        // The spu id.
+        // Notice: If this is not setting, this sku tokens don't have spu.
+        String spuId = "000000001";
+        // The sku label.
+        String skuLabel = "iphone 5s 白色 64G 中国大陆版";
+        // The address that will be sent SKU Tokens when the cash finishes.
+        String cashAddress = "buQqudnoPPV2utx92jfdcLkFGDaB7v3iasPM";
+        // The sku reference price.
+        String skuPrice = "3000";
+        // The sku color.
+        String skuColor = "白色";
+        // The sku memory.
+        String skuMemory = "64";
+        // The sku model.
+        String skuModel = "中国大陆";
+        // The token name
+        String tokenName = "iphone 5s 白色 64G 中国大陆版";
+        // The token symbol.
+        String tokenSymbol = "IPWSFC";
+        // The token supply.
+        String tokenSupply = "10000";
+        // The token decimals.
+        int decimals = 0;
+        // The token description.
+        String tokenDesc = "iphone 5s 白色 64G 中国大陆版";
+
+        // Issuing SKU Tokens.
+        issueSKUTokensTx(sellerPrivateKey, sellerAddress, skuId, defaultTrancheId, spuId, skuLabel, cashAddress, skuPrice, skuColor, skuMemory, skuModel, tokenName, tokenSymbol, tokenSupply, decimals, tokenDesc);
     }
 
     @Test
@@ -105,7 +189,19 @@ public class Atp60TokenDemo {
      */
     @Test
     public void addIssuanceByTranche() {
-        addIssuanceByTrancheTx();
+        // The seller private key to issue SKU Tokens.
+        String sellerPrivateKey = "privC15YAp4M4oDLcJ6JqyPqYH55VXPeNckE2AVqWcHN8BB4PAVwGjJr";
+        // The seller address.
+        String sellerAddress = "buQfTPaQBzFGBzGy87pSsc6MmNJKKKmzTSyC";
+        // The sku id.
+        String skuId = "1";
+        // The tranche id. If the trancheId is ignored, SKU Tokens will be sent to default tranche which id is '0'.
+        String trancheId = "1";
+        // The token supply.
+        String tokenSupply = "10000";
+
+        // Adding issuance by tranche.
+        addIssuanceByTrancheTx(sellerPrivateKey, sellerAddress, skuId, trancheId, tokenSupply);
     }
 
 
@@ -114,7 +210,20 @@ public class Atp60TokenDemo {
      */
     @Test
     public void authorizeSKU() {
-        autorizeSKUTx();
+        // The manufacturer private key to authrize sku tokens.
+        String manufacturerPrivateKey = "privbyGpWyTTBgJoj3WezCv2D5cCCuPoL1dHYpMCmaFVSTvQmuUpgz6j";
+        // The seller address.
+        String manufacturerAddress = "buQamKpa9vmNwA7PTknnbgWRhyVZLPWy2bCu";
+        // The fixed write 1000L, the unit is MO
+        Long gasPrice = 1000L;
+        // Setting up the maximum cost 0.01BU
+        Long feeLimit = ToBaseUnit.BU2MO("0.1");
+        // The list of sku ids.
+        JSONArray skuIds = new JSONArray();
+        skuIds.add("1");
+
+        // Autorizing SKU.
+        autorizeSKUTx(manufacturerPrivateKey, manufacturerAddress, skuIds);
     }
 
 
@@ -123,7 +232,19 @@ public class Atp60TokenDemo {
      */
     @Test
     public void setController() {
-        setControllerTx();
+        // The seller private key to set controller.
+        String sellerPrivateKey = "privC15YAp4M4oDLcJ6JqyPqYH55VXPeNckE2AVqWcHN8BB4PAVwGjJr";
+        // The seller address.
+        String sellerAddress = "buQfTPaQBzFGBzGy87pSsc6MmNJKKKmzTSyC";
+        // The controller address.
+        String controllerAddress = "buQVzjctnsuSyCiAVDMTFsGggDhb12GEuQcD";
+        // The controller name.
+        String controllerName = "北京法院";
+        // The controller contact.
+        String controllerContact = "dispute@fy.com";
+
+        // Setting controller.
+        setControllerTx(sellerPrivateKey, sellerAddress, controllerAddress, controllerName, controllerContact);
     }
 
     @Test
@@ -137,7 +258,21 @@ public class Atp60TokenDemo {
      */
     @Test
     public void createLockup() {
-        createLockupTx("1");
+        // The seller private key to create lockup.
+        String sellerPrivateKey = "privC15YAp4M4oDLcJ6JqyPqYH55VXPeNckE2AVqWcHN8BB4PAVwGjJr";
+        // The seller address.
+        String sellerAddress = "buQfTPaQBzFGBzGy87pSsc6MmNJKKKmzTSyC";
+        // The lockup id.
+        String lockupId = "1";
+        // The start time of lockup.
+        String startTime = "1";
+        // The end time.
+        String endTime = "1588057810000000";
+        // The unlocker.
+        String unlocker = "buQVzjctnsuSyCiAVDMTFsGggDhb12GEuQcD";
+
+        // Creating lockup.
+        createLockupTx(sellerPrivateKey, sellerAddress, lockupId, startTime, endTime, unlocker);
     }
 
     @Test
@@ -151,7 +286,25 @@ public class Atp60TokenDemo {
      */
     @Test
     public void transferByTranche() {
-        transferByTrancheTx();
+        // The seller private key to transfer sku tokens.
+        String sellerPrivateKey = "privC15YAp4M4oDLcJ6JqyPqYH55VXPeNckE2AVqWcHN8BB4PAVwGjJr";
+        // The seller address.
+        String sellerAddress = "buQfTPaQBzFGBzGy87pSsc6MmNJKKKmzTSyC";
+        // The fixed write 1000L, the unit is MO
+        Long gasPrice = 1000L;
+        // Setting up the maximum cost 0.01BU
+        Long feeLimit = ToBaseUnit.BU2MO("0.1");
+        // The sku id.
+        String skuId = "1";
+        // The tranche id. If the trancheId is ignored, SKU Tokens will be sent to default tranche in sku.
+        String trancheId = "1";
+        // The target address.
+        String toAddress = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
+        // The sku tokens amount.
+        String value = "200";
+
+        // Transferring tokens.
+        transferByTrancheTx(sellerPrivateKey, sellerAddress, skuId, trancheId, toAddress, value);
     }
 
     @Test
@@ -169,7 +322,19 @@ public class Atp60TokenDemo {
      */
     @Test
     public void approve() {
-        approveTx();
+        // The token holder private key to approve sku tokens.
+        String sellerPrivateKey = "privbUCxLLYNCPP1smBiNEYVnErMDwT8eJ7PWJZyioJQhXcHApwgqKsP";
+        // The token holder address.
+        String sellerAddress = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
+        // The sku id.
+        String skuId = "1";
+        // The spender address.
+        String spender = "buQXmv2C8hLAArdR2HtJZwz44x9eiJ1hERYK";
+        // The sku tokens amount.
+        String value = "100";
+
+        // Approving
+        approveTx(sellerPrivateKey, sellerAddress, skuId, spender, value);
     }
 
     @Test
@@ -183,7 +348,23 @@ public class Atp60TokenDemo {
      */
     @Test
     public void transferFromByTranche() {
-        transferFromByTrancheTx();
+        // The spender private key to transfer sku tokens.
+        String spenderPrivateKey = "privbwMxt4BFNjN6vbjizrFEMhiFJyxMydWCb3sr1utDokApEMGXB9mD";
+        // The spender address.
+        String spenderAddress = "buQXmv2C8hLAArdR2HtJZwz44x9eiJ1hERYK";
+        // The from address.
+        String fromAddress = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
+        // The sku id.
+        String skuId = "1";
+        // The tranche id. If the trancheId is ignored, SKU Tokens will be sent to default tranche in sku.
+        String trancheId = "1";
+        // The target address.
+        String toAddress = "buQiHTjDSjQedxR2vF9WULhgWMtbo8rRLmor";
+        // The sku tokens amount.
+        String value = "50";
+
+        // Transferring the Tokens.
+        transferFromByTrancheTx(spenderPrivateKey, spenderAddress, fromAddress, skuId, trancheId, toAddress, value);
     }
 
 
@@ -192,7 +373,27 @@ public class Atp60TokenDemo {
      */
     @Test
     public void setAcceptance() {
-        setAcceptanceTx();
+        // The seller private key to set acceptance.
+        String sellerPrivateKey = "privC15YAp4M4oDLcJ6JqyPqYH55VXPeNckE2AVqWcHN8BB4PAVwGjJr";
+        // The seller address.
+        String sellerAddress = "buQfTPaQBzFGBzGy87pSsc6MmNJKKKmzTSyC";
+        // The acceptance id.
+        String acceptanceId = "1";
+        // The sku ids.
+        JSONArray skuIds = new JSONArray();
+        skuIds.add("1");
+        // The tranche id. If the trancheId is ignored, SKU Tokens will be sent to default tranche in sku.
+        String trancheId = "1";
+        // The acceptor address.
+        String acceptorAddress = "buQiHTjDSjQedxR2vF9WULhgWMtbo8rRLmor";
+        // The acceptance name.
+        String acceptanceName = "北京贸易集中处理中心";
+        // The acceptance contact.
+        String acceptanceContact = "contact@my.com";
+        // The acceptance period.
+        String acceptancePeriod = "7天";
+
+        setAcceptanceTx(sellerPrivateKey, sellerAddress, acceptanceId, skuIds, trancheId, acceptorAddress, acceptanceName, acceptanceContact, acceptancePeriod);
     }
 
     @Test
@@ -206,7 +407,25 @@ public class Atp60TokenDemo {
      */
     @Test
     public void requestCash() {
-        requestCashTx();
+        // The token holder private key to request cash.
+        String holderPrivateKey = "privbUCxLLYNCPP1smBiNEYVnErMDwT8eJ7PWJZyioJQhXcHApwgqKsP";
+        // The token holder address.
+        String holderAddress = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
+        // The cash id.
+        String cashId = "1";
+        // The sku id.
+        String skuId = "1";
+        // The tranche id. If the trancheId is ignored, SKU Tokens will be sent to default tranche in sku.
+        String trancheId = "1";
+        // The amount to be cashed.
+        String value = "50";
+        // The acceptance id.
+        String acceptanceId = "1";
+        // The lockup id.
+        String lockupId = "1";
+
+        // Requesting cash.
+        requestCashTx(holderPrivateKey, holderAddress, cashId, skuId, trancheId, value, acceptanceId, lockupId);
     }
 
     @Test
@@ -220,7 +439,17 @@ public class Atp60TokenDemo {
      */
     @Test
     public void cash() {
-        cashTx();
+        // The acceptor private key to cash.
+        String acceptorPrivateKey = "privbUbdoe6co99ykomqQRUDiD8rh3XvWvmexNUS1bZbu5gb8RuKJA8Y";
+        // The acceptor address.
+        String acceptorAddress = "buQiHTjDSjQedxR2vF9WULhgWMtbo8rRLmor";
+        // The cash id.
+        String cashId = "1";
+        // The cash applicant.
+        String applicant = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
+
+        // Cashing.
+        cashTx(acceptorPrivateKey, acceptorAddress, cashId, applicant);
     }
 
 
@@ -230,7 +459,17 @@ public class Atp60TokenDemo {
      */
     @Test
     public void confirmCash() {
-        confirmCashTx();
+        // The token holder private key to confirm cash.
+        String holderPrivateKey = "privbUCxLLYNCPP1smBiNEYVnErMDwT8eJ7PWJZyioJQhXcHApwgqKsP";
+        // The token holder address.
+        String holderAddress = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
+        // The cash id.
+        String cashId = "1";
+        // The cash applicant.
+        String applicant = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
+
+        // Confirming cash.
+        confirmCashTx(holderPrivateKey, holderAddress, cashId, applicant);
     }
 
 
@@ -239,7 +478,21 @@ public class Atp60TokenDemo {
      */
     @Test
     public void createLockupForDispute() {
-        createLockupTx("2");
+        // The seller private key to create lockup.
+        String sellerPrivateKey = "privC15YAp4M4oDLcJ6JqyPqYH55VXPeNckE2AVqWcHN8BB4PAVwGjJr";
+        // The seller address.
+        String sellerAddress = "buQfTPaQBzFGBzGy87pSsc6MmNJKKKmzTSyC";
+        // The lockup id.
+        String lockupId = "1";
+        // The start time of lockup.
+        String startTime = "2";
+        // The end time.
+        String endTime = "1588057810000000";
+        // The unlocker.
+        String unlocker = "buQVzjctnsuSyCiAVDMTFsGggDhb12GEuQcD";
+
+        // Creating lockup.
+        createLockupTx(sellerPrivateKey, sellerAddress, lockupId, startTime, endTime, unlocker);
     }
 
     /**
@@ -248,7 +501,23 @@ public class Atp60TokenDemo {
      */
     @Test
     public void applyDispute() {
-        applyDisputeTx();
+        // The token holder private key to apply dispute.
+        String holderPrivateKey = "privbUCxLLYNCPP1smBiNEYVnErMDwT8eJ7PWJZyioJQhXcHApwgqKsP";
+        // The token holder address.
+        String holderAddress = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
+        // The cash id.
+        String cashId = "1";
+        // The cash applicant.
+        String applicant = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
+        // The dispute reason.
+        String reason = "未收到货";
+        // The controller address.
+        String controller = "buQVzjctnsuSyCiAVDMTFsGggDhb12GEuQcD";
+        // The lockup id for disupte.
+        String lockupId = "2";
+
+        // Applying dispute.
+        applyDisputeTx(holderPrivateKey, holderAddress, cashId, applicant, reason, controller, lockupId);
     }
 
     @Test
@@ -262,7 +531,19 @@ public class Atp60TokenDemo {
      */
     @Test
     public void setEvidence() {
-        setEvidenceTx();
+        // The token holder private key to set evidence.
+        String holderPrivateKey = "privbUCxLLYNCPP1smBiNEYVnErMDwT8eJ7PWJZyioJQhXcHApwgqKsP";
+        // The token holder address.
+        String holderAddress = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
+        // The cash id.
+        String cashId = "1";
+        // The cash applicant.
+        String applicant = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
+        // The evidence description.
+        String description = "未收到货，查询不到快递信息";
+
+        // Setting evidence.
+        setEvidenceTx(holderPrivateKey, holderAddress, cashId, applicant, description);
     }
 
     @Test
@@ -276,7 +557,21 @@ public class Atp60TokenDemo {
      */
     @Test
     public void handleDispute() {
-        handleDisputeTx();
+        // The controller private key to handle dispute.
+        String controllerPrivateKey = "privbtttvTCVHMCeUTZU6qEmRNxFGo5Hd3Bk2BPgZyy5WCCMaEghgecu";
+        // The controller address.
+        String controllerAddress = "buQVzjctnsuSyCiAVDMTFsGggDhb12GEuQcD";
+        // The cash id.
+        String cashId = "1";
+        // The cash applicant.
+        String applicant = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
+        // The dispute result status.
+        int status = 1;
+        // The evidence description.
+        String description = "确实查询不到快递信息，SKU Tokens 返回给兑付申请人。";
+
+        // Handling dispute.
+        handleDisputeTx(controllerPrivateKey, controllerAddress, cashId, applicant, status, description);
     }
 
 
@@ -285,7 +580,25 @@ public class Atp60TokenDemo {
      */
     @Test
     public void lockupByTranche() {
-        lockupByTrancheTx("1", null);
+        // The controller private key to lockup other's tokens.
+        String controllerPrivateKey = "privbtttvTCVHMCeUTZU6qEmRNxFGo5Hd3Bk2BPgZyy5WCCMaEghgecu";
+        // The controller address.
+        String controllerAddress = "buQVzjctnsuSyCiAVDMTFsGggDhb12GEuQcD";
+        // The account to be lockuped.
+        String address = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
+        // The sku id.
+        String skuId = "1";
+        // The tranche id. If the trancheId is ignored, SKU Tokens will be sent to default tranche in sku.
+        String trancheId = "1";
+        // The lockup id.
+        String lockupId = "1";
+        // The cash id.
+        String cashId = null;
+        // The amount to be lockuped.
+        String value = "100";
+
+        // Lockuping the tokens
+        lockupByTrancheTx(controllerPrivateKey, controllerAddress, address, skuId, trancheId, lockupId, cashId, value);
     }
 
     @Test
@@ -299,7 +612,23 @@ public class Atp60TokenDemo {
      */
     @Test
     public void unlockByTranche() {
-        unlockByTrancheTx("1");
+        // The controller private key to unlockup other's tokens.
+        String controllerPrivateKey = "privbtttvTCVHMCeUTZU6qEmRNxFGo5Hd3Bk2BPgZyy5WCCMaEghgecu";
+        // The controller address.
+        String controllerAddress = "buQVzjctnsuSyCiAVDMTFsGggDhb12GEuQcD";
+        // The account to be lockuped.
+        String address = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
+        // The sku id.
+        String skuId = "1";
+        // The tranche id.
+        String trancheId = "1";
+        // The lockup id.
+        String lockupId = "1";
+        // The amount to be lockuped.
+        String value = "50";
+
+        // Unlocking tokens.
+        unlockByTrancheTx(controllerPrivateKey, controllerAddress, address, skuId, trancheId, lockupId, value);
     }
 
 
@@ -308,7 +637,21 @@ public class Atp60TokenDemo {
      */
     @Test
     public void redeemByTranche() {
-        redeemByTrancheTx();
+        // The controller private key to redeem tokens.
+        String controllerPrivateKey = "privbtttvTCVHMCeUTZU6qEmRNxFGo5Hd3Bk2BPgZyy5WCCMaEghgecu";
+        // The controller address.
+        String controllerAddress = "buQVzjctnsuSyCiAVDMTFsGggDhb12GEuQcD";
+        // The account to be redeemed.
+        String address = "buQfTPaQBzFGBzGy87pSsc6MmNJKKKmzTSyC";
+        // The sku id.
+        String skuId = "1";
+        // The tranche id. If the trancheId is ignored, SKU Tokens of default tranche in sku will be redeemed.
+        String trancheId = "1";
+        // The amount to be redeemed.
+        String value = "1000";
+
+        // Redeeming the tokens.
+        redeemByTrancheTx(controllerPrivateKey, controllerAddress, address, skuId, trancheId, value);
     }
 
     /**
@@ -418,34 +761,13 @@ public class Atp60TokenDemo {
      * Setting document.
      * @return The tx hash.
      */
-    private String setDocumentTx() {
-        // The seller private key to set document.
-        String sellerPrivateKey = "privC15YAp4M4oDLcJ6JqyPqYH55VXPeNckE2AVqWcHN8BB4PAVwGjJr";
-        // The seller address.
-        String sellerAddress = "buQfTPaQBzFGBzGy87pSsc6MmNJKKKmzTSyC";
+    private String setDocumentTx(String sourcePrivateKey, String sourceAddress, String documentId, String documentName, String documentUrl, String documentHashType, String documentHash) {
         // The fixed write 1000L, the unit is MO
         Long gasPrice = 1000L;
         // Setting up the maximum cost 0.01BU
         Long feeLimit = ToBaseUnit.BU2MO("0.1");
-        // The document id.
-        String documentId = "1";
-        // The document name.
-        String documentName = "BUMO白皮书";
-        // The document url.
-        String documentUrl = "https://BUMO.io/BUMO-Technology-White-Paper-cn";
-        // The document hash type.
-        String documentHashType = "md5";
-        // The document hash.
-        String documentHash = "31be016368639ba1a7ae7b63247807a1";
 
-        // 1. Transaction initiation account's Nonce + 1
-        Long nonce = getAccountNonce(sellerAddress) + 1;
-
-
-        // 2. Getting the contract address.
-        String contractAddress = getContractAddressQuery();
-
-        // 3. Building the input of 'createTranche'.
+        // 1. Building the input of 'setDocument'.
         JSONObject input = new JSONObject();
         input.put("method", "setDocument");
         JSONObject params = new JSONObject();
@@ -456,18 +778,10 @@ public class Atp60TokenDemo {
         params.put("hash", documentHash);
         input.put("params", params);
 
-        // Building ContractInvokeByBUOperation
-        ContractInvokeByBUOperation operation = new ContractInvokeByBUOperation();
-        operation.setContractAddress(contractAddress);
-        operation.setInput(input.toJSONString());
-        operation.setBuAmount(0L);
-
-        BaseOperation[] operations = { operation };
-
-        // 4. Broadcasting the transaction
-        String txHash = broadcastTransaction(sellerPrivateKey, sellerAddress, operations, nonce, gasPrice, feeLimit, null);
+        // 2. Submitting the transaction.
+        String txHash = submitTrasaction(sourcePrivateKey, sourceAddress, input.toJSONString(), null, gasPrice, feeLimit);
         if (txHash != null) {
-            System.out.println("Success, hash: " + txHash + ", document id: " + documentId);
+            System.out.println("Success, hash: " + txHash);
         }
 
         return txHash;
@@ -517,36 +831,14 @@ public class Atp60TokenDemo {
      * Creating the SPU.
      * @return The hash.
      */
-    private String createSPUTx() {
-        // The seller private key to create spu.
-        String sellerPrivateKey = "privC15YAp4M4oDLcJ6JqyPqYH55VXPeNckE2AVqWcHN8BB4PAVwGjJr";
-        // The seller address.
-        String sellerAddress = "buQfTPaQBzFGBzGy87pSsc6MmNJKKKmzTSyC";
+    private String createSPUTx(String sourcePrivateKey, String sourceAddress, String spuId, String spuName, String spuType, String spuPrice, String spuBrand, String spuModel) {
         // The fixed write 1000L, the unit is MO
         Long gasPrice = 1000L;
         // Setting up the maximum cost 0.01BU
         Long feeLimit = ToBaseUnit.BU2MO("0.1");
-        // The spu id.
-        String spuId = "000000001";
-        // The spu name.
-        String spuName = "苹果 5s";
-        // The spu type.
-        String spuType = "手机";
-        // The spu reference price.
-        String spuPrice = "3000.00";
-        // The spu brand.
-        String spuBrand = "苹果";
-        // The spu model.
-        String spuModel = "5s";
-
-        // 1. Transaction initiation account's Nonce + 1
-        Long nonce = getAccountNonce(sellerAddress) + 1;
 
 
-        // 2. Getting the contract address.
-        String contractAddress = getContractAddressQuery();
-
-        // 3. Building the input of 'createSpu'.
+        // 1. Building the input of 'createSpu'.
         JSONObject input = new JSONObject();
         input.put("method", "createSpu");
         JSONObject params = new JSONObject();
@@ -561,18 +853,10 @@ public class Atp60TokenDemo {
         params.put("attributes", attributes);
         input.put("params", params);
 
-        // Building ContractInvokeByBUOperation
-        ContractInvokeByBUOperation operation = new ContractInvokeByBUOperation();
-        operation.setContractAddress(contractAddress);
-        operation.setInput(input.toJSONString());
-        operation.setBuAmount(0L);
-
-        BaseOperation[] operations = { operation };
-
-        // 4. Broadcasting the transaction
-        String txHash = broadcastTransaction(sellerPrivateKey, sellerAddress, operations, nonce, gasPrice, feeLimit, null);
+        // 2. Submitting the transaction.
+        String txHash = submitTrasaction(sourcePrivateKey, sourceAddress, input.toJSONString(), null, gasPrice, feeLimit);
         if (txHash != null) {
-            System.out.println("Success, hash: " + txHash + ", spuId: " + spuId);
+            System.out.println("Success, hash: " + txHash);
         }
 
         return txHash;
@@ -622,32 +906,13 @@ public class Atp60TokenDemo {
      * Creating the tranche.
      * @return The tx hash.
      */
-    private String createTrancheTx() {
-        // The seller private key to create tranche.
-        String sellerPrivateKey = "privC15YAp4M4oDLcJ6JqyPqYH55VXPeNckE2AVqWcHN8BB4PAVwGjJr";
-        // The seller address.
-        String sellerAddress = "buQfTPaQBzFGBzGy87pSsc6MmNJKKKmzTSyC";
+    private String createTrancheTx(String sourcePrivateKey, String sourceAddress, String trancheId, String trancheDesc, String startTime, String endTime) {
         // The fixed write 1000L, the unit is MO
         Long gasPrice = 1000L;
         // Setting up the maximum cost 0.01BU
         Long feeLimit = ToBaseUnit.BU2MO("0.1");
-        // The tranche id.
-        String trancheId = "1";
-        // The tranche description.
-        String trancheDesc = "有效期";
-        // The start time.
-        String startTime = "1517032155872949";
-        // The end time.
-        String endTime = "1517470155872949";
 
-        // 1. Transaction initiation account's Nonce + 1
-        Long nonce = getAccountNonce(sellerAddress) + 1;
-
-
-        // 2. Getting the contract address.
-        String contractAddress = getContractAddressQuery();
-
-        // 3. Building the input of 'createTranche'.
+        // 1. Building the input of 'createTranche'.
         JSONObject input = new JSONObject();
         input.put("method", "createTranche");
         JSONObject params = new JSONObject();
@@ -661,18 +926,10 @@ public class Atp60TokenDemo {
         params.put("limits", limits);
         input.put("params", params);
 
-        // Building ContractInvokeByBUOperation
-        ContractInvokeByBUOperation operation = new ContractInvokeByBUOperation();
-        operation.setContractAddress(contractAddress);
-        operation.setInput(input.toJSONString());
-        operation.setBuAmount(0L);
-
-        BaseOperation[] operations = { operation };
-
-        // 4. Broadcasting the transaction
-        String txHash = broadcastTransaction(sellerPrivateKey, sellerAddress, operations, nonce, gasPrice, feeLimit, null);
+        // 2. Submitting the transaction.
+        String txHash = submitTrasaction(sourcePrivateKey, sourceAddress, input.toJSONString(), null, gasPrice, feeLimit);
         if (txHash != null) {
-            System.out.println("Success, hash: " + txHash + ", trancheId: " + trancheId);
+            System.out.println("Success, hash: " + txHash);
         }
 
         return txHash;
@@ -722,54 +979,13 @@ public class Atp60TokenDemo {
      * Issuing the SKU tokens
      * @return The tx hash.
      */
-    private String issueSKUTokensTx() {
-        // The seller private key to issue SKU Tokens.
-        String sellerPrivateKey = "privC15YAp4M4oDLcJ6JqyPqYH55VXPeNckE2AVqWcHN8BB4PAVwGjJr";
-        // The seller address.
-        String sellerAddress = "buQfTPaQBzFGBzGy87pSsc6MmNJKKKmzTSyC";
+    private String issueSKUTokensTx(String sourcePrivateKey, String sourceAddress, String skuId, String defaultTrancheId, String spuId, String skuLabel, String cashAddress, String skuPrice, String skuColor, String skuMemory, String skuModel, String tokenName, String tokenSymbol, String tokenSupply, int decimals, String tokenDesc) {
         // The fixed write 1000L, the unit is MO
         Long gasPrice = 1000L;
         // Setting up the maximum cost 0.01BU
         Long feeLimit = ToBaseUnit.BU2MO("0.1");
-        // The sku id.
-        String skuId = "1";
-        // The default tranche.
-        // Notice: If this is not setting, the default tranche of id '0' will be used.
-        String defaultTrancheId = "1";
-        // The spu id.
-        // Notice: If this is not setting, this sku tokens don't have spu.
-        String spuId = "000000001";
-        // The sku label.
-        String skuLabel = "iphone 5s 白色 64G 中国大陆版";
-        // The address that will be sent SKU Tokens when the cash finishes.
-        String cashAddress = "buQqudnoPPV2utx92jfdcLkFGDaB7v3iasPM";
-        // The sku reference price.
-        String skuPrice = "3000";
-        // The sku color.
-        String skuColor = "白色";
-        // The sku memory.
-        String skuMemory = "64";
-        // The sku model.
-        String skuModel = "中国大限";
-        // The token name
-        String tokenName = "iphone 5s 白色 64G 中国大陆版";
-        // The token symbol.
-        String tokenSymbol = "IPWSFC";
-        // The token supply.
-        String tokenSupply = "10000";
-        // The token decimals.
-        int decimals = 0;
-        // The token description.
-        String tokenDesc = "iphone 5s 白色 64G 中国大陆版";
 
-        // 1. Transaction initiation account's Nonce + 1
-        Long nonce = getAccountNonce(sellerAddress) + 1;
-
-
-        // 2. Getting the contract address.
-        String contractAddress = getContractAddressQuery();
-
-        // 3. Building the input of 'issueByTranche'.
+        // 1. Building the input of 'issueByTranche'.
         JSONObject input = new JSONObject();
         input.put("method", "issueByTranche");
         JSONObject params = new JSONObject();
@@ -783,7 +999,7 @@ public class Atp60TokenDemo {
         attributes.put("1", buildAdditionIndex("0",         "参考价", "int",  skuPrice,     "-",       "CNY"));
         attributes.put("2", buildAdditionIndex("0",         "颜色",  "text",  skuColor,   "-",        "-"));
         attributes.put("3", buildAdditionIndex("0",         "内存",  "int",   skuMemory,       "-",        "G"));
-        attributes.put("4", buildAdditionIndex("0",         "型号",  "text",  skuMemory, "-",       "-"));
+        attributes.put("4", buildAdditionIndex("0",         "型号",  "text",  skuModel, "-",       "-"));
         params.put("attributes", attributes);
         JSONObject token = new JSONObject();
         token.put("name", tokenName);
@@ -794,18 +1010,10 @@ public class Atp60TokenDemo {
         params.put("token", token);
         input.put("params", params);
 
-        // Building ContractInvokeByBUOperation
-        ContractInvokeByBUOperation operation = new ContractInvokeByBUOperation();
-        operation.setContractAddress(contractAddress);
-        operation.setInput(input.toJSONString());
-        operation.setBuAmount(0L);
-
-        BaseOperation[] operations = { operation };
-
-        // 4. Broadcasting the transaction
-        String txHash = broadcastTransaction(sellerPrivateKey, sellerAddress, operations, nonce, gasPrice, feeLimit, null);
+        // 2. Submitting the transaction.
+        String txHash = submitTrasaction(sourcePrivateKey, sourceAddress, input.toJSONString(), null, gasPrice, feeLimit);
         if (txHash != null) {
-            System.out.println("Success, hash: " + txHash + ", skuId: " + skuId);
+            System.out.println("Success, hash: " + txHash);
         }
 
         return txHash;
@@ -816,30 +1024,13 @@ public class Atp60TokenDemo {
      * Adding the issuance of SKU Tokens
      * @return The tx hash.
      */
-    private String addIssuanceByTrancheTx() {
-        // The seller private key to issue SKU Tokens.
-        String sellerPrivateKey = "privC15YAp4M4oDLcJ6JqyPqYH55VXPeNckE2AVqWcHN8BB4PAVwGjJr";
-        // The seller address.
-        String sellerAddress = "buQfTPaQBzFGBzGy87pSsc6MmNJKKKmzTSyC";
+    private String addIssuanceByTrancheTx(String sourcePrivateKey, String sourceAddress, String skuId, String trancheId, String tokenSupply) {
         // The fixed write 1000L, the unit is MO
         Long gasPrice = 1000L;
         // Setting up the maximum cost 0.01BU
         Long feeLimit = ToBaseUnit.BU2MO("0.1");
-        // The sku id.
-        String skuId = "1";
-        // The tranche id. If the trancheId is ignored, SKU Tokens will be sent to default tranche which id is '0'.
-        String trancheId = "1";
-        // The token supply.
-        String tokenSupply = "10000";
 
-        // 1. Transaction initiation account's Nonce + 1
-        Long nonce = getAccountNonce(sellerAddress) + 1;
-
-
-        // 2. Getting the contract address.
-        String contractAddress = getContractAddressQuery();
-
-        // 3. Building the input of 'addIssuanceByTranche'.
+        // 1. Building the input of 'addIssuanceByTranche'.
         JSONObject input = new JSONObject();
         input.put("method", "addIssuanceByTranche");
         JSONObject params = new JSONObject();
@@ -848,18 +1039,10 @@ public class Atp60TokenDemo {
         params.put("supply", tokenSupply);
         input.put("params", params);
 
-        // Building ContractInvokeByBUOperation
-        ContractInvokeByBUOperation operation = new ContractInvokeByBUOperation();
-        operation.setContractAddress(contractAddress);
-        operation.setInput(input.toJSONString());
-        operation.setBuAmount(0L);
-
-        BaseOperation[] operations = { operation };
-
-        // 4. Broadcasting the transaction
-        String txHash = broadcastTransaction(sellerPrivateKey, sellerAddress, operations, nonce, gasPrice, feeLimit, null);
+        // 2. Submitting the transaction.
+        String txHash = submitTrasaction(sourcePrivateKey, sourceAddress, input.toJSONString(), null, gasPrice, feeLimit);
         if (txHash != null) {
-            System.out.println("Success, hash: " + txHash + ", skuId: " + skuId);
+            System.out.println("Success, hash: " + txHash);
         }
 
         return txHash;
@@ -870,43 +1053,21 @@ public class Atp60TokenDemo {
      * Autorizing the issuance of sku tokens.
      * @return The tx hash.
      */
-    private String autorizeSKUTx() {
-        // The manufacturer private key to authrize sku tokens.
-        String manufacturerPrivateKey = "privbyGpWyTTBgJoj3WezCv2D5cCCuPoL1dHYpMCmaFVSTvQmuUpgz6j";
-        // The seller address.
-        String manufacturerAddress = "buQamKpa9vmNwA7PTknnbgWRhyVZLPWy2bCu";
+    private String autorizeSKUTx(String sourcePrivateKey, String sourceAddress, JSONArray skuIds) {
         // The fixed write 1000L, the unit is MO
         Long gasPrice = 1000L;
         // Setting up the maximum cost 0.01BU
         Long feeLimit = ToBaseUnit.BU2MO("0.1");
-        // The list of sku ids.
-        JSONArray skuIds = new JSONArray();
-        skuIds.add("1");
 
-        // 1. Transaction initiation account's Nonce + 1
-        Long nonce = getAccountNonce(manufacturerAddress) + 1;
-
-
-        // 2. Getting the contract address.
-        String contractAddress = getContractAddressQuery();
-
-        // 3. Building the input of 'authorizeSku'.
+        // 1. Building the input of 'authorizeSku'.
         JSONObject input = new JSONObject();
         input.put("method", "authorizeSku");
         JSONObject params = new JSONObject();
         params.put("skuIds", skuIds);
         input.put("params", params);
 
-        // Building ContractInvokeByBUOperation
-        ContractInvokeByBUOperation operation = new ContractInvokeByBUOperation();
-        operation.setContractAddress(contractAddress);
-        operation.setInput(input.toJSONString());
-        operation.setBuAmount(0L);
-
-        BaseOperation[] operations = { operation };
-
-        // 4. Broadcasting the transaction
-        String txHash = broadcastTransaction(manufacturerPrivateKey, manufacturerAddress, operations, nonce, gasPrice, feeLimit, null);
+        // 2. Submitting the transaction.
+        String txHash = submitTrasaction(sourcePrivateKey, sourceAddress, input.toJSONString(), null, gasPrice, feeLimit);
         if (txHash != null) {
             System.out.println("Success, hash: " + txHash);
         }
@@ -958,28 +1119,11 @@ public class Atp60TokenDemo {
      * Setting controller.
      * @return The tx hash.
      */
-    private String setControllerTx() {
-        // The seller private key to set controller.
-        String sellerPrivateKey = "privC15YAp4M4oDLcJ6JqyPqYH55VXPeNckE2AVqWcHN8BB4PAVwGjJr";
-        // The seller address.
-        String sellerAddress = "buQfTPaQBzFGBzGy87pSsc6MmNJKKKmzTSyC";
+    private String setControllerTx(String sourcePrivateKey, String sourceAddress, String controllerAddress, String controllerName, String controllerContact) {
         // The fixed write 1000L, the unit is MO
         Long gasPrice = 1000L;
         // Setting up the maximum cost 0.01BU
         Long feeLimit = ToBaseUnit.BU2MO("0.1");
-        // The controller address.
-        String controllerAddress = "buQVzjctnsuSyCiAVDMTFsGggDhb12GEuQcD";
-        // The controller name.
-        String controllerName = "北京法院";
-        // The controller contact.
-        String controllerContact = "dispute@fy.com";
-
-        // 1. Transaction initiation account's Nonce + 1
-        Long nonce = getAccountNonce(sellerAddress) + 1;
-
-
-        // 2. Getting the contract address.
-        String contractAddress = getContractAddressQuery();
 
         // 3. Building the input of 'setController'.
         JSONObject input = new JSONObject();
@@ -990,16 +1134,8 @@ public class Atp60TokenDemo {
         params.put("contact", controllerContact);
         input.put("params", params);
 
-        // Building ContractInvokeByBUOperation
-        ContractInvokeByBUOperation operation = new ContractInvokeByBUOperation();
-        operation.setContractAddress(contractAddress);
-        operation.setInput(input.toJSONString());
-        operation.setBuAmount(0L);
-
-        BaseOperation[] operations = { operation };
-
-        // 4. Broadcasting the transaction
-        String txHash = broadcastTransaction(sellerPrivateKey, sellerAddress, operations, nonce, gasPrice, feeLimit, null);
+        // 2. Submitting the transaction.
+        String txHash = submitTrasaction(sourcePrivateKey, sourceAddress, input.toJSONString(), null, gasPrice, feeLimit);
         if (txHash != null) {
             System.out.println("Success, hash: " + txHash);
         }
@@ -1051,30 +1187,13 @@ public class Atp60TokenDemo {
      * Creating the lockup.
      * @return The tx hash.
      */
-    private String createLockupTx(String lockupId) {
-        // The seller private key to create lockup.
-        String sellerPrivateKey = "privC15YAp4M4oDLcJ6JqyPqYH55VXPeNckE2AVqWcHN8BB4PAVwGjJr";
-        // The seller address.
-        String sellerAddress = "buQfTPaQBzFGBzGy87pSsc6MmNJKKKmzTSyC";
+    private String createLockupTx(String sourcePrivateKey, String sourceAddress, String lockupId, String startTime, String endTime, String unlocker) {
         // The fixed write 1000L, the unit is MO
         Long gasPrice = 1000L;
         // Setting up the maximum cost 0.01BU
         Long feeLimit = ToBaseUnit.BU2MO("0.1");
-        // The start time of lockup.
-        String startTime = "1";
-        // The end time.
-        String endTime = "1588057810000000";
-        // The unlocker.
-        String unlocker = "buQVzjctnsuSyCiAVDMTFsGggDhb12GEuQcD";
 
-        // 1. Transaction initiation account's Nonce + 1
-        Long nonce = getAccountNonce(sellerAddress) + 1;
-
-
-        // 2. Getting the contract address.
-        String contractAddress = getContractAddressQuery();
-
-        // 3. Building the input of 'createLockup'.
+        // 1. Building the input of 'createLockup'.
         JSONObject input = new JSONObject();
         input.put("method", "createLockup");
         JSONObject params = new JSONObject();
@@ -1086,16 +1205,8 @@ public class Atp60TokenDemo {
         params.put("unlockers", unlockers);
         input.put("params", params);
 
-        // Building ContractInvokeByBUOperation
-        ContractInvokeByBUOperation operation = new ContractInvokeByBUOperation();
-        operation.setContractAddress(contractAddress);
-        operation.setInput(input.toJSONString());
-        operation.setBuAmount(0L);
-
-        BaseOperation[] operations = { operation };
-
-        // 4. Broadcasting the transaction
-        String txHash = broadcastTransaction(sellerPrivateKey, sellerAddress, operations, nonce, gasPrice, feeLimit, null);
+        // 2. Submitting the transaction.
+        String txHash = submitTrasaction(sourcePrivateKey, sourceAddress, input.toJSONString(), null, gasPrice, feeLimit);
         if (txHash != null) {
             System.out.println("Success, hash: " + txHash);
         }
@@ -1149,37 +1260,17 @@ public class Atp60TokenDemo {
      * @param cashId The cash id.
      * @return The tx hash.
      */
-    private String lockupByTrancheTx(String lockupId, String cashId) {
-        // The controller private key to lockup other's tokens.
-        String controllerPrivateKey = "privbtttvTCVHMCeUTZU6qEmRNxFGo5Hd3Bk2BPgZyy5WCCMaEghgecu";
-        // The controller address.
-        String controllerAddress = "buQVzjctnsuSyCiAVDMTFsGggDhb12GEuQcD";
+    private String lockupByTrancheTx(String sourcePrivateKey, String sourceAddress, String toAddress, String skuId, String trancheId, String lockupId, String cashId, String value) {
         // The fixed write 1000L, the unit is MO
         Long gasPrice = 1000L;
         // Setting up the maximum cost 0.01BU
         Long feeLimit = ToBaseUnit.BU2MO("0.1");
-        // The account to be lockuped.
-        String address = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
-        // The sku id.
-        String skuId = "1";
-        // The tranche id. If the trancheId is ignored, SKU Tokens will be sent to default tranche in sku.
-        String trancheId = "1";
-        // The amount to be lockuped.
-        String value = "100";
 
-
-        // 1. Transaction initiation account's Nonce + 1
-        Long nonce = getAccountNonce(controllerAddress) + 1;
-
-
-        // 2. Getting the contract address.
-        String contractAddress = getContractAddressQuery();
-
-        // 3. Building the input of 'lockupByTranche'.
+        // 1. Building the input of 'lockupByTranche'.
         JSONObject input = new JSONObject();
         input.put("method", "lockupByTranche");
         JSONObject params = new JSONObject();
-        params.put("address", address);
+        params.put("address", toAddress);
         params.put("skuId", skuId);
         params.put("trancheId", trancheId);
         params.put("lockupId", lockupId);
@@ -1189,16 +1280,8 @@ public class Atp60TokenDemo {
         params.put("value", value);
         input.put("params", params);
 
-        // 4. Building ContractInvokeByBUOperation
-        ContractInvokeByBUOperation operation = new ContractInvokeByBUOperation();
-        operation.setContractAddress(contractAddress);
-        operation.setInput(input.toJSONString());
-        operation.setBuAmount(0L);
-
-        BaseOperation[] operations = { operation };
-
-        // 5. Broadcasting the transaction
-        String txHash = broadcastTransaction(controllerPrivateKey, controllerAddress, operations, nonce, gasPrice, feeLimit, null);
+        // 2. Submitting the transaction.
+        String txHash = submitTrasaction(sourcePrivateKey, sourceAddress, input.toJSONString(), null, gasPrice, feeLimit);
         if (txHash != null) {
             System.out.println("Success, hash: " + txHash);
         }
@@ -1260,53 +1343,26 @@ public class Atp60TokenDemo {
      * @param lockupId The lockup id.
      * @return The tx hash.
      */
-    private String unlockByTrancheTx(String lockupId) {
-        // The controller private key to unlockup other's tokens.
-        String controllerPrivateKey = "privbtttvTCVHMCeUTZU6qEmRNxFGo5Hd3Bk2BPgZyy5WCCMaEghgecu";
-        // The controller address.
-        String controllerAddress = "buQVzjctnsuSyCiAVDMTFsGggDhb12GEuQcD";
+    private String unlockByTrancheTx(String sourcePrivateKey, String sourceAddress, String toAddress, String skuId, String trancheId, String lockupId, String value) {
         // The fixed write 1000L, the unit is MO
         Long gasPrice = 1000L;
         // Setting up the maximum cost 0.01BU
         Long feeLimit = ToBaseUnit.BU2MO("0.1");
-        // The account to be lockuped.
-        String address = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
-        // The sku id.
-        String skuId = "1";
-        // The tranche id.
-        String trancheId = "1";
-        // The amount to be lockuped.
-        String value = "50";
 
 
-        // 1. Transaction initiation account's Nonce + 1
-        Long nonce = getAccountNonce(controllerAddress) + 1;
-
-
-        // 2. Getting the contract address.
-        String contractAddress = getContractAddressQuery();
-
-        // 3. Building the input of 'unlockByTranche'.
+        // 1. Building the input of 'unlockByTranche'.
         JSONObject input = new JSONObject();
         input.put("method", "unlockByTranche");
         JSONObject params = new JSONObject();
-        params.put("address", address);
+        params.put("address", toAddress);
         params.put("skuId", skuId);
         params.put("trancheId", trancheId);
         params.put("lockupId", lockupId);
         params.put("value", value);
         input.put("params", params);
 
-        // 4. Building ContractInvokeByBUOperation
-        ContractInvokeByBUOperation operation = new ContractInvokeByBUOperation();
-        operation.setContractAddress(contractAddress);
-        operation.setInput(input.toJSONString());
-        operation.setBuAmount(0L);
-
-        BaseOperation[] operations = { operation };
-
-        // 5. Broadcasting the transaction
-        String txHash = broadcastTransaction(controllerPrivateKey, controllerAddress, operations, nonce, gasPrice, feeLimit, null);
+        // 2. Submitting the transaction.
+        String txHash = submitTrasaction(sourcePrivateKey, sourceAddress, input.toJSONString(), null, gasPrice, feeLimit);
         if (txHash != null) {
             System.out.println("Success, hash: " + txHash);
         }
@@ -1319,32 +1375,13 @@ public class Atp60TokenDemo {
      * Transferring the sku tokens of specified tranche to other account.
      * @return The tx hash.
      */
-    private String transferByTrancheTx() {
-        // The seller private key to transfer sku tokens.
-        String sellerPrivateKey = "privC15YAp4M4oDLcJ6JqyPqYH55VXPeNckE2AVqWcHN8BB4PAVwGjJr";
-        // The seller address.
-        String sellerAddress = "buQfTPaQBzFGBzGy87pSsc6MmNJKKKmzTSyC";
+    private String transferByTrancheTx(String sourcePrivateKey, String sourceAddress, String skuId, String trancheId, String toAddress, String value) {
         // The fixed write 1000L, the unit is MO
         Long gasPrice = 1000L;
         // Setting up the maximum cost 0.01BU
         Long feeLimit = ToBaseUnit.BU2MO("0.1");
-        // The sku id.
-        String skuId = "1";
-        // The tranche id. If the trancheId is ignored, SKU Tokens will be sent to default tranche in sku.
-        String trancheId = "1";
-        // The target address.
-        String toAddress = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
-        // The sku tokens amount.
-        String value = "200";
 
-        // 1. Transaction initiation account's Nonce + 1
-        Long nonce = getAccountNonce(sellerAddress) + 1;
-
-
-        // 2. Getting the contract address.
-        String contractAddress = getContractAddressQuery();
-
-        // 3. Building the input of 'transferByTranche'.
+        // 1. Building the input of 'transferByTranche'.
         JSONObject input = new JSONObject();
         input.put("method", "transferByTranche");
         JSONObject params = new JSONObject();
@@ -1354,16 +1391,8 @@ public class Atp60TokenDemo {
         params.put("value", value);
         input.put("params", params);
 
-        // Building ContractInvokeByBUOperation
-        ContractInvokeByBUOperation operation = new ContractInvokeByBUOperation();
-        operation.setContractAddress(contractAddress);
-        operation.setInput(input.toJSONString());
-        operation.setBuAmount(0L);
-
-        BaseOperation[] operations = { operation };
-
-        // 4. Broadcasting the transaction
-        String txHash = broadcastTransaction(sellerPrivateKey, sellerAddress, operations, nonce, gasPrice, feeLimit, null);
+        // 2. Submitting the transaction.
+        String txHash = submitTrasaction(sourcePrivateKey, sourceAddress, input.toJSONString(), null, gasPrice, feeLimit);
         if (txHash != null) {
             System.out.println("Success, hash: " + txHash);
         }
@@ -1463,30 +1492,13 @@ public class Atp60TokenDemo {
      * Approving the SKU Tokens to spender.
      * @return The tx hash.
      */
-    private String approveTx() {
-        // The token holder private key to approve sku tokens.
-        String sellerPrivateKey = "privbUCxLLYNCPP1smBiNEYVnErMDwT8eJ7PWJZyioJQhXcHApwgqKsP";
-        // The token holder address.
-        String sellerAddress = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
+    private String approveTx(String sourcePrivateKey, String sourceAddress, String skuId, String spender, String value) {
         // The fixed write 1000L, the unit is MO
         Long gasPrice = 1000L;
         // Setting up the maximum cost 0.01BU
         Long feeLimit = ToBaseUnit.BU2MO("0.1");
-        // The sku id.
-        String skuId = "1";
-        // The spender address.
-        String spender = "buQXmv2C8hLAArdR2HtJZwz44x9eiJ1hERYK";
-        // The sku tokens amount.
-        String value = "100";
 
-        // 1. Transaction initiation account's Nonce + 1
-        Long nonce = getAccountNonce(sellerAddress) + 1;
-
-
-        // 2. Getting the contract address.
-        String contractAddress = getContractAddressQuery();
-
-        // 3. Building the input of 'approve'.
+        // 1. Building the input of 'approve'.
         JSONObject input = new JSONObject();
         input.put("method", "approve");
         JSONObject params = new JSONObject();
@@ -1495,16 +1507,8 @@ public class Atp60TokenDemo {
         params.put("value", value);
         input.put("params", params);
 
-        // Building ContractInvokeByBUOperation
-        ContractInvokeByBUOperation operation = new ContractInvokeByBUOperation();
-        operation.setContractAddress(contractAddress);
-        operation.setInput(input.toJSONString());
-        operation.setBuAmount(0L);
-
-        BaseOperation[] operations = { operation };
-
-        // 4. Broadcasting the transaction
-        String txHash = broadcastTransaction(sellerPrivateKey, sellerAddress, operations, nonce, gasPrice, feeLimit, null);
+        // 2. Submitting the transaction.
+        String txHash = submitTrasaction(sourcePrivateKey, sourceAddress, input.toJSONString(), null, gasPrice, feeLimit);
         if (txHash != null) {
             System.out.println("Success, hash: " + txHash);
         }
@@ -1562,34 +1566,13 @@ public class Atp60TokenDemo {
      * The spender move the allownce to other account.
      * @return The tx hash.
      */
-    private String transferFromByTrancheTx() {
-        // The spender private key to transfer sku tokens.
-        String spenderPrivateKey = "privbwMxt4BFNjN6vbjizrFEMhiFJyxMydWCb3sr1utDokApEMGXB9mD";
-        // The spender address.
-        String spenderAddress = "buQXmv2C8hLAArdR2HtJZwz44x9eiJ1hERYK";
+    private String transferFromByTrancheTx(String sourcePrivateKey, String sourceAddress, String fromAddress, String skuId, String trancheId, String toAddress, String value) {
         // The fixed write 1000L, the unit is MO
         Long gasPrice = 1000L;
         // Setting up the maximum cost 0.01BU
         Long feeLimit = ToBaseUnit.BU2MO("0.1");
-        // The from address.
-        String fromAddress = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
-        // The sku id.
-        String skuId = "1";
-        // The tranche id. If the trancheId is ignored, SKU Tokens will be sent to default tranche in sku.
-        String trancheId = "1";
-        // The target address.
-        String toAddress = "buQiHTjDSjQedxR2vF9WULhgWMtbo8rRLmor";
-        // The sku tokens amount.
-        String value = "50";
 
-        // 1. Transaction initiation account's Nonce + 1
-        Long nonce = getAccountNonce(spenderAddress) + 1;
-
-
-        // 2. Getting the contract address.
-        String contractAddress = getContractAddressQuery();
-
-        // 3. Building the input of 'transferFromByTranche'.
+        // 1. Building the input of 'transferFromByTranche'.
         JSONObject input = new JSONObject();
         input.put("method", "transferFromByTranche");
         JSONObject params = new JSONObject();
@@ -1600,16 +1583,8 @@ public class Atp60TokenDemo {
         params.put("value", value);
         input.put("params", params);
 
-        // Building ContractInvokeByBUOperation
-        ContractInvokeByBUOperation operation = new ContractInvokeByBUOperation();
-        operation.setContractAddress(contractAddress);
-        operation.setInput(input.toJSONString());
-        operation.setBuAmount(0L);
-
-        BaseOperation[] operations = { operation };
-
-        // 4. Broadcasting the transaction
-        String txHash = broadcastTransaction(spenderPrivateKey, spenderAddress, operations, nonce, gasPrice, feeLimit, null);
+        // 2. Submitting the transaction.
+        String txHash = submitTrasaction(sourcePrivateKey, sourceAddress, input.toJSONString(), null, gasPrice, feeLimit);
         if (txHash != null) {
             System.out.println("Success, hash: " + txHash);
         }
@@ -1622,39 +1597,13 @@ public class Atp60TokenDemo {
      * Setting an accetance.
      * @return The tx hash.
      */
-    private String setAcceptanceTx() {
-        // The seller private key to set acceptance.
-        String sellerPrivateKey = "privC15YAp4M4oDLcJ6JqyPqYH55VXPeNckE2AVqWcHN8BB4PAVwGjJr";
-        // The seller address.
-        String sellerAddress = "buQfTPaQBzFGBzGy87pSsc6MmNJKKKmzTSyC";
+    private String setAcceptanceTx(String sourcePrivateKey, String sourceAddress, String acceptanceId, JSONArray skuIds, String trancheId, String acceptorAddress, String acceptanceName, String acceptanceContact, String acceptancePeriod) {
         // The fixed write 1000L, the unit is MO
         Long gasPrice = 1000L;
         // Setting up the maximum cost 0.01BU
         Long feeLimit = ToBaseUnit.BU2MO("0.1");
-        // The acceptance id.
-        String acceptanceId = "1";
-        // The sku ids.
-        JSONArray skuIds = new JSONArray();
-        skuIds.add("1");
-        // The tranche id. If the trancheId is ignored, SKU Tokens will be sent to default tranche in sku.
-        String trancheId = "1";
-        // The acceptor address.
-        String acceptorAddress = "buQiHTjDSjQedxR2vF9WULhgWMtbo8rRLmor";
-        // The acceptance name.
-        String acceptanceName = "北京贸易集中处理中心";
-        // The acceptance contact.
-        String acceptanceContact = "contact@my.com";
-        // The acceptance period.
-        String acceptancePeriod = "7天";
 
-        // 1. Transaction initiation account's Nonce + 1
-        Long nonce = getAccountNonce(sellerAddress) + 1;
-
-
-        // 2. Getting the contract address.
-        String contractAddress = getContractAddressQuery();
-
-        // 3. Building the input of 'setAcceptance'.
+        // 1. Building the input of 'setAcceptance'.
         JSONObject input = new JSONObject();
         input.put("method", "setAcceptance");
         JSONObject params = new JSONObject();
@@ -1667,16 +1616,8 @@ public class Atp60TokenDemo {
         params.put("period", acceptancePeriod);
         input.put("params", params);
 
-        // Building ContractInvokeByBUOperation
-        ContractInvokeByBUOperation operation = new ContractInvokeByBUOperation();
-        operation.setContractAddress(contractAddress);
-        operation.setInput(input.toJSONString());
-        operation.setBuAmount(0L);
-
-        BaseOperation[] operations = { operation };
-
-        // 4. Broadcasting the transaction
-        String txHash = broadcastTransaction(sellerPrivateKey, sellerAddress, operations, nonce, gasPrice, feeLimit, null);
+        // 2. Submitting the transaction.
+        String txHash = submitTrasaction(sourcePrivateKey, sourceAddress, input.toJSONString(), null, gasPrice, feeLimit);
         if (txHash != null) {
             System.out.println("Success, hash: " + txHash);
         }
@@ -1728,36 +1669,13 @@ public class Atp60TokenDemo {
      * Requesting the cash.
      * @return The tx hash.
      */
-    private String requestCashTx() {
-        // The token holder private key to request cash.
-        String holderPrivateKey = "privbUCxLLYNCPP1smBiNEYVnErMDwT8eJ7PWJZyioJQhXcHApwgqKsP";
-        // The token holder address.
-        String holderAddress = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
+    private String requestCashTx(String sourcePrivateKey, String sourceAddress, String cashId, String skuId, String trancheId, String value, String acceptanceId, String lockupId) {
         // The fixed write 1000L, the unit is MO
         Long gasPrice = 1000L;
         // Setting up the maximum cost 0.01BU
         Long feeLimit = ToBaseUnit.BU2MO("0.1");
-        // The cash id.
-        String cashId = "1";
-        // The sku id.
-        String skuId = "1";
-        // The tranche id. If the trancheId is ignored, SKU Tokens will be sent to default tranche in sku.
-        String trancheId = "1";
-        // The amount to be cashed.
-        String value = "50";
-        // The acceptance id.
-        String acceptanceId = "1";
-        // The lockup id.
-        String lockupId = "1";
 
-        // 1. Transaction initiation account's Nonce + 1
-        Long nonce = getAccountNonce(holderAddress) + 1;
-
-
-        // 2. Getting the contract address.
-        String contractAddress = getContractAddressQuery();
-
-        // 3. Building the input of 'requestCash'.
+        // 1. Building the input of 'requestCash'.
         JSONObject input = new JSONObject();
         input.put("method", "requestCash");
         JSONObject params = new JSONObject();
@@ -1769,16 +1687,8 @@ public class Atp60TokenDemo {
         params.put("lockupId", lockupId);
         input.put("params", params);
 
-        // Building ContractInvokeByBUOperation
-        ContractInvokeByBUOperation operation = new ContractInvokeByBUOperation();
-        operation.setContractAddress(contractAddress);
-        operation.setInput(input.toJSONString());
-        operation.setBuAmount(0L);
-
-        BaseOperation[] operations = { operation };
-
-        // 4. Broadcasting the transaction
-        String txHash = broadcastTransaction(holderPrivateKey, holderAddress, operations, nonce, gasPrice, feeLimit, null);
+        // 2. Submitting the transaction.
+        String txHash = submitTrasaction(sourcePrivateKey, sourceAddress, input.toJSONString(), null, gasPrice, feeLimit);
         if (txHash != null) {
             System.out.println("Success, hash: " + txHash);
         }
@@ -1833,28 +1743,13 @@ public class Atp60TokenDemo {
      * The acceptor pays cash.
      * @return The tx hash.
      */
-    private String cashTx() {
-        // The acceptor private key to cash.
-        String acceptorPrivateKey = "privbUbdoe6co99ykomqQRUDiD8rh3XvWvmexNUS1bZbu5gb8RuKJA8Y";
-        // The acceptor address.
-        String acceptorAddress = "buQiHTjDSjQedxR2vF9WULhgWMtbo8rRLmor";
+    private String cashTx(String sourcePrivateKey, String sourceAddress, String cashId, String applicant) {
         // The fixed write 1000L, the unit is MO
         Long gasPrice = 1000L;
         // Setting up the maximum cost 0.01BU
         Long feeLimit = ToBaseUnit.BU2MO("0.1");
-        // The cash id.
-        String cashId = "1";
-        // The cash applicant.
-        String applicant = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
 
-        // 1. Transaction initiation account's Nonce + 1
-        Long nonce = getAccountNonce(acceptorAddress) + 1;
-
-
-        // 2. Getting the contract address.
-        String contractAddress = getContractAddressQuery();
-
-        // 3. Building the input of 'cash'.
+        // 1. Building the input of 'cash'.
         JSONObject input = new JSONObject();
         input.put("method", "cash");
         JSONObject params = new JSONObject();
@@ -1862,16 +1757,8 @@ public class Atp60TokenDemo {
         params.put("applicant", applicant);
         input.put("params", params);
 
-        // Building ContractInvokeByBUOperation
-        ContractInvokeByBUOperation operation = new ContractInvokeByBUOperation();
-        operation.setContractAddress(contractAddress);
-        operation.setInput(input.toJSONString());
-        operation.setBuAmount(0L);
-
-        BaseOperation[] operations = { operation };
-
-        // 4. Broadcasting the transaction
-        String txHash = broadcastTransaction(acceptorPrivateKey, acceptorAddress, operations, nonce, gasPrice, feeLimit, null);
+        // 2. Submitting the transaction.
+        String txHash = submitTrasaction(sourcePrivateKey, sourceAddress, input.toJSONString(), null, gasPrice, feeLimit);
         if (txHash != null) {
             System.out.println("Success, hash: " + txHash);
         }
@@ -1884,28 +1771,13 @@ public class Atp60TokenDemo {
      * The token holder confirm the cash right.
      * @return The tx hash.
      */
-    private String confirmCashTx() {
-        // The token holder private key to confirm cash.
-        String holderPrivateKey = "privbUCxLLYNCPP1smBiNEYVnErMDwT8eJ7PWJZyioJQhXcHApwgqKsP";
-        // The token holder address.
-        String holderAddress = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
+    private String confirmCashTx(String  sourcePrivateKey, String sourceAddress, String cashId, String applicant) {
         // The fixed write 1000L, the unit is MO
         Long gasPrice = 1000L;
         // Setting up the maximum cost 0.01BU
         Long feeLimit = ToBaseUnit.BU2MO("0.1");
-        // The cash id.
-        String cashId = "1";
-        // The cash applicant.
-        String applicant = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
 
-        // 1. Transaction initiation account's Nonce + 1
-        Long nonce = getAccountNonce(holderAddress) + 1;
-
-
-        // 2. Getting the contract address.
-        String contractAddress = getContractAddressQuery();
-
-        // 3. Building the input of 'confirmCash'.
+        // 1. Building the input of 'confirmCash'.
         JSONObject input = new JSONObject();
         input.put("method", "confirmCash");
         JSONObject params = new JSONObject();
@@ -1913,16 +1785,8 @@ public class Atp60TokenDemo {
         params.put("applicant", applicant);
         input.put("params", params);
 
-        // Building ContractInvokeByBUOperation
-        ContractInvokeByBUOperation operation = new ContractInvokeByBUOperation();
-        operation.setContractAddress(contractAddress);
-        operation.setInput(input.toJSONString());
-        operation.setBuAmount(0L);
-
-        BaseOperation[] operations = { operation };
-
-        // 4. Broadcasting the transaction
-        String txHash = broadcastTransaction(holderPrivateKey, holderAddress, operations, nonce, gasPrice, feeLimit, null);
+        // 2. Submitting the transaction.
+        String txHash = submitTrasaction(sourcePrivateKey, sourceAddress, input.toJSONString(), null, gasPrice, feeLimit);
         if (txHash != null) {
             System.out.println("Success, hash: " + txHash);
         }
@@ -1935,34 +1799,13 @@ public class Atp60TokenDemo {
      * The seller or the cash applicant applys dispute.
      * @return The tx hash.
      */
-    private String applyDisputeTx() {
-        // The token holder private key to apply dispute.
-        String holderPrivateKey = "privbUCxLLYNCPP1smBiNEYVnErMDwT8eJ7PWJZyioJQhXcHApwgqKsP";
-        // The token holder address.
-        String holderAddress = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
+    private String applyDisputeTx(String sourcePrivateKey, String sourceAddress, String cashId, String applicant, String reason, String controller, String lockupId) {
         // The fixed write 1000L, the unit is MO
         Long gasPrice = 1000L;
         // Setting up the maximum cost 0.01BU
         Long feeLimit = ToBaseUnit.BU2MO("0.1");
-        // The cash id.
-        String cashId = "1";
-        // The cash applicant.
-        String applicant = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
-        // The dispute reason.
-        String reason = "未收到货";
-        // The controller address.
-        String controller = "buQVzjctnsuSyCiAVDMTFsGggDhb12GEuQcD";
-        // The lockup id for disupte.
-        String lockupId = "2";
 
-        // 1. Transaction initiation account's Nonce + 1
-        Long nonce = getAccountNonce(holderAddress) + 1;
-
-
-        // 2. Getting the contract address.
-        String contractAddress = getContractAddressQuery();
-
-        // 3. Building the input of 'applyDispute'.
+        // 1. Building the input of 'applyDispute'.
         JSONObject input = new JSONObject();
         input.put("method", "applyDispute");
         JSONObject params = new JSONObject();
@@ -1973,16 +1816,8 @@ public class Atp60TokenDemo {
         params.put("lockupId", lockupId);
         input.put("params", params);
 
-        // Building ContractInvokeByBUOperation
-        ContractInvokeByBUOperation operation = new ContractInvokeByBUOperation();
-        operation.setContractAddress(contractAddress);
-        operation.setInput(input.toJSONString());
-        operation.setBuAmount(0L);
-
-        BaseOperation[] operations = { operation };
-
-        // 4. Broadcasting the transaction
-        String txHash = broadcastTransaction(holderPrivateKey, holderAddress, operations, nonce, gasPrice, feeLimit, null);
+        // 2. Submitting the transaction.
+        String txHash = submitTrasaction(sourcePrivateKey, sourceAddress, input.toJSONString(), null, gasPrice, feeLimit);
         if (txHash != null) {
             System.out.println("Success, hash: " + txHash);
         }
@@ -2037,30 +1872,13 @@ public class Atp60TokenDemo {
      * The seller, cash applicant or acceptor can set evidence.
      * @return The tx hash.
      */
-    private String setEvidenceTx() {
-        // The token holder private key to set evidence.
-        String holderPrivateKey = "privbUCxLLYNCPP1smBiNEYVnErMDwT8eJ7PWJZyioJQhXcHApwgqKsP";
-        // The token holder address.
-        String holderAddress = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
+    private String setEvidenceTx(String sourcePrivateKey, String sourceAddress, String cashId, String applicant, String description) {
         // The fixed write 1000L, the unit is MO
         Long gasPrice = 1000L;
         // Setting up the maximum cost 0.01BU
         Long feeLimit = ToBaseUnit.BU2MO("0.1");
-        // The cash id.
-        String cashId = "1";
-        // The cash applicant.
-        String applicant = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
-        // The evidence description.
-        String description = "未收到货，查询不到快递信息";
 
-        // 1. Transaction initiation account's Nonce + 1
-        Long nonce = getAccountNonce(holderAddress) + 1;
-
-
-        // 2. Getting the contract address.
-        String contractAddress = getContractAddressQuery();
-
-        // 3. Building the input of 'setEvidence'.
+        // 1. Building the input of 'setEvidence'.
         JSONObject input = new JSONObject();
         input.put("method", "setEvidence");
         JSONObject params = new JSONObject();
@@ -2069,16 +1887,8 @@ public class Atp60TokenDemo {
         params.put("description", description);
         input.put("params", params);
 
-        // Building ContractInvokeByBUOperation
-        ContractInvokeByBUOperation operation = new ContractInvokeByBUOperation();
-        operation.setContractAddress(contractAddress);
-        operation.setInput(input.toJSONString());
-        operation.setBuAmount(0L);
-
-        BaseOperation[] operations = { operation };
-
-        // 4. Broadcasting the transaction
-        String txHash = broadcastTransaction(holderPrivateKey, holderAddress, operations, nonce, gasPrice, feeLimit, null);
+        // 2. Submitting the transaction.
+        String txHash = submitTrasaction(sourcePrivateKey, sourceAddress, input.toJSONString(), null, gasPrice, feeLimit);
         if (txHash != null) {
             System.out.println("Success, hash: " + txHash);
         }
@@ -2136,32 +1946,13 @@ public class Atp60TokenDemo {
      * Handling the dispute according to the evidence.
      * @return The tx hash.
      */
-    private String handleDisputeTx() {
-        // The controller private key to handle dispute.
-        String controllerPrivateKey = "privbtttvTCVHMCeUTZU6qEmRNxFGo5Hd3Bk2BPgZyy5WCCMaEghgecu";
-        // The controller address.
-        String controllerAddress = "buQVzjctnsuSyCiAVDMTFsGggDhb12GEuQcD";
+    private String handleDisputeTx(String sourcePrivateKey, String sourceAddress, String cashId, String applicant, int status, String description) {
         // The fixed write 1000L, the unit is MO
         Long gasPrice = 1000L;
         // Setting up the maximum cost 0.01BU
         Long feeLimit = ToBaseUnit.BU2MO("0.1");
-        // The cash id.
-        String cashId = "1";
-        // The cash applicant.
-        String applicant = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
-        // The dispute result status.
-        int status = 1;
-        // The evidence description.
-        String description = "确实查询不到快递信息，SKU Tokens 返回给兑付申请人。";
 
-        // 1. Transaction initiation account's Nonce + 1
-        Long nonce = getAccountNonce(controllerAddress) + 1;
-
-
-        // 2. Getting the contract address.
-        String contractAddress = getContractAddressQuery();
-
-        // 3. Building the input of 'handleDispute'.
+        // 1. Building the input of 'handleDispute'.
         JSONObject input = new JSONObject();
         input.put("method", "handleDispute");
         JSONObject params = new JSONObject();
@@ -2171,16 +1962,8 @@ public class Atp60TokenDemo {
         params.put("description", description);
         input.put("params", params);
 
-        // Building ContractInvokeByBUOperation
-        ContractInvokeByBUOperation operation = new ContractInvokeByBUOperation();
-        operation.setContractAddress(contractAddress);
-        operation.setInput(input.toJSONString());
-        operation.setBuAmount(0L);
-
-        BaseOperation[] operations = { operation };
-
-        // 4. Broadcasting the transaction
-        String txHash = broadcastTransaction(controllerPrivateKey, controllerAddress, operations, nonce, gasPrice, feeLimit, null);
+        // 2. Submitting the transaction.
+        String txHash = submitTrasaction(sourcePrivateKey, sourceAddress, input.toJSONString(), null, gasPrice, feeLimit);
         if (txHash != null) {
             System.out.println("Success, hash: " + txHash);
         }
@@ -2193,51 +1976,24 @@ public class Atp60TokenDemo {
      * Redeeming the tokens.
      * @return The tx hash.
      */
-    private String redeemByTrancheTx() {
-        // The controller private key to redeem tokens.
-        String controllerPrivateKey = "privbtttvTCVHMCeUTZU6qEmRNxFGo5Hd3Bk2BPgZyy5WCCMaEghgecu";
-        // The controller address.
-        String controllerAddress = "buQVzjctnsuSyCiAVDMTFsGggDhb12GEuQcD";
+    private String redeemByTrancheTx(String sourcePrivateKey, String sourceAddress, String toAddress, String skuId, String trancheId, String value) {
         // The fixed write 1000L, the unit is MO
         Long gasPrice = 1000L;
         // Setting up the maximum cost 0.01BU
         Long feeLimit = ToBaseUnit.BU2MO("0.1");
-        // The account to be redeemed.
-        String address = "buQfTPaQBzFGBzGy87pSsc6MmNJKKKmzTSyC";
-        // The sku id.
-        String skuId = "1";
-        // The tranche id. If the trancheId is ignored, SKU Tokens of default tranche in sku will be redeemed.
-        String trancheId = "1";
-        // The amount to be redeemed.
-        String value = "1000";
 
-        // 1. Transaction initiation account's Nonce + 1
-        Long nonce = getAccountNonce(controllerAddress) + 1;
-
-
-        // 2. Getting the contract address.
-        String contractAddress = getContractAddressQuery();
-
-        // 3. Building the input of 'redeemByTranche'.
+        // 1. Building the input of 'redeemByTranche'.
         JSONObject input = new JSONObject();
         input.put("method", "redeemByTranche");
         JSONObject params = new JSONObject();
-        params.put("address", address);
+        params.put("address", toAddress);
         params.put("skuId", skuId);
         params.put("trancheId", trancheId);
         params.put("value", value);
         input.put("params", params);
 
-        // Building ContractInvokeByBUOperation
-        ContractInvokeByBUOperation operation = new ContractInvokeByBUOperation();
-        operation.setContractAddress(contractAddress);
-        operation.setInput(input.toJSONString());
-        operation.setBuAmount(0L);
-
-        BaseOperation[] operations = { operation };
-
-        // 4. Broadcasting the transaction
-        String txHash = broadcastTransaction(controllerPrivateKey, controllerAddress, operations, nonce, gasPrice, feeLimit, null);
+        // 2. Submitting the transaction.
+        String txHash = submitTrasaction(sourcePrivateKey, sourceAddress, input.toJSONString(), null, gasPrice, feeLimit);
         if (txHash != null) {
             System.out.println("Success, hash: " + txHash);
         }
@@ -2288,6 +2044,28 @@ public class Atp60TokenDemo {
         return index;
 	}
 
+
+	private String submitTrasaction(String privateKey, String sourceAddress, String input, String transMetadata, Long gasPrice, Long feeLimit) {
+        // 1. Transaction initiation account's Nonce + 1
+        Long nonce = getAccountNonce(sourceAddress) + 1;
+
+
+        // 2. Getting the contract address.
+        String contractAddress = getContractAddressQuery();
+
+        // 3. Building ContractInvokeByBUOperation
+        ContractInvokeByBUOperation operation = new ContractInvokeByBUOperation();
+        operation.setContractAddress(contractAddress);
+        operation.setInput(input);
+        operation.setBuAmount(0L);
+
+        BaseOperation[] operations = { operation };
+
+        // 4. Broadcasting the transaction
+        String txHash = broadcastTransaction(privateKey, sourceAddress, operations, nonce, gasPrice, feeLimit, transMetadata);
+
+        return txHash;
+    }
 
     /**
      * @param senderPrivateKey The account private key to start transaction
