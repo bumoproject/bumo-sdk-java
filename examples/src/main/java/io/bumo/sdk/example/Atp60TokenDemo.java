@@ -1,6 +1,7 @@
 package io.bumo.sdk.example;
 
 import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
+import io.bumo.common.Tools;
 import io.bumo.model.request.*;
 import io.bumo.model.request.operation.ContractInvokeByBUOperation;
 import io.bumo.model.response.*;
@@ -276,6 +277,29 @@ public class Atp60TokenDemo {
     @Test
     public void handleDispute() {
         handleDisputeTx();
+    }
+
+
+    /**
+     * Nineteenth: The controller (buQVzjctnsuSyCiAVDMTFsGggDhb12GEuQcD) lockups 100 SKU Tokens of the account (buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP).
+     */
+    @Test
+    public void lockupByTranche() {
+        lockupByTrancheTx("1", null);
+    }
+
+    @Test
+    public void balanceOfByLockup() {
+        balanceOfByLockupQuery();
+    }
+
+
+    /**
+     * Twentieth: The controller (buQVzjctnsuSyCiAVDMTFsGggDhb12GEuQcD) unlocks 50 SKU Tokens of the account (buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP);
+     */
+    @Test
+    public void unlockByTranche() {
+        unlockByTrancheTx("1");
     }
 
 
@@ -1112,6 +1136,178 @@ public class Atp60TokenDemo {
 
 
     /**
+     * Lockuping the tokens
+     * @param lockupId The lockup id.
+     * @param cashId The cash id.
+     * @return The tx hash.
+     */
+    private String lockupByTrancheTx(String lockupId, String cashId) {
+        // The controller private key to lockup other's tokens.
+        String controllerPrivateKey = "privbtttvTCVHMCeUTZU6qEmRNxFGo5Hd3Bk2BPgZyy5WCCMaEghgecu";
+        // The controller address.
+        String controllerAddress = "buQVzjctnsuSyCiAVDMTFsGggDhb12GEuQcD";
+        // The fixed write 1000L, the unit is MO
+        Long gasPrice = 1000L;
+        // Setting up the maximum cost 0.01BU
+        Long feeLimit = ToBaseUnit.BU2MO("0.1");
+        // The account to be lockuped.
+        String address = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
+        // The sku id.
+        String skuId = "1";
+        // The tranche id.
+        String trancheId = "1";
+        // The amount to be lockuped.
+        String value = "100";
+
+
+        // 1. Transaction initiation account's Nonce + 1
+        Long nonce = getAccountNonce(controllerAddress) + 1;
+
+
+        // 2. Getting the contract address.
+        String contractAddress = getContractAddressQuery();
+
+        // 3. Building the input of 'lockupByTranche'.
+        JSONObject input = new JSONObject();
+        input.put("method", "lockupByTranche");
+        JSONObject params = new JSONObject();
+        params.put("address", address);
+        params.put("skuId", skuId);
+        params.put("trancheId", trancheId);
+        params.put("lockupId", lockupId);
+        if (!Tools.isEmpty(cashId)) {
+            params.put("cashId", cashId);
+        }
+        params.put("value", value);
+        input.put("params", params);
+
+        // 4. Building ContractInvokeByBUOperation
+        ContractInvokeByBUOperation operation = new ContractInvokeByBUOperation();
+        operation.setContractAddress(contractAddress);
+        operation.setInput(input.toJSONString());
+        operation.setBuAmount(0L);
+
+        BaseOperation[] operations = { operation };
+
+        // 5. Broadcasting the transaction
+        String txHash = broadcastTransaction(controllerPrivateKey, controllerAddress, operations, nonce, gasPrice, feeLimit, null);
+        if (txHash != null) {
+            System.out.println("Success, hash: " + txHash);
+        }
+
+        return txHash;
+    }
+
+
+    /**
+     * Querying the balance of specified lockup.
+     * @return The balance.
+     */
+    private String balanceOfByLockupQuery() {
+        // The contract address.
+        String contractAddress = getContractAddressQuery();
+        // The account address.
+        String address = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
+        // The sku id.
+        String skuId = "1";
+        // The tranche id.
+        String trancheId = "1";
+        // The lockup id.
+        String lockupId = "1";
+
+        // Init input
+        JSONObject input = new JSONObject();
+        input.put("method", "balanceOfByLockup");
+        JSONObject params = new JSONObject();
+        params.put("address", address);
+        params.put("skuId", skuId);
+        params.put("trancheId", trancheId);
+        params.put("lockupId", lockupId);
+        input.put("params", params);
+
+        // Init request
+        ContractCallRequest request = new ContractCallRequest();
+        request.setContractAddress(contractAddress);
+        request.setFeeLimit(1000000000L);
+        request.setOptType(2);
+        request.setInput(input.toJSONString());
+
+        // Call call
+        String spuResult = null;
+        ContractCallResponse response = sdk.getContractService().call(request);
+        if (response.getErrorCode() == 0) {
+            ContractCallResult result = response.getResult();
+            spuResult = JSON.toJSONString(result.getQueryRets().getJSONObject(0).getJSONObject("result"), false);
+            System.out.println(spuResult);
+        } else {
+            System.out.println("error: " + response.getErrorDesc());
+        }
+
+        return spuResult;
+    }
+
+
+    /**
+     * Unlock the tokens of specified tranche.
+     * @param lockupId The lockup id.
+     * @return The tx hash.
+     */
+    private String unlockByTrancheTx(String lockupId) {
+        // The controller private key to unlockup other's tokens.
+        String controllerPrivateKey = "privbtttvTCVHMCeUTZU6qEmRNxFGo5Hd3Bk2BPgZyy5WCCMaEghgecu";
+        // The controller address.
+        String controllerAddress = "buQVzjctnsuSyCiAVDMTFsGggDhb12GEuQcD";
+        // The fixed write 1000L, the unit is MO
+        Long gasPrice = 1000L;
+        // Setting up the maximum cost 0.01BU
+        Long feeLimit = ToBaseUnit.BU2MO("0.1");
+        // The account to be lockuped.
+        String address = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
+        // The sku id.
+        String skuId = "1";
+        // The tranche id.
+        String trancheId = "1";
+        // The amount to be lockuped.
+        String value = "50";
+
+
+        // 1. Transaction initiation account's Nonce + 1
+        Long nonce = getAccountNonce(controllerAddress) + 1;
+
+
+        // 2. Getting the contract address.
+        String contractAddress = getContractAddressQuery();
+
+        // 3. Building the input of 'unlockByTranche'.
+        JSONObject input = new JSONObject();
+        input.put("method", "unlockByTranche");
+        JSONObject params = new JSONObject();
+        params.put("address", address);
+        params.put("skuId", skuId);
+        params.put("trancheId", trancheId);
+        params.put("lockupId", lockupId);
+        params.put("value", value);
+        input.put("params", params);
+
+        // 4. Building ContractInvokeByBUOperation
+        ContractInvokeByBUOperation operation = new ContractInvokeByBUOperation();
+        operation.setContractAddress(contractAddress);
+        operation.setInput(input.toJSONString());
+        operation.setBuAmount(0L);
+
+        BaseOperation[] operations = { operation };
+
+        // 5. Broadcasting the transaction
+        String txHash = broadcastTransaction(controllerPrivateKey, controllerAddress, operations, nonce, gasPrice, feeLimit, null);
+        if (txHash != null) {
+            System.out.println("Success, hash: " + txHash);
+        }
+
+        return txHash;
+    }
+
+
+    /**
      * Transferring the sku tokens of specified tranche to other account.
      * @return The tx hash.
      */
@@ -1928,6 +2124,10 @@ public class Atp60TokenDemo {
     }
 
 
+    /**
+     * Handling the dispute according to the evidence.
+     * @return The tx hash.
+     */
     private String handleDisputeTx() {
         // The controller private key to handle dispute.
         String controllerPrivateKey = "privbtttvTCVHMCeUTZU6qEmRNxFGo5Hd3Bk2BPgZyy5WCCMaEghgecu";
