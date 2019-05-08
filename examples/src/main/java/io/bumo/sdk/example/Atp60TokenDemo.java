@@ -203,7 +203,7 @@ public class Atp60TokenDemo {
         // The token supply.
         String tokenSupply = "10000";
         // The token decimals.
-        int decimals = 0;
+        String decimals = "0";
         // The token description.
         String tokenDesc = "iphone 5s 白色 64G 中国大陆版";
 
@@ -1004,7 +1004,7 @@ public class Atp60TokenDemo {
      * Issuing the SKU tokens
      * @return The tx hash.
      */
-    public String issueSKUTokensTx(String sourcePrivateKey, String sourceAddress, String skuId, String defaultTrancheId, String spuId, String skuLabel, String cashAddress, String skuPrice, String skuColor, String skuMemory, String skuModel, String tokenName, String tokenSymbol, String tokenSupply, int decimals, String tokenDesc) {
+    public String issueSKUTokensTx(String sourcePrivateKey, String sourceAddress, String skuId, String defaultTrancheId, String spuId, String skuLabel, String cashAddress, String skuPrice, String skuColor, String skuMemory, String skuModel, String tokenName, String tokenSymbol, String tokenSupply, String decimals, String tokenDesc) {
         // The fixed write 1000L, the unit is MO
         Long gasPrice = 1000L;
         // Setting up the maximum cost 0.01BU

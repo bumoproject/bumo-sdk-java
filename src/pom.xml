@@ -31,7 +31,7 @@
 		<dependency>
 			<groupId>io.bumo</groupId>
 			<artifactId>bumo-encryption</artifactId>
-			<version>1.0.6</version>
+			<version>1.0.1</version>
 		</dependency>
 	</dependencies>
 	<repositories>
