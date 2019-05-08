@@ -1855,6 +1855,7 @@ public class Atp60TokenDemo {
             } else {
                 queryResult.put("code", 0);
                 queryResult.put("msg", result.getQueryRets().getJSONObject(0).getJSONObject("result").getString("value"));
+                System.out.println(queryResult.getString("msg"));
             }
         } else {
             queryResult.put("code", response.getErrorCode());
