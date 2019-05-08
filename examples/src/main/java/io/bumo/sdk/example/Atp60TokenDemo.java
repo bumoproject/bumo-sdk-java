@@ -955,7 +955,7 @@ public class Atp60TokenDemo {
         // The fixed write 1000L, the unit is MO
         Long gasPrice = 1000L;
         // Setting up the maximum cost 0.01BU
-        Long feeLimit = ToBaseUnit.BU2MO("0.1");
+        Long feeLimit = ToBaseUnit.BU2MO("2");
 
         // 1. Building the input of 'createTranche'.
         JSONObject input = new JSONObject();
