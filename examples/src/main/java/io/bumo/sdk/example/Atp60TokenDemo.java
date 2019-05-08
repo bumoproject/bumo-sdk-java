@@ -1843,17 +1843,26 @@ public class Atp60TokenDemo {
         request.setInput(input);
 
         // Call call
-        String spuResult = null;
+        JSONObject queryResult = new JSONObject();
         ContractCallResponse response = sdk.getContractService().call(request);
         if (response.getErrorCode() == 0) {
             ContractCallResult result = response.getResult();
-            spuResult = JSON.toJSONString(result.getQueryRets().getJSONObject(0).getJSONObject("result"), false);
-            System.out.println(spuResult);
+            JSONObject errorResult = result.getQueryRets().getJSONObject(0).getJSONObject("error");
+            if (errorResult != null) {
+                String dataException = errorResult.getJSONObject("data").getString("exception");
+                queryResult = JSON.parseObject(dataException);
+                System.out.println("Error: " + queryResult.getString("msg"));
+            } else {
+                queryResult.put("code", 0);
+                queryResult.put("msg", result.getQueryRets().getJSONObject(0).getJSONObject("result").getString("value"));
+            }
         } else {
+            queryResult.put("code", response.getErrorCode());
+            queryResult.put("msg", response.getErrorDesc());
             System.out.println("error: " + response.getErrorDesc());
         }
 
-        return spuResult;
+        return queryResult.toJSONString();
     }
 
 
