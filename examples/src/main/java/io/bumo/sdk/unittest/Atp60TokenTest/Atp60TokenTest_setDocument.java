@@ -1,4 +1,4 @@
-package io.bumo.sdk.unittest;
+package io.bumo.sdk.unittest.Atp60TokenTest;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
