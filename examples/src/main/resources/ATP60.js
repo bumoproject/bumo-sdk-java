@@ -2342,7 +2342,7 @@ function main(input) {
             approve(params.spender, params.skuId, params.trancheId, params.value);
             break;
         case 'setAcceptance':
-            setAcceptance(params.id, params.skuIds, params.trancheId, params.address, params.name, params.logo, params.contact, params.period, params.addition);
+            setAcceptance(params.id, params.address, params.name, params.logo, params.contact, params.period, params.addition);
             break;
         case 'requestRedemption':
             requestRedemption(params.redemptionId, params.skuId, params.trancheId, params.value, params.acceptanceId, params.addition);
