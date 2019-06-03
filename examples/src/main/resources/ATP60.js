@@ -584,7 +584,7 @@ function _checkAddArrayItem(_isAdd, _id, _key, _pa1, _pa2, _pa3, _idx) {
             return -1;
         }
     }
-    if (_isAdd) {
+    if (_isAdd === true) {
         items.push(_id);
         _store(key, _toStr(items));
     }
@@ -605,7 +605,7 @@ function _checkSubArrayItem(_isSub, _id, _key, _pa1, _pa2, _pa3, _idx) {
         if (idx === -1) {
             return -1;
         }
-        if (_isSub) {
+        if (_isSub === true) {
             items.splice(idx, 1);
             _store(key, _toStr(items));
         }
@@ -631,7 +631,7 @@ function _checkAddPageItem(_isAdd, _pgcnt, _id, _key, _pa1, _pa2, _pa3) {
         }
     }
 
-    if (_intCompare(i, _pgcnt) === 0 && _isAdd) {
+    if (_intCompare(i, _pgcnt) === 0 && _isAdd === true) {
         const newPgcnt = _intAdd(_pgcnt, 1);
         if (_intCompare(newPgcnt, 2000) <= 0) {
             _checkAddArrayItem(_isAdd, _id, _key, _pa1, _pa2, _pa3, _pgcnt);
@@ -673,7 +673,7 @@ function _checkAddPagesItem(_isAdd, _id, _keyPgs, _keyPg, _pa1, _pa2, _pa3) {
         pgsVal = 0;
     }
     const ret = _checkAddPageItem(_isAdd, pgsVal, _id, _keyPg, _pa1, _pa2);
-    if (_isAdd && _intCompare(ret, 0) > 0) {
+    if (_isAdd === true && _intCompare(ret, 0) > 0) {
         _store(pgsKey, ret);
     }
     return ret;
@@ -691,7 +691,7 @@ function _checkSubPagesItem(_isSub, _id, _keyPgs, _keyPg, _pa1, _pa2, _pa3) {
         return -1;
     }
     const ret = _checkSubPageItem(_isSub, pgsVal, _id, _keyPg, _pa1, _pa2, _pa3);
-    if (ret === 0 && _isSub) {
+    if (ret === 0 && _isSub === true) {
         pgsVal = _intSub(pgsVal, 1);
         _store(pgsKey, pgsVal);
     }
@@ -758,7 +758,7 @@ function _subVal(_isSub, _val, _key, _pa1, _pa2, _pa3) {
     if (_intCompare(val, 0) < 0) {
         return -1;
     }
-    if (_isSub) {
+    if (_isSub === true) {
         if (val !== '0') {
             _store(key, val);
         } else {
@@ -809,7 +809,7 @@ function _appove(_spr, _skuId, _trnId, _val) {
     return _trnId;
 }
 
-function _checkSubBalance(_sender, _frm, _skuId, _trnId, _val, _isDftTrn, _isSub) {
+function _checkSubBalance(_sender, _frm, _skuId, _trnId, _val, _isSub, _isDftTrn) {
     // Checking whether the sku exists.
     const skuTkKey = _makeKey(keys.sku, _skuId);
     const skuTkVal = _checkExist(skuTkKey, error.SKU_NOT_EST);
@@ -850,7 +850,7 @@ function _checkSubBalance(_sender, _frm, _skuId, _trnId, _val, _isDftTrn, _isSub
 
 function _transferFrom(_frm, _skuId, _trnId, _to, _val) {
     // Reducing the from balance, and checking whether the from balance is enough.
-    const trns = _checkSubBalance(gMsgSender, _frm, _skuId, _trnId, _val, true);
+    const trns = _checkSubBalance(gMsgSender, _frm, _skuId, _trnId, _val, true, false);
     // Add the to balance
     _checkAddBalance(_to, _skuId, trns.trnId, _val);
 
@@ -1453,10 +1453,7 @@ function assignToTranche(skuId, toTrnId, val) {
     _checkExist(trnKey, error.TRN_NOT_EST);
 
     // Checking whether the from balance is enough.
-    const trns = _checkSubBalance(gTxSender, gTxSender, skuId, skuTk.defaultTrancheId, val, true);
-
-    // Reducing the sender default tranche balance.
-    _checkSubBalance(gTxSender, skuId, trns, val);
+    _checkSubBalance(gTxSender, gTxSender, skuId, skuTk.defaultTrancheId, val, true, true);
 
     // Adding the sender target tranche balance.
     _checkAddBalance(gTxSender, skuId, toTrnId, val);
