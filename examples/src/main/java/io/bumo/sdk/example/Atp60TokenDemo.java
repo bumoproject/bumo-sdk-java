@@ -219,8 +219,10 @@ public class Atp60TokenDemo {
         // The sku id.
         String skuId = "1";
         // The default tranche.
-        // Notice: If this is not setting, the default tranche of id '0' will be used.
-        String defaultTrancheId = "1";
+        // Notice: If this is not setting, the tranche of id '0' will be used.
+        String trancheId = "1";
+        // Whether setting the tranche id as default tranche.
+        boolean isDefaultTranche = false;
         // The spu id.
         // Notice: If this is not setting, this sku tokens don't have spu.
         String spuId = "000000001";
@@ -267,8 +269,7 @@ public class Atp60TokenDemo {
         JSONArray viceIcons = new JSONArray();
         viceIcons.add(mainIcon);
         // The acceptance ids
-        JSONArray acceptanceIds = new JSONArray();
-        acceptanceIds.add("1");
+        String acceptanceId = "1";
 
         // The sku attributes
         JSONObject attributes = new JSONObject();
@@ -279,7 +280,7 @@ public class Atp60TokenDemo {
         attributes.put("4", buildAdditionIndex("0",         "型号",  "text",  skuModel, "-",       "-"));
 
         // Issuing SKU Tokens.
-        issueSKUTokensTx(sellerPrivateKey, sellerAddress, skuId, defaultTrancheId, spuId, skuName, tokenSymbol, tokenSupply, decimals, withTokenIds, tokenIds, skuDesc, mainIcon, viceIcons, skuLabel, redemptionAddress, acceptanceIds, skuAbstract, attributes);
+        issueSKUTokensTx(sellerPrivateKey, sellerAddress, skuId, trancheId, isDefaultTranche, spuId, skuName, tokenSymbol, tokenSupply, decimals, withTokenIds, tokenIds, skuDesc, mainIcon, viceIcons, skuLabel, redemptionAddress, acceptanceId, skuAbstract, attributes);
     }
 
     @Test
@@ -1038,7 +1039,7 @@ public class Atp60TokenDemo {
      * Issuing the SKU tokens
      * @return The tx hash.
      */
-    public String issueSKUTokensTx(String sourcePrivateKey, String sourceAddress, String skuId, String defaultTrancheId, String spuId, String skuName, String tokenSymbol, String tokenSupply, String decimals, Object withTokenIds, JSONArray tokenIds, String skuDesc, String mainIcon, JSONArray viceIcons, JSONArray skuLabel, String redemptionAddress, JSONArray acceptanceIds, JSONArray skuAbstract, JSONObject attributes) {
+    public String issueSKUTokensTx(String sourcePrivateKey, String sourceAddress, String skuId, String trancheId, boolean isDefaultTranche, String spuId, String skuName, String tokenSymbol, String tokenSupply, String decimals, Object withTokenIds, JSONArray tokenIds, String skuDesc, String mainIcon, JSONArray viceIcons, JSONArray skuLabel, String redemptionAddress, String acceptanceId, JSONArray skuAbstract, JSONObject attributes) {
         // The fixed write 1000L, the unit is MO
         Long gasPrice = 1000L;
         // Setting up the maximum cost 0.01BU
@@ -1046,10 +1047,11 @@ public class Atp60TokenDemo {
 
         // 1. Building the input of 'issueByTranche'.
         JSONObject input = new JSONObject();
-        input.put("method", "issueByTranche");
+        input.put("method", "issue");
         JSONObject params = new JSONObject();
         params.put("skuId", skuId);
-        params.put("defaultTrancheId", defaultTrancheId);
+        params.put("trancheId", trancheId);
+        params.put("isDefaultTranche", isDefaultTranche);
         params.put("spuId", spuId);
         params.put("name", skuName);
         params.put("symbol", tokenSymbol);
@@ -1062,7 +1064,7 @@ public class Atp60TokenDemo {
         params.put("viceIcons", viceIcons);
         params.put("labels", skuLabel);
         params.put("redemptionAddress", redemptionAddress);
-        params.put("acceptanceIds", acceptanceIds);
+        params.put("acceptanceId", acceptanceId);
         params.put("abstract", skuAbstract);
         params.put("attributes", attributes);
         input.put("params", params);
