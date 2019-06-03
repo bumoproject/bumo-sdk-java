@@ -16,12 +16,20 @@ import io.bumo.model.response.result.ContractCheckValidResult;
 import io.bumo.model.response.result.TransactionBuildBlobResult;
 import org.junit.Test;
 
+import java.util.UUID;
+
 /**
  * @Author riven
  * @Date 2018/8/6 20:52
  */
 public class ContractDemo {
-    SDK sdk = SDK.getInstance("http://seed1.bumotest.io:26002");
+    SDK sdk = SDK.getInstance("http://seed1.bumo.io:16002");
+
+    @Test
+    public void get24UUID(){
+        long test = (2019L - 1700L) * 24L * 3600L * 1000L * 1000L;
+        System.out.println(test);
+    }
 
     /**
      * Check whether the contract is valid
@@ -102,10 +110,11 @@ public class ContractDemo {
 
         // Init request
         ContractCallRequest request = new ContractCallRequest();
-        request.setContractAddress(contractAddress);
+        //request.setContractAddress(contractAddress);
+        request.setCode("\"use strict\";function unique(arr){return(arr.filter((v,i,a)=>a.indexOf(v)===i));}function subSame(arr1,arr2){return arr1.filter((v,i,a)=>arr2.indexOf(v)===-1);}function init(bar){const arr1=[1,2,3,4,5,6];const arr2=[2,2,4,4,1,1,6,6,5];const arrSub=subSame(arr1,arr2);Chain.store(\"test\",JSON.stringify(arrSub));}function main(input){let i=0;for(i=0;i<50;i+=1){Chain.store(`test${i}`,`${i}`);}}function query(input){return Chain.load(\"test\");}");
         request.setFeeLimit(1000000000L);
         request.setOptType(1);
-        request.setInput(input.toJSONString());
+        //request.setInput(input.toJSONString());
 
         // Call call
         ContractCallResponse response = sdk.getContractService().call(request);
@@ -211,19 +220,19 @@ public class ContractDemo {
     public void invokeContractByBU() {
         // Init variable
         // The account private key to invoke contract
-        String invokePrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq";
+        String invokePrivateKey = "privbxK6xXnsWVy5pHJK8vzRkExzN5fcT11B9FVGevhWQYAy9E67SRBm";
         // The account to receive the BU
-        String destAddress = "buQd7e8E5XMa7Yg6FJe4BeLWfqpGmurxzZ5F";
+        String destAddress = "buQqzdS9YSnokDjvzg4YaNatcFQfkgXqk6ss";
         // 0 means that the contract is only triggered
-        Long amount = 0L;
+        Long amount = ToBaseUnit.BU2MO("810");
         // The fixed write 1000L, the unit is MO
         Long gasPrice = 1000L;
         // Set up the maximum cost 0.01BU
         Long feeLimit = ToBaseUnit.BU2MO("0.01");
         // Transaction initiation account's Nonce + 1
-        Long nonce = 58L;
+        Long nonce = 5L;
         // Contract main function entry
-        String input = "";
+        String input = "{\"method\":\"vote\",\"params\" : {\"role\":\"kol\",\"address\": \"buQZvtjVHLVuwS43bevdxMFbZqrS6HCNrnmf\"}}";
 
         // 1. Get the account address to send this transaction
         String invokeAddresss = getAddressByPrivateKey(invokePrivateKey);

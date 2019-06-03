@@ -75,7 +75,7 @@ public class ToBaseUnit {
             long temp = (long)Math.pow(10, decimals);
             String zeroNumber = Long.toString(temp);
             String amount = amountWithoutDecimals + zeroNumber.substring(1);
-            if (amount.compareTo(longMaxValue) > 0){
+            if (Long.valueOf(amount).compareTo(Long.valueOf(longMaxValue)) > 0){
                 return null;
             }
             return Long.parseLong(amount);

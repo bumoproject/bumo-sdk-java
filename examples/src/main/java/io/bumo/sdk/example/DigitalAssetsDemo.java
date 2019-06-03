@@ -24,7 +24,14 @@ import org.junit.Test;
  */
 
 public class DigitalAssetsDemo {
-    SDK sdk = SDK.getInstance("http://seed1.bumotest.io:26002");
+    SDK sdk = SDK.getInstance("http://127.0.0.1:26002");
+
+    @Test
+    public void test() throws InvalidProtocolBufferException {
+        String blob = "0a2462755173396e70614371396d4e465a473138717538385a636d5859716436627170545533100218c0843d20e807286432080123456789abcdef3aa2030801229d0312e50212e2020a20202020202020202020202020202020202775736520737472696374273b0a202020202020202020202020202020202066756e6374696f6e20696e697428626172290a20202020202020202020202020202020207b0a2020202020202020202020202020202020202072657475726e3b0a20202020202020202020202020202020207d0a0a202020202020202020202020202020202066756e6374696f6e206d61696e28696e707574290a20202020202020202020202020202020207b0a2020202020202020202020202020202020202072657475726e3b0a20202020202020202020202020202020207d0a0a202020202020202020202020202020202066756e6374696f6e20717565727928290a20202020202020202020202020202020207b0a2020202020202020202020202020202020202072657475726e3b0a20202020202020202020202020202020207d0a20202020202020202020202020202020201a041a02080128a08d0632297b226d6574686f64223a22746f57656e222c22706172616d73223a7b2266656554797065223a307d7d";
+        Chain.Transaction tran = Chain.Transaction.parseFrom(HexFormat.hexToByte(blob));
+        System.out.println(tran);
+    }
 
     @Test
     public void SDKConfigure() {
@@ -92,7 +99,7 @@ public class DigitalAssetsDemo {
     @Test
     public void getAccountInfo() {
         // Init request
-        String accountAddress = "buQemmMwmRQY1JkcU7w3nhruoX5N3j6C29uo";
+        String accountAddress = "buQkXvJjHfZGHvPMTM79Jj9GXwPQa6m5JuXa";
         AccountGetInfoRequest request = new AccountGetInfoRequest();
         request.setAddress(accountAddress);
 
@@ -131,7 +138,7 @@ public class DigitalAssetsDemo {
     @Test
     public void getAccountBalance() {
         // Init request
-        String accountAddress = "buQswSaKDACkrFsnP1wcVsLAUzXQsemauEjf";
+        String accountAddress = "buQkXvJjHfZGHvPMTM79Jj9GXwPQa6m5JuXa";
         AccountGetBalanceRequest request = new AccountGetBalanceRequest();
         request.setAddress(accountAddress);
 
