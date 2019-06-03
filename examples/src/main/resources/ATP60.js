@@ -997,7 +997,7 @@ function createSpu(id, name, type, attrs) {
  * @param {JSON} attrs [SPU属性]
  * @throws {error}
  */
-function modifySpu(spuId, name, type, attrs) {
+function setSpu(spuId, name, type, attrs) {
     // Checking parameters.
     _assert(_checkStr(spuId, 1, 32), _throwErr(error.SPU_ID_ERR));
     _assert(_checkStr(name, 1, 1024), _throwErr(error.NAME_ERR));
@@ -1015,7 +1015,7 @@ function modifySpu(spuId, name, type, attrs) {
     _store(spuKey, _toStr(spu));
 
     // Committing event.
-    Chain.tlog('modifySpu', _makeTlogSender(), spuId, name, type);
+    Chain.tlog('setSpu', _makeTlogSender(), spuId, name, type);
 }
 
 /**
@@ -2296,8 +2296,8 @@ function main(input) {
         case 'createSpu':
             createSpu(params.id, params.name, params.type, params.attributes);
             break;
-        case 'modifySpu':
-            modifySpu(params.name, params.type, params.attributes);
+        case 'setSpu':
+            setSpu(params.name, params.type, params.attributes);
             break;
         case 'issue':
             issue(params.skuId, params.trancheId, params.isDefaultTranche, params.spuId, params.name, params.symbol, params.supply, params.decimals, params.mainIcon, params.viceIcons, params.labels, params.description, params.redemptionAddress, params.acceptanceId, params.abstract, params.attributes);
