@@ -374,15 +374,11 @@ const gTxSender = Chain.tx.sender;
 const gMsgSender = Chain.msg.sender;
 const gBlockTime = Chain.block.timestamp;
 
-function _make4PasKey(_key, _pa1, _pa2, _pa3, _pa4) {
-    return `${_key}${_pa1}_${_pa2}_${_pa3}_${_pa4}`;
-}
-
-function _makeKey(_key, _pa1, _pa2, _pa3, _idx) {
+function _makeKey(_key, _pa1, _pa2, _pa3, _pa4, _idx) {
     if (_idx !== undefined) {
-        return (_pa1 === undefined ? `${_key}${_idx}`: (_pa2 === undefined ? `${_key}${_pa1}_${_idx}` : (_pa3 === undefined ? `${_key}${_pa1}_${_pa2}_${_idx}` : `${_key}${_pa1}_${_pa2}_${_pa3}_${_idx}`)));
+        return (_pa1 === undefined ? `${_key}${_idx}`: (_pa2 === undefined ? `${_key}${_pa1}_${_idx}` : (_pa3 === undefined ? `${_key}${_pa1}_${_pa2}_${_idx}` : (_pa4 === undefined ?  `${_key}${_pa1}_${_pa2}_${_pa3}_${_idx}` : `${_key}${_pa1}_${_pa2}_${_pa3}_${_pa4}_${_idx}`))));
     }
-    return (_pa1 === undefined ? _key : (_pa2 === undefined ? `${_key}${_pa1}` : (_pa3 === undefined ? `${_key}${_pa1}_${_pa2}`: `${_key}${_pa1}_${_pa2}_${_pa3}`)));
+    return (_pa1 === undefined ? _key : (_pa2 === undefined ? `${_key}${_pa1}` : (_pa3 === undefined ? `${_key}${_pa1}_${_pa2}`: (_pa4 === undefined ? `${_key}${_pa1}_${_pa2}_${_pa3}` : `${_key}${_pa1}_${_pa2}_${_pa3}_${_pa4}`))));
 }
 
 function _makeTlogSender() {
@@ -417,8 +413,8 @@ function _store(_key, _val) {
     Chain.store(_key, _val);
 }
 
-function _loadNum(_key, _pa1, _pa2, _pa3) {
-    let val = _load(_makeKey(_key, _pa1, _pa2, _pa3));
+function _loadNum(_key, _pa1, _pa2, _pa3, _pa4) {
+    let val = _load(_makeKey(_key, _pa1, _pa2, _pa3, _pa4));
     if (val === false) {
         val = '0';
     }
@@ -569,8 +565,8 @@ function _checkArrayItem(_arr, _minLen, _maxLen, _itemName, _err) {
  *         -1: 检测已存在该元素
  *          0: 检测不存在该元素，且添加该元素成功
  */
-function _checkAddArrayItem(_isAdd, _id, _key, _pa1, _pa2, _pa3, _idx) {
-    const key = _makeKey(_key, _pa1, _pa2, _pa3, _idx);
+function _checkAddArrayItem(_isAdd, _id, _key, _pa1, _pa2, _pa3, _pa4, _idx) {
+    const key = _makeKey(_key, _pa1, _pa2, _pa3, _pa4, _idx);
     const val = _load(key);
     let items = [];
     if (val !== false) {
@@ -584,7 +580,7 @@ function _checkAddArrayItem(_isAdd, _id, _key, _pa1, _pa2, _pa3, _idx) {
             return -1;
         }
     }
-    if (_isAdd === true) {
+    if (_isAdd) {
         items.push(_id);
         _store(key, _toStr(items));
     }
@@ -596,8 +592,8 @@ function _checkAddArrayItem(_isAdd, _id, _key, _pa1, _pa2, _pa3, _idx) {
  * @return -1: 检测不存在该元素
  *          0: 检测存在该元素，且删除该元素成功
  */
-function _checkSubArrayItem(_isSub, _id, _key, _pa1, _pa2, _pa3, _idx) {
-    const key = _makeKey(_key, _pa1, _pa2, _pa3, _idx);
+function _checkSubArrayItem(_isSub, _id, _key, _pa1, _pa2, _pa3, _pa4, _idx) {
+    const key = _makeKey(_key, _pa1, _pa2, _pa3, _pa4, _idx);
     const val = _load(key);
     if (val !== false) {
         let items = JSON.parse(val);
@@ -605,7 +601,7 @@ function _checkSubArrayItem(_isSub, _id, _key, _pa1, _pa2, _pa3, _idx) {
         if (idx === -1) {
             return -1;
         }
-        if (_isSub === true) {
+        if (_isSub) {
             items.splice(idx, 1);
             _store(key, _toStr(items));
         }
@@ -621,20 +617,20 @@ function _checkSubArrayItem(_isSub, _id, _key, _pa1, _pa2, _pa3, _idx) {
  *          0: 检测不存在该元素，并且添加该元素成功
  *          newPageCount: 添加到元素到新页中，并返回新页数
  */
-function _checkAddPageItem(_isAdd, _pgcnt, _id, _key, _pa1, _pa2, _pa3) {
+function _checkAddPageItem(_isAdd, _pgcnt, _id, _key, _pa1, _pa2, _pa3, _pa4) {
     let ret = -1;
     let i = 0;
     for (i = 0; _intCompare(i, _pgcnt) < 0; i = _intAdd(i, 1)) {
-        ret = _checkAddArrayItem(_isAdd, _id, _key, _pa1, _pa2, _pa3, i);
+        ret = _checkAddArrayItem(_isAdd, _id, _key, _pa1, _pa2, _pa3, _pa4, i);
         if (ret === -1 || (_isAdd && ret === 0)) {
             break;
         }
     }
 
-    if (_intCompare(i, _pgcnt) === 0 && _isAdd === true) {
+    if (_intCompare(i, _pgcnt) === 0 && _isAdd) {
         const newPgcnt = _intAdd(_pgcnt, 1);
         if (_intCompare(newPgcnt, 2000) <= 0) {
-            _checkAddArrayItem(_isAdd, _id, _key, _pa1, _pa2, _pa3, _pgcnt);
+            _checkAddArrayItem(_isAdd, _id, _key, _pa1, _pa2, _pa3, _pa4, _pgcnt);
             ret = newPgcnt;
         }
     }
@@ -646,11 +642,11 @@ function _checkAddPageItem(_isAdd, _pgcnt, _id, _key, _pa1, _pa2, _pa3) {
  * @return -1: 检测不存在该元素
  *          0: 检测存在该元素，且删除该元素成功
  */
-function _checkSubPageItem(_isSub, _pgcnt, _id, _key, _pa1, _pa2, _pa3) {
+function _checkSubPageItem(_isSub, _pgcnt, _id, _key, _pa1, _pa2, _pa3, _pa4) {
     let ret = -1;
     let i = 0;
     for (i = 0; _intCompare(i, _pgcnt) < 0; i = _intAdd(i, 1)) {
-        ret = _checkSubArrayItem(_isSub, _id, _key, _pa1, _pa2, _pa3, i);
+        ret = _checkSubArrayItem(_isSub, _id, _key, _pa1, _pa2, _pa3, _pa4, i);
         if (ret === 0) {
             break;
         }
@@ -666,15 +662,22 @@ function _checkSubPageItem(_isSub, _pgcnt, _id, _key, _pa1, _pa2, _pa3) {
  *          0: 检测不存在该元素，并且添加该元素成功
  *        > 0: 添加到元素到新页中，并返回新页数
  */
-function _checkAddPagesItem(_isAdd, _id, _keyPgs, _keyPg, _pa1, _pa2, _pa3) {
-    const pgsKey = _makeKey(_keyPgs, _pa1, _pa2, _pa3);
+function _checkAddPagesItem(_isAdd, _id, _keyPgs, _keyPg, _pa1, _pa2, _pa3, _pa4) {
+    const pgsKey = _makeKey(_keyPgs, _pa1, _pa2, _pa3, _pa4);
     let pgsVal = _load(pgsKey);
-    if (pgsVal === false) {
-        pgsVal = 0;
+    let pgs = {};
+    pgs.pages = 0;
+    pgs.value = 0;
+    if (pgsVal !== false) {
+        pgs = _toJsn(pgsVal);
     }
-    const ret = _checkAddPageItem(_isAdd, pgsVal, _id, _keyPg, _pa1, _pa2);
-    if (_isAdd === true && _intCompare(ret, 0) > 0) {
-        _store(pgsKey, ret);
+    const ret = _checkAddPageItem(_isAdd, pgs.pages, _id, _keyPg, _pa1, _pa2, _pa3, _pa4);
+    if (_isAdd && _intCompare(ret, 0) >= 0) {
+        pgs.value = _intAdd(pgs.value, 1);
+        if (_intCompare(ret, 0) > 0) {
+            pgs.pages = ret;
+        }
+        _store(pgsKey, _toStr(pgs));
     }
     return ret;
 }
@@ -682,24 +685,27 @@ function _checkAddPagesItem(_isAdd, _id, _keyPgs, _keyPg, _pa1, _pa2, _pa3) {
 /**
  * 检测并减少页中的元素
  * @return -1: 检测不存在该元素
- *          0: 检测存在该元素，且删除该元素成功
+ *        >=0: 检测存在该元素，且删除该元素成功
  */
-function _checkSubPagesItem(_isSub, _id, _keyPgs, _keyPg, _pa1, _pa2, _pa3) {
-    const pgsKey = _makeKey(_keyPgs, _pa1, _pa2, _pa3);
+function _checkSubPagesItem(_isSub, _id, _keyPgs, _keyPg, _pa1, _pa2, _pa3, _pa4) {
+    const pgsKey = _makeKey(_keyPgs, _pa1, _pa2, _pa3, _pa4);
     let pgsVal = _load(pgsKey);
     if (pgsVal === false) {
         return -1;
     }
-    const ret = _checkSubPageItem(_isSub, pgsVal, _id, _keyPg, _pa1, _pa2, _pa3);
-    if (ret === 0 && _isSub === true) {
-        pgsVal = _intSub(pgsVal, 1);
-        _store(pgsKey, pgsVal);
+    let pgs = _toJsn(pgsVal);
+    const ret = _checkSubPageItem(_isSub, pgs.pages, _id, _keyPg, _pa1, _pa2, _pa3, _pa4);
+    if (ret === 0 && _isSub) {
+        pgs.value = _intSub(pgs.value, 1);
+        pgs.pages = _intSub(pgs.pages, 1);
+        _store(pgsKey, _toStr(pgs));
+        return pgs.value;
     }
     return ret;
 }
 
-function _getPagesItems(_keyPgs, _keyPg, _pa1, _pa2, _pa3) {
-    const pgsKey = _makeKey(_keyPgs, _pa1, _pa2, _pa3);
+function _getPagesItemsF(_keyPgs, _keyPg, _pgsPa1, _pgsPa2, _pgsPa3, _pgsPa4, _pgPa1, _pgPa2, _pgPa3, _pgPa4) {
+    const pgsKey = _makeKey(_keyPgs, _pgsPa1, _pgsPa2, _pgsPa3, _pgsPa4);
     let pgsVal = _load(pgsKey);
     if (pgsVal === false) {
         return [];
@@ -707,12 +713,15 @@ function _getPagesItems(_keyPgs, _keyPg, _pa1, _pa2, _pa3) {
     let i = 0;
     let items = [];
     for (i = 0; _intCompare(i, pgsVal) < 0; i = _intAdd(i, 1)) {
-        const key = _makeKey(_keyPg, _pa1, _pa2, _pa3, i);
-        const val = _load(key);
+        const val = _load(_makeKey(_keyPg, _pgPa1, _pgPa2, _pgPa3, _pgPa4, i));
         const item = _toJsn(val);
         items = items.concat(item);
     }
     return items;
+}
+
+function _getPagesItems(_keyPgs, _keyPg, _pa1, _pa2, _pa3, _pa4) {
+    return _getPagesItemsF(_keyPgs, _keyPg, _pa1, _pa2, _pa3, _pa4, _pa1, _pa2, _pa3, _pa4);
 }
 
 /**
@@ -783,7 +792,7 @@ function _checkAddBalance(_to, _skuId, _trnId, _val) {
     }
 }
 
-function _appove(_spr, _skuId, _trnId, _val) {
+function _approve(_spr, _skuId, _trnId, _val) {
     // Checking parameters.
     _assert(_checkAddr(_spr), _throwErr(error.SPR_ERR));
     _assert(_checkStr(_skuId, 1, 32), _throwErr(error.SKU_ID_ERR));
@@ -803,7 +812,7 @@ function _appove(_spr, _skuId, _trnId, _val) {
     _assert(_intCompare(bleTrnVal, _val) >= 0, _throwErr(error.BLE_NOT_EGH));
 
     // Approving the tokens.
-    const alwKey = _make4PasKey(keys.alw, gMsgSender, _skuId, _trnId, _spr);
+    const alwKey = _makeKey(keys.alw, gMsgSender, _skuId, _trnId, _spr);
     _store(alwKey, _val);
 
     return _trnId;
@@ -820,8 +829,8 @@ function _checkSubBalance(_sender, _frm, _skuId, _trnId, _val, _isSub, _isDftTrn
     _checkExist(_makeKey(keys.trn, _trnId), error.TRN_NOT_EST);
 
     // If the sender is not from, checking whether the allowance is enough.
-    const alwKey = _make4PasKey(keys.alw, _frm, _skuId, _trnId, _sender);
     if (_sender !== _frm) {
+        const alwKey = _makeKey(keys.alw, _frm, _skuId, _trnId, _sender);
         let alwVal = _checkExist(alwKey, error.NO_ALW);
         _assert(_intCompare(alwVal, _val) >= 0, _throwErr(error.ALW_NOT_EGH));
         alwVal = _intSub(alwVal, _val);
@@ -1791,7 +1800,7 @@ function destroy(address, skuId, trnId, val) {
  */
 function approve(spr, skuId, trnId, val) {
     // Approving the tokens.
-    trnId = _appove(spr, skuId, trnId, val);
+    trnId = _approve(spr, skuId, trnId, val);
 
     // Committing event.
     Chain.tlog('approve', _makeTlogSender(), spr, skuId, trnId, val);
