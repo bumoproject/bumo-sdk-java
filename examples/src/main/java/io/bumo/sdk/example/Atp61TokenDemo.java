@@ -488,7 +488,7 @@ public class Atp61TokenDemo {
     }
 
     /**
-     * Seventh: Seller (buQfTPaQBzFGBzGy87pSsc6MmNJKKKmzTSyC) sets the choice for several skus.
+     * Eighth: Seller (buQfTPaQBzFGBzGy87pSsc6MmNJKKKmzTSyC) sets the choice for several skus.
      */
     @Test
     public void setSkusChoice() {
@@ -520,7 +520,7 @@ public class Atp61TokenDemo {
     }
 
     /**
-     * Eighth: Seller (buQfTPaQBzFGBzGy87pSsc6MmNJKKKmzTSyC) adds issuance of the SKU Tokens.
+     * NinTh: Seller (buQfTPaQBzFGBzGy87pSsc6MmNJKKKmzTSyC) adds issuance of the SKU Tokens.
      *
      * Notice: The tranche can be ignored.
      *    If the trancheId is ignored, SKU Tokens will be sent to default tranche which id is '0'.
@@ -546,7 +546,7 @@ public class Atp61TokenDemo {
 
 
     /**
-     * NinTh: Seller (buQfTPaQBzFGBzGy87pSsc6MmNJKKKmzTSyC) destroys SKU Tokens.
+     * Tenth: Seller (buQfTPaQBzFGBzGy87pSsc6MmNJKKKmzTSyC) destroys SKU Tokens.
      */
     @Test
     public void destroy() {
@@ -562,8 +562,9 @@ public class Atp61TokenDemo {
         destroyTx(sellerPrivateKey, sellerAddress, address, tokenId);
     }
 
+
     /**
-     * Tenth: Manufacturer (buQamKpa9vmNwA7PTknnbgWRhyVZLPWy2bCu) authorizes the issuance of SKU Tokens.
+     * Eleventh: Manufacturer (buQamKpa9vmNwA7PTknnbgWRhyVZLPWy2bCu) authorizes the issuance of SKU Tokens.
      */
     @Test
     public void setAuthorizers() {
@@ -610,7 +611,7 @@ public class Atp61TokenDemo {
 
 
     /**
-     * Eleventh: Seller (buQfTPaQBzFGBzGy87pSsc6MmNJKKKmzTSyC) transfers the token id (1) to an account (buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP).
+     * Twelfth: Seller (buQfTPaQBzFGBzGy87pSsc6MmNJKKKmzTSyC) transfers the token id (1) to an account (buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP).
      */
     @Test
     public void transfer() {
@@ -650,7 +651,7 @@ public class Atp61TokenDemo {
     }
 
     /**
-     * Twelfth: Token holder (buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP) approve other account (buQXmv2C8hLAArdR2HtJZwz44x9eiJ1hERYK) token id (1).
+     * Thirteenth: Token holder (buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP) approve other account (buQXmv2C8hLAArdR2HtJZwz44x9eiJ1hERYK) token id (1).
      */
     @Test
     public void approve() {
@@ -683,7 +684,7 @@ public class Atp61TokenDemo {
 
 
     /**
-     * Thirteenth: The spender (buQXmv2C8hLAArdR2HtJZwz44x9eiJ1hERYK) tranfers the tokens of the token holder (buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP) token id (1) to other account (buQiHTjDSjQedxR2vF9WULhgWMtbo8rRLmor).
+     * Fourteenth: The spender (buQXmv2C8hLAArdR2HtJZwz44x9eiJ1hERYK) tranfers the tokens of the token holder (buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP) token id (1) to other account (buQiHTjDSjQedxR2vF9WULhgWMtbo8rRLmor).
      */
     @Test
     public void transferFrom() {
@@ -703,7 +704,7 @@ public class Atp61TokenDemo {
     }
 
     /**
-     * Fourteenth: The token holder (buQiHTjDSjQedxR2vF9WULhgWMtbo8rRLmor) requests redemption.
+     * Fifteenth: The token holder (buQiHTjDSjQedxR2vF9WULhgWMtbo8rRLmor) requests redemption.
      */
     @Test
     public void requestRedemption() {
@@ -734,7 +735,7 @@ public class Atp61TokenDemo {
 
 
     /**
-     * Fifteenth: The acceptor (buQiHTjDSjQedxR2vF9WULhgWMtbo8rRLmor) redeems.
+     * Sixteenth: The acceptor (buQiHTjDSjQedxR2vF9WULhgWMtbo8rRLmor) redeems.
      */
     @Test
     public void redeem() {
@@ -753,8 +754,8 @@ public class Atp61TokenDemo {
 
 
     /**
-     * Sixteenth: The redemption finished or causes dispute.
-     * Sixteenth1: The token holder (buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP) confirms redemption right, then finishes the redemption.
+     * Seventeenth: The redemption finished or causes dispute.
+     * Seventeenth1: The token holder (buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP) confirms redemption right, then finishes the redemption.
      */
     @Test
     public void confirmRedemption() {
@@ -773,8 +774,8 @@ public class Atp61TokenDemo {
 
 
     /**
-     * Sixteenth: The redemption finished or causes dispute.
-     * Sixteenth2: The token holder (buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP) applies dispute.
+     * Seventeenth: The redemption finished or causes dispute.
+     * Seventeenth2: The token holder (buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP) applies dispute.
      */
     @Test
     public void applyDispute() {
@@ -810,7 +811,7 @@ public class Atp61TokenDemo {
 
 
     /**
-     * Seventeenth: The token holder (buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP) sets evidence.
+     * Eighteenth: The token holder (buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP) sets evidence.
      */
     @Test
     public void setEvidence() {
@@ -843,7 +844,7 @@ public class Atp61TokenDemo {
 
 
     /**
-     * Eighteenth: The controller (buQVzjctnsuSyCiAVDMTFsGggDhb12GEuQcD) handle evidence.
+     * Nineteenth: The controller (buQVzjctnsuSyCiAVDMTFsGggDhb12GEuQcD) handle evidence.
      */
     @Test
     public void handleDispute() {
