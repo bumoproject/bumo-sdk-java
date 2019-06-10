@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSONObject;
 import io.bumo.SDK;
 import io.bumo.common.ToBaseUnit;
 import io.bumo.common.Tools;
+import io.bumo.encryption.utils.hash.HashUtil;
 import io.bumo.model.request.*;
 import io.bumo.model.request.operation.BaseOperation;
 import io.bumo.model.request.operation.ContractCreateOperation;
@@ -15,9 +16,9 @@ import io.bumo.model.response.result.ContractCallResult;
 import io.bumo.model.response.result.TransactionBuildBlobResult;
 import org.junit.Test;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class Atp61TokenDemo {
     /* Bumo 1.2.0 test version */
@@ -44,12 +45,14 @@ public class Atp61TokenDemo {
         String corporateName = "某某";
         // Company corporate identity card number
         String cardNumber = "1**";
-        // Company business license photo.
-        String businessLicense = "[url_hash类型_hash值]";
+        String businessLicenseUrl = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1560172631149&di=36e2c4a9539a82fb97e4bb29f97a5e81&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01acc45607d5826ac7251df87e05b8.jpg%401280w_1l_2o_100sh.png";
+        String businessLicenseHashType = "sha256";
+        String businessLicenseHash = HashUtil.GenerateHashHex(getContentFromUrl(businessLicenseUrl));
+        String businessLicense = businessLicenseUrl + "|" + businessLicenseHashType + "|" + businessLicenseHash;//"[url|hash类型|hash值]";
         // Company corporate identity card front photo.
-        String cardFrontPhoto = "[url_hash类型_hash值]";
+        String cardFrontPhoto = "[url|hash类型|hash值]";
         // Company corporate identity card back photo.
-        String cardBackPhoto = "[url_hash类型_hash值]";
+        String cardBackPhoto = "[url|hash类型|hash值]";
 
         // Registerring.
         registerTx(sellerPrivateKey, sellerAddress, fullName, shortName, contact, organizationalCode, corporateName, cardNumber, businessLicense, cardFrontPhoto, cardBackPhoto);
@@ -84,11 +87,11 @@ public class Atp61TokenDemo {
         // Company corporate identity card number
         String cardNumber = "1**";
         // Company business license photo.
-        String businessLicense = "[url_hash类型_hash值]";
+        String businessLicense = "[url|hash类型|hash值]";
         // Company corporate identity card front photo.
-        String cardFrontPhoto = "[url_hash类型_hash值]";
+        String cardFrontPhoto = "[url|hash类型|hash值]";
         // Company corporate identity card back photo.
-        String cardBackPhoto = "[url_hash类型_hash值]";
+        String cardBackPhoto = "[url|hash类型|hash值]";
 
         setSellerTx(sellerPrivateKey, sellerAddress, fullName, shortName, contact, organizationalCode, corporateName, cardNumber, businessLicense, cardFrontPhoto, cardBackPhoto);
     }
@@ -2430,6 +2433,34 @@ public class Atp61TokenDemo {
         }
 
         return result;
+    }
+
+    public byte[] getContentFromUrl(String urlPath) {
+        byte[] ret = null;
+        try {
+            URL url = new URL(urlPath);
+            HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.setConnectTimeout(5000);
+            InputStream inStream = connection.getInputStream();
+            ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+            //创建一个Buffer字符串
+            byte[] buffer = new byte[1024];
+            //每次读取的字符串长度，如果为-1，代表全部读取完毕
+            int len = 0;
+            //使用一个输入流从buffer里把数据读取出来
+            while( (len=inStream.read(buffer)) != -1 ){
+                //用输出流往buffer里写入数据，中间参数代表从哪个位置开始读，len代表读取的长度
+                outStream.write(buffer, 0, len);
+            }
+            //关闭输入流
+            inStream.close();
+            //把outStream里的数据写入内存
+            ret = outStream.toByteArray();
+        } catch (Exception e) {
+
+        }
+        return ret;
     }
 
 }
