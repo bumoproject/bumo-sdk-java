@@ -350,6 +350,10 @@ const error = {
     SENDER_NOT_CTR: {
         code: 20081,
         msg: 'The sender is not the controller in dispute.'
+    },
+    CTR_ERR: {
+        code: 20082,
+        msg: 'The controller is invalid.'
     }
 };
 

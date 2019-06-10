@@ -791,11 +791,9 @@ public class Atp61TokenDemo {
         String reason = "未收到货";
         // The controller address.
         String controller = "buQVzjctnsuSyCiAVDMTFsGggDhb12GEuQcD";
-        // The lockup id for disupte.
-        String lockupId = "2";
 
         // Applying dispute.
-        applyDisputeTx(holderPrivateKey, holderAddress, redemptionId, applicant, reason, controller, lockupId);
+        applyDisputeTx(holderPrivateKey, holderAddress, redemptionId, applicant, reason, controller);
     }
 
     @Test
@@ -2118,7 +2116,7 @@ public class Atp61TokenDemo {
      * The seller or the redemption applicant applys dispute.
      * @return The tx hash.
      */
-    public String applyDisputeTx(String sourcePrivateKey, String sourceAddress, String redemptionId, String applicant, String reason, String controller, String lockupId) {
+    public String applyDisputeTx(String sourcePrivateKey, String sourceAddress, String redemptionId, String applicant, String reason, String controller) {
         // The fixed write 1000L, the unit is MO
         Long gasPrice = 1000L;
         // Setting up the maximum cost 0.01BU
@@ -2132,7 +2130,6 @@ public class Atp61TokenDemo {
         params.put("applicant", applicant);
         params.put("reason", reason);
         params.put("controller", controller);
-        params.put("lockupId", lockupId);
         input.put("params", params);
 
         // 2. Submitting the transaction.

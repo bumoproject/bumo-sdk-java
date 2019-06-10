@@ -357,36 +357,40 @@ const error = {
         code: 20081,
         msg: 'The sender is not the controller in dispute.'
     },
-    TK_EST: {
+    CTR_ERR: {
         code: 20082,
+        msg: 'The controller is invalid.'
+    },
+    TK_EST: {
+        code: 20083,
         msg: 'The token already exists.'
     },
     TK_NOT_EST: {
-        code: 20083,
+        code: 20084,
         msg: 'The token does not exist.'
     },
     TK_NOT_IN_ALW: {
-        code: 20084,
+        code: 20085,
         msg: 'The token doest not exist in the allowance.'
     },
     TK_ID_ERR: {
-        code: 20085,
+        code: 20086,
         msg: 'The token id must be string and its length must be between 1 and 64.'
     },
     TK_INFO_ERR: {
-        code: 20086,
+        code: 20087,
         msg: 'The token information must be string and its length must be between 1 and 1024.'
     },
     TK_NOT_IN_DFT_TRN: {
-        code: 20087,
+        code: 20088,
         msg: 'The token does not exist in the default tranche.'
     },
     TK_NOT_IN_BLE: {
-        code: 20088,
+        code: 20089,
         msg: 'The token does not exist in the balance.'
     },
     TK_MORE_TRN_ERR: {
-        code: 20089,
+        code: 20090,
         msg: 'The pages of all tokens of tranche cannot be bigger than 2000.'
     }
 };
