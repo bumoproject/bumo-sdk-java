@@ -726,12 +726,12 @@ public class Atp60TokenDemo {
      */
     @Test
     public void requestRedemption() {
-        // The token holder public key to request redemption.
-        String holderPrivateKey = "privbUCxLLYNCPP1smBiNEYVnErMDwT8eJ7PWJZyioJQhXcHApwgqKsP";
-        // The token holder address.
-        String holderAddress = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
+        // The seller public key to issue SKU Tokens.
+        String holderPrivateKey = "privC15YAp4M4oDLcJ6JqyPqYH55VXPeNckE2AVqWcHN8BB4PAVwGjJr";
+        // The seller address.
+        String holderAddress = "buQfTPaQBzFGBzGy87pSsc6MmNJKKKmzTSyC";
         // The redemption id.
-        String redemptionId = "2";
+        String redemptionId = "1";
         // The sku id.
         String skuId = "2";
         // The tranche id. If the trancheId is ignored, SKU Tokens will be sent to default tranche in sku.
@@ -805,7 +805,7 @@ public class Atp60TokenDemo {
         // The token holder address.
         String holderAddress = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
         // The redemption id.
-        String redemptionId = "2";
+        String redemptionId = "1";
         // The redemption applicant.
         String applicant = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
         // The dispute reason.
@@ -942,7 +942,7 @@ public class Atp60TokenDemo {
      */
     public String getContractAddressQuery() {
         // Getting the register tx hash.
-        String registerTxHash = "38d29fc8de5b58832144334963bc7bbf4c1c59f6c0c066af487eaa0496736abb"; //registerTx();
+        String registerTxHash = "664a75dbc86b7ec7499fac6e9e58b1e6a69a9a6cd6b7cf08887480c0bd0e2aaf"; //registerTx();
 
         // Making sure the register tx success.
         if (!MakeSureTxSuccess(registerTxHash)) {
@@ -1682,149 +1682,6 @@ public class Atp60TokenDemo {
 
         return result;
     }
-
-
-    /**
-     * Creating the lockup.
-     * @return The tx hash.
-     */
-    public String createLockupTx(String sourcePrivateKey, String sourceAddress, String lockupId, String startTime, String endTime, String unlocker) {
-        // The fixed write 1000L, the unit is MO
-        Long gasPrice = 1000L;
-        // Setting up the maximum cost 0.01BU
-        Long feeLimit = ToBaseUnit.BU2MO("0.1");
-
-        // 1. Building the input of 'createLockup'.
-        JSONObject input = new JSONObject();
-        input.put("method", "createLockup");
-        JSONObject params = new JSONObject();
-        params.put("id", lockupId);
-        params.put("startTime", startTime);
-        params.put("endTime", endTime);
-        JSONArray unlockers = new JSONArray();
-        unlockers.add(unlocker);
-        params.put("unlockers", unlockers);
-        input.put("params", params);
-
-        // 2. Submitting the transaction.
-        String txHash = submitTrasaction(sourcePrivateKey, sourceAddress, input.toJSONString(), null, gasPrice, feeLimit);
-        if (txHash != null) {
-            System.out.println("Success, hash: " + txHash);
-        }
-
-        return txHash;
-    }
-
-
-    /**
-     * Querying the lockup information.
-     * @return The lockup information.
-     */
-    public String lockupInfoQuery(String lockupId) {
-        // Init input
-        JSONObject input = new JSONObject();
-        input.put("method", "lockupInfo");
-        JSONObject params = new JSONObject();
-        params.put("lockupId", lockupId);
-        input.put("params", params);
-
-        // Querying
-        String result = queryInfo(input.toJSONString());
-
-        return result;
-    }
-
-
-    /**
-     * Lockuping the tokens
-     * @param lockupId The lockup id.
-     * @param redemptionId The redemption id.
-     * @return The tx hash.
-     */
-    public String lockupByTrancheTx(String sourcePrivateKey, String sourceAddress, String toAddress, String skuId, String trancheId, String lockupId, String redemptionId, String value) {
-        // The fixed write 1000L, the unit is MO
-        Long gasPrice = 1000L;
-        // Setting up the maximum cost 0.01BU
-        Long feeLimit = ToBaseUnit.BU2MO("0.1");
-
-        // 1. Building the input of 'lockupByTranche'.
-        JSONObject input = new JSONObject();
-        input.put("method", "lockupByTranche");
-        JSONObject params = new JSONObject();
-        params.put("address", toAddress);
-        params.put("skuId", skuId);
-        params.put("trancheId", trancheId);
-        params.put("lockupId", lockupId);
-        if (!Tools.isEmpty(redemptionId)) {
-            params.put("redemptionId", redemptionId);
-        }
-        params.put("value", value);
-        input.put("params", params);
-
-        // 2. Submitting the transaction.
-        String txHash = submitTrasaction(sourcePrivateKey, sourceAddress, input.toJSONString(), null, gasPrice, feeLimit);
-        if (txHash != null) {
-            System.out.println("Success, hash: " + txHash);
-        }
-
-        return txHash;
-    }
-
-
-    /**
-     * Querying the balance of specified lockup.
-     * @return The balance.
-     */
-    public String balanceOfByLockupQuery(String address, String skuId, String trancheId, String lockupId) {
-        // Init input
-        JSONObject input = new JSONObject();
-        input.put("method", "balanceOfByLockup");
-        JSONObject params = new JSONObject();
-        params.put("address", address);
-        params.put("skuId", skuId);
-        params.put("trancheId", trancheId);
-        params.put("lockupId", lockupId);
-        input.put("params", params);
-
-        // Querying
-        String result = queryInfo(input.toJSONString());
-
-        return result;
-    }
-
-
-    /**
-     * Unlock the tokens of specified tranche.
-     * @param lockupId The lockup id.
-     * @return The tx hash.
-     */
-    public String unlockByTrancheTx(String sourcePrivateKey, String sourceAddress, String toAddress, String skuId, String trancheId, String lockupId, String value) {
-        // The fixed write 1000L, the unit is MO
-        Long gasPrice = 1000L;
-        // Setting up the maximum cost 0.01BU
-        Long feeLimit = ToBaseUnit.BU2MO("0.1");
-
-
-        // 1. Building the input of 'unlockByTranche'.
-        JSONObject input = new JSONObject();
-        input.put("method", "unlockByTranche");
-        JSONObject params = new JSONObject();
-        params.put("address", toAddress);
-        params.put("skuId", skuId);
-        params.put("trancheId", trancheId);
-        params.put("lockupId", lockupId);
-        params.put("value", value);
-        input.put("params", params);
-
-        // 2. Submitting the transaction.
-        String txHash = submitTrasaction(sourcePrivateKey, sourceAddress, input.toJSONString(), null, gasPrice, feeLimit);
-        if (txHash != null) {
-            System.out.println("Success, hash: " + txHash);
-        }
-
-        return txHash;
-    }
-
 
     /**
      * Transferring the sku tokens of specified tranche to other account.
