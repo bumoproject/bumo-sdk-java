@@ -9,7 +9,9 @@ const keys = {
     spu: 'spu_',
     trn: 'tranche_',
     sku: 'sku_token_',
-    skutrnspy: 'sku_tranche_supply_',
+    tk: 'token_',
+    skutrntkspgs: 'sku_tranche_tokens_pages_',
+    skutrntkspg: 'sku_tranche_tokens_page_',
     skutrnspgs: 'sku_tranches_pages_',
     skutrnspg: 'sku_tranches_page_',
     skuacpspgs: 'sku_acceptances_pages_',
@@ -18,13 +20,17 @@ const keys = {
     trnskuspg: 'tranche_skus_page_',
     spuskuspgs: 'spu_skus_pages_',
     spuskuspg: 'spu_skus_page_',
-    skuauth: 'sku_authorization_',
-    ble: 'balance_',
-    bletrn: 'balance_tranche_',
+    skutrnauthtkspgs: 'sku_tranche_authorization_tokens_pages_',
+    skutrnauthtkspg: 'sku_tranche_authorization_tokens_page_',
+    bletkspgs: 'balance_tokens_pages_',
+    bletkspg: 'balance_tokens_page_',
+    bletrntkspgs: 'balance_tranche_tokens_pages_',
+    bletrntkspg: 'balance_tranche_tokens_page_',
     bletrnspgs: 'balance_tranches_pages_',
     bletrnspg: 'balance_tranches_page_',
+    alwtrntkspgs: 'allowance_tranche_tokens_pages_',
+    alwtrntkspg: 'allowance_tranche_tokens_page_',
     acp: 'acceptance_',
-    alw: 'allowance_',
     repn: 'redemption_',
     dpt: 'dispute_',
     evi: 'evidence_'
@@ -350,6 +356,38 @@ const error = {
     SENDER_NOT_CTR: {
         code: 20081,
         msg: 'The sender is not the controller in dispute.'
+    },
+    TK_EST: {
+        code: 20082,
+        msg: 'The token already exists.'
+    },
+    TK_NOT_EST: {
+        code: 20083,
+        msg: 'The token does not exist.'
+    },
+    TK_NOT_IN_ALW: {
+        code: 20084,
+        msg: 'The token doest not exist in the allowance.'
+    },
+    TK_ID_ERR: {
+        code: 20085,
+        msg: 'The token id must be string and its length must be between 1 and 64.'
+    },
+    TK_INFO_ERR: {
+        code: 20086,
+        msg: 'The token information must be string and its length must be between 1 and 1024.'
+    },
+    TK_NOT_IN_DFT_TRN: {
+        code: 20087,
+        msg: 'The token does not exist in the default tranche.'
+    },
+    TK_NOT_IN_BLE: {
+        code: 20088,
+        msg: 'The token does not exist in the balance.'
+    },
+    TK_MORE_TRN_ERR: {
+        code: 20089,
+        msg: 'The pages of all tokens of tranche cannot be bigger than 2000.'
     }
 };
 
@@ -396,24 +434,12 @@ function _store(_key, _val) {
     Chain.store(_key, _val);
 }
 
-function _loadNum(_key, _pa1, _pa2, _pa3, _pa4) {
-    let val = _load(_makeKey(_key, _pa1, _pa2, _pa3, _pa4));
-    if (val === false) {
-        val = '0';
-    }
-    return val;
-}
-
 function _del(_key) {
     Chain.del(_key);
 }
 
 function _checkStr(_var, _minLen, _maxLen) {
     return (_minLen === 0 && _var === undefined) || (typeof _var === 'string' && _var.length >= _minLen && _var.length <= _maxLen);
-}
-
-function _checkInt(_var, _min, _max) {
-    return Utils.stoI64Check(_var) && Utils.int64Compare(_var, _min) >= 0 && Utils.int64Compare(_var, _max) <= 0;
 }
 
 function _checkJSNObj(_var) {
@@ -467,6 +493,14 @@ function _checkTranche(_trnId, _dftTrnId, _isDft) {
     return _trnId;
 }
 
+function _checkDefaultTranche(_skuId, _trnId, _isDftTrn) {
+    const skuTkKey = _makeKey(keys.sku, _skuId);
+    const skuTkVal = _checkExist(skuTkKey, error.SKU_NOT_EST);
+    const skuTk = _toJsn(skuTkVal);
+
+    return _checkTranche(_trnId, skuTk.defaultTrancheId, _isDftTrn);
+}
+
 function _setSeller(_sender, _cpyFlNm, _cpyStNm, _cpyCat, _attrs) {
     // Checking parameters.
     Utils.assert(_checkStr(_cpyFlNm, 1, 1024), _throwErr(error.CPY_FL_NM_ERR));
@@ -480,6 +514,8 @@ function _setSeller(_sender, _cpyFlNm, _cpyStNm, _cpyCat, _attrs) {
     seller.companyShortName = _cpyStNm;
     seller.companyContact = _cpyCat;
     seller.attributes = _attrs;
+    seller.majorVersion = 'ATP60';
+    seller.minorVersion = "0";
     const sellerKey = keys.sel;
     _store(sellerKey, _toStr(seller));
 }
@@ -506,7 +542,7 @@ function _checkArrayItem(_arr, _minLen, _maxLen, _itemName, _err) {
  * 检测并添加元素到列表中
  * @return -3: 添加元素超过列表允许的长度(256K)
  *         -2: 检测已存在该元素
- *          -1: 检测不存在该元素，且添加该元素成功
+ *         -1: 检测不存在该元素，且添加该元素成功
  */
 function _checkAddArrayItem(_isAdd, _id, _key, _pa1, _pa2, _pa3, _pa4, _idx) {
     const key = _makeKey(_key, _pa1, _pa2, _pa3, _pa4, _idx);
@@ -675,164 +711,120 @@ function _getPagesItems(_keyPgs, _keyPg, _pa1, _pa2, _pa3, _pa4) {
     return _getPagesItemsF(_keyPgs, _keyPg, _pa1, _pa2, _pa3, _pa4, _pa1, _pa2, _pa3, _pa4);
 }
 
-/**
- * 给metadata的value执行加法
- * @param {string} _val [数值]
- * @param {string} _key [keys的某项]
- * @param {string} _pa1 [key的参数1]
- * @param {string} _pa2 [key的参数2]
- * @param {string} _pa3 [key的参数3]
- * @return {boolean} [true: 加成功，但是从无到有, false: 加成功，但是刚开始就有值]
- */
-function _addVal(_val, _key, _pa1, _pa2, _pa3) {
-    let ret = false;
-    const key = _makeKey(_key, _pa1, _pa2, _pa3);
-    let val = _load(key);
-    if (val === false) {
-        val = 0;
-        ret = true;
-    }
-    val = Utils.int64Add(val, _val);
-    _store(key, val);
+function _pagesItemsCopy(_keyPgs1, _keyPg1, _k1Pa1, _k1Pa2, _keyPgs2, _keyPg2, _k2Pa1, _k2Pa2, _k2Pa3) {
+    const pgsKey1 = _makeKey(_keyPgs1, _k1Pa1, _k1Pa2);
+    const pgsVal1 = _load(pgsKey1);
+    const pgs = _toJsn(pgsVal1);
+    const pgsKey2 = _makeKey(_keyPgs2, _k2Pa1, _k2Pa2, _k2Pa3);
+    _store(pgsKey2, pgsVal1);
 
-    return ret;
+    let i = 0;
+    const len = pgs.pages.length;
+    for (i = 0; i < len; i += 1) {
+        const pgKey1 = _makeKey(_keyPg1, _k1Pa1, _k1Pa2, i);
+        const pgKey2 = _makeKey(_keyPg2, _k2Pa1, _k2Pa2, _k2Pa3, i);
+        const pgVal1 = _load(pgKey1);
+        _store(pgKey2, pgVal1);
+    }
 }
 
-/**
- * 给metadata的value执行减法
- * @param {boolean} _isSub [是否执行减法运算]
- * @param {string} _val [减去的数值]
- * @param {string} _key [keys的某项]
- * @param {string} _pa1 [key的参数1]
- * @param {string} _pa2 [key的参数2]
- * @param {string} _pa3 [key的参数3]
- * @return {boolean} [-1: 执行减法失败, 0: 执行减法成功，但是值为0, 1: 执行减法成功，且值大于　0]
- */
-function _subVal(_isSub, _val, _key, _pa1, _pa2, _pa3) {
-    const key = _makeKey(_key, _pa1, _pa2, _pa3);
-    let val = _load(key);
-    if (val === false) {
-        return -1;
-    }
-    val = Utils.int64Sub(val, _val);
-    if (Utils.int64Compare(val, 0) < 0) {
-        return -1;
-    }
-    if (_isSub === true) {
-        if (val !== '0') {
-            _store(key, val);
-        } else {
-            _del(key);
-            return 0;
-        }
-    }
-    return 1;
-}
-
-function _approve(_spr, _skuId, _trnId, _val) {
+function _approve(_spr, _tkId) {
     // Checking parameters.
     Utils.assert(_checkAddr(_spr), _throwErr(error.SPR_ERR));
-    Utils.assert(_checkStr(_skuId, 1, 32), _throwErr(error.SKU_ID_ERR));
-    Utils.assert(Utils.stoI64Check(_val) && Utils.int64Compare(_val, 0) > 0, _throwErr(error.VAL_ERR));
+    Utils.assert(_checkStr(_tkId, 1, 64), _throwErr(error.TK_ID_ERR));
 
-    // Checking whether the sku exists.
-    const skuTkKey = _makeKey(keys.sku, _skuId);
-    const skuTkVal = _checkExist(skuTkKey, error.SKU_NOT_EST);
-    const skuTk = _toJsn(skuTkVal);
+    const tkVal = _load(_makeKey(keys.tk, _tkId));
+    Utils.assert(tkVal !== false, _throwErr(error.TK_NOT_EST));
+    const tk = _toJsn(tkVal);
 
-    // Checking whether the tranche exists.
-    _trnId = _checkTranche(_trnId, skuTk.defaultTrancheId, false);
-    _checkExist(_makeKey(keys.trn, _trnId), error.TRN_NOT_EST);
-
-    // Checking the balance of this tranche is enough.
-    const bleTrnVal = _loadNum(keys.bletrn, _skuId, _trnId, gMsgSender);
-    Utils.assert(Utils.int64Compare(bleTrnVal, _val) >= 0, _throwErr(error.BLE_NOT_EGH));
+    // Checking whether the token id is in sender.
+    const isSub = _checkSubPagesItem(false, _tkId, keys.bletrntkspgs, keys.bletrntkspg, tk.skuId, tk.trancheId, gMsgSender);
+    Utils.assert(isSub !== -1, _throwErr(error.TK_NOT_IN_BLE));
 
     // Approving the tokens.
-    const alwKey = _makeKey(keys.alw, gMsgSender, _skuId, _trnId, _spr);
-    _store(alwKey, _val);
-
-    return _trnId;
+    _checkAddPagesItem(true, _tkId, keys.alwtrntkspgs, keys.alwtrntkspg, gMsgSender, tk.skuId, tk.trancheId, _spr);
 }
 
-function _checkAddBalance(_to, _skuId, _trnId, _val) {
-    // Adding the balance to sku.
-    _addVal(_val, keys.ble, _skuId, _to);
+function _checkAddBalance(_to, _skuId, _trnId,  _tkId) {
+    // Adding token to the balance.
+    _checkAddPagesItem(true, _tkId, keys.bletkspgs, keys.bletkspg, _skuId, _to);
 
-    // Adding the balance to sku tranche.
-    const trnAddRet = _addVal(_val, keys.bletrn, _skuId, _trnId, _to);
-    if (trnAddRet) {
+    // Adding token to the tranche balance.
+    const addTrnBle = _checkAddPagesItem(true, _tkId, keys.bletrntkspgs, keys.bletrntkspg, _skuId, _trnId, _to);
+    if (addTrnBle === 0) {
         _checkAddPagesItem(true, _trnId, keys.bletrnspgs, keys.bletrnspg, _skuId, _to);
     }
 }
 
-function _checkSubBalance(_sender, _frm, _skuId, _trnId, _val, _isSub, _isDftTrn) {
-    // Checking whether the sku exists.
-    const skuTkKey = _makeKey(keys.sku, _skuId);
-    const skuTkVal = _checkExist(skuTkKey, error.SKU_NOT_EST);
-    const skuTk = _toJsn(skuTkVal);
-
-    // Checking whether the tranche exists.
-    _trnId = _checkTranche(_trnId, skuTk.defaultTrancheId, _isDftTrn);
-    _checkExist(_makeKey(keys.trn, _trnId), error.TRN_NOT_EST);
-
-    // If the sender is not from, checking whether the allowance is enough.
+function _checkSubBalance(_sender, _frm, _skuId, _trnId, _tkId, _isSub) {
+    // If the sender is not from, checking whether the token is in allowance.
     if (_sender !== _frm) {
-        const alwKey = _makeKey(keys.alw, _frm, _skuId, _trnId, _sender);
-        let alwVal = _checkExist(alwKey, error.NO_ALW);
-        Utils.assert(Utils.int64Compare(alwVal, _val) >= 0, _throwErr(error.ALW_NOT_EGH));
-        alwVal = Utils.int64Sub(alwVal, _val);
-        _store(alwKey, alwVal);
+        const delAlw = _checkSubPagesItem(true, _tkId, keys.alwtrntkspgs, keys.alwtrntkspg, _frm, _skuId, _trnId, _sender);
+        Utils.assert(delAlw !== -1, _throwErr(error.TK_NOT_IN_ALW));
     }
 
-    // Reducing the tranche balance, and checking whether the tranche balance is enough.
-    const trnSubRet = _subVal(_isSub, _val, keys.bletrn, _skuId, _trnId, _frm);
-    Utils.assert(trnSubRet !== -1, _throwErr(error.BLE_NOT_EGH));
+    // Reducing the token of the tranche balance.
+    const delTk = _checkSubPagesItem(_isSub, _tkId, keys.bletrntkspgs, keys.bletrntkspg, _skuId, _trnId, _frm);
+    Utils.assert(delTk !== -1, _throwErr(error.TK_NOT_IN_BLE));
 
-    // Reducing the sku balance.
+    // Reducing the token of the total balance.
     if (_isSub === true) {
-        if (trnSubRet === 0) {
+        if (delTk === '0') {
             _checkSubPagesItem(true, _trnId, keys.bletrnspgs, keys.bletrnspg, _skuId, _frm);
         }
-        _subVal(_isSub, _val, keys.ble, _skuId, _frm);
+        _checkSubPagesItem(true, _tkId, keys.bletkspgs, keys.bletkspg, _skuId, _frm);
     }
-
-    let ret = {};
-    ret.trnId = _trnId;
-    ret.dftTrnId = skuTk.defaultTrancheId;
-
-    return ret;
 }
 
-function _transferFrom(_frm, _skuId, _trnId, _to, _val) {
-    // Reducing the from balance, and checking whether the from balance is enough.
-    const trns = _checkSubBalance(gMsgSender, _frm, _skuId, _trnId, _val, true, false);
+function _transferFrom(_frm, _to, _tkId) {
+    // Checking whether the token exists.
+    const tkKey = _makeKey(keys.tk, _tkId);
+    const tkVal = _checkExist(tkKey, error.TK_NOT_EST);
+    let tk = _toJsn(tkVal);
+
+    // Checking whether the tranche is not default tranche.
+    _checkDefaultTranche(tk.skuId, tk.trnId, false);
+
+    // Reducing the from balance, and checking whether the token id exists in the from balance.
+    _checkSubBalance(gMsgSender, _frm, tk.skuId, tk.trancheId, _tkId, true);
+
     // Add the to balance
-    _checkAddBalance(_to, _skuId, trns.trnId, _val);
-
-    return trns.trnId;
+    _checkAddBalance(_to, tk.skuId, tk.trancheId, _tkId);
 }
 
-function _transfer(_frm, _skuId, _trnId, _to, _val) {
+function _transfer(_frm, _to, _tkId) {
     // Checking parameters.
     Utils.assert(_checkAddr(_frm), _throwErr(error.FRM_ERR));
     Utils.assert(_checkAddr(_to), _throwErr(error.TO_ERR));
-    Utils.assert(_checkStr(_skuId, 1, 32), _throwErr(error.SKU_ID_ERR));
-    Utils.assert(Utils.stoI64Check(_val) && Utils.int64Compare(_val, 0) > 0, _throwErr(error.VAL_ERR));
+    Utils.assert(_checkStr(_tkId, 1, 64), _throwErr(error.TK_ID_ERR));
 
     // Transferring the tokens.
-    return _transferFrom(_frm, _skuId, _trnId, _to, _val);
+    _transferFrom(_frm, _to, _tkId);
 }
 
-function _destroy(_addr, _skuId, _trnId, _val) {
-    // Reducing the balance, and checking whether the from balance is enough.
-    _checkSubBalance(_addr, _addr, _skuId, _trnId, _val, true, true);
+function _destroy(_addr, _tkId) {
+    // Checking whether the token exists.
+    const tkKey = _makeKey(keys.tk, _tkId);
+    const tkVal = _checkExist(tkKey, error.TK_NOT_EST);
+    let tk = _toJsn(tkVal);
+
+    // If the sku has default tranche, checking whether the tranche is default tranche.
+    _checkDefaultTranche(tk.skuId, tk.trnId, true);
+
+    // Reducing the balance, and checking whether token id exist in the balance.
+    _checkSubBalance(_addr, _addr, tk.skuId, tk.trancheId, _tkId, true);
+
+    // Reducing the supply token of the sku.
+    const delSkuTrnTks = _checkSubPagesItem(true, _tkId, keys.skutrntkspgs, keys.skutrntkspg, tk.skuId, tk.trancheId);
+    if (delSkuTrnTks === '0') {
+        _checkSubPagesItem(true, tk.trancheId, keys.skutrnspgs, keys.skutrnspg, tk.skuId);
+    }
 
     // Reducing the totalSupply of sku.
-    const skuTkKey = _makeKey(keys.sku, _skuId);
+    const skuTkKey = _makeKey(keys.sku, tk.skuId);
     const skuTkValue = _load(skuTkKey);
-    const skuTk = _toJsn(skuTkValue);
-    skuTk.totalSupply = Utils.int64Sub(skuTk.totalSupply, _val);
+    let skuTk = _toJsn(skuTkValue);
+    skuTk.totalSupply = Utils.int64Sub(skuTk.totalSupply, 1);
     _store(skuTkKey, _toStr(skuTk));
 }
 
@@ -921,7 +913,7 @@ function documentInfo(docId) {
 function createSpu(id, name, type, attrs) {
     // Checking parameters.
     Utils.assert(_checkStr(id, 1, 32), _throwErr(error.SPU_ID_ERR));
-    Utils.assert(_checkStr(name, 1, 1024), _throwErr(error.FL_NM_ERR));
+    Utils.assert(_checkStr(name, 1, 1024), _throwErr(error.NAME_ERR));
     Utils.assert(_checkStr(type, 1, 64), _throwErr(error.SPU_TYPE_ERR));
 
     // Checking whether the sender is seller.
@@ -953,7 +945,7 @@ function createSpu(id, name, type, attrs) {
 function setSpu(spuId, name, type, attrs) {
     // Checking parameters.
     Utils.assert(_checkStr(spuId, 1, 32), _throwErr(error.SPU_ID_ERR));
-    Utils.assert(_checkStr(name, 1, 1024), _throwErr(error.FL_NM_ERR));
+    Utils.assert(_checkStr(name, 1, 1024), _throwErr(error.NAME_ERR));
     Utils.assert(_checkStr(type, 1, 64), _throwErr(error.SPU_TYPE_ERR));
 
     // Checking whether the spu exists.
@@ -970,6 +962,7 @@ function setSpu(spuId, name, type, attrs) {
     // Committing event.
     Chain.tlog('setSpu', _makeTlogSender(), spuId, name, type);
 }
+
 
 /**
  * 获取 spu 信息
@@ -991,7 +984,7 @@ function spuInfo(spuId) {
  *
  * @param {string} id [Tranche的id]
  * @param {string} des [Tranche的描述]
- * @param {JSONObject} lms [Tranche的限制]
+ * @param {Object} lms [Tranche的限制]
  * @throws {error}
  */
 function createTranche(id, des, lms) {
@@ -1040,27 +1033,28 @@ function trancheInfo(trnId) {
  * @param {string} spuId [SPU的id]
  * @param {string} name [SKU的名称]
  * @param {string} symbol [Token的符号]
- * @param {string} supply [Token的发行量]
+ * @param {string} tkId [Token的编号]
+ * @param {string} tkInfo [Token的信息]
  * @param {int} decimals [Token的精度]
  * @param {string} mainIcn [SKU的主力]
- * @param {JSONArray} viceIcns [SKU的副图列表]
- * @param {JSONArray} labels [SKU标签列表]
+ * @param {Array} viceIcns [SKU的副图列表]
+ * @param {Array} labels [SKU标签列表]
  * @param {string} des [SKU的描述]
  * @param {string} repnAddr [兑付回购区块链账户地址]
  * @param {string} acpId [承兑方的编号]
- * @param {JSONArray} abs [SKU的摘要属性]
- * @param {JSONObject} attrs [SKU的属性]
+ * @param {Array} abs [SKU的摘要属性]
+ * @param {Object} attrs [SKU的属性]
  */
-function issue(skuId, trnId, isDftTrn, spuId, name, symbol, supply, decimals, mainIcn, viceIcns, labels, des, repnAddr, acpId, abs, attrs) {
+function issue(skuId, trnId, isDftTrn, spuId, name, symbol, tkId, tkInfo, mainIcn, viceIcns, labels, des, repnAddr, acpId, abs, attrs) {
     // Checking parameters.
     trnId = _checkTranche(trnId);
     Utils.assert(_checkStr(skuId, 1, 32), _throwErr(error.SKU_ID_ERR));
     Utils.assert(isDftTrn === undefined || typeof isDftTrn === 'boolean',_throwErr(error.IS_DFT_TRN_ERR));
     Utils.assert(_checkStr(spuId, 0, 32), _throwErr(error.SPU_ID_ERR));
-    Utils.assert(_checkStr(name, 1, 1024), _throwErr(error.FL_NM_ERR));
+    Utils.assert(_checkStr(name, 1, 1024), _throwErr(error.NAME_ERR));
     Utils.assert(_checkStr(symbol, 1, 16), _throwErr(error.TK_BML_ERR));
-    Utils.assert(Utils.stoI64Check(supply) && Utils.int64Compare(supply, 0) > 0, _throwErr(error.TK_SPY_ERR));
-    Utils.assert(_checkInt(decimals, 0, 8), _throwErr(error.TK_DCS_ERR));
+    Utils.assert(_checkStr(tkId, 1, 64), _throwErr(error.TK_ID_ERR));
+    Utils.assert(_checkStr(tkInfo, 1, 1024), _throwErr(error.TK_INFO_ERR));
     Utils.assert(_checkStr(mainIcn, 0, 10240), _throwErr(error.MAIN_ICN_ERR));
     Utils.assert(_checkJSNArr(viceIcns, 0, 5), _throwErr(error.VICE_ICNS_ERR));
     Utils.assert(_checkStr(des, 0, 64000), _throwErr(error.DES_ERR));
@@ -1071,6 +1065,9 @@ function issue(skuId, trnId, isDftTrn, spuId, name, symbol, supply, decimals, ma
 
     // Checking whether the issueByTrancher is seller.
     Utils.assert(_checkIsSeller(gTxSender), _throwErr(error.NOT_SEL));
+
+    // Checking whether the token already exists.
+    _checkNotExist(_makeKey(keys.tk, tkId), error.TK_EST);
 
     // Checking whether each length of viceIcons is between 1 and 10240.
     _checkArrayItem(viceIcns, 1, 10240, 'vice', error.VICE_ICNS_ERR);
@@ -1095,7 +1092,7 @@ function issue(skuId, trnId, isDftTrn, spuId, name, symbol, supply, decimals, ma
     // Checking whether the acceptance exists.
     _checkExist(_makeKey(keys.acp, acpId), error.ACP_NOT_EST);
 
-    // Issuing the sku tokens.
+    // Issuing the sku token.
     let sku = {};
     sku.spuId = spuId;
     if (isDftTrn === true) {
@@ -1103,8 +1100,7 @@ function issue(skuId, trnId, isDftTrn, spuId, name, symbol, supply, decimals, ma
     }
     sku.name = name;
     sku.symbol = symbol;
-    sku.totalSupply = supply;
-    sku.decimals = decimals;
+    sku.totalSupply = 1;
     sku.description = des;
     sku.label = labels;
     sku.redemptionAddress = repnAddr;
@@ -1114,8 +1110,15 @@ function issue(skuId, trnId, isDftTrn, spuId, name, symbol, supply, decimals, ma
     sku.time = Chain.block.timestamp;
     _store(_makeKey(keys.sku, skuId), _toStr(sku));
 
-    // Setting the total supply of the specified tranche of the sku.
-    _store(_makeKey(keys.skutrnspy, skuId, trnId), `${supply}`);
+    // Setting token.
+    let tk = {};
+    tk.skuId = skuId;
+    tk.trancheId = trnId;
+    tk.information = tkInfo;
+    Chain.store(_makeKey(keys.tk, tkId), _toStr(tk));
+
+    // Setting the tokens of the specified tranche of the sku.
+    _checkAddPagesItem(true, tkId, keys.skutrntkspgs, keys.skutrntkspg, skuId, trnId);
 
     // Adding the tranche to the sku.
     _checkAddPagesItem(true, trnId, keys.skutrnspgs, keys.skutrnspg, skuId);
@@ -1131,23 +1134,23 @@ function issue(skuId, trnId, isDftTrn, spuId, name, symbol, supply, decimals, ma
         _checkAddPagesItem(true, skuId, keys.spuskuspgs, keys.spuskuspg, spuId);
     }
 
-    // Setting issuer balance.
-    _store(_makeKey(keys.ble, skuId, gTxSender), `${supply}`);
+    // Adding token id to the balance of issuer.
+    _checkAddPagesItem(true, tkId, keys.bletkspgs, keys.bletkspg, skuId, gTxSender);
 
-    // Setting issuer tranche balance.
-    _store(_makeKey(keys.bletrn, skuId, trnId, gTxSender), `${supply}`);
+    // Adding token id to the balance tranche of issuer.
+    _checkAddPagesItem(true, tkId, keys.bletrntkspgs, keys.bletrntkspg, skuId, trnId, gTxSender);
 
     // Adding the tranche to the balance.
     _checkAddPagesItem(true, trnId, keys.bletrnspgs, keys.bletrnspg, skuId, gTxSender);
 
     // Committing event.
-    Chain.tlog('issue', _makeTlogSender(), skuId, `${trnId}_${spuId}`, symbol, supply);
+    Chain.tlog('issue', _makeTlogSender(), skuId, `${trnId}_${spuId}`, symbol, tkId);
 }
 
 /**
  * 设置筛选 SPU 中的 SKU 的信息
  * @param {string} spuId [SPU的编号]
- * @param {JSONObject} choice [SKU的筛选信息]
+ * @param {Object} choice [SKU的筛选信息]
  */
 function setSkusChoice(spuId, choice) {
     // Checking parameters.
@@ -1173,15 +1176,15 @@ function setSkusChoice(spuId, choice) {
  * @param {string} name [SKU名称]
  * @param {string} symbol [Token的符号]
  * @param {string} mainIcn [SKU的主图]
- * @param {JSONArray} viceIcns [SKU的副图列表]
- * @param {JSONArray} labels [SKU的标签列表]
+ * @param {Array} viceIcns [SKU的副图列表]
+ * @param {Array} labels [SKU的标签列表]
  * @param {string} des [SKU的描述]
  * @throws {error}
  */
 function setSku(skuId, name, symbol, mainIcn, viceIcns, labels, des, repnAddr, abs, attrs) {
     // Checking parameters.
     Utils.assert(_checkStr(skuId, 1, 32), _throwErr(error.SKU_ID_ERR));
-    Utils.assert(_checkStr(name, 0, 1024), _throwErr(error.FL_NM_ERR));
+    Utils.assert(_checkStr(name, 0, 1024), _throwErr(error.NAME_ERR));
     Utils.assert(_checkStr(symbol, 0, 16), _throwErr(error.TK_BML_ERR));
     Utils.assert(_checkStr(mainIcn, 0, 10240), _throwErr(error.MAIN_ICN_ERR));
     Utils.assert(_checkJSNArr(viceIcns, 0, 5), _throwErr(error.VICE_ICNS_ERR));
@@ -1299,13 +1302,15 @@ function delAcceptanceFromSku(skuId, acpId) {
  * 增发到指定 Tranche
  * @param {string} skuId [SKU的id]
  * @param {string} trnId [Tranche的编号]
- * @param {string} supply [增发数量]
+ * @param {string} tkId [Token的编号]
+ * @param {string} tkInfo [Token的信息]
  * @throws {error}
  */
-function additionalIssuance(skuId, trnId, supply) {
+function additionalIssuance(skuId, trnId, tkId, tkInfo) {
     // Checking parameters.
     Utils.assert(_checkStr(skuId, 1, 32), _throwErr(error.SKU_ID_ERR));
-    Utils.assert(Utils.stoI64Check(supply) && Utils.int64Compare(supply, 0) > 0, _throwErr(error.TK_SPY_ERR));
+    Utils.assert(_checkStr(tkId, 1, 64), _throwErr(error.TK_ID_ERR));
+    Utils.assert(_checkStr(tkInfo, 1, 1024), _throwErr(error.TK_INFO_ERR));
 
     // Checking whether the issuer is seller.
     Utils.assert(_checkIsSeller(gTxSender), _throwErr(error.NOT_SEL));
@@ -1316,46 +1321,54 @@ function additionalIssuance(skuId, trnId, supply) {
     let skuTk = _toJsn(skuTkVal);
 
     // Adding the totalSupply of sku tokens.
-    skuTk.totalSupply = Utils.int64Add(skuTk.totalSupply, supply);
+    skuTk.totalSupply = Utils.int64Add(skuTk.totalSupply, 1);
     _store(skuTkKey, _toStr(skuTk));
 
     // Checking whether the tranche exists.
     trnId = _checkTranche(trnId, skuTk.defaultTrancheId, true);
     _checkExist(_makeKey(keys.trn, trnId), error.TRN_NOT_EST);
 
-    // Adding the total supply of sku tranche.
-    _addVal(supply, keys.skutrnspy, skuId, trnId);
+    // Adding the token id to the specified tranche of the sku.
+    const ret = _checkAddPagesItem(true, tkId, keys.skutrntkspgs, keys.skutrntkspg, skuId, trnId);
+    Utils.assert(ret !== -3, _throwErr(error.TK_MORE_TRN_ERR));
 
     // Adding the tranche to the sku.
     _checkAddPagesItem(true, trnId, keys.skutrnspgs, keys.skutrnspg, skuId);
 
-    // Adding to issuer balance.
-    _addVal(supply, keys.ble, skuId, gTxSender);
+    // Setting token.
+    let tk = {};
+    tk.skuId = skuId;
+    tk.trancheId = trnId;
+    tk.information = tkInfo;
+    Chain.store(_makeKey(keys.tk, tkId), _toStr(tk));
 
-    // Adding to issuer tranche balance.
-    _addVal(supply, keys.bletrn, skuId, trnId, gTxSender);
+    // Adding token id to the balance of issuer.
+    _checkAddPagesItem(true, tkId, keys.bletkspgs, keys.bletkspg, skuId, gTxSender);
+
+    // Adding token id to the balance tranche of issuer.
+    _checkAddPagesItem(true, tkId, keys.bletrntkspgs, keys.bletrntkspg, skuId, trnId, gTxSender);
 
     // Adding the tranche to the balance.
     _checkAddPagesItem(true, trnId, keys.bletrnspgs, keys.bletrnspg, skuId, gTxSender);
 
     // Committing event.
-    Chain.tlog('additionalIssuance', _makeTlogSender(), skuId, supply);
+    Chain.tlog('additionalIssuance', _makeTlogSender(), skuId, tkId);
 }
 
 /**
  * 将默认 Tranche 的 SKU Token 分配到指定 Tranche.
  * @param {string} skuId [SKU编号]
  * @param {string} toTrnId [目标Tranche编号]
- * @param {string} val [分配数量]
+ * @param {string} tkId [token编号]
  * @param {string} dftTrnInfo [默认Tranche的token的描述]
  * @param {string} toTrnInfo [目标Tranche的token的描述]
  * @throws {error}
  */
-function assignToTranche(skuId, toTrnId, val) {
+function assignToTranche(skuId, toTrnId, tkId) {
     // Checking parameters.
     Utils.assert(_checkStr(skuId, 1, 32), _throwErr(error.SKU_ID_ERR));
     Utils.assert(_checkStr(toTrnId, 1, 32), _throwErr(error.TRN_ID_ERR));
-    Utils.assert(Utils.stoI64Check(val) && Utils.int64Compare(val, 0) > 0, _throwErr(error.VAL_ERR));
+    Utils.assert(_checkStr(tkId, 1, 64), _throwErr(error.TK_ID_ERR));
 
     // Checking whether the sender is seller.
     const isSel = _checkIsSeller(gTxSender);
@@ -1375,20 +1388,29 @@ function assignToTranche(skuId, toTrnId, val) {
     const trnKey = _makeKey(keys.trn, toTrnId);
     _checkExist(trnKey, error.TRN_NOT_EST);
 
-    // Checking whether the from balance is enough.
-    _checkSubBalance(gTxSender, gTxSender, skuId, skuTk.defaultTrancheId, val, true, true);
+    // Checking whether the token exists.
+    const tkKey = _makeKey(keys.tk, tkId);
+    const tkVal = _checkExist(tkKey, error.TK_NOT_EST);
+    let tk = _toJsn(tkVal);
 
-    // Adding the sender target tranche balance.
-    _checkAddBalance(gTxSender, skuId, toTrnId, val);
+    // Reducing the seller balance, and checking whether the token id exists in the seller balance.
+    _checkSubBalance(gTxSender, gTxSender, tk.skuId, tk.trancheId, tkId, true);
+
+    // Changing the token info.
+    tk.trancheId = toTrnId;
+    _store(tkKey, _toStr(tk));
+
+    // Add the to the seller balance.
+    _checkAddBalance(gTxSender, tk.skuId, toTrnId, tkId);
 
     // Committing event.
-    Chain.tlog('assignToTranche', _makeTlogSender(), skuId, toTrnId, val);
+    Chain.tlog('assignToTranche', _makeTlogSender(), skuId, toTrnId, tkId);
 }
 
 /**
  * 设置授权者
  * @param {String} skuId [SKU的编号]
- * @param {JSONArray} autrs [授权者区块链账户地址列表]
+ * @param {Array} autrs [授权者区块链账户地址列表]
  */
 function setAuthorizers(skuId, autrs) {
     // Checking parameters.
@@ -1446,10 +1468,8 @@ function authorizeSku(skuId, trnId) {
     const trnInSku = _checkAddPagesItem(false, trnId, keys.skutrnspgs, keys.skutrnspg, skuId);
     Utils.assert(trnInSku !== -1, _throwErr(error.TRN_NOT_IN_SKU));
 
-    // If the authorizer already exists.
-    const autrKey =  _makeKey(keys.skuauth, skuId, trnId, gTxSender);
-    const autrVal = _load(_makeKey(keys.skutrnspy, skuId, trnId));
-    _store(autrKey, autrVal);
+    // Setting
+    _pagesItemsCopy(keys.skutrntkspgs, keys.skutrntkspg, skuId, trnId, keys.skutrnauthtkspgs, keys.skutrnauthtkspg, skuId, trnId, gTxSender);
 
     // Committing event.
     Chain.tlog('authorizeSku', _makeTlogSender(), skuId, trnId);
@@ -1478,7 +1498,10 @@ function authorizedSku(skuId, trnId, autr) {
     const idx = skuTk.authorizers.indexOf(autr);
     Utils.assert(idx !== -1, _throwErr(error.ATOR_NOT_EST));
 
-    return _loadNum(keys.skuauth, skuId, trnId, autr);
+    // Getting the authorized tokens of sku tranche.
+    const tks = _getPagesItems(keys.skutrnauthtkspgs, keys.skutrnauthtkspg, skuId, trnId, autr);
+
+    return _toStr(tks);
 }
 
 /**
@@ -1567,8 +1590,7 @@ function tranchesOf(skuId, addr) {
  * @param {string} skuId [SKU编号]
  * @return {string}
  * @throws {error}
- */
-function acceptancesOfSku(skuId) {
+ */function acceptancesOfSku(skuId) {
     // Checking parameters.
     Utils.assert(_checkStr(skuId, 1, 32), _throwErr(error.SKU_ID_ERR));
 
@@ -1613,63 +1635,67 @@ function totalSupplyByTranche(skuId, trnId) {
     trnId = _checkTranche(trnId);
     _checkExist(_makeKey(keys.trn, trnId), error.TRN_NOT_EST);
 
-    return _loadNum(keys.skutrnspy, skuId, trnId);
+    // Getting the tokens of the sku tranche.
+    const tks = _getPagesItems(keys.skutrntkspgs, keys.skutrntkspg, skuId, trnId);
+
+    return _toStr(tks);
 }
 
 /**
  * 查询账户 SKU Token 余额
  * @param {string} skuId [SKU的id]
- * @param {string} address [区块链账户地址]
+ * @param {string} addr [区块链账户地址]
  * @throws {error}
  */
-function balanceOf(address, skuId) {
+function balanceOf(addr, skuId) {
     // Checking parameters.
     Utils.assert(_checkStr(skuId, 1, 32), _throwErr(error.SKU_ID_ERR));
-    Utils.assert(_checkAddr(address), _throwErr(error.ADDR_ERR));
+    Utils.assert(_checkAddr(addr), _throwErr(error.ADDR_ERR));
 
     // Checking whether the sku exists.
     _checkExist(_makeKey(keys.sku, skuId), error.SKU_NOT_EST);
 
-    return _loadNum(keys.ble, skuId, address);
+    // Getting the tokens of the sku tranche.
+    const tks = _getPagesItems(keys.bletkspgs, keys.bletkspg, skuId, addr);
+
+    return _toStr(tks);
 }
 
 /**
  * 查询账户指定 Tranche 的 SKU Token 余额
  * @param {string} skuId [SKU的id]
  * @param {string} trnId [Tranche的id]
- * @param {string} address [区块链账户地址]
+ * @param {string} addr [区块链账户地址]
  * @throws {error}
  */
-function balanceOfByTranche(address, skuId, trnId) {
+function balanceOfByTranche(addr, skuId, trnId) {
     // Checking parameters.
     Utils.assert(_checkStr(skuId, 1, 32), _throwErr(error.SKU_ID_ERR));
-    Utils.assert(_checkAddr(address), _throwErr(error.ADDR_ERR));
+    Utils.assert(_checkAddr(addr), _throwErr(error.ADDR_ERR));
 
     // Checking whether the sku exists.
     _checkExist(_makeKey(keys.sku, skuId), error.SKU_NOT_EST);
 
-    // Getting the tranche.
-    trnId = _checkTranche(trnId);
-
     // Checking whether the tranche exists.
+    trnId = _checkTranche(trnId);
     _checkExist(_makeKey(keys.trn, trnId), error.TRN_NOT_EST);
 
-    return _loadNum(keys.bletrn, skuId, trnId, address);
+    // Getting the tokens of the sku tranche.
+    const tks = _getPagesItems(keys.bletrntkspgs, keys.bletrntkspg, skuId, trnId, addr);
+
+    return _toStr(tks);
 }
 
 /**
  * 销毁指定 Tranche 的 SKU Token
  * @param {string} address [销毁的账户地址]
- * @param {string} skuId [SKU的id]
- * @param {String} trnId [Tranche的id]
- * @param {String} val [销毁的数量]
+ * @param {String} tkId [Token的编号]
  * @throws {error}
  */
-function destroy(address, skuId, trnId, val) {
+function destroy(address, tkId) {
     // Checking parameters.
     Utils.assert(_checkAddr(address), _throwErr(error.ADDR_ERR));
-    Utils.assert(_checkStr(skuId, 1, 32), _throwErr(error.SKU_ID_ERR));
-    Utils.assert(Utils.stoI64Check(val) && Utils.int64Compare(val, 0) > 0, _throwErr(error.VAL_ERR));
+    Utils.assert(_checkStr(tkId, 1, 64), _throwErr(error.TK_ID_ERR));
 
     // Checking whether the address is seller.
     const isSel = _checkIsSeller(gTxSender);
@@ -1678,34 +1704,25 @@ function destroy(address, skuId, trnId, val) {
     // Checking whether the address is seller.
     Utils.assert(address === gTxSender, _throwErr(error.SEL_RDM_OTR));
 
-    // Checking whether the sku exists.
-    _checkExist(_makeKey(keys.sku, skuId), error.SKU_NOT_EST);
-
-    // Checking whether the tranche exists.
-    trnId = _checkTranche(trnId);
-    _checkExist(_makeKey(keys.trn, trnId), error.TRN_NOT_EST);
-
     // Redeeming the tokens
-    _destroy(address, skuId, trnId, val);
+    _destroy(address, tkId);
 
     // Committing event.
-    Chain.tlog('destroy', _makeTlogSender(), address, skuId, trnId, val);
+    Chain.tlog('destroy', _makeTlogSender(), address, tkId);
 }
 
 /**
  * 授权转移
  * @param {string} spr [被授权者的区块链账户地址]
- * @param {string} skuId [SKU的id]
- * @param {string} trnId [Tranche的id]
- * @param {string} val [授权的SKU数量]
+ * @param {Array} tkId [Token的编号]
  * @throws {error}
  */
-function approve(spr, skuId, trnId, val) {
+function approve(spr, tkId) {
     // Approving the tokens.
-    trnId = _approve(spr, skuId, trnId, val);
+    _approve(spr, tkId);
 
     // Committing event.
-    Chain.tlog('approve', _makeTlogSender(), spr, skuId, trnId, val);
+    Chain.tlog('approve', _makeTlogSender(), spr, tkId);
 }
 
 /**
@@ -1729,40 +1746,38 @@ function allowance(owr, skuId, trnId, spr) {
     _checkExist(_makeKey(keys.trn, trnId), error.TRN_NOT_EST);
 
     // Checking whether the allowance exists.
-    return _loadNum(keys.alw, owr, skuId, trnId, spr);
+    const tks = _getPagesItems(keys.alwtrntkspgs, keys.alwtrntkspg, owr, skuId, trnId, spr);
+
+    return _toStr(tks);
 }
 
 /**
  * 将 SKU Token 从指定地址转移
  * @param {string} frm [发Token区块链账户地址]
- * @param {string} skuId [SKU的id]
- * @param {string} trnId [Tranche的id]
  * @param {string} to [收Token的区块链账户地址]
- * @param {string} val [Token数量]
+ * @param {string} tkId [Token编号]
  * @throws {error}
  * */
-function transferFrom(frm, skuId, trnId, to, val) {
+function transferFrom(frm, to, tkId) {
     // Transferring the tokens.
-    trnId = _transfer(frm, skuId, trnId, to, val);
+    _transfer(frm, to, tkId);
 
     // Committing event.
-    Chain.tlog('transferFrom', _makeTlogSender(), frm, `${skuId}_${trnId}`, to, val);
+    Chain.tlog('transferFrom', _makeTlogSender(), frm, to, tkId);
 }
 
 /**
  * 将 SKU Token 转移
- * @param {string} skuId [SKU的id]
- * @param {string} trnId [Tranche的id]
  * @param {string} to [收Token的区块链账户地址]
- * @param {string} val [Token数量]
+ * @param {string} tkId [Token编号]
  * @throws {error}
  */
-function transfer(skuId, trnId, to, val) {
+function transfer(to, tkId) {
     // Transferring the tokens.
-    trnId = _transfer(gMsgSender, skuId, trnId, to, val);
+    _transfer(gMsgSender, to, tkId);
 
     // Committing event.
-    Chain.tlog('transfer', _makeTlogSender(), `${skuId}_${trnId}`, to, val);
+    Chain.tlog('transfer', _makeTlogSender(), to, tkId);
 }
 
 /**
@@ -1825,22 +1840,23 @@ function acceptanceInfo(acpId) {
 /**
  * 申请兑付
  * @param {string} repnId [兑付编号]
- * @param {string} skuId [SKU的id]
- * @param {string} trnId [Tranche的id]
- * @param {string} val [兑付SKU的数量]
+ * @param {string} tkId [Token编号]
  * @param {string} acpId [承兑方区块链账户地址]
  * @param {string} des [描述信息]
- * @param {JSONObject} addi [附加信息]
+ * @param {Object} addi [附加信息]
  * @throws {error}
  */
-function requestRedemption(repnId, skuId, trnId, val, acpId, des, addi) {
+function requestRedemption(repnId, tkId, acpId, des, addi) {
     // Checking parameters.
     Utils.assert(_checkStr(repnId, 1, 32), _throwErr(error.REPN_ID_ERR));
-    Utils.assert(_checkStr(skuId, 1, 32), _throwErr(error.SKU_ID_ERR));
-    Utils.assert(_checkStr(trnId, 0, 32), _throwErr(error.TRN_ID_ERR));
-    Utils.assert(Utils.stoI64Check(val) && Utils.int64Compare(val, 0) > 0, _throwErr(error.VAL_ERR));
+    Utils.assert(_checkStr(tkId, 1, 64), _throwErr(error.TK_ID_ERR));
     Utils.assert(_checkStr(acpId, 1, 32), _throwErr(error.ACP_ID_ERR));
     Utils.assert(_checkStr(des, 0, 64000), _throwErr(error.DES_ERR));
+
+    // Checking whether the token exists.
+    const tkKey = _makeKey(keys.tk, tkId);
+    const tkVal = _checkExist(tkKey, error.TK_NOT_EST);
+    let tk = _toJsn(tkVal);
 
     // Checking whether the redemption does not exist.
     const repnKey = _makeKey(keys.repn, repnId, gMsgSender);
@@ -1850,14 +1866,15 @@ function requestRedemption(repnId, skuId, trnId, val, acpId, des, addi) {
     const acpKey = _makeKey(keys.acp, acpId);
     _checkExist(acpKey, error.ACP_NOT_EST);
 
-    // Checking whether the from balance is enough.
-    const trns = _checkSubBalance(gMsgSender, gMsgSender, skuId, trnId, val, false, false);
+    // Checking whether the tranche is not default tranche.
+    _checkDefaultTranche(tk.skuId, tk.trnId, false);
+
+    // Checking whether the token is in the sender.
+    _checkSubBalance(gMsgSender, gMsgSender, tk.skuId, tk.trancheId, tkId);
 
     // Recording the redemption.
     let repn = {};
-    repn.skuId = skuId;
-    repn.trancheId = trns.trnId;
-    repn.value = val;
+    repn.tokenId = tkId;
     repn.acceptanceId = acpId;
     repn.status = 0;
     repn.description = des;
@@ -1866,7 +1883,7 @@ function requestRedemption(repnId, skuId, trnId, val, acpId, des, addi) {
     _store(repnKey, _toStr(repn));
 
     // Committing event.
-    Chain.tlog('requestRedemption', _makeTlogSender(), repnId, skuId, trns.trnId, val);
+    Chain.tlog('requestRedemption', _makeTlogSender(), repnId, tkId);
 }
 
 
@@ -1971,7 +1988,7 @@ function redemptionInfo(repnId, apt) {
  * @param {string} apt [Redemption的申请人区块链账户地址]
  * @param {string} rsn [纠纷申请原因]
  * @param {string} ctr [纠纷处理人区块链账户地址]
- * @param {JSONObject} addi [附加信息]
+ * @param {Object} addi [附加信息]
  * @throws {error}
  */
 function applyDispute(repnId, apt, rsn, ctr, addi) {
@@ -2168,7 +2185,7 @@ function init(bar) {
 
     // Setting the contract info.
     let crt = {};
-    crt.name = "ATP60";
+    crt.name = "ATP61";
     crt.version = '1.0';
     _store(keys.crt, _toStr(crt));
 
@@ -2199,7 +2216,7 @@ function main(input) {
             setSpu(params.spuId, params.name, params.type, params.attributes);
             break;
         case 'issue':
-            issue(params.skuId, params.trancheId, params.isDefaultTranche, params.spuId, params.name, params.symbol, params.supply, params.decimals, params.mainIcon, params.viceIcons, params.labels, params.description, params.redemptionAddress, params.acceptanceId, params.abstracts, params.attributes);
+            issue(params.skuId, params.trancheId, params.isDefaultTranche, params.spuId, params.name, params.symbol, params.tokenId, params.tokenInfo, params.mainIcon, params.viceIcons, params.labels, params.description, params.redemptionAddress, params.acceptanceId, params.abstracts, params.attributes);
             break;
         case 'setSkusChoice':
             setSkusChoice(params.spuId, params.choice);
@@ -2214,10 +2231,10 @@ function main(input) {
             delAcceptanceFromSku(params.skuId, params.acceptanceId);
             break;
         case 'additionalIssuance':
-            additionalIssuance(params.skuId, params.trancheId, params.supply);
+            additionalIssuance(params.skuId, params.trancheId, params.tokenId, params.tokenInfo);
             break;
         case 'assignToTranche':
-            assignToTranche(params.skuId, params.toTrancheId, params.value);
+            assignToTranche(params.skuId, params.toTrancheId, params.tokenId);
             break;
         case 'setAuthorizers':
             setAuthorizers(params.skuId, params.authorizers);
@@ -2229,22 +2246,22 @@ function main(input) {
             createTranche(params.id, params.description, params.limits);
             break;
         case 'destroy':
-            destroy(params.address, params.skuId, params.trancheId, params.value);
+            destroy(params.address, params.tokenId);
             break;
         case 'transferFrom':
-            transferFrom(params.from, params.skuId, params.trancheId, params.to, params.value);
+            transferFrom(params.from, params.to, params.tokenId);
             break;
         case 'transfer':
-            transfer(params.skuId, params.trancheId, params.to, params.value);
+            transfer(params.to, params.tokenId);
             break;
         case 'approve':
-            approve(params.spender, params.skuId, params.trancheId, params.value);
+            approve(params.spender, params.tokenId);
             break;
         case 'setAcceptance':
             setAcceptance(params.id, params.address, params.fullName, params.shortName, params.logo, params.contact, params.period, params.addition);
             break;
         case 'requestRedemption':
-            requestRedemption(params.redemptionId, params.skuId, params.trancheId, params.value, params.acceptanceId, params.addition);
+            requestRedemption(params.redemptionId, params.tokenId, params.acceptanceId, params.addition);
             break;
         case 'redeem':
             redeem(params.redemptionId, params.applicant);
@@ -2282,14 +2299,8 @@ function query(input) {
         case 'allDocuments':
             val = allDocuments();
             break;
-        case 'skusOfSpu':
-            val = skusOfSpu(params.spuId);
-            break;
         case 'skusOfTranche':
             val = skusOfTranche(params.trancheId);
-            break;
-        case 'tranchesOfSku':
-            val = tranchesOfSku(params.skuId);
             break;
         case 'tranchesOf':
             val = tranchesOf(params.skuId, params.address);
@@ -2317,6 +2328,12 @@ function query(input) {
             break;
         case 'authorizedSku':
             val = authorizedSku(params.skuId, params.trancheId, params.authorizer);
+            break;
+        case 'skusOfSpu':
+            val = skusOfSpu(params.spuId);
+            break;
+        case 'tranchesOfSku':
+            val = tranchesOfSku(params.skuId);
             break;
         case 'balanceOf':
             val = balanceOf(params.address, params.skuId);
