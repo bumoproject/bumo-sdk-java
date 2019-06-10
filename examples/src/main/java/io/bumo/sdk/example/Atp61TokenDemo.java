@@ -48,11 +48,11 @@ public class Atp61TokenDemo {
         String businessLicenseUrl = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1560172631149&di=36e2c4a9539a82fb97e4bb29f97a5e81&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01acc45607d5826ac7251df87e05b8.jpg%401280w_1l_2o_100sh.png";
         String businessLicenseHashType = "sha256";
         String businessLicenseHash = HashUtil.GenerateHashHex(getContentFromUrl(businessLicenseUrl));
-        String businessLicense = businessLicenseUrl + "|" + businessLicenseHashType + "|" + businessLicenseHash;//"[url|hash类型|hash值]";
+        String businessLicense = businessLicenseUrl + "|" + businessLicenseHashType + "|" + businessLicenseHash;//"[图片类型|url|hash类型|hash值]";
         // Company corporate identity card front photo.
-        String cardFrontPhoto = "[url|hash类型|hash值]";
+        String cardFrontPhoto = "[图片类型|url|hash类型|hash值]";
         // Company corporate identity card back photo.
-        String cardBackPhoto = "[url|hash类型|hash值]";
+        String cardBackPhoto = "[图片类型|url|hash类型|hash值]";
 
         // Registerring.
         registerTx(sellerPrivateKey, sellerAddress, fullName, shortName, contact, organizationalCode, corporateName, cardNumber, businessLicense, cardFrontPhoto, cardBackPhoto);
@@ -87,11 +87,11 @@ public class Atp61TokenDemo {
         // Company corporate identity card number
         String cardNumber = "1**";
         // Company business license photo.
-        String businessLicense = "[url|hash类型|hash值]";
+        String businessLicense = "[图片类型|url|hash类型|hash值]";
         // Company corporate identity card front photo.
-        String cardFrontPhoto = "[url|hash类型|hash值]";
+        String cardFrontPhoto = "[图片类型|url|hash类型|hash值]";
         // Company corporate identity card back photo.
-        String cardBackPhoto = "[url|hash类型|hash值]";
+        String cardBackPhoto = "[图片类型|url|hash类型|hash值]";
 
         setSellerTx(sellerPrivateKey, sellerAddress, fullName, shortName, contact, organizationalCode, corporateName, cardNumber, businessLicense, cardFrontPhoto, cardBackPhoto);
     }
