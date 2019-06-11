@@ -43,10 +43,6 @@ const error = {
         code: 20002,
         msg: 'The companyContact must be a string and its length must be between 1 and 64.'
     },
-    CPY_CER_ERR: {
-        code: 20003,
-        msg: 'The companyCertification is invalid.'
-    },
     MTD_ERR: {
         code: 20004,
         msg: 'The method type is invalid.'
@@ -72,7 +68,7 @@ const error = {
         msg: 'The hash_type must be string and its length must be between 1 and 64.'
     },
     HASH_ERR: {
-        code: 200010,
+        code: 20010,
         msg: 'The hash must be string and its length must be between 1 and 2048.'
     },
     NOT_SEL: {
@@ -199,6 +195,10 @@ const error = {
         code: 20041,
         msg: 'Only default tranche can be assigned.'
     },
+    FC_ERR: {
+        code: 20042,
+        msg: 'The faceValue must be string and its length must be between 1 and 32.'
+    },
     ONR_ERR: {
         code: 20043,
         msg: 'The owner is invalid.'
@@ -221,7 +221,7 @@ const error = {
     },
     BLE_NOT_EGH: {
         code: 20048,
-        msg: 'The available balance is not enough.'
+        msg: 'The balance is not enough.'
     },
     ATOS_ERR: {
         code: 20049,
@@ -261,7 +261,7 @@ const error = {
     },
     LOGO_ERR: {
         code: 20058,
-        msg: 'The logo must be string, and its length must be between 1 and 10240..'
+        msg: 'The logo must be string, and its length must be between 1 and 10240.'
     },
     CAT_ERR: {
         code: 20059,
@@ -1044,6 +1044,7 @@ function trancheInfo(trnId) {
  * @param {string} spuId [SPU的id]
  * @param {string} name [SKU的名称]
  * @param {string} symbol [Token的符号]
+ * @param {string} faceVal [面值]
  * @param {string} supply [Token的发行量]
  * @param {int} decimals [Token的精度]
  * @param {string} mainIcn [SKU的主力]
@@ -1055,7 +1056,7 @@ function trancheInfo(trnId) {
  * @param {JSONArray} abs [SKU的摘要属性]
  * @param {JSONObject} attrs [SKU的属性]
  */
-function issue(skuId, trnId, isDftTrn, spuId, name, symbol, supply, decimals, mainIcn, viceIcns, labels, des, repnAddr, acpId, abs, attrs) {
+function issue(skuId, trnId, isDftTrn, spuId, name, symbol, faceVal, supply, decimals, mainIcn, viceIcns, labels, des, repnAddr, acpId, abs, attrs) {
     // Checking parameters.
     trnId = _checkTranche(trnId);
     Utils.assert(_checkStr(skuId, 1, 32), _throwErr(error.SKU_ID_ERR));
@@ -1063,6 +1064,7 @@ function issue(skuId, trnId, isDftTrn, spuId, name, symbol, supply, decimals, ma
     Utils.assert(_checkStr(spuId, 0, 32), _throwErr(error.SPU_ID_ERR));
     Utils.assert(_checkStr(name, 1, 1024), _throwErr(error.FL_NM_ERR));
     Utils.assert(_checkStr(symbol, 1, 16), _throwErr(error.TK_BML_ERR));
+    Utils.assert(_checkStr(faceVal, 0, 32), _throwErr(error.FC_ERR));
     Utils.assert(Utils.stoI64Check(supply) && Utils.int64Compare(supply, 0) > 0, _throwErr(error.TK_SPY_ERR));
     Utils.assert(_checkInt(decimals, 0, 8), _throwErr(error.TK_DCS_ERR));
     Utils.assert(_checkStr(mainIcn, 0, 10240), _throwErr(error.MAIN_ICN_ERR));
@@ -1107,6 +1109,7 @@ function issue(skuId, trnId, isDftTrn, spuId, name, symbol, supply, decimals, ma
     }
     sku.name = name;
     sku.symbol = symbol;
+    sku.faceValue = faceVal;
     sku.totalSupply = supply;
     sku.decimals = decimals;
     sku.description = des;
@@ -2168,7 +2171,7 @@ function init(bar) {
     let params = _toJsn(bar);
 
     // Setting the seller.
-    _setSeller(gTxSender, params.companyFullName, params.companyShortName, params.companyContact, params.attributes);
+    _setSeller(gTxSender, params.companyFullName, params.companyShortName, params.companyContact, params.companyCertification);
 
     // Setting the contract info.
     let crt = {};
@@ -2191,7 +2194,7 @@ function main(input) {
 
     switch (method) {
         case 'setSeller':
-            setSeller(params.companyFullName, params.companyShortName, params.companyContact, params.attributes);
+            setSeller(params.companyFullName, params.companyShortName, params.companyContact, params.companyCertification);
             break;
         case 'setDocument':
             setDocument(params.id, params.name, params.url, params.hashType, params.hash);
@@ -2203,7 +2206,7 @@ function main(input) {
             setSpu(params.spuId, params.name, params.type, params.attributes);
             break;
         case 'issue':
-            issue(params.skuId, params.trancheId, params.isDefaultTranche, params.spuId, params.name, params.symbol, params.supply, params.decimals, params.mainIcon, params.viceIcons, params.labels, params.description, params.redemptionAddress, params.acceptanceId, params.abstracts, params.attributes);
+            issue(params.skuId, params.trancheId, params.isDefaultTranche, params.spuId, params.name, params.symbol, params.faceValue, params.supply, params.decimals, params.mainIcon, params.viceIcons, params.labels, params.description, params.redemptionAddress, params.acceptanceId, params.abstracts, params.attributes);
             break;
         case 'setSkusChoice':
             setSkusChoice(params.spuId, params.choice);

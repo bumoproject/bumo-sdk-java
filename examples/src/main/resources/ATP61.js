@@ -49,10 +49,6 @@ const error = {
         code: 20002,
         msg: 'The companyContact must be a string and its length must be between 1 and 64.'
     },
-    CPY_CER_ERR: {
-        code: 20003,
-        msg: 'The companyCertification is invalid.'
-    },
     MTD_ERR: {
         code: 20004,
         msg: 'The method type is invalid.'
@@ -141,14 +137,6 @@ const error = {
         code: 20025,
         msg: 'The token symbol must be string and its length must be between 1 and 16.'
     },
-    TK_SPY_ERR: {
-        code: 20026,
-        msg: 'The token supply must be bigger than 0.'
-    },
-    TK_DCS_ERR: {
-        code: 20027,
-        msg: 'The token decimals must be between 0 and 8.'
-    },
     MAIN_ICN_ERR: {
         code: 20028,
         msg: 'The main icon must be string, and its length must be between 1 and 10240.'
@@ -205,29 +193,17 @@ const error = {
         code: 20041,
         msg: 'Only default tranche can be assigned.'
     },
+    FC_ERR: {
+        code: 20042,
+        msg: 'The faceValue must be string and its length must be between 1 and 32..'
+    },
     ONR_ERR: {
         code: 20043,
         msg: 'The owner is invalid.'
     },
-    VAL_ERR: {
-        code: 20044,
-        msg: 'The value must be bigger than 0.'
-    },
     TO_TRN_DEFAULT_ERR: {
         code: 20045,
         msg: 'The target tranche cannot be default tranche.'
-    },
-    NO_ALW: {
-        code: 20046,
-        msg: 'The spender does not have the allowance.'
-    },
-    ALW_NOT_EGH: {
-        code: 20047,
-        msg: 'The allowance is not enough.'
-    },
-    BLE_NOT_EGH: {
-        code: 20048,
-        msg: 'The available balance is not enough.'
     },
     ATOS_ERR: {
         code: 20049,
@@ -358,39 +334,35 @@ const error = {
         msg: 'The sender is not the controller in dispute.'
     },
     CTR_ERR: {
-        code: 20082,
+        code: 20081,
         msg: 'The controller is invalid.'
     },
     TK_EST: {
-        code: 20083,
+        code: 20082,
         msg: 'The token already exists.'
     },
     TK_NOT_EST: {
-        code: 20084,
+        code: 20083,
         msg: 'The token does not exist.'
     },
     TK_NOT_IN_ALW: {
-        code: 20085,
+        code: 20084,
         msg: 'The token doest not exist in the allowance.'
     },
     TK_ID_ERR: {
-        code: 20086,
+        code: 20085,
         msg: 'The token id must be string and its length must be between 1 and 64.'
     },
     TK_INFO_ERR: {
-        code: 20087,
+        code: 20086,
         msg: 'The token information must be string and its length must be between 1 and 1024.'
     },
-    TK_NOT_IN_DFT_TRN: {
-        code: 20088,
-        msg: 'The token does not exist in the default tranche.'
-    },
     TK_NOT_IN_BLE: {
-        code: 20089,
+        code: 20088,
         msg: 'The token does not exist in the balance.'
     },
     TK_MORE_TRN_ERR: {
-        code: 20090,
+        code: 20089,
         msg: 'The pages of all tokens of tranche cannot be bigger than 2000.'
     }
 };
@@ -1037,6 +1009,7 @@ function trancheInfo(trnId) {
  * @param {string} spuId [SPU的id]
  * @param {string} name [SKU的名称]
  * @param {string} symbol [Token的符号]
+ * @param {string} faceVal [面值]
  * @param {string} tkId [Token的编号]
  * @param {string} tkInfo [Token的信息]
  * @param {int} decimals [Token的精度]
@@ -1049,7 +1022,7 @@ function trancheInfo(trnId) {
  * @param {Array} abs [SKU的摘要属性]
  * @param {Object} attrs [SKU的属性]
  */
-function issue(skuId, trnId, isDftTrn, spuId, name, symbol, tkId, tkInfo, mainIcn, viceIcns, labels, des, repnAddr, acpId, abs, attrs) {
+function issue(skuId, trnId, isDftTrn, spuId, name, symbol, faceVal, tkId, tkInfo, mainIcn, viceIcns, labels, des, repnAddr, acpId, abs, attrs) {
     // Checking parameters.
     trnId = _checkTranche(trnId);
     Utils.assert(_checkStr(skuId, 1, 32), _throwErr(error.SKU_ID_ERR));
@@ -1057,6 +1030,7 @@ function issue(skuId, trnId, isDftTrn, spuId, name, symbol, tkId, tkInfo, mainIc
     Utils.assert(_checkStr(spuId, 0, 32), _throwErr(error.SPU_ID_ERR));
     Utils.assert(_checkStr(name, 1, 1024), _throwErr(error.NAME_ERR));
     Utils.assert(_checkStr(symbol, 1, 16), _throwErr(error.TK_BML_ERR));
+    Utils.assert(_checkStr(faceVal, 0, 32), _throwErr(error.FC_ERR));
     Utils.assert(_checkStr(tkId, 1, 64), _throwErr(error.TK_ID_ERR));
     Utils.assert(_checkStr(tkInfo, 1, 1024), _throwErr(error.TK_INFO_ERR));
     Utils.assert(_checkStr(mainIcn, 0, 10240), _throwErr(error.MAIN_ICN_ERR));
@@ -1104,6 +1078,7 @@ function issue(skuId, trnId, isDftTrn, spuId, name, symbol, tkId, tkInfo, mainIc
     }
     sku.name = name;
     sku.symbol = symbol;
+    sku.faceValue = faceVal;
     sku.totalSupply = 1;
     sku.description = des;
     sku.label = labels;
@@ -1318,6 +1293,9 @@ function additionalIssuance(skuId, trnId, tkId, tkInfo) {
 
     // Checking whether the issuer is seller.
     Utils.assert(_checkIsSeller(gTxSender), _throwErr(error.NOT_SEL));
+
+    // Checking whether the token does not exist.
+    _checkNotExist(_makeKey(keys.tk, tkId), error.TK_EST);
 
     // Checking whether the sku already exists.
     const skuTkKey = _makeKey(keys.sku, skuId);
@@ -2185,7 +2163,7 @@ function init(bar) {
     let params = _toJsn(bar);
 
     // Setting the seller.
-    _setSeller(gTxSender, params.companyFullName, params.companyShortName, params.companyContact, params.attributes);
+    _setSeller(gTxSender, params.companyFullName, params.companyShortName, params.companyContact, params.companyCertification);
 
     // Setting the contract info.
     let crt = {};
@@ -2208,7 +2186,7 @@ function main(input) {
 
     switch (method) {
         case 'setSeller':
-            setSeller(params.companyFullName, params.companyShortName, params.companyContact, params.attributes);
+            setSeller(params.companyFullName, params.companyShortName, params.companyContact, params.companyCertification);
             break;
         case 'setDocument':
             setDocument(params.id, params.name, params.url, params.hashType, params.hash);
@@ -2220,7 +2198,7 @@ function main(input) {
             setSpu(params.spuId, params.name, params.type, params.attributes);
             break;
         case 'issue':
-            issue(params.skuId, params.trancheId, params.isDefaultTranche, params.spuId, params.name, params.symbol, params.tokenId, params.tokenInfo, params.mainIcon, params.viceIcons, params.labels, params.description, params.redemptionAddress, params.acceptanceId, params.abstracts, params.attributes);
+            issue(params.skuId, params.trancheId, params.isDefaultTranche, params.spuId, params.name, params.symbol, params.faceValue, params.tokenId, params.tokenInfo, params.mainIcon, params.viceIcons, params.labels, params.description, params.redemptionAddress, params.acceptanceId, params.abstracts, params.attributes);
             break;
         case 'setSkusChoice':
             setSkusChoice(params.spuId, params.choice);
