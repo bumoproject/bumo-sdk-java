@@ -45,10 +45,11 @@ public class Atp61TokenDemo {
         String corporateName = "某某";
         // Company corporate identity card number
         String cardNumber = "1**";
+        String businessLicenseIconType = "png";
         String businessLicenseUrl = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1560172631149&di=36e2c4a9539a82fb97e4bb29f97a5e81&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01acc45607d5826ac7251df87e05b8.jpg%401280w_1l_2o_100sh.png";
         String businessLicenseHashType = "sha256";
         String businessLicenseHash = HashUtil.GenerateHashHex(getContentFromUrl(businessLicenseUrl));
-        String businessLicense = businessLicenseUrl + "|" + businessLicenseHashType + "|" + businessLicenseHash;//"[图片类型|url|hash类型|hash值]";
+        String businessLicense = businessLicenseIconType + "|" + businessLicenseUrl + "|" + businessLicenseHashType + "|" + businessLicenseHash;//"[图片类型|url|hash类型|hash值]";
         // Company corporate identity card front photo.
         String cardFrontPhoto = "[图片类型|url|hash类型|hash值]";
         // Company corporate identity card back photo.
@@ -240,7 +241,7 @@ public class Atp61TokenDemo {
         // The acceptance id.
         String acceptanceId = "1";
         // The acceptor address.
-        String acceptorAddress = "buQiHTjDSjQedxR2vF9WULhgWMtbo8rRLmor";
+        String acceptorPublicKey = "b0014d4d8338f743631f4b04c49a693c6757962d888fbc4188a6cf4bacf99b585806bd335194";
         // The acceptance full name.
         String acceptanceFullName = "北京贸易集中处理中心";
         // The acceptance short name.
@@ -252,7 +253,7 @@ public class Atp61TokenDemo {
         // The acceptance period.
         String acceptancePeriod = "7";
 
-        setAcceptanceTx(sellerPrivateKey, sellerAddress, acceptanceId, acceptorAddress, acceptanceFullName, acceptanceShortName, acceptanceLogo, acceptanceContact, acceptancePeriod);
+        setAcceptanceTx(sellerPrivateKey, sellerAddress, acceptanceId, acceptorPublicKey, acceptanceFullName, acceptanceShortName, acceptanceLogo, acceptanceContact, acceptancePeriod);
     }
 
     @Test
@@ -1818,7 +1819,7 @@ public class Atp61TokenDemo {
      * Setting an accetance.
      * @return The tx hash.
      */
-    public String setAcceptanceTx(String sourcePrivateKey, String sourceAddress, String acceptanceId, String acceptorAddress, String acceptanceFullName, String acceptanceShortName, String acceptanceLogo, String acceptanceContact, String acceptancePeriod) {
+    public String setAcceptanceTx(String sourcePrivateKey, String sourceAddress, String acceptanceId, String acceptorPublicKey, String acceptanceFullName, String acceptanceShortName, String acceptanceLogo, String acceptanceContact, String acceptancePeriod) {
         // The fixed write 1000L, the unit is MO
         Long gasPrice = 1000L;
         // Setting up the maximum cost 0.01BU
@@ -1829,7 +1830,7 @@ public class Atp61TokenDemo {
         input.put("method", "setAcceptance");
         JSONObject params = new JSONObject();
         params.put("id", acceptanceId);
-        params.put("address", acceptorAddress);
+        params.put("publicKey", acceptorPublicKey);
         params.put("fullName", acceptanceFullName);
         params.put("shortName", acceptanceShortName);
         params.put("logo", acceptanceLogo);

@@ -21,10 +21,16 @@ import io.bumo.model.response.result.TransactionBuildBlobResult;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.security.PrivateKey;
 
 public class Atp60TokenDemo {
     /* Bumo 1.2.0 test version */
 	public SDK sdk = SDK.getInstance("http://13.112.159.231");
+
+	@Test
+    public void tttt() {
+        System.out.println(io.bumo.encryption.key.PrivateKey.getEncPublicKey("privbUbdoe6co99ykomqQRUDiD8rh3XvWvmexNUS1bZbu5gb8RuKJA8Y"));
+    }
 	
 	/**
 	 * First: Seller (buQfTPaQBzFGBzGy87pSsc6MmNJKKKmzTSyC) registers the information in ATP 60.
@@ -244,7 +250,7 @@ public class Atp60TokenDemo {
         // The acceptance id.
         String acceptanceId = "1";
         // The acceptor address.
-        String acceptorAddress = "buQiHTjDSjQedxR2vF9WULhgWMtbo8rRLmor";
+        String acceptorPublicKey = "b0014d4d8338f743631f4b04c49a693c6757962d888fbc4188a6cf4bacf99b585806bd335194";
         // The acceptance full name.
         String acceptanceFullName = "北京贸易集中处理中心";
         // The acceptance short name.
@@ -256,7 +262,7 @@ public class Atp60TokenDemo {
         // The acceptance period.
         String acceptancePeriod = "7";
 
-        setAcceptanceTx(sellerPrivateKey, sellerAddress, acceptanceId, acceptorAddress, acceptanceFullName, acceptanceShortName, acceptanceLogo, acceptanceContact, acceptancePeriod);
+        setAcceptanceTx(sellerPrivateKey, sellerAddress, acceptanceId, acceptorPublicKey, acceptanceFullName, acceptanceShortName, acceptanceLogo, acceptanceContact, acceptancePeriod);
     }
 
     @Test
@@ -1846,7 +1852,7 @@ public class Atp60TokenDemo {
      * Setting an accetance.
      * @return The tx hash.
      */
-    public String setAcceptanceTx(String sourcePrivateKey, String sourceAddress, String acceptanceId, String acceptorAddress, String acceptanceFullName, String acceptanceShortName, String acceptanceLogo, String acceptanceContact, String acceptancePeriod) {
+    public String setAcceptanceTx(String sourcePrivateKey, String sourceAddress, String acceptanceId, String acceptorPublicKey, String acceptanceFullName, String acceptanceShortName, String acceptanceLogo, String acceptanceContact, String acceptancePeriod) {
         // The fixed write 1000L, the unit is MO
         Long gasPrice = 1000L;
         // Setting up the maximum cost 0.01BU
@@ -1857,7 +1863,7 @@ public class Atp60TokenDemo {
         input.put("method", "setAcceptance");
         JSONObject params = new JSONObject();
         params.put("id", acceptanceId);
-        params.put("address", acceptorAddress);
+        params.put("publicKey", acceptorPublicKey);
         params.put("fullName", acceptanceFullName);
         params.put("shortName", acceptanceShortName);
         params.put("logo", acceptanceLogo);

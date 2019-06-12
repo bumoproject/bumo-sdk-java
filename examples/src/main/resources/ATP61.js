@@ -341,20 +341,24 @@ const error = {
         code: 20082,
         msg: 'The token already exists.'
     },
-    TK_NOT_EST: {
+    PUB_ERR: {
         code: 20083,
+        msg: 'The public key of the acceptor is invalid.'
+    },
+    TK_NOT_EST: {
+        code: 20084,
         msg: 'The token does not exist.'
     },
     TK_NOT_IN_ALW: {
-        code: 20084,
+        code: 20085,
         msg: 'The token doest not exist in the allowance.'
     },
     TK_ID_ERR: {
-        code: 20085,
+        code: 20086,
         msg: 'The token id must be string and its length must be between 1 and 64.'
     },
     TK_INFO_ERR: {
-        code: 20086,
+        code: 20087,
         msg: 'The token information must be string and its length must be between 1 and 1024.'
     },
     TK_NOT_IN_BLE: {
@@ -1765,7 +1769,7 @@ function transfer(to, tkId) {
 /**
  * 商家设置承兑方信息
  * @param {string} id [承兑方的id]
- * @param {string} addr [承兑方地址]
+ * @param {string} pub [承兑方地址]
  * @param {strin} flNm [承兑方名称全称]
  * @param {string} stNm [承兑方名称简称]
  * @param {string} logo [承兑方logo]
@@ -1774,10 +1778,11 @@ function transfer(to, tkId) {
  * @param {string} addi [附加信息]
  * @throws {error}
  */
-function setAcceptance(id, addr, flNm, stNm, logo, cat, period, addi) {
+function setAcceptance(id, pub, flNm, stNm, logo, cat, period, addi) {
     // Checking parameters.
     Utils.assert(_checkStr(id, 1, 32), _throwErr(error.ACP_ID_ERR));
-    Utils.assert(_checkAddr(addr), _throwErr(error.ADDR_ERR));
+    const addr = Utils.toAddress(pub);
+    Utils.assert(_checkAddr(addr), _throwErr(error.PUB_ERR));
     Utils.assert(_checkStr(flNm, 1,1024), _throwErr(error.FL_NM_ERR));
     Utils.assert(_checkStr(stNm, 1,64), _throwErr(error.ST_NM_ERR));
     Utils.assert(_checkStr(logo, 0, 10240), _throwErr(error.LOGO_ERR));
@@ -1792,7 +1797,7 @@ function setAcceptance(id, addr, flNm, stNm, logo, cat, period, addi) {
     const acpKey = _makeKey(keys.acp, id);
     let acp = {};
     acp.id = id;
-    acp.address = addr;
+    acp.publicKey = pub;
     acp.fullName = flNm;
     acp.shortName = stNm;
     acp.logo = logo;
@@ -1889,7 +1894,8 @@ function redeem(repnId, apt) {
     const acpKey = _makeKey(keys.acp, repn.acceptanceId);
     const acpVal = _load(acpKey);
     const acp = _toJsn(acpVal);
-    Utils.assert(gTxSender === acp.address, _throwErr(error.NOT_APR));
+    const acpAddr = Utils.toAddress(acp.publicKey);
+    Utils.assert(gTxSender === acpAddr, _throwErr(error.NOT_APR));
 
     // Checking whether the redemption is in dispute.
     let dptKey = _makeKey(keys.dpt, repnId, apt);
@@ -2030,7 +2036,8 @@ function setEvidence(repnId, apt, des, addi) {
     const acpKey = _makeKey(keys.acp, repn.acceptanceId);
     const acpVal = _load(acpKey);
     const acp = _toJsn(acpVal);
-    Utils.assert(gMsgSender === apt || _checkIsSeller(gMsgSender) || gMsgSender === acp.address, _throwErr(error.NOT_APT_SEL_APR));
+    const acpAddr = Utils.toAddress(acp.publicKey);
+    Utils.assert(gMsgSender === apt || _checkIsSeller(gMsgSender) || gMsgSender === acpAddr, _throwErr(error.NOT_APT_SEL_APR));
 
     // Checking whether the dispute exists.
     const dptKey = _makeKey(keys.dpt, repnId, apt);
@@ -2240,7 +2247,7 @@ function main(input) {
             approve(params.spender, params.tokenId);
             break;
         case 'setAcceptance':
-            setAcceptance(params.id, params.address, params.fullName, params.shortName, params.logo, params.contact, params.period, params.addition);
+            setAcceptance(params.id, params.publicKey, params.fullName, params.shortName, params.logo, params.contact, params.period, params.addition);
             break;
         case 'requestRedemption':
             requestRedemption(params.redemptionId, params.tokenId, params.acceptanceId, params.addition);
