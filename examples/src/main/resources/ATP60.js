@@ -475,7 +475,7 @@ function _checkTranche(_trnId, _dftTrnId, _isDft) {
     return _trnId;
 }
 
-function _setSeller(_sender, _cpyFlNm, _cpyStNm, _cpyCat, _attrs) {
+function _setSeller(_sender, _cpyFlNm, _cpyStNm, _cpyCat, _cpyCer) {
     // Checking parameters.
     Utils.assert(_checkStr(_cpyFlNm, 1, 1024), _throwErr(error.CPY_FL_NM_ERR));
     Utils.assert(_checkStr(_cpyStNm, 1, 64), _throwErr(error.CPY_ST_NM_ERR));
@@ -487,7 +487,7 @@ function _setSeller(_sender, _cpyFlNm, _cpyStNm, _cpyCat, _attrs) {
     seller.companyFullName = _cpyFlNm;
     seller.companyShortName = _cpyStNm;
     seller.companyContact = _cpyCat;
-    seller.attributes = _attrs;
+    seller.companyCertification = _cpyCer;
     const sellerKey = keys.sel;
     _store(sellerKey, _toStr(seller));
 }
@@ -884,6 +884,7 @@ function setDocument(id, name, url, hashType, hash) {
     docInfo.hashType = hashType;
     docInfo.hash = hash;
     docInfo.provider = gTxSender;
+    docInfo.date = gBlockTime;
     _store(_makeKey(keys.doc, id), _toStr(docInfo));
 
     // Committing event.
@@ -1806,7 +1807,6 @@ function setAcceptance(id, pub, flNm, stNm, logo, cat, period, addi) {
     // Setting the acceptance.
     const acpKey = _makeKey(keys.acp, id);
     let acp = {};
-    acp.id = id;
     acp.publicKey = pub;
     acp.fullName = flNm;
     acp.shortName = stNm;
@@ -2152,30 +2152,19 @@ function disputeInfo(repnId, apt) {
  * @param {string} cpyFlNm [公司名称全称]
  * @param {string} cpyStName [公司名称简称]
  * @param {string} cpyCat [公司联系方式]
- * @param {Object} attrs [属性]
+ * @param {Object} cpyCer [属性]
  * @throws {error}
  */
-function setSeller(cpyFlNm, cpyStNm, cpyCat, attrs) {
+function setSeller(cpyFlNm, cpyStNm, cpyCat, cpyCer) {
     // Checking whether the sender is seller.
     const isSel = _checkIsSeller(gTxSender);
     Utils.assert(isSel, _throwErr(error.NOT_SEL));
 
     // Setting the seller.
-    _setSeller(gTxSender, cpyFlNm, cpyStNm, cpyCat, attrs);
+    _setSeller(gTxSender, cpyFlNm, cpyStNm, cpyCat, cpyCer);
 
     // Committing event.
     Chain.tlog('setSeller', _makeTlogSender(), cpyFlNm, cpyStNm, cpyCat);
-}
-
-function setLogicContract(addr) {
-    // Checking parameters.
-    Utils.assert(_checkAddr(_addr), _throwErr(error.ADDR_ERR));
-
-    // Checking whether the sender is seller.
-    const isSel = _checkIsSeller(gTxSender);
-    Utils.assert(isSel, _throwErr(error.NOT_SEL));
-
-    //
 }
 
 /**

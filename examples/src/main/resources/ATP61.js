@@ -1,6 +1,7 @@
 'use strict';
 
 const keys = {
+    lgaddr: 'logic_address',
     sel: 'seller',
     crt: 'contract',
     doc: 'document_',
@@ -481,7 +482,7 @@ function _checkDefaultTranche(_skuId, _trnId, _isDftTrn) {
     return _checkTranche(_trnId, skuTk.defaultTrancheId, _isDftTrn);
 }
 
-function _setSeller(_sender, _cpyFlNm, _cpyStNm, _cpyCat, _attrs) {
+function _setSeller(_sender, _cpyFlNm, _cpyStNm, _cpyCat, _cpyCer) {
     // Checking parameters.
     Utils.assert(_checkStr(_cpyFlNm, 1, 1024), _throwErr(error.CPY_FL_NM_ERR));
     Utils.assert(_checkStr(_cpyStNm, 1, 64), _throwErr(error.CPY_ST_NM_ERR));
@@ -493,9 +494,7 @@ function _setSeller(_sender, _cpyFlNm, _cpyStNm, _cpyCat, _attrs) {
     seller.companyFullName = _cpyFlNm;
     seller.companyShortName = _cpyStNm;
     seller.companyContact = _cpyCat;
-    seller.attributes = _attrs;
-    seller.majorVersion = 'ATP60';
-    seller.minorVersion = "0";
+    seller.companyCertification = _cpyCer;
     const sellerKey = keys.sel;
     _store(sellerKey, _toStr(seller));
 }
@@ -1796,7 +1795,6 @@ function setAcceptance(id, pub, flNm, stNm, logo, cat, period, addi) {
     // Setting the acceptance.
     const acpKey = _makeKey(keys.acp, id);
     let acp = {};
-    acp.id = id;
     acp.publicKey = pub;
     acp.fullName = flNm;
     acp.shortName = stNm;
@@ -2144,16 +2142,16 @@ function disputeInfo(repnId, apt) {
  * @param {string} cpyFlNm [公司名称全称]
  * @param {string} cpyStName [公司名称简称]
  * @param {string} cpyCat [公司联系方式]
- * @param {Object} attrs [属性]
+ * @param {Object} cpyCer [属性]
  * @throws {error}
  */
-function setSeller(cpyFlNm, cpyStNm, cpyCat, attrs) {
+function setSeller(cpyFlNm, cpyStNm, cpyCat, cpyCer) {
     // Checking whether the sender is seller.
     const isSel = _checkIsSeller(gTxSender);
     Utils.assert(isSel, _throwErr(error.NOT_SEL));
 
     // Setting the seller.
-    _setSeller(gTxSender, cpyFlNm, cpyStNm, cpyCat, attrs);
+    _setSeller(gTxSender, cpyFlNm, cpyStNm, cpyCat, cpyCer);
 
     // Committing event.
     Chain.tlog('setSeller', _makeTlogSender(), cpyFlNm, cpyStNm, cpyCat);
