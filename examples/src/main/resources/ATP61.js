@@ -399,9 +399,9 @@ function _throwErr(_errCode) {
     return _toStr(_errCode);
 }
 
-function _throwErrMsg(_code, _msg) {
+function _throwErrMsg(_err, _msg) {
     const defErr = {
-        code: _code,
+        code: _err.code,
         msg: _msg
     };
     return _toStr(defErr);
@@ -512,7 +512,7 @@ function _checkArrayItem(_arr, _minLen, _maxLen, _itemName, _err) {
         const len = _arr.length;
         let i = 0;
         for (i = 0; i < len; i += 1) {
-            Utils.assert(_checkStr(_arr[i], _minLen, _maxLen), _throwErrMsg(_err.code, `The ${_itemName} of index ${i} is not between ${_minLen} and ${_maxLen}.`));
+            Utils.assert(_checkStr(_arr[i], _minLen, _maxLen), _throwErrMsg(_err, `The ${_itemName} of index ${i} is not between ${_minLen} and ${_maxLen}.`));
         }
     }
 }
@@ -996,7 +996,7 @@ function createTranche(id, des, lms) {
  */
 function trancheInfo(trnId) {
     // Checking parameters.
-    Utils.assert(_checkStr(trnId, 1, 32), _throwErr(error.TRN_ID_ERR));
+    Utils.assert(_checkStr(trnId, 0, 32), _throwErr(error.TRN_ID_ERR));
 
     // Checking whether the tranche exists.
     const trnVal = _checkExist(_makeKey(keys.trn, trnId), error.TRN_NOT_EST);
@@ -1223,7 +1223,7 @@ function setSku(skuId, name, symbol, mainIcn, viceIcns, labels, des, repnAddr, a
     _store(skuTkKey, _toStr(skuTk));
 
     // Committing event.
-    Chain.tlog('modifySku', _makeTlogSender(), skuId, name);
+    Chain.tlog('modifySku', _makeTlogSender(), skuId);
 }
 
 /**
@@ -1352,7 +1352,7 @@ function additionalIssuance(skuId, trnId, tkId, tkInfo) {
 function assignToTranche(skuId, toTrnId, tkId) {
     // Checking parameters.
     Utils.assert(_checkStr(skuId, 1, 32), _throwErr(error.SKU_ID_ERR));
-    Utils.assert(_checkStr(toTrnId, 1, 32), _throwErr(error.TRN_ID_ERR));
+    Utils.assert(_checkStr(toTrnId, 0, 32), _throwErr(error.TRN_ID_ERR));
     Utils.assert(_checkStr(tkId, 1, 64), _throwErr(error.TK_ID_ERR));
 
     // Checking whether the sender is seller.
@@ -1435,6 +1435,7 @@ function setAuthorizers(skuId, autrs) {
 function authorizeSku(skuId, trnId) {
     // Checking parameters.
     Utils.assert(_checkStr(skuId, 1, 32), _throwErr(error.SKU_ID_ERR));
+    Utils.assert(_checkStr(trnId, 0, 32), _throwErr(error.TRN_ID_ERR));
 
     // Checking whether the sku exists.
     const skuTkKey = _makeKey(keys.sku, skuId);
@@ -1516,7 +1517,7 @@ function skusOfSpu(spuId) {
  */
 function skusOfTranche(trnId) {
     // Checking parameters.
-    Utils.assert(_checkStr(trnId, 1, 32), _throwErr(error.TRN_ID_ERR));
+    Utils.assert(_checkStr(trnId, 0, 32), _throwErr(error.TRN_ID_ERR));
 
     // Checking whether the tranche exists.
     trnId = _checkTranche(trnId);
@@ -2248,7 +2249,7 @@ function main(input) {
             setAcceptance(params.id, params.publicKey, params.fullName, params.shortName, params.logo, params.contact, params.period, params.addition);
             break;
         case 'requestRedemption':
-            requestRedemption(params.redemptionId, params.tokenId, params.acceptanceId, params.addition);
+            requestRedemption(params.redemptionId, params.tokenId, params.acceptanceId, params.description, params.addition);
             break;
         case 'redeem':
             redeem(params.redemptionId, params.applicant);
