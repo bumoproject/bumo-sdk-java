@@ -5,7 +5,6 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import io.bumo.SDK;
 import io.bumo.common.ToBaseUnit;
-import io.bumo.common.Tools;
 import io.bumo.encryption.utils.hash.HashUtil;
 import io.bumo.model.request.*;
 import io.bumo.model.request.operation.BaseOperation;
@@ -23,8 +22,40 @@ import java.net.URL;
 public class Atp61TokenDemo {
     /* Bumo 1.2.0 test version */
 	public SDK sdk = SDK.getInstance("http://13.112.159.231");
-	
-	/**
+
+    public String atp61Address = "buQtCAY2Q92SiXaMwXdKKXhe4dVrmJnx1CfR";
+    public String entryAddress = "buQep2Eq8rVCxyb7NHtZ15Y77n6AcZufpkan";
+
+    @Test
+    public void createAtp61Contract() {
+        // The seller public key to registers information.
+        String sellerPrivateKey = "privC15YAp4M4oDLcJ6JqyPqYH55VXPeNckE2AVqWcHN8BB4PAVwGjJr";
+        // The seller account address.
+        String sellerAddress = "buQfTPaQBzFGBzGy87pSsc6MmNJKKKmzTSyC";
+
+        createContract(sellerPrivateKey, sellerAddress, "ATP61.js");
+    }
+
+    @Test
+    public void createEntryContract() {
+        // The seller public key to registers information.
+        String sellerPrivateKey = "privC15YAp4M4oDLcJ6JqyPqYH55VXPeNckE2AVqWcHN8BB4PAVwGjJr";
+        // The seller account address.
+        String sellerAddress = "buQfTPaQBzFGBzGy87pSsc6MmNJKKKmzTSyC";
+
+        createContract(sellerPrivateKey, sellerAddress, "Entry.js");
+    }
+
+    @Test
+    public void getContractAddress() {
+        String atp61Hash = "407227f74c310db3a6e05ad2d719099deb5b830030e7f497fc829bd82ca02a13";
+        String entryHash = "ce6312b096f7c19a9e4f19616cd5e95712c5d18f2995e7521b6240e633911c00";
+        getContractAddressQuery(atp61Hash);
+        getContractAddressQuery(entryHash);;
+    }
+
+
+    /**
 	 * First: Seller (buQfTPaQBzFGBzGy87pSsc6MmNJKKKmzTSyC) registers the information in ATP 60.
 	 */
 	@Test
@@ -43,6 +74,7 @@ public class Atp61TokenDemo {
         String organizationalCode = "N5464**";
         // Company corporate name.
         String corporateName = "某某";
+        String confirmPeriod = "7";
         // Company corporate identity card number
         String cardNumber = "1**";
         String businessLicenseIconType = "png";
@@ -56,12 +88,7 @@ public class Atp61TokenDemo {
         String cardBackPhoto = "[图片类型|url|hash类型|hash值]";
 
         // Registerring.
-        registerTx(sellerPrivateKey, sellerAddress, fullName, shortName, contact, organizationalCode, corporateName, cardNumber, businessLicense, cardFrontPhoto, cardBackPhoto);
-    }
-
-	@Test
-	public void getContractAddress() {
-        getContractAddressQuery();
+        registerTx(sellerPrivateKey, sellerAddress, fullName, shortName, contact, confirmPeriod, organizationalCode, corporateName, cardNumber, businessLicense, cardFrontPhoto, cardBackPhoto);
     }
 
     @Test
@@ -239,7 +266,7 @@ public class Atp61TokenDemo {
         // The seller address.
         String sellerAddress = "buQfTPaQBzFGBzGy87pSsc6MmNJKKKmzTSyC";
         // The acceptance id.
-        String acceptanceId = "1";
+        String acceptanceId = "2";
         // The acceptor address.
         String acceptorPublicKey = "b0014d4d8338f743631f4b04c49a693c6757962d888fbc4188a6cf4bacf99b585806bd335194";
         // The acceptance full name.
@@ -250,16 +277,14 @@ public class Atp61TokenDemo {
         String acceptanceLogo = "png|data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAyMC4wLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjxzdmcgdmVyc2lvbj0iMS4wIiBpZD0i5Zu+5bGCXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB2aWV3Qm94PSIwIDAgMTEyLjQgNDAiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDExMi40IDQwOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+DQo8c3R5bGUgdHlwZT0idGV4dC9jc3MiPg0KCS5zdDB7ZmlsbDojRkZGRkZGO30NCgkuc3Qxe2ZpbGw6dXJsKCNTVkdJRF8xXyk7fQ0KCS5zdDJ7ZmlsbDp1cmwoI1NWR0lEXzJfKTt9DQoJLnN0M3tmaWxsOnVybCgjU1ZHSURfM18pO30NCgkuc3Q0e2ZpbGw6dXJsKCNTVkdJRF80Xyk7fQ0KPC9zdHlsZT4NCjxnPg0KCTxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik03MS43LDExLjl2MTIuNGMwLDAuNS0wLjQsMC44LTAuOCwwLjhoLTIuM2MtMC41LDAtMC44LTAuNC0wLjgtMC44VjExLjljMC0wLjEtMC4xLTAuMi0wLjItMC4yaC0zLjINCgkJYy0wLjEsMC0wLjIsMC4xLTAuMiwwLjJWMjdjMCwwLjksMC43LDEuNywxLjcsMS43aDcuN2MwLjksMCwxLjctMC43LDEuNy0xLjdWMTEuOWMwLTAuMS0wLjEtMC4yLTAuMi0wLjJoLTMuMg0KCQlDNzEuOCwxMS43LDcxLjcsMTEuOCw3MS43LDExLjl6Ii8+DQoJPHBhdGggY2xhc3M9InN0MCIgZD0iTTc5LjEsMTEuN3YyMGwzLjUtMy4xVjE1LjRjMC0wLjEsMC4xLTAuMiwwLjItMC4yaDIuNmMwLjEsMCwwLjIsMC4xLDAuMiwwLjJ2MTNjMCwwLjEsMC4xLDAuMiwwLjIsMC4ySDg5DQoJCWMwLjEsMCwwLjItMC4xLDAuMi0wLjJ2LTEzYzAtMC4xLDAuMS0wLjIsMC4yLTAuMmgyYzAuNSwwLDAuOCwwLjQsMC44LDAuOHYxMi40YzAsMC4xLDAuMSwwLjIsMC4yLDAuMmgzLjJjMC4xLDAsMC4yLTAuMSwwLjItMC4yDQoJCXYtMTVjMC0wLjktMC43LTEuNy0xLjctMS43SDc5LjF6Ii8+DQoJPHBhdGggY2xhc3M9InN0MCIgZD0iTTk5LjUsMTMuNFYyN2MwLDAuOSwwLjcsMS43LDEuNywxLjdoNy43YzAuOSwwLDEuNy0wLjcsMS43LTEuN1YxMy40YzAtMC45LTAuNy0xLjctMS43LTEuN2gtNy43DQoJCUMxMDAuMiwxMS43LDk5LjUsMTIuNCw5OS41LDEzLjR6IE0xMDYuMSwyNC44aC0yLjNjLTAuNSwwLTAuOC0wLjQtMC44LTAuOHYtNy43YzAtMC41LDAuNC0wLjgsMC44LTAuOGgyLjNjMC41LDAsMC44LDAuNCwwLjgsMC44DQoJCVYyNEMxMDcsMjQuNSwxMDYuNiwyNC44LDEwNi4xLDI0Ljh6Ii8+DQoJPHBhdGggY2xhc3M9InN0MCIgZD0iTTU5LjIsMjBsMS4xLTEuMWMwLjEtMC4xLDAuMS0wLjEsMC4xLTAuMnYtNS40YzAtMC45LTAuNy0xLjctMS43LTEuN2gtOS4zdjE2LjloOS4zYzAuOSwwLDEuNy0wLjcsMS43LTEuNw0KCQl2LTUuNGMwLTAuMSwwLTAuMi0wLjEtMC4yTDU5LjIsMjBDNTkuMSwyMC4yLDU5LjEsMjAuMSw1OS4yLDIweiBNNTYsMjUuMWgtMy4xdi0zLjVINTZjMC41LDAsMC44LDAuNCwwLjgsMC44djEuOQ0KCQlDNTYuOCwyNC43LDU2LjQsMjUuMSw1NiwyNS4xeiBNNTYuOCwxNy45YzAsMC41LTAuNCwwLjgtMC44LDAuOGgtMy4xbDAsMHYtMy41SDU2YzAuNSwwLDAuOCwwLjQsMC44LDAuOFYxNy45eiIvPg0KPC9nPg0KPGc+DQoJPGc+DQoJCQ0KCQkJPGxpbmVhckdyYWRpZW50IGlkPSJTVkdJRF8xXyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSI5LjkiIHkxPSIzNjAuNzM3MiIgeDI9IjkuOSIgeTI9IjM5My41NzEzIiBncmFkaWVudFRyYW5zZm9ybT0ibWF0cml4KDEgMCAwIDEgMCAtMzU4KSI+DQoJCQk8c3RvcCAgb2Zmc2V0PSIwIiBzdHlsZT0ic3RvcC1jb2xvcjojMDBEMDgwIi8+DQoJCQk8c3RvcCAgb2Zmc2V0PSIxIiBzdHlsZT0ic3RvcC1jb2xvcjojMEJERDYwIi8+DQoJCTwvbGluZWFyR3JhZGllbnQ+DQoJCTxwYXRoIGNsYXNzPSJzdDEiIGQ9Ik0xNy45LDEwLjhWMC42YzAtMC4xLTAuMS0wLjItMC4yLTAuMUwyLDkuNUwxLjksOS42djEwLjJDMS45LDIwLDIuMSwyMCwyLjIsMjBsMTUuNi05DQoJCQlDMTcuOCwxMC45LDE3LjksMTAuOSwxNy45LDEwLjh6Ii8+DQoJPC9nPg0KCTxnPg0KCQkNCgkJCTxsaW5lYXJHcmFkaWVudCBpZD0iU1ZHSURfMl8iIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiB4MT0iMTQuNjYyNSIgeTE9IjM2MC43MzcyIiB4Mj0iMTQuNjYyNSIgeTI9IjM5My41NzEzIiBncmFkaWVudFRyYW5zZm9ybT0ibWF0cml4KDEgMCAwIDEgMCAtMzU4KSI+DQoJCQk8c3RvcCAgb2Zmc2V0PSIwIiBzdHlsZT0ic3RvcC1jb2xvcjojMDBEMDgwIi8+DQoJCQk8c3RvcCAgb2Zmc2V0PSIxIiBzdHlsZT0ic3RvcC1jb2xvcjojMEJERDYwIi8+DQoJCTwvbGluZWFyR3JhZGllbnQ+DQoJCTxwYXRoIGNsYXNzPSJzdDIiIGQ9Ik0xNy45LDIzLjZ2LTcuMWMwLTAuMS0wLjEtMC4yLTAuMi0wLjFMMTEuNSwyMGMtMC4xLDAuMS0wLjEsMC4yLDAsMC4zbDYuMSwzLjUNCgkJCUMxNy43LDIzLjgsMTcuOSwyMy44LDE3LjksMjMuNnoiLz4NCgk8L2c+DQoJPGc+DQoJCQ0KCQkJPGxpbmVhckdyYWRpZW50IGlkPSJTVkdJRF8zXyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIzMC41NSIgeTE9IjM2MC43MzcyIiB4Mj0iMzAuNTUiIHkyPSIzOTMuNTcxMyIgZ3JhZGllbnRUcmFuc2Zvcm09Im1hdHJpeCgxIDAgMCAxIDAgLTM1OCkiPg0KCQkJPHN0b3AgIG9mZnNldD0iMCIgc3R5bGU9InN0b3AtY29sb3I6IzAwRDA4MCIvPg0KCQkJPHN0b3AgIG9mZnNldD0iMSIgc3R5bGU9InN0b3AtY29sb3I6IzBCREQ2MCIvPg0KCQk8L2xpbmVhckdyYWRpZW50Pg0KCQk8cGF0aCBjbGFzcz0ic3QzIiBkPSJNMzMuNSw2Ljl2MjAuNWMwLDAuMSwwLDAuMS0wLjEsMC4xTDI5LDMwLjFjLTAuMSwwLjEtMC4yLDAtMC4yLTAuMVY0LjFjMC0wLjEsMC0wLjEtMC4xLTAuMWwtNS45LTMuNA0KCQkJYy0wLjEtMC4xLTAuMiwwLTAuMiwwLjF2Ny42bDAsMFYzMmwwLDB2Ny42YzAsMC4xLDAuMSwwLjIsMC4yLDAuMWwxNS42LTlsMC4xLTAuMVY5LjdjMC0wLjEsMC0wLjEtMC4xLTAuMWwtNC43LTIuNw0KCQkJQzMzLjYsNi44LDMzLjUsNi44LDMzLjUsNi45eiIvPg0KCTwvZz4NCgk8Zz4NCgkJDQoJCQk8bGluZWFyR3JhZGllbnQgaWQ9IlNWR0lEXzRfIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjkuOTUiIHkxPSIzNjAuNzM3MiIgeDI9IjkuOTUiIHkyPSIzOTMuNTcxMyIgZ3JhZGllbnRUcmFuc2Zvcm09Im1hdHJpeCgxIDAgMCAxIDAgLTM1OCkiPg0KCQkJPHN0b3AgIG9mZnNldD0iMCIgc3R5bGU9InN0b3AtY29sb3I6IzAwRDA4MCIvPg0KCQkJPHN0b3AgIG9mZnNldD0iMSIgc3R5bGU9InN0b3AtY29sb3I6IzBCREQ2MCIvPg0KCQk8L2xpbmVhckdyYWRpZW50Pg0KCQk8cGF0aCBjbGFzcz0ic3Q0IiBkPSJNMTcuOCwyOS4zbC0xNS42LTljLTAuMS0wLjEtMC4yLDAtMC4yLDAuMXYxMC4yYzAsMC4xLDAsMC4xLDAuMSwwLjFsMTUuNiw5YzAuMSwwLjEsMC4yLDAsMC4yLTAuMVYyOS40DQoJCQlDMTcuOSwyOS4zLDE3LjgsMjkuMywxNy44LDI5LjN6Ii8+DQoJPC9nPg0KPC9nPg0KPC9zdmc+DQo=|md5|1231231231231231";
         // The acceptance contact.
         String acceptanceContact = "contact@my.com";
-        // The acceptance period.
-        String acceptancePeriod = "7";
 
-        setAcceptanceTx(sellerPrivateKey, sellerAddress, acceptanceId, acceptorPublicKey, acceptanceFullName, acceptanceShortName, acceptanceLogo, acceptanceContact, acceptancePeriod);
+        setAcceptanceTx(sellerPrivateKey, sellerAddress, acceptanceId, acceptorPublicKey, acceptanceFullName, acceptanceShortName, acceptanceLogo, acceptanceContact);
     }
 
     @Test
     public void acceptanceInfo() {
         // The acceptance id.
-        String acceptanceId = "1";
+        String acceptanceId = "2";
 
         acceptanceInfoQuery(acceptanceId);
     }
@@ -279,15 +304,15 @@ public class Atp61TokenDemo {
         // The seller address.
         String sellerAddress = "buQfTPaQBzFGBzGy87pSsc6MmNJKKKmzTSyC";
         // The sku id.
-        String skuId = "2";
+        String skuId = "1";
         // The default tranche.
         // Notice: If this is not setting, the tranche of id '0' will be used.
-        String trancheId = "1";
+        String trancheId = null;
         // Whether setting the tranche id as default tranche.
         boolean isDefaultTranche = false;
         // The spu id.
         // Notice: If this is not setting, this sku tokens don't have spu.
-        String spuId = "000000001";
+        String spuId = null;
         // The sku label.
         JSONArray skuLabel = new JSONArray();
         skuLabel.add("iphone");
@@ -297,6 +322,8 @@ public class Atp61TokenDemo {
         skuLabel.add("iphone 5s 白色 64G 中国大陆版");
         // The address that will be sent SKU Tokens when the redemption finishes.
         String redemptionAddress = "buQqudnoPPV2utx92jfdcLkFGDaB7v3iasPM";
+        // The redemption peroid.
+        String redemptionPeriod = "7";
         // The sku reference price.
         String skuPrice = "3000";
         // The sku color.
@@ -326,7 +353,7 @@ public class Atp61TokenDemo {
         JSONArray viceIcons = new JSONArray();
         viceIcons.add(mainIcon);
         // The acceptance id
-        String acceptanceId = "1";
+        String acceptanceId = "2";
 
         // The sku attributes
         JSONObject attributes = new JSONObject();
@@ -337,7 +364,19 @@ public class Atp61TokenDemo {
         attributes.put("4", buildAdditionIndex("0",         "型号",  "text",  skuModel, "-",       "-"));
 
         // Issuing SKU Tokens.
-        issueSKUTokensTx(sellerPrivateKey, sellerAddress, skuId, trancheId, isDefaultTranche, spuId, skuName, tokenSymbol, tokenId, tokenInfo, skuDesc, mainIcon, viceIcons, skuLabel, redemptionAddress, acceptanceId, skuAbstract, attributes);
+        issueSKUTokensTx(sellerPrivateKey, sellerAddress, skuId, trancheId, isDefaultTranche, spuId, skuName, tokenSymbol, tokenId, tokenInfo, skuDesc, mainIcon, viceIcons, skuLabel, redemptionAddress, redemptionPeriod, acceptanceId, skuAbstract, attributes);
+    }
+
+    @Test
+    public void setLogicAddress() {
+        // The seller public key to registers information.
+        String sellerPrivateKey = "privC15YAp4M4oDLcJ6JqyPqYH55VXPeNckE2AVqWcHN8BB4PAVwGjJr";
+        // The seller account address.
+        String sellerAddress = "buQfTPaQBzFGBzGy87pSsc6MmNJKKKmzTSyC";
+        // The new logic address
+        String logicAddress = "buQYJZ4e5MASDBXcMGSxzdWEZ3eej5voHCxo";
+
+        setLogicAddressTx(sellerPrivateKey, sellerAddress, logicAddress);
     }
 
     @Test
@@ -358,6 +397,7 @@ public class Atp61TokenDemo {
         skuLabel.add("iphone 5s 白色 64G 中国大陆版");
         // The address that will be sent SKU Tokens when the redemption finishes.
         String redemptionAddress = "buQqudnoPPV2utx92jfdcLkFGDaB7v3iasPM";
+        String acceptanceId = "adfqwqwq";
         // The sku reference price.
         String skuPrice = "3000";
         // The sku color.
@@ -391,13 +431,13 @@ public class Atp61TokenDemo {
         attributes.put("3", buildAdditionIndex("0",         "内存",  "int",   skuMemory,       "-",        "G"));
         attributes.put("4", buildAdditionIndex("0",         "型号",  "text",  skuModel, "-",       "-"));
 
-        setSKUTx(sellerPrivateKey, sellerAddress, skuId, skuName, tokenSymbol, skuDesc, mainIcon, viceIcons, skuLabel, redemptionAddress, skuAbstract, attributes);
+        setSKUTx(sellerPrivateKey, sellerAddress, skuId, skuName, tokenSymbol, skuDesc, mainIcon, viceIcons, skuLabel, redemptionAddress, acceptanceId, skuAbstract, attributes);
     }
 
     @Test
     public void skuTokenInfo() {
         // The sku id.
-        String skuId = "2";
+        String skuId = "1";
 
         SKUTokenInfoQuery(skuId);
     }
@@ -536,9 +576,9 @@ public class Atp61TokenDemo {
         // The seller address.
         String sellerAddress = "buQfTPaQBzFGBzGy87pSsc6MmNJKKKmzTSyC";
         // The sku id.
-        String skuId = "2";
+        String skuId = "1";
         // The tranche id. If the trancheId is ignored, SKU Tokens will be sent to default tranche which id is '0'.
-        String trancheId = "1";
+        String trancheId = null; //"1";
         // The token supply.
         String tokenId = "3";
         // The token info
@@ -561,7 +601,7 @@ public class Atp61TokenDemo {
         // The address.
         String address= "buQfTPaQBzFGBzGy87pSsc6MmNJKKKmzTSyC";
         // The token supply.
-        String tokenId = "2";
+        String tokenId = "1";
 
         destroyTx(sellerPrivateKey, sellerAddress, address, tokenId);
     }
@@ -635,7 +675,7 @@ public class Atp61TokenDemo {
     @Test
     public void balanceOf() {
         // The sku id.
-        String skuId = "2";
+        String skuId = "1";
         // The address to be queried.
         String address = "buQfTPaQBzFGBzGy87pSsc6MmNJKKKmzTSyC";
 
@@ -645,13 +685,27 @@ public class Atp61TokenDemo {
     @Test
     public void balanceOfByTranche() {
         // The sku id.
-        String skuId = "2";
+        String skuId = "1";
         // The tranche id.
-        String trancheId = "1";
+        String trancheId = null; //"1";
         // The address to be queried.
-        String address = "buQfTPaQBzFGBzGy87pSsc6MmNJKKKmzTSyC";
+        String address = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
 
         balanceOfByTrancheQuery(address, skuId, trancheId);
+    }
+
+    @Test
+    public void balanceOfByLockup() {
+        // The sku id.
+        String skuId = "1";
+        // The tranche id.
+        String trancheId = null; //"1";
+        // The lockup id.
+        String lockupId = "d8c6bee358347953cda5cde0a35695ed76bb777edef23492f84a750f7572d18f";
+        // The address
+        String address = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
+
+        balanceOfByLockupQuery(address, skuId, trancheId, lockupId);
     }
 
     /**
@@ -660,9 +714,14 @@ public class Atp61TokenDemo {
     @Test
     public void approve() {
         // The token holder public key to approve sku tokens.
-        String holderPrivateKey = "privbUCxLLYNCPP1smBiNEYVnErMDwT8eJ7PWJZyioJQhXcHApwgqKsP";
+        // The seller public key to issue SKU Tokens.
+        String sellerPrivateKey = "privC15YAp4M4oDLcJ6JqyPqYH55VXPeNckE2AVqWcHN8BB4PAVwGjJr";
+        // The seller address.
+        String sellerAddress = "buQfTPaQBzFGBzGy87pSsc6MmNJKKKmzTSyC";
+
+        String holderPrivateKey = "privC15YAp4M4oDLcJ6JqyPqYH55VXPeNckE2AVqWcHN8BB4PAVwGjJr";
         // The token holder address.
-        String holderAddress = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
+        String holderAddress = "buQfTPaQBzFGBzGy87pSsc6MmNJKKKmzTSyC";
         // The spender address.
         String spender = "buQXmv2C8hLAArdR2HtJZwz44x9eiJ1hERYK";
         // The sku token id.
@@ -675,13 +734,13 @@ public class Atp61TokenDemo {
     @Test
     public void allowance() {
         // The token owner.
-        String owner = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
+        String owner = "buQfTPaQBzFGBzGy87pSsc6MmNJKKKmzTSyC";
         // The spender.
         String spender = "buQXmv2C8hLAArdR2HtJZwz44x9eiJ1hERYK";
         // The sku id.
-        String skuId = "2";
+        String skuId = "1";
         // The tranche id.
-        String trancheId = "1";
+        String trancheId = null;
 
         allowanceQuery(owner, spender, skuId, trancheId);
     }
@@ -712,27 +771,40 @@ public class Atp61TokenDemo {
      */
     @Test
     public void requestRedemption() {
-        // The token holder public key to request redemption.
-        String holderPrivateKey = "privbUbdoe6co99ykomqQRUDiD8rh3XvWvmexNUS1bZbu5gb8RuKJA8Y";
+        // The seller public key to issue SKU Tokens.
+        String sellerPrivateKey = "privC15YAp4M4oDLcJ6JqyPqYH55VXPeNckE2AVqWcHN8BB4PAVwGjJr";
+        // The seller address.
+        String sellerAddress = "buQfTPaQBzFGBzGy87pSsc6MmNJKKKmzTSyC";
+        // The token holder public key to apply dispute.
+        String holderPrivateKey = "privbUCxLLYNCPP1smBiNEYVnErMDwT8eJ7PWJZyioJQhXcHApwgqKsP";
         // The token holder address.
-        String holderAddress = "buQiHTjDSjQedxR2vF9WULhgWMtbo8rRLmor";
+        String holderAddress = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
         // The redemption id.
-        String redemptionId = "1";
+        String redemptionId = "5";
         // The token id.
         String tokenId = "1";
-        // The acceptance id.
-        String acceptanceId = "1";
+        // The description.
+        String description = "要好的";
+        // The addition
+        JSONObject addition = new JSONObject();
+        addition.put("id", buildAdditionIndex("parentId", "name", "type", "value", "decimals", "uint"));
+        addition.put("1", buildAdditionIndex("0",         "参考价", "int",  "100",     "-",       "CNY"));
+        addition.put("2", buildAdditionIndex("0",         "颜色",  "text",  "白色",   "-",        "-"));
+        addition.put("3", buildAdditionIndex("0",         "内存",  "int",   "256",       "-",        "G"));
+        addition.put("4", buildAdditionIndex("0",         "型号",  "text",  "Plus", "-",       "-"));
+
+
 
         // Requesting redemption.
-        requestRedemptionTx(holderPrivateKey, holderAddress, redemptionId, tokenId, acceptanceId, null);
+        requestRedemptionTx(holderPrivateKey, holderAddress, redemptionId, tokenId, description, addition);
     }
 
     @Test
     public void redemptionInfo() {
         // The redemption id.
-        String redemptionId = "1";
+        String redemptionId = "4";
         // The redemption applicant.
-        String applicant = "buQiHTjDSjQedxR2vF9WULhgWMtbo8rRLmor";
+        String applicant = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
 
         redemptionInfoQuery(redemptionId, applicant);
     }
@@ -748,12 +820,14 @@ public class Atp61TokenDemo {
         // The acceptor address.
         String acceptorAddress = "buQiHTjDSjQedxR2vF9WULhgWMtbo8rRLmor";
         // The redemption id.
-        String redemptionId = "1";
+        String redemptionId = "5";
         // The redemption applicant.
-        String applicant = "buQiHTjDSjQedxR2vF9WULhgWMtbo8rRLmor";
+        String applicant = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
+        // The logistics.
+        String logistics = "1234134";
 
         // Redeeming.
-        redeemTx(acceptorPrivateKey, acceptorAddress, redemptionId, applicant);
+        redeemTx(acceptorPrivateKey, acceptorAddress, redemptionId, applicant, logistics);
     }
 
 
@@ -764,119 +838,54 @@ public class Atp61TokenDemo {
     @Test
     public void confirmRedemption() {
         // The token holder public key to confirm redemption.
-        String holderPrivateKey = "privbUbdoe6co99ykomqQRUDiD8rh3XvWvmexNUS1bZbu5gb8RuKJA8Y";
+        String holderPrivateKey = "privbUCxLLYNCPP1smBiNEYVnErMDwT8eJ7PWJZyioJQhXcHApwgqKsP";
         // The token holder address.
-        String holderAddress = "buQiHTjDSjQedxR2vF9WULhgWMtbo8rRLmor";
+        String holderAddress = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
         // The redemption id.
-        String redemptionId = "1";
+        String redemptionId = "5";
         // The redemption applicant.
-        String applicant = "buQiHTjDSjQedxR2vF9WULhgWMtbo8rRLmor";
+        String applicant = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
 
         // Confirming redemption.
         confirmRedemptionTx(holderPrivateKey, holderAddress, redemptionId, applicant);
     }
 
-
-    /**
-     * Seventeenth: The redemption finished or causes dispute.
-     * Seventeenth2: The token holder (buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP) applies dispute.
-     */
     @Test
-    public void applyDispute() {
-        // The token holder public key to apply dispute.
+    public void lockupInfo() {
+        // The redemption id.
+        String lockupId = "d8c6bee358347953cda5cde0a35695ed76bb777edef23492f84a750f7572d18f";
+
+        lockupInfoQuery(lockupId);
+    }
+
+    @Test
+    public void cancelRedemption() {
         String holderPrivateKey = "privbUCxLLYNCPP1smBiNEYVnErMDwT8eJ7PWJZyioJQhXcHApwgqKsP";
-        // The token holder address.
+        // The seller address.
         String holderAddress = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
+        //String sellerPrivateKey = "privC15YAp4M4oDLcJ6JqyPqYH55VXPeNckE2AVqWcHN8BB4PAVwGjJr";
+        // The seller address.
+        //String sellerAddress = "buQfTPaQBzFGBzGy87pSsc6MmNJKKKmzTSyC";
+        // The token seller public key to confirm redemption.
+        String sellerPrivateKey = "privbUCxLLYNCPP1smBiNEYVnErMDwT8eJ7PWJZyioJQhXcHApwgqKsP"; // The seller public key to transfer sku tokens
+        // The seller address.
+        String sellerAddress = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
         // The redemption id.
-        String redemptionId = "1";
+        String redemptionId = "4";
         // The redemption applicant.
         String applicant = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
-        // The dispute reason.
-        String reason = "未收到货";
-        // The controller address.
-        String controller = "buQVzjctnsuSyCiAVDMTFsGggDhb12GEuQcD";
+        // The reason.
+        String reason = "12341234";
 
-        // Applying dispute.
-        applyDisputeTx(holderPrivateKey, holderAddress, redemptionId, applicant, reason, controller);
+        // Confirming redemption.
+        cancelRedemptionTx(sellerPrivateKey, sellerAddress, redemptionId, applicant, reason);
     }
 
-    @Test
-    public void disputeInfo() {
-        // The redemption id.
-        String redemptionId = "1";
-        // The redemption applicant.
-        String applicant = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
-
-
-        disputeInfoQuery(redemptionId, applicant);
-    }
-
-
-    /**
-     * Eighteenth: The token holder (buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP) sets evidence.
-     */
-    @Test
-    public void setEvidence() {
-        // The token holder public key to set evidence.
-        String holderPrivateKey = "privbUCxLLYNCPP1smBiNEYVnErMDwT8eJ7PWJZyioJQhXcHApwgqKsP";
-        // The token holder address.
-        String holderAddress = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
-        // The redemption id.
-        String redemptionId = "1";
-        // The redemption applicant.
-        String applicant = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
-        // The evidence description.
-        String description = "未收到货，查询不到快递信息";
-
-        // Setting evidence.
-        setEvidenceTx(holderPrivateKey, holderAddress, redemptionId, applicant, description);
-    }
-
-    @Test
-    public void evidenceInfo() {
-        // The redemption id.
-        String redemptionId = "1";
-        // The redemption applicant.
-        String applicant = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
-        // The evidence provider.
-        String provider = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
-
-        evidenceInfoQuery(redemptionId, applicant, provider);
-    }
-
-
-    /**
-     * Nineteenth: The controller (buQVzjctnsuSyCiAVDMTFsGggDhb12GEuQcD) handle evidence.
-     */
-    @Test
-    public void handleDispute() {
-        // The controller public key to handle dispute.
-        String controllerPrivateKey = "privbtttvTCVHMCeUTZU6qEmRNxFGo5Hd3Bk2BPgZyy5WCCMaEghgecu";
-        // The controller address.
-        String controllerAddress = "buQVzjctnsuSyCiAVDMTFsGggDhb12GEuQcD";
-        // The redemption id.
-        String redemptionId = "1";
-        // The redemption applicant.
-        String applicant = "buQWJ6jNak1stGEkQfZEZPvUwZR2W2YybUUP";
-        // The dispute result status.
-        int status = 1;
-        // The evidence description.
-        String description = "确实查询不到快递信息，SKU Tokens 返回给兑付申请人。";
-
-        // Handling dispute.
-        handleDisputeTx(controllerPrivateKey, controllerAddress, redemptionId, applicant, status, description);
-    }
-
-
-    /**
-     * Registering.
-     * @return The register tx hash.
-     */
-    public String registerTx(String sourcePrivateKey, String sourceAddress, String fullName, String shortName, String contact, String organizationalCode, String corporateName, String cardNumber, String businessLicense, String cardFrontPhoto, String cardBackPhoto) {
+    public String createContract(String sourcePrivateKey, String sourceAddress, String fileName) {
         // The contract account init balance.
         Long initBalance = ToBaseUnit.BU2MO("0.01");
         // The contract codes
-        String payLoad = getContractCodeFromFile("ATP61.js");
+        String payLoad = getContractCodeFromFile(fileName);
         // The fixed write 1000L, the unit is MO
         Long gasPrice = 1000L;
         // Setting up the maximum cost 10.03BU
@@ -885,28 +894,11 @@ public class Atp61TokenDemo {
         // 1. Getting the account nonce, and the nonce must add 1.
         Long nonce = getAccountNonce(sourceAddress) + 1;
 
-        // 2. Building the initInput
-        JSONObject initInput = new JSONObject();
-        initInput.put("companyFullName", fullName);
-        initInput.put("companyShortName", shortName);
-        initInput.put("companyContact", contact);
-        JSONObject companyCertification = new JSONObject();
-        companyCertification.put("id", buildAdditionIndex("parentId", "name", "type", "value", "decimals", "uint"));
-        companyCertification.put("1", buildAdditionIndex("0", "企业组织机构代码", "text", organizationalCode, "-", "-"));
-        companyCertification.put("2", buildAdditionIndex("0", "法人名称", "text", corporateName, "-", "-"));
-        companyCertification.put("3", buildAdditionIndex("0", "法人身份证号", "text", cardNumber, "-", "-"));
-        companyCertification.put("4", buildAdditionIndex("0", "营业执照照片", "image", businessLicense, "-", "-"));
-        companyCertification.put("5", buildAdditionIndex("0", "法人身份证正面照片", "image", cardFrontPhoto, "-", "-"));
-        companyCertification.put("6", buildAdditionIndex("0", "法人身份证反面照片", "image", cardBackPhoto, "-", "-"));
-        initInput.put("companyCertification", companyCertification);
-
-        // 3. Building ContractCreateOperation.
+        // 2. Building ContractCreateOperation.
         ContractCreateOperation operation = new ContractCreateOperation();
         operation.setSourceAddress(sourceAddress);
         operation.setInitBalance(initBalance);
         operation.setPayload(payLoad);
-        operation.setInitInput(initInput.toJSONString());
-
 
         BaseOperation[] operations = { operation };
 
@@ -921,22 +913,59 @@ public class Atp61TokenDemo {
 
 
     /**
+     * Registering.
+     * @return The register tx hash.
+     */
+    public String registerTx(String sourcePrivateKey, String sourceAddress, String fullName, String shortName, String contact, String confirmPeriod, String organizationalCode, String corporateName, String cardNumber, String businessLicense, String cardFrontPhoto, String cardBackPhoto) {
+        // The fixed write 1000L, the unit is MO
+        Long gasPrice = 1000L;
+        // Setting up the maximum cost 10.03BU
+        Long feeLimit = ToBaseUnit.BU2MO("12");
+
+        // 1. Building the initInput
+        JSONObject input = new JSONObject();
+        input.put("method", "register");
+        JSONObject params = new JSONObject();
+        params.put("logicAddress", atp61Address);
+        params.put("companyFullName", fullName);
+        params.put("companyShortName", shortName);
+        params.put("companyContact", contact);
+        params.put("confirmPeriod", confirmPeriod);
+        JSONObject companyCertification = new JSONObject();
+        companyCertification.put("id", buildAdditionIndex("parentId", "name", "type", "value", "decimals", "uint"));
+        companyCertification.put("1", buildAdditionIndex("0", "企业组织机构代码", "text", organizationalCode, "-", "-"));
+        companyCertification.put("2", buildAdditionIndex("0", "法人名称", "text", corporateName, "-", "-"));
+        companyCertification.put("3", buildAdditionIndex("0", "法人身份证号", "text", cardNumber, "-", "-"));
+        companyCertification.put("4", buildAdditionIndex("0", "营业执照照片", "image", businessLicense, "-", "-"));
+        companyCertification.put("5", buildAdditionIndex("0", "法人身份证正面照片", "image", cardFrontPhoto, "-", "-"));
+        companyCertification.put("6", buildAdditionIndex("0", "法人身份证反面照片", "image", cardBackPhoto, "-", "-"));
+        params.put("companyCertification", companyCertification);
+        input.put("params", params);
+
+        // 2. Submitting the transaction.
+        String txHash = submitTrasaction(sourcePrivateKey, sourceAddress, input.toJSONString(), null, gasPrice, feeLimit);
+        if (txHash != null) {
+            System.out.println("Success, hash: " + txHash);
+        }
+
+        return txHash;
+    }
+
+
+    /**
      * Getting the contract address.
      * @return The contract address.
      */
-    public String getContractAddressQuery() {
-        // Getting the register tx hash.
-        String registerTxHash = "c0a9611d09e3827d2dde7161d5a6c5a3295b8845b860f3759264d2c422a33bcf"; //registerTx();
-
+    public String getContractAddressQuery(String hash) {
         // Making sure the register tx success.
-        if (!MakeSureTxSuccess(registerTxHash)) {
+        if (!MakeSureTxSuccess(hash)) {
             System.out.println("The register tx runs failed!");
             return null;
         }
 
         // Initializing the request.
         ContractGetAddressRequest request = new ContractGetAddressRequest();
-        request.setHash(registerTxHash);
+        request.setHash(hash);
 
         // Getting the contract address.
         ContractGetAddressResponse response = sdk.getContractService().getAddress(request);
@@ -1222,7 +1251,7 @@ public class Atp61TokenDemo {
      * Issuing the SKU tokens
      * @return The tx hash.
      */
-    public String issueSKUTokensTx(String sourcePrivateKey, String sourceAddress, String skuId, String trancheId, Boolean isDefaultTranche, String spuId, String skuName, String tokenSymbol, String tokenId, String tokenInfo, String skuDesc, String mainIcon, JSONArray viceIcons, JSONArray skuLabel, String redemptionAddress, String acceptanceId, JSONArray skuAbstract, JSONObject attributes) {
+    public String issueSKUTokensTx(String sourcePrivateKey, String sourceAddress, String skuId, String trancheId, Boolean isDefaultTranche, String spuId, String skuName, String tokenSymbol, String tokenId, String tokenInfo, String skuDesc, String mainIcon, JSONArray viceIcons, JSONArray skuLabel, String redemptionAddress, String redemptionPeriod, String acceptanceId, JSONArray skuAbstract, JSONObject attributes) {
         // The fixed write 1000L, the unit is MO
         Long gasPrice = 1000L;
         // Setting up the maximum cost 0.01BU
@@ -1245,6 +1274,7 @@ public class Atp61TokenDemo {
         params.put("viceIcons", viceIcons);
         params.put("labels", skuLabel);
         params.put("redemptionAddress", redemptionAddress);
+        params.put("redemptionPeriod", redemptionPeriod);
         params.put("acceptanceId", acceptanceId);
         params.put("abstract", skuAbstract);
         params.put("attributes", attributes);
@@ -1260,10 +1290,36 @@ public class Atp61TokenDemo {
     }
 
     /**
+     * Set new logic address.
+     * @return The register tx hash.
+     */
+    public String setLogicAddressTx(String sourcePrivateKey, String sourceAddress, String logicAddress) {
+        // The fixed write 1000L, the unit is MO
+        Long gasPrice = 1000L;
+        // Setting up the maximum cost 0.01BU
+        Long feeLimit = ToBaseUnit.BU2MO("1");
+
+        // 1. Building the input
+        JSONObject input = new JSONObject();
+        input.put("method", "setLogicContract");
+        JSONObject params = new JSONObject();
+        params.put("newLogicAddress", logicAddress);
+        input.put("params", params);
+
+        // 2. Submitting the transaction.
+        String txHash = submitTrasaction(sourcePrivateKey, sourceAddress, input.toJSONString(), null, gasPrice, feeLimit);
+        if (txHash != null) {
+            System.out.println("Success, hash: " + txHash);
+        }
+
+        return txHash;
+    }
+
+    /**
      * Setting the SKU.
      * @return The tx hash.
      */
-    public String setSKUTx(String sourcePrivateKey, String sourceAddress, String skuId, String skuName, String tokenSymbol, String skuDesc, String mainIcon, JSONArray viceIcons, JSONArray skuLabel, String redemptionAddress, JSONArray skuAbstract, JSONObject attributes) {
+    public String setSKUTx(String sourcePrivateKey, String sourceAddress, String skuId, String skuName, String tokenSymbol, String skuDesc, String mainIcon, JSONArray viceIcons, JSONArray skuLabel, String redemptionAddress, String acceptanceId, JSONArray skuAbstract, JSONObject attributes) {
         // The fixed write 1000L, the unit is MO
         Long gasPrice = 1000L;
         // Setting up the maximum cost 0.01BU
@@ -1281,6 +1337,7 @@ public class Atp61TokenDemo {
         params.put("viceIcons", viceIcons);
         params.put("labels", skuLabel);
         params.put("redemptionAddress", redemptionAddress);
+        params.put("acceptanceId", acceptanceId);
         params.put("abstract", skuAbstract);
         params.put("attributes", attributes);
         input.put("params", params);
@@ -1735,6 +1792,23 @@ public class Atp61TokenDemo {
         return result;
     }
 
+    public String balanceOfByLockupQuery(String address, String skuId, String trancheId, String lockupId) {
+        // Init input
+        JSONObject input = new JSONObject();
+        input.put("method", "balanceOfByLockup");
+        JSONObject params = new JSONObject();
+        params.put("skuId", skuId);
+        params.put("trancheId", trancheId);
+        params.put("lockupId", lockupId);
+        params.put("address", address);
+        input.put("params", params);
+
+        // Querying
+        String result = queryInfo(input.toJSONString());
+
+        return result;
+    }
+
 
     /**
      * Approving the SKU Tokens to spender.
@@ -1819,7 +1893,7 @@ public class Atp61TokenDemo {
      * Setting an accetance.
      * @return The tx hash.
      */
-    public String setAcceptanceTx(String sourcePrivateKey, String sourceAddress, String acceptanceId, String acceptorPublicKey, String acceptanceFullName, String acceptanceShortName, String acceptanceLogo, String acceptanceContact, String acceptancePeriod) {
+    public String setAcceptanceTx(String sourcePrivateKey, String sourceAddress, String acceptanceId, String acceptorPublicKey, String acceptanceFullName, String acceptanceShortName, String acceptanceLogo, String acceptanceContact) {
         // The fixed write 1000L, the unit is MO
         Long gasPrice = 1000L;
         // Setting up the maximum cost 0.01BU
@@ -1835,7 +1909,6 @@ public class Atp61TokenDemo {
         params.put("shortName", acceptanceShortName);
         params.put("logo", acceptanceLogo);
         params.put("contact", acceptanceContact);
-        params.put("period", acceptancePeriod);
         input.put("params", params);
 
         // 2. Submitting the transaction.
@@ -1871,7 +1944,7 @@ public class Atp61TokenDemo {
      * Requesting the redemption.
      * @return The tx hash.
      */
-    public String requestRedemptionTx(String sourcePrivateKey, String sourceAddress, String redemptionId, String tokenId, String acceptanceId, Object addition) {
+    public String requestRedemptionTx(String sourcePrivateKey, String sourceAddress, String redemptionId, String tokenId, String description, Object addition) {
         // The fixed write 1000L, the unit is MO
         Long gasPrice = 1000L;
         // Setting up the maximum cost 0.01BU
@@ -1883,7 +1956,7 @@ public class Atp61TokenDemo {
         JSONObject params = new JSONObject();
         params.put("redemptionId", redemptionId);
         params.put("tokenId", tokenId);
-        params.put("acceptanceId", acceptanceId);
+        params.put("description", description);
         params.put("addition", addition);
         input.put("params", params);
 
@@ -1921,7 +1994,7 @@ public class Atp61TokenDemo {
      * The acceptor pays redemption.
      * @return The tx hash.
      */
-    public String redeemTx(String sourcePrivateKey, String sourceAddress, String redemptionId, String applicant) {
+    public String redeemTx(String sourcePrivateKey, String sourceAddress, String redemptionId, String applicant, String logistics) {
         // The fixed write 1000L, the unit is MO
         Long gasPrice = 1000L;
         // Setting up the maximum cost 0.01BU
@@ -1933,6 +2006,7 @@ public class Atp61TokenDemo {
         JSONObject params = new JSONObject();
         params.put("redemptionId", redemptionId);
         params.put("applicant", applicant);
+        params.put("logistics", logistics);
         input.put("params", params);
 
         // 2. Submitting the transaction.
@@ -1972,155 +2046,34 @@ public class Atp61TokenDemo {
         return txHash;
     }
 
+    public String lockupInfoQuery(String lockupId) {
+        // Init input
+        JSONObject input = new JSONObject();
+        input.put("method", "lockupInfo");
+        JSONObject params = new JSONObject();
+        params.put("lockupId", lockupId);
+        input.put("params", params);
 
-    /**
-     * The seller or the redemption applicant applys dispute.
-     * @return The tx hash.
-     */
-    public String applyDisputeTx(String sourcePrivateKey, String sourceAddress, String redemptionId, String applicant, String reason, String controller) {
+        // Querying
+        String result = queryInfo(input.toJSONString());
+
+        return result;
+
+    }
+
+    public String cancelRedemptionTx(String  sourcePrivateKey, String  sourceAddress, String  redemptionId, String  applicant, String reason) {
         // The fixed write 1000L, the unit is MO
         Long gasPrice = 1000L;
         // Setting up the maximum cost 0.01BU
         Long feeLimit = ToBaseUnit.BU2MO("0.1");
 
-        // 1. Building the input of 'applyDispute'.
+        // 1. Building the input of 'confirmRedemption'.
         JSONObject input = new JSONObject();
-        input.put("method", "applyDispute");
+        input.put("method", "cancelRedemption");
         JSONObject params = new JSONObject();
         params.put("redemptionId", redemptionId);
         params.put("applicant", applicant);
         params.put("reason", reason);
-        params.put("controller", controller);
-        input.put("params", params);
-
-        // 2. Submitting the transaction.
-        String txHash = submitTrasaction(sourcePrivateKey, sourceAddress, input.toJSONString(), null, gasPrice, feeLimit);
-        if (txHash != null) {
-            System.out.println("Success, hash: " + txHash);
-        }
-
-        return txHash;
-    }
-
-
-    /**
-     * Querying the dispute information.
-     * @return The dispute information.
-     */
-    public String disputeInfoQuery(String redemptionId, String applicant) {
-        // Init input
-        JSONObject input = new JSONObject();
-        input.put("method", "disputeInfo");
-        JSONObject params = new JSONObject();
-        params.put("redemptionId", redemptionId);
-        params.put("applicant", applicant);
-        input.put("params", params);
-
-        // Querying
-        String result = queryInfo(input.toJSONString());
-
-        return result;
-    }
-
-
-    /**
-     * The seller, redemption applicant or acceptor can set evidence.
-     * @return The tx hash.
-     */
-    public String setEvidenceTx(String sourcePrivateKey, String sourceAddress, String redemptionId, String applicant, String description) {
-        // The fixed write 1000L, the unit is MO
-        Long gasPrice = 1000L;
-        // Setting up the maximum cost 0.01BU
-        Long feeLimit = ToBaseUnit.BU2MO("0.1");
-
-        // 1. Building the input of 'setEvidence'.
-        JSONObject input = new JSONObject();
-        input.put("method", "setEvidence");
-        JSONObject params = new JSONObject();
-        params.put("redemptionId", redemptionId);
-        params.put("applicant", applicant);
-        params.put("description", description);
-        input.put("params", params);
-
-        // 2. Submitting the transaction.
-        String txHash = submitTrasaction(sourcePrivateKey, sourceAddress, input.toJSONString(), null, gasPrice, feeLimit);
-        if (txHash != null) {
-            System.out.println("Success, hash: " + txHash);
-        }
-
-        return txHash;
-    }
-
-
-    /**
-     * Querying the evidence information.
-     * @return The evidence information.
-     */
-    public String evidenceInfoQuery(String redemptionId, String applicant, String provider) {
-        // Init input
-        JSONObject input = new JSONObject();
-        input.put("method", "evidenceInfo");
-        JSONObject params = new JSONObject();
-        params.put("redemptionId", redemptionId);
-        params.put("applicant", applicant);
-        params.put("provider", provider);
-        input.put("params", params);
-
-        // Querying
-        String result = queryInfo(input.toJSONString());
-
-        return result;
-    }
-
-
-    /**
-     * Handling the dispute according to the evidence.
-     * @return The tx hash.
-     */
-    public String handleDisputeTx(String sourcePrivateKey, String sourceAddress, String redemptionId, String applicant, int status, String description) {
-        // The fixed write 1000L, the unit is MO
-        Long gasPrice = 1000L;
-        // Setting up the maximum cost 0.01BU
-        Long feeLimit = ToBaseUnit.BU2MO("0.1");
-
-        // 1. Building the input of 'handleDispute'.
-        JSONObject input = new JSONObject();
-        input.put("method", "handleDispute");
-        JSONObject params = new JSONObject();
-        params.put("redemptionId", redemptionId);
-        params.put("applicant", applicant);
-        params.put("status", status);
-        params.put("description", description);
-        input.put("params", params);
-
-        // 2. Submitting the transaction.
-        String txHash = submitTrasaction(sourcePrivateKey, sourceAddress, input.toJSONString(), null, gasPrice, feeLimit);
-        if (txHash != null) {
-            System.out.println("Success, hash: " + txHash);
-        }
-
-        return txHash;
-    }
-
-
-    /**
-     * Redeeming the tokens.
-     * @return The tx hash.
-     */
-    public String redeemByTrancheTx(String sourcePrivateKey, String sourceAddress, String toAddress, String skuId, String trancheId, String value) {
-        // The fixed write 1000L, the unit is MO
-        Long gasPrice = 1000L;
-        // Setting up the maximum cost 0.01BU
-        Long feeLimit = ToBaseUnit.BU2MO("0.1");
-
-        // 1. Building the input of 'redeemByTranche'.
-        JSONObject input = new JSONObject();
-        input.put("method", "redeemByTranche");
-        JSONObject params = new JSONObject();
-        params.put("address", toAddress);
-        params.put("skuId", skuId);
-        params.put("trancheId", trancheId);
-        params.put("value", value);
         input.put("params", params);
 
         // 2. Submitting the transaction.
@@ -2204,12 +2157,10 @@ public class Atp61TokenDemo {
      * @return The information.
      */
 	public String queryInfo(String input) {
-        // The contract address.
-        String contractAddress = getContractAddressQuery();
 
         // Init request
         ContractCallRequest request = new ContractCallRequest();
-        request.setContractAddress(contractAddress);
+        request.setContractAddress(entryAddress);
         request.setFeeLimit(1000000000L);
         request.setOptType(2);
         request.setInput(input);
@@ -2253,13 +2204,9 @@ public class Atp61TokenDemo {
         // 1. Transaction initiation account's Nonce + 1
         Long nonce = getAccountNonce(sourceAddress) + 1;
 
-
-        // 2. Getting the contract address.
-        String contractAddress = getContractAddressQuery();
-
-        // 3. Building ContractInvokeByBUOperation
+        // 2. Building ContractInvokeByBUOperation
         ContractInvokeByBUOperation operation = new ContractInvokeByBUOperation();
-        operation.setContractAddress(contractAddress);
+        operation.setContractAddress(entryAddress);
         operation.setInput(input);
         operation.setBuAmount(0L);
 

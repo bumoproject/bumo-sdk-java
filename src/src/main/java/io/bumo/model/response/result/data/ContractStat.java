@@ -16,7 +16,7 @@ public class ContractStat {
     @JSONField(name = "stack_usage")
     private Long stackUsage;
 
-    @JSONField(name = "stack_usage")
+    @JSONField(name = "step")
     private Long step;
 
     /**
