@@ -590,16 +590,16 @@ function _checkArrayItem(_arr, _minLen, _maxLen, _itemName, _err) {
 
 /**
  * 检测并添加元素到列表中
- * @return -3: 添加元素超过列表允许的长度(256K)
+ * @return -3: 添加元素超过列表允许的长度(1K)
  *         -2: 检测已存在该元素
- *          -1: 检测不存在该元素，且添加该元素成功
+ *         -1: 检测不存在该元素，且添加该元素成功
  */
 function _checkAddArrayItem(_isAdd, _id, _key, _pa1, _pa2, _pa3, _pa4, _idx) {
     const key = _makeKey(_key, _pa1, _pa2, _pa3, _pa4, _idx);
     const val = _load(key);
     let items = [];
     if (val !== false) {
-        const maxLen = "256000";
+        const maxLen = "10000";
         const len = Utils.int64Add(val.length, _id.length);
         if (Utils.int64Compare(len, maxLen) > 0) {
             return -3;
@@ -641,25 +641,20 @@ function _checkSubArrayItem(_isSub, _id, _key, _pa1, _pa2, _pa3, _pa4, _idx) {
 
 /**
  * 检测并添加元素到某页的列表中
- * @return -3: 添加元素时，页数也增加，是超过了2000。
+ * @return -3: 页数超出报错
  *         -2: 检测已存在该元素
  *         -1: 检测不存在该元素，并且添加该元素成功
  *         >0: 添加到元素到新页中，并返回新页数
  */
-function _checkAddPageItem(_isAdd, _pgcnt, _id, _key, _pa1, _pa2, _pa3, _pa4) {
+function _checkAddPageItem(_isAdd, _maxPgs, _pgcnt, _id, _key, _pa1, _pa2, _pa3, _pa4) {
     let ret = -1;
     let i = 0;
-    for (i = 0; Utils.int64Compare(i, _pgcnt) < 0; i = Utils.int64Add(i, 1)) {
-        ret = _checkAddArrayItem(_isAdd, _id, _key, _pa1, _pa2, _pa3, _pa4, i);
-        if (ret === -2 || ret === -1) {
-            break;
-        }
-    }
+    ret = _checkAddArrayItem(_isAdd, _id, _key, _pa1, _pa2, _pa3, _pa4, _pgcnt);
 
-    if (Utils.int64Compare(i, _pgcnt) === 0 && _isAdd) {
+    if (ret === -3 && _isAdd) {
         const newPgcnt = Utils.int64Add(_pgcnt, 1);
-        if (Utils.int64Compare(newPgcnt, 2000) <= 0) {
-            _checkAddArrayItem(_isAdd, _id, _key, _pa1, _pa2, _pa3, _pa4, _pgcnt);
+        if ((Utils.int64Compare(_maxPgs, 0) <= 0 && Utils.int64Compare(newPgcnt, 100000) <= 0) || Utils.int64Compare(newPgcnt, _maxPgs) <= 0) {
+            _checkAddArrayItem(_isAdd, _id, _key, _pa1, _pa2, _pa3, _pa4, newPgcnt);
             ret = newPgcnt;
         }
     }
@@ -673,8 +668,8 @@ function _checkAddPageItem(_isAdd, _pgcnt, _id, _key, _pa1, _pa2, _pa3, _pa4) {
  */
 function _checkSubPageItem(_isSub, _pgcnt, _id, _key, _pa1, _pa2, _pa3, _pa4) {
     let ret = -1;
-    let i = 0;
-    for (i = 0; Utils.int64Compare(i, _pgcnt) < 0; i = Utils.int64Add(i, 1)) {
+    let i = 1;
+    for (i = 1; Utils.int64Compare(i, _pgcnt) <= 0; i = Utils.int64Add(i, 1)) {
         ret = _checkSubArrayItem(_isSub, _id, _key, _pa1, _pa2, _pa3, _pa4, i);
         if (ret === 0) {
             break;
@@ -686,25 +681,25 @@ function _checkSubPageItem(_isSub, _pgcnt, _id, _key, _pa1, _pa2, _pa3, _pa4) {
 
 /**
  * 检测并添加元素到页中
- * @return -3: 添加元素时，页数也增加，但是超过了2000
+ * @return -3: 添加元素时，页数也增加，但是超过了限制
  *         -2: 检测已存在该元素
  *         -1: 检测不存在该元素，并且添加该元素成功
  *          0: 添加元素成功，但是添加的是第1个元素
  *         >0: 添加到元素到新页中，并返回新页数
  */
-function _checkAddPagesItem(_isAdd, _id, _keyPgs, _keyPg, _pa1, _pa2, _pa3, _pa4) {
+function _checkAddPagesItem(_isAdd, _maxPgs, _id, _keyPgs, _keyPg, _pa1, _pa2, _pa3, _pa4) {
     const pgsKey = _makeKey(_keyPgs, _pa1, _pa2, _pa3, _pa4);
     let pgsVal = _load(pgsKey);
     let pgs = {};
-    pgs.pages = 0;
+    pgs.pages = 1;
     pgs.value = 0;
     if (pgsVal !== false) {
         pgs = _toJsn(pgsVal);
     }
-    let ret = _checkAddPageItem(_isAdd, pgs.pages, _id, _keyPg, _pa1, _pa2, _pa3, _pa4);
+    let ret = _checkAddPageItem(_isAdd, _maxPgs, pgs.pages, _id, _keyPg, _pa1, _pa2, _pa3, _pa4);
     if (_isAdd && Utils.int64Compare(ret, -1) >= 0) {
         pgs.value = Utils.int64Add(pgs.value, 1);
-        if (Utils.int64Compare(ret, 0) > 0) {
+        if (Utils.int64Compare(ret, 1) > 0) {
             pgs.pages = ret;
         }
         _store(pgsKey, _toStr(pgs));
@@ -749,7 +744,7 @@ function _getPagesItemsF(_keyPgs, _keyPg, _pgsPa1, _pgsPa2, _pgsPa3, _pgsPa4, _p
 
     let i = 0;
     let items = [];
-    for (i = 0; Utils.int64Compare(i, pgs.pages) < 0; i = Utils.int64Add(i, 1)) {
+    for (i = 1; Utils.int64Compare(i, pgs.pages) <= 0; i = Utils.int64Add(i, 1)) {
         const val = _load(_makeKey(_keyPg, _pgPa1, _pgPa2, _pgPa3, _pgPa4, i));
         const item = _toJsn(val);
         items = items.concat(item);
@@ -893,7 +888,7 @@ function _checkAddBalance(_to, _skuId, _trnId, _val) {
     // Adding the tranche balance.
     const trnAddRet = _addVal(1, _val, keys.bletrn, _skuId, _trnId, _to);
     if (trnAddRet) {
-        _checkAddPagesItem(true, _trnId, keys.bletrnspgs, keys.bletrnspg, _skuId, _to);
+        _checkAddPagesItem(true, 60, _trnId, keys.bletrnspgs, keys.bletrnspg, _skuId, _to);
     }
 }
 
@@ -986,7 +981,7 @@ function _lockup(_addr, _skuId, _trnId, _lockId, _val, _isDftTrn) {
     // Adding the lockup balance.
     const lckAddRet = _addVal(0, _val, keys.bletrnlock, _skuId, _trnId, _lockId, _addr);
     if (lckAddRet) {
-        _checkAddPagesItem(true, _lockId, keys.bletrnlockspgs, keys.bletrnlockspg, _skuId, _trnId, _addr);
+        _checkAddPagesItem(true, 60, _lockId, keys.bletrnlockspgs, keys.bletrnlockspg, _skuId, _trnId, _addr);
     }
 }
 
@@ -1089,7 +1084,7 @@ function setDocument(id, name, url, hashType, hash) {
     Utils.assert(_isSeller(gTxSender), _throwErr(error.NOT_SEL));
 
     // Checking whether all documents are more.
-    Utils.assert(_checkAddPagesItem(true, id, keys.docspgs, keys.docspg) !== -3, _throwErr(error.DOCS_MORE_ERR));
+    Utils.assert(_checkAddPagesItem(true, 88, id, keys.docspgs, keys.docspg) !== -3, _throwErr(error.DOCS_MORE_ERR));
 
 
     // Storing document.
@@ -1367,14 +1362,14 @@ function issue(skuId, trnId, isDftTrn, spuId, name, symbol, faceVal, supply, dec
     _store(_makeKey(keys.skutrnspy, skuId, trnId), `${supply}`);
 
     // Adding the tranche to the sku.
-    _checkAddPagesItem(true, trnId, keys.skutrnspgs, keys.skutrnspg, skuId);
+    _checkAddPagesItem(true, 88, trnId, keys.skutrnspgs, keys.skutrnspg, skuId);
 
     // Adding the sku to the tranche.
-    _checkAddPagesItem(true, skuId, keys.trnskuspgs, keys.trnskuspg, trnId); // 1
+    _checkAddPagesItem(true, 88, skuId, keys.trnskuspgs, keys.trnskuspg, trnId); // 1
 
     // Adding the sku to the spu.
     if (spuId !== undefined) {
-        _checkAddPagesItem(true, skuId, keys.spuskuspgs, keys.spuskuspg, spuId);
+        _checkAddPagesItem(true, 88, skuId, keys.spuskuspgs, keys.spuskuspg, spuId);
     }
 
     // Setting issuer balance.
@@ -1384,7 +1379,7 @@ function issue(skuId, trnId, isDftTrn, spuId, name, symbol, faceVal, supply, dec
     _addVal(1, supply, keys.bletrn, skuId, trnId, gTxSender); // 1
 
     // Adding the tranche to the balance.
-    _checkAddPagesItem(true, trnId, keys.bletrnspgs, keys.bletrnspg, skuId, gTxSender); // 1
+    _checkAddPagesItem(true, 80, trnId, keys.bletrnspgs, keys.bletrnspg, skuId, gTxSender); // 1
 
     // Committing event.
     Chain.tlog('issue', _makeTlogSender(), skuId, `${trnId}_${spuId}`, symbol, supply);
@@ -1508,7 +1503,7 @@ function additionalIssuance(skuId, trnId, supply) {
     _addVal(0, supply, keys.skutrnspy, skuId, trnId);
 
     // Adding the tranche to the sku.
-    _checkAddPagesItem(true, trnId, keys.skutrnspgs, keys.skutrnspg, skuId);
+    _checkAddPagesItem(true, 88, trnId, keys.skutrnspgs, keys.skutrnspg, skuId);
 
     // Adding to issuer total balance.
     _addVal(1, supply, keys.ble, skuId, gTxSender);
@@ -1517,7 +1512,7 @@ function additionalIssuance(skuId, trnId, supply) {
     _addVal(1, supply, keys.bletrn, skuId, trnId, gTxSender);
 
     // Adding the tranche to the balance.
-    _checkAddPagesItem(true, trnId, keys.bletrnspgs, keys.bletrnspg, skuId, gTxSender);
+    _checkAddPagesItem(true, 60, trnId, keys.bletrnspgs, keys.bletrnspg, skuId, gTxSender);
 
     // Committing event.
     Chain.tlog('additionalIssuance', _makeTlogSender(), skuId, supply);
@@ -1620,7 +1615,7 @@ function authorizeSku(skuId, trnId) {
     trnId = _checkTranche(trnId, skuTk.defaultTrancheId, true);
 
     // Checking whether the tranche is in sku.
-    const trnInSku = _checkAddPagesItem(false, trnId, keys.skutrnspgs, keys.skutrnspg, skuId);
+    const trnInSku = _checkAddPagesItem(false, 88, trnId, keys.skutrnspgs, keys.skutrnspg, skuId);
     Utils.assert(trnInSku !== -1, _throwErr(error.TRN_NOT_IN_SKU));
 
     // If the authorizer already exists.
@@ -2268,8 +2263,8 @@ function register(cmFlNm, cmStNm, cmCat, des, cfmPrd, cmCer) {
 
     // Setting the contract info.
     let crt = {};
-    crt.name = "ATP61";
-    crt.version = '1.0';
+    crt.name = "ATP60";
+    crt.version = '1.1.1';
     crt.logicAddress = gThisAddress;
     crt.entryAddress = Chain.thisAddress;
     _store(keys.crt, _toStr(crt));
@@ -2306,7 +2301,7 @@ function setLogicContract(newLgAddr) {
     _store(keys.crt, _toStr(crt));
 
     // Committing event.
-    Chain.tlog('setContract', _makeTlogSender(), newLgAddr);
+    Chain.tlog('setLogicContract', _makeTlogSender(), newLgAddr);
 }
 
 /**

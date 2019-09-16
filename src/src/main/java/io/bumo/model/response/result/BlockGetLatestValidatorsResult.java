@@ -9,7 +9,7 @@ import io.bumo.model.response.result.data.ValidatorInfo;
  */
 public class BlockGetLatestValidatorsResult {
     @JSONField(name = "validators")
-    private ValidatorInfo[] validators;
+    private String[] validators;
 
     /**
      * @Author riven
@@ -18,7 +18,7 @@ public class BlockGetLatestValidatorsResult {
      * @Return io.bumo.model.response.result.data.ValidatorInfo[]
      * @Date 2018/7/12 10:22
      */
-    public ValidatorInfo[] getValidators() {
+    public String[] getValidators() {
         return validators;
     }
 
@@ -29,7 +29,7 @@ public class BlockGetLatestValidatorsResult {
      * @Return void
      * @Date 2018/7/12 11:21
      */
-    public void setValidators(ValidatorInfo[] validators) {
+    public void setValidators(String[] validators) {
         this.validators = validators;
     }
 }

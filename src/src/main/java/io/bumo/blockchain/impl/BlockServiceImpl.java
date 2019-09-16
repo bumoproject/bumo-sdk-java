@@ -1,6 +1,7 @@
 package io.bumo.blockchain.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import io.bumo.blockchain.BlockService;
 import io.bumo.common.General;
@@ -12,6 +13,7 @@ import io.bumo.model.request.*;
 import io.bumo.model.response.*;
 import io.bumo.model.response.result.*;
 import io.bumo.model.response.result.data.LedgerSeq;
+import io.bumo.model.response.result.data.Rewards;
 import io.bumo.model.response.result.data.ValidatorRewardInfo;
 
 import java.io.IOException;
@@ -300,25 +302,37 @@ public class BlockServiceImpl implements BlockService {
             if (Tools.isEmpty(blockNumber) || blockNumber < 1) {
                 throw new SDKException(SdkError.INVALID_BLOCKNUMBER_ERROR);
             }
-            String getInfoUrl = General.getInstance().blockGetRewardUrl(blockNumber);
-            String result = HttpKit.get(getInfoUrl);
-            BlockRewardJsonResponse blockRewardJsonResponse = JSONObject.parseObject(result, BlockRewardJsonResponse.class);
-            Integer errorCode = blockRewardJsonResponse.getErrorCode();
-            String errorDesc = blockRewardJsonResponse.getErrorDesc();
-            if (!Tools.isEmpty(errorCode) && errorCode == 4) {
-                throw new SDKException(4, (Tools.isEmpty(errorDesc) ? "Block (" + blockNumber + ") does not exist" : errorDesc));
+            JSONObject input = new JSONObject();
+            input.put("method", "getRewardDistribute");
+            JSONObject params = new JSONObject();
+            params.put("opt_type", 2);
+            params.put("fee_limit", 1000000000L);
+            params.put("contract_address", "buQqzdS9YSnokDjvzg4YaNatcFQfkgXqk6ss");
+            params.put("input", input.toJSONString());
+            String contractCallUrl = General.getInstance().contractCallUrl();
+            String result = HttpKit.post(contractCallUrl, params.toJSONString());
+            ContractCallResponse callResp = JSONObject.parseObject(result, ContractCallResponse.class);
+            if (callResp.getErrorCode() == 0) {
+                String value = callResp.getResult().getQueryRets().getJSONObject(0).getJSONObject("result").getString("value");
+                JSONObject valueJson = JSONObject.parseObject(value);
+                JSONObject validators = valueJson.getJSONObject("rewards").getJSONObject("validators");
+                JSONObject kols = valueJson.getJSONObject("rewards").getJSONObject("kols");
+                for (Map.Entry<String, Object> entry : validators.entrySet()) {
+                    Rewards validatorObj = new Rewards();
+                    validatorObj.setAddress(entry.getKey());
+                    validatorObj.setReward((JSONArray)entry.getValue());
+                    blockGetRewardResult.addValidator(validatorObj);
+                }
+                for (Map.Entry<String, Object> entry : kols.entrySet()) {
+                    Rewards kolObj = new Rewards();
+                    kolObj.setAddress(entry.getKey());
+                    kolObj.setReward((JSONArray)entry.getValue());
+                    blockGetRewardResult.addKol(kolObj);
+                }
+                blockGetRewardResponse.buildResponse(SdkError.SUCCESS, blockGetRewardResult);
+            } else {
+                blockGetRewardResponse.buildResponse(callResp.getErrorCode(), callResp.getErrorDesc());
             }
-            SdkError.checkErrorCode(blockRewardJsonResponse);
-            Long blockReward = blockRewardJsonResponse.getResult().getBlockReward();
-            JSONObject getRewardsJson = blockRewardJsonResponse.getResult().getValidatorsReward();
-            for (Map.Entry<String, Object> entry : getRewardsJson.entrySet()) {
-                ValidatorRewardInfo validatorRewardInfo = new ValidatorRewardInfo();
-                validatorRewardInfo.setValidator(entry.getKey());
-                validatorRewardInfo.setReward(getRewardsJson.getLong(entry.getKey()));
-                blockGetRewardResult.addRewareResult(validatorRewardInfo);
-            }
-            blockGetRewardResult.setBlockReward(blockReward);
-            blockGetRewardResponse.buildResponse(SdkError.SUCCESS, blockGetRewardResult);
         } catch (SDKException apiException) {
             Integer errorCode = apiException.getErrorCode();
             String errorDesc = apiException.getErrorDesc();
@@ -346,20 +360,37 @@ public class BlockServiceImpl implements BlockService {
             if (Tools.isEmpty(General.getInstance().getUrl())) {
                 throw new SDKException(SdkError.URL_EMPTY_ERROR);
             }
-            String getInfoUrl = General.getInstance().blockGetLatestRewardUrl();
-            String result = HttpKit.get(getInfoUrl);
-            BlockRewardJsonResponse blockRewardJsonResponse = JSONObject.parseObject(result, BlockRewardJsonResponse.class);
-            SdkError.checkErrorCode(blockRewardJsonResponse);
-            JSONObject getLatestRewardsJson = blockRewardJsonResponse.getResult().getValidatorsReward();
-            Long blockReward = blockRewardJsonResponse.getResult().getBlockReward();
-            for (Map.Entry<String, Object> entry : getLatestRewardsJson.entrySet()) {
-                ValidatorRewardInfo validatorLatestRewardInfo = new ValidatorRewardInfo();
-                validatorLatestRewardInfo.setValidator(entry.getKey());
-                validatorLatestRewardInfo.setReward(getLatestRewardsJson.getLong(entry.getKey()));
-                blockGetLatestRewardResult.addRewareResult(validatorLatestRewardInfo);
+            JSONObject input = new JSONObject();
+            input.put("method", "getRewardDistribute");
+            JSONObject params = new JSONObject();
+            params.put("opt_type", 2);
+            params.put("fee_limit", 1000000000L);
+            params.put("contract_address", "buQqzdS9YSnokDjvzg4YaNatcFQfkgXqk6ss");
+            params.put("input", input.toJSONString());
+            String contractCallUrl = General.getInstance().contractCallUrl();
+            String result = HttpKit.post(contractCallUrl, params.toJSONString());
+            ContractCallResponse callResp = JSONObject.parseObject(result, ContractCallResponse.class);
+            if (callResp.getErrorCode() == 0) {
+                String value = callResp.getResult().getQueryRets().getJSONObject(0).getJSONObject("result").getString("value");
+                JSONObject valueJson = JSONObject.parseObject(value);
+                JSONObject validators = valueJson.getJSONObject("rewards").getJSONObject("validators");
+                JSONObject kols = valueJson.getJSONObject("rewards").getJSONObject("kols");
+                for (Map.Entry<String, Object> entry : validators.entrySet()) {
+                    Rewards validatorObj = new Rewards();
+                    validatorObj.setAddress(entry.getKey());
+                    validatorObj.setReward((JSONArray)entry.getValue());
+                    blockGetLatestRewardResult.addValidator(validatorObj);
+                }
+                for (Map.Entry<String, Object> entry : kols.entrySet()) {
+                    Rewards kolObj = new Rewards();
+                    kolObj.setAddress(entry.getKey());
+                    kolObj.setReward((JSONArray)entry.getValue());
+                    blockGetLatestRewardResult.addKol(kolObj);
+                }
+                blockGetLatestRewardResponse.buildResponse(SdkError.SUCCESS, blockGetLatestRewardResult);
+            } else {
+                blockGetLatestRewardResponse.buildResponse(callResp.getErrorCode(), callResp.getErrorDesc());
             }
-            blockGetLatestRewardResult.setBlockReward(blockReward);
-            blockGetLatestRewardResponse.buildResponse(SdkError.SUCCESS, blockGetLatestRewardResult);
         } catch (SDKException apiException) {
             Integer errorCode = apiException.getErrorCode();
             String errorDesc = apiException.getErrorDesc();

@@ -94,27 +94,19 @@ public class ContractDemo {
     public void callContract() {
         // Init variable
         // Contract address
-        String contractAddress = "buQhdBSkJqERBSsYiUShUZFMZQhXvkdNgnYq";
-        // Spender address
-        String spender = "buQnnUEBREw2hB6pWHGPzwanX7d28xk6KVcp";
-        // Amount
-        String amount = "1000000";
+        String contractAddress = "buQqzdS9YSnokDjvzg4YaNatcFQfkgXqk6ss";
 
         // Init input
         JSONObject input = new JSONObject();
-        input.put("method", "approve");
-        JSONObject params = new JSONObject();
-        params.put("spender", spender);
-        params.put("value", amount);
-        input.put("params", params);
+        input.put("method", "getRewardDistribute");
 
         // Init request
         ContractCallRequest request = new ContractCallRequest();
-        //request.setContractAddress(contractAddress);
-        request.setCode("\"use strict\";function unique(arr){return(arr.filter((v,i,a)=>a.indexOf(v)===i));}function subSame(arr1,arr2){return arr1.filter((v,i,a)=>arr2.indexOf(v)===-1);}function init(bar){const arr1=[1,2,3,4,5,6];const arr2=[2,2,4,4,1,1,6,6,5];const arrSub=subSame(arr1,arr2);Chain.store(\"test\",JSON.stringify(arrSub));}function main(input){let i=0;for(i=0;i<50;i+=1){Chain.store(`test${i}`,`${i}`);}}function query(input){return Chain.load(\"test\");}");
+        request.setContractAddress(contractAddress);
+        //request.setCode("\"use strict\";function unique(arr){return(arr.filter((v,i,a)=>a.indexOf(v)===i));}function subSame(arr1,arr2){return arr1.filter((v,i,a)=>arr2.indexOf(v)===-1);}function init(bar){const arr1=[1,2,3,4,5,6];const arr2=[2,2,4,4,1,1,6,6,5];const arrSub=subSame(arr1,arr2);Chain.store(\"test\",JSON.stringify(arrSub));}function main(input){let i=0;for(i=0;i<50;i+=1){Chain.store(`test${i}`,`${i}`);}}function query(input){return Chain.load(\"test\");}");
         request.setFeeLimit(1000000000L);
-        request.setOptType(1);
-        //request.setInput(input.toJSONString());
+        request.setOptType(2);
+        request.setInput(input.toJSONString());
 
         // Call call
         ContractCallResponse response = sdk.getContractService().call(request);

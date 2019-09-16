@@ -22,7 +22,7 @@ function init() {
 }
 
 function main(input) {
-    const data = JSON.parse(input);
+    let data = JSON.parse(input);
     const method = data.method || '';
     let params = data.params || {};
     const crtVal = Chain.load(crtKey);
@@ -30,18 +30,18 @@ function main(input) {
         Utils.assert(crtVal !== false, JSON.stringify(error.NOT_CRT_ERR));
         const crt = JSON.parse(crtVal);
         params.logicAddress = crt.logicAddress;
+        data.params = params;
     } else {
         Utils.assert(crtVal === false, JSON.stringify(error.REG_ERR));
         Utils.assert(Utils.addressCheck(params.logicAddress) && Utils.int64Compare(Chain.getBalance(params.logicAddress), 0) > 0, JSON.stringify(error.LOG_ADDR_ERR));
     }
-    Chain.delegateCall(params.logicAddress, input);
+
+    Chain.delegateCall(params.logicAddress, JSON.stringify(data));
 }
 
 function query(input) {
     const crtVal = Chain.load(crtKey);
     Utils.assert(crtVal !== false, JSON.stringify(error.NOT_CRT_ERR));
     const crt = JSON.parse(crtVal);
-    const callResult = Chain.delegateQuery(crt.logicAddress, input);
-    Utils.assert(callResult !== false, `Calling ${crt.logicAddress} failed`);
-    Utils.assert(false, callResult);
+    return Chain.delegateQuery(crt.logicAddress, input);
 }

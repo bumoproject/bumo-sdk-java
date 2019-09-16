@@ -20,13 +20,15 @@ import io.bumo.model.response.result.TransactionBuildBlobResult;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.UUID;
 
 public class Atp60TokenDemo {
     /* Bumo 1.2.0 test version */
 	public SDK sdk = SDK.getInstance("http://13.112.159.231");
 
-	public String atp60Address = "buQBLEZtjriZrFCg5ytgbqUqn7BPiSUmtzEF";
-    public String entryAddress = "buQmSWrVihx4sgcb8BwcaBuXzbueBGxoeMG3";
+	public String atp60Address = "buQanFSG1ekPknhrQ9JWszVq8kwR3GgchjrS";
+    public String entryAddress = "buQaFpRQLK1A1iZFEcwUtMXktBmx6ocYJsfJ";
+    public Long gNonce = 0L;
 
 	@Test
     public void createAtp60Contract() {
@@ -34,6 +36,9 @@ public class Atp60TokenDemo {
         String sellerPrivateKey = "privC15YAp4M4oDLcJ6JqyPqYH55VXPeNckE2AVqWcHN8BB4PAVwGjJr";
         // The seller account address.
         String sellerAddress = "buQfTPaQBzFGBzGy87pSsc6MmNJKKKmzTSyC";
+
+        // The sender nonce.
+        gNonce = getAccountNonce(sellerAddress);
 
         createContract(sellerPrivateKey, sellerAddress, "ATP60.js");
     }
@@ -45,13 +50,16 @@ public class Atp60TokenDemo {
         // The seller account address.
         String sellerAddress = "buQfTPaQBzFGBzGy87pSsc6MmNJKKKmzTSyC";
 
+        // The sender nonce.
+        gNonce = getAccountNonce(sellerAddress);
+
         createContract(sellerPrivateKey, sellerAddress, "Entry.js");
     }
 
     @Test
     public void getContractAddress() {
-	    String atp60Hash = "910941993099b59c0224c2b31794dbfbcf07ed67a81044fed1d722fac5d5bdb0";
-	    String entryHash = "cd78bbf98121e5a4ff08ffbb6cdd14083a1b43b6388e4d70f28116a0b75434ac";
+	    String atp60Hash = "26919acd3bb8117d8ff4478072ed635f540a139528a87f1ced7c9c470e7c6572";
+	    String entryHash = "c654df7b0c239ff203a5ec308527d9619f01174114369c93195982b88823c567";
         getContractAddressQuery(atp60Hash);
         getContractAddressQuery(entryHash);
     }
@@ -88,6 +96,9 @@ public class Atp60TokenDemo {
         String cardFrontPhoto = "[图片类型|url|hash类型|hash值]";
         // Company corporate identity card back photo.
         String cardBackPhoto = "[图片类型|url|hash类型|hash值]";
+
+        // The sender nonce.
+        gNonce = getAccountNonce(sellerAddress);
 
         // Registerring.
         registerTx(sellerPrivateKey, sellerAddress, fullName, shortName, contact, confirmPeriod, organizationalCode, corporateName, cardNumber, businessLicense, cardFrontPhoto, cardBackPhoto);
@@ -292,15 +303,99 @@ public class Atp60TokenDemo {
         // The acceptance contact.
         String acceptanceContact = "contact@my.com";
 
+        // The sender nonce.
+        gNonce = getAccountNonce(sellerAddress);
+
         setAcceptanceTx(sellerPrivateKey, sellerAddress, acceptanceId, acceptorPublicKey, acceptanceFullName, acceptanceShortName, acceptanceLogo, acceptanceContact);
     }
 
     @Test
     public void acceptanceInfo() {
+        String skuId = UUID.randomUUID().toString();
+        System.out.println(skuId.replace("-", ""));
         // The acceptance id.
+        //String acceptanceId = "1";
+
+        //acceptanceInfoQuery(acceptanceId);
+    }
+
+    @Test
+    public void testMultiIssue() {
+        // The seller public key to issue SKU Tokens.
+        String sellerPrivateKey = "privC15YAp4M4oDLcJ6JqyPqYH55VXPeNckE2AVqWcHN8BB4PAVwGjJr";
+        // The seller address.
+        String sellerAddress = "buQfTPaQBzFGBzGy87pSsc6MmNJKKKmzTSyC";
+        // The sender nonce.
+        gNonce = getAccountNonce(sellerAddress);
+
+        // The default tranche.
+        // Notice: If this is not setting, the tranche of id '0' will be used.
+        String trancheId = null; //"1";
+        // Whether setting the tranche id as default tranche.
+        boolean isDefaultTranche = false;
+        // The spu id.
+        // Notice: If this is not setting, this sku tokens don't have spu.
+        String spuId = null; //"000000001";
+        // The sku label.
+        JSONArray skuLabel = new JSONArray();
+        skuLabel.add("iphone");
+        skuLabel.add("iphone 5s");
+        skuLabel.add("iphone 5s 白色");
+        skuLabel.add("iphone 5s 白色 64G");
+        skuLabel.add("iphone 5s 白色 64G 中国大陆版");
+        // The address that will be sent SKU Tokens when the redemption finishes.
+        String redemptionAddress = "buQqudnoPPV2utx92jfdcLkFGDaB7v3iasPM";
+        // The redemption peroid.
+        String redemptionPeriod = "7";
+        // The sku reference price.
+        String skuPrice = "3000";
+        // The sku color.
+        String skuColor = "白色";
+        // The sku memory.
+        String skuMemory = "64";
+        // The sku model.
+        String skuModel = "中国大陆";
+        // The sku abstract
+        JSONArray skuAbstract = new JSONArray();
+        skuAbstract.add("1"); // id "1" in attributes
+        skuAbstract.add("3"); // id "3" in attributes
+        skuAbstract.add("2"); // id "2" in attributes
+        // The token name
+        String skuName = "iphone 5s 白色 64G 中国大陆版";
+        // The token symbol.
+        String tokenSymbol = "IPWSFC";
+        // The token supply.
+        String tokenSupply = "100000";
+        // The token decimals.
+        String decimals = "0";
+        // The sku description.
+        String skuDesc = "iphone 5s 白色 64G 中国大陆版";
+        // The main icon
+        String mainIcon = "png|https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1557751338635&di=3f6b989903ddf1cf9c10cc530c849d93&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01815657c24f1b0000012e7eb901a1.jpg|md5|2938472190312847";
+        // The vice icons
+        JSONArray viceIcons = new JSONArray();
+        viceIcons.add(mainIcon);
+        // The acceptance ids
         String acceptanceId = "1";
 
-        acceptanceInfoQuery(acceptanceId);
+        // The sku attributes
+        JSONObject attributes = new JSONObject();
+        attributes.put("id", buildAdditionIndex("parentId", "name", "type", "value", "decimals", "uint"));
+        attributes.put("1", buildAdditionIndex("0",         "参考价", "int",  skuPrice,     "-",       "CNY"));
+        attributes.put("2", buildAdditionIndex("0",         "颜色",  "text",  skuColor,   "-",        "-"));
+        attributes.put("3", buildAdditionIndex("0",         "内存",  "int",   skuMemory,       "-",        "G"));
+        attributes.put("4", buildAdditionIndex("0",         "型号",  "text",  skuModel, "-",       "-"));
+
+        Long i = 0L;
+        while (i < 10000L) {
+            String skuId = UUID.randomUUID().toString();
+            // Issuing SKU Tokens.
+            String hash = issueSKUTokensTx(sellerPrivateKey, sellerAddress, skuId.replace("-", ""), trancheId, isDefaultTranche, spuId, skuName, tokenSymbol, tokenSupply, decimals, skuDesc, mainIcon, viceIcons, skuLabel, redemptionAddress, redemptionPeriod, acceptanceId, skuAbstract, attributes);
+            if (hash != null) {
+                i++;
+            }
+            System.out.println(", skuId: " + skuId + ", nonce: " + gNonce + ", i: " + i);
+        }
     }
 
 
@@ -482,7 +577,7 @@ public class Atp60TokenDemo {
     @Test
     public void skusOfTranche() {
         // The tranche id.
-        String trancheId = "1";
+        String trancheId = "0";
 
         skusOfTrancheQuery(trancheId);
     }
@@ -1309,7 +1404,7 @@ public class Atp60TokenDemo {
         // 2. Submitting the transaction.
         String txHash = submitTrasaction(sourcePrivateKey, sourceAddress, input.toJSONString(), null, gasPrice, feeLimit);
         if (txHash != null) {
-            System.out.println("Success, hash: " + txHash);
+            System.out.print("Success, hash: " + txHash);
         }
 
         return txHash;
@@ -2144,7 +2239,8 @@ public class Atp60TokenDemo {
                     JSONObject rst = JSON.parseObject(queryResult.getString("msg"));
                     System.out.println(JSON.toJSONString(rst, true));
                 } catch (Exception e) {
-                    System.out.println(queryResult.getString("msg"));
+                    JSONArray arr = JSONArray.parseArray(queryResult.getString("msg"));
+                    System.out.println(arr.size() + ", " + queryResult.getString("msg"));
                 }
             }
         } else {
@@ -2169,7 +2265,7 @@ public class Atp60TokenDemo {
      */
 	public String submitTrasaction(String privateKey, String sourceAddress, String input, String transMetadata, Long gasPrice, Long feeLimit) {
         // 1. Transaction initiation account's Nonce + 1
-        Long nonce = getAccountNonce(sourceAddress) + 1;
+        Long nonce = gNonce + 1;//getAccountNonce(sourceAddress) + 1;
 
 
         // 2. Building ContractInvokeByBUOperation
@@ -2201,7 +2297,7 @@ public class Atp60TokenDemo {
         // 1. Build transaction
         TransactionBuildBlobRequest transactionBuildBlobRequest = new TransactionBuildBlobRequest();
         transactionBuildBlobRequest.setSourceAddress(senderAddresss);
-        transactionBuildBlobRequest.setNonce(senderNonce);
+        transactionBuildBlobRequest.setNonce(gNonce + 1);
         transactionBuildBlobRequest.setFeeLimit(feeLimit);
         transactionBuildBlobRequest.setGasPrice(gasPrice);
         for (int i = 0; i < operations.length; i++) {
@@ -2214,7 +2310,7 @@ public class Atp60TokenDemo {
         String transactionBlob;
         TransactionBuildBlobResponse transactionBuildBlobResponse = sdk.getTransactionService().buildBlob(transactionBuildBlobRequest);
         if (transactionBuildBlobResponse.getErrorCode() != 0) {
-            System.out.println("Error: " + transactionBuildBlobResponse.getErrorDesc());
+            System.out.print("Error: " + transactionBuildBlobResponse.getErrorDesc());
             return null;
         }
         TransactionBuildBlobResult transactionBuildBlobResult = transactionBuildBlobResponse.getResult();
@@ -2229,7 +2325,7 @@ public class Atp60TokenDemo {
         }
         TransactionSignResponse transactionSignResponse = sdk.getTransactionService().sign(transactionSignRequest);
         if (transactionSignResponse.getErrorCode() != 0) {
-            System.out.println("Error: " + transactionSignResponse.getErrorDesc());
+            System.out.print("Error: " + transactionSignResponse.getErrorDesc());
             return null;
         }
 
@@ -2241,8 +2337,9 @@ public class Atp60TokenDemo {
         TransactionSubmitResponse transactionSubmitResponse = sdk.getTransactionService().submit(transactionSubmitRequest);
         if (0 == transactionSubmitResponse.getErrorCode()) {
             Hash = transactionSubmitResponse.getResult().getHash();
+            gNonce += 1;
         } else {
-            System.out.println("Error: " + transactionSubmitResponse.getErrorDesc());
+            System.out.print("Error (" + transactionSubmitResponse.getErrorCode() +"): " + transactionSubmitResponse.getErrorDesc());
         }
         return Hash;
     }
