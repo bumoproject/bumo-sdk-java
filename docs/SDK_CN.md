@@ -528,7 +528,7 @@ asset	    | [AssetInfo](#AssetInfo)[] |账户资产
 ----------- | ------------ | ---------------- 
   key       | [Key](#Key)  | 资产惟一标识
   assetAmount    | Long        | 资产数量
- 
+
  #### Key
 
    成员   |     类型    |     描述       
@@ -592,7 +592,7 @@ metadata    |[MetadataInfo](#MetadataInfo)   |  账户
 key         |  String     |  metadata的关键词
 value       |  String     |  metadata的内容
 version     |  Long      |  metadata的版本
-   
+
 
 > 错误码
 
@@ -655,8 +655,8 @@ asset	    | [AssetInfo](#AssetInfo)[] |账户资产
 
 > 错误码
 
-   异常       |     错误码   |   描述   |
------------  | ----------- | -------- |
+   异常       |     错误码   |   描述   
+-----------  | ----------- | -------- 
 INVALID_ADDRESS_ERROR|11006|Invalid address
 REQUEST_NULL_ERROR|12001|Request parameter cannot be null
 CONNECTNETWORK_ERROR|11007|Failed to connect to the network
@@ -746,27 +746,27 @@ ContractGetInfoResponse getInfo (ContractGetInfoRequest);
 
 > 请求参数
 
-   参数      |     类型     |        描述       |
------------ | ------------ | ---------------- |
-contractAddress     |   String     |  待查询的合约账户地址   |
+   参数      |     类型     |        描述       
+----------- | ------------ | ---------------- 
+contractAddress     |   String     |  待查询的合约账户地址   
 
 > 响应数据
 
-   参数      |     类型     |        描述       |
------------ | ------------ | ---------------- |
+   参数      |     类型     |        描述       
+----------- | ------------ | ---------------- 
 contract|[ContractInfo](#contractinfo)|合约信息
 
 #### ContractInfo
 
-   成员      |     类型     |        描述       |
------------ | ------------ | ---------------- |
+   成员      |     类型     |        描述       
+----------- | ------------ | ---------------- 
 type|Integer|合约类型，默认0
 payload|String|合约代码
 
 > 错误码
 
-   异常       |     错误码   |   描述   |
------------  | ----------- | -------- |
+   异常       |     错误码   |   描述   
+-----------  | ----------- | -------- 
 INVALID_CONTRACTADDRESS_ERROR|11037|Invalid contract address
 CONTRACTADDRESS_NOT_CONTRACTACCOUNT_ERROR|11038|contractAddress is not a contract account
 NO_SUCH_TOKEN_ERROR|11030|No such token
@@ -802,27 +802,27 @@ ContractGetAddressResponse getInfo (ContractGetAddressRequest);
 
 > 请求参数
 
-参数      |     类型     |        描述       |
------------ | ------------ | ---------------- |
-hash     |   String     |  创建合约交易的hash   |
+参数      |     类型     |        描述       
+----------- | ------------ | ---------------- 
+hash     |   String     |  创建合约交易的hash   
 
 > 响应数据
 
-参数      |     类型     |        描述       |
------------ | ------------ | ---------------- |
+参数      |     类型     |        描述       
+----------- | ------------ | ---------------- 
 contractAddressList|List<[ContractAddressInfo](#contractaddressinfo)>|合约地址列表
 
 #### ContractAddressInfo
 
-成员      |     类型     |        描述       |
------------ | ------------ | ---------------- |
+成员      |     类型     |        描述       
+----------- | ------------ | ---------------- 
 contractAddress|String|合约地址
 operationIndex|Integer|所在操作的下标
 
 > 错误码
 
-异常       |     错误码   |   描述   |
------------  | ----------- | -------- |
+异常       |     错误码   |   描述   
+-----------  | ----------- | -------- 
 INVALID_HASH_ERROR|11055|Invalid transaction hash
 CONNECTNETWORK_ERROR|11007|Failed to connect to the network
 REQUEST_NULL_ERROR|12001|Request parameter cannot be null
@@ -856,8 +856,8 @@ ContractCallesponse call(ContractCallRequest);
 
 > 请求参数
 
-   参数      |     类型     |        描述       |
------------ | ------------ | ---------------- |
+   参数      |     类型     |        描述       
+----------- | ------------ | ---------------- 
 sourceAddress|String|选填，合约触发账户地址
 contractAddress|String|选填，合约账户地址，与code不能同时为空
 code|String|选填，合约代码，与contractAddress不能同时为空，长度限制[1, 64]
@@ -870,17 +870,17 @@ gasPrice|Long|交易燃料单价，大小限制[1000, Long.MAX_VALUE]
 
 > 响应数据
 
-   参数      |     类型     |        描述       |
------------ | ------------ | ---------------- |
+   参数      |     类型     |        描述       
+----------- | ------------ | ---------------- 
 logs|JSONObject|日志信息
 queryRets|JSONArray|查询结果集
 stat|[ContractStat](#ContractStat)|合约资源占用信息
-txs|[TransactionEnvs](#TransactionEnvs)[]	交易集
+txs|[TransactionEnvs](#TransactionEnvs)[]	交易集|
 
 #### ContractStat
 
-   成员      |     类型     |        描述       |
------------ | ------------ | ---------------- |
+   成员      |     类型     |        描述       
+----------- | ------------ | ---------------- 
   applyTime|Long|接收时间
   memoryUsage|Long|内存占用量
   stackUsage|Long|堆栈占用量
@@ -888,21 +888,21 @@ txs|[TransactionEnvs](#TransactionEnvs)[]	交易集
 
 #### TransactionEnvs
 
-   成员      |     类型     |        描述       |
------------ | ------------ | ---------------- |
+   成员      |     类型     |        描述       
+----------- | ------------ | ---------------- 
   transactionEnv|[TransactionEnv](#transactionenv)|交易
 
 #### TransactionEnv
 
-   成员      |     类型     |        描述       |
------------ | ------------ | ---------------- |
+   成员      |     类型     |        描述       
+----------- | ------------ | ---------------- 
 transaction|[TransactionInfo](#transactioninfo)|交易内容
 trigger|[ContractTrigger](#contracttrigger)|合约触发者
 
 #### TransactionInfo
 
-   成员      |     类型     |        描述       |
------------ | ------------ | ---------------- |
+   成员      |     类型     |        描述       
+----------- | ------------ | ---------------- 
 sourceAddress|String|交易发起的源账户地址
 feeLimit|Long|交易要求的最低费用
 gasPrice|Long|交易燃料单价
@@ -910,14 +910,14 @@ nonce|Long|交易序列号
 operations|[Operation](#operation)[]|操作列表
 
 #### ContractTrigger
-   成员      |     类型     |        描述       |
------------ | ------------ | ---------------- |
+   成员      |     类型     |        描述       
+----------- | ------------ | ---------------- 
 transaction|[TriggerTransaction](#triggertransaction)|触发交易
 
 #### Operation
 
-   成员      |     类型     |        描述       |
------------ | ------------ | ---------------- |
+   成员      |     类型     |        描述       
+----------- | ------------ | ---------------- 
 type|Integer|操作类型
 sourceAddress|String|操作发起源账户地址
 metadata|String|备注
@@ -931,14 +931,14 @@ log|[OperationLog](#operationlog)|记录日志
 
 #### TriggerTransaction
 
-   成员      |     类型     |        描述       |
------------ | ------------ | ---------------- |
+   成员      |     类型     |        描述       
+----------- | ------------ | ---------------- 
 hash|String|交易hash
 
 #### OperationCreateAccount
 
-   成员      |     类型     |        描述       |
------------ | ------------ | ---------------- |
+   成员      |     类型     |        描述       
+----------- | ------------ | ---------------- 
 destAddress|String|目标账户地址
 contract|[Contract](#contract)|合约信息
 priv|[Priv](#priv)|账户权限
@@ -948,46 +948,46 @@ initInput|String|合约init函数的入参
 
 #### Contract
 
-   成员      |     类型     |        描述       |
------------ | ------------ | ---------------- |
+   成员      |     类型     |        描述       
+----------- | ------------ | ---------------- 
 type|Integer| 合约的语种，默认不赋值
 payload|String|对应语种的合约代码
 
 #### MetadataInfo
 
-   成员      |     类型     |        描述       |
------------ | ------------ | ---------------- |
+   成员      |     类型     |        描述       
+----------- | ------------ | ---------------- 
 key|String|metadata的关键词
 value|String|metadata的内容
 version|Long|metadata的版本
 
 #### OperationIssueAsset
 
-   成员      |     类型     |        描述       |
------------ | ------------ | ---------------- |
+   成员      |     类型     |        描述       
+----------- | ------------ | ---------------- 
 code|String|资产编码
 assetAmount|Long|资产数量
 
 #### OperationPayAsset
 
-   成员      |     类型     |        描述       |
------------ | ------------ | ---------------- |
+   成员      |     类型     |        描述       
+----------- | ------------ | ---------------- 
 destAddress|String|待转移的目标账户地址
 asset|[AssetInfo](#assetinfo)|账户资产
 input|String|合约main函数入参
 
 #### OperationPayCoin
 
-   成员      |     类型     |        描述       |
------------ | ------------ | ---------------- |
+   成员      |     类型     |        描述       
+----------- | ------------ | ---------------- 
 destAddress|String|待转移的目标账户地址
 buAmount|Long|待转移的BU数量
 input|String|合约main函数入参
 
 #### OperationSetMetadata
 
-   成员      |     类型     |        描述       |
------------ | ------------ | ---------------- |
+   成员      |     类型     |        描述       
+----------- | ------------ | ---------------- 
 key|String|metadata的关键词
 value|String|metadata的内容
 version|Long|metadata的版本
@@ -995,8 +995,8 @@ deleteFlag|boolean|是否删除metadata
 
 #### OperationSetPrivilege
 
-   成员      |     类型     |        描述       |
------------ | ------------ | ---------------- |
+   成员      |     类型     |        描述       
+----------- | ------------ | ---------------- 
 masterWeight|String|账户自身权重，大小限制[0, (Integer.MAX_VALUE * 2L + 1)]
 signers|[Signer](#signer)[]|签名者权重列表
 txThreshold|String|交易门限，大小限制[0, Long.MAX_VALUE]
@@ -1004,15 +1004,15 @@ typeThreshold|[TypeThreshold](#typethreshold)|指定类型交易门限
 
 #### OperationLog
 
-   成员      |     类型     |        描述       |
------------ | ------------ | ---------------- |
+   成员      |     类型     |        描述       
+----------- | ------------ | ---------------- 
 topic|String|日志主题
 data|String[]|日志内容
 
 > 错误码
 
-   异常       |     错误码   |   描述   |
------------  | ----------- | -------- |
+   异常       |     错误码   |   描述   
+-----------  | ----------- | -------- 
 INVALID_SOURCEADDRESS_ERROR|11002|Invalid sourceAddress
 INVALID_CONTRACTADDRESS_ERROR|11037|Invalid contract address
 CONTRACTADDRESS_CODE_BOTH_NULL_ERROR|11063|ContractAddress and code cannot be empty at the same time
@@ -1204,15 +1204,15 @@ metadata|String|选填，备注
 
 > 响应数据
 
-   参数      |     类型     |        描述       |
------------ | ------------ | ---------------- |
+   参数      |     类型     |        描述       
+----------- | ------------ | ---------------- 
 transactionBlob|String|Transaction序列化后的16进制字符串
 hash|String|交易hash
 
 > 错误码
 
-   异常       |     错误码   |   描述   |
------------  | ----------- | -------- |
+   异常       |     错误码   |   描述   
+-----------  | ----------- | -------- 
 INVALID_SOURCEADDRESS_ERROR|11002|Invalid sourceAddress
 INVALID_NONCE_ERROR|11048|Nonce must be between 1 and Long.MAX_VALUE
 INVALID_DESTADDRESS_ERROR|11003|Invalid destAddress
@@ -1306,8 +1306,8 @@ TransactionEvaluateFeeResponse evaluateFee (TransactionEvaluateFeeRequest);
 
 > 请求参数
 
-   参数      |     类型     |        描述       |
------------ | ------------ | ---------------- |
+   参数      |     类型     |        描述       
+----------- | ------------ | ---------------- 
 sourceAddress|String|必填，发起该操作的源账户地址
 nonce|Long|必填，待发起的交易序列号，大小限制[1, Long.MAX_VALUE]
 operation|BaseOperation[]|必填，待提交的操作列表，不能为空
@@ -1317,32 +1317,32 @@ metadata|String|选填，备注
 
 > 响应数据
 
-   参数      |     类型     |        描述       |
------------ | ------------ | ---------------- |
-txs     |   [TestTx](#testtx)[]     |  评估交易集   |
+   参数      |     类型     |        描述       
+----------- | ------------ | ---------------- 
+txs     |   [TestTx](#testtx)[]     |  评估交易集   
 
 #### TestTx
 
-   成员变量      |     类型     |        描述       |
------------ | ------------ | ---------------- |
+   成员变量      |     类型     |        描述       
+----------- | ------------ | ---------------- 
 transactionEnv| [TestTransactionFees](#testtransactionfees)| 评估交易费用
 
 #### TestTransactionFees
 
-   成员变量      |     类型     |      描述      |
------------ | ------------ | ---------------- |
+   成员变量      |     类型     |      描述      
+----------- | ------------ | ---------------- 
 transactionFees|[TransactionFees](#transactionfees)|交易费用
 
 #### TransactionFees
-   成员变量      |     类型     |        描述    |
------------ | ------------ | ---------------- |
+   成员变量      |     类型     |        描述    
+----------- | ------------ | ---------------- 
 feeLimit|Long|交易要求的最低费用
 gasPrice|Long|交易燃料单价
 
 > 错误码
 
-   异常       |     错误码   |   描述   |
------------  | ----------- | -------- |
+   异常       |     错误码   |   描述   
+-----------  | ----------- | -------- 
 INVALID_SOURCEADDRESS_ERROR|11002|Invalid sourceAddress
 INVALID_NONCE_ERROR|11045|Nonce must be between 1 and Long.MAX_VALUE
 OPERATIONS_EMPTY_ERROR|11051|Operations cannot be empty
@@ -1398,29 +1398,29 @@ TransactionSignResponse sign(TransactionSignRequest);
 
 > 请求参数
 
-   参数      |     类型     |        描述       |
------------ | ------------ | ---------------- |
+   参数      |     类型     |        描述       
+----------- | ------------ | ---------------- 
 blob|String|必填，待签名的交易Blob
 privateKeys|String[]|必填，私钥列表
 
 
 > 响应数据
 
-   参数      |     类型     |        描述       |
------------ | ------------ | ---------------- |
-signatures|[Signature](#signature)	签名后的数据列表
+   参数      |     类型     |        描述       
+----------- | ------------ | ---------------- 
+signatures|[Signature](#signature)	签名后的数据列表|
 
 #### Signature
 
-   成员变量      |     类型     |        描述       |
------------ | ------------ | ---------------- |
+   成员变量      |     类型     |        描述       
+----------- | ------------ | ---------------- 
   signData|Long|签名后数据
   publicKey|Long|公钥
 
 > 错误码
 
-   异常       |     错误码   |   描述   |
------------  | ----------- | -------- |
+   异常       |     错误码   |   描述   
+-----------  | ----------- | -------- 
 INVALID_BLOB_ERROR|11056|Invalid blob
 PRIVATEKEY_NULL_ERROR|11057|PrivateKeys cannot be empty
 PRIVATEKEY_ONE_ERROR|11058|One of privateKeys is invalid
@@ -1459,21 +1459,21 @@ TransactionSubmitResponse submit(TransactionSubmitRequest);
 
 > 请求参数
 
-   参数      |     类型     |        描述       |
------------ | ------------ | ---------------- |
+   参数      |     类型     |        描述       
+----------- | ------------ | ---------------- 
   blob|String|必填，交易blob
   signature|[Signature](#signature)[]|必填，签名列表
 
 > 响应数据
 
-   参数      |     类型     |        描述       |
------------ | ------------ | ---------------- |
+   参数      |     类型     |        描述       
+----------- | ------------ | ---------------- 
 hash|String|交易hash
 
 > 错误码
 
-   异常       |     错误码   |   描述   |
------------  | ----------- | -------- |
+   异常       |     错误码   |   描述   
+-----------  | ----------- | -------- 
 INVALID_BLOB_ERROR|11056|Invalid blob
 SIGNATURE_EMPTY_ERROR|11067|The signatures cannot be empty
 REQUEST_NULL_ERROR|12001|Request parameter cannot be null
@@ -1512,21 +1512,21 @@ TransactionGetInfoResponse getInfo (TransactionGetInfoRequest);
 
 > 请求参数
 
-   参数      |     类型     |        描述       |
------------ | ------------ | ---------------- |
+   参数      |     类型     |        描述       
+----------- | ------------ | ---------------- 
 hash|String|交易hash
 
 > 响应数据
 
-   参数      |     类型     |        描述       |
------------ | ------------ | ---------------- |
+   参数      |     类型     |        描述       
+----------- | ------------ | ---------------- 
 totalCount|Long|返回的总交易数
 transactions|[TransactionHistory](#transactionhistory)[]|交易内容
 
 #### TransactionHistory
 
-   成员变量  |     类型     |        描述       |
------------ | ------------ | ---------------- |
+   成员变量  |     类型     |        描述       
+----------- | ------------ | ---------------- 
 actualFee|String|交易实际费用
 closeTime|Long|交易关闭时间
 errorCode|Long|交易错误码
@@ -1539,8 +1539,8 @@ txSize|Long|交易大小
 
 > 错误码
 
-   异常       |     错误码   |   描述   |
------------  | ----------- | -------- |
+   异常       |     错误码   |   描述   
+-----------  | ----------- | -------- 
 INVALID_HASH_ERROR|11055|Invalid transaction hash
 REQUEST_NULL_ERROR|12001|Request parameter cannot be null
 CONNECTNETWORK_ERROR|11007|Failed to connect to the network
@@ -1579,15 +1579,15 @@ BlockGetNumberResponse getNumber();
 
 > 响应数据
 
-   参数      |     类型     |        描述       |
------------ | ------------ | ---------------- |
+   参数      |     类型     |        描述       
+----------- | ------------ | ---------------- 
 header|BlockHeader|区块头
 blockNumber|Long|最新的区块高度，对应底层字段seq
 
 > 错误码
 
-   异常       |     错误码   |   描述   |
------------  | ----------- | -------- |
+   异常       |     错误码   |   描述   
+-----------  | ----------- | -------- 
 CONNECTNETWORK_ERROR|11007|Failed to connect to the network
 SYSTEM_ERROR|20000|System error
 
@@ -1615,14 +1615,14 @@ BlockCheckStatusResponse checkStatus();
 
 > 响应数据
 
-   参数      |     类型     |        描述       |
------------ | ------------ | ---------------- |
-isSynchronous    |   Boolean     |  区块是否同步   |
+   参数      |     类型     |        描述       
+----------- | ------------ | ---------------- 
+isSynchronous    |   Boolean     |  区块是否同步   
 
 > 错误码
 
-   异常       |     错误码   |   描述   |
------------  | ----------- | -------- |
+   异常       |     错误码   |   描述   
+-----------  | ----------- | -------- 
 CONNECTNETWORK_ERROR|11007|Failed to connect to the network
 SYSTEM_ERROR|20000|System error
 
@@ -1650,21 +1650,21 @@ if(0 == response.getErrorCode()){
 
 > 请求参数
 
-   参数      |     类型     |        描述       |
------------ | ------------ | ---------------- |
+   参数      |     类型     |        描述       
+----------- | ------------ | ---------------- 
 blockNumber|Long|必填，待查询的区块高度，必须大于0
 
 > 响应数据
 
-   参数      |     类型     |        描述       |
------------ | ------------ | ---------------- |
+   参数      |     类型     |        描述       
+----------- | ------------ | ---------------- 
 totalCount|Long|返回的总交易数
 transactions|[TransactionHistory](#transactionhistory)[]|交易内容
 
 > 错误码
 
-   异常       |     错误码   |   描述   |
------------  | ----------- | -------- |
+   异常       |     错误码   |   描述   
+-----------  | ----------- | -------- 
 INVALID_BLOCKNUMBER_ERROR|11060|BlockNumber must bigger than 0
 REQUEST_NULL_ERROR|12001|Request parameter cannot be null
 CONNECTNETWORK_ERROR|11007|Failed to connect to the network
@@ -1699,14 +1699,14 @@ BlockGetInfoResponse getInfo(BlockGetInfoRequest);
 
 > 请求参数
 
-   参数      |     类型     |        描述       |
------------ | ------------ | ---------------- |
+   参数      |     类型     |        描述       
+----------- | ------------ | ---------------- 
 blockNumber|Long|必填，待查询的区块高度
 
 > 响应数据
 
-   参数      |     类型     |        描述       |
------------ | ------------ | ---------------- |
+   参数      |     类型     |        描述       
+----------- | ------------ | ---------------- 
 closeTime|Long|区块关闭时间
 number|Long|区块高度
 txCount|Long|交易总量
@@ -1714,8 +1714,8 @@ version|String|区块版本
 
 > 错误码
 
-   异常       |     错误码   |   描述   |
------------  | ----------- | -------- |
+   异常       |     错误码   |   描述   
+-----------  | ----------- | -------- 
 INVALID_BLOCKNUMBER_ERROR|11060|BlockNumber must bigger than 0
 REQUEST_NULL_ERROR|12001|Request parameter cannot be null
 CONNECTNETWORK_ERROR|11007|Failed to connect to the network
@@ -1750,8 +1750,8 @@ BlockGetLatestInfoResponse getLatestInfo();
 
 > 响应数据
 
-   参数      |     类型     |        描述       |
------------ | ------------ | ---------------- |
+   参数      |     类型     |        描述       
+----------- | ------------ | ---------------- 
 closeTime|Long|区块关闭时间
 number|Long|区块高度，对应底层字段seq
 txCount|Long|交易总量
@@ -1760,8 +1760,8 @@ version|String|区块版本
 
 > 错误码
 
-   异常       |     错误码   |   描述   |
------------  | ----------- | -------- |
+   异常       |     错误码   |   描述   
+-----------  | ----------- | -------- 
 CONNECTNETWORK_ERROR|11007|Failed to connect to the network
 SYSTEM_ERROR|20000|System error
 
@@ -1790,27 +1790,26 @@ BlockGetValidatorsResponse getValidators(BlockGetValidatorsRequest);
 
 > 请求参数
 
-   参数      |     类型     |        描述       |
------------ | ------------ | ---------------- |
+   参数      |     类型     |        描述       
+----------- | ------------ | ---------------- 
 blockNumber|Long|必填，待查询的区块高度，必须大于0
 
 > 响应数据
 
-   参数      |     类型     |        描述       |
------------ | ------------ | ---------------- |
-validators|[ValidatorInfo](#validatorinfo)[]|验证节点列表
+   参数      |     类型     |        描述       
+----------- | ------------ | ---------------- 
+validators|String[]|验证节点列表
 
 #### ValidatorInfo
 
-   成员变量  |     类型     |        描述       |
------------ | ------------ | ---------------- |
+   成员变量  |     类型     |        描述       
+----------- | ------------ | ---------------- 
 address|String|共识节点地址
-plegeCoinAmount|Long|验证节点押金
 
 > 错误码
 
-   异常       |     错误码   |   描述   |
------------  | ----------- | -------- |
+   异常       |     错误码   |   描述   
+-----------  | ----------- | -------- 
 INVALID_BLOCKNUMBER_ERROR|11060|BlockNumber must bigger than 0
 REQUEST_NULL_ERROR|12001|Request parameter cannot be null
 CONNECTNETWORK_ERROR|11007|Failed to connect to the network
@@ -1845,14 +1844,14 @@ BlockGetLatestValidatorsResponse getLatestValidators();
 
 > 响应数据
 
-   参数      |     类型     |        描述       |
------------ | ------------ | ---------------- |
-validators|[ValidatorInfo](#validatorinfo)[]|验证节点列表
+   参数      |     类型     |        描述       
+----------- | ------------ | ---------------- 
+validators|String[]|验证节点列表
 
 > 错误码
 
-   异常       |     错误码   |   描述   |
------------  | ----------- | -------- |
+   异常       |     错误码   |   描述   
+-----------  | ----------- | -------- 
 CONNECTNETWORK_ERROR|11007|Failed to connect to the network
 SYSTEM_ERROR|20000|System error
 
@@ -1875,35 +1874,37 @@ if (response.getErrorCode() == 0) {
 
    该接口用于获取指定区块中的区块奖励和验证节点奖励
 
+   注：不建议使用该接口，后期会删除该接口，建议使用 getLatestReward 接口。该接口的参数 blockNumber 无效，只获取最新的区块奖励，与 getLatestReward 功接口能一样。
+
 > 调用方法
 
 BlockGetRewardResponse getReward(BlockGetRewardRequest);
 
 > 请求参数
 
-   参数      |     类型     |        描述       |
------------ | ------------ | ---------------- |
+   参数      |     类型     |        描述       
+----------- | ------------ | ---------------- 
 blockNumber|Long|必填，待查询的区块高度，必须大于0
 
 > 响应数据
 
-   参数      |     类型     |        描述       |
------------ | ------------ | ---------------- |
-blockReward|Long|区块奖励数
-validatorsReward|[ValidatorReward](#validatorreward)[]|验证节点奖励情况
+   参数      |     类型     |        描述       
+----------- | ------------ | ---------------- 
+ validators | [Rewards](#Rewards)[] | 验证节点奖励 
+ kols       | [Rewards](#Rewards)[] | 生态节点奖励 
 
-#### ValidatorReward
+#### Rewards
 
-   成员变量  |     类型     |        描述       |
------------ | ------------ | ---------------- |
-  validator|String|验证节点地址
-  reward|Long|验证节点奖励
+   成员变量  |     类型     |        描述       
+----------- | ------------ | ---------------- 
+ address  | String | 节点地址 
+ reward   | Long   | 节点奖励 
 
 
 > 错误码
 
-   异常       |     错误码   |   描述   |
------------  | ----------- | -------- |
+   异常       |     错误码   |   描述   
+-----------  | ----------- | -------- 
 INVALID_BLOCKNUMBER_ERROR|11060|BlockNumber must bigger than 0
 REQUEST_NULL_ERROR|12001|Request parameter cannot be null
 CONNECTNETWORK_ERROR|11007|Failed to connect to the network
@@ -1938,15 +1939,15 @@ BlockGetLatestRewardResponse getLatestReward();
 
 > 响应数据
 
-   参数      |     类型     |        描述       |
------------ | ------------ | ---------------- |
-blockReward|Long|区块奖励数
-validatorsReward|[ValidatorReward](#validatorreward)[]|验证节点奖励情况
+   参数      |     类型     |        描述       
+----------- | ------------ | ---------------- 
+ validators | [Rewards](#Rewards)[] | 验证节点奖励 
+ kols       | [Rewards](#Rewards)[] | 生态节点奖励 
 
 > 错误码
 
-   异常       |     错误码   |   描述   |
------------  | ----------- | -------- |
+   异常       |     错误码   |   描述   
+-----------  | ----------- | -------- 
 CONNECTNETWORK_ERROR|11007|Failed to connect to the network
 SYSTEM_ERROR|20000|System error
 
@@ -1975,27 +1976,27 @@ BlockGetFeesResponse getFees(BlockGetFeesRequest);
 
 > 请求参数
 
-   参数      |     类型     |        描述       |
------------ | ------------ | ---------------- |
+   参数      |     类型     |        描述       
+----------- | ------------ | ---------------- 
 blockNumber|Long|必填，待查询的区块高度，必须大于0
 
 > 响应数据
 
-   参数      |     类型     |        描述       |
------------ | ------------ | ---------------- |
+   参数      |     类型     |        描述       
+----------- | ------------ | ---------------- 
 fees|[Fees](#fees)|费用
 
 #### Fees
 
-   成员变量  |     类型     |        描述       |
------------ | ------------ | ---------------- |
+   成员变量  |     类型     |        描述       
+----------- | ------------ | ---------------- 
 baseReserve|Long|账户最低资产限制
 gasPrice|Long|交易燃料单价，单位MO，1 BU = 10^8 MO
 
 > 错误码
 
-   异常       |     错误码   |   描述   |
------------  | ----------- | -------- |
+   异常       |     错误码   |   描述   
+-----------  | ----------- | -------- 
 INVALID_BLOCKNUMBER_ERROR|11060|BlockNumber must bigger than 0
 REQUEST_NULL_ERROR|12001|Request parameter cannot be null
 CONNECTNETWORK_ERROR|11007|Failed to connect to the network
@@ -2029,14 +2030,14 @@ BlockGetLatestFeesResponse getLatestFees();
 
 > 响应数据
 
-   参数      |     类型     |        描述       |
------------ | ------------ | ---------------- |
+   参数      |     类型     |        描述       
+----------- | ------------ | ---------------- 
 fees|[Fees](#fees)|费用
 
 > 错误码
 
-   异常       |     错误码   |   描述   |
------------  | ----------- | -------- |
+   异常       |     错误码   |   描述   
+-----------  | ----------- | -------- 
 CONNECTNETWORK_ERROR|11007|Failed to connect to the network
 SYSTEM_ERROR|20000|System error
 
@@ -2054,8 +2055,8 @@ if (response.getErrorCode() == 0) {
 
 ## 错误码
 
-   异常       |     错误码   |   描述   |
------------  | ----------- | -------- |
+   异常       |     错误码   |   描述   
+-----------  | ----------- | -------- 
 ACCOUNT_CREATE_ERROR|11001|Failed to create the account 
 INVALID_SOURCEADDRESS_ERROR|11002|Invalid sourceAddress
 INVALID_DESTADDRESS_ERROR|11003|Invalid destAddress
