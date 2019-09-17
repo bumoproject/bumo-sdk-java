@@ -1898,7 +1898,7 @@ blockNumber|Long|必填，待查询的区块高度，必须大于0
    成员变量  |     类型     |        描述       
 ----------- | ------------ | ---------------- 
  address  | String | 节点地址 
- reward   | Long   | 节点奖励 
+ reward   | Array | 节点奖励 
 
 
 > 错误码

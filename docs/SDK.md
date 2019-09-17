@@ -1917,7 +1917,7 @@ blockNumber|Long|Required, the height of the block to be queried must be greater
    Member变量  |     Type     |        Description      
 ----------- | ------------ | ---------------- 
  address |String|Node address
-  reward|Long|Node reward
+  reward|Array|Node reward
 
 
 > Error Code
