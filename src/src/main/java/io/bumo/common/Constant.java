@@ -10,12 +10,6 @@ public class Constant {
     public static final Long METADATA_VALUE_MAX = 256000L;
     public static final Long UINT_MAX = Integer.MAX_VALUE * 2L + 1;
     public static final Long ASSET_CODE_MAX = 64L;
-    public static final Long TOKEN_NAME_MAX = 1024L;
-    public static final Long TOKEN_SYMBOL_MAX = 1024L;
-    public static final Integer TOKEN_DECIMALS_MAX = 8;
-    public static final Integer TOKEN_DECIMALS_MIN = 0;
-    public static final Long GAS_PRICE_MIN = 1000L;
-    public static final Long FEE_LIMIT_MIN = 1L;
     public static final Integer HASH_HEX_LENGTH = 64;
     public static final Integer OPT_TYPE_MIN = 0;
     public static final Integer OPT_TYPE_MAX = 2;
@@ -23,5 +17,4 @@ public class Constant {
     public static final Integer LOG_TOPIC_MAX = 128;
     public static final Integer LOG_EACH_DATA_MIN = 1;
     public static final Integer LOG_EACH_DATA_MAX = 1024;
-    public static final Integer DESCRIPTION_LENGTH_MAX = 1024;
 }

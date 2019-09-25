@@ -394,7 +394,7 @@ public class ContractServiceImpl implements ContractService {
                 throw new SDKException(SdkError.CONTRACTADDRESS_CODE_BOTH_NULL_ERROR);
             }
             Long feeLimit = contractCallRequest.getFeeLimit();
-            if (Tools.isEmpty(feeLimit) || feeLimit < Constant.FEE_LIMIT_MIN) {
+            if (Tools.isEmpty(feeLimit) || feeLimit < 0) {
                 throw new SDKException(SdkError.INVALID_FEELIMIT_ERROR);
             }
             Integer optType = contractCallRequest.getOptType();

@@ -188,11 +188,11 @@ public enum SdkError {
     /*
      * INVALID_GASPRICE_ERROR
      */
-    INVALID_GASPRICE_ERROR(11049, "GasPrice must be between 1000 and Long.MAX_VALUE"),
+    INVALID_GASPRICE_ERROR(11049, "GasPrice must be between 0 and Long.MAX_VALUE"),
     /*
      * INVALID_FEELIMIT_ERROR
      */
-    INVALID_FEELIMIT_ERROR(11050, "FeeLimit must be between 1 and Long.MAX_VALUE"),
+    INVALID_FEELIMIT_ERROR(11050, "FeeLimit must be between 0 and Long.MAX_VALUE"),
     /*
      * OPERATIONS_EMPTY_ERROR
      */

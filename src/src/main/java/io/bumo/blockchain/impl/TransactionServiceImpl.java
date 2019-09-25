@@ -70,13 +70,13 @@ public class TransactionServiceImpl implements TransactionService {
             }
             // check gasPrice
             Long gasPrice = transactionBuildBlobRequest.getGasPrice();
-            if (Tools.isEmpty(gasPrice) || gasPrice < Constant.GAS_PRICE_MIN) {
+            if (Tools.isEmpty(gasPrice) || gasPrice < 0) {
                 throw new SDKException(SdkError.INVALID_GASPRICE_ERROR);
             }
 
             // check feeLimit
             Long feeLimit = transactionBuildBlobRequest.getFeeLimit();
-            if (Tools.isEmpty(feeLimit) || feeLimit < Constant.FEE_LIMIT_MIN) {
+            if (Tools.isEmpty(feeLimit) || feeLimit < 0) {
                 throw new SDKException(SdkError.INVALID_FEELIMIT_ERROR);
             }
 

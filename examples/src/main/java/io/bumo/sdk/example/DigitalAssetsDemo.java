@@ -238,8 +238,8 @@ public class DigitalAssetsDemo {
         TransactionBuildBlobRequest request = new TransactionBuildBlobRequest();
         request.setSourceAddress(senderAddresss);
         request.setNonce(nonce);
-        request.setFeeLimit(feeLimit);
-        request.setGasPrice(gasPrice);
+        request.setFeeLimit(0L);
+        request.setGasPrice(0L);
         request.addOperation(operation);
 
         // Call buildBlob
