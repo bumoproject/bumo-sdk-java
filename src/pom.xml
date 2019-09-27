@@ -36,8 +36,18 @@
 	</dependencies>
 	<repositories>
 		<repository>
-			<id>bumo-mirror</id>
+			<id>bumo</id>
 			<url>http://maven.bumo.io/content/groups/public/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>bumo-mirror</id>
+			<url>http://maven.bumo.io/content/repositories/public/</url>
 			<releases>
 				<enabled>true</enabled>
 			</releases>
