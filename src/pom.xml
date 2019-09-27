@@ -47,7 +47,7 @@
 		</repository>
 		<repository>
 			<id>bumo-mirror</id>
-			<url>http://maven.bumo.io/content/repositories/public/</url>
+			<url>http://maven.bumo.io/content/repositories/releases/</url>
 			<releases>
 				<enabled>true</enabled>
 			</releases>
