@@ -27,7 +27,7 @@
     </dependencies>
     <repositories>
         <repository>
-            <id>bumo</id>
+            <id>bumo-mirror</id>
             <url>http://maven.bumo.io/content/groups/public/</url>
             <releases>
                 <enabled>true</enabled>
